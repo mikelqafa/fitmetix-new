@@ -1,0 +1,8 @@
+{
+	"name": "Default",
+    "description": "Starting fitmetix website.",
+    "version": "1.0",
+    "author" : "Freelancer",
+    "thumbnail" : "assets/images/theme1.png",
+    "email" : "info@ifreelance.asia"
+}

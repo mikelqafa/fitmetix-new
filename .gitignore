@@ -1,0 +1,18 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea
+
+#Ignore Vendor folder
+vendor/*
+
+#Ignore .env file
+.env
+
+#Ignore css and js file
+public/js/app.js
+public/css/app.css
+
+#Ignore node module
+node_modules/*
+
+#Ignore error log
+error_log
