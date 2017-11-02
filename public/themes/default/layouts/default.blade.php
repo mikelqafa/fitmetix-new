@@ -17,7 +17,9 @@
         <meta content="website" property="og:type" />
         <meta content="{{ Setting::get('site_name') }}" property="og:site_name" />
         <title>{{ Theme::get('title') }}</title>
-        <link href="{{ Theme::asset()->url('css/flag-icon.css') }}" rel="stylesheet">
+        <link href="{{ asset('fitmetixfont/font.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
         <link href="{{ Theme::asset()->url('css/custom.css') }}" rel="stylesheet">
         {!! Theme::asset()->styles() !!}
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -26,6 +28,7 @@
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <script type="text/javascript">
         function SP_source() {
           return "{{ url('/') }}/";

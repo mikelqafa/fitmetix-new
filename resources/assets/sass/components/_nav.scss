@@ -1,0 +1,61 @@
+.fm-nav > li a {
+  line-height: 30px;
+  min-width: 52px;
+  text-align: center;
+  background-color: rgba(0,0,0,0);
+  transition: all 0.2s ease;
+}
+.fm-nav .has-hover-effect a:hover,
+.fm-nav .has-hover-effect.open a {
+  background-color: rgba(0,0,0,0.03) !important;
+}
+.user-image.socialite{
+  min-width: 40px;
+}
+.fm-nav .dropdown.message a .fa {
+  font-size: 16px;
+}
+.unread-notification {
+  position: absolute;
+  bottom: 14px;
+  display: block;
+  width: 6px;
+  height: 6px;
+  left: 50%;
+  margin-left: -3px;
+  border-radius: 50%;
+}
+.material-svg{
+  width: 20px;
+  user-select: none;
+  z-index: 0;
+}
+.fm-nav__item--no-padding .dropdown-toggle,
+.fm-nav__item--no-padding .user-image-wrapper{
+  padding-left:4px;
+  padding-right:4px;
+  min-width: 24px;
+}
+.fm-nav__item .dropdown-toggle {
+  line-height: 60px;
+}
+.unread-notification.is-visible {
+  background-color: #E76C8B;
+}
+div.icon {
+  line-height: 1;
+}
+.fm-nav .dropdown.message a.dropdown-toggle {
+  padding-top: 19px;
+  padding-bottom: 19px;
+}
+@media (max-width: 1325px) {
+  .dropdown.message {
+    padding-right: 0;
+  }
+}
+@media (max-width: 1325px){
+  .dropdown.message.notification {
+    padding-right: 0;
+  }
+}

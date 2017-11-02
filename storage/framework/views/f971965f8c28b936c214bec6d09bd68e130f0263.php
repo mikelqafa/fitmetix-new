@@ -17,7 +17,9 @@
         <meta content="website" property="og:type" />
         <meta content="<?php echo e(Setting::get('site_name')); ?>" property="og:site_name" />
         <title><?php echo e(Theme::get('title')); ?></title>
-        <link href="<?php echo e(Theme::asset()->url('css/flag-icon.css')); ?>" rel="stylesheet">
+        <link href="<?php echo e(asset('fitmetixfont/font.css')); ?>" rel="stylesheet">
+        <link href="<?php echo e(asset('css/bootstrap.css')); ?>" rel="stylesheet">
+        <link href="<?php echo e(asset('css/style.css')); ?>" rel="stylesheet">
         <link href="<?php echo e(Theme::asset()->url('css/custom.css')); ?>" rel="stylesheet">
         <?php echo Theme::asset()->styles(); ?>
 
@@ -27,6 +29,7 @@
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <link href="<?php echo e(asset('css/app.css')); ?>" rel="stylesheet">
         <script type="text/javascript">
         function SP_source() {
           return "<?php echo e(url('/')); ?>/";

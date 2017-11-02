@@ -10,9 +10,13 @@ vendor/*
 #Ignore css and js file
 public/js/app.js
 public/css/app.css
+storage
 
 #Ignore node module
 node_modules/*
 
 #Ignore error log
 error_log
+
+#Ignore webpack mix js
+webpack.mix.js
