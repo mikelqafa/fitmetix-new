@@ -6,7 +6,7 @@
   ?>
 @endif
 
- <div class="panel panel-default panel-post animated" id="post{{ $post->id }}">
+ <div class="panel panel-default timeline-posts__item panel-post animated" id="post{{ $post->id }}">
   <div class="panel-heading no-bg">
     <div class="post-author">
       <div class="post-options">
@@ -368,64 +368,9 @@
     @endif
   </div>
 
-
-  
   <!-- Modal Ends here -->
   @if(isset($next_page_url))
   <a class="jscroll-next hidden" href="{{ $next_page_url }}">{{ trans('messages.get_more_posts') }}</a>
   @endif
 
   {!! Theme::asset()->container('footer')->usePath()->add('lightbox', 'js/lightbox.min.js') !!}
-<div id="myModal" class="modal fade" role="dialog" tabindex='-1'>
-  <div class="modal-dialog">
-
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h3 class="modal-title">{{ trans('common.copy_embed_post') }}</h3>
-        </div>
-        <textarea class="form-control" rows="3">
-          <iframe src="{{ url('/share-post/'.$post->id) }}" width="600px" height="420px" frameborder="0"></iframe>
-          </textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('common.close') }}</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-<script type="text/javascript">
-  function share(){
-FB.ui(
-  {
-    method: 'feed',
-    name: 'Put name',
-    link: 'put link',
-    picture: 'image url',
-    description: 'descrition'
-  },
-  function(response) {
-    if (response) {
-       alert ('success');
-    } else {
-       alert ('Failed');
-    }
-  }
-);  
-}
-</script>
-<style>
-  .link-preview
-  {
-    border: 1px solid #EEE;
-    margin: 7px 0px;
-    padding: 5px;
-  }
-  .link-preview img
-  {
-    width: 100%;
-    height: auto;
-  }
-</style>

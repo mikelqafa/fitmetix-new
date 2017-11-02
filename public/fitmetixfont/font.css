@@ -11,6 +11,9 @@
   font-style: normal;
 
 }
+.icon {
+  font-size: 20px;
+}
 
 [data-icon]:before {
   font-family: "fitmetixfont" !important;
@@ -35,9 +38,9 @@
   text-transform: none !important;
   speak: none;
   line-height: 1;
-  font-size: 20px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: inherit;
 }
 
 .icon-comment:before {

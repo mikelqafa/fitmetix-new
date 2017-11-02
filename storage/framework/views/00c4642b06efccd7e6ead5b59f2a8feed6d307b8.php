@@ -1,8 +1,8 @@
 <?php if(Auth::guest()): ?>
-    <nav class="navbar socialite navbar-default no-bg guest-nav">
+    <nav class="navbar socialite navbar-default no-bg guest-nav hidden-sm hidden-xs">
         <div class="container">
 <?php else: ?>
-    <nav class="navbar socialite navbar-default no-bg">
+    <nav class="navbar socialite navbar-default no-bg hidden-sm hidden-xs">
         <div class="container-fluid">
 <?php endif; ?>
         <!-- Brand and toggle get grouped for better mobile display -->

@@ -73,23 +73,9 @@
     <body <?php if(Setting::get('enable_rtl') == 'on'): ?> class="direction-rtl" <?php endif; ?>>
         <?php echo Theme::partial('header'); ?>
 
+        <?php echo Theme::partial('mobileHeader'); ?>
 
         <div class="main-content">
-            <div class="row visible-sm visible-xs" style="margin-top:-25px;">
-                <ul class="nav nav-justified">
-                    <?php if(Auth::user()->hasRole('admin')): ?>
-                        <li class="<?php echo e(Request::segment(1) == 'admin' ? 'active' : ''); ?>"><a style="color:#484848" href="<?php echo e(url('admin')); ?>"><i class="fa fa-user-secret" aria-hidden="true"></i><?php echo e(trans('common.admin')); ?></a></li>
-                    <?php endif; ?>
-                    <li><a style="color:#484848" href="<?php echo e(url('/'.Auth::user()->username.'/settings/general')); ?>"><i class="fa fa-bars"></i></a></li>
-                    <li><a style="color:#484848" href="<?php echo url(Auth::user()->username.'/create-event'); ?>"><i class="fa fa-heart"></i></a></li>
-                    <li><a style="color:#484848" href="<?php echo url('messages'); ?>"><i class="fa fa-commenting-o"></i></a></li>
-                    <li><a style="color:#484848" href="<?php echo url('events'); ?>"><i class="fa fa-users"></i></a></li>
-                    <li><a style="color:#484848" data-toggle="collapse" href="#bs-example-navbar-collapse-4" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-search"></i></a></li>
-                    <li><a style="color:#484848" href="<?php echo url(Auth::user()->username); ?>"><i class="fa fa-user"></i></a></li>
-                </ul>
-                    </div>
-                </div>
-            </div>
             <?php echo Theme::content(); ?>
 
         </div>
