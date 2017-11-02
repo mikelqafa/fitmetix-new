@@ -7,13 +7,6 @@
                         <?php endif; ?>
                                 <!-- Brand and toggle get grouped for better mobile display -->
                         <div class="navbar-header">
-                            <button type="button" class="navbar-toggle hidden-sm hidden-xs collapsed" data-toggle="collapse"
-                                    data-target="#bs-example-navbar-collapse-4" aria-expanded="false">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
                             <a class="navbar-brand socialite" href="<?php echo e(url('/')); ?>">
                                 <img class="socialite-logo" src="<?php echo url('setting/'.Setting::get('logo')); ?>"
                                      alt="<?php echo e(Setting::get('site_name')); ?>" title="<?php echo e(Setting::get('site_name')); ?>">
@@ -64,14 +57,13 @@
                                 <ul class="nav fm-nav navbar-nav hidden-sm hidden-xs navbar-right" id="navbar-right" v-cloak>
                                     <li class="has-hover-effect fm-nav__item">
                                         <a href="<?php echo e(url(Auth::user()->username.'/create-event')); ?>" class="fm-nav__item">
-                                            <i class="fa fa-cog"></i>
+                                            <i class="fa fa-plus"></i>
                                             <b>Inspire</b>
                                         </a>
                                     </li>
                                     <li class="has-hover-effect fm-nav__item">
                                         <a href="<?php echo e(url('events')); ?>">
-                                            <i class="fa fa-calendar"></i>
-                                            <b>Event</b>
+                                            <b>Events</b>
                                         </a>
                                     </li>
                                     <li class="has-hover-effect dropdown message hidden-sm hidden-xs notification">
@@ -190,7 +182,7 @@
                                             <span class="user-name hidden"><?php echo e(Auth::user()->name); ?></span>
                                         </a>
                                     </li>
-                                    <li class="dropdown fm-nav__item--no-padding vert-has">
+                                    <li class="dropdown message fm-nav__item--no-padding vert-has">
                                         <a href="<?php echo e(url(Auth::user()->username)); ?>" class="dropdown-toggle"
                                            data-toggle="dropdown" role="button" aria-haspopup="true"
                                            aria-expanded="false">

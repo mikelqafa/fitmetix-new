@@ -53,14 +53,13 @@
                                 <ul class="nav fm-nav navbar-nav hidden-sm hidden-xs navbar-right" id="navbar-right" v-cloak>
                                     <li class="has-hover-effect fm-nav__item">
                                         <a href="{{ url(Auth::user()->username.'/create-event') }}" class="fm-nav__item">
-                                            <i class="fa fa-cog"></i>
+                                            <i class="fa fa-plus"></i>
                                             <b>Inspire</b>
                                         </a>
                                     </li>
                                     <li class="has-hover-effect fm-nav__item">
                                         <a href="{{ url('events') }}">
-                                            <i class="fa fa-calendar"></i>
-                                            <b>Event</b>
+                                            <b>Events</b>
                                         </a>
                                     </li>
                                     <li class="has-hover-effect dropdown message hidden-sm hidden-xs notification">
@@ -179,7 +178,7 @@
                                             <span class="user-name hidden">{{ Auth::user()->name }}</span>
                                         </a>
                                     </li>
-                                    <li class="dropdown fm-nav__item--no-padding vert-has">
+                                    <li class="dropdown message fm-nav__item--no-padding vert-has">
                                         <a href="{{ url(Auth::user()->username) }}" class="dropdown-toggle"
                                            data-toggle="dropdown" role="button" aria-haspopup="true"
                                            aria-expanded="false">
