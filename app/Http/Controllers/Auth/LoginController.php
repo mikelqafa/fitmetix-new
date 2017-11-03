@@ -97,4 +97,11 @@ class LoginController extends Controller
             return response()->json(['status' => '201', 'message' => trans('auth.login_failed')]);
         }
     }
+
+    public function reset() {
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('guest');
+        $theme->setTitle(trans('auth.login').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+
+        return $theme->scope('auth.reset')->render();
+    }
 }

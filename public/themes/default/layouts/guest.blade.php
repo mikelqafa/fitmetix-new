@@ -14,11 +14,11 @@
         <meta name="description" content="{{ Setting::get('meta_description') }}">
         <link rel="icon" type="image/x-icon" href="{!! url('setting/'.Setting::get('favicon')) !!}">
 
-
         <title>{{ Theme::get('title') }}</title>
-
+        <link href="{{ asset('fitmetixfont/font.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
         <link href="{{ Theme::asset()->url('css/custom.css') }}" rel="stylesheet">
-        
         {!! Theme::asset()->styles() !!}
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

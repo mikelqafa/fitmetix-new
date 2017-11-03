@@ -11,7 +11,9 @@
     <div class="post-author">
       <div class="post-options">
         <ul class="list-inline no-margin">
-          <li class="dropdown"><a href="#" class="dropdown-togle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-share-alt fa-rotate-90"></i></a>
+          <li class="dropdown"><a href="#" class="dropdown-togle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <i class="icon icon-options"></i>
+              </a>
             <ul class="dropdown-menu">
               <?php if($post->notifications_user->contains(Auth::user()->id)): ?>
               <li class="main-link">
@@ -58,7 +60,7 @@
               <?php if((Auth::id() == $post->user->id) || ($post->timeline_id == Auth::user()->timeline_id)): ?>
               <li class="main-link">
                 <a href="#" class="delete-post" data-post-id="<?php echo e($post->id); ?>">
-                  <i class="fa fa-trash" aria-hidden="true"></i><?php echo e(trans('common.delete')); ?>
+                  <i class="icon icon-delete" aria-hidden="true"></i><?php echo e(trans('common.delete')); ?>
 
                   <span class="small-text"><?php echo e(trans('messages.delete_text')); ?></span>
                 </a>
@@ -76,7 +78,7 @@
 
               <li class="main-link">  
                 <a href="#" class="save-post" data-post-id="<?php echo e($post->id); ?>">
-                  <i class="fa fa-save" aria-hidden="true"></i>
+                  <i class="icon icon-save" aria-hidden="true"></i>
                     <?php if(!Auth::user()->postsSaved->contains($post->id)): ?>
                       <?php echo e(trans('common.save_post')); ?>
 
@@ -91,7 +93,7 @@
 
               <li class="main-link">  
                 <a href="#" class="manage-report report" data-post-id="<?php echo e($post->id); ?>">
-                  <i class="fa fa-flag" aria-hidden="true"></i><?php echo e(trans('common.report')); ?>
+                  <i class="icon icon-report" aria-hidden="true"></i><?php echo e(trans('common.report')); ?>
 
                   <span class="small-text"><?php echo e(trans('messages.report_text')); ?></span>
                 </a>
@@ -100,15 +102,24 @@
               <li class="divider"></li>
 
               <li class="main-link">
-                <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo e(urlencode(url('/share-post/'.$post->id))); ?>" class="fb-xfbml-parse-ignore" target="_blank"><i class="fa fa-facebook-square"></i>Facebook <?php echo e(trans('common.share')); ?></a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo e(urlencode(url('/share-post/'.$post->id))); ?>" class="fb-xfbml-parse-ignore" target="_blank">
+                    <i class="fa fa-facebook-square"></i>Facebook <?php echo e(trans('common.share')); ?>
+
+                </a>
               </li>
 
               <li class="main-link">
-                <a href="https://twitter.com/intent/tweet?text=<?php echo e(url('/share-post/'.$post->id)); ?>"target="_blank"><i class="fa fa-twitter-square"></i>Twitter <?php echo e(trans('common.tweet')); ?></a>
+                <a href="https://twitter.com/intent/tweet?text=<?php echo e(url('/share-post/'.$post->id)); ?>"target="_blank">
+                    <i class="fa fa-twitter-square"></i>Twitter <?php echo e(trans('common.tweet')); ?>
+
+                </a>
               </li>
 
               <li class="main-link">
-                <a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-share-alt"></i>Embed <?php echo e(trans('common.post')); ?></a>
+                <a href="#" data-toggle="modal" data-target="#myModal">
+                    <i class="icon icon-share-alt"></i>Embed <?php echo e(trans('common.post')); ?>
+
+                </a>
               </li>
 
             </ul>
@@ -125,20 +136,20 @@
           <li>
 
               <?php if(isset($sharedOwner)): ?>
-                <a href="<?php echo e(url($sharedOwner->user->username)); ?>" title="<?php echo e('@'.$sharedOwner->user->username); ?>" data-toggle="tooltip" data-placement="top" class="user-name user">
+                <a href="<?php echo e(url($sharedOwner->user->username)); ?>" title="<?php echo e('@'.$sharedOwner->user->username); ?>" data-toggle="tooltip" data-placement="top" class="user-name user ft-user-name">
                 <?php echo e($sharedOwner->user->username); ?>
 
               </a>
               shared
               <?php endif; ?>
             
-            <a href="<?php echo e(url($post->user->username)); ?>" title="<?php echo e('@'.$post->user->username); ?>" data-toggle="tooltip" data-placement="top" class="user-name user">
+            <a href="<?php echo e(url($post->user->username)); ?>" title="<?php echo e('@'.$post->user->username); ?>" data-toggle="tooltip" data-placement="top" class="user-name user ft-user-name">
               <?php echo e($post->user->username); ?>
 
             </a>
             <?php if($post->user->verified): ?>
               <span class="verified-badge bg-success">
-                    <i class="fa fa-check"></i>
+                    <i class="icon icon-accept"></i>
                 </span>
             <?php endif; ?>
 
@@ -301,26 +312,46 @@
         <?php if(!$post->users_liked->contains(Auth::user()->id)): ?>
         
           
-          <li><a href="#" class="like-post like-<?php echo e($post->id); ?>" data-post-id="<?php echo e($post->id); ?>"><i class="fa fa-heart"></i></a></li>
-          <li class="hidden"><a href="#" class="like-post unlike unlike-<?php echo e($post->id); ?>" data-post-id="<?php echo e($post->id); ?>"><i class="fa fa-heart unlike"></i></a></li>
+          <li>
+              <a href="#" class="like-post like-<?php echo e($post->id); ?>" data-post-id="<?php echo e($post->id); ?>">
+                  <i class="icon icon-liked"></i>
+              </a>
+          </li>
+          <li class="hidden">
+              <a href="#" class="like-post unlike unlike-<?php echo e($post->id); ?>" data-post-id="<?php echo e($post->id); ?>">
+                  <i class="icon icon-like unlike"></i>
+              </a>
+          </li>
         <?php else: ?>
-          <li class="hidden"><a href="#" class="like-post like-<?php echo e($post->id); ?>" data-post-id="<?php echo e($post->id); ?>"><i class="fa fa-heart"></i></a></li>
-          <li><a href="#" class="like-post unlike unlike-<?php echo e($post->id); ?>" data-post-id="<?php echo e($post->id); ?>"><i class="fa fa-heart unlike"></i></a></li>
+          <li class="hidden">
+              <a href="#" class="like-post like-<?php echo e($post->id); ?>" data-post-id="<?php echo e($post->id); ?>">
+                  <i class="icon icon-liked"></i>
+              </a>
+          </li>
+          <li>
+              <a href="#" class="like-post unlike unlike-<?php echo e($post->id); ?>" data-post-id="<?php echo e($post->id); ?>">
+                  <i class="icon icon-like"></i>
+              </a>
+          </li>
         <?php endif; ?>
-        <li><a href="#" class="show-comments"><i class="fa fa-comment-o"></i></a></li>
+        <li><a href="#" class="show-comments"><i class="icon icon-comment"></i></a></li>
         <?php if($post->users_liked()->count() > 0): ?>
             <?php
             $liked_ids = $post->users_liked->pluck('id')->toArray();
             $liked_names = $post->users_liked->pluck('name')->toArray();
             ?>
             <li>
-                <a href="#" class="show-users-modal" data-html="true" data-heading="<?php echo e(trans('common.likes')); ?>"  data-users="<?php echo e(implode(',', $liked_ids)); ?>" data-original-title="<?php echo e(implode('<br />', $liked_names)); ?>"><span class="count-circle"><i class="fa fa-heart"></i></span> <?php echo e($post->users_liked->count()); ?> <span class="hidden-sm hidden-xs"><?php echo e(trans('common.likes')); ?></span></a>
+                <a href="#" class="show-users-modal" data-html="true" data-heading="<?php echo e(trans('common.likes')); ?>"  data-users="<?php echo e(implode(',', $liked_ids)); ?>" data-original-title="<?php echo e(implode('<br />', $liked_names)); ?>">
+                    <span class="count-circle">
+                        <i class="icon icon-like"></i>
+                    </span>
+                    <?php echo e($post->users_liked->count()); ?> <span class="hidden-sm hidden-xs"><?php echo e(trans('common.likes')); ?></span></a>
             </li>
         <?php endif; ?>
 
         <?php if($post->comments->count() > 0): ?>
             <li>
-                <a href="#" class="show-all-comments"><span class="count-circle"><i class="fa fa-comment"></i></span><?php echo e($post->comments->count()); ?> <span class="hidden-sm hidden-xs"><?php echo e(trans('common.comments')); ?></span></a>
+                <a href="#" class="show-all-comments"><span class="count-circle"><i class="icon icon-comment"></i></span><?php echo e($post->comments->count()); ?> <span class="hidden-sm hidden-xs"><?php echo e(trans('common.comments')); ?></span></a>
             </li>
         <?php endif; ?>
 
@@ -329,17 +360,17 @@
             $shared_ids = $post->shares->pluck('id')->toArray();
             $shared_names = $post->shares->pluck('name')->toArray(); ?>
             <li>
-                <a href="#" class="show-users-modal" data-html="true" data-heading="<?php echo e(trans('common.shares')); ?>"  data-users="<?php echo e(implode(',', $shared_ids)); ?>" data-original-title="<?php echo e(implode('<br />', $shared_names)); ?>"><span class="count-circle"><i class="fa fa-share"></i></span> <?php echo e($post->shares->count()); ?> <?php echo e(trans('common.shares')); ?></a>
+                <a href="#" class="show-users-modal" data-html="true" data-heading="<?php echo e(trans('common.shares')); ?>"  data-users="<?php echo e(implode(',', $shared_ids)); ?>" data-original-title="<?php echo e(implode('<br />', $shared_names)); ?>"><span class="count-circle"><i class="icon icon-share"></i></span> <?php echo e($post->shares->count()); ?> <?php echo e(trans('common.shares')); ?></a>
             </li>
         <?php endif; ?>
-            <li class="pull-right"><a href="<?php echo url('post/'.$post->id); ?>" ><i class="fa fa-external-link-square"></i></a></li>
+            <li class="pull-right"><a href="<?php echo url('post/'.$post->id); ?>" ><i class="icon icon-share"></i></a></li>
         <?php if(Auth::user()->id != $post->user_id): ?>
           <?php if(!$post->users_shared->contains(Auth::user()->id)): ?>
-            <li class="pull-right"><a href="#" class="share-post share" data-post-id="<?php echo e($post->id); ?>"><i class="fa fa-bookmark-o"></i></a></li>
-            <li class="hidden pull-right"><a href="#" class="share-post unlike shared" data-post-id="<?php echo e($post->id); ?>"><i class="fa fa fa-bookmark-o unlike"></i></a></li>
+            <li class="pull-right"><a href="#" class="share-post share" data-post-id="<?php echo e($post->id); ?>"><i class="icon icon-label-o"></i></a></li>
+            <li class="hidden pull-right"><a href="#" class="share-post unlike shared" data-post-id="<?php echo e($post->id); ?>"><i class="fa icon icon-label-o unlike"></i></a></li>
           <?php else: ?>
-            <li class="hidden pull-right"><a href="#" class="share-post share" data-post-id="<?php echo e($post->id); ?>"><i class="fa fa-bookmark-o"></i></a></li>
-            <li class="pull-right"><a href="#" class="share-post unlike shared" data-post-id="<?php echo e($post->id); ?>"><i class="fa fa fa-bookmark-o unlike"></i></a></li>
+            <li class="hidden pull-right"><a href="#" class="share-post share" data-post-id="<?php echo e($post->id); ?>"><i class="icon icon-label-o"></i></a></li>
+            <li class="pull-right"><a href="#" class="share-post unlike shared" data-post-id="<?php echo e($post->id); ?>"><i class="fa icon icon-label-o unlike"></i></a></li>
           <?php endif; ?>
         <?php endif; ?>
       </ul>
@@ -360,7 +391,7 @@
 
                     <input type="file" class="comment-images-upload hidden" accept="image/jpeg,image/png,image/gif" name="comment_images_upload">
                      <ul class="list-inline meme-reply hidden">
-                      <li><a href="#" id="imageComment"><i class="fa fa-camera" aria-hidden="true"></i></a></li>
+                      <li><a href="#" id="imageComment"><i class="icon icon-photo" aria-hidden="true"></i></a></li>
                       
                     </ul>
                 </div>                 

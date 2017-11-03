@@ -80,12 +80,12 @@
         <div class="panel-footer">
             <ul class="list-inline left-list">
                 <li><a href="#" id="addUserTags"><i class="fa fa-user-plus"></i></a></li>
-                <li><a href="#" id="imageUpload"><i class="fa fa-camera-retro"></i></a></li>
+                <li><a href="#" id="imageUpload"><i class="icon icon-photo"></i></a></li>
                 
                 <?php if((env('SOUNDCLOUD_CLIENT_ID') != "" || (env('SOUNDCLOUD_CLIENT_ID') != null))): ?>
                   <li><a href="#" id="musicUpload"><i class="fa fa-music"></i></a></li>
                 <?php endif; ?>
-                <li><a href="#" id="videoUpload"><i class="fa fa-youtube"></i></a></li>
+                <li><a href="#" id="videoUpload"><i class="icon icon-youtube"></i></a></li>
                 <li><a href="#" id="locationUpload"><i class="fa fa-map-marker"></i></a></li>
                 <li><a href="#" id="emoticons"><i class="fa fa-smile-o"></i></a></li>
             </ul>

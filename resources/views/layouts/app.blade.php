@@ -5,7 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{!! Setting::get('site_title') !!}</title>
-    <link href="http://fitmetix.local/themes/default/assets/css/style.d843a54abab569eaede4ed3a69a9b943.css" rel="stylesheet">
+    <link href="{{ asset('fitmetixfont/font.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ Theme::asset()->url('css/custom.css') }}" rel="stylesheet">
 </head>
 <body id="app-layout">
     <nav class="navbar socialite navbar-default no-bg" style="position: relative;">

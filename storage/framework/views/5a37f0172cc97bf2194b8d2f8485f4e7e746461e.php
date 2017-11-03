@@ -14,11 +14,11 @@
         <meta name="description" content="<?php echo e(Setting::get('meta_description')); ?>">
         <link rel="icon" type="image/x-icon" href="<?php echo url('setting/'.Setting::get('favicon')); ?>">
 
-
         <title><?php echo e(Theme::get('title')); ?></title>
-
+        <link href="<?php echo e(asset('fitmetixfont/font.css')); ?>" rel="stylesheet">
+        <link href="<?php echo e(asset('css/bootstrap.css')); ?>" rel="stylesheet">
+        <link href="<?php echo e(asset('css/style.css')); ?>" rel="stylesheet">
         <link href="<?php echo e(Theme::asset()->url('css/custom.css')); ?>" rel="stylesheet">
-        
         <?php echo Theme::asset()->styles(); ?>
 
 

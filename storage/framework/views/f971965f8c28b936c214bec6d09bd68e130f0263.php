@@ -19,10 +19,10 @@
         <title><?php echo e(Theme::get('title')); ?></title>
         <link href="<?php echo e(asset('fitmetixfont/font.css')); ?>" rel="stylesheet">
         <link href="<?php echo e(asset('css/bootstrap.css')); ?>" rel="stylesheet">
-        <link href="<?php echo e(asset('css/style.css')); ?>" rel="stylesheet">
         <link href="<?php echo e(Theme::asset()->url('css/custom.css')); ?>" rel="stylesheet">
         <?php echo Theme::asset()->styles(); ?>
 
+        <link href="<?php echo e(asset('css/style.css')); ?>" rel="stylesheet">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>

@@ -11,7 +11,9 @@
     <div class="post-author">
       <div class="post-options">
         <ul class="list-inline no-margin">
-          <li class="dropdown"><a href="#" class="dropdown-togle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-share-alt fa-rotate-90"></i></a>
+          <li class="dropdown"><a href="#" class="dropdown-togle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <i class="icon icon-options"></i>
+              </a>
             <ul class="dropdown-menu">
               @if($post->notifications_user->contains(Auth::user()->id))
               <li class="main-link">
@@ -53,7 +55,7 @@
               @if((Auth::id() == $post->user->id) || ($post->timeline_id == Auth::user()->timeline_id))
               <li class="main-link">
                 <a href="#" class="delete-post" data-post-id="{{ $post->id }}">
-                  <i class="fa fa-trash" aria-hidden="true"></i>{{ trans('common.delete') }}
+                  <i class="icon icon-delete" aria-hidden="true"></i>{{ trans('common.delete') }}
                   <span class="small-text">{{ trans('messages.delete_text') }}</span>
                 </a>
               </li>
@@ -69,7 +71,7 @@
 
               <li class="main-link">  
                 <a href="#" class="save-post" data-post-id="{{ $post->id }}">
-                  <i class="fa fa-save" aria-hidden="true"></i>
+                  <i class="icon icon-save" aria-hidden="true"></i>
                     @if(!Auth::user()->postsSaved->contains($post->id))
                       {{ trans('common.save_post') }}
                       <span class="small-text">{{ trans('messages.post_save_text') }}</span>
@@ -82,7 +84,7 @@
 
               <li class="main-link">  
                 <a href="#" class="manage-report report" data-post-id="{{ $post->id }}">
-                  <i class="fa fa-flag" aria-hidden="true"></i>{{ trans('common.report') }}
+                  <i class="icon icon-report" aria-hidden="true"></i>{{ trans('common.report') }}
                   <span class="small-text">{{ trans('messages.report_text') }}</span>
                 </a>
               </li>
@@ -90,15 +92,21 @@
               <li class="divider"></li>
 
               <li class="main-link">
-                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url('/share-post/'.$post->id)) }}" class="fb-xfbml-parse-ignore" target="_blank"><i class="fa fa-facebook-square"></i>Facebook {{ trans('common.share') }}</a>
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url('/share-post/'.$post->id)) }}" class="fb-xfbml-parse-ignore" target="_blank">
+                    <i class="fa fa-facebook-square"></i>Facebook {{ trans('common.share') }}
+                </a>
               </li>
 
               <li class="main-link">
-                <a href="https://twitter.com/intent/tweet?text={{ url('/share-post/'.$post->id) }}"target="_blank"><i class="fa fa-twitter-square"></i>Twitter {{ trans('common.tweet') }}</a>
+                <a href="https://twitter.com/intent/tweet?text={{ url('/share-post/'.$post->id) }}"target="_blank">
+                    <i class="fa fa-twitter-square"></i>Twitter {{ trans('common.tweet') }}
+                </a>
               </li>
 
               <li class="main-link">
-                <a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-share-alt"></i>Embed {{ trans('common.post') }}</a>
+                <a href="#" data-toggle="modal" data-target="#myModal">
+                    <i class="icon icon-share-alt"></i>Embed {{ trans('common.post') }}
+                </a>
               </li>
 
             </ul>
@@ -115,18 +123,18 @@
           <li>
 
               @if(isset($sharedOwner))
-                <a href="{{ url($sharedOwner->user->username) }}" title="{{ '@'.$sharedOwner->user->username }}" data-toggle="tooltip" data-placement="top" class="user-name user">
+                <a href="{{ url($sharedOwner->user->username) }}" title="{{ '@'.$sharedOwner->user->username }}" data-toggle="tooltip" data-placement="top" class="user-name user ft-user-name">
                 {{ $sharedOwner->user->username }}
               </a>
               shared
               @endif
             
-            <a href="{{ url($post->user->username) }}" title="{{ '@'.$post->user->username }}" data-toggle="tooltip" data-placement="top" class="user-name user">
+            <a href="{{ url($post->user->username) }}" title="{{ '@'.$post->user->username }}" data-toggle="tooltip" data-placement="top" class="user-name user ft-user-name">
               {{ $post->user->username }}
             </a>
             @if($post->user->verified)
               <span class="verified-badge bg-success">
-                    <i class="fa fa-check"></i>
+                    <i class="icon icon-accept"></i>
                 </span>
             @endif
 
@@ -286,26 +294,46 @@
         
           {{--<li><a href="#" class="like-post like-{{ $post->id }}" data-post-id="{{ $post->id }}"><i class="fa fa-thumbs-o-up"></i>{{ trans('common.like') }}</a></li>
 --}}
-          <li><a href="#" class="like-post like-{{ $post->id }}" data-post-id="{{ $post->id }}"><i class="fa fa-heart"></i></a></li>
-          <li class="hidden"><a href="#" class="like-post unlike unlike-{{ $post->id }}" data-post-id="{{ $post->id }}"><i class="fa fa-heart unlike"></i></a></li>
+          <li>
+              <a href="#" class="like-post like-{{ $post->id }}" data-post-id="{{ $post->id }}">
+                  <i class="icon icon-liked"></i>
+              </a>
+          </li>
+          <li class="hidden">
+              <a href="#" class="like-post unlike unlike-{{ $post->id }}" data-post-id="{{ $post->id }}">
+                  <i class="icon icon-like unlike"></i>
+              </a>
+          </li>
         @else
-          <li class="hidden"><a href="#" class="like-post like-{{ $post->id }}" data-post-id="{{ $post->id }}"><i class="fa fa-heart"></i></a></li>
-          <li><a href="#" class="like-post unlike unlike-{{ $post->id }}" data-post-id="{{ $post->id }}"><i class="fa fa-heart unlike"></i></a></li>
+          <li class="hidden">
+              <a href="#" class="like-post like-{{ $post->id }}" data-post-id="{{ $post->id }}">
+                  <i class="icon icon-liked"></i>
+              </a>
+          </li>
+          <li>
+              <a href="#" class="like-post unlike unlike-{{ $post->id }}" data-post-id="{{ $post->id }}">
+                  <i class="icon icon-like"></i>
+              </a>
+          </li>
         @endif
-        <li><a href="#" class="show-comments"><i class="fa fa-comment-o"></i></a></li>
+        <li><a href="#" class="show-comments"><i class="icon icon-comment"></i></a></li>
         @if($post->users_liked()->count() > 0)
             <?php
             $liked_ids = $post->users_liked->pluck('id')->toArray();
             $liked_names = $post->users_liked->pluck('name')->toArray();
             ?>
             <li>
-                <a href="#" class="show-users-modal" data-html="true" data-heading="{{ trans('common.likes') }}"  data-users="{{ implode(',', $liked_ids) }}" data-original-title="{{ implode('<br />', $liked_names) }}"><span class="count-circle"><i class="fa fa-heart"></i></span> {{ $post->users_liked->count() }} <span class="hidden-sm hidden-xs">{{ trans('common.likes') }}</span></a>
+                <a href="#" class="show-users-modal" data-html="true" data-heading="{{ trans('common.likes') }}"  data-users="{{ implode(',', $liked_ids) }}" data-original-title="{{ implode('<br />', $liked_names) }}">
+                    <span class="count-circle">
+                        <i class="icon icon-like"></i>
+                    </span>
+                    {{ $post->users_liked->count() }} <span class="hidden-sm hidden-xs">{{ trans('common.likes') }}</span></a>
             </li>
         @endif
 
         @if($post->comments->count() > 0)
             <li>
-                <a href="#" class="show-all-comments"><span class="count-circle"><i class="fa fa-comment"></i></span>{{ $post->comments->count() }} <span class="hidden-sm hidden-xs">{{ trans('common.comments') }}</span></a>
+                <a href="#" class="show-all-comments"><span class="count-circle"><i class="icon icon-comment"></i></span>{{ $post->comments->count() }} <span class="hidden-sm hidden-xs">{{ trans('common.comments') }}</span></a>
             </li>
         @endif
 
@@ -314,17 +342,17 @@
             $shared_ids = $post->shares->pluck('id')->toArray();
             $shared_names = $post->shares->pluck('name')->toArray(); ?>
             <li>
-                <a href="#" class="show-users-modal" data-html="true" data-heading="{{ trans('common.shares') }}"  data-users="{{ implode(',', $shared_ids) }}" data-original-title="{{ implode('<br />', $shared_names) }}"><span class="count-circle"><i class="fa fa-share"></i></span> {{ $post->shares->count() }} {{ trans('common.shares') }}</a>
+                <a href="#" class="show-users-modal" data-html="true" data-heading="{{ trans('common.shares') }}"  data-users="{{ implode(',', $shared_ids) }}" data-original-title="{{ implode('<br />', $shared_names) }}"><span class="count-circle"><i class="icon icon-share"></i></span> {{ $post->shares->count() }} {{ trans('common.shares') }}</a>
             </li>
         @endif
-            <li class="pull-right"><a href="{!! url('post/'.$post->id) !!}" ><i class="fa fa-external-link-square"></i></a></li>
+            <li class="pull-right"><a href="{!! url('post/'.$post->id) !!}" ><i class="icon icon-share"></i></a></li>
         @if(Auth::user()->id != $post->user_id)
           @if(!$post->users_shared->contains(Auth::user()->id))
-            <li class="pull-right"><a href="#" class="share-post share" data-post-id="{{ $post->id }}"><i class="fa fa-bookmark-o"></i></a></li>
-            <li class="hidden pull-right"><a href="#" class="share-post unlike shared" data-post-id="{{ $post->id }}"><i class="fa fa fa-bookmark-o unlike"></i></a></li>
+            <li class="pull-right"><a href="#" class="share-post share" data-post-id="{{ $post->id }}"><i class="icon icon-label-o"></i></a></li>
+            <li class="hidden pull-right"><a href="#" class="share-post unlike shared" data-post-id="{{ $post->id }}"><i class="fa icon icon-label-o unlike"></i></a></li>
           @else
-            <li class="hidden pull-right"><a href="#" class="share-post share" data-post-id="{{ $post->id }}"><i class="fa fa-bookmark-o"></i></a></li>
-            <li class="pull-right"><a href="#" class="share-post unlike shared" data-post-id="{{ $post->id }}"><i class="fa fa fa-bookmark-o unlike"></i></a></li>
+            <li class="hidden pull-right"><a href="#" class="share-post share" data-post-id="{{ $post->id }}"><i class="icon icon-label-o"></i></a></li>
+            <li class="pull-right"><a href="#" class="share-post unlike shared" data-post-id="{{ $post->id }}"><i class="fa icon icon-label-o unlike"></i></a></li>
           @endif
         @endif
       </ul>
@@ -345,7 +373,7 @@
 
                     <input type="file" class="comment-images-upload hidden" accept="image/jpeg,image/png,image/gif" name="comment_images_upload">
                      <ul class="list-inline meme-reply hidden">
-                      <li><a href="#" id="imageComment"><i class="fa fa-camera" aria-hidden="true"></i></a></li>
+                      <li><a href="#" id="imageComment"><i class="icon icon-photo" aria-hidden="true"></i></a></li>
                       {{-- <li><a href="#"><i class="fa fa-smile-o" aria-hidden="true"></i></a></li> --}}
                     </ul>
                 </div>                 
