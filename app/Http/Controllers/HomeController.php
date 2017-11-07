@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 // use Guzzle\Service\Client;
 use Illuminate\Http\Request;
+use Theme;
+use Setting;
 
 class HomeController extends Controller
 {

@@ -248,9 +248,18 @@
           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           </div>
           <p class="post-description">
-          <?php echo clean($main_description); ?>
-
-        </p>
+            <?php 
+              $strlen = strlen($main_description);
+              if($strlen > 150)  {
+                $main_description_head = substr($main_description, 0, 150);
+                $main_description_details = substr($main_description, 151, $strlen);
+                echo "<details>><summary>$main_description_head</summary>$main_description_details</details>";
+              }
+              else {
+                echo $main_description;
+              }
+             ?> 
+          </p>
 
           <div class="post-v-holder">
           <?php $__currentLoopData = $post->images()->get(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $postImage): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -373,10 +382,17 @@
 
           <div class="comments post-comments-list"> <!-- comments/main-comment  -->
             <?php if($post->comments->count() > 0): ?>
-            <?php $__currentLoopData = $post->comments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <?php echo Theme::partial('comment',compact('comment','post')); ?>
+              <?php 
+                $start = 0;
+                $end = 4;
+               ?>
+              <script type="text/javascript">
+                post = "<?php echo e($post->comment); ?>";
+                moreCommentsURL = "<?php echo e(url('loadMoreComments')); ?>";
+                __token = "<?php echo e(csrf_token()); ?>";
+              </script>
+              <?php echo Theme::partial('comment',compact('post','start','end')); ?>
 
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             <?php endif; ?>
           </div><!-- comments/main-comment  -->            
         </div>        

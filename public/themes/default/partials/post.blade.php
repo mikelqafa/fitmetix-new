@@ -233,8 +233,18 @@
           @endforeach
           </div>
           <p class="post-description">
-          {!! clean($main_description) !!}
-        </p>
+            @php
+              $strlen = strlen($main_description);
+              if($strlen > 150)  {
+                $main_description_head = substr($main_description, 0, 150);
+                $main_description_details = substr($main_description, 151, $strlen);
+                echo "<details>><summary>$main_description_head</summary>$main_description_details</details>";
+              }
+              else {
+                echo $main_description;
+              }
+            @endphp 
+          </p>
 
           <div class="post-v-holder">
           @foreach($post->images()->get() as $postImage)
@@ -358,9 +368,16 @@
 
           <div class="comments post-comments-list"> <!-- comments/main-comment  -->
             @if($post->comments->count() > 0)
-            @foreach($post->comments as $comment)
-            {!! Theme::partial('comment',compact('comment','post')) !!}
-            @endforeach
+              @php
+                $start = 0;
+                $end = 4;
+              @endphp
+              <script type="text/javascript">
+                post = "{{ $post->comment }}";
+                moreCommentsURL = "{{ url('loadMoreComments') }}";
+                __token = "{{ csrf_token() }}";
+              </script>
+              {!! Theme::partial('comment',compact('post','start','end')) !!}
             @endif
           </div><!-- comments/main-comment  -->            
         </div>        

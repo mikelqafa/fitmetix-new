@@ -1,4 +1,8 @@
-  <?php 
+@foreach($post->comments as $comment)
+
+  @continue($loop->index < $start)
+
+  @php 
   $display_comment ="";           
   $user_setting =""; 
   $user_follower = $post->chkUserFollower(Auth::user()->id,$post->user_id);
@@ -21,7 +25,8 @@
     }
   }
 
-  ?>
+  @endphp
+    
   <ul class="list-unstyled main-comment comment{{ $comment->id }} @if($comment->replies()->count() > 0) has-replies @endif" id="comment{{ $comment->id }}">    
     <li> 
       <div class="comments delete_comment_list"> <!-- main-comment -->
@@ -46,6 +51,7 @@
               @endforeach
 
               <span class="comment-description">{!! $main_description !!}</span>
+
             </div>
             <ul class="list-inline comment-options">
 
@@ -105,6 +111,19 @@
       </div>
     </li>
     @endif
-
+    @if($loop->count > 5)
+      @php
+        $more = true;
+      @endphp
+    @else 
+      @php
+        $more = false;
+      @endphp
+    @endif
   </ul>
 </li><!-- replys/sub-comment -->
+    @break($loop->index == $end)
+@endforeach
+@if($more)
+<button class="load-more-comments btn btn-xs" id="loadMore">View more comments</button>
+@endif

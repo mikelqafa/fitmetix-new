@@ -1172,6 +1172,29 @@ $(function () {
         all_comments.find('.comments-section').slideToggle();
     });
 
+    var start = 5;
+    var end = start + 10;
+
+    $(document).on('click','.load-more-comments',function(e){
+        e.preventDefault();
+        $("#loadMore").remove();
+        $.post (
+          'loadMoreComments',
+          {
+            'post' : post,
+            'start' : start,
+            'end' : end,
+            '_token' : __token
+          },
+          function(data){
+            $(".comments-section").append(data);
+            start = end;
+            end = start + 10;
+          },"json"
+
+        );
+    });
+
     $(document).on('click','.show-comment-replies',function(e){
       e.preventDefault();
       $(this).next().slideToggle();
@@ -1376,11 +1399,26 @@ $(function () {
 
                  var reader = new FileReader();
                  reader.onload = function(e) {
-                   var file = e.target;                  
-                   $("<span class=\"pip\">" +
-                    "<img class=\"thumb-image\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-                    "<a data-id=" + (key) + " class='remove-thumb'><i class='fa fa-times'></i></a>" +
-                    "</span>").appendTo(image_holder);                
+                   var file = e.target;
+                   var image = new Image();
+                   image.src = e.target.result;
+                   image.onload = function(){
+                    if(image.width < 600 || image.height < 200) {
+                      alert('Dimensions less than 600 x 200 not allowed');
+                      files =[];
+                      validFiles =[];
+                      imgPath = '';
+                      $('.post-images-selected').find('span').text(files.length);
+                      $('.post-images-selected').hide('slow');
+                      return;
+                    }
+                    else {
+                      $("<span class=\"pip\">" +
+                      "<img class=\"thumb-image\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                      "<a data-id=" + (key) + " class='remove-thumb'><i class='fa fa-times'></i></a>" +
+                      "</span>").appendTo(image_holder); 
+                     }
+                   }
                  }
                  image_holder.show();
                  reader.readAsDataURL(files[key]);             

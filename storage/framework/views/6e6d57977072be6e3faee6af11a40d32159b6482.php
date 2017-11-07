@@ -1,4 +1,8 @@
-  <?php 
+<?php $__currentLoopData = $post->comments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $comment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+  <?php if($loop->index < $start) continue; ?>
+
+  <?php  
   $display_comment ="";           
   $user_setting =""; 
   $user_follower = $post->chkUserFollower(Auth::user()->id,$post->user_id);
@@ -21,7 +25,8 @@
     }
   }
 
-  ?>
+   ?>
+    
   <ul class="list-unstyled main-comment comment<?php echo e($comment->id); ?> <?php if($comment->replies()->count() > 0): ?> has-replies <?php endif; ?>" id="comment<?php echo e($comment->id); ?>">    
     <li> 
       <div class="comments delete_comment_list"> <!-- main-comment -->
@@ -46,6 +51,7 @@
               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
               <span class="comment-description"><?php echo $main_description; ?></span>
+
             </div>
             <ul class="list-inline comment-options">
 
@@ -106,6 +112,19 @@
       </div>
     </li>
     <?php endif; ?>
-
+    <?php if($loop->count > 5): ?>
+      <?php 
+        $more = true;
+       ?>
+    <?php else: ?> 
+      <?php 
+        $more = false;
+       ?>
+    <?php endif; ?>
   </ul>
 </li><!-- replys/sub-comment -->
+    <?php if($loop->index == $end) break; ?>
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<?php if($more): ?>
+<button class="load-more-comments btn btn-xs" id="loadMore">View more comments</button>
+<?php endif; ?>

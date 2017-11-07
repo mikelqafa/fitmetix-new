@@ -84,6 +84,7 @@ Route::get('email/verify', 'Auth\RegisterController@verifyEmail');
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', 'TimelineController@showFeed');
     Route::get('/browse', 'TimelineController@showGlobalFeed');
+    Route::post('loadMoreComments','TimelineController@loadMoreComments');
 });
 
 Route::get('/home', 'HomeController@index');

@@ -2677,4 +2677,12 @@ class TimelineController extends AppBaseController
         App::setLocale($request->language);
         return response()->json(['status' => '200', 'message' => 'Switched language to '.$request->language]);
     }
+
+    public function loadMoreComments(Request $request) {
+        $post = $request->post;
+        $start = $request->start;
+        $end = $request->end;
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+        return $theme->partial('comment', compact('post','start','end'))->render();
+    }
 }
