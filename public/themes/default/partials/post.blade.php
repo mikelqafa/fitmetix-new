@@ -289,30 +289,30 @@
     ?>
 
     <div class="panel-footer socialite">
-      <ul class="list-inline footer-list">
+      <ul class="list-inline footer-list pos-rel">
         @if(!$post->users_liked->contains(Auth::user()->id))
         
           {{--<li><a href="#" class="like-post like-{{ $post->id }}" data-post-id="{{ $post->id }}"><i class="fa fa-thumbs-o-up"></i>{{ trans('common.like') }}</a></li>
 --}}
           <li>
               <a href="#" class="like-post like-{{ $post->id }}" data-post-id="{{ $post->id }}">
-                  <i class="icon icon-liked"></i>
+                  <i class="icon icon-like"></i>
               </a>
           </li>
           <li class="hidden">
               <a href="#" class="like-post unlike unlike-{{ $post->id }}" data-post-id="{{ $post->id }}">
-                  <i class="icon icon-like unlike"></i>
+                  <i class="icon icon-liked unlike"></i>
               </a>
           </li>
         @else
           <li class="hidden">
               <a href="#" class="like-post like-{{ $post->id }}" data-post-id="{{ $post->id }}">
-                  <i class="icon icon-liked"></i>
+                  <i class="icon icon-like"></i>
               </a>
           </li>
           <li>
               <a href="#" class="like-post unlike unlike-{{ $post->id }}" data-post-id="{{ $post->id }}">
-                  <i class="icon icon-like"></i>
+                  <i class="icon icon-liked unlike"></i>
               </a>
           </li>
         @endif
@@ -322,7 +322,7 @@
             $liked_ids = $post->users_liked->pluck('id')->toArray();
             $liked_names = $post->users_liked->pluck('name')->toArray();
             ?>
-            <li>
+            <li class="text-center absolute absolute-center ">
                 <a href="#" class="show-users-modal" data-html="true" data-heading="{{ trans('common.likes') }}"  data-users="{{ implode(',', $liked_ids) }}" data-original-title="{{ implode('<br />', $liked_names) }}">
                     <span class="count-circle">
                         <i class="icon icon-like"></i>
@@ -401,4 +401,5 @@
   <a class="jscroll-next hidden" href="{{ $next_page_url }}">{{ trans('messages.get_more_posts') }}</a>
   @endif
 
-  {!! Theme::asset()->container('footer')->usePath()->add('lightbox', 'js/lightbox.min.js') !!}
+  {{--comment repeative js inejection --}}
+  {{--{!! Theme::asset()->container('footer')->usePath()->add('lightbox', 'js/lightbox.min.js') !!}--}}

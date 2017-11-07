@@ -9,7 +9,7 @@ vendor/*
 
 #Ignore css and js file
 public/js/app.js
-public/css/app.css
+public/css
 storage
 
 #Ignore node module

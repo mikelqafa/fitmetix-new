@@ -45,17 +45,21 @@
 div.icon {
   line-height: 1;
 }
-.fm-nav .dropdown.message a.dropdown-toggle {
+.fm-nav .dropdown.message > a.dropdown-toggle {
   padding-top: 19px;
   padding-bottom: 19px;
+  height: 60px;
 }
 @media (max-width: 1325px) {
   .dropdown.message {
-    padding-right: 0;
+    padding-right: 8px;
   }
 }
 @media (max-width: 1325px){
   .dropdown.message.notification {
     padding-right: 0;
   }
+}
+.dropdown.message .dropdown-menu[data-width="3"] {
+  width: 172px;
 }

@@ -308,29 +308,29 @@
     ?>
 
     <div class="panel-footer socialite">
-      <ul class="list-inline footer-list">
+      <ul class="list-inline footer-list pos-rel">
         <?php if(!$post->users_liked->contains(Auth::user()->id)): ?>
         
           
           <li>
               <a href="#" class="like-post like-<?php echo e($post->id); ?>" data-post-id="<?php echo e($post->id); ?>">
-                  <i class="icon icon-liked"></i>
+                  <i class="icon icon-like"></i>
               </a>
           </li>
           <li class="hidden">
               <a href="#" class="like-post unlike unlike-<?php echo e($post->id); ?>" data-post-id="<?php echo e($post->id); ?>">
-                  <i class="icon icon-like unlike"></i>
+                  <i class="icon icon-liked unlike"></i>
               </a>
           </li>
         <?php else: ?>
           <li class="hidden">
               <a href="#" class="like-post like-<?php echo e($post->id); ?>" data-post-id="<?php echo e($post->id); ?>">
-                  <i class="icon icon-liked"></i>
+                  <i class="icon icon-like"></i>
               </a>
           </li>
           <li>
               <a href="#" class="like-post unlike unlike-<?php echo e($post->id); ?>" data-post-id="<?php echo e($post->id); ?>">
-                  <i class="icon icon-like"></i>
+                  <i class="icon icon-liked unlike"></i>
               </a>
           </li>
         <?php endif; ?>
@@ -340,7 +340,7 @@
             $liked_ids = $post->users_liked->pluck('id')->toArray();
             $liked_names = $post->users_liked->pluck('name')->toArray();
             ?>
-            <li>
+            <li class="text-center absolute absolute-center ">
                 <a href="#" class="show-users-modal" data-html="true" data-heading="<?php echo e(trans('common.likes')); ?>"  data-users="<?php echo e(implode(',', $liked_ids)); ?>" data-original-title="<?php echo e(implode('<br />', $liked_names)); ?>">
                     <span class="count-circle">
                         <i class="icon icon-like"></i>
@@ -420,5 +420,5 @@
   <a class="jscroll-next hidden" href="<?php echo e($next_page_url); ?>"><?php echo e(trans('messages.get_more_posts')); ?></a>
   <?php endif; ?>
 
-  <?php echo Theme::asset()->container('footer')->usePath()->add('lightbox', 'js/lightbox.min.js'); ?>
-
+  
+  

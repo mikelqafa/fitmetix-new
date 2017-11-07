@@ -19,10 +19,22 @@
 }
 
 .panel-post .panel-footer.socialite {
-  .icon-like {
+  a .icon-like {
     color: #333;
   }
-  .icon-liked {
-    color: #EB5757;
+  a .icon-liked {
+    color: #EB5757 !important;
   }
+}
+.flex-grow{
+  flex-grow: 1;
+}
+.flex {
+  display: flex;
+}
+.absolute{
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
 }

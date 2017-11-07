@@ -20,9 +20,8 @@
         <link href="<?php echo e(asset('fitmetixfont/font.css')); ?>" rel="stylesheet">
         <link href="<?php echo e(asset('css/bootstrap.css')); ?>" rel="stylesheet">
         <link href="<?php echo e(Theme::asset()->url('css/custom.css')); ?>" rel="stylesheet">
-        <?php echo Theme::asset()->styles(); ?>
-
-        <link href="<?php echo e(asset('css/style.css')); ?>" rel="stylesheet">
+        
+        <link href="<?php echo e(asset('css/bootstrap.css')); ?>" rel="stylesheet">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -38,13 +37,13 @@
         var theme_url = "<?php echo Theme::asset()->url(''); ?>";
         var current_username = "<?php echo e(Auth::user()->username); ?>";
         </script>
-        <?php echo Theme::asset()->scripts(); ?>
-
+        
         <?php if(Setting::get('google_analytics') != NULL): ?>
             <?php echo Setting::get('google_analytics'); ?>
 
         <?php endif; ?>
-        <script src="<?php echo Theme::asset()->url('js/lightgallery.js'); ?>"></script>
+        
+       
         <style>
             .footer-description { padding-top: 0px !important; }
             .panel-post .panel-body .text-wrapper p { color: #000 !important; }
@@ -53,7 +52,7 @@
             .nav > li > a > img { border-radius: 50%; }
             @media (max-width: 660px) { .timeline-cover-section .timeline-cover img { width: 100% !important;} }
             @media (max-width: 1660px) { .chat-list .left-sidebar.socialite {margin-right: -240px !important;display:none; } }
-            .unlike { color: #FF0000 !important; } .actions-count {text-align:center !important;}
+            .actions-count {text-align:center !important;}
             @media (max-width: 768px) {
                 .nav-justified > li {
                     display: table-cell;
@@ -97,8 +96,31 @@
        </script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.5.0/socket.io.min.js"></script>
 
-        <?php echo Theme::asset()->container('footer')->scripts(); ?>
-
         
+        <script src="<?php echo e(asset('js/jquery.min.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/jquery-ui-1.10.3.custom.min.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/bootstrap.min.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/moment.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/jquery.form.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/jquery.timeago.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/bootstrap-datepicker.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/bootstrap-datetimepicker.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/jquery-confirm.min.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/jquery.noty.packaged.min.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/selectize.min.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/jquery.jscroll.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/jquery.mCustomScrollbar.concat.min.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/emojify.min.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/bootstrap-typeahead.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/mention.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/playSound.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/linkify.min.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/linkify-jquery.min.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/tinymce/tinymce.min.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/app.js')); ?>" type="text/javascript"></script>
+        <script src="<?php echo e(asset('js/login.js')); ?>" type="text/javascript"></script>
+        <?php if(in_array(!Route::currentRouteName(), ['contact', 'login', 'register'])): ?>
+            <script src="<?php echo e(asset('js/notification.js')); ?>" type="text/javascript"></script>
+        <?php endif; ?>
     </body>
 </html>

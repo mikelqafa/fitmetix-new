@@ -20,8 +20,8 @@
         <link href="{{ asset('fitmetixfont/font.css') }}" rel="stylesheet">
         <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
         <link href="{{ Theme::asset()->url('css/custom.css') }}" rel="stylesheet">
-        {!! Theme::asset()->styles() !!}
-        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+        {{--{!! Theme::asset()->styles() !!}--}}
+        <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -37,11 +37,12 @@
         var theme_url = "{!! Theme::asset()->url('') !!}";
         var current_username = "{{ Auth::user()->username }}";
         </script>
-        {!! Theme::asset()->scripts() !!}
+        {{--{!! Theme::asset()->scripts() !!}--}}
         @if(Setting::get('google_analytics') != NULL)
             {!! Setting::get('google_analytics') !!}
         @endif
-        <script src="{!! Theme::asset()->url('js/lightgallery.js') !!}"></script>
+        {{--removed light gallery beacause of webpack --}}
+       {{-- <script src="{!! Theme::asset()->url('js/lightgallery.js') !!}"></script>--}}
         <style>
             .footer-description { padding-top: 0px !important; }
             .panel-post .panel-body .text-wrapper p { color: #000 !important; }
@@ -50,7 +51,7 @@
             .nav > li > a > img { border-radius: 50%; }
             @media (max-width: 660px) { .timeline-cover-section .timeline-cover img { width: 100% !important;} }
             @media (max-width: 1660px) { .chat-list .left-sidebar.socialite {margin-right: -240px !important;display:none; } }
-            .unlike { color: #FF0000 !important; } .actions-count {text-align:center !important;}
+            .actions-count {text-align:center !important;}
             @media (max-width: 768px) {
                 .nav-justified > li {
                     display: table-cell;
@@ -89,7 +90,31 @@
        </script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.5.0/socket.io.min.js"></script>
 
-        {!! Theme::asset()->container('footer')->scripts() !!}
-        
+        {{--{!! Theme::asset()->container('footer')->scripts() !!}--}}
+        <script src="{{ asset('js/jquery.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/jquery-ui-1.10.3.custom.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/moment.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/jquery.form.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/jquery.timeago.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/bootstrap-datepicker.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/bootstrap-datetimepicker.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/jquery-confirm.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/jquery.noty.packaged.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/selectize.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/jquery.jscroll.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/emojify.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/bootstrap-typeahead.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/mention.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/playSound.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/linkify.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/linkify-jquery.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/tinymce/tinymce.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/login.js') }}" type="text/javascript"></script>
+        @if (in_array(!Route::currentRouteName(), ['contact', 'login', 'register']))
+            <script src="{{ asset('js/notification.js') }}" type="text/javascript"></script>
+        @endif
     </body>
 </html>

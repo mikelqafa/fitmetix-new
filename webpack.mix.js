@@ -11,24 +11,29 @@ const { mix } = require('laravel-mix');
  |
  */
 
-/*mix.sass('resources/assets/sass/bootstrap.scss', 'public/css/bootstrap.css')
+mix.js(['resources/assets/js/webpack/notification.js'], 'public/js/notification.js');
+
+// mix.sass('resources/assets/sass/bootstrap.scss', 'public/css/bootstrap.css')
+return
+mix.sass('resources/assets/sass/app.scss', 'public/css/style.css')
     .combine([
-      'public/themes/default/assets/css/bootstrap.css',
-      'public/themes/default/assets/css/animate.css',
-      'public/themes/default/assets/css/font-awesome.min.css',
-      'public/themes/default/assets/css/datepicker.css',
-      'public/themes/default/assets/css/bootstrap-datetimepicker.css',
-      'public/themes/default/assets/css/jquery-confirm.min.css',
-      'public/themes/default/assets/css/selectize.css',
-      'public/themes/default/assets/css/selectize.bootstrap3.css',
-      'public/themes/default/assets/css/emojify.css',
-      'public/themes/default/assets/css/jquery.mCustomScrollbar.css',
-      'public/themes/default/assets/css/lightbox.min.css',
-      'public/themes/default/assets/css/lightgallery.css',
-      'public/themes/default/assets/css/main.css'
-    ], 'public/css/style.css')*/
-mix.sass('resources/assets/sass/app.scss', 'public/css/app.css');
+      'resources/assets/sass/style/animate.css',
+      'resources/assets/sass/style/font-awesome.min.css',
+      'resources/assets/sass/style/datepicker.css',
+      'resources/assets/sass/style/bootstrap-datetimepicker.css',
+      'resources/assets/sass/style/jquery-confirm.min.css',
+      'resources/assets/sass/style/selectize.css',
+      'resources/assets/sass/style/selectize.bootstrap3.css',
+      'resources/assets/sass/style/emojify.css',
+      'resources/assets/sass/style/jquery.mCustomScrollbar.css',
+      'resources/assets/sass/style/lightbox.min.css',
+      'resources/assets/sass/style/lightgallery.css',
+      'resources/assets/sass/style/main.css',
+      'public/css/style.css'
+    ], 'public/css/app.css')
+
 mix.disableNotifications();
+
 mix.browserSync({
   proxy: 'http://localhost/fitmetix/public/'
 });
