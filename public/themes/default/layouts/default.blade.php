@@ -67,6 +67,15 @@
                 height: 100vh !important;
             }
         </style>
+        <style>
+            .padding-10 .container-fluid{
+                width: 100%;
+                padding: 0 10%;
+            }
+            .navbar.socialite{
+                border-bottom: 1px solid #1e7c82;
+            }
+        </style>
     </head>
     <body @if(Setting::get('enable_rtl') == 'on') class="direction-rtl" @endif>
     {{--test--}}
@@ -76,8 +85,11 @@
         <button class="change-theme" data-theme="pink">change to pink</button>
     </div>
     {{--test--}}
+    <div class="padding-10">
         {!! Theme::partial('header') !!}
         {!! Theme::partial('mobileHeader') !!}
+    </div>
+
         <div class="main-content">
             {!! Theme::content() !!}
         </div>
