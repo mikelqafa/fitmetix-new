@@ -38,3 +38,26 @@
   left: 0;
   width: 100%;
 }
+
+.panel-post .panel-footer.socialite .footer-list {
+  display: flex;;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.full-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+[data-theme="blue"] .panel-default{
+  background-color: #00A8FF;
+}
+[data-theme="pink"] .panel-default{
+  background-color: #EB5757;
+}
+[data-theme="green"] .panel-default{
+  background-color: #2ab27b;
+}

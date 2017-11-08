@@ -69,6 +69,13 @@
         </style>
     </head>
     <body @if(Setting::get('enable_rtl') == 'on') class="direction-rtl" @endif>
+    {{--test--}}
+    <div style="position: fixed; bottom: 20px;left: 16px;">
+        <button class="change-theme" data-theme="blue">change to blue</button>
+        <button class="change-theme" data-theme="green">change to geen</button>
+        <button class="change-theme" data-theme="pink">change to pink</button>
+    </div>
+    {{--test--}}
         {!! Theme::partial('header') !!}
         {!! Theme::partial('mobileHeader') !!}
         <div class="main-content">

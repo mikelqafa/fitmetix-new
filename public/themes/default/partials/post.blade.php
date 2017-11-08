@@ -322,7 +322,7 @@
             $liked_ids = $post->users_liked->pluck('id')->toArray();
             $liked_names = $post->users_liked->pluck('name')->toArray();
             ?>
-            <li class="text-center absolute absolute-center ">
+            <li class="text-center full-center ">
                 <a href="#" class="show-users-modal" data-html="true" data-heading="{{ trans('common.likes') }}"  data-users="{{ implode(',', $liked_ids) }}" data-original-title="{{ implode('<br />', $liked_names) }}">
                     <span class="count-circle">
                         <i class="icon icon-like"></i>

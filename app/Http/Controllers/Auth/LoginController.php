@@ -98,10 +98,9 @@ class LoginController extends Controller
         }
     }
 
-    public function reset() {
+    public function getReset() {
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('guest');
         $theme->setTitle(trans('auth.login').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
-
-        return $theme->scope('auth.reset')->render();
+        return $theme->scope('reset-password')->render();
     }
 }

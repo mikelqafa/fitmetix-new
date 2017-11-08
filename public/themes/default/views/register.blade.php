@@ -75,7 +75,7 @@
                             </div>
 
                             <div class="row">
-                                {{--<div class="col-md-6">
+                                <div class="col-md-6">
                                     <fieldset class="form-group required {{ $errors->has('username') ? ' has-error' : '' }}">
                                         {{ Form::label('username', trans('common.username')) }}
                                         {{ Form::text('username', NULL, ['class' => 'form-control', 'id' => 'username', 'placeholder'=> trans('common.username')]) }}
@@ -85,7 +85,7 @@
                   </span>
                                         @endif
                                     </fieldset>
-                                </div>--}}
+                                </div>
                                 <div class="col-md-6">
                                     <fieldset class="form-group required {{ $errors->has('password') ? ' has-error' : '' }}">
                                         {{ Form::label('password', trans('auth.password')) }}

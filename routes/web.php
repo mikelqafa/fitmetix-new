@@ -73,7 +73,7 @@ Route::get('account/linkedin', 'Auth\RegisterController@linkedin');
 // Login
 Route::get('/login', 'Auth\LoginController@getLogin');
 Route::post('/login', 'Auth\LoginController@login');
-Route::get('/password/reset', 'Auth\LoginController@reset');
+Route::get('/password/reset', 'Auth\LoginController@getReset');
 
 // Register
 Route::get('/register', 'Auth\RegisterController@register');

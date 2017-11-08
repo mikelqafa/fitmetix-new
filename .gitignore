@@ -8,9 +8,9 @@ vendor/*
 .env
 
 #Ignore css and js file
-public/js/app.js
+public/js/
 public/css
-storage
+storage/*
 
 #Ignore node module
 node_modules/*
