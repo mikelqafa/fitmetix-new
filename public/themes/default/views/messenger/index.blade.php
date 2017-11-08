@@ -2,7 +2,7 @@
 <div class="container">
 
     <div class="row">
-        <div class="col-md-2 visible-lg">
+        <div class="col-md-2 visible-lg hidden-sm hidden-xs">
             {!! Theme::partial('home-leftbar',compact('trending_tags')) !!}
         </div>
         <div class="col-lg-10 col-md-12">
@@ -22,8 +22,8 @@
                     <div class="panel-body nopadding">
 
                         {{-- messagebox --}}
-                        <div class="row message-box">
-                            <div class="col-md-4 col-sm-4 col-xs-4 message-col-4">
+                        <div class="row message-box-full">
+                            <div class="col-md-4 col-sm-4 col-xs-12 message-col-4">
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="{{ trans('common.search') }}">
                                     <span class="input-group-btn">
@@ -54,7 +54,7 @@
                                 
                             </div>
 
-                            <div class="col-md-8 col-sm-8 col-xs-8 message-col-8">
+                            <div class="col-md-8 col-sm-8 col-xs-12 message-col-8">
                                 <div class="coversation-tree">
                                     <div class="conversation">
                                         <div class="left-side">

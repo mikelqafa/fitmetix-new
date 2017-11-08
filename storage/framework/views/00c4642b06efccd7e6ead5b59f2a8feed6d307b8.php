@@ -207,11 +207,12 @@
                         </a>
                         <ul data-width="3" class="dropdown-menu">
                             <?php if(Auth::user()->hasRole('admin')): ?>
-                                <li class="<?php echo e(Request::segment(1) == 'admin' ? 'active' : ''); ?>"><a
-                                            href="<?php echo e(url('admin')); ?>"><i class="fa fa-user-secret"
-                                                                         aria-hidden="true"></i><?php echo e(trans('common.admin')); ?>
+                                <li class="<?php echo e(Request::segment(1) == 'admin' ? 'active' : ''); ?>">
+                                    <a href="<?php echo e(url('admin')); ?>">
+                                        <i class="fa fa-user-secret" aria-hidden="true"></i><?php echo e(trans('common.admin')); ?>
 
-                                    </a></li>
+                                    </a>
+                                </li>
                             <?php endif; ?>
 
                             <li class="<?php echo e((Request::segment(1) == Auth::user()->username && Request::segment(2) == '') ? 'active' : ''); ?>">
@@ -232,10 +233,11 @@
                                             aria-hidden="true"></i><?php echo e(trans('common.my_events')); ?></a>
                             </li>
 
-                            <li class="<?php echo e(Request::segment(3) == 'general' ? 'active' : ''); ?>"><a
-                                        href="<?php echo e(url('/'.Auth::user()->username.'/settings/general')); ?>"><i
-                                            class="fa fa-cog"
-                                            aria-hidden="true"></i><?php echo e(trans('common.settings')); ?></a>
+                            <li class="<?php echo e(Request::segment(3) == 'general' ? 'active' : ''); ?>">
+                                <a href="<?php echo e(url('/'.Auth::user()->username.'/settings/general')); ?>">
+                                    <i class="fa fa-cog" aria-hidden="true"></i><?php echo e(trans('common.settings')); ?>
+
+                                </a>
                             </li>
 
                             <li>
@@ -243,22 +245,13 @@
                                     <?php echo e(csrf_field()); ?>
 
 
-                                    <button type="submit" class="btn-logout"><i class="fa fa-unlock"
-                                                                                aria-hidden="true"></i><?php echo e(trans('common.logout')); ?>
+                                    <button type="submit" class="btn-logout">
+                                        <i class="fa fa-unlock" aria-hidden="true"></i><?php echo e(trans('common.logout')); ?>
 
                                     </button>
                                 </form>
                             </li>
                         </ul>
-                    </li>
-                    <li class="smallscreen-message">
-                        <a href="<?php echo e(url('messages')); ?>">
-                            <i class="fa fa-comments" aria-hidden="true">
-                                    <span class="count"
-                                          v-if="unreadConversations">{{ unreadConversations }}</span>
-                            </i>
-                            <span class="small-screen"><?php echo e(trans('common.messages')); ?></span>
-                        </a>
                     </li>
                 </ul>
             </div>

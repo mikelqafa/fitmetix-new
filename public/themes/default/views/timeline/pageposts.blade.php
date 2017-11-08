@@ -12,13 +12,13 @@
 					</div>
 					<div class="col-md-8">
 						@if($timeline->type == "page")
-							
+
 							@if(($page->timeline_post_privacy == "only_admins" && $page->is_admin(Auth::user()->id)) || ($page->timeline_post_privacy == "everyone"))
 								{!! Theme::partial('create-post',compact('timeline','user_post')) !!}
-							@elseif($page->timeline_post_privacy == "everyone")	
+							@elseif($page->timeline_post_privacy == "everyone")
 								{!! Theme::partial('create-post',compact('timeline','user_post')) !!}
 							@endif
-						@endif	
+						@endif
 
 						<div class="timeline-posts">
 							@if($posts->count() > 0)

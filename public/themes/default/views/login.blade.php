@@ -1,172 +1,82 @@
-<div style="margin-top: -20px !important;margin-bottom: -100px">
-    <div class="row">
-        <div class="col-xs-12">
-            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                </ol>
-
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" role="listbox">
-                    <div class="item active">
-                        <img src="{!! url('images/slider1.jpg') !!}" alt="Fitmetix">
-                        <div class="carousel-caption" style="top: 30%">
-                            <h3>Never just stay
-                                <hr/>
-                                <span>Stay Inspired</span>
-                            </h3>
-                            <div class="new_years">
-                                <div class="new_years_inner">
-                                    <h4> New Year Offer</h4>
-                                    <a href="#" class="btn btn-danger btn-lg"> Grab it now </a>
-                                </div>
-                            </div>
+<style>
+    .navbar-default {
+        display: none;
+    }
+    .navbar--login{
+        display: block;
+        position: fixed;
+        top:0;
+        left: 0;
+    }
+    body {
+        position: relative;
+    }
+    .navbar.socialite { background: transparent;border: 1px solid transparent;margin-top: 40px;box-shadow: none !important; }
+    .overlay { position:absolute;height:100px;background:#FFF;opacity:0.45;width:100%; }
+    .bose { height: 100vh; }
+    @media (max-width: 499px) { .overlay{ height:600px; }.bose { height: 100vh;} }
+    @media (min-width: 500px) and (max-width: 960px) { .overlay{ height: 950px; } }
+    .navbar a { color: #fff !important; }
+    @media (min-width: 970px) { .navbar-brand{ margin-right: 500px; }.bose-holder img { width: 100% !important; } }
+    .footer-description .socialite-terms:nth-child(1) { border-top: 0px !important; }
+</style>
+<div class="bose">
+    <div class="pos-rel">
+        <nav class="navbar navbar--login  socialite navbar-default no-bg guest-nav">
+            <div class="overlay"></div>
+            <div class="container" style="position: relative !important;">
+                <div class="hidden-xs navbar-header text-center">
+                    <a class="navbar-brand socialite" href="{!! url('/') !!}">
+                        <img class="socialite-logo" src="{!! url('setting/'.Setting::get('logo')) !!}"  alt="Fitmetix" title="Fitmetix" style="height:60px;">
+                    </a>
+                </div>
+                <div class="navbar-header visible-xs text-center">
+                    <a class="socialite" href="{!! url('/') !!}">
+                        <img class="socialite-logo" src="{!! url('setting/'.Setting::get('logo')) !!}" alt="Fitmetix" title="Fitmetix">
+                    </a>
+                </div>
+                <div>
+                    <form method="POST" class="login-form navbar-form" action="/login">
+                        <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                        <fieldset class="form-group mail-form ">
+                            <input class="form-control" id="email" placeholder="Enter E-mail or username" name="email" type="text">
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <input class="form-control" id="password" placeholder="Password" name="password" type="password" value="">
+                            <ul class="list-inline">
+                                <li>
+                                    <a class="hidden-xs" href="{!! url('register') !!}" class="forgot-password"><i class="fa fa-user-plus"></i> New? Register here</a>
+                                </li>
+                                <li>
+                                    <a href="{!! url('password/reset') !!}" class="forgot-password"><i class="fa fa-refresh"></i> Forgot your password?</a>
+                                </li>
+                            </ul>
+                        </fieldset>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-submit">Log In</button>
+                            <a href="{!! url('account/facebook') !!}" class="btn btn-success"><i class="fa fa-facebook"></i> | Facebook <span class="hidden-sm">Login</span></a>
                         </div>
-                    </div>
-                    <div class="item">
-                        <img src="{!! url('images/video.gif') !!}" alt="Fitness" width="100%" style="width:100vw;height:100vh;">
-                        <div class="carousel-caption" style="top: 30%;">
-                            <h3>Bringing together health lovers
-                                <hr/>
-                            </h3>
-                            <div class="new_years">
-                                <div class="new_years_inner">
-                                    <h4>Lorem Ipsum</h4>
-                                    <a href="" class="btn btn-danger btn-lg"> Lorem Ipsum </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="{!! url('images/slider2.jpg') !!}" alt="Fitmetix">
-                        <div class="carousel-caption" style="top: 30%">
-                            <h3>Never just stay
-                                <hr/>
-                                <span>Stay Inspired</span>
-                            </h3>
-                            <div class="new_years">
-                                <div class="new_years_inner">
-                                    <h4> New Year Offer</h4>
-                                    <a href="#" class="btn btn-danger btn-lg"> Grab it now </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <img src="{!! url('images/slider3.jpg') !!}" alt="Fitmetix">
-                        <div class="carousel-caption" style="top: 30%;">
-                            <h3>Never just stay
-                                <hr/>
-                                <span>Stay Inspired</span>
-                            </h3>
-                            <div class="new_years">
-                                <div class="new_years_inner">
-                                    <h4> New Year Offer</h4>
-                                    <a href="#" class="btn btn-danger btn-lg"> Grab it now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <hr class="visible-xs">
+                        <a href="{!! url('register') !!}" class="btn btn-success visible-xs">Create Account</a>
+                    </form>
                 </div>
-
-                <!-- Controls -->
-                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="watch_video" style="background:#FFF;padding: 20px;">
-        <div class="container">
-            <div class="section-title text-center">
-                <h2>WATCH <span class="text-highlight">THIS</span> VIDEO</h2>
-                <h3 class="subline">You’ll get all informations about our App from this video.</h3>
-                <hr>
-            </div>
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe src="https://player.vimeo.com/video/95558527?color=ff485e&amp;title=0&amp;byline=0&amp;portrait=0&amp;wmode=opaque" allowfullscreen=""></iframe>
-                    </div>
+            </div><!-- /.container-fluid -->
+        </nav>
+        <div class="modal fade" id="usersModal" tabindex="-1" role="dialog" aria-labelledby="usersModalLabel">
+            <div class="modal-dialog modal-likes" role="document">
+                <div class="modal-content">
+                    <i class="fa fa-spinner fa-spin"></i>
                 </div>
             </div>
         </div>
     </div>
-    <div id="procedure-section" style="padding: 50px;">
-        <div class="container">
-            <h1 class="text-center">Fitness for Life - Fitmetix</h1>
-            <div class="row text-center procedure">
-                <div class="col-md-4 col-sm-4 col-xs-12 procedure-box">
-                    <h3 class="text-center">
-                        <img src="{!! url('images/procedure1.png') !!}" alt="" class="img-circle">
-                    </h3>
-                    <h3>STRENGTH TRAINING</h3>
-                    <p>Nroin gravida nibh vel velit auctor aliquet lorem quis.  </p>
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-12 procedure-box">
-                    <h3 class="text-center">
-                        <img src="{!! url('images/procedure2.png') !!}" alt="" class="img-circle">
-                    </h3>
-                    <h3>WEIGTH LOSS</h3>
-                    <p>Gravida nibh vel velit auctor aliquet lorem quis. </p>
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-12 procedure-box">
-                    <h3 class="text-center">
-                        <img src="{!! url('images/procedure3.png') !!}" alt="" class="img-circle">
-                    </h3>
-                    <h3>YOGA FITNESS</h3>
-                    <p>Proin gravida nibh vel velit auctor aliquet lorem quis. </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="background: #FFF;">
-        <div class="container">
-            <div class="section-title text-center">
-                <h1>WHAT OUR MEMBERS SAY</h1>
-                <h2 class="subline">Don’t take our word. See what our users say about us.</h2>
-                <hr>
-            </div>
-            <div class="row">
-                <div class="col-sm-2">
-                    <img src="{!! url('images/patient-pic2.jpg') !!}" class="img-responsive img-circle center-block" alt="patient">
-                </div>
-                <div class="col-sm-9">
-                    <blockquote class="bq-right">Fitmetix is one of the best community site for fitness freak like me. It's easy and convenient while it comes to get connected with people who are fitness lovers. The Scout here are amazingly awesome.</blockquote>
-                    <p class="bq-author"><strong><span class="text-highlight">Jennifer</span></strong>, Sanfransicso Area</p>
-                </div>
-            </div>
-
-            <div class="vertical-space-lg">
-                <hr>
-            </div>
-            <div class="row">
-                <div class="col-sm-2 col-sm-push-9">
-                    <img src="{!! url('images/patient-pic.jpg') !!}" class="img-responsive img-circle center-block" alt="patient">
-                </div>
-                <div class="col-sm-9 col-sm-pull-2">
-                    <blockquote class="bq-left">What an experience! Every human being I encountered who worked there was so nice and cheerful and attentive!!! Amazing attention given to both users and loved ones who are communicating freely with each other. An Excellement Community for Health Lovers.</blockquote>
-                    <p class="text-right bq-author"><strong> <span class="text-highlight">Daniel</span></strong>, Atlanta, GA</p>
-                </div>
-            </div>
-
-            <div class="vertical-space-lg">
-            </div>
-        </div>
-    </div>
-    <div class="row text-center">
-        <div class="col-xs-12">
-            <a href="#"><img src="{!! url('images/googlePlay.jpg') !!}" alt="Google Play"></a>
-            <a href="#"><img src="{!! url('images/appStore.jpg') !!}" alt="App Store"></a>
-        </div>
-    </div>
-</div><!-- /container -->
-{!! Theme::asset()->container('footer')->usePath()->add('app', 'js/app.js') !!}
+</div>
+<script src="{!! asset('js/slider.min.js') !!}"></script>
+<script>
+    $(".bose").bose({
+        images : [ "{!! url('images/4.jpg') !!}", "{!! url('images/3.jpeg') !!}", "{!! url('images/2.jpeg') !!}"],
+        startIndex   : 0,
+        transition   : 'fade',
+        autofit      : true
+    });
+</script>

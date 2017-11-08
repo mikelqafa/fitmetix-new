@@ -203,10 +203,11 @@
                         </a>
                         <ul data-width="3" class="dropdown-menu">
                             @if(Auth::user()->hasRole('admin'))
-                                <li class="{{ Request::segment(1) == 'admin' ? 'active' : '' }}"><a
-                                            href="{{ url('admin') }}"><i class="fa fa-user-secret"
-                                                                         aria-hidden="true"></i>{{ trans('common.admin') }}
-                                    </a></li>
+                                <li class="{{ Request::segment(1) == 'admin' ? 'active' : '' }}">
+                                    <a href="{{ url('admin') }}">
+                                        <i class="fa fa-user-secret" aria-hidden="true"></i>{{ trans('common.admin') }}
+                                    </a>
+                                </li>
                             @endif
 
                             <li class="{{ (Request::segment(1) == Auth::user()->username && Request::segment(2) == '') ? 'active' : '' }}">
@@ -226,31 +227,22 @@
                                             aria-hidden="true"></i>{{ trans('common.my_events') }}</a>
                             </li>
 
-                            <li class="{{ Request::segment(3) == 'general' ? 'active' : '' }}"><a
-                                        href="{{ url('/'.Auth::user()->username.'/settings/general') }}"><i
-                                            class="fa fa-cog"
-                                            aria-hidden="true"></i>{{ trans('common.settings') }}</a>
+                            <li class="{{ Request::segment(3) == 'general' ? 'active' : '' }}">
+                                <a href="{{ url('/'.Auth::user()->username.'/settings/general') }}">
+                                    <i class="fa fa-cog" aria-hidden="true"></i>{{ trans('common.settings') }}
+                                </a>
                             </li>
 
                             <li>
                                 <form action="{{ url('/logout') }}" method="post">
                                     {{ csrf_field() }}
 
-                                    <button type="submit" class="btn-logout"><i class="fa fa-unlock"
-                                                                                aria-hidden="true"></i>{{ trans('common.logout') }}
+                                    <button type="submit" class="btn-logout">
+                                        <i class="fa fa-unlock" aria-hidden="true"></i>{{ trans('common.logout') }}
                                     </button>
                                 </form>
                             </li>
                         </ul>
-                    </li>
-                    <li class="smallscreen-message">
-                        <a href="{{ url('messages') }}">
-                            <i class="fa fa-comments" aria-hidden="true">
-                                    <span class="count"
-                                          v-if="unreadConversations">@{{ unreadConversations }}</span>
-                            </i>
-                            <span class="small-screen">{{ trans('common.messages') }}</span>
-                        </a>
                     </li>
                 </ul>
             </div>

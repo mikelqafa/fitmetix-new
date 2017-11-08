@@ -46,7 +46,7 @@ class LoginController extends Controller
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('guest');
         $theme->setTitle(trans('auth.login').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
-        return $theme->scope('landing')->render();
+        return $theme->scope('login')->render();
     }
 
     public function login(Request $request)

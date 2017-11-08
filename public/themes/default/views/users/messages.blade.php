@@ -1,9 +1,9 @@
-<!-- <div class="main-content">-->	
+<!-- <div class="main-content">-->
 <div class="container">
 
 	<div class="row">
-		<div class="col-md-2 visible-lg">
-			{!! Theme::partial('home-leftbar',compact('trending_tags')) !!}			
+		<div class="col-md-2 visible-lg hidden">
+			{!! Theme::partial('home-leftbar',compact('trending_tags')) !!}
 		</div>
 		<div class="col-lg-10 col-md-12">
 			<div class="messages-page" id="messages-page">
@@ -56,7 +56,7 @@
 									<span class="input-group-btn">
 										<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
 									</span>
-								</div><!-- /input-group -->    
+								</div><!-- /input-group -->
 								<ul class="list-unstyled coversations-list scrollable">
 									<li class="message-holder"  v-for="conversation in conversations.data">
 										<a href="#" class="show-conversation" data-id="@{{ conversation.id }}">
@@ -104,7 +104,7 @@
 																			</h4>
 																			<div class="post-text">
 																				@foreach($conversation->messages as $key => $message)
-																				{{  $message->description  }}	
+																				{{  $message->description  }}
 																				<div class="unseen-messages">
 																					1
 																				</div>
@@ -136,7 +136,7 @@
 
 							<div class="col-md-8 message-col-8">
 								<div class="coversation-tree">
-									{!! Theme::partial('conversation-thread',compact('latest_conversation')) !!}	
+									{!! Theme::partial('conversation-thread',compact('latest_conversation')) !!}
 								</div>
 
 								<div class="input-group new-message">
@@ -150,9 +150,9 @@
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
-		
+
 	</div>
 
 </div>

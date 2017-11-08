@@ -6,7 +6,7 @@
 
 			<div class="col-md-6">
 				<div class="post-filters pages-groups">
-					
+
 					<div class="panel panel-default">
 						<div class="panel-heading no-bg panel-settings">
 							<div class="side-right create-btn">
@@ -15,11 +15,11 @@
 							<h3 class="panel-title small-heading">
 								{{ trans('messages.pages-manage') }}
 							</h3>
-							
+
 						</div>
 						<div class="panel-body">
 							@if(Auth::user()->own_pages()->count())
-								
+
 							<ul class="list-group page-likes">
 								@foreach(Auth::user()->own_pages() as $userpage)
 								<li class="list-group-item deletepage">
@@ -46,12 +46,12 @@
 					</div><!-- /panel -->
 				</div>
 			</div><!-- /col-md-6 -->
-			
+
 			<!-- List of user groups-->
-			
+
 			<div class="col-md-6">
 				<div class="post-filters pages-groups">
-					
+
 					<div class="panel panel-default">
 						<div class="panel-heading no-bg panel-settings">
 							<h3 class="panel-title small-heading">
@@ -60,7 +60,7 @@
 						</div>
 						<div class="panel-body">
 							@if(Auth::user()->joinedPages()->count())
-								
+
 							<ul class="list-group page-likes">
 								@foreach(Auth::user()->joinedPages() as $joinpage)
 								<li class="list-group-item holder">

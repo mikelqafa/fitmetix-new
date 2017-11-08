@@ -7,63 +7,13 @@
             <a class="ft-header-nav__item {{ Request::is(Auth::user()->username.'/create-event') ? 'is-active' : '' }}" style="padding: 0" href="{!! url(Auth::user()->username.'/create-event') !!}">
                 <div class="icon icon-eventpage" style="font-size: 50px; line-height: 45px"></div>
             </a>
-            <a class="ft-header-nav__item dropdown" data-toggle="dropdown" href="{!! url('notifications') !!}" class="dropdown-toggle" role="button" aria-haspopup="true"
-               aria-expanded="false">
+            <a class="ft-header-nav__item pos-rel {{ Request::is('messages') ? 'is-active' : '' }}" href="{!! url('notifications') !!}">
                 <div class="icon icon icon-like"></div>
-                <div class="dropdown-menu">
-                    <div class="dropdown-menu-header">
-                        <span class="side-left">{{ trans('common.notifications') }}</span>
-                        <a v-if="unreadNotifications > 0" class="side-right" href="#"
-                           @click.prevent="markNotificationsRead">{{ trans('messages.mark_all_read') }}</a>
-                        <div class="clearfix"></div>
-                    </div>
-                    @if(Auth::user()->notifications()->count() > 0)
-                        <ul class="list-unstyled dropdown-messages-list scrollable"
-                            data-type="notifications">
-                            <li class="inbox-message"
-                                v-bind:class="[ !notification.seen ? 'active' : '' ]"
-                                v-for="notification in notifications.data">
-                                <a href="{{ url(Auth::user()->username.'/notification/') }}/@{{ notification.id }}">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <img class="media-object img-icon"
-                                                 v-bind:src="notification.notified_from.avatar"
-                                                 alt="images">
-                                        </div>
-                                        <div class="media-body">
-                                            <h4 class="media-heading">
-                                                <span class="notification-text"> @{{ notification.description }} </span>
-                                            <span class="message-time">
-                                                <span class="notification-type"><i class="fa fa-user"
-                                                                                   aria-hidden="true"></i></span>
-                                                <time class="timeago"
-                                                      datetime="@{{ notification.created_at }}+00:00"
-                                                      title="@{{ notification.created_at }}+00:00">
-                                                    @{{ notification.created_at }}+00:00
-                                                </time>
-                                            </span>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li v-if="notificationsLoading" class="dropdown-loading">
-                                <i class="fa fa-spin fa-spinner"></i>
-                            </li>
-                        </ul>
-                    @else
-                        <div class="no-messages">
-                            <i class="fa fa-bell-slash-o" aria-hidden="true"></i>
-                            <p>{{ trans('messages.no_notifications') }}</p>
-                        </div>
-                    @endif
-                    <div class="dropdown-menu-footer"><br>
-                        <a href="{{ url('allnotifications') }}">{{ trans('common.see_all') }}</a>
-                    </div>
-                </div>
+                <span class="unread-notification is-visible" v-bind:class="{ 'is-visible': isShowUN }"></span>
             </a>
-            <a class="ft-header-nav__item" href="{!! url('messages') !!}">
-                <div class="icon icon-chat"></div>
+            <a class="ft-header-nav__item pos-rel" href="{!! url('messages') !!}">
+                <i class="icon icon-chat"></i>
+                <span class="unread-notification is-visible" v-bind:class="{ 'is-visible': isShowUCM }"></span>
             </a>
             <a class="ft-header-nav__item" href="{!! url('messages') !!}" data-toggle="collapse" href="#bs-example-navbar-collapse-4" aria-expanded="false" aria-controls="collapseExample">
                 <div class="icon icon-search"></div>
@@ -75,17 +25,18 @@
                     <ul style="left: auto; right: 0;" class="dropdown-menu">
                         <li class="{{ (Request::segment(1) == Auth::user()->username && Request::segment(2) == '') ? 'active' : '' }}">
                             <a href="{{ url(Auth::user()->username.'/create-event') }}">
-                                <i class="fa fa-plus"></i> Inspire
+                                <i class="icon icon-add"></i> Inspire
                             </a>
                         </li>
                         <li class="{{ (Request::segment(1) == Auth::user()->username && Request::segment(2) == '') ? 'active' : '' }}">
                             <a href="{{ url(Auth::user()->username) }}">
-                                <i class="icon icon-user"></i> {{ trans('common.my_profile') }}
+                                <i class="icon icon-participant"></i> {{ trans('common.my_profile') }}
                             </a>
                         </li>
-                        <li class="{{ Request::segment(3) == 'general' ? 'active' : '' }}"><a
-                                    href="{{ url('/'.Auth::user()->username.'/settings/general') }}">
-                                <i class="icon icon-settings"></i> {{ trans('common.settings') }}</a>
+                        <li class="{{ Request::segment(3) == 'general' ? 'active' : '' }}">
+                            <a href="{{ url('/'.Auth::user()->username.'/settings/general') }}">
+                                <i class="icon icon-settings-o"></i> {{ trans('common.settings') }}
+                            </a>
                         </li>
                     </ul>
                 </a>

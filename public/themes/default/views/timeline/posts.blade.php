@@ -4,7 +4,7 @@
 		<div class="col-md-10">
 			{!! Theme::partial('user-header',compact('timeline','liked_pages','user','joined_groups','followRequests','following_count',
 			'followers_count','follow_confirm','user_post','joined_groups_count','guest_events')) !!}
-			
+
 			<div class="row">
 				<div class=" timeline">
 					<div class="col-md-4">
@@ -12,9 +12,9 @@
 					</div>
 					<div class="col-md-8">
 						@if($timeline->type == "user" && $timeline_post == true)
-							{!! Theme::partial('create-post',compact('timeline','user_post')) !!}						
+							{!! Theme::partial('create-post',compact('timeline','user_post')) !!}
 						@endif
-						
+
 						<div class="timeline-posts">
 							@if($posts->count() > 0)
 								@foreach($posts as $post)
