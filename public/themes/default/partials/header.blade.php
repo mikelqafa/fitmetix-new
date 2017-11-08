@@ -190,7 +190,7 @@
 
                     <li class="has-hover-effect user-image socialite fm-nav__item">
                         <a href="{{ url(Auth::user()->username) }}" class="user-image-wrapper">
-                            <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}"
+                            <img src="{{asset('images/default.png')}}" style="max-width: 100%" alt="{{ Auth::user()->name }}"
                                  class="img-radius img-30" title="{{ Auth::user()->name }}">
                             <span class="user-name hidden">{{ Auth::user()->name }}</span>
                         </a>
