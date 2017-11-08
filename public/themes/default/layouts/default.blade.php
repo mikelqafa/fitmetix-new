@@ -75,6 +75,16 @@
             .navbar.socialite{
                 border-bottom: 1px solid #1e7c82;
             }
+            .panel-default .panel-heading.no-bg {
+                border: none !important;
+            }
+            .panel-post .panel-body{
+                border-right: none;
+                border-left: none;
+            }
+            .panel-post .panel-footer.socialite{
+                border: none !important;
+            }
         </style>
     </head>
     <body @if(Setting::get('enable_rtl') == 'on') class="direction-rtl" @endif>

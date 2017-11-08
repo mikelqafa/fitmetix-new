@@ -194,7 +194,7 @@
 
                     <li class="has-hover-effect user-image socialite fm-nav__item">
                         <a href="<?php echo e(url(Auth::user()->username)); ?>" class="user-image-wrapper">
-                            <img src="<?php echo e(Auth::user()->avatar); ?>" alt="<?php echo e(Auth::user()->name); ?>"
+                            <img src="<?php echo e(asset('images/default.png')); ?>" style="max-width: 100%" alt="<?php echo e(Auth::user()->name); ?>"
                                  class="img-radius img-30" title="<?php echo e(Auth::user()->name); ?>">
                             <span class="user-name hidden"><?php echo e(Auth::user()->name); ?></span>
                         </a>
