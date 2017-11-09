@@ -65,7 +65,6 @@ class RegisterController extends Controller
             'no_admin' => 'The name admin is restricted for :attribute'
         ];
         $rules = [
-            'name'      => 'required|max:255',
             'email'     => 'required|email|max:255|unique:users',
             'password'  => 'required|min:6',
             'gender'    => 'required',
@@ -92,7 +91,7 @@ class RegisterController extends Controller
     {
         $timeline = Timeline::create([
             'username' => $data['username'],
-            'name'     => $data['name'],
+            'name'     => $data['username'],
         ]);
 
         return User::create([
@@ -136,7 +135,6 @@ class RegisterController extends Controller
         //Create timeline record for the user
         $timeline = Timeline::create([
             'username' => $request->username,
-            'name'     => $request->name,
             'type'     => 'user',
             'about'    => 'write something about yourself'
             ]);
@@ -184,6 +182,8 @@ class RegisterController extends Controller
 
         //Create a record in user settings table.
         $userSettings = DB::table('user_settings')->insert($user_settings);
+
+        Auth::attempt(['email' => $user->email, 'password' => $request->password]);
 
         if ($user) {
             if ($socialLogin) {

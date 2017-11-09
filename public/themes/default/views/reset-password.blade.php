@@ -13,7 +13,7 @@
                                 <div class="col-md-12">
                                     <fieldset class="form-group required {{ $errors->has('email') ? ' has-error' : '' }}">
                                         {{ Form::label('email', trans('auth.email_address')) }}
-                                        {{ Form::text('email', NULL, ['class' => 'form-control', 'id' => 'email', 'placeholder'=> trans('Email')]) }}
+                                        {{ Form::text('email', NULL, ['class' => 'form-control', 'id' => 'email', 'placeholder'=> trans('auth.email_address')]) }}
                                         @if ($errors->has('email'))
                                             <span class="help-block">
                                             {{ $errors->first('email') }}
@@ -22,7 +22,7 @@
                                     </fieldset>
                                 </div>
                             </div>
-                            {{ Form::button(trans('Rest Password'), ['type' => 'submit','class' => 'btn btn-success btn-submit']) }}
+                            {{ Form::button(trans('Reset Password'), ['type' => 'submit','class' => 'btn btn-success btn-submit']) }}
                         </form>
                     </div>
                 </div>

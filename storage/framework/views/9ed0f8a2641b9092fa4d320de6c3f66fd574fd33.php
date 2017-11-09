@@ -127,13 +127,13 @@
 
             <div class="row">
               <div class="col-md-6">
-                <fieldset class="form-group required <?php echo e($errors->has('name') ? ' has-error' : ''); ?>">
-                  <?php echo e(Form::label('name', trans('auth.name'))); ?> 
-                  <?php echo e(Form::text('name', NULL, ['class' => 'form-control', 'id' => 'name', 'placeholder'=> trans('auth.name')])); ?>
+                <fieldset class="form-group required <?php echo e($errors->has('username') ? ' has-error' : ''); ?>">
+                  <?php echo e(Form::label('username', trans('common.username'))); ?> 
+                  <?php echo e(Form::text('username', NULL, ['class' => 'form-control', 'id' => 'username', 'placeholder'=> trans('common.username')])); ?>
 
-                  <?php if($errors->has('name')): ?>
+                  <?php if($errors->has('username')): ?>
                   <span class="help-block">
-                    <?php echo e($errors->first('name')); ?>
+                    <?php echo e($errors->first('username')); ?>
 
                   </span>
                   <?php endif; ?>
@@ -155,19 +155,7 @@
             </div>
 
             <div class="row">
-              <div class="col-md-6">
-                <fieldset class="form-group required <?php echo e($errors->has('username') ? ' has-error' : ''); ?>">
-                  <?php echo e(Form::label('username', trans('common.username'))); ?> 
-                  <?php echo e(Form::text('username', NULL, ['class' => 'form-control', 'id' => 'username', 'placeholder'=> trans('common.username')])); ?>
-
-                  <?php if($errors->has('username')): ?>
-                  <span class="help-block">
-                    <?php echo e($errors->first('username')); ?>
-
-                  </span>
-                  <?php endif; ?>
-                </fieldset>
-              </div>
+              
               <div class="col-md-6">
                 <fieldset class="form-group required <?php echo e($errors->has('password') ? ' has-error' : ''); ?>">
                   <?php echo e(Form::label('password', trans('auth.password'))); ?> 
@@ -181,36 +169,37 @@
                   <?php endif; ?>
                 </fieldset>
               </div>
-            </div>
-
-            <div class="row">
-              <?php if(Setting::get('birthday') == "on"): ?>
+              
               <div class="col-md-6">
-                <fieldset class="form-group">
-                  <?php echo e(Form::label('birthday', trans('common.birthday'))); ?><i class="optional">(optional)</i>
-                  <div class="input-group date datepicker">
-                    <span class="input-group-addon addon-left calendar-addon">
-                      <span class="fa fa-calendar"></span>
-                    </span>
-                    <?php echo e(Form::text('birthday', NULL, ['class' => 'form-control', 'id' => 'datepicker1'])); ?>
+                <?php if(Setting::get('birthday') == "on"): ?>
+                <div class="col-md-6">
+                  <fieldset class="form-group">
+                    <?php echo e(Form::label('birthday', trans('common.birthday'))); ?><i class="optional">(optional)</i>
+                    <div class="input-group date datepicker">
+                      <span class="input-group-addon addon-left calendar-addon">
+                        <span class="fa fa-calendar"></span>
+                      </span>
+                      <?php echo e(Form::text('birthday', NULL, ['class' => 'form-control', 'id' => 'datepicker1'])); ?>
 
-                    <span class="input-group-addon addon-right angle-addon">
-                      <span class="fa fa-angle-down"></span>
-                    </span>
-                  </div>
-                </fieldset>
+                      <span class="input-group-addon addon-right angle-addon">
+                        <span class="fa fa-angle-down"></span>
+                      </span>
+                    </div>
+                  </fieldset>
+                </div>
+                <?php endif; ?>
+
+                <?php if(Setting::get('city') == "on"): ?>
+                <div class="col-md-6">
+                  <fieldset class="form-group">
+                    <?php echo e(Form::label('city', trans('common.current_city'))); ?><i class="optional">(optional)</i>
+                    <?php echo e(Form::text('city', NULL, ['class' => 'form-control', 'placeholder' => trans('common.current_city')])); ?>
+
+                  </fieldset>
+                </div>
+                <?php endif; ?>   
               </div>
-              <?php endif; ?>
 
-              <?php if(Setting::get('city') == "on"): ?>
-              <div class="col-md-6">
-                <fieldset class="form-group">
-                  <?php echo e(Form::label('city', trans('common.current_city'))); ?><i class="optional">(optional)</i>
-                  <?php echo e(Form::text('city', NULL, ['class' => 'form-control', 'placeholder' => trans('common.current_city')])); ?>
-
-                </fieldset>
-              </div>
-              <?php endif; ?>   
             </div>
 
             <div class="row">

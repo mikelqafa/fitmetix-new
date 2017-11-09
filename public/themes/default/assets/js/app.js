@@ -1376,7 +1376,21 @@ $(function () {
 
                  var reader = new FileReader();
                  reader.onload = function(e) {
-                   var file = e.target;                  
+                   var file = e.target;       
+                   var image = new Image();
+                   image.src = file.result;
+                   image.onload(function(){
+                      if(this.width < 600 || this.height < 150) {
+                        alert("Please select a larger image");
+                        imgPath = '';
+                        validFiles = [];
+                        image_holder.empty();
+                        files.length = 0;
+                        $('.post-images-selected').hide('slow');
+                        $('.post-images-selected').find('span').text(files.length);
+                        return ;
+                      }
+                   });           
                    $("<span class=\"pip\">" +
                     "<img class=\"thumb-image\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
                     "<a data-id=" + (key) + " class='remove-thumb'><i class='fa fa-times'></i></a>" +

@@ -110,12 +110,12 @@
 
             <div class="row">
               <div class="col-md-6">
-                <fieldset class="form-group required {{ $errors->has('name') ? ' has-error' : '' }}">
-                  {{ Form::label('name', trans('auth.name')) }} 
-                  {{ Form::text('name', NULL, ['class' => 'form-control', 'id' => 'name', 'placeholder'=> trans('auth.name')]) }}
-                  @if ($errors->has('name'))
+                <fieldset class="form-group required {{ $errors->has('username') ? ' has-error' : '' }}">
+                  {{ Form::label('username', trans('common.username')) }} 
+                  {{ Form::text('username', NULL, ['class' => 'form-control', 'id' => 'username', 'placeholder'=> trans('common.username')]) }}
+                  @if ($errors->has('username'))
                   <span class="help-block">
-                    {{ $errors->first('name') }}
+                    {{ $errors->first('username') }}
                   </span>
                   @endif
                 </fieldset>
@@ -134,17 +134,7 @@
             </div>
 
             <div class="row">
-              <div class="col-md-6">
-                <fieldset class="form-group required {{ $errors->has('username') ? ' has-error' : '' }}">
-                  {{ Form::label('username', trans('common.username')) }} 
-                  {{ Form::text('username', NULL, ['class' => 'form-control', 'id' => 'username', 'placeholder'=> trans('common.username')]) }}
-                  @if ($errors->has('username'))
-                  <span class="help-block">
-                    {{ $errors->first('username') }}
-                  </span>
-                  @endif
-                </fieldset>
-              </div>
+              
               <div class="col-md-6">
                 <fieldset class="form-group required {{ $errors->has('password') ? ' has-error' : '' }}">
                   {{ Form::label('password', trans('auth.password')) }} 
@@ -156,34 +146,35 @@
                   @endif
                 </fieldset>
               </div>
-            </div>
-
-            <div class="row">
-              @if(Setting::get('birthday') == "on")
+              
               <div class="col-md-6">
-                <fieldset class="form-group">
-                  {{ Form::label('birthday', trans('common.birthday')) }}<i class="optional">(optional)</i>
-                  <div class="input-group date datepicker">
-                    <span class="input-group-addon addon-left calendar-addon">
-                      <span class="fa fa-calendar"></span>
-                    </span>
-                    {{ Form::text('birthday', NULL, ['class' => 'form-control', 'id' => 'datepicker1']) }}
-                    <span class="input-group-addon addon-right angle-addon">
-                      <span class="fa fa-angle-down"></span>
-                    </span>
-                  </div>
-                </fieldset>
-              </div>
-              @endif
+                @if(Setting::get('birthday') == "on")
+                <div class="col-md-6">
+                  <fieldset class="form-group">
+                    {{ Form::label('birthday', trans('common.birthday')) }}<i class="optional">(optional)</i>
+                    <div class="input-group date datepicker">
+                      <span class="input-group-addon addon-left calendar-addon">
+                        <span class="fa fa-calendar"></span>
+                      </span>
+                      {{ Form::text('birthday', NULL, ['class' => 'form-control', 'id' => 'datepicker1']) }}
+                      <span class="input-group-addon addon-right angle-addon">
+                        <span class="fa fa-angle-down"></span>
+                      </span>
+                    </div>
+                  </fieldset>
+                </div>
+                @endif
 
-              @if(Setting::get('city') == "on")
-              <div class="col-md-6">
-                <fieldset class="form-group">
-                  {{ Form::label('city', trans('common.current_city')) }}<i class="optional">(optional)</i>
-                  {{ Form::text('city', NULL, ['class' => 'form-control', 'placeholder' => trans('common.current_city')]) }}
-                </fieldset>
+                @if(Setting::get('city') == "on")
+                <div class="col-md-6">
+                  <fieldset class="form-group">
+                    {{ Form::label('city', trans('common.current_city')) }}<i class="optional">(optional)</i>
+                    {{ Form::text('city', NULL, ['class' => 'form-control', 'placeholder' => trans('common.current_city')]) }}
+                  </fieldset>
+                </div>
+                @endif   
               </div>
-              @endif   
+
             </div>
 
             <div class="row">

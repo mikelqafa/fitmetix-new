@@ -876,7 +876,7 @@ class TimelineController extends AppBaseController
                         'iframe' => $video->player->embedHtml,
                       ];
 
-        return response()->json(['status' => '200', 'message' => $videoData]);
+        return response()->json(['status' => '200', 'message' => $video]);
     }
 
     public function show($id)

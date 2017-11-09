@@ -1354,42 +1354,56 @@ $(function () {
   // Image upload on create post on timeline
   $(document).on('change','.post-images-upload',function(e){
     e.preventDefault();
-    var files = !!this.files ? this.files : [];
-    $('.post-images-selected').find('span').text(files.length);
-    $('.post-images-selected').show('slow');
-    if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+       var files = !!this.files ? this.files : [];             
+       $('.post-images-selected').find('span').text(files.length);
+       $('.post-images-selected').show('slow');
+        if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
 
-    var countFiles = $(this)[0].files.length;
-    var imgPath = $(this)[0].value;
-    var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
-    var image_holder = $("#post-image-holder");
-    image_holder.empty();
-    if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg")
-    {
-      if (typeof(FileReader) != "undefined")
-      {
-        validFiles = [];
-        //loop for each file selected for uploaded.
-        $.each(files, function(key,val) {
-          validFiles.push(files[key]);
+         var countFiles = $(this)[0].files.length;
+         var imgPath = $(this)[0].value;
+         var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+         var image_holder = $("#post-image-holder");
+         image_holder.empty();
+          if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") 
+          {
+            if (typeof(FileReader) != "undefined") 
+            {
+              validFiles = [];
+               //loop for each file selected for uploaded.             
+               $.each(files, function(key,val) {      
+                 validFiles.push(files[key]); 
 
-          var reader = new FileReader();
-          reader.onload = function(e) {
-            var file = e.target;
-            $("<span class=\"pip\">" +
-                "<img class=\"thumb-image\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-                "<a data-id=" + (key) + " class='remove-thumb'><i class='fa fa-times'></i></a>" +
-                "</span>").appendTo(image_holder);
+                 var reader = new FileReader();
+                 reader.onload = function(e) {
+                   var file = e.target;       
+                   var image = new Image();
+                   image.src = file.result;
+                   image.onload = function(){
+                      if(this.width < 600 || this.height < 150) {
+                        alert("Please select a larger image");
+                        imgPath = '';
+                        validFiles = [];
+                        image_holder.empty();
+                        files.length = 0;
+                        $('.post-images-selected').hide('slow');
+                        $('.post-images-selected').find('span').text(files.length);
+                        return ;
+                      }
+                    };           
+                   $("<span class=\"pip\">" +
+                    "<img class=\"thumb-image\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                    "<a data-id=" + (key) + " class='remove-thumb'><i class='fa fa-times'></i></a>" +
+                    "</span>").appendTo(image_holder);                
+                 }
+                 image_holder.show();
+                 reader.readAsDataURL(files[key]);             
+               });
+            } else {
+               alert("This browser does not support FileReader.");
+            }
+          } else {
+             alert("Pls select only images");
           }
-          image_holder.show();
-          reader.readAsDataURL(files[key]);
-        });
-      } else {
-        alert("This browser does not support FileReader.");
-      }
-    } else {
-      alert("Pls select only images");
-    }
   });
 
   // Removing selected image here
@@ -1414,7 +1428,7 @@ $(function () {
     e.preventDefault();
     var files = !!this.files ? this.files : [];
 
-    if((files[0].size/1024)/1024 < 100)
+    if((files[0].size/1024)/1024 < 50)
     {
 
       $('.post-video-selected').find('span').text(files[0]['name']);
@@ -1424,7 +1438,7 @@ $(function () {
     else
     {
       $('.post-video-upload').val("");
-      alert('file size is more than 100 MB');
+      alert('file size is more than 50 MB');
     }
 
   });
