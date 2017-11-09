@@ -103,4 +103,8 @@ class LoginController extends Controller
         $theme->setTitle(trans('auth.login').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
         return $theme->scope('reset-password')->render();
     }
+
+    public function postReset() {
+       
+    }
 }

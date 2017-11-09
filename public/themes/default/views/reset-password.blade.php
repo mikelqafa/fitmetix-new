@@ -6,7 +6,7 @@
                 <div class="panel-body nopadding">
                     <div class="login-bottom">
                         <ul class="signup-errors text-danger list-unstyled"></ul>
-                        <form method="POST" class="signup-form" action="{{ url('/reset-password') }}">
+                        <form method="POST" class="" action="{{ url('/password/email') }}">
                             {{ csrf_field() }}
 
                             <div class="row">

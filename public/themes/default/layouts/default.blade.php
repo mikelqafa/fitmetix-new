@@ -85,6 +85,13 @@
             .panel-post .panel-footer.socialite{
                 border: none !important;
             }
+            .panel-post .panel-body .text-wrapper .post-image-holder{
+                margin-top: 0;
+            }
+            .panel-post .panel-body{
+                padding-bottom: 15px;
+                padding-top: 0;
+            }
         </style>
     </head>
     <body @if(Setting::get('enable_rtl') == 'on') class="direction-rtl" @endif>
