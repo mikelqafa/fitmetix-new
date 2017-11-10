@@ -1,9 +1,3 @@
-// var socket = io('http://fitmetix.dev:3000');
-import Vue from 'vue'
-import VueResource from 'vue-resource'
-
-Vue.use(VueResource)
-require('./pusher')
 var indexes;
 var el = document.getElementById('messages-page');
 if(el !== null) {
@@ -114,13 +108,14 @@ if(el !== null) {
 
         });
       },
-      getConversations : function()
-      {
-        this.$http.post(base_url + 'ajax/get-messages').then( function(response) {
-          this.conversations = response.body.data;
-          this.showConversation(this.conversations.data[0]);
+      getConversations : function() {
+        axios.post(base_url + 'ajax/get-messages').then(function (response) {
+          console.log(response.data)
+          // this.conversations = response.data.data;
+          // this.showConversation(this.conversations.data[0]);
         });
-      },
+      }
+      ,
       showConversation : function(conversation)
       {
         this.newConversation = false;
@@ -129,8 +124,8 @@ if(el !== null) {
           if(conversation.id != this.currentConversation.id)
           {
             conversation.unread = false;
-            this.$http.post(base_url + 'ajax/get-conversation/' + conversation.id).then( function(response) {
-              this.currentConversation = response.body.data;
+            axios.post(base_url + 'ajax/get-conversation/' + conversation.id).then( function(response) {
+              this.currentConversation = response.data.data;
               this.currentConversation.user = conversation.user;
               var vm = this;
               setTimeout(function(){
@@ -147,10 +142,10 @@ if(el !== null) {
 
         messageBody = this.messageBody;
         this.messageBody = '';
-        this.$http.post(base_url + 'ajax/post-message/' + conversation.id,{message: messageBody}).then( function(response) {
+        axios.post(base_url + 'ajax/post-message/' + conversation.id,{message: messageBody}).then( function(response) {
           if(response.status)
           {
-            this.currentConversation.conversationMessages.data.push(response.body.data);
+            this.currentConversation.conversationMessages.data.push(response.data.data);
             var vm = this;
             $('#messageReceipient').focus();
             setTimeout(function(){
@@ -166,12 +161,12 @@ if(el !== null) {
       {
         if(this.recipients.length)
         {
-          this.$http.post(base_url + 'ajax/create-message',{message: this.messageBody, recipients : this.recipients}).then( function(response) {
+          axios.post(base_url + 'ajax/create-message',{message: this.messageBody, recipients : this.recipients}).then( function(response) {
             if(response.status)
             {
               var vm = this;
 
-              newThread = response.body.data;
+              newThread = response.data.data;
               indexes = $.map(vm.conversations.data, function(thread, key) {
                 if(thread.id == newThread.id) {
                   return key;
@@ -225,8 +220,8 @@ if(el !== null) {
       {
         if(this.currentConversation.conversationMessages.data.length < this.currentConversation.conversationMessages.total)
         {
-          this.$http.post(this.currentConversation.conversationMessages.next_page_url).then( function(response) {
-            var latestConversations = response.body.data;
+          axios.post(this.currentConversation.conversationMessages.next_page_url).then( function(response) {
+            var latestConversations = response.data.data;
 
 
             this.currentConversation.conversationMessages.last_page =  latestConversations.conversationMessages.last_page;
@@ -249,8 +244,8 @@ if(el !== null) {
       {
         if(this.conversations.data.length < this.conversations.total)
         {
-          this.$http.post(this.conversations.next_page_url).then( function(response) {
-            var latestConversations = response.body.data;
+          axios.post(this.conversations.next_page_url).then( function(response) {
+            var latestConversations = response.data.data;
 
 
             this.conversations.last_page =  latestConversations.last_page;
@@ -432,9 +427,10 @@ var chatBoxes = new Vue({
     },
     getConversations : function()
     {
-      this.$http.post(base_url + 'ajax/get-messages').then( function(response) {
-        this.conversations = response.body.data;
+      axios.post(base_url + 'ajax/get-messages').then( function(response) {
+        this.conversations = response.data.data;
       });
+
     },
     showConversation : function(conversation)
     {
@@ -443,8 +439,8 @@ var chatBoxes = new Vue({
         if(conversation.id != this.currentConversation.id)
         {
           conversation.unread = false;
-          this.$http.post(base_url + 'ajax/get-conversation/' + conversation.id).then( function(response) {
-            this.currentConversation = response.body.data;
+          axios.post(base_url + 'ajax/get-conversation/' + conversation.id).then( function(response) {
+            this.currentConversation = response.data.data;
             this.currentConversation.user = conversation.user;
             var vm = this;
             setTimeout(function(){
@@ -460,10 +456,10 @@ var chatBoxes = new Vue({
     {
       if(conversation.newMessage != '')
       {
-        this.$http.post(base_url + 'ajax/post-message/' + conversation.id,{message: conversation.newMessage}).then( function(response) {
+        axios.post(base_url + 'ajax/post-message/' + conversation.id,{message: conversation.newMessage}).then( function(response) {
           if(response.status)
           {
-            conversation.conversationMessages.data.push(response.body.data);
+            conversation.conversationMessages.data.push(response.data.data);
 
             conversation.newMessage="";
             var vm = this;
@@ -491,10 +487,10 @@ var chatBoxes = new Vue({
         console.log('prevented second opening of chat box');
       }
       else{
-        this.$http.post(base_url + 'ajax/get-conversation/' + conversation.id).then( function(response) {
+        axios.post(base_url + 'ajax/get-conversation/' + conversation.id).then( function(response) {
           if(response.status)
           {
-            var chatBox = response.body.data;
+            var chatBox = response.data.data;
             chatBox.newMessage = "";
             chatBox.user = conversation.user;
             chatBox.minimised = false;
@@ -525,7 +521,7 @@ var chatBoxes = new Vue({
       }
       else
       {
-        this.$http.post(base_url + 'ajax/get-private-conversation/' + userid).then( function(response) {
+        axios.post(base_url + 'ajax/get-private-conversation/' + userid).then( function(response) {
           if(response.status)
           {
             this.showChatBox(response.data.data);
@@ -554,8 +550,8 @@ var chatBoxes = new Vue({
     {
       if(this.currentConversation.conversationMessages.data.length < this.currentConversation.conversationMessages.total)
       {
-        this.$http.post(this.currentConversation.conversationMessages.next_page_url).then( function(response) {
-          var latestConversations = response.body.data;
+        axios.post(this.currentConversation.conversationMessages.next_page_url).then( function(response) {
+          var latestConversations = response.data.data;
 
 
           this.currentConversation.conversationMessages.last_page =  latestConversations.conversationMessages.last_page;
@@ -587,8 +583,8 @@ var chatBoxes = new Vue({
     {
       if(this.conversations.data.length < this.conversations.total)
       {
-        this.$http.post(this.conversations.next_page_url).then( function(response) {
-          var latestConversations = response.body.data;
+        axios.post(this.conversations.next_page_url).then( function(response) {
+          var latestConversations = response.data.data;
           this.conversations.last_page =  latestConversations.last_page;
           this.conversations.next_page_url =  latestConversations.next_page_url;
           this.conversations.per_page =  latestConversations.per_page;
@@ -705,17 +701,17 @@ var conversation = new Vue({
     },
     getNotificationsCounter : function () {
       // Lets get the unread notifications once the Vue instance is ready
-      this.$http.post(base_url + 'ajax/get-unread-notifications').then(function (response) {
-        console.log(response.body)
-        this.unreadNotifications = response.body.unread_notifications;
+      axios.post(base_url + 'ajax/get-unread-notifications').then(function (response) {
+        console.log(response.data)
+        this.unreadNotifications = response.data.unread_notifications;
       });
     },
     showNotifications : function () {
       if (!this.notificationsLoaded) {
         this.notificationsLoading = true;
-        this.$http.post(base_url + 'ajax/get-notifications').then(function (response) {
+        axios.post(base_url + 'ajax/get-notifications').then(function (response) {
           console.log(response)
-          this.notifications = response.body.notifications;
+          this.notifications = response.data.notifications;
           setTimeout(function () {
             jQuery("time.timeago").timeago();
           }, 10);
@@ -728,8 +724,8 @@ var conversation = new Vue({
     getMoreNotifications : function () {
       if (this.notifications.data.length < this.notifications.total) {
         this.notificationsLoading = true;
-        this.$http.post(this.notifications.next_page_url).then(function (response) {
-          var latestNotifications = response.body.notifications;
+        axios.post(this.notifications.next_page_url).then(function (response) {
+          var latestNotifications = response.data.notifications;
 
           this.notifications.last_page = latestNotifications.last_page;
           this.notifications.next_page_url = latestNotifications.next_page_url;
@@ -750,7 +746,7 @@ var conversation = new Vue({
     ,
     markNotificationsRead : function () {
 
-      this.$http.post(base_url + 'ajax/mark-all-notifications').then(function (response) {
+      axios.post(base_url + 'ajax/mark-all-notifications').then(function (response) {
         this.unreadNotifications = 0;
         var vm = this;
         $.map(this.notifications, function (notification, key) {
@@ -761,9 +757,9 @@ var conversation = new Vue({
     ,
     getConversationsCounter : function () {
       // Lets get the unread  messages once the Vue instance is ready
-      this.$http.post(base_url + 'ajax/get-unread-messages').then(function (response) {
-        console.log(response.body.unread_conversations)
-        this.unreadConversations = response.body.unread_conversations;
+      axios.post(base_url + 'ajax/get-unread-messages').then(function (response) {
+        console.log(response.data.unread_conversations)
+        this.unreadConversations = response.data.unread_conversations;
       });
 
     }
@@ -771,8 +767,8 @@ var conversation = new Vue({
     showConversations : function () {
       if (!this.conversationsLoaded) {
         this.conversationsLoading = true;
-        this.$http.post(base_url + 'ajax/get-messages').then(function (response) {
-          this.conversations = response.body.data;
+        axios.post(base_url + 'ajax/get-messages').then(function (response) {
+          this.conversations = response.data.data;
           setTimeout(function () {
             jQuery("time.timeago").timeago();
           }, 10);
@@ -786,8 +782,8 @@ var conversation = new Vue({
       this.conversationsLoading = true;
 
       if (this.conversations.data.length < this.conversations.total) {
-        this.$http.post(this.conversations.next_page_url).then(function (response) {
-          var latestConversations = response.body.data;
+        axios.post(this.conversations.next_page_url).then(function (response) {
+          var latestConversations = response.data.data;
 
           this.conversations.last_page = latestConversations.last_page;
           this.conversations.next_page_url = latestConversations.next_page_url;
@@ -840,3 +836,24 @@ var conversation = new Vue({
   }
 });
 window.conversation = conversation
+
+
+
+var Child = {
+  template: '<div>' +
+  '' +
+  '' +
+  '</div>'
+}
+
+var timeline = new Vue({
+  el: '#timeline-app',
+  data: function () {
+    return {
+      isFirstTime: false
+    }
+  },
+  components: {
+    'my-component': Child
+  }
+})

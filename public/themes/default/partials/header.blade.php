@@ -47,7 +47,7 @@
     </nav>
 @else
     <nav class="navbar socialite navbar-default no-bg hidden-sm hidden-xs">
-        <div class="container-fluid">
+        <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand socialite" href="{{ url('/') }}">
                     <img class="socialite-logo" src="{!! url('setting/'.Setting::get('logo')) !!}"

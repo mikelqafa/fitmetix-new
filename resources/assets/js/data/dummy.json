@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "12",
+    "userLink": "//localhost:3004/fitmetix/public/mikele",
+    "userImage": "//localhost:3004/fitmetix/public/user/avatar/2017-10-22-14-07-04athletebookprofilepage.png",
+    "postTime": "2017-11-08 21:47:49+00:00",
+    "postHtml": "<p>If instead of discarding all local commits, you can make your branch identical to some other branch, tag, ref, or SHA that exists on your system.</p>",
+    "tags": [
+      "qui",
+      "voluptate",
+      "pariatur",
+      "ullamco",
+      "dolore",
+      "duis",
+      "sint"
+    ],
+    "friends": [
+      {
+        "id": 0,
+        "name": "Whitney Palmer"
+      },
+      {
+        "id": 1,
+        "name": "Workman Dean"
+      },
+      {
+        "id": 2,
+        "name": "Jenifer Armstrong"
+      }
+    ]
+  }
+]

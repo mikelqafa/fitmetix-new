@@ -15,15 +15,15 @@
 					</div>
 					<div class="panel-body nopadding">
 						<div class="socialite-form">
-							@include('flash::message')   
-							
+							@include('flash::message')
+
 							<form action="{{ url('/'.$username.'/page-settings/general')}}" method="POST">
 								{{ csrf_field() }}
-								
+
 								<div class="row">
 									<div class="col-md-6">
 										<fieldset class="form-group">
-											{{ Form::label('username', trans('common.username'), ['class' => 'control-label']) }} 
+											{{ Form::label('username', trans('common.username'), ['class' => 'control-label']) }}
 											{{ Form::text('username', $timeline->username, ['class' => 'form-control', 'placeholder' => trans('common.username'), 'disabled' => 'disabled']) }}
 											{{ Form::hidden('username', $timeline->username) }}
 										</fieldset>
@@ -40,12 +40,12 @@
 										</div>
 									</div>
 								</div>
-								
+
 								<fieldset class="form-group text-area-form">
 									{{ Form::label('about', trans('common.about'), ['class' => 'control-label']) }}
 									{{ Form::textarea('about', $timeline->about, ['class' => 'form-control', 'placeholder' => trans('messages.create_page_placeholder'), 'rows' => '2', 'cols' => '20'])}}
 								</fieldset>
-								
+
 								<div class="row">
 									<div class="col-md-6">
 										<fieldset class="form-group">

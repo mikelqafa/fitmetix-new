@@ -55,7 +55,7 @@ return [
         // this event should call to assign some assets,
         // breadcrumb template.
         'beforeRenderTheme' => function ($theme) {
-            $theme->asset()->add('style', mix('themes/default/assets/js/main.js', ''));
+            // $theme->asset()->add('style', mix('themes/default/assets/js/main.js', ''));
         },
 
         // Listen on event before render a layout,
@@ -64,7 +64,7 @@ return [
 
             'default' => function ($theme) {
                 // $theme->asset()->usePath()->add('bootstrap', 'css/bootstrap.min.css');
-                $theme->asset()->add('style', mix('themes/default/assets/css/style.css', ''));
+                // $theme->asset()->add('style', mix('themes/default/assets/css/style.css', ''));
             },
 
             'admin' => function ($theme) {

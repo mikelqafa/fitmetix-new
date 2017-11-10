@@ -1,7 +1,7 @@
 
 @if(isset($post->shared_post_id))
-  <?php 
-    $sharedOwner = $post;    
+  <?php
+    $sharedOwner = $post;
     $post = App\Post::where('id', $post->shared_post_id)->with('comments')->first();
   ?>
 @endif
@@ -42,7 +42,7 @@
                 </a>
               </li>
               @endif
-              
+
               @if(Auth::user()->id == $post->user->id)
               <li class="main-link">
                 <a href="#" data-post-id="{{ $post->id }}" class="edit-post">
@@ -69,7 +69,7 @@
                 </a>
               </li>
 
-              <li class="main-link">  
+              <li class="main-link">
                 <a href="#" class="save-post" data-post-id="{{ $post->id }}">
                   <i class="icon icon-save" aria-hidden="true"></i>
                     @if(!Auth::user()->postsSaved->contains($post->id))
@@ -82,7 +82,7 @@
                 </a>
               </li>
 
-              <li class="main-link">  
+              <li class="main-link">
                 <a href="#" class="manage-report report" data-post-id="{{ $post->id }}">
                   <i class="icon icon-report" aria-hidden="true"></i>{{ trans('common.report') }}
                   <span class="small-text">{{ trans('messages.report_text') }}</span>
@@ -112,7 +112,7 @@
             </ul>
 
           </li>
-          
+
         </ul>
       </div>
       <div class="user-avatar">
@@ -128,7 +128,7 @@
               </a>
               shared
               @endif
-            
+
             <a href="{{ url($post->user->username) }}" title="{{ '@'.$post->user->username }}" data-toggle="tooltip" data-placement="top" class="user-name user ft-user-name">
               {{ $post->user->username }}
             </a>
@@ -160,14 +160,14 @@
                   <a href="{{ url($user->username) }}" class="user"> {{ array_shift($post_tags) }} </a>
                 @endif
               @endforeach
-            
+
             @endif
             <div class="small-text">
               @if(isset($timeline))
                 @if($timeline->type != 'event' && $timeline->type != 'page' && $timeline->type != 'group')
                   @if($post->timeline->type == 'page' || $post->timeline->type == 'group' || $post->timeline->type == 'event')
-                    (posted on 
-                    <a href="{{ url($post->timeline->username) }}">{{ $post->timeline->name }}</a> 
+                    (posted on
+                    <a href="{{ url($post->timeline->username) }}">{{ $post->timeline->name }}</a>
                     {{ $post->timeline->type }})
                   @endif
                 @endif
@@ -200,9 +200,9 @@
     </div>
     <div class="panel-body">
       <div class="text-wrapper">
-        <?php 
+        <?php
               $links = preg_match_all("/(?i)\b((?:[a-z][\w-]+:(?:\/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))/", $post->description, $matches);
-              
+
               $main_description = $post->description;
               ?>
               @foreach($matches[0] as $link)
@@ -217,7 +217,7 @@
                                 <a target="_blank" href="'.$link.'">'.$main_link->getTitle().'</a><br>'.substr($main_link->getDescription(), 0, 500). '...'.'
                               </div>
                             </div>';
-                  } 
+                  }
                  $main_description = str_replace($link, $data, $main_description); ?>
               @endforeach
 
@@ -265,8 +265,8 @@
       @endif
     </div>
 
-    <?php 
-    $display_comment ="";            
+    <?php
+    $display_comment ="";
     $user_follower = $post->chkUserFollower(Auth::user()->id,$post->user_id);
     $user_setting = $post->chkUserSettings($post->user_id);
 
@@ -275,14 +275,14 @@
       if($user_follower == "only_follow") {
         $display_comment = "only_follow";
       }elseif ($user_follower == "everyone") {
-        $display_comment = "everyone"; 
+        $display_comment = "everyone";
       }
     }
     else{
       if($user_setting){
         if($user_setting == "everyone"){
           $display_comment = "everyone";
-        }            
+        }
       }
     }
 
@@ -291,7 +291,7 @@
     <div class="panel-footer socialite">
       <ul class="list-inline footer-list pos-rel">
         @if(!$post->users_liked->contains(Auth::user()->id))
-        
+
           {{--<li><a href="#" class="like-post like-{{ $post->id }}" data-post-id="{{ $post->id }}"><i class="fa fa-thumbs-o-up"></i>{{ trans('common.like') }}</a></li>
 --}}
           <li>
@@ -360,7 +360,7 @@
 
     @if($post->comments->count() > 0 || $post->user_id == Auth::user()->id || $display_comment == "everyone")
       <div class="comments-section all_comments" style="display:none">
-        <div class="comments-wrapper">         
+        <div class="comments-wrapper">
           <div class="to-comment">  <!-- to-comment -->
             @if($display_comment == "only_follow" || $display_comment == "everyone" || $user_setting == "everyone" || $post->user_id == Auth::user()->id)
             <div class="commenter-avatar">
@@ -376,12 +376,12 @@
                       <li><a href="#" id="imageComment"><i class="icon icon-photo" aria-hidden="true"></i></a></li>
                       {{-- <li><a href="#"><i class="fa fa-smile-o" aria-hidden="true"></i></a></li> --}}
                     </ul>
-                </div>                 
-                  <div id="comment-image-holder"></div>               
+                </div>
+                  <div id="comment-image-holder"></div>
               </form>
             </div>
             <div class="clearfix"></div>
-            @endif  
+            @endif
           </div><!-- to-comment -->
 
           <div class="comments post-comments-list"> <!-- comments/main-comment  -->
@@ -390,8 +390,8 @@
             {!! Theme::partial('comment',compact('comment','post')) !!}
             @endforeach
             @endif
-          </div><!-- comments/main-comment  -->            
-        </div>        
+          </div><!-- comments/main-comment  -->
+        </div>
       </div><!-- /comments-section -->
     @endif
   </div>

@@ -28,4 +28,4 @@
 	</div>
 </div>
 
-<?php echo Theme::asset()->container('footer')->usePath()->add('app', 'js/app.js'); ?>
+

@@ -8,7 +8,9 @@ use Intervention\Image\Facades\Image;
 | API routes
 |--------------------------------------------------------------------------
 */
-
+Route::get('ajax/dummy', function () {
+   return ['laravel', 'php', 'JavaScript'];
+});
 Route::get('new/pass', function () {
     return \Illuminate\Support\Facades\Hash::make('fitmetix');
 });

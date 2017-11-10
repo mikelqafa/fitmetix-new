@@ -28,4 +28,5 @@
 	</div>
 </div>
 
-{!! Theme::asset()->container('footer')->usePath()->add('app', 'js/app.js') !!}
+{{--
+{!! Theme::asset()->container('footer')->usePath()->add('app', 'js/app.js') !!}--}}

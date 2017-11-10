@@ -11,10 +11,13 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.js(['resources/assets/js/webpack/notification.js'], 'public/js/notification.js');
+mix.js(['resources/assets/js/main.js'], 'public/js/notification.js');
 
-// mix.sass('resources/assets/sass/bootstrap.scss', 'public/css/bootstrap.css')
+mix.browserSync({
+      proxy: 'http://localhost/fitmetix/public/'
+});
 return
+// mix.sass('resources/assets/sass/bootstrap.scss', 'public/css/bootstrap.css')
 mix.sass('resources/assets/sass/app.scss', 'public/css/style.css')
     .combine([
       'resources/assets/sass/style/animate.css',
@@ -32,8 +35,4 @@ mix.sass('resources/assets/sass/app.scss', 'public/css/style.css')
       'public/css/style.css'
     ], 'public/css/app.css')
 
-mix.disableNotifications();
 
-mix.browserSync({
-  proxy: 'http://localhost/fitmetix/public/'
-});

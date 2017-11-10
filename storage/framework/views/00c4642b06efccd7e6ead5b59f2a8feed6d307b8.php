@@ -51,7 +51,7 @@
     </nav>
 <?php else: ?>
     <nav class="navbar socialite navbar-default no-bg hidden-sm hidden-xs">
-        <div class="container-fluid">
+        <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand socialite" href="<?php echo e(url('/')); ?>">
                     <img class="socialite-logo" src="<?php echo url('setting/'.Setting::get('logo')); ?>"
