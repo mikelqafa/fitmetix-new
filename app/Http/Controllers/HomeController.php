@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Theme;
 use Setting;
+use App\Timeline;
+use App\Post;
 
 class HomeController extends Controller
 {
@@ -60,13 +62,5 @@ class HomeController extends Controller
         $theme->setTitle(Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
         return $theme->scope('landing')->render();
     }
-
-    public function getLocation(Request $request)
-    {
-        $location = str_replace(' ', '+', $request->location);
-
-        $map_url = 'http://www.google.com/maps/place/'.$location;
-
-        return redirect($map_url);
-    }
+    
 }

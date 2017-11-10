@@ -18,7 +18,7 @@ Route::get('new/pass', function () {
 Route::get('/contact', 'PageController@contact');
 Route::post('/contact', 'PageController@saveContact');
 Route::get('/share-post/{id}', 'PageController@sharePost');
-Route::get('/get-location/{location}', 'HomeController@getLocation');
+Route::get('/get-location/{location}', 'TimelineController@getLocation');
 
 Route::group(['prefix' => 'api', 'middleware' => ['auth', 'cors'], 'namespace' => 'API'], function () {
     Route::group(['prefix' => 'v1'], function () {
@@ -96,7 +96,6 @@ Route::post('/member/updatepage-role', 'TimelineController@assignPageMemberRole'
 Route::get('/post/{post_id}', 'TimelineController@singlePost');
 
 Route::get('allnotifications', 'TimelineController@allNotifications');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -366,6 +365,8 @@ Route::group(['prefix' => '/{username}/event-settings', 'middleware' => ['auth',
 | and give it the controller to call when that URI is requested.
 |
 */
+
+Route::post('get-posts','TimelineController@postAPI');
 
 Route::post('ajax/switch-language', 'TimelineController@switchLanguage');
 

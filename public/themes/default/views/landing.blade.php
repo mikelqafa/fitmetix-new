@@ -3,7 +3,6 @@
     <h2>{!! Setting::get('home_welcome_message') !!}</h2>
   </div>
 
-
 <div class="row tpadding-20">
   <div class="col-md-7 features-list">
     <h2>{!! Setting::get('home_list_heading') !!}</h2>

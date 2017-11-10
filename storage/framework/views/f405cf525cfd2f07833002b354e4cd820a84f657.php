@@ -5,6 +5,15 @@
 				<div class="visible-lg col-lg-2">
 					<?php echo Theme::partial('home-leftbar',compact('trending_tags')); ?>
 
+
+					<div class="btn-group-vertical">
+					    <button type="button" class="btn btn-warning btn-xs switch-language" data-language="en">English</button>
+					    <button type="button" class="btn btn-warning btn-xs switch-language" data-language="de">German</button>
+					    <button type="button" class="btn btn-warning btn-xs switch-language" data-language="it">Italian</button>
+					    <button type="button" class="btn btn-warning btn-xs switch-language" data-language="fr">French</button>
+					    <button type="button" class="btn btn-warning btn-xs switch-language" data-language="es">Spanish</button>
+					    <button type="button" class="btn btn-warning btn-xs switch-language" data-language="tr">Turkish</button>
+					 </div> 
 				</div>
               
                 <div class="col-md-7 col-lg-6">

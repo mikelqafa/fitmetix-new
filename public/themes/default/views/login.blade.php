@@ -36,7 +36,7 @@
                     </a>
                 </div>
                 <div>
-                    <form method="POST" class="login-form navbar-form" action="/login">
+                    <form method="POST" class="login-form navbar-form" action="{{ url('login') }}">
                         <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                         <fieldset class="form-group mail-form ">
                             <input class="form-control" id="email" placeholder="Enter E-mail or username" name="email" type="text">

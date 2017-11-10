@@ -2677,4 +2677,68 @@ class TimelineController extends AppBaseController
         App::setLocale($request->language);
         return response()->json(['status' => '200', 'message' => 'Switched language to '.$request->language]);
     }
+
+    public function postAPI(Request $request)
+    {
+        $timeline = Timeline::where('username', $request->username)->first();
+
+        $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('comments')->paginate($request->paginate);
+        $theme = Theme::uses('default')->layout('default');
+
+        return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline]]);
+    }
+
+    public function getLocation(Request $request)
+    {
+        $location = $request->location;
+
+        $mode = "showfeed";
+        $user_post = 'showfeed';
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+
+        $timeline = Timeline::where('username', Auth::user()->username)->first();
+
+        $id = Auth::id();
+
+        $trending_tags = trendingTags();
+        $suggested_users = suggestedUsers();
+        $suggested_groups = suggestedGroups();
+        $suggested_pages = suggestedPages();
+
+        // Check for hashtag
+        if ($request->hashtag) {
+            $hashtag = '#'.$request->hashtag;
+
+            $posts = Post::where([['description', 'like', "%{$hashtag}%"],['location','like',$location],['active',1]])->latest()->paginate(Setting::get('items_page'));
+        } // else show the normal feed
+        else {
+            $posts = Post::where('location',$location)->whereIn('user_id', function ($query) use ($id) {
+                $query->select('leader_id')
+                    ->from('followers')
+                    ->where('follower_id', $id);
+            })->orWhere('user_id', $id)->where([['active', 1],['location','like',$location]])->latest()->paginate(Setting::get('items_page'));
+        }
+
+
+        $announcement = Announcement::find(Setting::get('announcement'));
+        if ($announcement != null) {
+            $chk_isExpire = $announcement->chkAnnouncementExpire($announcement->id);
+
+            if ($chk_isExpire == 'notexpired') {
+                $active_announcement = $announcement;
+                if (!$announcement->users->contains(Auth::user()->id)) {
+                    $announcement->users()->attach(Auth::user()->id);
+                }
+            }
+        }
+
+
+        // $next_page_url = url('ajax/get-more-feed-by-location?page=2&ajax=true&hashtag='.$request->hashtag.'&username='.Auth::user()->username);
+
+        $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+
+        return $theme->scope('home', compact('timeline', 'posts', 'next_page_url', 'trending_tags', 'suggested_users', 'active_announcement', 'suggested_groups', 'suggested_pages', 'mode', 'user_post'))
+        ->render();
+        
+    }
 }
