@@ -7,11 +7,12 @@
 		<h3 class="panel-title">{{ trans('common.create_event') }}</h3>
 		@endif						
 	</div>
-	<div class="panel-body nopadding">  
+	<div class="panel-body nopadding">
 		@if( env('GOOGLE_MAPS_API_KEY') == NULL)
 		<div class="col-md-12">
 			<div class="alert alert-warning">
 				<i class="fa fa-warning"></i> Please add Google maps API key in "Environment settings" available in admin panel to create an event as it needs location to be added.
+				}
 			</div>
 		</div>
 

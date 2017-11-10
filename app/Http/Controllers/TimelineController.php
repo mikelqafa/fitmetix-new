@@ -1995,6 +1995,9 @@ class TimelineController extends AppBaseController
                 'end_date'    => date('Y-m-d H:i', strtotime($request->end_date)),
                 'invite_privacy'        => Setting::get('invite_privacy'),
                 'timeline_post_privacy' => Setting::get('event_timeline_post_privacy'),
+                'focus' => $request->focus,
+                'gender' => $request->gender,
+                'frequency' => $request->frequency,
                 ]);
 
             if ($request->group_id) {
