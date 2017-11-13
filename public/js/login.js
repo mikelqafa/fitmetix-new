@@ -46,11 +46,10 @@ var LoginForm = function () {
         'username' : $('input[name=username]').val(),
         'affiliate' : $('input[name=affiliate]').val(),
         'birthday' : $('input[name=birthday]').val(),
-        'gender' : $('input[name=gender]').val(),
+        'gender' : $('#gender').val(),
         'password' : $('input[name=password]').val(),
         '_token': $('input[name=_token]').val()
       };
-
       var submitBtn = $('#submit')
       submitBtn.prop('disabled',true);
       $.ajax({
@@ -61,12 +60,19 @@ var LoginForm = function () {
         if(e.status == 200) {
           window.location = e.url
         } else {
-          var config = {
-            messageText:  e.message,
-            alignCenter: false,
-            autoClose: false
-          }
-          window.materialSnackBar(config)
+          console.log(e.err_result)
+          var c = 0;
+          $.each(e.err_result, function( index, value ) {
+            var config = {
+              messageText:  value,
+              alignCenter: false,
+              autoClose: true
+            }
+            setTimeout(function(){
+              window.materialSnackBar(config)
+            }, 2000*c)
+            c++;
+          });
         }
       }).always(function(e){
         submitBtn.prop('disabled',false)

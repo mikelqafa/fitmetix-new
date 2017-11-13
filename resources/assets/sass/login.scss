@@ -196,7 +196,7 @@ color: inherit !important;
     }
 
     .form-group__adjust{
-      margin-bottom:15px;
+      margin-bottom:10px;
     }
   }
   .mobile-align-center{
@@ -264,26 +264,24 @@ color: inherit !important;
   }
   .ft-login__header {
     top:112px !important;
-    background-color: transparent;
-    padding-top: 0;
-    padding-bottom: 0;
 
     .form-control {
-      background-color: transparent;
-      border-color: #fff;
+     /* background-color: transparent;*/
+      /*TODO*/
+     /* border-color: #fff;
 
-      &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      &::-webkit-input-placeholder { !* Chrome/Opera/Safari *!
         color: rgba(255,255,255,.9);
       }
-      &::-moz-placeholder { /* Firefox 19+ */
+      &::-moz-placeholder { !* Firefox 19+ *!
         color: rgba(255,255,255,.9);
       }
-      &:-ms-input-placeholder { /* IE 10+ */
+      &:-ms-input-placeholder { !* IE 10+ *!
         color: rgba(255,255,255,.9);
       }
-      &:-moz-placeholder { /* Firefox 18- */
+      &:-moz-placeholder { !* Firefox 18- *!
         color: rgba(255,255,255,.9);
-      }
+      }*/
     }
   }
   .mobile-layout-column__register {
@@ -318,7 +316,7 @@ color: inherit !important;
   
   .ft-login {
     .form-control{
-      color: #fff;
+     /* color: #fff;*/
     }
     .btn--icon, .btn-submit {
       max-height: 34px;
@@ -371,11 +369,4 @@ color: inherit !important;
 .footer__wrapper{
   flex-grow: 1;
   width: 100%;
-}
-
-input[type=date]::-webkit-inner-spin-button {
-  color: #fff;
-}
-input[type=date]::-webkit-calendar-picker-indicator {
-  color: #fff;
 }

@@ -65,7 +65,7 @@
                     <div class="md-layout layout-m-t-0 layout-p-r-0" style="width: 100%">
                         <div class="md-layout-spacer"></div>
                         <div class="form-group mobile-full-width md-layout layout-m-l-1 layout-m-l-0--sm">
-                            <button type="submit" class="btn btn-primary btn-submit">Create Account</button>
+                            <button type="submit" id="submit" class="btn btn-primary btn-submit">Create Account</button>
                             <a href="{!! url('account/facebook') !!}" class="btn btn--icon btn-primary layout-m-l-0">
                                 <object type="image/svg+xml" data="{{asset('fonts/facebook.svg')}}" class="splash">
                                 </object>
