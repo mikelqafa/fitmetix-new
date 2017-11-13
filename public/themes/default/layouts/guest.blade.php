@@ -15,12 +15,18 @@
         <link rel="icon" type="image/x-icon" href="{!! url('setting/'.Setting::get('favicon')) !!}">
 
         <title>{{ Theme::get('title') }}</title>
-        <link href="{{ asset('fitmetixfont/font.css') }}" rel="stylesheet">
         <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-        <link href="{{ Theme::asset()->url('css/custom.css') }}" rel="stylesheet">
-        {!! Theme::asset()->styles() !!}
-
+        <link href="{{ asset('fitmetixfont/font.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/login.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/snackbar.css') }}" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Finger+Paint" rel="stylesheet">
+        <style>
+            .md-button--icon {
+                width: 32px;
+                height: 32px
+                display: inline-block;
+            }
+        </style>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -34,20 +40,31 @@
         var base_url = "{{ url('/') }}/";
         var theme_url = "{!! Theme::asset()->url('') !!}";
         </script>
-        {!! Theme::asset()->scripts() !!}
         @if(Setting::get('google_analytics') != NULL)
             {!! Setting::get('google_analytics') !!}
         @endif
     </head>
     <body @if(Setting::get('enable_rtl') == 'on') class="direction-rtl" @endif>
-        <div class="">
-            {!! Theme::partial('guest-header') !!}    
-        </div>
-        
         {!! Theme::content() !!}
-        
         {!! Theme::partial('footer') !!}
-
-        {!! Theme::asset()->container('footer')->scripts() !!}
+        <script src="{{ asset('js/bundle.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('js/login.js') }}" type="text/javascript"></script>
+        <link href="{{asset('js/owl/dist/assets/owl.carousel.min.css')}}" rel="stylesheet">
+        <link href="{{asset('js/owl/dist/assets/owl.theme.default.css')}}" rel="stylesheet">
+        <script src="{{asset('js/jquery.min.js')}}" type="text/javascript"></script>
+        <script src="{{asset('js/owl/dist/owl.carousel.min.js')}}" type="text/javascript"></script>
+        <script>
+            $(document).ready(function () {
+                $('#slider-owl').owlCarousel({
+                    loop:true,
+                    margin:0,
+                    nav:false,
+                    items: 1,
+                    dots: false,
+                    autoplay:true,
+                    animateOut: 'fadeOut'
+                });
+            })
+        </script>
     </body>
 </html>

@@ -20,8 +20,9 @@ Vue.config.productionTip = true
 /* eslint-disable no-new */
 
 new Vue({
-  el: '#timeline-app',
+  el: '#app',
   components: {
-    'app-post': Post
+    'app-post': Post,
+    'app-login': Login
   }
 })

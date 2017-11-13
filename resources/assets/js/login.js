@@ -1,6 +1,11 @@
 
 $(function () {
 
+  $('.login-form').on('submit', function (e)) {
+    e.preventDefault()
+    alert()
+  }
+
     $('.login-form').ajaxForm({
         url: SP_source() + 'login',
 
@@ -20,7 +25,7 @@ $(function () {
                 window.location = responseText.url;
             } else {
                 //console.log(responseText.message)
-                var n = noty({
+              noty({
                    text: responseText.message,
                    layout: 'topRight',
                    type : 'error',
@@ -32,13 +37,11 @@ $(function () {
                            easing: 'swing', // unavailable - no need
                            speed: 500 // unavailable - no need
                          }
-                       });
+                });
             }
 
         }
     });
-
-
 
     $('.signup-form').ajaxForm({
         url: SP_source() + 'register',
@@ -73,6 +76,5 @@ $(function () {
 
         }
     });
-
 
 });

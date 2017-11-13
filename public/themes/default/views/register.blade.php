@@ -1,168 +1,139 @@
-<div class="container">
-    <div class="text-center welcome-message">
-        <h2>{!! Setting::get('home_welcome_message') !!}</h2>
+<style>
+    .ft-login__header{
+        top:0;
+    }
+</style>
+<div class="ft-login">
+
+    <div class="ft-mobile-logo ft-mobile-logo--register md-layout md-align md-align--center-center">
+        <a class="ft-header__logo" href="{{ url('/') }}">
+            <img src="{!! url('setting/'.Setting::get('logo')) !!}" alt="{{ Setting::get('site_name') }}" title="{{ Setting::get('site_name') }}" />
+        </a>
     </div>
 
+    <div class="ft-login__header ft-login__header--register">
+        <div class="container">
+            <div class="md-layout md-layout--row md-align mobile-align-center md-align--start-start">
+                <a class="ft-header__logo" href="{{ url('/') }}">
+                    <img src="{!! url('setting/'.Setting::get('logo')) !!}" alt="{{ Setting::get('site_name') }}" title="{{ Setting::get('site_name') }}" />
+                </a>
+                <div class="md-layout-spacer md-layout-spacer--mobile"></div>
+                <form method="POST" id="signup-form" class="signup-form mobile-align-center md-layout md-layout--column ft-login__wrapper md-align md-align--center-start" action="{{ url('/register') }}">
 
-    <div class="row tpadding-20">
-        <div class="col-md-12">
-
-            <h2 class="register-heading">Create an Account</h2>
-            <div class="panel panel-default">
-                <div class="panel-body nopadding">
-
-                    <div class="login-bottom">
-
-                        <ul class="signup-errors text-danger list-unstyled"></ul>
-
-                        <form method="POST" class="signup-form" action="{{ url('/register') }}">
-                            {{ csrf_field() }}
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <fieldset class="form-group{{ $errors->has('affiliate') ? ' has-error' : '' }}">
-                                        {{ Form::label('affiliate', trans('auth.affiliate_code')) }}<i class="optional">(optional)</i>
-                                        @if(isset($_GET['affiliate']))
-                                            {{ Form::text('affiliate', $_GET['affiliate'], ['class' => 'form-control', 'id' => 'affiliate', 'disabled' =>'disabled']) }}
-                                            {{ Form::hidden('affiliate', $_GET['affiliate']) }}
-                                        @else
-                                            {{ Form::text('affiliate', NULL, ['class' => 'form-control', 'id' => 'affiliate', 'placeholder'=> trans('auth.affiliate_code')]) }}
-                                        @endif
-
-                                        @if ($errors->has('affiliate'))
-                                            <span class="help-block">
-                    {{ $errors->first('affiliate') }}
-                  </span>
-                                        @endif
-                                    </fieldset>
-                                </div>
-                                <div class="col-md-6">
-                                    <fieldset class="form-group required {{ $errors->has('email') ? ' has-error' : '' }}">
-                                        {{ Form::label('email', trans('auth.email_address')) }}
-                                        {{ Form::text('email', NULL, ['class' => 'form-control', 'id' => 'email', 'placeholder'=> trans('auth.welcome_to')]) }}
-                                        @if ($errors->has('email'))
-                                            <span class="help-block">
-                    {{ $errors->first('email') }}
-                  </span>
-                                        @endif
-                                    </fieldset>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <fieldset class="form-group required {{ $errors->has('username') ? ' has-error' : '' }}">
-                                        {{ Form::label('username', trans('common.username')) }}
-                                        {{ Form::text('username', NULL, ['class' => 'form-control', 'id' => 'username', 'placeholder'=> trans('common.username')]) }}
-                                        @if ($errors->has('username'))
-                                            <span class="help-block">
-                                                {{ $errors->first('username') }}
-                                            </span>
-                                        @endif
-                                    </fieldset>
-                                </div>
-                                <div class="col-md-6">
-                                    <fieldset class="form-group required {{ $errors->has('gender') ? ' has-error' : '' }}">
-                                        {{ Form::label('gender', trans('common.gender')) }}
-                                        {{ Form::select('gender', array('female' => 'Female', 'male' => 'Male', 'other' => 'None'), null, ['placeholder' => trans('auth.select_gender'), 'class' => 'form-control']) }}
-                                        @if ($errors->has('gender'))
-                                            <span class="help-block">
-                    {{ $errors->first('gender') }}
-                  </span>
-                                        @endif
-                                    </fieldset>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                
-                                <div class="col-md-6">
-                                    <fieldset class="form-group required {{ $errors->has('password') ? ' has-error' : '' }}">
-                                        {{ Form::label('password', trans('auth.password')) }}
-                                        {{ Form::password('password', ['class' => 'form-control', 'id' => 'password', 'placeholder'=> trans('auth.password')]) }}
-                                        @if ($errors->has('password'))
-                                            <span class="help-block">
-                                                {{ $errors->first('password') }}
-                                            </span>
-                                        @endif
-                                    </fieldset>
-                                </div>
-
-                                <div class="col-md-6">
-                                    @if(Setting::get('birthday') == "on")
-                                    <div class="col-md-6">
-                                        <fieldset class="form-group">
-                                            {{ Form::label('birthday', trans('common.birthday')) }}<i class="optional">(optional)</i>
-                                            <div class="input-group date datepicker">
-                    <span class="input-group-addon addon-left calendar-addon">
-                      <span class="fa fa-calendar"></span>
-                    </span>
-                                                {{ Form::text('birthday', NULL, ['class' => 'form-control', 'id' => 'datepicker1']) }}
-                                                <span class="input-group-addon addon-right angle-addon">
-                      <span class="fa fa-angle-down"></span>
-                    </span>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                @endif
-
-                                @if(Setting::get('city') == "on")
-                                    <div class="col-md-6">
-                                        <fieldset class="form-group">
-                                            {{ Form::label('city', trans('common.current_city')) }}<i class="optional">(optional)</i>
-                                            {{ Form::text('city', NULL, ['class' => 'form-control', 'placeholder' => trans('common.current_city')]) }}
-                                        </fieldset>
-                                    </div>
-                                @endif  
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                @if(Setting::get('captcha') == "on")
-                                    <div class="col-md-12">
-                                        <fieldset class="form-group{{ $errors->has('captcha_error') ? ' has-error' : '' }}">
-                                            {!! app('captcha')->display() !!}
-                                            @if ($errors->has('captcha_error'))
-                                                <span class="help-block">
-                    {{ $errors->first('captcha_error') }}
-                  </span>
-                                            @endif
-                                        </fieldset>
-                                    </div>
-                                @endif
-                            </div>
-
-                            {{ Form::button(trans('auth.signup_to_dashboard'), ['type' => 'submit','class' => 'btn btn-success btn-submit']) }}
-                        </form>
-                    </div>
-                    @if((env('GOOGLE_CLIENT_ID') != NULL && env('GOOGLE_CLIENT_SECRET') != NULL) ||
-                      (env('TWITTER_CLIENT_ID') != NULL && env('TWITTER_CLIENT_SECRET') != NULL) ||
-                      (env('FACEBOOK_CLIENT_ID') != NULL && env('FACEBOOK_CLIENT_SECRET') != NULL) ||
-                      (env('LINKEDIN_CLIENT_ID') != NULL && env('LINKEDIN_CLIENT_SECRET') != NULL) )
-                        <div class="divider-login">
-                            <div class="divider-text"> {{ trans('auth.login_via_social_networks') }}</div>
+                    <div class="md-layout layout-m-b-1 layout-m-b-1--register md-layout-spacer mobile-layout-column__register mobile-layout-column md-layout--row md-align md-align-start-center">
+                        <div class="mail-form  form-group form-group__adjust">
+                            <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                            <input class="form-control" id="username" placeholder="Username" name="username" type="text">
                         </div>
-                    @endif
-                    <ul class="list-inline social-connect">
-                        @if(env('GOOGLE_CLIENT_ID') != NULL && env('GOOGLE_CLIENT_SECRET') != NULL)
-                            <li><a href="{{ url('google') }}" class="btn btn-social google-plus"><span class="social-circle"><i class="fa fa-google-plus" aria-hidden="true"></i></span></a></li>
-                        @endif
+                        <div class="form-group form-group__adjust">
+                            <input class="form-control" id="email" placeholder="Email" name="email" type="email" value="">
+                        </div>
+                    </div>
 
-                        @if(env('TWITTER_CLIENT_ID') != NULL && env('TWITTER_CLIENT_SECRET') != NULL)
-                            <li><a href="{{ url('twitter') }}" class="btn btn-social tw"><span class="social-circle"><i class="fa fa-twitter" aria-hidden="true"></i></span></a></li>
-                        @endif
+                    <div class="md-layout layout-m-b-1 layout-m-b-1--register md-layout-spacer mobile-layout-column__register mobile-layout-column md-layout--row md-align md-align-start-center">
+                        <div class="mail-form  form-group form-group__adjust">
+                            <input class="form-control" id="password" placeholder="Password" name="password" type="password">
+                        </div>
+                        <div class="form-group form-group__adjust">
+                            <input class="form-control" id="referral_code" placeholder="Referrer code" name="affiliate" type="text" value="">
+                        </div>
+                    </div>
 
-                        @if(env('FACEBOOK_CLIENT_ID') != NULL && env('FACEBOOK_CLIENT_SECRET') != NULL)
-                            <li><a href="{{ url('facebook') }}" class="btn btn-social fb"><span class="social-circle"><i class="fa fa-facebook" aria-hidden="true"></i></span></a></li>
-                        @endif
 
-                        @if(env('LINKEDIN_CLIENT_ID') != NULL && env('LINKEDIN_CLIENT_SECRET') != NULL)
-                            <li><a href="{{ url('linkedin') }}" class="btn btn-social linkedin"><span class="social-circle"><i class="fa fa-linkedin" aria-hidden="true"></i></span></a></li>
-                        @endif
-                    </ul>
-                </div>
-            </div><!-- /panel -->
+                    <div class="md-layout md-layout-spacer mobile-layout-column__register mobile-layout-column md-layout--row md-align md-align-start-center">
+                        <div class="mail-form  form-group form-group__adjust">
+                            <input class="form-control" id="datepicker1" placeholder="Birthday" name="birthday" type="text">
+                        </div>
+                        <div class="form-group form-group__adjust">
+                            <select class="form-control" id="gender" name="gender">
+                                <option value="">Gender</option>
+                                <option value="female">Female</option>
+                                <option value="male">Male</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layout-m-t-0 layout-m-t-0--register md-layout md-layout-flex layout-p-r-0" style="width: 100%">
+                        <div class="md-layout-spacer"></div>
+                        <ul class="list-inline layout-p-l-1--sm  list-inline__login  layout-p-r-1--sm">
+                            <li>
+                                <a class="" href="{!! url('register') !!}" class="forgot-password">
+                                    <i class="icon icon-user"></i> New user?
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{!! url('password/reset') !!}" class="layout-m-l-0">
+                                    Forgot password?
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="md-layout layout-m-t-0 layout-p-r-0" style="width: 100%">
+                        <div class="md-layout-spacer"></div>
+                        <div class="form-group mobile-full-width md-layout layout-m-l-1 layout-m-l-0--sm">
+                            <button type="submit" class="btn btn-primary btn-submit">Create Account</button>
+                            <a href="{!! url('account/facebook') !!}" class="btn btn--icon btn-primary layout-m-l-0">
+                                <object type="image/svg+xml" data="{{asset('fonts/facebook.svg')}}" class="splash">
+                                </object>
+                            </a>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
         </div>
-    </div><!-- /row -->
-</div><!-- /container -->
-{!! Theme::asset()->container('footer')->usePath()->add('app', 'js/app.js') !!}
+    </div>
+    <div class="ft-login__slider">
+        <div id="slider-owl"  class="owl-carousel ft-carousel owl-theme">
+            <div class="item">
+                <div class="ft-carousel__cover" style="background-image: url({{asset('images/jogging-2343558_640.png')}})">
+                    <div class="container pos-rel">
+                        <div class="appearContainer ft-carousel__text ft-carousel__text--register">
+                            <span class="font-curly">
+                                push yourself every time you hit the ground
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ft-carousel__cover" style="background-image: url({{asset('images/2.jpeg')}})">
+                    <div class="container pos-rel">
+                        <div class="appearContainer ft-carousel__text ft-carousel__text--register">
+                            <span class="font-curly">
+                                When nothing goes right <br/>
+                                go lift
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ft-carousel__cover" style="background-image: url({{asset('images/3.jpeg')}})">
+                    <div class="container pos-rel">
+                        <div class="appearContainer ft-carousel__text ft-carousel__text--register">
+                            <span class="font-curly">
+                                WORK OUT. EAT WELL. BE PATIENT
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ft-carousel__cover" style="background-image: url({{asset('images/4.jpeg')}})">
+                    <div class="container pos-rel">
+                        <div class="appearContainer ft-carousel__text ft-carousel__text--register">
+                            <span class="font-curly">
+                                Fit is Not a Destination
+                                <br/>
+                                it is a way of life
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a href="{!! url('register') !!}" class="btn btn-success hidden">Create Account</a>

@@ -1,78 +1,96 @@
+var LoginForm = function () {
+  var handleLoginForm = function () {
+    $('#login-form').on('submit', function (e) {
+      e.preventDefault()
+      var post_url = SP_source() + 'login'
+      var formData = {
+        'email' : $('input[name=email]').val(),
+        'password' : $('input[name=password]').val(),
+        '_token': $('input[name=_token]').val()
+      };
 
-$(function () {
-
-    $('.login-form').ajaxForm({
-        url: SP_source() + 'login',
-
-        beforeSend: function() {
-            login_form = $('.login-form');
-            login_button = login_form.find('.btn-submit');
-            login_button.attr('disabled', true);
-            alert('here');
-            $('.login-progress').removeClass('hidden');
-            $('.login-errors').html('');
-        },
-
-        success: function(responseText) {
-          login_button.attr('disabled', false);
-          $('.login-progress').addClass('hidden');
-            if (responseText.status == 200) {
-                window.location = responseText.url;
-            } else {
-                //console.log(responseText.message)
-                var n = noty({
-                   text: responseText.message,
-                   layout: 'topRight',
-                   type : 'error',
-                   theme : 'relax',
-                   timeout:5000,
-                   animation: {
-                           open: 'animated fadeIn', // Animate.css class names
-                           close: 'animated fadeOut', // Animate.css class names
-                           easing: 'swing', // unavailable - no need
-                           speed: 500 // unavailable - no need
-                         }
-                       });
-            }
-
+      var submitBtn = $('#submit')
+      submitBtn.prop('disabled',true);
+      $.ajax({
+        url : post_url,
+        type: "post",
+        data: formData
+      }).done(function(e){ //
+        if(e.status == 200) {
+          window.location = e.url
+        } else {
+          var config = {
+            messageText:  e.message,
+            alignCenter: false,
+            autoClose: false
+          }
+          window.materialSnackBar(config)
         }
-    });
-
-
-
-    $('.signup-form').ajaxForm({
-        url: SP_source() + 'register',
-
-        beforeSend: function() {
-            signup_form = $('.signup-form');
-            signup_button = signup_form.find('.btn-submit');
-            signup_button.attr('disabled', true).append(' <i class="fa fa-spinner fa-pulse "></i>');
-        },
-
-        success: function(responseText) {
-          // console.log(jQuery.parseJSON(responseText));
-          signup_button.attr('disabled', false).find('.fa-spinner').addClass('hidden');
-            if (responseText.status == 200) {
-                if(responseText.emailnotify == "on")
-                {
-                    window.location = SP_source() + 'login?echk=' + responseText.emailnotify;
-                }
-                else
-                {
-                    window.location = SP_source();    
-                }
-                
-            } else {
-
-                $('.signup-errors').html('');
-                $.each(responseText.err_result, function(key, value) {
-                    $('.signup-errors').append('<li>'+ value[0] + '</li>');
-                });
-
-            }
-
+      }).always(function(e){
+        submitBtn.prop('disabled',false)
+      }).fail(function(e){
+        var config = {
+          messageText:  'Authentication failed. Please try again!',
+          alignCenter: false,
+          autoClose: true
         }
-    });
+        window.materialSnackBar(config)
+      })
+    })
 
 
-});
+    $('#signup-form').on('submit', function (e) {
+      e.preventDefault()
+      var post_url = SP_source() + 'login'
+      var formData = {
+        'email' : $('input[name=email]').val(),
+        'username' : $('input[name=username]').val(),
+        'affiliate' : $('input[name=affiliate]').val(),
+        'birthday' : $('input[name=birthday]').val(),
+        'gender' : $('input[name=gender]').val(),
+        'password' : $('input[name=password]').val(),
+        '_token': $('input[name=_token]').val()
+      };
+
+      var submitBtn = $('#submit')
+      submitBtn.prop('disabled',true);
+      $.ajax({
+        url : post_url,
+        type: "post",
+        data: formData
+      }).done(function(e){ //
+        if(e.status == 200) {
+          window.location = e.url
+        } else {
+          var config = {
+            messageText:  e.message,
+            alignCenter: false,
+            autoClose: false
+          }
+          window.materialSnackBar(config)
+        }
+      }).always(function(e){
+        submitBtn.prop('disabled',false)
+      }).fail(function(e){
+        var config = {
+          messageText:  'Authentication failed. Please try again!',
+          alignCenter: false,
+          autoClose: true
+        }
+        window.materialSnackBar(config)
+      })
+    })
+
+  }
+  var  submitAjaxForm = function (post_url, fd) {
+
+
+  }
+  return {
+    //main function to initiate
+    initLogin: function () {
+      handleLoginForm();
+    }
+  };
+}();
+LoginForm.initLogin()

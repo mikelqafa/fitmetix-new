@@ -74,12 +74,12 @@ return [
 
             'guest' => function ($theme) {
                 // $theme->asset()->usePath()->add('bootstrap', 'css/bootstrap.min.css');
-                $theme->asset()->add('style', mix('themes/default/assets/css/style.css', ''));
+                // $theme->asset()->add('style', mix('themes/default/assets/css/style.css', ''));
             },
 
             'share' => function ($theme) {
                 // $theme->asset()->usePath()->add('bootstrap', 'css/bootstrap.min.css');
-                $theme->asset()->add('style', mix('themes/default/assets/css/style.css', ''));
+                // $theme->asset()->add('style', mix('themes/default/assets/css/style.css', ''));
             },
 
         ],

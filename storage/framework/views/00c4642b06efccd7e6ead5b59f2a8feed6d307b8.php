@@ -1,52 +1,14 @@
 <?php if(Auth::guest()): ?>
-    <nav class="navbar socialite navbar-default no-bg guest-nav hidden-sm hidden-xs">
+    <nav class="navbar socialite navbar-default no-bg hidden-sm hidden-xs">
         <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand socialite" href="<?php echo e(url('/')); ?>">
-                    <img class="socialite-logo" src="<?php echo url('setting/'.Setting::get('logo')); ?>"
-                         alt="<?php echo e(Setting::get('site_name')); ?>" title="<?php echo e(Setting::get('site_name')); ?>">
-                </a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-4">
-                <form class="navbar-form navbar-left form-left" role="search">
-                    <div class="input-group no-margin">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
-                        </span>
-                        <input type="text" id="navbar-search" data-url="<?php echo e(URL::to('api/v1/timelines')); ?>"
-                               class="form-control"
-                               placeholder="<?php echo e(trans('messages.search_placeholder')); ?>">
-                    </div>
-                </form>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <form method="POST" class="login-form navbar-form navbar-right"
-                          action="<?php echo e(url('/login')); ?>">
-                        <?php echo e(csrf_field()); ?>
-
-                        <fieldset
-                                class="form-group mail-form <?php echo e($errors->has('email') ? ' has-error' : ''); ?>">
-                            <?php echo e(Form::text('email', NULL, ['class' => 'form-control', 'id' => 'email', 'placeholder'=> trans('auth.enter_email_or_username')])); ?>
-
-                        </fieldset>
-                        <fieldset class="form-group<?php echo e($errors->has('password') ? ' has-error' : ''); ?>">
-                            <?php echo e(Form::password('password', ['class' => 'form-control', 'id' => 'password', 'placeholder'=> trans('auth.password')])); ?>
-
-                            <ul class="list-inline">
-                                <li>
-                                    <a href="<?php echo e(url('/register')); ?>" class="forgot-password"><i
-                                                class="fa fa-user-plus"></i> Create new Account</a>
-                                </li>
-                                <li>
-                                    <a href="<?php echo e(url('/password/reset')); ?>" class="forgot-password"><i
-                                                class="fa fa-refresh"></i> Forgot your password</a>
-                                </li>
-                            </ul>
-                        </fieldset>
-                        <?php echo e(Form::button( trans('common.signin') , ['type' => 'submit','class' => 'btn btn-success btn-submit'])); ?>
-
-                    </form>
+            <div class="md-header__row layout-p-l-0 layout-p-r-0">
+                <div class="navbar-header">
+                    <a class="navbar-brand socialite" href="<?php echo e(url('/')); ?>">
+                        <img class="socialite-logo" src="<?php echo url('setting/'.Setting::get('logo')); ?>"
+                             alt="<?php echo e(Setting::get('site_name')); ?>" title="<?php echo e(Setting::get('site_name')); ?>">
+                    </a>
                 </div>
-            </div><!-- /.navbar-collapse -->
+            </div>
         </div>
     </nav>
 <?php else: ?>

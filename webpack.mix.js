@@ -11,13 +11,31 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.js(['resources/assets/js/main.js'], 'public/js/notification.js');
-
+mix.combine([
+      'resources/assets/js/bundle/jquery.min.js',
+      'resources/assets/js/bundle/jquery.form.js',
+      'resources/assets/js/bundle/bootstrap.min.js',
+      'resources/assets/js/bundle/selectize.min.js',
+      'resources/assets/js/bundle/emojify.min.js',
+      'resources/assets/js/bundle/mention.js',
+      'resources/assets/js/bundle/playSound.js',
+      'resources/assets/js/bundle/snackbar.js',
+      'resources/assets/js/bundle/jquery.jscroll.js',
+      'resources/assets/js/bundle/selectize.min.js',
+      'resources/assets/js/bundle/snackbar.js',
+      'resources/assets/js/bundle/jquery.mCustomScrollbar.concat.min.js'
+], 'public/js/bundle.js')
+return
+mix.sass('resources/assets/sass/login.scss', 'public/css/login.css')
+mix.sass('resources/assets/sass/bootstrap.scss', 'public/css/bootstrap.css')
 mix.browserSync({
       proxy: 'http://localhost/fitmetix/public/'
 });
 return
-// mix.sass('resources/assets/sass/bootstrap.scss', 'public/css/bootstrap.css')
+
+mix.combine(['resources/assets/js/main.js'], 'public/js/notification.js');
+
+
 mix.sass('resources/assets/sass/app.scss', 'public/css/style.css')
     .combine([
       'resources/assets/sass/style/animate.css',

@@ -21,9 +21,9 @@ $(function () {
     window.location = SP_source() + 'admin/events?sort=' + this.value;
   });
 
-  $(".form_datetime").datetimepicker({
+ /* $(".form_datetime").datetimepicker({
     format: "mm/dd/yyyy hh:ii"
-  });
+  });*/
 
   // save/unsave the timelines by logged user
   $('.save-timeline').on('click',function(e){
@@ -49,42 +49,6 @@ $(function () {
         notify(data.message,'warning');
       }
     });
-  });
-
-  $('.login-form').ajaxForm({
-    url: SP_source() + 'login',
-
-    beforeSend: function() {
-      login_form = $('.login-form');
-      login_button = login_form.find('.btn-submit');
-      login_button.attr('disabled', true);
-      $('.login-progress').removeClass('hidden');
-      $('.login-errors').html('');
-    },
-
-    success: function(responseText) {
-      login_button.attr('disabled', false);
-      $('.login-progress').addClass('hidden');
-      if (responseText.status == 200) {
-        window.location = responseText.url;
-      } else {
-        //console.log(responseText.message)
-        var n = noty({
-          text: responseText.message,
-          layout: 'topRight',
-          type : 'error',
-          theme : 'relax',
-          timeout:5000,
-          animation: {
-            open: 'animated fadeIn', // Animate.css class names
-            close: 'animated fadeOut', // Animate.css class names
-            easing: 'swing', // unavailable - no need
-            speed: 500 // unavailable - no need
-          }
-        });
-      }
-
-    }
   });
 
   // save/unsave the posts by logged user
@@ -166,14 +130,13 @@ $(function () {
   // This will show modal when the settings are saved and flashed with overlay
   $('#flash-overlay-modal').modal();
 
-  $("#datepick2").datepicker();
-  jQuery("time.timeago").timeago();
+  /*$("#datepick2").datepicker();*/
+  /*jQuery("time.timeago").timeago();*/
 
   $('.create-post-form').ajaxForm({
     url: SP_source() + 'ajax/create-post',
     beforeSubmit : function validate(formData, jqForm, options) {
       var form = jqForm[0];
-
       //Uploading selected images on create post box
       var hasFile = false
       for(var i=0; i<=validFiles.length; i++){
@@ -1260,10 +1223,10 @@ $(function () {
   });
 
 
-  $("#createPost").mention({
+  /*$("#createPost").mention({
     remote: SP_source() + 'ajax/get-users-mentions',
     limit : 10,
-  });
+  });*/
 
 
   function hashtagify()
@@ -1292,7 +1255,6 @@ $(function () {
   }
   mentionify();
 
-  $('.post-description').linkify()
   $('form.change-cover-form').ajaxForm({
     url: SP_source() + 'ajax/change-cover',
 
@@ -1937,9 +1899,9 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 
   //date-picker
-  $( "#datepicker" ).datepicker();
+  /*$( "#datepicker" ).datepicker();
   $( "#datepicker1" ).datepicker();
-  $( "#datepicker2" ).datepicker();
+  $( "#datepicker2" ).datepicker();*/
 
   // focus fix for input
   $('.input-group-addon').on('click',function(){
@@ -1993,7 +1955,7 @@ $(function () {
   });
 
 //WYSIWYG EDITOR(TinyMCE)
-  tinymce.init({
+  /*tinymce.init({
     selector: '.mytextarea',
     theme: 'modern',
     height : 84,
@@ -2009,7 +1971,7 @@ $(function () {
     statusbar: false,
     resize: true,
 
-  });
+  });*/
 
   $('.add_selectize').selectize({
     plugins: ['drag_drop'],

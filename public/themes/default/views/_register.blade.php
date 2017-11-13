@@ -42,8 +42,8 @@
                                         {{ Form::text('email', NULL, ['class' => 'form-control', 'id' => 'email', 'placeholder'=> trans('auth.welcome_to')]) }}
                                         @if ($errors->has('email'))
                                             <span class="help-block">
-                    {{ $errors->first('email') }}
-                  </span>
+                                                {{ $errors->first('email') }}
+                                            </span>
                                         @endif
                                     </fieldset>
                                 </div>
@@ -67,8 +67,8 @@
                                         {{ Form::select('gender', array('female' => 'Female', 'male' => 'Male', 'other' => 'None'), null, ['placeholder' => trans('auth.select_gender'), 'class' => 'form-control']) }}
                                         @if ($errors->has('gender'))
                                             <span class="help-block">
-                    {{ $errors->first('gender') }}
-                  </span>
+                                                {{ $errors->first('gender') }}
+                                            </span>
                                         @endif
                                     </fieldset>
                                 </div>
@@ -94,13 +94,13 @@
                                         <fieldset class="form-group">
                                             {{ Form::label('birthday', trans('common.birthday')) }}<i class="optional">(optional)</i>
                                             <div class="input-group date datepicker">
-                    <span class="input-group-addon addon-left calendar-addon">
-                      <span class="fa fa-calendar"></span>
-                    </span>
+                                                <span class="input-group-addon addon-left calendar-addon">
+                                                  <span class="fa fa-calendar"></span>
+                                                </span>
                                                 {{ Form::text('birthday', NULL, ['class' => 'form-control', 'id' => 'datepicker1']) }}
                                                 <span class="input-group-addon addon-right angle-addon">
-                      <span class="fa fa-angle-down"></span>
-                    </span>
+                                                    <span class="fa fa-angle-down"></span>
+                                                </span>
                                             </div>
                                         </fieldset>
                                     </div>
@@ -124,8 +124,8 @@
                                             {!! app('captcha')->display() !!}
                                             @if ($errors->has('captcha_error'))
                                                 <span class="help-block">
-                    {{ $errors->first('captcha_error') }}
-                  </span>
+                                                    {{ $errors->first('captcha_error') }}
+                                                </span>
                                             @endif
                                         </fieldset>
                                     </div>

@@ -110,7 +110,7 @@ class RegisterController extends Controller
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('guest');
         $theme->setTitle(trans('auth.register').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
-        return $theme->scope('landing')->render();
+        return $theme->scope('register')->render();
     }
 
     protected function registerUser(Request $request, $socialLogin = false)
@@ -194,7 +194,6 @@ class RegisterController extends Controller
                     $chk = 'on';
                     Mail::send('emails.welcome', ['user' => $user], function ($m) use ($user) {
                         $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
-
                         $m->to($user->email, $user->name)->subject('Welcome to '.Setting::get('site_name'));
                     });
                 }
