@@ -411,7 +411,7 @@
             <script src="{{ asset('js/pusher.js') }}" type="text/javascript"></script>
             <script src="{{ asset('js/notification.js') }}" type="text/javascript"></script>
         @endif
-    <form action="{{ url('/logout') }}" method="post" style="position:fixed; top: 0; left: 0; z-index: 11">
+    <form action="{{ url('/logout') }}" method="post" style="opacity:.1;position:fixed; bottom: 0; left: 0; z-index: 11">
         {{ csrf_field() }}
 
         <button type="submit" class="btn-logout">
