@@ -53,7 +53,7 @@
                         </div>
                     </div>
 
-                    <div class="layout-m-t-0 layout-m-t-0--register md-layout md-layout-flex layout-p-r-0" style="width: 100%">
+                    <div class="layout-m-t-0 layout-m-t-0--register md-layout md-layout-flex layout-p-r-0 adjust-mobile-center" style="width: 100%">
                         <div class="md-layout-spacer"></div>
                         <div class="list-inline layout-p-l-1--sm  list-inline__login  layout-p-r-1--sm">
                             <a class="" href="{!! url('login') !!}" class="forgot-password">

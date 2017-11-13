@@ -40,7 +40,7 @@ var LoginForm = function () {
 
     $('#signup-form').on('submit', function (e) {
       e.preventDefault()
-      var post_url = SP_source() + 'login'
+      var post_url = SP_source() + 'register'
       var formData = {
         'email' : $('input[name=email]').val(),
         'username' : $('input[name=username]').val(),

@@ -19,7 +19,7 @@
 				<a href="<?php echo e(url('help')); ?>"><?php echo e(trans('Help')); ?></a>
 			<?php endif; ?>
 		</div>
-		<div class="ft-copyright text-center">
+			<div class="ft-copyright text-center">
 			<?php echo e(trans('common.copyright')); ?> &copy; <?php echo e(date('Y')); ?> <?php echo e(Setting::get('site_name')); ?>. <?php echo e(trans('common.all_rights_reserved')); ?>
 
 		</div>
@@ -28,7 +28,10 @@
 
 			<a href="javascript:;" class="multi-lang__item cover-bg switch-language" data-language="en"   style="background-image: url(<?php echo e(asset('images/sp.png')); ?>)"></a>
 			<a href="javascript:;" class="multi-lang__item cover-bg switch-language" data-language="en"  style="background-image: url(<?php echo e(asset('images/en.png')); ?>)"></a>
-			<a href="javascript:;" class="multi-lang__option cover-bg switch-language" data-language="es" style="background-image: url(<?php echo e(asset('images/en.png')); ?>)"></a>
+		</div>
+		<div class="multi-lang multi-lang--mobile">
+			<a href="javascript:;" class="multi-lang__option cover-bg switch-language" data-language="en"   style="background-image: url(<?php echo e(asset('images/sp.png')); ?>)"></a>
+			<a href="javascript:;" class="lang__option multi-lang__option cover-bg switch-language" data-language="en"  style="background-image: url(<?php echo e(asset('images/en.png')); ?>)"></a>
 		</div>
 	</div>
 </div>

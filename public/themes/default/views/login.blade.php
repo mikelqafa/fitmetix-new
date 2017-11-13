@@ -35,10 +35,10 @@
                             </a>
                         </div>
                     </div>
-                    <div class="form-group__adjust layout-m-t-0">
-                        <ul class="list-inline layout-p-l-1--sm  list-inline__login  layout-p-r-1--sm">
+                    <div class="form-group__adjust layout-m-t-0 text-center--mobile">
+                        <ul class="list-inline  layout-p-l-1--sm  list-inline__login  layout-p-r-1--sm">
                             <li>
-                                <a class="" href="{!! url('register') !!}" class="forgot-password">
+                                <a href="{!! url('register') !!}" class="forgot-password">
                                     <i class="icon icon-user"></i> New user?</a>
                             </li>
                             <li>
