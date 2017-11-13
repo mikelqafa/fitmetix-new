@@ -5645,7 +5645,8 @@ else if (typeof define === 'function' && define.amd) {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(5);
+__webpack_require__(5);
+module.exports = __webpack_require__(30);
 
 
 /***/ }),
@@ -5684,7 +5685,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.config.productionTip = true;
 /* eslint-disable no-new */
 
 new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-  el: '#timeline-app',
+  el: '#app',
   components: {
     'app-post': __WEBPACK_IMPORTED_MODULE_1__components_Post___default.a
   }
@@ -17313,29 +17314,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         getDefaultData: function getDefaultData() {
             var that = this;
-            window.axios.get(base_url + 'ajax/dummy').then(function (response) {
+            window.axios.post(base_url + 'get-posts').then(function (response) {
                 console.log(response.data);
-                var data = {
-                    "_id": "12",
-                    "userLink": "//localhost:3004/fitmetix/public/mikele",
-                    "userImage": "//localhost:3000/fitmetix/public/user/avatar/default-male-avatar.png",
-                    "postTime": "2017-11-08 21:47:49+00:00",
-                    "postHtml": "<p>If instead of discarding all local commits, you can make your branch identical to some other branch, tag, ref, or SHA that exists on your system.</p>",
-                    "tags": ["qui", "voluptate", "pariatur", "ullamco", "dolore", "duis", "sint"],
-                    "friends": [{
-                        "id": 0,
-                        "name": "Whitney Palmer"
-                    }, {
-                        "id": 1,
-                        "name": "Workman Dean"
-                    }, {
-                        "id": 2,
-                        "name": "Jenifer Armstrong"
-                    }]
-                };
-                that.itemList.push(data);
-                // this.conversations = response.data.data;
-                // this.showConversation(this.conversations.data[0]);
+                //that.itemList.push(data)
             });
         }
     },
@@ -18911,6 +18892,12 @@ module.exports = function (css) {
 /***/ (function(module, exports) {
 
 module.exports = ["just now",["%s second ago","%s seconds ago"],["%s minute ago","%s minutes ago"],["%s hour ago","%s hours ago"],["%s day ago","%s days ago"],["%s week ago","%s weeks ago"],["%s month ago","%s months ago"],["%s year ago","%s years ago"]]
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

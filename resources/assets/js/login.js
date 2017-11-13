@@ -7,8 +7,7 @@ $(function () {
   }
 
     $('.login-form').ajaxForm({
-        url: SP_source() + 'login',
-
+        url: SP_source() + 'login',s
         beforeSend: function() {
             login_form = $('.login-form');
             login_button = login_form.find('.btn-submit');

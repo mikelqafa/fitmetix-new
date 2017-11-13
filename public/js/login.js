@@ -38,7 +38,6 @@ var LoginForm = function () {
       })
     })
 
-
     $('#signup-form').on('submit', function (e) {
       e.preventDefault()
       var post_url = SP_source() + 'login'
@@ -81,10 +80,29 @@ var LoginForm = function () {
       })
     })
 
-  }
-  var  submitAjaxForm = function (post_url, fd) {
-
-
+    $('.switch-language').on('click',function(e){
+      e.preventDefault();
+      var formData = {
+        'language' : $(this).data('language'),
+        '_token': $('input[name=_token]').val()
+      };
+      $.ajax({
+        url : SP_source() + 'ajax/switch-language',
+        type: "post",
+        data: formData
+      }).done(function(e){ //
+        if(e.status == 200) {
+          window.location = SP_source();
+        } else {
+          var config = {
+            messageText:  e.message,
+            alignCenter: false,
+            autoClose: false
+          }
+          window.materialSnackBar(config)
+        }
+      })
+    })
   }
   return {
     //main function to initiate

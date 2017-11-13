@@ -1,3 +1,4 @@
 {
-    "/js/bundle.js": "/js/bundle.js"
+    "/js/notification.js": "/js/notification.js",
+    "/css/login.css": "/css/login.css"
 }

@@ -23,16 +23,16 @@
                     <div class="md-layout layout-m-b-1 layout-m-b-1--register md-layout-spacer mobile-layout-column__register mobile-layout-column md-layout--row md-align md-align-start-center">
                         <div class="mail-form  form-group form-group__adjust">
                             <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                            <input class="form-control" id="username" placeholder="Username" name="username" type="text">
+                            <input class="form-control" id="username" required placeholder="Username" name="username" type="text">
                         </div>
                         <div class="form-group form-group__adjust">
-                            <input class="form-control" id="email" placeholder="Email" name="email" type="email" value="">
+                            <input class="form-control" id="email" required placeholder="Email" name="email" type="email" value="">
                         </div>
                     </div>
 
                     <div class="md-layout layout-m-b-1 layout-m-b-1--register md-layout-spacer mobile-layout-column__register mobile-layout-column md-layout--row md-align md-align-start-center">
                         <div class="mail-form  form-group form-group__adjust">
-                            <input class="form-control" id="password" placeholder="Password" name="password" type="password">
+                            <input class="form-control" id="password" required placeholder="Password" name="password" type="password">
                         </div>
                         <div class="form-group form-group__adjust">
                             <input class="form-control" id="referral_code" placeholder="Referrer code" name="affiliate" type="text" value="">
@@ -40,12 +40,12 @@
                     </div>
 
 
-                    <div class="md-layout md-layout-spacer mobile-layout-column__register mobile-layout-column md-layout--row md-align md-align-start-center">
+                    <div class="md-layout md-layout-spacer mobile-layout-column__register-group mobile-layout-column md-layout--row md-align md-align-start-center" style="width: 100%">
                         <div class="mail-form  form-group form-group__adjust">
-                            <input class="form-control" id="datepicker1" placeholder="Birthday" name="birthday" type="text">
+                            <input class="form-control" id="datepicker1" placeholder="Birthday" name="birthday" type="date">
                         </div>
                         <div class="form-group form-group__adjust">
-                            <select class="form-control" id="gender" name="gender">
+                            <select class="form-control" id="gender" required name="gender">
                                 <option value="">Gender</option>
                                 <option value="female">Female</option>
                                 <option value="male">Male</option>
@@ -55,18 +55,11 @@
 
                     <div class="layout-m-t-0 layout-m-t-0--register md-layout md-layout-flex layout-p-r-0" style="width: 100%">
                         <div class="md-layout-spacer"></div>
-                        <ul class="list-inline layout-p-l-1--sm  list-inline__login  layout-p-r-1--sm">
-                            <li>
-                                <a class="" href="{!! url('register') !!}" class="forgot-password">
-                                    <i class="icon icon-user"></i> New user?
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{!! url('password/reset') !!}" class="layout-m-l-0">
-                                    Forgot password?
-                                </a>
-                            </li>
-                        </ul>
+                        <div class="list-inline layout-p-l-1--sm  list-inline__login  layout-p-r-1--sm">
+                            <a class="" href="{!! url('login') !!}" class="forgot-password">
+                                <i class="icon icon-user"></i> Already registered?
+                            </a>
+                        </div>
                     </div>
 
                     <div class="md-layout layout-m-t-0 layout-p-r-0" style="width: 100%">
@@ -90,7 +83,7 @@
                 <div class="ft-carousel__cover" style="background-image: url({{asset('images/jogging-2343558_640.png')}})">
                     <div class="container pos-rel">
                         <div class="appearContainer ft-carousel__text ft-carousel__text--register">
-                            <span class="font-curly">
+                            <span class="font-curl">
                                 push yourself every time you hit the ground
                             </span>
                         </div>
@@ -101,20 +94,9 @@
                 <div class="ft-carousel__cover" style="background-image: url({{asset('images/2.jpeg')}})">
                     <div class="container pos-rel">
                         <div class="appearContainer ft-carousel__text ft-carousel__text--register">
-                            <span class="font-curly">
+                            <span class="font-curl">
                                 When nothing goes right <br/>
                                 go lift
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ft-carousel__cover" style="background-image: url({{asset('images/3.jpeg')}})">
-                    <div class="container pos-rel">
-                        <div class="appearContainer ft-carousel__text ft-carousel__text--register">
-                            <span class="font-curly">
-                                WORK OUT. EAT WELL. BE PATIENT
                             </span>
                         </div>
                     </div>
@@ -124,7 +106,7 @@
                 <div class="ft-carousel__cover" style="background-image: url({{asset('images/4.jpeg')}})">
                     <div class="container pos-rel">
                         <div class="appearContainer ft-carousel__text ft-carousel__text--register">
-                            <span class="font-curly">
+                            <span class="font-curl">
                                 Fit is Not a Destination
                                 <br/>
                                 it is a way of life

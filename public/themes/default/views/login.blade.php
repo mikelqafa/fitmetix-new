@@ -57,8 +57,8 @@
             <div class="item">
                 <div class="ft-carousel__cover" style="background-image: url({{asset('images/jogging-2343558_640.png')}})">
                     <div class="container pos-rel">
-                        <div class="appearContainer ft-carousel__text">
-                            <span class="font-curly">
+                        <div class="appearContainer ft-carousel__text ft-carousel__text--register">
+                            <span class="font-curl">
                                 push yourself every time you hit the ground
                             </span>
                         </div>
@@ -68,10 +68,23 @@
             <div class="item">
                 <div class="ft-carousel__cover" style="background-image: url({{asset('images/2.jpeg')}})">
                     <div class="container pos-rel">
-                        <div class="appearContainer ft-carousel__text">
-                            <span class="font-curly">
+                        <div class="appearContainer ft-carousel__text ft-carousel__text--register">
+                            <span class="font-curl">
                                 When nothing goes right <br/>
                                 go lift
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ft-carousel__cover" style="background-image: url({{asset('images/4.jpeg')}})">
+                    <div class="container pos-rel">
+                        <div class="appearContainer ft-carousel__text ft-carousel__text--register">
+                            <span class="font-curl">
+                                Fit is Not a Destination
+                                <br/>
+                                it is a way of life
                             </span>
                         </div>
                     </div>

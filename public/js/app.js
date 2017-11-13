@@ -51,6 +51,42 @@ $(function () {
     });
   });
 
+  $('.login-form').ajaxForm({
+    url: SP_source() + 'login',
+
+    beforeSend: function() {
+      login_form = $('.login-form');
+      login_button = login_form.find('.btn-submit');
+      login_button.attr('disabled', true);
+      $('.login-progress').removeClass('hidden');
+      $('.login-errors').html('');
+    },
+
+    success: function(responseText) {
+      login_button.attr('disabled', false);
+      $('.login-progress').addClass('hidden');
+      if (responseText.status == 200) {
+        window.location = responseText.url;
+      } else {
+        //console.log(responseText.message)
+        var n = noty({
+          text: responseText.message,
+          layout: 'topRight',
+          type : 'error',
+          theme : 'relax',
+          timeout:5000,
+          animation: {
+            open: 'animated fadeIn', // Animate.css class names
+            close: 'animated fadeOut', // Animate.css class names
+            easing: 'swing', // unavailable - no need
+            speed: 500 // unavailable - no need
+          }
+        });
+      }
+
+    }
+  });
+
   // save/unsave the posts by logged user
   $('.save-post').on('click',function(e){
     e.preventDefault();

@@ -204,41 +204,9 @@
         methods: {
             getDefaultData: function () {
                 let that = this
-                window.axios.get(base_url + 'ajax/dummy').then(function (response) {
+                window.axios.post(base_url + 'get-posts').then(function (response) {
                     console.log(response.data)
-                    let data  =  {
-                        "_id": "12",
-                        "userLink": "//localhost:3004/fitmetix/public/mikele",
-                        "userImage": "//localhost:3000/fitmetix/public/user/avatar/default-male-avatar.png",
-                        "postTime": "2017-11-08 21:47:49+00:00",
-                        "postHtml": "<p>If instead of discarding all local commits, you can make your branch identical to some other branch, tag, ref, or SHA that exists on your system.</p>",
-                        "tags": [
-                            "qui",
-                            "voluptate",
-                            "pariatur",
-                            "ullamco",
-                            "dolore",
-                            "duis",
-                            "sint"
-                        ],
-                        "friends": [
-                            {
-                                "id": 0,
-                                "name": "Whitney Palmer"
-                            },
-                            {
-                                "id": 1,
-                                "name": "Workman Dean"
-                            },
-                            {
-                                "id": 2,
-                                "name": "Jenifer Armstrong"
-                            }
-                        ]
-                    }
-                    that.itemList.push(data)
-                    // this.conversations = response.data.data;
-                    // this.showConversation(this.conversations.data[0]);
+                    //that.itemList.push(data)
                 });
             }
         },

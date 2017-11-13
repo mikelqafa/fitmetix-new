@@ -22,7 +22,6 @@ Vue.config.productionTip = true
 new Vue({
   el: '#app',
   components: {
-    'app-post': Post,
-    'app-login': Login
+    'app-post': Post
   }
 })

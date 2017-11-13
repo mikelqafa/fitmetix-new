@@ -22,7 +22,7 @@ color: inherit !important;
 }
 .ft-login {
   position: relative;
-  min-height: 100vh;
+  min-height: calc(100vh - 64px);
   width: 100%;
   background-color: #0A0A0A;
 
@@ -30,6 +30,7 @@ color: inherit !important;
     position: absolute;
     display: flex;
     flex-direction: row;
+    margin-top: 64px;
     align-items: center;
     top:24px;
     min-height: 56px;
@@ -43,7 +44,7 @@ color: inherit !important;
 
   &__slider {
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 64px);
     pointer-events: none;
   }
 
@@ -121,7 +122,7 @@ color: inherit !important;
 .ft-carousel {
 
   &__cover {
-    min-height: 100vh;
+    min-height: calc(100vh - 64px);
     width: 100vw;
     display: flex;
     justify-content: center;
@@ -152,7 +153,7 @@ color: inherit !important;
   position: absolute;
   right: 0px;
   height: 32px;
-  bottom: 0;
+  bottom: 9px;
   display: flex;
   flex-direction: row;
 
@@ -183,7 +184,7 @@ color: inherit !important;
   }
   .ft-login__header {
     top:112px;
-
+    margin-top: 0;
     .ft-header__logo {
       display: none;
     }
@@ -267,6 +268,17 @@ color: inherit !important;
   .mobile-layout-column__register {
     padding-top: 0;
   }
+  .mobile-layout-column__register-group  {
+    padding-top: 0;
+    flex-direction: row !important;
+    max-width: 280px;
+    .form-group__adjust {
+      min-width: 0;
+      &:last-child {
+        margin-left: 15px;
+      }
+    }
+  }
   .layout-m-b-1--register {
     margin-bottom: 0;
   }
@@ -282,21 +294,44 @@ color: inherit !important;
   .ft-login__header--register {
     top: 108px !important;
   }
+  
+  .ft-login {
+    .form-control{
+      color: #fff;
+    }
+  }
 }
 .footer-description{
-  position: fixed;
+  position:relative;
   bottom: 0;
+  height: 64px;
   left: 0;
   width: 100%;
   z-index: 1;
   /*background: rgba(255, 255, 255, 0.5);*/
   background: transparent;
+  display: flex;
+  align-items: center;
   color: #FFF;
   .ft-copyright {
-    color: rgba(255,255,255, .7);
+
   }
 }
+
 .cover-bg {
   background-size: cover;
   background-position: center;
+}
+
+.footer__wrapper{
+  flex-grow: 1;
+  width: 100%;
+}
+
+input[type=date]::-webkit-inner-spin-button {
+  display: none;
+  -webkit-appearance: none;
+}
+input[type=date]::-webkit-calendar-picker-indicator {
+  color: #fff;
 }

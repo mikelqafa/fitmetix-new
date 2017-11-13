@@ -406,7 +406,6 @@
        </script>
         <script src="{{ asset('js/bundle.js') }}" type="text/javascript"></script>
         <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
-        <script src="{{ asset('js/login.js') }}" type="text/javascript"></script>
         @if (in_array(!Route::currentRouteName(), ['contact', 'login', 'register']))
             <script src="{{ asset('js/axios.min.js') }}" type="text/javascript"></script>
             <script src="{{ asset('js/pusher.js') }}" type="text/javascript"></script>
