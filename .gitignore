@@ -14,7 +14,7 @@ storage/*
 #Ignore node module
 node_modules/*
 
-public/css
+#public/css
 
 #Ignore error log
 error_log
