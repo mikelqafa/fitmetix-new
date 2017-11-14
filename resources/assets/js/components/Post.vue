@@ -48,41 +48,11 @@ youtube_video_id: "",
         </template>
         <template v-else="">
             <div v-for="postItem in itemList" class="panel panel-default timeline-posts__item panel-post" :id="postItem.id">
-                <div class="panel-heading no-bg">
-                    <div class="post-author">
-                        <div class="post-options">
-                            <a href="#" class="dropdown-togle">
-                                <i class="icon icon-options"></i>
-                            </a>
-                        </div>
-                        <div class="user-avatar">
-                            <a href="#">
-                                <img src="" alt="postItem.userName" title="postItem.userName">
-                            </a>
-                        </div>
-                        <div class="user-post-details">
-                            <ul class="list-unstyled no-margin">
-                                <li>
-                                    <a href="//localhost:3004/fitmetix/public/mikele" title="" data-toggle="tooltip" data-placement="top" class="user-name user ft-user-name" data-original-title="@mikele">
-                                        mikele
-                                    </a>
-                                    <div class="small-text">
-                                    </div>
-                                </li>
-                                <li>
-                                    <!--<timeago :since="postItem.time"></timeago>-->
-                                    <timeago :since="since(postItem.created_at)"
-                                            :auto-update="autoUpdate"
-                                            class="timeago"></timeago>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                <post-header :timeline-data="postItem.timeline" :date="postItem.created_at"></post-header>
                 <div class="panel-body">
                     <post-description :post-html="postItem.description"></post-description>
-                    <post-youtube></post-youtube>
-                    <post-image></post-image>
+                    <post-youtube :post-you-tube="postItem.youtube_video_id" :you-tube-title="postItem.youtube_title"></post-youtube>
+                    <post-image :post-images="dummy"></post-image>
                     <post-sound-cloud></post-sound-cloud>
                 </div>
                 <div class="panel-footer socialite">
@@ -138,14 +108,16 @@ youtube_video_id: "",
     import postDescription from './child/postDescription'
     import postImage from './child/postImage'
     import postYouTube from './child/postYouTube'
-    import postSoundColud from './child/postSoundColud'
+    import postSoundCloud from './child/postSoundCloud'
+    import postHeader from './child/postHeader'
 
     let axios = window.axios
     export default {
         data: function () {
             return {
                 itemList: [],
-                autoUpdate: 60
+                autoUpdate: 60,
+                dummy: []
             }
         },
         computed: {
@@ -160,7 +132,7 @@ youtube_video_id: "",
             getDefaultData: function () {
                 let that = this
                 let username = ''
-                let paginate = 5
+                let paginate = 50
                 let _token = $("meta[name=_token]").attr('content')
                 axios({
                     method: 'post',
@@ -193,8 +165,9 @@ youtube_video_id: "",
         components: {
             'post-description': postDescription,
             'post-image': postImage,
-            'post-sound-cloud': postSoundColud,
-            'post-youtube': postYouTube
+            'post-sound-cloud': postSoundCloud,
+            'post-youtube': postYouTube,
+            'post-header': postHeader
         }
     }
 </script>

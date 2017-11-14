@@ -15,7 +15,6 @@
             hasItem () {
                 return this.postHtml !== ''
             }
-        },
-
+        }
     }
 </script>

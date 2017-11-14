@@ -17113,8 +17113,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__child_postImage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__child_postImage__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__child_postYouTube__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__child_postYouTube___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__child_postYouTube__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__child_postSoundColud__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__child_postSoundColud___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__child_postSoundColud__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__child_postSoundCloud__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__child_postSoundCloud___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__child_postSoundCloud__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__child_postHeader__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__child_postHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__child_postHeader__);
 //
 //
 //
@@ -17221,36 +17223,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -17262,7 +17235,8 @@ var axios = window.axios;
     data: function data() {
         return {
             itemList: [],
-            autoUpdate: 60
+            autoUpdate: 60,
+            dummy: []
         };
     },
     computed: {
@@ -17278,7 +17252,7 @@ var axios = window.axios;
         getDefaultData: function getDefaultData() {
             var that = this;
             var username = '';
-            var paginate = 5;
+            var paginate = 50;
             var _token = $("meta[name=_token]").attr('content');
             axios({
                 method: 'post',
@@ -17312,8 +17286,9 @@ var axios = window.axios;
     components: {
         'post-description': __WEBPACK_IMPORTED_MODULE_0__child_postDescription___default.a,
         'post-image': __WEBPACK_IMPORTED_MODULE_1__child_postImage___default.a,
-        'post-sound-cloud': __WEBPACK_IMPORTED_MODULE_3__child_postSoundColud___default.a,
-        'post-youtube': __WEBPACK_IMPORTED_MODULE_2__child_postYouTube___default.a
+        'post-sound-cloud': __WEBPACK_IMPORTED_MODULE_3__child_postSoundCloud___default.a,
+        'post-youtube': __WEBPACK_IMPORTED_MODULE_2__child_postYouTube___default.a,
+        'post-header': __WEBPACK_IMPORTED_MODULE_4__child_postHeader___default.a
     }
 });
 
@@ -17389,7 +17364,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.postHtml !== '';
         }
     }
-
 });
 
 /***/ }),
@@ -17423,7 +17397,7 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(45)
 /* template */
 var __vue_template__ = __webpack_require__(20)
 /* template functional */
@@ -17472,7 +17446,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    this is post image\n")])
+  return _vm.hasItem ? _c("div", { staticClass: "text-wrapper" }) : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -17491,7 +17465,7 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(44)
 /* template */
 var __vue_template__ = __webpack_require__(22)
 /* template functional */
@@ -17540,7 +17514,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    this is post you tube\n")])
+  return _vm.hasItem
+    ? _c("div", { staticClass: "text-wrapper" }, [
+        _c("iframe", {
+          attrs: { src: _vm.youTubeSrc, frameborder: "0", allowfullscreen: "" }
+        })
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -17553,74 +17533,8 @@ if (false) {
 }
 
 /***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = null
-/* template */
-var __vue_template__ = __webpack_require__(24)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/child/postSoundColud.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0d87236a", Component.options)
-  } else {
-    hotAPI.reload("data-v-0d87236a", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    this is post sound cloud\n")])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0d87236a", module.exports)
-  }
-}
-
-/***/ }),
+/* 23 */,
+/* 24 */,
 /* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17642,33 +17556,12 @@ var render = function() {
                 attrs: { id: postItem.id }
               },
               [
-                _c("div", { staticClass: "panel-heading no-bg" }, [
-                  _c("div", { staticClass: "post-author" }, [
-                    _vm._m(2, true),
-                    _vm._v(" "),
-                    _vm._m(3, true),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "user-post-details" }, [
-                      _c("ul", { staticClass: "list-unstyled no-margin" }, [
-                        _vm._m(4, true),
-                        _vm._v(" "),
-                        _c(
-                          "li",
-                          [
-                            _c("timeago", {
-                              staticClass: "timeago",
-                              attrs: {
-                                since: _vm.since(postItem.created_at),
-                                "auto-update": _vm.autoUpdate
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      ])
-                    ])
-                  ])
-                ]),
+                _c("post-header", {
+                  attrs: {
+                    "timeline-data": postItem.timeline,
+                    date: postItem.created_at
+                  }
+                }),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -17678,17 +17571,23 @@ var render = function() {
                       attrs: { "post-html": postItem.description }
                     }),
                     _vm._v(" "),
-                    _c("post-youtube"),
+                    _c("post-youtube", {
+                      attrs: {
+                        "post-you-tube": postItem.youtube_video_id,
+                        "you-tube-title": postItem.youtube_title
+                      }
+                    }),
                     _vm._v(" "),
-                    _c("post-image"),
+                    _c("post-image", { attrs: { "post-images": _vm.dummy } }),
                     _vm._v(" "),
                     _c("post-sound-cloud")
                   ],
                   1
                 ),
                 _vm._v(" "),
-                _vm._m(5, true)
-              ]
+                _vm._m(2, true)
+              ],
+              1
             )
           })
     ],
@@ -17783,59 +17682,6 @@ var staticRenderFns = [
         ])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "post-options" }, [
-      _c("a", { staticClass: "dropdown-togle", attrs: { href: "#" } }, [
-        _c("i", { staticClass: "icon icon-options" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "user-avatar" }, [
-      _c("a", { attrs: { href: "#" } }, [
-        _c("img", {
-          attrs: {
-            src: "",
-            alt: "postItem.userName",
-            title: "postItem.userName"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", [
-      _c(
-        "a",
-        {
-          staticClass: "user-name user ft-user-name",
-          attrs: {
-            href: "//localhost:3004/fitmetix/public/mikele",
-            title: "",
-            "data-toggle": "tooltip",
-            "data-placement": "top",
-            "data-original-title": "@mikele"
-          }
-        },
-        [
-          _vm._v(
-            "\n                                    mikele\n                                "
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "small-text" })
-    ])
   },
   function() {
     var _vm = this
@@ -18929,6 +18775,331 @@ module.exports = function (css) {
 /***/ (function(module, exports) {
 
 module.exports = ["just now",["%s second ago","%s seconds ago"],["%s minute ago","%s minutes ago"],["%s hour ago","%s hours ago"],["%s day ago","%s days ago"],["%s week ago","%s weeks ago"],["%s month ago","%s months ago"],["%s year ago","%s years ago"]]
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(40)
+/* template */
+var __vue_template__ = __webpack_require__(41)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/child/postHeader.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-12bd2f92", Component.options)
+  } else {
+    hotAPI.reload("data-v-12bd2f92", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 40 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        timelineData: {},
+        date: ''
+    },
+    data: function data() {
+        return {
+            autoUpdate: 60
+        };
+    },
+    computed: {
+        since: function since() {
+            return this.date != '' ? new Date(this.date).getTime() : '';
+        },
+        userLink: function userLink() {
+            return this.timelineData != {} ? window.base_url + this.timelineData.username : '#';
+        }
+    }
+});
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "panel-heading no-bg" }, [
+    _c("div", { staticClass: "post-author" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _c("div", { staticClass: "user-post-details" }, [
+        _c("ul", { staticClass: "list-unstyled no-margin" }, [
+          _c("li", [
+            _c(
+              "a",
+              {
+                staticClass: "user-name user ft-user-name",
+                attrs: {
+                  href: _vm.userLink,
+                  title: "",
+                  "data-toggle": "tooltip",
+                  "data-placement": "top",
+                  "data-original-title": "@mikele"
+                }
+              },
+              [_vm._v("\n                        mikele\n                    ")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "small-text" })
+          ]),
+          _vm._v(" "),
+          _c(
+            "li",
+            [
+              _c("timeago", {
+                staticClass: "timeago",
+                attrs: { since: _vm.since, "auto-update": _vm.autoUpdate }
+              })
+            ],
+            1
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "post-options" }, [
+      _c("a", { staticClass: "dropdown-togle", attrs: { href: "#" } }, [
+        _c("i", { staticClass: "icon icon-options" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "user-avatar" }, [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("img", {
+          attrs: {
+            src: "",
+            alt: "postItem.userName",
+            title: "postItem.userName"
+          }
+        })
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-12bd2f92", module.exports)
+  }
+}
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__(43)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/child/postSoundCloud.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-74964e90", Component.options)
+  } else {
+    hotAPI.reload("data-v-74964e90", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_vm._v("\n    this is post sound cloud\n")])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-74964e90", module.exports)
+  }
+}
+
+/***/ }),
+/* 44 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        postYouTube: '',
+        youTubeTitle: ''
+    },
+    data: function data() {
+        return {};
+    },
+    computed: {
+        hasItem: function hasItem() {
+            return this.postYouTube !== '';
+        },
+        youTubeSrc: function youTubeSrc() {
+            return 'https://www.youtube.com/embed/' + this.postYouTube;
+        }
+    }
+});
+
+/***/ }),
+/* 45 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        postImages: {
+            type: Array,
+            default: function _default() {
+                return [];
+            }
+        }
+    },
+    data: function data() {
+        return {};
+    },
+    computed: {
+        hasItem: function hasItem() {
+            return this.postImages.length !== 0;
+        },
+        hasMultipleImages: function hasMultipleImages() {
+            return this.postImages.length > 1;
+        }
+    }
+});
 
 /***/ })
 /******/ ]);
