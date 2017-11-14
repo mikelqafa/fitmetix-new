@@ -2692,7 +2692,7 @@ class TimelineController extends AppBaseController
 
         $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->get();
         // $theme = Theme::uses('default')->layout('default');
-
+        $posts['user_info'] = $timeline;
         return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline]]);
     }
 
