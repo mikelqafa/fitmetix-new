@@ -70,8 +70,7 @@
                             </div>
 							<?php if($posts->count() > 0): ?>
 								<?php $__currentLoopData = $posts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $post): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-									<?php echo Theme::partial('post',compact('post','timeline','next_page_url')); ?>
-
+									
 								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 							<?php else: ?>
 								<div class="no-posts alert alert-warning"><?php echo e(trans('common.no_posts')); ?></div>

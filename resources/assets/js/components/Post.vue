@@ -1,3 +1,19 @@
+<!--
+created_at: "2017-11-01 13:19:09"
+deleted_at: null
+description:" :full_moon_with_face: ↵"
+id: 80
+location: ""
+shared_post_id: null
+soundcloud_id: ""
+soundcloud_title: ""
+timeline_id: 1
+type: null
+updated_at: "2017-11-01 13:19:09"
+user_id: 1
+youtube_title: ""
+youtube_video_id: "",
+-->
 <template>
     <div>
         <template v-if="isLoading">
@@ -31,7 +47,7 @@
             </div>
         </template>
         <template v-else="">
-            <div v-for="postItem in itemList" class="panel panel-default timeline-posts__item panel-post animated" :id="postItem._id">
+            <div v-for="postItem in itemList" class="panel panel-default timeline-posts__item panel-post" :id="postItem.id">
                 <div class="panel-heading no-bg">
                     <div class="post-author">
                         <div class="post-options">
@@ -40,8 +56,8 @@
                             </a>
                         </div>
                         <div class="user-avatar">
-                            <a :href="postItem.userLink">
-                                <img :src="postItem.userImage" alt="postItem.userName" :title="postItem.userName">
+                            <a href="#">
+                                <img src="" alt="postItem.userName" title="postItem.userName">
                             </a>
                         </div>
                         <div class="user-post-details">
@@ -55,7 +71,7 @@
                                 </li>
                                 <li>
                                     <!--<timeago :since="postItem.time"></timeago>-->
-                                    <timeago :since="since"
+                                    <timeago :since="since(postItem.created_at)"
                                             :auto-update="autoUpdate"
                                             class="timeago"></timeago>
                                 </li>
@@ -64,10 +80,10 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="text-wrapper">
-                        <div v-html="postItem.postHtml"></div>
-                        <div class="post-v-holder"></div>
-                    </div>
+                    <post-description :post-html="postItem.description"></post-description>
+                    <post-youtube></post-youtube>
+                    <post-image></post-image>
+                    <post-sound-cloud></post-sound-cloud>
                 </div>
                 <div class="panel-footer socialite">
                     <ul class="list-inline footer-list pos-rel">
@@ -109,75 +125,6 @@
                         </li>
                     </ul>
                 </div>
-                <div class="comments-section all_comments" style="display:none">
-                    <div class="comments-wrapper">
-                        <div class="to-comment">  <!-- to-comment -->
-                            <div class="commenter-avatar">
-                                <a href="#"><img src="//localhost:3004/fitmetix/public/user/avatar/2017-10-22-14-07-04athletebookprofilepage.png" alt="Mikel" title="Mikel"></a>
-                            </div>
-                            <div class="comment-textfield">
-                                <form action="#" class="comment-form" method="post" files="true" enctype="multipart/form-data" id="comment-form">
-                                    <div class="comment-holder">
-                                        <input class="form-control post-comment" autocomplete="off" data-post-id="87" name="post_comment" placeholder="Write a comment...Press Enter to Post">
-
-                                        <input type="file" class="comment-images-upload hidden" accept="image/jpeg,image/png,image/gif" name="comment_images_upload">
-                                        <ul class="list-inline meme-reply hidden">
-                                            <li><a href="#" id="imageComment"><i class="icon icon-photo" aria-hidden="true"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div id="comment-image-holder"></div>
-                                </form>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div><!-- to-comment -->
-
-                        <div class="comments post-comments-list"> <!-- comments/main-comment  -->
-                            <ul class="list-unstyled main-comment comment54 " id="comment54">
-                                <li>
-                                    <div class="comments delete_comment_list"> <!-- main-comment -->
-                                        <div class="commenter-avatar">
-                                            <a href="#"><img src="//localhost:3004/fitmetix/public/user/avatar/2017-10-22-14-07-04athletebookprofilepage.png" title="Mikel" alt="Mikel"></a>
-                                        </div>
-                                        <div class="comments-list">
-                                            <div class="commenter">
-                                                <a href="#" class="delete-comment delete_comment" data-commentdelete-id="54"><i class="fa fa-times"></i></a>
-                                                <div class="commenter-name">
-                                                    <a href="//localhost:3004/fitmetix/public/mikele">Mikel</a>
-                                                    <span class="comment-description">dd</span>
-                                                </div>
-                                                <ul class="list-inline comment-options">
-                                                    <li><a href="#" class="text-capitalize like-comment like" data-comment-id="54">like</a></li>
-                                                    <li class="hidden"><a href="#" class="text-capitalize like-comment unlike" data-comment-id="54">unlike</a></li>
-                                                    <li>.</li>
-                                                    <li><a href="#" class="show-comment-reply">reply</a></li>
-                                                    <li>.</li>
-                                                    <li><a href="#" class="show-likes like3-54"><i class="fa fa-thumbs-up"></i>0</a></li>
-                                                    <li class="show-likes like4-54 hidden"></li>
-                                                    <li>.</li>
-                                                    <li>
-                                                        <time class="post-time timeago" datetime="2017-11-08 21:49:47+00:00" title="2017-11-08 21:49:47+00:00">about 12 hours ago</time>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li><li>
-                                <div class="to-comment comment-reply" style="display:none">  <!-- to-comment -->
-                                    <div class="commenter-avatar">
-                                        <img src="//localhost:3004/fitmetix/public/user/avatar/2017-10-22-14-07-04athletebookprofilepage.png" alt="Mikel" title="Mikel">
-                                    </div>
-                                    <div class="comment-textfield">
-                                        <form action="#" class="comment-form">
-                                            <input class="form-control post-comment" autocomplete="off" data-post-id="87" data-comment-id="54" name="post_comment" placeholder="Write a comment...Press Enter to Post" rows="1">
-                                        </form>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
             </div>
         </template>
     </div>
@@ -188,12 +135,16 @@
     }
 </style>
 <script>
+    import postDescription from './child/postDescription'
+    import postImage from './child/postImage'
+    import postYouTube from './child/postYouTube'
+    import postSoundColud from './child/postSoundColud'
+
     let axios = window.axios
     export default {
         data: function () {
             return {
                 itemList: [],
-                since: 1510235516210,
                 autoUpdate: 60
             }
         },
@@ -203,15 +154,31 @@
             }
         },
         methods: {
+            since(date) {
+                return new Date(date).getTime()
+            },
             getDefaultData: function () {
                 let that = this
+                let username = ''
+                let paginate = 5
+                let _token = $("meta[name=_token]").attr('content')
                 axios({
                     method: 'post',
                     responseType: 'json',
                     url: base_url + 'get-posts',
-                    data: {}
+                    data: {
+                        username: current_username,
+                        paginate: paginate,
+                        _token: _token
+                    }
                 }).then( function (response) {
-                    console.log(response)
+                    if (response.status ==  200) {
+                        let posts = response.data[0].posts;
+                        $.each(posts, function(key, val) {
+                            that.itemList.push(val);
+                            console.log(val)
+                        });
+                    }
                 }).catch(function(error) {
                     console.log(error)
                 })
@@ -222,6 +189,12 @@
             setTimeout(function () {
                 that.getDefaultData()
             }, 1000)
+        },
+        components: {
+            'post-description': postDescription,
+            'post-image': postImage,
+            'post-sound-cloud': postSoundColud,
+            'post-youtube': postYouTube
         }
     }
 </script>

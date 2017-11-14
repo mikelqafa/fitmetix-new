@@ -5658,9 +5658,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Post__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Post___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_Post__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_timeago__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_timeago__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_timeago___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_timeago__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_awesome_swiper__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_awesome_swiper__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_awesome_swiper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_awesome_swiper__);
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
@@ -5668,7 +5668,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-__webpack_require__(25);
+__webpack_require__(34);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vue_awesome_swiper___default.a);
 
@@ -5676,7 +5676,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vue_
   name: 'timeago', // component name, `timeago` by default
   locale: 'en-US',
   locales: {
-    'en-US': __webpack_require__(29)
+    'en-US': __webpack_require__(38)
   }
 });
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.config.productionTip = true;
@@ -16768,7 +16768,7 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(15)
 /* template */
-var __vue_template__ = __webpack_require__(16)
+var __vue_template__ = __webpack_require__(25)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -17107,59 +17107,14 @@ module.exports = function listToStyles (parentId, list) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__child_postDescription__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__child_postDescription___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__child_postDescription__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__child_postImage__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__child_postImage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__child_postImage__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__child_postYouTube__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__child_postYouTube___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__child_postYouTube__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__child_postSoundColud__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__child_postSoundColud___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__child_postSoundColud__);
 //
 //
 //
@@ -17297,12 +17252,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
+
+
+
 var axios = window.axios;
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             itemList: [],
-            since: 1510235516210,
             autoUpdate: 60
         };
     },
@@ -17312,15 +17271,32 @@ var axios = window.axios;
         }
     },
     methods: {
+        since: function since(date) {
+            return new Date(date).getTime();
+        },
+
         getDefaultData: function getDefaultData() {
             var that = this;
+            var username = '';
+            var paginate = 5;
+            var _token = $("meta[name=_token]").attr('content');
             axios({
                 method: 'post',
                 responseType: 'json',
                 url: base_url + 'get-posts',
-                data: {}
+                data: {
+                    username: current_username,
+                    paginate: paginate,
+                    _token: _token
+                }
             }).then(function (response) {
-                console.log(response);
+                if (response.status == 200) {
+                    var posts = response.data[0].posts;
+                    $.each(posts, function (key, val) {
+                        that.itemList.push(val);
+                        console.log(val);
+                    });
+                }
             }).catch(function (error) {
                 console.log(error);
             });
@@ -17331,11 +17307,321 @@ var axios = window.axios;
         setTimeout(function () {
             that.getDefaultData();
         }, 1000);
+    },
+
+    components: {
+        'post-description': __WEBPACK_IMPORTED_MODULE_0__child_postDescription___default.a,
+        'post-image': __WEBPACK_IMPORTED_MODULE_1__child_postImage___default.a,
+        'post-sound-cloud': __WEBPACK_IMPORTED_MODULE_3__child_postSoundColud___default.a,
+        'post-youtube': __WEBPACK_IMPORTED_MODULE_2__child_postYouTube___default.a
     }
 });
 
 /***/ }),
 /* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(17)
+/* template */
+var __vue_template__ = __webpack_require__(18)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/child/postDescription.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-31462242", Component.options)
+  } else {
+    hotAPI.reload("data-v-31462242", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        postHtml: ''
+    },
+    data: function data() {
+        return {};
+    },
+    computed: {
+        hasItem: function hasItem() {
+            return this.postHtml !== '';
+        }
+    }
+
+});
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.hasItem
+    ? _c("div", { staticClass: "text-wrapper" }, [
+        _c("div", { domProps: { innerHTML: _vm._s(_vm.postHtml) } })
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-31462242", module.exports)
+  }
+}
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__(20)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/child/postImage.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-32d7daa1", Component.options)
+  } else {
+    hotAPI.reload("data-v-32d7daa1", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_vm._v("\n    this is post image\n")])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-32d7daa1", module.exports)
+  }
+}
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__(22)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/child/postYouTube.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-ce476dee", Component.options)
+  } else {
+    hotAPI.reload("data-v-ce476dee", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_vm._v("\n    this is post you tube\n")])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-ce476dee", module.exports)
+  }
+}
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__(24)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/child/postSoundColud.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0d87236a", Component.options)
+  } else {
+    hotAPI.reload("data-v-0d87236a", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [_vm._v("\n    this is post sound cloud\n")])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0d87236a", module.exports)
+  }
+}
+
+/***/ }),
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -17352,29 +17638,19 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "panel panel-default timeline-posts__item panel-post animated",
-                attrs: { id: postItem._id }
+                  "panel panel-default timeline-posts__item panel-post",
+                attrs: { id: postItem.id }
               },
               [
                 _c("div", { staticClass: "panel-heading no-bg" }, [
                   _c("div", { staticClass: "post-author" }, [
                     _vm._m(2, true),
                     _vm._v(" "),
-                    _c("div", { staticClass: "user-avatar" }, [
-                      _c("a", { attrs: { href: postItem.userLink } }, [
-                        _c("img", {
-                          attrs: {
-                            src: postItem.userImage,
-                            alt: "postItem.userName",
-                            title: postItem.userName
-                          }
-                        })
-                      ])
-                    ]),
+                    _vm._m(3, true),
                     _vm._v(" "),
                     _c("div", { staticClass: "user-post-details" }, [
                       _c("ul", { staticClass: "list-unstyled no-margin" }, [
-                        _vm._m(3, true),
+                        _vm._m(4, true),
                         _vm._v(" "),
                         _c(
                           "li",
@@ -17382,7 +17658,7 @@ var render = function() {
                             _c("timeago", {
                               staticClass: "timeago",
                               attrs: {
-                                since: _vm.since,
+                                since: _vm.since(postItem.created_at),
                                 "auto-update": _vm.autoUpdate
                               }
                             })
@@ -17394,17 +17670,22 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "panel-body" }, [
-                  _c("div", { staticClass: "text-wrapper" }, [
-                    _c("div", {
-                      domProps: { innerHTML: _vm._s(postItem.postHtml) }
+                _c(
+                  "div",
+                  { staticClass: "panel-body" },
+                  [
+                    _c("post-description", {
+                      attrs: { "post-html": postItem.description }
                     }),
                     _vm._v(" "),
-                    _c("div", { staticClass: "post-v-holder" })
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._m(4, true),
+                    _c("post-youtube"),
+                    _vm._v(" "),
+                    _c("post-image"),
+                    _vm._v(" "),
+                    _c("post-sound-cloud")
+                  ],
+                  1
+                ),
                 _vm._v(" "),
                 _vm._m(5, true)
               ]
@@ -17517,6 +17798,22 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "user-avatar" }, [
+      _c("a", { attrs: { href: "#" } }, [
+        _c("img", {
+          attrs: {
+            src: "",
+            alt: "postItem.userName",
+            title: "postItem.userName"
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("li", [
       _c(
         "a",
@@ -17620,272 +17917,6 @@ var staticRenderFns = [
         ])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "comments-section all_comments",
-        staticStyle: { display: "none" }
-      },
-      [
-        _c("div", { staticClass: "comments-wrapper" }, [
-          _c("div", { staticClass: "to-comment" }, [
-            _c("div", { staticClass: "commenter-avatar" }, [
-              _c("a", { attrs: { href: "#" } }, [
-                _c("img", {
-                  attrs: {
-                    src:
-                      "//localhost:3004/fitmetix/public/user/avatar/2017-10-22-14-07-04athletebookprofilepage.png",
-                    alt: "Mikel",
-                    title: "Mikel"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "comment-textfield" }, [
-              _c(
-                "form",
-                {
-                  staticClass: "comment-form",
-                  attrs: {
-                    action: "#",
-                    method: "post",
-                    files: "true",
-                    enctype: "multipart/form-data",
-                    id: "comment-form"
-                  }
-                },
-                [
-                  _c("div", { staticClass: "comment-holder" }, [
-                    _c("input", {
-                      staticClass: "form-control post-comment",
-                      attrs: {
-                        autocomplete: "off",
-                        "data-post-id": "87",
-                        name: "post_comment",
-                        placeholder: "Write a comment...Press Enter to Post"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "comment-images-upload hidden",
-                      attrs: {
-                        type: "file",
-                        accept: "image/jpeg,image/png,image/gif",
-                        name: "comment_images_upload"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("ul", { staticClass: "list-inline meme-reply hidden" }, [
-                      _c("li", [
-                        _c("a", { attrs: { href: "#", id: "imageComment" } }, [
-                          _c("i", {
-                            staticClass: "icon icon-photo",
-                            attrs: { "aria-hidden": "true" }
-                          })
-                        ])
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { attrs: { id: "comment-image-holder" } })
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "clearfix" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "comments post-comments-list" }, [
-            _c(
-              "ul",
-              {
-                staticClass: "list-unstyled main-comment comment54 ",
-                attrs: { id: "comment54" }
-              },
-              [
-                _c("li", [
-                  _c("div", { staticClass: "comments delete_comment_list" }, [
-                    _c("div", { staticClass: "commenter-avatar" }, [
-                      _c("a", { attrs: { href: "#" } }, [
-                        _c("img", {
-                          attrs: {
-                            src:
-                              "//localhost:3004/fitmetix/public/user/avatar/2017-10-22-14-07-04athletebookprofilepage.png",
-                            title: "Mikel",
-                            alt: "Mikel"
-                          }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "comments-list" }, [
-                      _c("div", { staticClass: "commenter" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "delete-comment delete_comment",
-                            attrs: { href: "#", "data-commentdelete-id": "54" }
-                          },
-                          [_c("i", { staticClass: "fa fa-times" })]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "commenter-name" }, [
-                          _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "//localhost:3004/fitmetix/public/mikele"
-                              }
-                            },
-                            [_vm._v("Mikel")]
-                          ),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "comment-description" }, [
-                            _vm._v("dd")
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "ul",
-                          { staticClass: "list-inline comment-options" },
-                          [
-                            _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  staticClass:
-                                    "text-capitalize like-comment like",
-                                  attrs: { href: "#", "data-comment-id": "54" }
-                                },
-                                [_vm._v("like")]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "hidden" }, [
-                              _c(
-                                "a",
-                                {
-                                  staticClass:
-                                    "text-capitalize like-comment unlike",
-                                  attrs: { href: "#", "data-comment-id": "54" }
-                                },
-                                [_vm._v("unlike")]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("li", [_vm._v(".")]),
-                            _vm._v(" "),
-                            _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "show-comment-reply",
-                                  attrs: { href: "#" }
-                                },
-                                [_vm._v("reply")]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("li", [_vm._v(".")]),
-                            _vm._v(" "),
-                            _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "show-likes like3-54",
-                                  attrs: { href: "#" }
-                                },
-                                [
-                                  _c("i", { staticClass: "fa fa-thumbs-up" }),
-                                  _vm._v("0")
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("li", {
-                              staticClass: "show-likes like4-54 hidden"
-                            }),
-                            _vm._v(" "),
-                            _c("li", [_vm._v(".")]),
-                            _vm._v(" "),
-                            _c("li", [
-                              _c(
-                                "time",
-                                {
-                                  staticClass: "post-time timeago",
-                                  attrs: {
-                                    datetime: "2017-11-08 21:49:47+00:00",
-                                    title: "2017-11-08 21:49:47+00:00"
-                                  }
-                                },
-                                [_vm._v("about 12 hours ago")]
-                              )
-                            ])
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ]),
-                _c("li", [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "to-comment comment-reply",
-                      staticStyle: { display: "none" }
-                    },
-                    [
-                      _c("div", { staticClass: "commenter-avatar" }, [
-                        _c("img", {
-                          attrs: {
-                            src:
-                              "//localhost:3004/fitmetix/public/user/avatar/2017-10-22-14-07-04athletebookprofilepage.png",
-                            alt: "Mikel",
-                            title: "Mikel"
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "comment-textfield" }, [
-                        _c(
-                          "form",
-                          {
-                            staticClass: "comment-form",
-                            attrs: { action: "#" }
-                          },
-                          [
-                            _c("input", {
-                              staticClass: "form-control post-comment",
-                              attrs: {
-                                autocomplete: "off",
-                                "data-post-id": "87",
-                                "data-comment-id": "54",
-                                name: "post_comment",
-                                placeholder:
-                                  "Write a comment...Press Enter to Post",
-                                rows: "1"
-                              }
-                            })
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "clearfix" })
-                    ]
-                  )
-                ])
-              ]
-            )
-          ])
-        ])
-      ]
-    )
   }
 ]
 render._withStripped = true
@@ -17898,7 +17929,7 @@ if (false) {
 }
 
 /***/ }),
-/* 17 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -18073,7 +18104,7 @@ return install;
 
 
 /***/ }),
-/* 18 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -18082,8 +18113,8 @@ return install;
  */
 
 var Swiper = __webpack_require__(3)
-var SwiperComponent = __webpack_require__(19)
-var SlideComponent = __webpack_require__(22)
+var SwiperComponent = __webpack_require__(28)
+var SlideComponent = __webpack_require__(31)
 SwiperComponent = SwiperComponent.default || SwiperComponent
 SlideComponent = SlideComponent.default || SlideComponent
 if (typeof window !== 'undefined') {
@@ -18104,15 +18135,15 @@ module.exports = swiper
 
 
 /***/ }),
-/* 19 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(20)
+var __vue_script__ = __webpack_require__(29)
 /* template */
-var __vue_template__ = __webpack_require__(21)
+var __vue_template__ = __webpack_require__(30)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -18152,7 +18183,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 20 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18238,7 +18269,7 @@ if (browser) window.Swiper = __webpack_require__(3);
 });
 
 /***/ }),
-/* 21 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -18280,15 +18311,15 @@ if (false) {
 }
 
 /***/ }),
-/* 22 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(23)
+var __vue_script__ = __webpack_require__(32)
 /* template */
-var __vue_template__ = __webpack_require__(24)
+var __vue_template__ = __webpack_require__(33)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -18328,7 +18359,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 23 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -18375,7 +18406,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 24 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -18395,13 +18426,13 @@ if (false) {
 }
 
 /***/ }),
-/* 25 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(26);
+var content = __webpack_require__(35);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -18409,7 +18440,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(27)(content, options);
+var update = __webpack_require__(36)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -18426,7 +18457,7 @@ if(false) {
 }
 
 /***/ }),
-/* 26 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(undefined);
@@ -18440,7 +18471,7 @@ exports.push([module.i, "/**\n * Swiper 3.4.2\n * Most modern mobile touch slide
 
 
 /***/ }),
-/* 27 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -18486,7 +18517,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(28);
+var	fixUrls = __webpack_require__(37);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -18799,7 +18830,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 28 */
+/* 37 */
 /***/ (function(module, exports) {
 
 
@@ -18894,7 +18925,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 29 */
+/* 38 */
 /***/ (function(module, exports) {
 
 module.exports = ["just now",["%s second ago","%s seconds ago"],["%s minute ago","%s minutes ago"],["%s hour ago","%s hours ago"],["%s day ago","%s days ago"],["%s week ago","%s weeks ago"],["%s month ago","%s months ago"],["%s year ago","%s years ago"]]

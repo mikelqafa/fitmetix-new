@@ -10,6 +10,7 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
         <meta name="keywords" content="{{ Setting::get('meta_keywords') }}">
         <meta name="description" content="{{ Setting::get('meta_description') }}">
+        <meta name="_token" content="{{ csrf_token() }}">
         <link rel="icon" type="image/x-icon" href="{!! url('setting/'.Setting::get('favicon')) !!}">
         <meta content="{{ url('/') }}" property="og:url" />
         <meta content="{!! url('setting/'.Setting::get('logo')) !!}" property="og:image" />
