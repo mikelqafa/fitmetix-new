@@ -17297,6 +17297,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+var axios = window.axios;
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
@@ -17313,12 +17314,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         getDefaultData: function getDefaultData() {
             var that = this;
-            console.log('here');
-            window.axios.post(base_url + 'get-posts').then(function (response) {
-                console.log(response.data);
-                //that.itemList.push(data)
-            }).catch(function (e) {
-                console.log(e);
+            axios({
+                method: 'post',
+                responseType: 'json',
+                url: base_url + 'get-posts',
+                data: {}
+            }).then(function (response) {
+                console.log(response);
+            }).catch(function (error) {
+                console.log(error);
             });
         }
     },
