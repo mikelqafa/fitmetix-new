@@ -11,7 +11,6 @@
         <meta name="description" content="{{ Setting::get('meta_description') }}">
         <link rel="icon" type="image/x-icon" href="{!! url('setting/'.Setting::get('favicon')) !!}">
 
-
         <title>{{ Theme::get('title') }}</title>
 
         <link href="{{ Theme::asset()->url('css/flag-icon.css') }}" rel="stylesheet">

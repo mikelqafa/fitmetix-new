@@ -204,10 +204,13 @@
         methods: {
             getDefaultData: function () {
                 let that = this
+                console.log('here')
                 window.axios.post(base_url + 'get-posts').then(function (response) {
                     console.log(response.data)
                     //that.itemList.push(data)
-                });
+                }).catch( function (e) {
+                    console.log(e)
+                })
             }
         },
         mounted () {

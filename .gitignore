@@ -21,3 +21,5 @@ error_log
 
 #Ignore webpack mix js
 webpack.mix.js
+public/mix-manifest.json
+npm-debug.log

@@ -5645,8 +5645,7 @@ else if (typeof define === 'function' && define.amd) {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(5);
-module.exports = __webpack_require__(30);
+module.exports = __webpack_require__(5);
 
 
 /***/ }),
@@ -17314,9 +17313,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         getDefaultData: function getDefaultData() {
             var that = this;
+            console.log('here');
             window.axios.post(base_url + 'get-posts').then(function (response) {
                 console.log(response.data);
                 //that.itemList.push(data)
+            }).catch(function (e) {
+                console.log(e);
             });
         }
     },
@@ -18892,12 +18894,6 @@ module.exports = function (css) {
 /***/ (function(module, exports) {
 
 module.exports = ["just now",["%s second ago","%s seconds ago"],["%s minute ago","%s minutes ago"],["%s hour ago","%s hours ago"],["%s day ago","%s days ago"],["%s week ago","%s weeks ago"],["%s month ago","%s months ago"],["%s year ago","%s years ago"]]
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
