@@ -2749,4 +2749,13 @@ class TimelineController extends AppBaseController
         ->render();
         
     }
+
+    public function editEvent(Request $request, $id){
+        $event = Event::find($id);
+
+        $input = $request->all();
+
+        $event->fill($input);
+        $event->save();
+    }
 }

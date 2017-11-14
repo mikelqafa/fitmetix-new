@@ -233,6 +233,7 @@ Route::group(['prefix' => '/{username}', 'middleware' => 'auth'], function ($use
     Route::get('/notification/{id}', 'NotificationController@redirectNotification');
 
     Route::get('/events', 'TimelineController@eventsList');
+    Route::get('/edit-event/{id}', 'TimelineController@eventsList');
     
     Route::get('/event-posts', 'TimelineController@getEventPosts');
     Route::get('/invite-guests', 'UserController@guestList');
