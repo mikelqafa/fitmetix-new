@@ -1370,6 +1370,8 @@ class AdminController extends Controller
         $env = $request->env;
         file_put_contents(base_path('.env'), $env);
 
+        Artisan::call('config:ca');
+
         return redirect('admin/get-env');
     }
 

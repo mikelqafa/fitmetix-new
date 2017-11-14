@@ -2690,8 +2690,8 @@ class TimelineController extends AppBaseController
     {
         $timeline = Timeline::where('username', $request->username)->first();
 
-        $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('comments')->paginate($request->paginate);
-        $theme = Theme::uses('default')->layout('default');
+        $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->get();
+        // $theme = Theme::uses('default')->layout('default');
 
         return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline]]);
     }
@@ -2757,5 +2757,17 @@ class TimelineController extends AppBaseController
 
         $event->fill($input);
         $event->save();
+    }
+
+    public function commentsAPI(Request $request) {
+        $total_comments = Comment::where('post_id',$request->post_id)->count();
+
+        $comments = Comment::where('post_id',$request->post_id)->limit(10)->offset($request->offset)->get();
+
+        if($total_comments > $request->offset) {
+            $comments['hasMore'] = true;
+        }
+
+        return response()->json(['status' => '200', ['comments'=>$comments]]);
     }
 }

@@ -369,6 +369,8 @@ Route::group(['prefix' => '/{username}/event-settings', 'middleware' => ['auth',
 
 Route::post('get-posts','TimelineController@postAPI');
 
+Route::post('get-comments','TimelineController@commentsAPI');
+
 Route::post('ajax/switch-language', 'TimelineController@switchLanguage');
 
 Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {
