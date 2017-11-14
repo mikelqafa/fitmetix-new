@@ -2676,8 +2676,13 @@ class TimelineController extends AppBaseController
 
     public function switchLanguage(Request $request)
     {
-        Auth::user()->update(['language' => $request->language]);
-        App::setLocale($request->language);
+        if(Auth::user()){
+            Auth::user()->update(['language' => $request->language]);
+            App::setLocale($request->language);
+        }
+        else {
+            $request->session()->put('guest_locale',$request->language);
+        }
         return response()->json(['status' => '200', 'message' => 'Switched language to '.$request->language]);
     }
 

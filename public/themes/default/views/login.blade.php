@@ -3,6 +3,9 @@
         top:0;
     }
 </style>
+@if(Session::has('guest_locale'))
+    {{ App::setLocale(Session::get('guest_locale')) }}
+@endif
 <div class="ft-login">
 
     <div class="ft-mobile-logo md-layout md-align md-align--center-center">
@@ -22,13 +25,13 @@
                     <div class="md-layout md-layout-spacer mobile-layout-column md-layout--row md-align md-align-start-center">
                         <div class="mail-form  form-group form-group__adjust">
                             <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                            <input class="form-control" id="email" required placeholder="Email or username" name="email" type="text">
+                            <input class="form-control" id="email" required placeholder="{{ trans('auth.enter_email_or_username') }}" name="email" type="text">
                         </div>
                         <div class="form-group form-group__adjust">
-                            <input class="form-control" id="password" required placeholder="Password" name="password" type="password" value="">
+                            <input class="form-control" id="password" required placeholder="{{ trans('auth.password') }}" name="password" type="password" value="">
                         </div>
                         <div class="form-group mobile-full-width md-layout layout-m-l-1 layout-m-l-0--sm">
-                            <button type="submit" id="submit" class="btn btn-primary btn-submit">Log In</button>
+                            <button type="submit" id="submit" class="btn btn-primary btn-submit">{{ trans('auth.login') }}</button>
                             <a href="{!! url('account/facebook') !!}" class="btn btn--icon btn-primary layout-m-l-0">
                                 <object type="image/svg+xml" data="{{asset('fonts/facebook.svg')}}" class="splash">
                                 </object>

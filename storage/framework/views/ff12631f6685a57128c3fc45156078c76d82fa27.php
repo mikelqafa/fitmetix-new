@@ -26,12 +26,12 @@
 		<div class="multi-lang">
 			<?php echo e(csrf_field()); ?>
 
-			<a href="javascript:;" class="multi-lang__item cover-bg switch-language" data-language="en"   style="background-image: url(<?php echo e(asset('images/sp.png')); ?>)"></a>
-			<a href="javascript:;" class="multi-lang__item cover-bg switch-language" data-language="en"  style="background-image: url(<?php echo e(asset('images/en.png')); ?>)"></a>
+			<a href="javascript:;" class="multi-lang__item cover-bg switch-language" data-language='es'   style="background-image: url(<?php echo e(asset('images/sp.png')); ?>)"></a>
+			<a href="javascript:;" class="multi-lang__item cover-bg switch-language" data-language='en'  style="background-image: url(<?php echo e(asset('images/en.png')); ?>)"></a>
 		</div>
 		<div class="multi-lang multi-lang--mobile">
-			<a href="javascript:;" class="multi-lang__option cover-bg switch-language" data-language="en"   style="background-image: url(<?php echo e(asset('images/sp.png')); ?>)"></a>
-			<a href="javascript:;" class="lang__option multi-lang__option cover-bg switch-language" data-language="en"  style="background-image: url(<?php echo e(asset('images/en.png')); ?>)"></a>
+			<a href="javascript:;" class="multi-lang__option cover-bg switch-language" data-language='es'   style="background-image: url(<?php echo e(asset('images/sp.png')); ?>)"></a>
+			<a href="javascript:;" class="lang__option multi-lang__option cover-bg switch-language" data-language='en'  style="background-image: url(<?php echo e(asset('images/en.png')); ?>)"></a>
 		</div>
 	</div>
 </div>
