@@ -2759,6 +2759,11 @@ class TimelineController extends AppBaseController
         $event->save();
     }
 
+    public function commentsCountAPI(Request $request) {
+        $total_comments = Comment::where('post_id',$request->post_id)->count();
+        return response()->json(['status' => '200', ['post_comment_count'=>$total_comments]]);
+    }
+
     public function commentsAPI(Request $request) {
         $total_comments = Comment::where('post_id',$request->post_id)->count();
 
