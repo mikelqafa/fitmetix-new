@@ -2777,9 +2777,9 @@ class TimelineController extends AppBaseController
         $limit = 10 + $request->offset;
 
         if($total_comments > $limit) {
-            $comments['hasMore'] = true;
+            $hasMore = true;
         }
 
-        return response()->json(['status' => '200', ['comments'=>$comments]]);
+        return response()->json(['status' => '200', ['comments'=>$comments,'hasMore'=>$hasMore]]);
     }
 }
