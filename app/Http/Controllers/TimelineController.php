@@ -2762,7 +2762,7 @@ class TimelineController extends AppBaseController
     public function commentsAPI(Request $request) {
         $total_comments = Comment::where('post_id',$request->post_id)->count();
 
-        $comments = Comment::where('post_id',$request->post_id)->limit(10)->offset($request->offset)->get();
+        $comments = Comment::where('post_id',$request->post_id)->with('comment_likes')->limit(10)->offset($request->offset)->get();
 
         if($total_comments > $request->offset) {
             $comments['hasMore'] = true;
