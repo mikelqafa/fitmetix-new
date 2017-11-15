@@ -39,7 +39,7 @@
                     <post-image :post-images="dummy"></post-image>
                     <post-sound-cloud :soundcloud="postItem.soundcloud_id"></post-sound-cloud>
                 </div>
-                <post-comment></post-comment>
+                <post-comment :post-id="postItem.id"></post-comment>
             </div>
         </template>
     </div>
@@ -94,7 +94,6 @@
                         let posts = response.data[0].posts;
                         $.each(posts, function(key, val) {
                             that.itemList.push(val);
-                            console.log(val)
                         });
                     }
                 }).catch(function(error) {
