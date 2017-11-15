@@ -2762,7 +2762,9 @@ class TimelineController extends AppBaseController
     public function commentsCountAPI(Request $request) {
         $total_comments = Comment::where('post_id',$request->post_id)->count();
         $total_likes = DB::table('post_likes')->where('post_id',$request->post_id)->count();
-        return response()->json(['status' => '200', ['post_comment_count'=>$total_comments,'post_likes_count'=>$total_likes]]);
+        $id = Auth::user()->id;
+        $user_liked = DB::table('post_likes')->where([['post_id',$request->post_id],['user_id',$id]])->count();
+        return response()->json(['status' => '200', ['post_comment_count'=>$total_comments,'post_likes_count'=>$total_likes,'user_liked'=>$user_liked]]);
     }
 
     public function commentsAPI(Request $request) {
