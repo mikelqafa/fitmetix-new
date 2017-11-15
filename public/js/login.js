@@ -86,29 +86,46 @@ var LoginForm = function () {
       })
     })
 
+    // $('.switch-language').on('click',function(e){
+    //   e.preventDefault();
+    //   var formData = {
+    //     'language' : $(this).data('language'),
+    //     '_token': $('input[name=_token]').val()
+    //   };
+    //   $.ajax({
+    //     url : SP_source() + 'ajax/switch-language',
+    //     type: "post",
+    //     data: formData
+    //   }).done(function(e){ //
+    //     if(e.status == 200) {
+    //       window.location = SP_source();
+    //     } else {
+    //       var config = {
+    //         messageText:  e.message,
+    //         alignCenter: false,
+    //         autoClose: false
+    //       }
+    //       window.materialSnackBar(config)
+    //     }
+    //   })
+    // })
     $('.switch-language').on('click',function(e){
       e.preventDefault();
-      var formData = {
-        'language' : $(this).data('language'),
-        '_token': $('input[name=_token]').val()
-      };
-      $.ajax({
-        url : SP_source() + 'ajax/switch-language',
-        type: "post",
-        data: formData
-      }).done(function(e){ //
-        if(e.status == 200) {
-          window.location = SP_source();
-        } else {
-          var config = {
-            messageText:  e.message,
-            alignCenter: false,
-            autoClose: false
+      $.post(SP_source() + 'ajax/switch-language', {language: $(this).data('language')}, function(data) {
+        if (data.status == 200) {
+          if (typeof redirect_source != "undefined") {
+            url = SP_source()+'/register';
+            window.location = url;
           }
-          window.materialSnackBar(config)
+          else {
+            window.location = SP_source();
+          }
         }
-      })
-    })
+        else if (data.status == 201) {
+          notify(data.message,'warning');
+        }
+      });
+    });
   }
   return {
     //main function to initiate

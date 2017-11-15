@@ -40,16 +40,22 @@ $(function () {
 
   // To switch language
   $('.switch-language').on('click',function(e){
-    e.preventDefault();
-    $.post(SP_source() + 'ajax/switch-language', {language: $(this).data('language')}, function(data) {
-      if (data.status == 200) {
-        window.location = SP_source();
-      }
-      else if (data.status == 201) {
-        notify(data.message,'warning');
-      }
+      e.preventDefault();
+      $.post(SP_source() + 'ajax/switch-language', {language: $(this).data('language')}, function(data) {
+        if (data.status == 200) {
+          if (typeof redirect_source != "undefined") {
+            url = SP_source()+'/register';
+            window.location = url;
+          }
+          else {
+            window.location = SP_source();
+          }
+        }
+        else if (data.status == 201) {
+          notify(data.message,'warning');
+        }
+      });
     });
-  });
 
   $('.login-form').ajaxForm({
     url: SP_source() + 'login',

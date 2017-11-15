@@ -42,11 +42,11 @@
                         <ul class="list-inline  layout-p-l-1--sm  list-inline__login  layout-p-r-1--sm">
                             <li>
                                 <a href="{!! url('register') !!}" class="forgot-password">
-                                    <i class="icon icon-user"></i> New user?</a>
+                                    <i class="icon icon-user"></i> {{ trans('auth.dont_have_an_account_yet') }}</a>
                             </li>
                             <li>
                                 <a href="{!! url('password/reset') !!}" class="layout-m-l-0">
-                                    Forgot password?
+                                    {{ trans('auth.forgot_password') }}
                                 </a>
                             </li>
                         </ul>
