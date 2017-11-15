@@ -33,7 +33,7 @@
 					@if($mode != "eventlist")
 						{!! Theme::partial('create-post',compact('timeline','user_post')) !!}
 						<div class="timeline-posts">
-                            <div id="app">
+                            <div>
                                 <app-post>
                                     <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
                                         <div class="panel-heading no-bg post-avatar md-layout md-layout--row">

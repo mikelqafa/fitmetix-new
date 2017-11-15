@@ -1,19 +1,3 @@
-<!--
-created_at: "2017-11-01 13:19:09"
-deleted_at: null
-description:" :full_moon_with_face: ↵"
-id: 80
-location: ""
-shared_post_id: null
-soundcloud_id: ""
-soundcloud_title: ""
-timeline_id: 1
-type: null
-updated_at: "2017-11-01 13:19:09"
-user_id: 1
-youtube_title: ""
-youtube_video_id: "",
--->
 <template>
     <div>
         <template v-if="isLoading">
@@ -53,48 +37,9 @@ youtube_video_id: "",
                     <post-description :post-html="postItem.description"></post-description>
                     <post-youtube :post-you-tube="postItem.youtube_video_id" :you-tube-title="postItem.youtube_title"></post-youtube>
                     <post-image :post-images="dummy"></post-image>
-                    <post-sound-cloud></post-sound-cloud>
+                    <post-sound-cloud :soundcloud="postItem.soundcloud_id"></post-sound-cloud>
                 </div>
-                <div class="panel-footer socialite">
-                    <ul class="list-inline footer-list pos-rel">
-                        <li class="hidden">
-                            <a href="#" class="like-post like-87" data-post-id="87">
-                                <i class="icon icon-like"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="like-post unlike unlike-87" data-post-id="87">
-                                <i class="icon icon-liked unlike"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="show-comments">
-                                <i class="icon icon-comment"></i>
-                            </a>
-                        </li>
-                        <li class="text-center full-center ">
-                            <a href="#" class="show-users-modal" data-html="true" data-heading="Likes" data-users="7" data-original-title="Mikel">
-                        <span class="count-circle">
-                            <i class="icon icon-like"></i>
-                        </span>
-                                <span class="hidden-sm hidden-xs">Likes</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="show-all-comments">
-                        <span class="count-circle">
-                            <i class="icon icon-comment"></i>
-                        </span>1
-                                <span class="hidden-sm hidden-xs">comments</span>
-                            </a>
-                        </li>
-                        <li class="pull-right">
-                            <a href="//localhost:3004/fitmetix/public/post/87">
-                                <i class="icon icon-share"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <post-comment></post-comment>
             </div>
         </template>
     </div>
@@ -110,6 +55,7 @@ youtube_video_id: "",
     import postYouTube from './child/postYouTube'
     import postSoundCloud from './child/postSoundCloud'
     import postHeader from './child/postHeader'
+    import postComment from './child/postComment'
 
     let axios = window.axios
     export default {
@@ -167,7 +113,8 @@ youtube_video_id: "",
             'post-image': postImage,
             'post-sound-cloud': postSoundCloud,
             'post-youtube': postYouTube,
-            'post-header': postHeader
+            'post-header': postHeader,
+            'post-comment': postComment
         }
     }
 </script>

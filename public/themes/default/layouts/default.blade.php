@@ -388,8 +388,9 @@
         {!! Theme::partial('mobileHeader') !!}
     </div>
 
-        <div class="main-content">
+        <div class="main-content" id="app">
             {!! Theme::content() !!}
+            <app-dialog-option></app-dialog-option>
         </div>
 
         {!! Theme::partial('right-sidebar') !!}

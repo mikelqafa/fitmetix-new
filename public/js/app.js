@@ -257,7 +257,6 @@ $(function () {
     e.preventDefault();
     $('.user-tags-addon').slideToggle();
     $('.user-tags-added').slideToggle();
-
   });
 
 

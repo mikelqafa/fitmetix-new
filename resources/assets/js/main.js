@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Post from './components/Post'
+import DialogOption from './components/DialogOption'
 import VueTimeago from 'vue-timeago'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 require('swiper/dist/css/swiper.css')
@@ -22,6 +23,7 @@ Vue.config.productionTip = true
 new Vue({
   el: '#app',
   components: {
-    'app-post': Post
+    'app-post': Post,
+    'app-dialog-option': DialogOption
   }
 })
