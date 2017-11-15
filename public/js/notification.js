@@ -17627,7 +17627,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports={render:function(){},staticRenderFns:[]}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.hasItem
+    ? _c("div", { staticClass: "soundcloud-wrapper" }, [
+        _c("iframe", {
+          attrs: {
+            width: "100%",
+            height: "166",
+            scrolling: "no",
+            frameborder: "no",
+            src: _vm.soundcloudSrc
+          }
+        })
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
@@ -17745,6 +17765,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         userAvatar: function userAvatar() {
             return this.timelineData.avatar_url.length !== 0 ? base_url + this.timelineData.avatar_url[0].source : base_url + this.defaultImage;
         }
+    },
+    methods: {
+        openPostDialog: function openPostDialog() {}
     }
 });
 
@@ -17931,7 +17954,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.ft-socialite {\n    background-color: #fff;\n    padding: 10px 15px;\n    border: none;\n}\n.ft-expression{\n    display: flex;\n    height: 32px;\n    width: 48px;\n    align-items: center;\n    text-align: center;\n    justify-content: center;\n    align-items: center;\n    color: #333;\n}\n.ft-expression .hidden-default {\n    display: none;\n}\n.ft-expression--liked .hidden-default {\n    display: block;\n}\n.ft-expression--liked .visible-default {\n    display: none;\n}\n.ft-expression i {\n    font-size: 24px;\n}\n.ft-comment {\n    flex-wrap: wrap;\n    align-items: center;\n}\n.ft-comment__item {\n    display: flex;\n}\n.ft-comment__item--grow{\n    flex-grow: 1;\n}\n.ft-expression--meta {\n    font-size: 13px;\n    height: 24px;\n    min-width: 24px;\n    width: auto;\n    padding: 0 7px;\n    line-height: 24px;\n}\n.ft-expression--meta i {\n    font-size: 14px;\n}\n.ft-expression--meta-text {\n    margin-left: 5px;\n}\n", ""]);
+exports.push([module.i, "\n.ft-loading{\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    flex-wrap: nowrap;\n    height: 48px;\n    background-color: #FAFBFC;\n}\n.ft-loading__dot{\n    background: #333;\n    display: block;\n    height: 8px;\n    float: left;\n    margin: 0 2px;\n    opacity: 0;\n    width: 8px;\n    border-radius: 50%;\n    animation: dot 1s cubic-bezier(0.77, 0, 0.175, 1) 0s infinite;\n}\n.ft-loading .ft-loading__dot:nth-child(1) {\n    animation-delay: 0.15s;\n}\n.ft-loading .ft-loading__dot:nth-child(2) {\n    animation-delay: 0.3s;\n}\n.ft-loading .ft-loading__dot:nth-child(3) {\n    animation-delay: 0.45s;\n}\n@keyframes dot {\n0% {\n        opacity: 0;\n}\n25% {\n        opacity: 1;\n}\n100% {\n        opacity: 0;\n}\n}\n.comment-textfield .form-control{\n    height: 48px;\n    border-top: none;\n    border-left:none;\n    border-right:none;\n    border-radius: 0;\n    padding-left: 15px;\n    padding-right: 15px;\n    background-color: #FAFBFC;\n}\n.md-list__item-icon {\n    margin-top: 2px;\n    height: 32px;\n    width: 32px;\n    align-self: flex-start;\n    margin-right: 16px;\n    flex-shrink: 0;\n}\n.user-avatar {\n    background-size: cover;\n}\n.md-list {\n    background-color: #FAFBFC;\n    padding: 4px 0;\n    width: 100%;\n    display: block;\n    list-style: none;\n}\n.md-list .md-list__item {\n    border-bottom: 1px solid rgba(0,0,0,.12);\n}\n.md-list .md-list__item:last-child {\n    border-bottom: none\n}\n.md-list--dense .md-list__item {\n    min-height: 40px;\n    font-size: 14px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    font-weight: 400;\n    color: rgba(0,0,0,.87);\n    letter-spacing: .04em;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    align-items: center;\n    cursor: default;\n    overflow: hidden;\n    line-height: 1;\n    padding-left: 16px;\n    padding-top:10px;\n    padding-bottom:10px;\n}\n.md-list__item-content {\n    flex: 1 1 100%;\n    display: flex;\n    position: relative;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    line-height: 20px;\n    justify-content: space-between;\n    padding-right: 16px;\n}\n.md-list__item-text-body{\n    line-height: 18px;\n    color: rgba(0,0,0,.54);\n    padding: 0;\n    font-size: 12px;\n}\n.md-list__item-secondary{\n    display: flex;\n    margin-left: 8px;\n}\n.md-list__item-secondary-action {\n    height: 20px;\n    width: 20px;\n    padding: 2px;\n    text-align: center;\n    font-size: 11px;\n    color: #333;\n}\n.md-list__item-secondary-action.ft-expression{\n    height: 20px;\n    width: 20px;\n}\n.md-list__item-secondary-action .icon{\n    font-size: 1.4rem;\n}\n.ft-socialite {\n    background-color: #fff;\n    padding: 10px 15px;\n    border: none;\n}\n.ft-expression {\n    display: flex;\n    height: 32px;\n    width: 48px;\n    text-align: center;\n    justify-content: center;\n    align-items: center;\n    color: #333;\n}\n.ft-expression .hidden-default {\n    display: none;\n}\n.ft-expression--liked,\n.ft-expression--liked:focus,\n.ft-expression--liked:hover {\n    color: #EB5757;\n}\n.ft-expression--liked .hidden-default {\n    display: block;\n}\n.ft-expression--liked .visible-default {\n    display: none;\n}\n.ft-expression i {\n    font-size: 24px;\n}\n.ft-comment {\n    flex-wrap: wrap;\n    align-items: center;\n}\n.ft-comment__item {\n    display: flex;\n}\n.ft-comment__item--grow {\n    flex-grow: 1;\n}\n.ft-expression--meta {\n    font-size: 13px;\n    height: 24px;\n    min-width: 24px;\n    width: auto;\n    padding: 0 7px;\n    line-height: 24px;\n}\n.ft-expression--meta i {\n    font-size: 14px;\n}\n.ft-expression--meta-text {\n    margin-left: 5px;\n}\n", ""]);
 
 // exports
 
@@ -18030,7 +18053,204 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
+// let Zippy = window.Zippy
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
         postId: ''
@@ -18039,12 +18259,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             postCommentsCount: 0,
             postLikesCount: 0,
-            userLiked: 0
+            userLiked: 0,
+            userCommented: 0,
+            commentInteract: false,
+            commentHasMore: true,
+            commentItemList: [],
+            commentIsPosting: false
         };
     },
     computed: {
         userAvatar: function userAvatar() {
             return 'hello';
+        },
+        expandID: function expandID() {
+            return 'comment-expand-' + this.postId;
         }
     },
     methods: {
@@ -18066,7 +18294,102 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     that.postLikesCount = response.data[0].post_likes_count;
                     that.userLiked = response.data[0].user_liked;
                 }
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        toggleLikePost: function toggleLikePost() {
+            var that = this;
+            var paginate = 50;
+            var _token = $("meta[name=_token]").attr('content');
+            axios({
+                method: 'post',
+                responseType: 'json',
+                url: base_url + '/ajax/like-post',
+                data: {
+                    post_id: that.postId,
+                    _token: _token
+                }
+            }).then(function (response) {
+                if (response.status == 200) {
+                    that.userLiked = response.data.liked;
+                }
                 console.log(response);
+            }).catch(function (error) {
+                console.log(error);
+            });
+            this.userLiked = !this.userLiked;
+            if (this.userLiked) {
+                this.postLikesCount++;
+            } else {
+                this.postLikesCount--;
+            }
+        },
+        commentOnPost: function commentOnPost() {
+            $('#' + this.expandID).Zippy('toggle');
+            if (!this.commentInteract) {
+                this.fetchComment();
+            }
+        },
+        postComment: function postComment(e) {
+            var input = e.target[0];
+            var value = e.target[0].value;
+            input.value = '';
+            if (value == '') {
+                return;
+            }
+            $(input).addClass('is-loading');
+            this.commentIsPosting = true;
+            console.log(value);
+            var that = this;
+            var _token = $("meta[name=_token]").attr('content');
+            axios({
+                method: 'post',
+                responseType: 'json',
+                url: base_url + '/ajax/post-comment',
+                data: {
+                    post_id: that.postId,
+                    description: value,
+                    _token: _token
+                }
+            }).then(function (response) {
+                if (response.status == 200) {
+                    that.postCommentsCount++;
+                    $(input).removeClass('is-loading');
+                    that.commentIsPosting = false;
+                    that.commentInteract = true;
+                    that.commentItemList.push({
+                        comment: value,
+                        timestamp: new Date().getTime(),
+                        userId: '',
+                        userAvatar: ''
+                    });
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        fetchComment: function fetchComment() {
+            var _token = $("meta[name=_token]").attr('content');
+            var that = this;
+            axios({
+                method: 'post',
+                responseType: 'json',
+                url: base_url + 'get-comments',
+                data: {
+                    post_id: that.postId,
+                    offset: 0,
+                    _token: _token
+                }
+            }).then(function (response) {
+                console.log(response);
+                if (response.status == 200) {
+                    var comments = response.data[0].comments;
+                    $.each(comments, function (key, value) {
+                        console.log(key, value);
+                    });
+                    that.commentInteract = true;
+                }
             }).catch(function (error) {
                 console.log(error);
             });
@@ -18077,7 +18400,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         setTimeout(function () {
             that.getDefaultData();
         }, 1000);
-    }
+        $('#' + this.expandID).Zippy();
+    },
+
+    components: {}
 });
 
 /***/ }),
@@ -18088,78 +18414,219 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "panel-footer ft-socialite" }, [
-    _c("div", { staticClass: "ft-comment md-layout md-layout--row" }, [
-      _c("div", { staticClass: "ft-comment__item md-layout md-layout--row" }, [
+  return _c("div", [
+    _c("div", { staticClass: "panel-footer ft-socialite" }, [
+      _c("div", { staticClass: "ft-comment md-layout md-layout--row" }, [
         _c(
-          "a",
+          "div",
+          { staticClass: "ft-comment__item md-layout md-layout--row" },
+          [
+            _c(
+              "a",
+              {
+                staticClass: "ft-expression",
+                class: { "ft-expression--liked": _vm.userLiked },
+                attrs: { href: "javascript:;" },
+                on: { click: _vm.toggleLikePost }
+              },
+              [
+                _c("i", { staticClass: "icon icon-like visible-default" }),
+                _vm._v(" "),
+                _c("i", { staticClass: "icon icon-liked hidden-default" })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "ft-expression",
+                class: { "ft-expression--liked": _vm.userCommented },
+                attrs: { href: "javascript:;" },
+                on: { click: _vm.commentOnPost }
+              },
+              [_c("i", { staticClass: "icon icon-comment" })]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
           {
-            staticClass: "ft-expression",
-            class: { "ft-expression--liked": _vm.userLiked },
-            attrs: { href: "#" }
+            staticClass:
+              "ft-comment__item md-align md-align--center-center ft-comment__item--grow"
           },
           [
-            _c("i", { staticClass: "icon icon-like visible-default" }),
+            _c(
+              "a",
+              {
+                staticClass: "ft-expression ft-expression--meta",
+                class: { "ft-expression--liked": _vm.userLiked },
+                attrs: { href: "javascript:;" }
+              },
+              [
+                _c("i", { staticClass: "icon icon-like visible-default" }),
+                _vm._v(" "),
+                _c("i", { staticClass: "icon icon-liked hidden-default" }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ft-expression--meta-text" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.postLikesCount) +
+                      "\n                "
+                  )
+                ])
+              ]
+            ),
             _vm._v(" "),
-            _c("i", { staticClass: "icon icon-liked hidden-default" })
+            _c(
+              "a",
+              {
+                staticClass: "ft-expression ft-expression--meta",
+                class: { "ft-expression--liked": _vm.userCommented },
+                attrs: { href: "javascript:;" }
+              },
+              [
+                _c("i", { staticClass: "icon icon-comment" }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ft-expression--meta-text" }, [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.postCommentsCount) +
+                      "\n                "
+                  )
+                ])
+              ]
+            )
           ]
         ),
         _vm._v(" "),
         _vm._m(0)
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "ft-comment__item md-align md-align--center-center ft-comment__item--grow"
-        },
-        [
-          _c(
-            "a",
-            {
-              staticClass: "ft-expression ft-expression--meta",
-              class: { "ft-expression--liked": _vm.userLiked },
-              attrs: { href: "#" }
-            },
-            [
-              _c("i", { staticClass: "icon icon-like visible-default" }),
-              _vm._v(" "),
-              _c("i", { staticClass: "icon icon-liked hidden-default" }),
-              _vm._v(" "),
-              _c("span", { staticClass: "ft-expression--meta-text" }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.postCommentsCount) +
-                    "\n                "
-                )
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "ft-expression ft-expression--meta",
-              attrs: { href: "#" }
-            },
-            [
-              _c("i", { staticClass: "icon icon-comment" }),
-              _vm._v(" "),
-              _c("span", { staticClass: "ft-expression--meta-text" }, [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.postLikesCount) +
-                    "\n                "
-                )
-              ])
-            ]
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _vm._m(1)
-    ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "section",
+      {
+        staticClass: "zippy suggestion-list-expand",
+        attrs: { id: _vm.expandID }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "zippy__wrapper" },
+          [
+            _vm.commentInteract
+              ? [
+                  _c("div", { staticClass: "comment-textfield" }, [
+                    _c(
+                      "form",
+                      {
+                        attrs: { action: "#" },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            _vm.postComment($event)
+                          }
+                        }
+                      },
+                      [
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: {
+                            autocomplete: "off",
+                            "data-post-id": "",
+                            "data-comment-id": "",
+                            name: "post_comment",
+                            placeholder: "Write a comment",
+                            rows: "1"
+                          }
+                        })
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm.commentItemList.length
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "demo-list-action md-list md-list--dense"
+                        },
+                        _vm._l(_vm.commentItemList, function(item) {
+                          return _c(
+                            "div",
+                            {
+                              staticClass:
+                                "md-list__item md-list__item--three-line has-divider"
+                            },
+                            [
+                              _c("a", {
+                                staticClass: "md-list__item-icon user-avatar",
+                                staticStyle: {
+                                  "background-image":
+                                    "url('http://localhost:3008/fitmetix/public/images/default.png')"
+                                },
+                                attrs: {
+                                  href:
+                                    "//localhost:3008/fitmetix/public/Uppal",
+                                  title: "@Uppal"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "md-list__item-content" },
+                                [
+                                  _vm._m(1, true),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "md-list__item-secondary md-layout md-layout--row"
+                                    },
+                                    [
+                                      _vm._m(2, true),
+                                      _vm._v(" "),
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass:
+                                            "md-list__item-secondary-action ft-expression",
+                                          class: {
+                                            "ft-expression--liked":
+                                              _vm.userLiked
+                                          },
+                                          attrs: { href: "javascript:;" },
+                                          on: { click: _vm.toggleLikePost }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass:
+                                              "icon icon-like visible-default"
+                                          }),
+                                          _vm._v(" "),
+                                          _c("i", {
+                                            staticClass:
+                                              "icon icon-liked hidden-default"
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        })
+                      )
+                    : _vm._e()
+                ]
+              : [_vm._m(3)]
+          ],
+          2
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -18167,18 +18634,63 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "ft-expression", attrs: { href: "#" } }, [
-      _c("i", { staticClass: "icon icon-comment" })
+    return _c("div", { staticClass: "ft-comment__item" }, [
+      _c(
+        "a",
+        { staticClass: "ft-expression", attrs: { href: "javascript:;" } },
+        [_c("i", { staticClass: "icon icon-share" })]
+      )
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ft-comment__item" }, [
-      _c("a", { staticClass: "ft-expression", attrs: { href: "" } }, [
-        _c("i", { staticClass: "icon icon-share" })
+    return _c("div", { staticClass: "md-list__item-primary" }, [
+      _c(
+        "a",
+        {
+          staticClass: "user-name user ft-user-name",
+          attrs: {
+            href: "//localhost:3008/fitmetix/public/Uppal",
+            title: "@Uppal",
+            "data-original-title": "@Uppal"
+          }
+        },
+        [
+          _vm._v(
+            "\n                                    Sidhant\n                                "
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "md-list__item-text-body" }, [
+        _vm._v(
+          "\n                                    Bryan Cranston played the role.\n                                    Bryan Cranston played the role of Walter in Breaking Bad.\n                                "
+        )
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      { staticClass: "md-list__item-secondary-action", attrs: { href: "#" } },
+      [_c("i", { staticClass: "icon icon-options" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ft-loading" }, [
+      _c("span", { staticClass: "ft-loading__dot" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "ft-loading__dot" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "ft-loading__dot" })
     ])
   }
 ]

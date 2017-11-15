@@ -54,6 +54,11 @@
             userAvatar () {
                 return this.timelineData.avatar_url.length !== 0 ? base_url + this.timelineData.avatar_url[0].source : base_url + this.defaultImage
             }
+        },
+        methods: {
+            openPostDialog: function () {
+
+            }
         }
     }
 </script>

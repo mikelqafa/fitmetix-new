@@ -32,6 +32,7 @@
         <![endif]-->
         <link href="{{ asset('css/prakash.css') }}" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/zippy.css') }}" rel="stylesheet">
         <script type="text/javascript">
         function SP_source() {
           return "{{ url('/') }}/";
@@ -409,6 +410,7 @@
         <script src="{{ asset('js/bundle.js') }}" type="text/javascript"></script>
         <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
         @if (in_array(!Route::currentRouteName(), ['contact', 'login', 'register']))
+            <script src="{{ asset('js/zippy.js') }}" type="text/javascript"></script>
             <script src="{{ asset('js/axios.min.js') }}" type="text/javascript"></script>
             <script src="{{ asset('js/pusher.js') }}" type="text/javascript"></script>
             <script src="{{ asset('js/notification.js') }}" type="text/javascript"></script>
