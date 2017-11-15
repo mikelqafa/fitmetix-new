@@ -371,7 +371,7 @@ Route::post('get-posts','TimelineController@postAPI');
 
 Route::post('get-comments','TimelineController@commentsAPI');
 
-Route::post('get-comments-count','TimelineController@commentsCountAPI');
+Route::post('get-likes-comments-count','TimelineController@commentsCountAPI');
 
 Route::post('ajax/switch-language', 'TimelineController@switchLanguage');
 

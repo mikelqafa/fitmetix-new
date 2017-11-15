@@ -2686,16 +2686,6 @@ class TimelineController extends AppBaseController
         return response()->json(['status' => '200', 'message' => 'Switched language to '.$request->language]);
     }
 
-    public function postAPI(Request $request)
-    {
-        $timeline = Timeline::where('username', $request->username)->first();
-
-        $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->take($request->paginate)->get();
-        // $theme = Theme::uses('default')->layout('default');
-        // $posts['user_info'] = $timeline;
-        return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline]]);
-    }
-
     public function getLocation(Request $request)
     {
         $location = $request->location;
@@ -2759,9 +2749,20 @@ class TimelineController extends AppBaseController
         $event->save();
     }
 
+    public function postAPI(Request $request)
+    {
+        $timeline = Timeline::where('username', $request->username)->first();
+
+        $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->take($request->paginate)->get();
+        // $theme = Theme::uses('default')->layout('default');
+        // $posts['user_info'] = $timeline;
+        return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline]]);
+    }
+
     public function commentsCountAPI(Request $request) {
         $total_comments = Comment::where('post_id',$request->post_id)->count();
-        return response()->json(['status' => '200', ['post_comment_count'=>$total_comments]]);
+        $total_likes = DB::table('post_likes')->where('post_id',$request->post_id)->count();
+        return response()->json(['status' => '200', ['post_comment_count'=>$total_comments,'post_likes_count'=>$total_likes]]);
     }
 
     public function commentsAPI(Request $request) {
