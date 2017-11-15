@@ -2774,7 +2774,9 @@ class TimelineController extends AppBaseController
 
         $comments = Comment::where('post_id',$request->post_id)->limit(10)->offset($request->offset)->get();
 
-        if($total_comments > $request->offset) {
+        $limit = 10 + $request->offset;
+
+        if($total_comments > $limit) {
             $comments['hasMore'] = true;
         }
 
