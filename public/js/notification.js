@@ -17954,7 +17954,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.ft-loading{\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    flex-wrap: nowrap;\n    height: 48px;\n    background-color: #FAFBFC;\n}\n.ft-loading__dot{\n    background: #333;\n    display: block;\n    height: 8px;\n    float: left;\n    margin: 0 2px;\n    opacity: 0;\n    width: 8px;\n    border-radius: 50%;\n    animation: dot 1s cubic-bezier(0.77, 0, 0.175, 1) 0s infinite;\n}\n.ft-loading .ft-loading__dot:nth-child(1) {\n    animation-delay: 0.15s;\n}\n.ft-loading .ft-loading__dot:nth-child(2) {\n    animation-delay: 0.3s;\n}\n.ft-loading .ft-loading__dot:nth-child(3) {\n    animation-delay: 0.45s;\n}\n@keyframes dot {\n0% {\n        opacity: 0;\n}\n25% {\n        opacity: 1;\n}\n100% {\n        opacity: 0;\n}\n}\n.comment-textfield .form-control{\n    height: 48px;\n    border-top: none;\n    border-left:none;\n    border-right:none;\n    border-radius: 0;\n    padding-left: 15px;\n    padding-right: 15px;\n    background-color: #FAFBFC;\n}\n.md-list__item-icon {\n    margin-top: 2px;\n    height: 32px;\n    width: 32px;\n    align-self: flex-start;\n    margin-right: 16px;\n    flex-shrink: 0;\n}\n.user-avatar {\n    background-size: cover;\n}\n.md-list {\n    background-color: #FAFBFC;\n    padding: 4px 0;\n    width: 100%;\n    display: block;\n    list-style: none;\n}\n.md-list .md-list__item {\n    border-bottom: 1px solid rgba(0,0,0,.12);\n}\n.md-list .md-list__item:last-child {\n    border-bottom: none\n}\n.md-list--dense .md-list__item {\n    min-height: 40px;\n    font-size: 14px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    font-weight: 400;\n    color: rgba(0,0,0,.87);\n    letter-spacing: .04em;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    align-items: center;\n    cursor: default;\n    overflow: hidden;\n    line-height: 1;\n    padding-left: 16px;\n    padding-top:10px;\n    padding-bottom:10px;\n}\n.md-list__item-content {\n    flex: 1 1 100%;\n    display: flex;\n    position: relative;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    line-height: 20px;\n    justify-content: space-between;\n    padding-right: 16px;\n}\n.md-list__item-text-body{\n    line-height: 18px;\n    color: rgba(0,0,0,.54);\n    padding: 0;\n    font-size: 12px;\n}\n.md-list__item-secondary{\n    display: flex;\n    margin-left: 8px;\n}\n.md-list__item-secondary-action {\n    height: 20px;\n    width: 20px;\n    padding: 2px;\n    text-align: center;\n    font-size: 11px;\n    color: #333;\n}\n.md-list__item-secondary-action.ft-expression{\n    height: 20px;\n    width: 20px;\n}\n.md-list__item-secondary-action .icon{\n    font-size: 1.4rem;\n}\n.ft-socialite {\n    background-color: #fff;\n    padding: 10px 15px;\n    border: none;\n}\n.ft-expression {\n    display: flex;\n    height: 32px;\n    width: 48px;\n    text-align: center;\n    justify-content: center;\n    align-items: center;\n    color: #333;\n}\n.ft-expression .hidden-default {\n    display: none;\n}\n.ft-expression--liked,\n.ft-expression--liked:focus,\n.ft-expression--liked:hover {\n    color: #EB5757;\n}\n.ft-expression--liked .hidden-default {\n    display: block;\n}\n.ft-expression--liked .visible-default {\n    display: none;\n}\n.ft-expression i {\n    font-size: 24px;\n}\n.ft-comment {\n    flex-wrap: wrap;\n    align-items: center;\n}\n.ft-comment__item {\n    display: flex;\n}\n.ft-comment__item--grow {\n    flex-grow: 1;\n}\n.ft-expression--meta {\n    font-size: 13px;\n    height: 24px;\n    min-width: 24px;\n    width: auto;\n    padding: 0 7px;\n    line-height: 24px;\n}\n.ft-expression--meta i {\n    font-size: 14px;\n}\n.ft-expression--meta-text {\n    margin-left: 5px;\n}\n", ""]);
+exports.push([module.i, "\n.comment-textfield{\n    position: relative;\n}\n.comment-textfield .loading-wrapper {\n    position: absolute;\n    top:0;\n    left:0;\n    height: 100%;\n    width: 100%;\n    display: none;\n}\n.comment-textfield.is-loading {\n    pointer-events: none;\n    cursor: wait;\n}\n.comment-textfield .ft-loading {\n    background-color: rgba(0,0,0,.12);\n}\n.comment-textfield.is-loading .loading-wrapper {\n    display: block;\n}\n.comment-list-action{\n    max-height: 320px;\n    overflow-y: auto;\n}\n.ft-loading{\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    flex-wrap: nowrap;\n    height: 48px;\n    background-color: #FAFBFC;\n}\n.ft-loading__dot{\n    background: #333;\n    display: block;\n    height: 8px;\n    float: left;\n    margin: 0 2px;\n    opacity: 0;\n    width: 8px;\n    border-radius: 50%;\n    animation: dot 1s cubic-bezier(0.77, 0, 0.175, 1) 0s infinite;\n}\n.ft-loading .ft-loading__dot:nth-child(1) {\n    animation-delay: 0.15s;\n}\n.ft-loading .ft-loading__dot:nth-child(2) {\n    animation-delay: 0.3s;\n}\n.ft-loading .ft-loading__dot:nth-child(3) {\n    animation-delay: 0.45s;\n}\n@keyframes dot {\n0% {\n        opacity: 0;\n}\n25% {\n        opacity: 1;\n}\n100% {\n        opacity: 0;\n}\n}\n.comment-textfield .form-control{\n    height: 48px;\n    border-top: none;\n    border-left:none;\n    border-right:none;\n    border-radius: 0;\n    padding-left: 15px;\n    padding-right: 15px;\n    background-color: #FAFBFC;\n}\n.md-list__item-icon {\n    margin-top: 2px;\n    height: 32px;\n    width: 32px;\n    align-self: flex-start;\n    margin-right: 16px;\n    flex-shrink: 0;\n}\n.user-avatar {\n    background-size: cover;\n}\n.md-list {\n    background-color: #FAFBFC;\n    padding: 4px 0;\n    width: 100%;\n    display: block;\n    list-style: none;\n}\n.md-list .md-list__item {\n    border-bottom: 1px solid rgba(0,0,0,.12);\n}\n.md-list .md-list__item:last-child {\n    border-bottom: none\n}\n.md-list--dense .md-list__item {\n    min-height: 40px;\n    font-size: 14px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    font-weight: 400;\n    color: rgba(0,0,0,.87);\n    letter-spacing: .04em;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    align-items: center;\n    cursor: default;\n    overflow: hidden;\n    line-height: 1;\n    padding-left: 16px;\n    padding-top:10px;\n    padding-bottom:10px;\n}\n.md-list__item-content {\n    flex: 1 1 100%;\n    display: flex;\n    position: relative;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    line-height: 20px;\n    justify-content: space-between;\n    padding-right: 16px;\n}\n.md-list__item-text-body{\n    line-height: 18px;\n    color: rgba(0,0,0,.54);\n    padding: 0;\n    font-size: 12px;\n}\n.md-list__item-secondary{\n    display: flex;\n    margin-left: 8px;\n}\n.md-list__item-secondary-action {\n    height: 20px;\n    width: 20px;\n    padding: 2px;\n    text-align: center;\n    font-size: 11px;\n    color: #333;\n}\n.md-list__item-secondary-action.ft-expression{\n    height: 20px;\n    width: 20px;\n}\n.md-list__item-secondary-action .icon{\n    font-size: 1.4rem;\n}\n.ft-socialite {\n    background-color: #fff;\n    padding: 10px 15px;\n    border: none;\n}\n.ft-expression {\n    display: flex;\n    height: 32px;\n    width: 48px;\n    text-align: center;\n    justify-content: center;\n    align-items: center;\n    color: #333;\n}\n.ft-expression .hidden-default {\n    display: none;\n}\n.ft-expression--liked,\n.ft-expression--liked:focus,\n.ft-expression--liked:hover {\n    color: #EB5757;\n}\n.ft-expression--liked .hidden-default {\n    display: block;\n}\n.ft-expression--liked .visible-default {\n    display: none;\n}\n.ft-expression i {\n    font-size: 24px;\n}\n.ft-comment {\n    flex-wrap: wrap;\n    align-items: center;\n}\n.ft-comment__item {\n    display: flex;\n}\n.ft-comment__item--grow {\n    flex-grow: 1;\n}\n.ft-expression--meta {\n    font-size: 13px;\n    height: 24px;\n    min-width: 24px;\n    width: auto;\n    padding: 0 7px;\n    line-height: 24px;\n}\n.ft-expression--meta i {\n    font-size: 14px;\n}\n.ft-expression--meta-text {\n    margin-left: 5px;\n}\n", ""]);
 
 // exports
 
@@ -17965,6 +17965,33 @@ exports.push([module.i, "\n.ft-loading{\n    display: flex;\n    flex-direction:
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -18273,6 +18300,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         expandID: function expandID() {
             return 'comment-expand-' + this.postId;
+        },
+
+        reverseCommentItemList: function reverseCommentItemList() {
+            return this.commentItemList.slice().reverse();
         }
     },
     methods: {
@@ -18328,21 +18359,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         commentOnPost: function commentOnPost() {
             $('#' + this.expandID).Zippy('toggle');
             if (!this.commentInteract) {
-                this.fetchComment();
+                var that = this;
+                setTimeout(function () {
+                    that.fetchComment();
+                }, 1000);
             }
         },
+        updateZippy: function updateZippy() {
+            $('#' + this.expandID).Zippy('update');
+        },
         postComment: function postComment(e) {
-            var input = e.target[0];
-            var value = e.target[0].value;
-            input.value = '';
+            e.preventDefault();
+            var input = e.target;
+            var value = e.target.value;
+            console.log(input, value);
+            $(e.target).parent().addClass('is-loading');
+            var loadingWrapper = $(e.target).parent().find('.loading-wrapper');
             if (value == '') {
                 return;
             }
-            $(input).addClass('is-loading');
-            this.commentIsPosting = true;
-            console.log(value);
+            //this.commentIsPosting = true
+            // appending html for loading
+            loadingWrapper.html('<div class="ft-loading">' + '<span class="ft-loading__dot"></span>' + '<span class="ft-loading__dot"></span>' + '<span class="ft-loading__dot"></span>' + '</div>');
             var that = this;
             var _token = $("meta[name=_token]").attr('content');
+            return;
             axios({
                 method: 'post',
                 responseType: 'json',
@@ -18354,16 +18395,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }).then(function (response) {
                 if (response.status == 200) {
+                    input.value = '';
                     that.postCommentsCount++;
                     $(input).removeClass('is-loading');
                     that.commentIsPosting = false;
                     that.commentInteract = true;
-                    that.commentItemList.push({
+                    /*that.commentItemList.push({
                         comment: value,
                         timestamp: new Date().getTime(),
                         userId: '',
                         userAvatar: ''
-                    });
+                    })*/
                 }
             }).catch(function (error) {
                 console.log(error);
@@ -18385,10 +18427,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(response);
                 if (response.status == 200) {
                     var comments = response.data[0].comments;
-                    $.each(comments, function (key, value) {
-                        console.log(key, value);
-                    });
+                    console.log(comments.length);
+                    for (var i = 0; i < comments.length; i++) {
+                        that.commentItemList.push(comments[i]);
+                    }
                     that.commentInteract = true;
+
+                    setTimeout(function () {
+                        that.updateZippy();
+                    }, 1000);
                 }
             }).catch(function (error) {
                 console.log(error);
@@ -18518,46 +18565,46 @@ var render = function() {
             _vm.commentInteract
               ? [
                   _c("div", { staticClass: "comment-textfield" }, [
-                    _c(
-                      "form",
-                      {
-                        attrs: { action: "#" },
+                    _c("form", { attrs: { action: "#" } }, [
+                      _c("textarea", {
+                        staticClass: "form-control",
+                        attrs: {
+                          autocomplete: "off",
+                          "data-post-id": "",
+                          "data-comment-id": "",
+                          name: "post_comment",
+                          placeholder: "Write a comment",
+                          rows: "1"
+                        },
                         on: {
-                          submit: function($event) {
+                          keyup: function($event) {
+                            if (
+                              !("button" in $event) &&
+                              _vm._k($event.keyCode, "enter", 13, $event.key)
+                            ) {
+                              return null
+                            }
                             $event.preventDefault()
                             _vm.postComment($event)
                           }
                         }
-                      },
-                      [
-                        _c("input", {
-                          staticClass: "form-control",
-                          attrs: {
-                            autocomplete: "off",
-                            "data-post-id": "",
-                            "data-comment-id": "",
-                            name: "post_comment",
-                            placeholder: "Write a comment",
-                            rows: "1"
-                          }
-                        })
-                      ]
-                    )
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "loading-wrapper" })
                   ]),
                   _vm._v(" "),
                   _vm.commentItemList.length
                     ? _c(
                         "div",
                         {
-                          staticClass: "demo-list-action md-list md-list--dense"
+                          staticClass:
+                            "comment-list-action md-list md-list--dense"
                         },
-                        _vm._l(_vm.commentItemList, function(item) {
+                        _vm._l(_vm.reverseCommentItemList, function(item) {
                           return _c(
                             "div",
-                            {
-                              staticClass:
-                                "md-list__item md-list__item--three-line has-divider"
-                            },
+                            { staticClass: "md-list__item has-divider" },
                             [
                               _c("a", {
                                 staticClass: "md-list__item-icon user-avatar",
@@ -18576,7 +18623,44 @@ var render = function() {
                                 "div",
                                 { staticClass: "md-list__item-content" },
                                 [
-                                  _vm._m(1, true),
+                                  _c(
+                                    "div",
+                                    { staticClass: "md-list__item-primary" },
+                                    [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass:
+                                            "user-name user ft-user-name",
+                                          attrs: {
+                                            href:
+                                              "//localhost:3008/fitmetix/public/Uppal",
+                                            title: "@Uppal",
+                                            "data-original-title": "@Uppal"
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                    Sidhant\n                                "
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "md-list__item-text-body"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                    " +
+                                              _vm._s(item.description) +
+                                              "\n                                "
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  ),
                                   _vm._v(" "),
                                   _c(
                                     "div",
@@ -18585,7 +18669,7 @@ var render = function() {
                                         "md-list__item-secondary md-layout md-layout--row"
                                     },
                                     [
-                                      _vm._m(2, true),
+                                      _vm._m(1, true),
                                       _vm._v(" "),
                                       _c(
                                         "a",
@@ -18621,7 +18705,7 @@ var render = function() {
                       )
                     : _vm._e()
                 ]
-              : [_vm._m(3)]
+              : [_vm._m(2)]
           ],
           2
         )
@@ -18640,35 +18724,6 @@ var staticRenderFns = [
         { staticClass: "ft-expression", attrs: { href: "javascript:;" } },
         [_c("i", { staticClass: "icon icon-share" })]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "md-list__item-primary" }, [
-      _c(
-        "a",
-        {
-          staticClass: "user-name user ft-user-name",
-          attrs: {
-            href: "//localhost:3008/fitmetix/public/Uppal",
-            title: "@Uppal",
-            "data-original-title": "@Uppal"
-          }
-        },
-        [
-          _vm._v(
-            "\n                                    Sidhant\n                                "
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "md-list__item-text-body" }, [
-        _vm._v(
-          "\n                                    Bryan Cranston played the role.\n                                    Bryan Cranston played the role of Walter in Breaking Bad.\n                                "
-        )
-      ])
     ])
   },
   function() {

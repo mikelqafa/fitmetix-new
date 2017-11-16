@@ -41,12 +41,15 @@
             <div class="zippy__wrapper">
                 <template v-if="commentInteract">
                     <div class="comment-textfield">
-                        <form action="#" v-on:submit.prevent="postComment">
-                            <input class="form-control"  autocomplete="off" data-post-id="" data-comment-id="" name="post_comment" placeholder="Write a comment" rows="1">
+                        <form action="#">
+                            <textarea v-on:keyup.enter.prevent="postComment" class="form-control"  autocomplete="off" data-post-id="" data-comment-id="" name="post_comment" placeholder="Write a comment" rows="1"></textarea>
                         </form>
+                        <div class="loading-wrapper">
+
+                        </div>
                     </div>
-                    <div class="demo-list-action md-list md-list--dense" v-if="commentItemList.length">
-                        <div class="md-list__item md-list__item--three-line has-divider" v-for="item in commentItemList">
+                    <div class="comment-list-action md-list md-list--dense" v-if="commentItemList.length">
+                        <div class="md-list__item has-divider" v-for="item in reverseCommentItemList">
                             <a style="background-image: url('http://localhost:3008/fitmetix/public/images/default.png')" href="//localhost:3008/fitmetix/public/Uppal" title="@Uppal" class="md-list__item-icon user-avatar"></a>
                             <div class="md-list__item-content">
                                 <div class="md-list__item-primary">
@@ -54,8 +57,7 @@
                                         Sidhant
                                     </a>
                                     <div class="md-list__item-text-body">
-                                        Bryan Cranston played the role.
-                                        Bryan Cranston played the role of Walter in Breaking Bad.
+                                        {{item.description}}
                                     </div>
                                 </div>
                                 <div class="md-list__item-secondary md-layout md-layout--row">
@@ -84,6 +86,31 @@
     </div>
 </template>
 <style>
+    .comment-textfield{
+        position: relative;
+    }
+    .comment-textfield .loading-wrapper {
+        position: absolute;
+        top:0;
+        left:0;
+        height: 100%;
+        width: 100%;
+        display: none;
+    }
+    .comment-textfield.is-loading {
+        pointer-events: none;
+        cursor: wait;
+    }
+    .comment-textfield .ft-loading {
+        background-color: rgba(0,0,0,.12);
+    }
+    .comment-textfield.is-loading .loading-wrapper {
+        display: block;
+    }
+    .comment-list-action{
+        max-height: 320px;
+        overflow-y: auto;
+    }
     .ft-loading{
         display: flex;
         flex-direction: row;
@@ -306,6 +333,9 @@
             },
             expandID () {
                 return 'comment-expand-' + this.postId
+            },
+            reverseCommentItemList: function() {
+                return this.commentItemList.slice().reverse();
             }
         },
         methods: {
@@ -362,21 +392,36 @@
             commentOnPost: function () {
                 $('#' + this.expandID).Zippy('toggle')
                 if(!this.commentInteract) {
-                    this.fetchComment()
+                    let that = this
+                    setTimeout(function () {
+                        that.fetchComment()
+                    }, 1000)
                 }
             },
+            updateZippy: function () {
+                $('#' + this.expandID).Zippy('update')
+            },
             postComment: function (e) {
-                let input = e.target[0]
-                let value = e.target[0].value
-                input.value = ''
+                e.preventDefault()
+                let input = e.target
+                let value = e.target.value
+                console.log(input, value)
+                $(e.target).parent().addClass('is-loading')
+                let loadingWrapper = $(e.target).parent().find('.loading-wrapper')
                 if(value == '') {
                     return
                 }
-                $(input).addClass('is-loading')
-                this.commentIsPosting = true
-                console.log(value)
+                //this.commentIsPosting = true
+                // appending html for loading
+                loadingWrapper.html(
+                        '<div class="ft-loading">'+
+                        '<span class="ft-loading__dot"></span>'+
+                        '<span class="ft-loading__dot"></span>'+
+                        '<span class="ft-loading__dot"></span>'+
+                        '</div>')
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
+                return
                 axios({
                     method: 'post',
                     responseType: 'json',
@@ -388,16 +433,17 @@
                     }
                 }).then(function (response) {
                     if (response.status == 200) {
+                        input.value = ''
                         that.postCommentsCount++
                         $(input).removeClass('is-loading')
                         that.commentIsPosting = false
                         that.commentInteract = true
-                        that.commentItemList.push({
+                        /*that.commentItemList.push({
                             comment: value,
                             timestamp: new Date().getTime(),
                             userId: '',
                             userAvatar: ''
-                        })
+                        })*/
                     }
                 }).catch(function (error) {
                     console.log(error)
@@ -420,10 +466,15 @@
                     console.log(response)
                     if (response.status == 200) {
                         let comments = response.data[0].comments
-                        $.each(comments, function(key, value) {
-                            console.log(key, value)
-                        });
+                       console.log(comments.length)
+                        for(let i = 0; i < comments.length;  i++) {
+                            that.commentItemList.push(comments[i])
+                        }
                         that.commentInteract = true
+
+                        setTimeout(function () {
+                            that.updateZippy()
+                        }, 1000)
                     }
                 }).catch(function (error) {
                     console.log(error)
