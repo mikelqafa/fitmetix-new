@@ -655,7 +655,7 @@ class TimelineController extends AppBaseController
 
         $user_info['avatar'] = Auth::user()->avatar;
         $user_info['name'] = Auth::user()->name;
-        return response()->json(['status' => '200', 'comment_id' => $comment->id, 'data' => $postHtml, 'user_info'=>$user_info]);
+        return response()->json(['status' => '200', 'comment_id' => $comment->id, 'user_info'=>$user_info]);
     }
 
     public function likePost(Request $request)
