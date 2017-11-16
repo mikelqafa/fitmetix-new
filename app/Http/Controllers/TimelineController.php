@@ -655,6 +655,7 @@ class TimelineController extends AppBaseController
 
         $user_info['avatar'] = Auth::user()->avatar;
         $user_info['name'] = Auth::user()->name;
+        $user_info['user_id'] = Auth::user()->id;
         return response()->json(['status' => '200', 'comment_id' => $comment->id, 'user_info'=>$user_info]);
     }
 
