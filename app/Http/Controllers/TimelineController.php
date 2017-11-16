@@ -2773,7 +2773,7 @@ class TimelineController extends AppBaseController
     public function commentsAPI(Request $request) {
         $total_comments = Comment::where('post_id',$request->post_id)->count();
 
-        $comments = Comment::where('post_id',$request->post_id)->limit(10)->offset($request->offset)->get();
+        $comments = Comment::where('post_id',$request->post_id)->limit(10)->with('user')->offset($request->offset)->get();
 
         $limit = 10 + $request->offset;
         $hasMore = false;
