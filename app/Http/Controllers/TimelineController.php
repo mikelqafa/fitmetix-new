@@ -1982,12 +1982,39 @@ class TimelineController extends AppBaseController
         
         if ($start_date >= date('Y-m-d', strtotime(Carbon::now())) && $end_date >= $start_date) {
             $user_timeline = Timeline::where('username', $username)->first();
-            $timeline = Timeline::create([
-                'username'  => $user_timeline->gen_num(),
-                'name'      => $request->name,
-                'about'     => $request->about,
-                'type'      => 'event',
-                ]);
+
+            if ($request->file('event_images_upload')) {
+                foreach ($request->file('event_images_upload') as $eventImage) {
+                    $strippedName = str_replace(' ', '', $eventImage->getClientOriginalName());
+                    $photoName = date('Y-m-d-H-i-s').$strippedName;
+
+                    $avatar = Image::make($eventImage->getRealPath());
+                    $avatar->save(storage_path().'/uploads/events/covers/'.$photoName, 60);
+
+                    $media = Media::create([
+                      'title'  => $eventImage->getClientOriginalName(),
+                      'type'   => 'image',
+                      'source' => $photoName,
+                    ]);
+
+                    $timeline = Timeline::create([
+                        'username'  => $user_timeline->gen_num(),
+                        'name'      => $request->name,
+                        'about'     => $request->about,
+                        'cover_id'  => $media->id,
+                        'type'      => 'event',
+                    ]);
+                }
+            }
+            else {
+                $timeline = Timeline::create([
+                    'username'  => $user_timeline->gen_num(),
+                    'name'      => $request->name,
+                    'about'     => $request->about,
+                    'type'      => 'event',
+                    ]);
+            }
+
 
             $event = Event::create([
                 'timeline_id' => $timeline->id,

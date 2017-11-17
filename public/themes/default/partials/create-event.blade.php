@@ -28,6 +28,8 @@
 				{{ csrf_field() }}
 
 				<fieldset class="form-group required {{ $errors->has('name') ? ' has-error' : '' }}">
+					<label>Upload Cover</label>
+					<input type="file" name="event_images_upload" class="form-control">
 					<div class="row">
 						<div class="col-md-6">
 							{{ Form::label('name', trans('common.name_of_your_event'), ['class' => 'control-label']) }}
