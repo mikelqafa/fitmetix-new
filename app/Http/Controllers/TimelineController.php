@@ -2803,8 +2803,10 @@ class TimelineController extends AppBaseController
 
         $post = $timeline->posts()->where([['active', 1],['id',$request->post_id]])->with('timeline')->get();
 
-        if($post->images()->count() > 0) {
-            $post['images'] = $post->images()->get();
+        foreach ($post as $p) {
+            if($p->images()->count() > 0) {
+                $p['images'] = $p->images()->get();
+            }
         }
 
         $image_path = storage_path().'/uploads/users/gallery/';
