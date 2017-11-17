@@ -45,7 +45,7 @@
                         <div class="loading-wrapper"></div>
                     </div>
                     <div class="comment-list-action md-list md-list--dense" v-if="commentItemList.length">
-                        <div class="md-list__item has-divider" v-for="(item, index) in reverseCommentItemList" :data-comment-id="item.id">
+                        <div class="md-list__item has-divider" v-for="(item, index) in commentItemList" :data-comment-id="item.id">
                             <a :style="{ backgroundImage: 'url(' + item.user.avatar + ')'}" data-theme="m" href="//localhost:3008/fitmetix/public/Uppal" :title="'@'+item.user.username" class="md-list__item-icon user-avatar"></a>
                             <div class="md-list__item-content">
                                 <div class="md-list__item-primary">
@@ -494,11 +494,10 @@
                 }).then(function (response) {
                     console.log(response)
                     if (response.status == 200) {
-                        console.log(response)
                         let comments = response.data[0].comments
                         let hasMore = response.data[0].hasMore
                         for(let i = 0; i < comments.length;  i++) {
-                            comments[i]['isLiked'] = true
+                            comments[i]['isLiked'] = false
                             that.commentItemList.push(comments[i])
                         }
                         setTimeout(function () {
@@ -523,15 +522,27 @@
                 let _token = $("meta[name=_token]").attr('content')
                 let commentId = $(this).data('comment-id')
                 let that = this
-                $.post(SP_source() + 'ajax/comment-like', {comment_id: commentId, _token: _token }, function(data) {
-                    if (data.status == 200) {
-                        if (data.liked == true) {
+
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: SP_source() + 'ajax/comment-like',
+                    data: {
+                        comment_id: commentId,
+                        _token: _token
+                    }
+                }).then(function (response) {
+                    console.log(response)
+                    if (response.status == 200) {
+                        if (response.data.liked == true) {
                             that.commentItemList[index].isLiked = true
                         } else {
                             that.commentItemList[index].isLiked = false
                         }
                     }
-                });
+                }).catch(function (error) {
+                    console.log(error)
+                })
                 that.commentItemList[index].isLiked = !that.commentItemList[index].isLiked
             },
             loadMore: function () {
