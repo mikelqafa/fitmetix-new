@@ -63,7 +63,9 @@
             return {
                 itemList: [],
                 autoUpdate: 60,
-                dummy: []
+                dummy: [],
+                inProgress: false,
+                hasMorePost: false
             }
         },
         computed: {
@@ -87,19 +89,24 @@
                     data: {
                         username: current_username,
                         paginate: paginate,
-                        _token: _token
+                        _token: _token,
+                        offset: that.offset
                     }
                 }).then( function (response) {
                     if (response.status ==  200) {
                         let posts = response.data[0].posts;
+                        let i = 0
                         $.each(posts, function(key, val) {
                             that.itemList.push(val);
+                            i++
                         });
+                        console.log(response)
                         setTimeout(function () {
                             hashtagify()
                             mentionify()
                         }, 1000)
-
+                        that.inProgress = false
+                        that.hasMorePost = i == paginate;
                     }
                 }).catch(function(error) {
                     console.log(error)
@@ -107,12 +114,24 @@
             },
             postNewPost: function (i) {
                 alert(i)
+            },
+            scrollFetchInit: function () {
+                let that = this
+                $(window).scroll(function() {
+                    if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                        if(!that.inProgress && that.hasMorePost ){
+                            that.getDefaultData()
+                            that.inProgress = true
+                        }
+                    }
+                });
             }
         },
         mounted () {
             let that = this
             setTimeout(function () {
                 that.getDefaultData()
+                that.scrollFetchInit()
             }, 1000)
         },
         components: {

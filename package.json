@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "vue-awesome-swiper": "^2.6.7",
+    "vue-sticky-bottom-scroll": "^0.1.0",
     "vue-timeago": "^3.3.6"
   }
 }

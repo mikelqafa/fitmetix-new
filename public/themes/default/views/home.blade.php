@@ -65,6 +65,7 @@
                                         </div>
                                     </div>
                                 </app-post>
+								<div id="scroll-bt"></div>
                             </div>
 							@if($posts->count() > 0)
 								@foreach($posts as $post)

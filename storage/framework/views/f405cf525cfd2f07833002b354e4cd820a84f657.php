@@ -68,6 +68,7 @@
                                         </div>
                                     </div>
                                 </app-post>
+								<div id="scroll-bt"></div>
                             </div>
 							<?php if($posts->count() > 0): ?>
 								<?php $__currentLoopData = $posts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $post): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

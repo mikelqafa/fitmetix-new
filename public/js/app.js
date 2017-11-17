@@ -1548,19 +1548,6 @@ $(function () {
     // });
   }
 
-  $('.timeline-posts').jscroll({
-    // loadingHtml: '<img src="loading.gif" alt="Loading" /> Loading...',
-    nextSelector: 'a.jscroll-next:last',
-    callback : function()
-    {
-      emojify.run();
-      hashtagify();
-      mentionify();
-      $('.post-description').linkify()
-      jQuery("time.timeago").timeago();
-    }
-  });
-
 
 // Adding members to the group
   $('#add-members-group').on('keyup',function(){
