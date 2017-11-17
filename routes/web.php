@@ -377,6 +377,7 @@ Route::post('get-likes-comments-count','TimelineController@commentsCountAPI');
 
 Route::post('ajax/switch-language', 'TimelineController@switchLanguage');
 
+Route::post('ajax/comment-like', 'TimelineController@likeComment');
 Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {
     Route::post('create-post', 'TimelineController@createPost');
 
@@ -388,7 +389,6 @@ Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {
     Route::post('page-like', 'TimelineController@pageLike');
     Route::post('change-avatar', 'TimelineController@changeAvatar');
     Route::post('change-cover', 'TimelineController@changeCover');
-    Route::post('comment-like', 'TimelineController@likeComment');
     Route::post('comment-delete', 'TimelineController@deleteComment');
     Route::post('post-delete', 'TimelineController@deletePost');
     Route::post('page-delete', 'TimelineController@deletePage');
