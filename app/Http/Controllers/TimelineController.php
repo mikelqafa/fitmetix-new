@@ -2783,7 +2783,7 @@ class TimelineController extends AppBaseController
     {
         $timeline = Timeline::where('username', $request->username)->first();
 
-        $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->take($request->paginate)->get();
+        $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
         // $theme = Theme::uses('default')->layout('default');
         // $posts['user_info'] = $timeline;
 
@@ -2796,6 +2796,20 @@ class TimelineController extends AppBaseController
         $image_path = storage_path().'/uploads/users/gallery/';
 
         return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'imagePath'=>$image_path]]);
+    }
+
+    public function singlePostAPI(Request $request) {
+        $timeline = Timeline::where('username', $request->username)->first();
+
+        $post = $timeline->posts()->where([['active', 1],['post_id',$request->post_id]])->with('timeline')->get();
+
+        if($post->images()->count() > 0) {
+            $post['images'] = $post->images()->get();
+        }
+
+        $image_path = storage_path().'/uploads/users/gallery/';
+
+        return response()->json(['status' => '200', ['post'=>$post, 'timeline'=>$timeline, 'imagePath'=>$image_path]]);
     }
 
     public function commentsCountAPI(Request $request) {

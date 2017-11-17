@@ -369,6 +369,8 @@ Route::group(['prefix' => '/{username}/event-settings', 'middleware' => ['auth',
 
 Route::post('get-posts','TimelineController@postAPI');
 
+Route::post('get-single-post','TimelineController@singlePostAPI');
+
 Route::post('get-comments','TimelineController@commentsAPI');
 
 Route::post('get-likes-comments-count','TimelineController@commentsCountAPI');
