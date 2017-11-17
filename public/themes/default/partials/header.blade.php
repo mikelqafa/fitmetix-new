@@ -12,205 +12,106 @@
         </div>
     </nav>
 @else
-    <nav class="navbar socialite navbar-default no-bg hidden-sm hidden-xs">
-        <div class="container">
-            <div class="navbar-header">
+    <nav class="navbar ft-custom socialite navbar-default no-bg hidden-sm hidden-xs">
+        <div class="container md-layout md-layout--row">
+            <div class="no-float navbar-header">
                 <a class="navbar-brand socialite" href="{{ url('/') }}">
                     <img class="socialite-logo" src="{!! url('setting/'.Setting::get('logo')) !!}"
                          alt="{{ Setting::get('site_name') }}" title="{{ Setting::get('site_name') }}">
                 </a>
             </div>
-            <div class="navbar-collapse" id="bs-example-navbar-collapse-4">
-                <form class="navbar-form navbar-left form-left" role="search">
-                    <div class="input-group no-margin">
+            <form class="no-float navbar-form navbar-left form-left" role="search">
+                <div class="input-group no-margin">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
                         </span>
-                        <input type="text" id="navbar-search" data-url="{{ URL::to('api/v1/timelines') }}"
-                               class="form-control"
-                               placeholder="{{ trans('messages.search_placeholder') }}">
-                    </div>
-                </form>
-                <ul class="nav fm-nav navbar-nav hidden-sm hidden-xs navbar-right" id="navbar-right" v-cloak>
-                    <li class="has-hover-effect fm-nav__item">
-                        <a href="{{ url(Auth::user()->username.'/create-event') }}" class="fm-nav__item">
-                            <i class="fa fa-plus"></i>
-                            <b>Inspire</b>
-                        </a>
-                    </li>
-                    <li class="has-hover-effect fm-nav__item">
-                        <a href="{{ url('events') }}">
-                            <b>Events</b>
-                        </a>
-                    </li>
-                    <li class="has-hover-effect dropdown message hidden-sm hidden-xs notification">
-                        <a href="#" data-toggle="dropdown" @click.prevent="showNotifications"
-                           class="dropdown-toggle" role="button" aria-haspopup="true"
-                           aria-expanded="false">
+                    <input type="text" id="navbar-search" data-url="{{ URL::to('api/v1/timelines') }}"
+                           class="form-control"
+                           placeholder="{{ trans('messages.search_placeholder') }}">
+                </div>
+            </form>
+            <div class="md-layout-spacer"></div>
+            <div class="nav no-float md-layout fm-nav navbar-nav hidden-sm hidden-xs" id="navbar-right">
+                <a href="{{ url(Auth::user()->username.'/create-event') }}" class="has-hover-effect fm-nav__item">
+                    <span>
+                        <i class="fa fa-plus"></i> Inspire
+                    </span>
+                </a>
+                <a href="{{ url('events') }}" class="has-hover-effect fm-nav__item">
+                    Events
+                </a>
+                <div id="app-notification">
+                    <app-notification>
+                        <a href="javascript:;" data-toggle="dropdown" @click.prevent="showNotifications" class="has-hover-effect fm-nav__item dropdown message hidden-sm hidden-xs">
                             <div class="icon icon-like"></div>
-                            <span class="unread-notification" v-bind:class="{ 'is-visible': isShowUN }"></span>
                         </a>
-                        <div class="dropdown-menu">
-                            <div class="dropdown-menu-header">
-                                <span class="side-left">{{ trans('common.notifications') }}</span>
-                                <a v-if="unreadNotifications > 0" class="side-right" href="#"
-                                   @click.prevent="markNotificationsRead">{{ trans('messages.mark_all_read') }}</a>
-                                <div class="clearfix"></div>
-                            </div>
-                            @if(Auth::user()->notifications()->count() > 0)
-                                <ul class="list-unstyled dropdown-messages-list scrollable"
-                                    data-type="notifications">
-                                    <li class="inbox-message"
-                                        v-bind:class="[ !notification.seen ? 'active' : '' ]"
-                                        v-for="notification in notifications.data">
-                                        {{--TODO--}}
-                                        {{--<a href="{{ url(Auth::user()->username.'/notification/') }}/@{{ notification.id }}">--}}
-                                        <a href="{{ url(Auth::user()->username.'/notification/') }}">
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <img class="media-object img-icon"
-                                                         v-bind:src="notification.notified_from.avatar"
-                                                         alt="images">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h4 class="media-heading">
-                                                        <span class="notification-text"> @{{ notification.description }} </span>
-                                            <span class="message-time">
-                                                <span class="notification-type"><i class="fa fa-user"
-                                                                                   aria-hidden="true"></i></span>
-                                                <time class="timeago"
-                                                      :datetime="notification.created_at+ '00:00'"
-                                                      :title="notification.created_at + '00:00'">
-                                                    @{{ notification.created_at }}+00:00
-                                                </time>
-                                            </span>
-                                                    </h4>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li v-if="notificationsLoading" class="dropdown-loading">
-                                        <i class="fa fa-spin fa-spinner"></i>
-                                    </li>
-                                </ul>
-                            @else
-                                <div class="no-messages">
-                                    <i class="fa fa-bell-slash-o" aria-hidden="true"></i>
-                                    <p>{{ trans('messages.no_notifications') }}</p>
-                                </div>
-                            @endif
-                            <div class="dropdown-menu-footer"><br>
-                                <a href="{{ url('allnotifications') }}">{{ trans('common.see_all') }}</a>
-                            </div>
-                        </div>
-                    </li>
-                    {{--TODO working on message notification--}}
-                    <li class="has-hover-effect dropdown message largescreen-message">
-                        <a href="#" data-toggle="dropdown" v-on:click="showConversations" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
-                            <span class="icon icon-chat"></span>
-                            <span class="unread-notification" v-bind:class="{ 'is-visible': isShowUCM }"></span>
-                        </a>
-                        <div class="dropdown-menu">
-                            <div class="dropdown-menu-header">
-                                <span class="side-left">{{ trans('common.messages') }}</span>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="no-messages hidden">
-                                <i class="fa fa-commenting-o" aria-hidden="true"></i>
-                                <p>{{ trans('messages.no_messages') }}</p>
-                            </div>
-                            <ul class="list-unstyled dropdown-messages-list scrollable"
-                                data-type="messages">
-                                <li class="inbox-message" v-for="conversation in conversations.data">
-                                    <a href="#" :data-user-id="conversation.user.id" onclick="chatBoxes.sendMessageOnClick(this)">
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <img class="media-object img-icon"
-                                                     v-bind:src="conversation.user.avatar" alt="images">
-                                            </div>
-                                            <div class="media-body">
-                                                <h4 class="media-heading">
-                                                    <span class="message-heading">@{{ conversation.user.name }}</span>
-                                                    <span class="online-status hidden"></span>
-                                                    <time class="timeago message-time"
-                                                          :datetime="conversation.lastMessage.created_at + '00:00'"
-                                                          :title="conversation.lastMessage.created_at + '00:00'">
-                                                        @{{ conversation.lastMessage.created_at }}+00:00
-                                                </h4>
-                                                <p class="message-text">
-                                                    @{{ conversation.lastMessage.body }}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li v-if="conversationsLoading" class="dropdown-loading">
-                                    <i class="fa fa-spin fa-spinner"></i>
-                                </li>
-                            </ul>
-                            <div class="dropdown-menu-footer">
-                                <a href="{{ url('messages') }}">{{ trans('common.see_all') }}</a>
-                            </div>
-                        </div>
-                    </li>
+                    </app-notification>
+                </div>
+                {{--TODO working on message notification--}}
+                <input type="hidden" name="nt-count" value="{{Auth::user()->notifications()->count()}}">
+                <input type="hidden" name="nt-common-messages" value="{{ trans('common.messages') }}">
+                <input type="hidden" name="nt-common-see_all" value="{{ trans('common.see_all') }}">
+                <input type="hidden" name="nt-no_messages" value="{{ trans('messages.no_messages') }}">
+                <input type="hidden"  name="see-all-messages" value="{{ url('messages') }}">
+                <a href="{{ url(Auth::user()->username) }}" class="has-hover-effect fm-nav__item user-image socialite fm-nav__item">
+                    <span class="user-image-wrapper">
+                        <img src="{{asset('images/default.png')}}" style="max-width: 100%" alt="{{ Auth::user()->name }}"
+                             class="img-radius img-30" title="{{ Auth::user()->name }}">
+                        <span class="user-name hidden">{{ Auth::user()->name }}</span>
+                    </span>
+                </a>
 
-                    <li class="has-hover-effect user-image socialite fm-nav__item">
-                        <a href="{{ url(Auth::user()->username) }}" class="user-image-wrapper">
-                            <img src="{{asset('images/default.png')}}" style="max-width: 100%" alt="{{ Auth::user()->name }}"
-                                 class="img-radius img-30" title="{{ Auth::user()->name }}">
-                            <span class="user-name hidden">{{ Auth::user()->name }}</span>
-                        </a>
-                    </li>
-                    <li class="dropdown message fm-nav__item--no-padding vert-has">
-                        <a href="{{ url(Auth::user()->username) }}" class="dropdown-toggle"
-                           data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">
-                            <div class="icon icon-options"></div>
-                        </a>
-                        <ul data-width="3" class="dropdown-menu">
-                            @if(Auth::user()->hasRole('admin'))
-                                <li class="{{ Request::segment(1) == 'admin' ? 'active' : '' }}">
-                                    <a href="{{ url('admin') }}">
-                                        <i class="fa fa-user-secret" aria-hidden="true"></i>{{ trans('common.admin') }}
-                                    </a>
-                                </li>
-                            @endif
-
-                            <li class="{{ (Request::segment(1) == Auth::user()->username && Request::segment(2) == '') ? 'active' : '' }}">
-                                <a href="{{ url(Auth::user()->username) }}"><i class="fa fa-user"
-                                                                               aria-hidden="true"></i>{{ trans('common.my_profile') }}
-                                </a></li>
-
-                            <li class="{{ Request::segment(2) == 'albums' ? 'active' : '' }}"><a
-                                        href="{{ url(Auth::user()->username.'/albums') }}"><i
-                                            class="fa fa-image"
-                                            aria-hidden="true"></i>{{ trans('common.my_albums') }}</a>
-                            </li>
-
-                            <li class="{{ Request::segment(3) == 'events' ? 'active' : '' }}"><a
-                                        href="{{ url(Auth::user()->username.'/events') }}"><i
-                                            class="fa fa-calendar"
-                                            aria-hidden="true"></i>{{ trans('common.my_events') }}</a>
-                            </li>
-
-                            <li class="{{ Request::segment(3) == 'general' ? 'active' : '' }}">
-                                <a href="{{ url('/'.Auth::user()->username.'/settings/general') }}">
-                                    <i class="fa fa-cog" aria-hidden="true"></i>{{ trans('common.settings') }}
+                <div class="dropdown message vert-has">
+                    <a href="{{ url(Auth::user()->username) }}" class="has-hover-effect fm-nav__item fm-nav__item--no-padding dropdown-toggle"
+                       data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        <div class="icon icon-options"></div>
+                    </a>
+                    <ul data-width="3" class="dropdown-menu ft-menu" style="left: -123px;border-top: none">
+                        @if(Auth::user()->hasRole('admin'))
+                            <li class="{{ Request::segment(1) == 'admin' ? 'active' : '' }}">
+                                <a href="{{ url('admin') }}" class="ft-menu__item  ft-menu__item--icon">
+                                    <i class="fa fa-user-secret" aria-hidden="true"></i>{{ trans('common.admin') }}
                                 </a>
                             </li>
+                        @endif
 
-                            <li>
-                                <form action="{{ url('/logout') }}" method="post">
-                                    {{ csrf_field() }}
+                        <li class="{{ (Request::segment(1) == Auth::user()->username && Request::segment(2) == '') ? 'active' : '' }}">
+                            <a href="{{ url(Auth::user()->username) }}" class="ft-menu__item ft-menu__item--icon">
+                                <i class="fa fa-user" aria-hidden="true"></i>{{ trans('common.my_profile') }}
+                            </a>
+                        </li>
 
-                                    <button type="submit" class="btn-logout">
-                                        <i class="fa fa-unlock" aria-hidden="true"></i>{{ trans('common.logout') }}
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                        <li class="{{ Request::segment(2) == 'albums' ? 'active' : '' }}">
+                            <a  href="{{ url(Auth::user()->username.'/albums') }}" class="ft-menu__item ft-menu__item--icon">
+                                <i class="fa fa-image" aria-hidden="true"></i>{{ trans('common.my_albums') }}
+                            </a>
+                        </li>
+
+                        <li class="{{ Request::segment(3) == 'events' ? 'active' : '' }}">
+                            <a class="ft-menu__item ft-menu__item--icon"
+                                    href="{{ url(Auth::user()->username.'/events') }}"><i
+                                        class="fa fa-calendar"
+                                        aria-hidden="true"></i>{{ trans('common.my_events') }}</a>
+                        </li>
+
+                        <li class="{{ Request::segment(3) == 'general' ? 'active' : '' }}">
+                            <a class="ft-menu__item ft-menu__item--icon" href="{{ url('/'.Auth::user()->username.'/settings/general') }}">
+                                <i class="fa fa-cog" aria-hidden="true"></i>{{ trans('common.settings') }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <form action="{{ url('/logout') }}" method="post">
+                                {{ csrf_field() }}
+
+                                <button type="submit" class="ft-menu__item ft-menu__item--icon btn btn-logout">
+                                    <i class="fa fa-unlock" aria-hidden="true"></i>{{ trans('common.logout') }}
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>

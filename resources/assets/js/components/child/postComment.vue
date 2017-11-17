@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="panel-footer ft-socialite">
+        <div class="panel-footer ft-socialite meta-font">
             <div class="ft-comment md-layout md-layout--row">
                 <div class="ft-comment__item md-layout md-layout--row">
                     <a href="javascript:;" class="ft-expression" v-bind:class="{ 'ft-expression--liked': userLiked }"
@@ -14,16 +14,14 @@
                     </a>
                 </div>
                 <div class="ft-comment__item md-align md-align--center-center ft-comment__item--grow">
-                    <a href="javascript:;" class="ft-expression ft-expression--meta"
-                       v-bind:class="{ 'ft-expression--liked': userLiked }">
+                    <a href="javascript:;" class="ft-expression ft-expression--meta">
                         <i class="icon icon-like visible-default"></i>
                         <i class="icon icon-liked hidden-default"></i>
                     <span class="ft-expression--meta-text">
                         {{postLikesCount}}
                     </span>
                     </a>
-                    <a href="javascript:;" class="ft-expression ft-expression--meta"
-                       v-bind:class="{ 'ft-expression--liked': userCommented }">
+                    <a href="javascript:;" class="ft-expression ft-expression--meta">
                         <i class="icon icon-comment"></i>
                     <span class="ft-expression--meta-text">
                         {{postCommentsCount}}
@@ -42,35 +40,35 @@
                 <template v-if="commentInteract">
                     <div class="comment-textfield">
                         <form action="#">
-                            <textarea v-on:keyup.enter.prevent="postComment" class="form-control"  autocomplete="off" data-post-id="" data-comment-id="" name="post_comment" placeholder="Write a comment" rows="1"></textarea>
+                            <textarea v-on:keydown.13="postComment" class="form-control"  autocomplete="off" data-post-id="" data-comment-id="" name="post_comment" placeholder="Write a comment" rows="1"></textarea>
                         </form>
-                        <div class="loading-wrapper">
-
-                        </div>
+                        <div class="loading-wrapper"></div>
                     </div>
                     <div class="comment-list-action md-list md-list--dense" v-if="commentItemList.length">
-                        <div class="md-list__item has-divider" v-for="item in reverseCommentItemList">
-                            <a style="background-image: url('http://localhost:3008/fitmetix/public/images/default.png')" href="//localhost:3008/fitmetix/public/Uppal" title="@Uppal" class="md-list__item-icon user-avatar"></a>
+                        <div class="md-list__item has-divider" v-for="(item, index) in reverseCommentItemList" :data-comment-id="item.id">
+                            <a :style="{ backgroundImage: 'url(' + item.user.avatar + ')'}" data-theme="m" href="//localhost:3008/fitmetix/public/Uppal" :title="'@'+item.user.username" class="md-list__item-icon user-avatar"></a>
                             <div class="md-list__item-content">
                                 <div class="md-list__item-primary">
-                                    <a href="//localhost:3008/fitmetix/public/Uppal" title="@Uppal" data-original-title="@Uppal" class="user-name user ft-user-name">
-                                        Sidhant
+                                    <a :href="base_url+item.user.username" title="@Uppal" data-original-title="@Uppal" class="user-name user ft-user-name">
+                                        {{item.user.name}}
                                     </a>
-                                    <div class="md-list__item-text-body">
-                                        {{item.description}}
-                                    </div>
+                                    <div class="md-list__item-text-body" v-html="item.description"></div>
                                 </div>
                                 <div class="md-list__item-secondary md-layout md-layout--row">
-                                    <a class="md-list__item-secondary-action" href="#">
-                                        <i class="icon icon-options"></i>
-                                    </a>
-                                    <a href="javascript:;" class="md-list__item-secondary-action ft-expression" v-bind:class="{ 'ft-expression--liked': userLiked }"
-                                       @click="toggleLikePost">
+                                    <a href="javascript:;" class="md-list__item-secondary-action ft-expression" :data-comment-id="item.id" v-on:click="likeUnlikeComment($event, index)"  v-bind:class="{ 'ft-expression--liked': item.isLiked }">
                                         <i class="icon icon-like visible-default"></i>
                                         <i class="icon icon-liked hidden-default"></i>
                                     </a>
+                                    <a class="md-list__item-secondary-action" href="javascript:;" v-on:click="openCommentDialog">
+                                        <i class="icon icon-options"></i>
+                                    </a>
                                 </div>
                             </div>
+                        </div>
+                        <div class="ft-menu" v-if="commentHasMore">
+                            <button type="submit" class="text-center ft-menu__item btn" v-on:click="loadMore">
+                                Load More
+                            </button>
                         </div>
                     </div>
                 </template>
@@ -86,6 +84,19 @@
     </div>
 </template>
 <style>
+    .icon {
+        pointer-events: none;
+    }
+    .text-center.ft-menu__item {
+        text-align: center !important;
+    }
+    .zippy {
+        height: 0;
+    }
+    .zippy.zippy--open,
+    .zippy.zippy--animating {
+        height: auto;
+    }
     .comment-textfield{
         position: relative;
     }
@@ -107,10 +118,10 @@
     .comment-textfield.is-loading .loading-wrapper {
         display: block;
     }
-    .comment-list-action{
+    /*.comment-list-action{
         max-height: 320px;
         overflow-y: auto;
-    }
+    }*/
     .ft-loading{
         display: flex;
         flex-direction: row;
@@ -159,6 +170,7 @@
         border-radius: 0;
         padding-left: 15px;
         padding-right: 15px;
+        padding-top: 15px;
         background-color: #FAFBFC;
     }
     .md-list__item-icon {
@@ -187,7 +199,7 @@
         border-bottom: none
     }
     .md-list--dense .md-list__item {
-        min-height: 40px;
+        min-height: 32px;
         font-size: 14px;
         display: -webkit-box;
         display: -ms-flexbox;
@@ -202,8 +214,8 @@
         overflow: hidden;
         line-height: 1;
         padding-left: 16px;
-        padding-top:10px;
-        padding-bottom:10px;
+        padding-top:5px;
+        padding-bottom:5px;
     }
     .md-list__item-content {
         flex: 1 1 100%;
@@ -243,14 +255,15 @@
     }
     .ft-socialite {
         background-color: #fff;
-        padding: 10px 15px;
+        padding: 7.5px 15px;
+        padding-bottom: 2px;
         border: none;
     }
 
     .ft-expression {
         display: flex;
         height: 32px;
-        width: 48px;
+        width: 36px;
         text-align: center;
         justify-content: center;
         align-items: center;
@@ -276,7 +289,7 @@
     }
 
     .ft-expression i {
-        font-size: 24px;
+        font-size: 22px;
     }
 
     .ft-comment {
@@ -310,13 +323,13 @@
     }
 </style>
 <script>
-    // let Zippy = window.Zippy
     export default {
         props: {
             postId: ''
         },
         data: function () {
             return {
+                base_url: base_url,
                 postCommentsCount: 0,
                 postLikesCount: 0,
                 userLiked: 0,
@@ -324,7 +337,8 @@
                 commentInteract: false,
                 commentHasMore: true,
                 commentItemList: [],
-                commentIsPosting: false
+                commentIsPosting: false,
+                offset: 0
             }
         },
         computed: {
@@ -341,7 +355,6 @@
         methods: {
             getDefaultData: function () {
                 let that = this
-                let paginate = 50
                 let _token = $("meta[name=_token]").attr('content')
                 axios({
                     method: 'post',
@@ -349,7 +362,7 @@
                     url: base_url + 'get-likes-comments-count',
                     data: {
                         post_id: that.postId,
-                        _token: _token
+                        _token: _token,
                     }
                 }).then(function (response) {
                     if (response.status == 200) {
@@ -402,6 +415,15 @@
                 $('#' + this.expandID).Zippy('update')
             },
             postComment: function (e) {
+                if (e.shiftKey) {
+                    if(e.which == 13) {
+                        return true
+                    }
+                } else {
+                    if(e.which != 13) {
+                        return true
+                    }
+                }
                 e.preventDefault()
                 let input = e.target
                 let value = e.target.value
@@ -411,8 +433,6 @@
                 if(value == '') {
                     return
                 }
-                //this.commentIsPosting = true
-                // appending html for loading
                 loadingWrapper.html(
                         '<div class="ft-loading">'+
                         '<span class="ft-loading__dot"></span>'+
@@ -421,29 +441,35 @@
                         '</div>')
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
-                return
                 axios({
                     method: 'post',
                     responseType: 'json',
                     url: base_url + '/ajax/post-comment',
                     data: {
                         post_id: that.postId,
-                        description: value,
+                        description: that.nl2br(value),
                         _token: _token
                     }
                 }).then(function (response) {
+                    console.log(response)
                     if (response.status == 200) {
                         input.value = ''
                         that.postCommentsCount++
-                        $(input).removeClass('is-loading')
+                        $(e.target).parent().addClass('is-loading')
+                        loadingWrapper.html('')
                         that.commentIsPosting = false
                         that.commentInteract = true
-                        /*that.commentItemList.push({
-                            comment: value,
-                            timestamp: new Date().getTime(),
-                            userId: '',
-                            userAvatar: ''
-                        })*/
+                        that.commentItemList.push({
+                            created_at: new Date().toString(),
+                            id: response.data.comment_id,
+                            description: that.nl2br(value),
+                            media_id: null,
+                            parent_id: null,
+                            post_id: that.postId,
+                            user: response.data.user_info
+                         })
+                        that.userCommented++
+                        that.updateZippy()
                     }
                 }).catch(function (error) {
                     console.log(error)
@@ -453,32 +479,63 @@
             fetchComment: function () {
                 let _token = $("meta[name=_token]").attr('content')
                 let that = this
+                let paginate = 5
+                that.commentInteract = true
                 axios({
                     method: 'post',
                     responseType: 'json',
                     url: base_url + 'get-comments',
                     data: {
                         post_id: that.postId,
-                        offset: 0,
+                        paginate: paginate,
+                        offset: that.offset,
                         _token: _token
                     }
                 }).then(function (response) {
                     console.log(response)
                     if (response.status == 200) {
+                        console.log(response)
                         let comments = response.data[0].comments
-                       console.log(comments.length)
+                        let hasMore = response.data[0].hasMore
                         for(let i = 0; i < comments.length;  i++) {
+                            comments[i]['isLiked'] = true
                             that.commentItemList.push(comments[i])
                         }
-                        that.commentInteract = true
-
                         setTimeout(function () {
                             that.updateZippy()
-                        }, 1000)
+                        }, 500)
+                        that.offset += comments.length
+                        that.commentHasMore = hasMore
                     }
                 }).catch(function (error) {
                     console.log(error)
                 })
+            },
+            nl2br: function (str, is_xhtml) {
+                var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
+                return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
+            },
+            openCommentDialog: function () {
+                $('#comment-option-dialog').addClass('ft-dialog--open')
+            },
+            likeUnlikeComment: function (e, index) {
+                console.log(e, index)
+                let _token = $("meta[name=_token]").attr('content')
+                let commentId = $(this).data('comment-id')
+                let that = this
+                $.post(SP_source() + 'ajax/comment-like', {comment_id: commentId, _token: _token }, function(data) {
+                    if (data.status == 200) {
+                        if (data.liked == true) {
+                            that.commentItemList[index].isLiked = true
+                        } else {
+                            that.commentItemList[index].isLiked = false
+                        }
+                    }
+                });
+                that.commentItemList[index].isLiked = !that.commentItemList[index].isLiked
+            },
+            loadMore: function () {
+                this.fetchComment()
             }
         },
         mounted () {

@@ -1,13 +1,13 @@
 
 $(function () {
 
-  $('.login-form').on('submit', function (e)) {
+  $('.login-form').on('submit', function (e) {
     e.preventDefault()
     alert()
-  }
+  })
 
     $('.login-form').ajaxForm({
-        url: SP_source() + 'login',s
+        url: SP_source() + 'login',
         beforeSend: function() {
             login_form = $('.login-form');
             login_button = login_form.find('.btn-submit');
