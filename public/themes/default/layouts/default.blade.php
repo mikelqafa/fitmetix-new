@@ -45,6 +45,12 @@
         {!! Setting::get('google_analytics') !!}
     @endif
     <style>
+        .form-left .form-control {
+            min-width: 0;
+        }
+        .selectize-input {
+            min-width: 200px;
+        }
         .btn.switch-language {
             display: none !important;
         }
