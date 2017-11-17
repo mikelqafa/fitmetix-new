@@ -2793,7 +2793,9 @@ class TimelineController extends AppBaseController
             }
         }
 
-        return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline]]);
+        $image_path = storage_path().'/uploads/users/gallery/';
+
+        return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'imagePath'=>$image_path]]);
     }
 
     public function commentsCountAPI(Request $request) {
