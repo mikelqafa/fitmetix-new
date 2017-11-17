@@ -2831,6 +2831,8 @@ class TimelineController extends AppBaseController
             $hasMore = true;
         }
 
-        return response()->json(['status' => '200', ['comments'=>$comments,'hasMore'=>$hasMore]]);
+        $comment_likes = $comments->comments_liked()->get();
+
+        return response()->json(['status' => '200', ['comments'=>$comments,'hasMore'=>$hasMore,'comment_likes'=>$comment_likes]]);
     }
 }
