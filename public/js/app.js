@@ -1,4 +1,24 @@
 document_title = document.title;
+function hashtagify()
+{
+  // Lets turn hashtags in the post clickable
+  $('.text-wrapper').each(function() {
+    $(this).html($(this).html().replace(
+        /#([a-zA-Z0-9]+)/g,
+        '<a class="hashtag" href="' + SP_source() + '?hashtag=$1">#$1</a>'
+    ));
+  });
+}
+function mentionify()
+{
+  // Lets turn usernames in the post clickable
+  $('.text-wrapper').each(function() {
+    $(this).html($(this).html().replace(
+        /@([a-zA-Z0-9]+)/g,
+        '<a class="hashtag" href="' + SP_source() + '$1">@$1</a>'
+    ));
+  });
+}
 $(function () {
   var validFiles = [];
   //Admin panel user sorting
@@ -121,18 +141,6 @@ $(function () {
   });
 
   $('#link_other a').attr('target', '_blank');
-  // $.fn.isolatedScroll = function() {
-  //     this.bind('mousewheel DOMMouseScroll', function (e) {
-  //         var delta = e.wheelDelta || (e.originalEvent && e.originalEvent.wheelDelta) || -e.detail,
-  //             bottomOverflow = this.scrollTop + $(this).outerHeight() - this.scrollHeight >= 0,
-  //             topOverflow = this.scrollTop <= 0;
-
-  //         if ((delta < 0 && bottomOverflow) || (delta > 0 && topOverflow)) {
-  //             e.preventDefault();
-  //         }
-  //     });
-  //     return this;
-  // };
 
   // show users modal
   $('body').on('click','.show-users-modal',function(e){
@@ -210,7 +218,8 @@ $(function () {
       if (responseText.status == 200)
       {
         $('.timeline-posts').prepend(responseText.data.original);
-        jQuery("time.timeago").timeago();
+        console.log(window.timeLine)
+        // jQuery("time.timeago").timeago();
         $('.no-posts').hide();
         // Resetting the create post form after successfull message
         $('.video-addon').hide();
@@ -235,15 +244,15 @@ $(function () {
         emojify.run();
         hashtagify();
         mentionify();
-        $('.post-description').linkify()
-        $('[data-toggle="tooltip"]').tooltip();
+        //$('.post-description').linkify()
+        window.timeLine.$options.components["app-post"].methods.postNewPost(2)
+        //$('[data-toggle="tooltip"]').tooltip();
         $('[name="description"]').focus();
         notify('Your post has been successfully published');
       }
       else
       {
         $('.login-errors').html(responseText.message);
-
       }
 
     }
@@ -264,8 +273,6 @@ $(function () {
     $('.user-tags-addon').slideToggle();
     $('.user-tags-added').slideToggle();
   });
-
-
 
   // Toggle music input in create post form
   $('#musicUpload').on('click',function(e){
@@ -296,28 +303,6 @@ $(function () {
 
     $('.emoticons-wrapper').slideToggle();
   });
-
-  // Fetch users id when keyup
-  // $('.user-tags').on('keyup',function(){
-
-  //     if($(".user-results").length){
-  //         $(".user-results").show();
-  //         $('.user-results').html('<i class="fa fa-spinner fa-pulse"></i> Fetching Sound Cloud results...');
-  //     }
-  //     else
-  //     {
-  //         $('.users-results-wrapper').html('<div class="list-group user-results"><i class="fa fa-spinner fa-pulse"></i> Fetching Sound Cloud results...</div>');
-  //     }
-
-  //     $.get( SP_source() + 'ajax/get-users-mentions' , { query: $('.user-tags').val() , csrf_token: $('[name="csrf_token"]').attr('content') })
-  //         .done(function( data ) {
-  //             $('.user-results').html('');
-  //             $.each(data, function(key, value) {
-  //                 $('.user-results').append('<a class="list-group-item user-result-item" data-user-id="' + value.id  + '" data-user-name="' + value.name  + '" href="#"> <img src="' +  value.image + '"> '+ value.name + '<span></span><div class="clearfix"></div></a>');
-  //             });
-  //     });
-  // });
-
 
   // Fetch the youtube title and id when keyup
   $('#youtubeText').on('keyup',function(){
@@ -379,8 +364,6 @@ $(function () {
         });
   });
 
-
-
   // Like/Unlike the post by user
   $(document).on('click','.soundcloud-result-item',function(e){
     e.preventDefault();
@@ -409,7 +392,6 @@ $(function () {
 
 
   });
-
 
   // Like/Unlike the post by user
   $(document).on('click','.like-post',function(e){
@@ -556,7 +538,6 @@ $(function () {
     });
   });
 
-
 //Accept follow request through join request tab in close group
   $('.accept-follow').on('click',function(e){
     e.preventDefault();
@@ -571,7 +552,6 @@ $(function () {
     });
   });
 
-
   //Reject follow user request through join request tab in close group
   $('.reject-follow').on('click',function(e){
     e.preventDefault();
@@ -585,10 +565,6 @@ $(function () {
       }
     });
   });
-
-
-
-
 
   //Adding follower through add members tab in close group
   $(document).on('click','.add-member',function(e){
@@ -685,7 +661,6 @@ $(function () {
     textbox.val(textbox.val() +' '+$(this).data('smiley-id'));
     textbox.focus();
   });
-
 
   // Page Like/Liked the timeline user  by  logged user
   $('.page-like').on('click',function(e){
@@ -1180,7 +1155,6 @@ $(function () {
     $(this).next().slideToggle();
   });
 
-
   // Change avatar button click event
   $(document).on('click','.change-avatar',function(e){
     e.preventDefault();
@@ -1233,25 +1207,6 @@ $(function () {
     }
   });
 
-
-  // $('form.create-album-form').ajaxForm({
-  //      url: SP_source() + 'ajax/create-album',
-
-  //      beforeSend: function() {
-  //      },
-
-
-  //      success: function(responseText) {
-
-  //          if (responseText.status == 200) {
-
-  //          }
-  //          else {
-
-  //          }
-  //      }
-  //  });
-
   // Change cover button click event
   $(document).on('click','.change-cover',function(e){
     e.preventDefault();
@@ -1263,37 +1218,13 @@ $(function () {
     $('form.change-cover-form').submit();
   });
 
-
-  /*$("#createPost").mention({
+  $("#createPost").mention({
     remote: SP_source() + 'ajax/get-users-mentions',
-    limit : 10,
-  });*/
+    limit : 10
+  });
 
-
-  function hashtagify()
-  {
-    // Lets turn hashtags in the post clickable
-    $('.text-wrapper').each(function() {
-      $(this).html($(this).html().replace(
-          /#([a-zA-Z0-9]+)/g,
-          '<a class="hashtag" href="' + SP_source() + '?hashtag=$1">#$1</a>'
-      ));
-    });
-  }
   hashtagify();
   emojify.run();
-
-
-  function mentionify()
-  {
-    // Lets turn usernames in the post clickable
-    $('.text-wrapper').each(function() {
-      $(this).html($(this).html().replace(
-          /@([a-zA-Z0-9]+)/g,
-          '<a class="hashtag" href="' + SP_source() + '$1">@$1</a>'
-      ));
-    });
-  }
   mentionify();
 
   $('form.change-cover-form').ajaxForm({
@@ -1319,6 +1250,7 @@ $(function () {
         }, 500);
       }
     },
+
     success: function(responseText) {
 
       if (responseText.status == 200) {
@@ -1344,15 +1276,12 @@ $(function () {
     $('.post-images-upload').trigger('click');
   });
 
+
   $(document).on('click','#selfVideoUpload',function(e){
     e.preventDefault();
     $('.post-video-upload').trigger('click');
   });
 
-  // $(document).on('click','#albumImageUpload',function(e){
-  //   e.preventDefault();
-  //   $('.album-images-upload').trigger('click');
-  // });
 
   // Image upload on create post on timeline
   $(document).on('change','.post-images-upload',function(e){
@@ -1445,47 +1374,6 @@ $(function () {
     }
 
   });
-
-  //  $(document).on('change','.album-images-upload',function(e){
-  //   e.preventDefault();
-
-  //   var files = !!this.files ? this.files : [];
-
-  //   $('.post-images-selcted').find('span').text(files.length);
-  //   $('.post-images-selcted').show('slow');
-  //   if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
-
-  //   var countFiles = $(this)[0].files.length;
-  //   var imgPath = $(this)[0].value;
-  //   var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
-  //   var image_holder = $(".albums-list .row");
-  //   image_holder.empty();
-  //   if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
-  //     if (typeof(FileReader) != "undefined") {
-  //       //loop for each file selected for uploaded.
-  //       for (var i = 0; i < countFiles; i++)
-  //       {
-  //         var reader = new FileReader();
-  //         reader.onload = function(e) {
-
-  //          image_holder.append('<div class="col-md-4 album-images">' +
-  //                              '<div class="album">' +
-  //                                  '<img src="' + e.target.result + '" alt="images">' +
-  //                                  '<a class="btn btn-remove"><i class="fa fa-times" aria-hidden="true"></i></a>' +
-  //                              '</div>' +
-  //                              '</div>');
-  //         }
-  //         image_holder.show();
-  //         reader.readAsDataURL($(this)[0].files[i]);
-  //       }
-  //     } else {
-  //       alert("This browser does not support FileReader.");
-  //     }
-  //   } else {
-  //     alert("Pls select only images");
-  //   }
-  // });
-
 
   //  Navbar Search suggestions
   var bigSearchUrl = $('#navbar-search').data('url');
@@ -1672,7 +1560,6 @@ $(function () {
       jQuery("time.timeago").timeago();
     }
   });
-
 
 
 // Adding members to the group
@@ -1903,12 +1790,14 @@ $(function () {
       });
     }
   });
+
   // chat-list-toggle
   $('.chat-list-toggle').on('click',function(e){
     e.preventDefault();
     $('.chat-list').animate({width: 'toggle'});
     $('.chat-box').slideToggle();
   });
+
   // for timeline-list toggle in small screens
   $('.btn-status').on('click',function(e){
     // $('.timeline-list .list-inline').slideToggle('slow');
@@ -1919,14 +1808,13 @@ $(function () {
       $('.timeline-list .list-inline').slideToggle('slow');
     }
   });
+
   $(window).on('resize',function(){
     var win = $(this);
     if (win.width()>= 1200){
       $('.timeline-list .list-inline').show('slow');
     }
   });
-
-
 
   //smooth scroll intialization
 
@@ -2239,3 +2127,4 @@ $(document).on('click', '.change-theme', function(e){
   var color = $(this).attr('data-theme');
   $('body').attr('data-theme', color)
 })
+

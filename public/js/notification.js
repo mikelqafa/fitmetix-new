@@ -5879,12 +5879,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Post__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Post___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_Post__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_DialogOption__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_DialogOption___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_DialogOption__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_timeago__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_timeago___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_timeago__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_awesome_swiper__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_awesome_swiper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue_awesome_swiper__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_AppNotification__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_AppNotification___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_AppNotification__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_DialogOption__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_DialogOption___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_DialogOption__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_CommentDialogOption_vue__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_CommentDialogOption_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_CommentDialogOption_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_timeago__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_timeago___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vue_timeago__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_awesome_swiper__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_awesome_swiper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vue_awesome_swiper__);
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 
@@ -5892,26 +5896,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-__webpack_require__(50);
 
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_4_vue_awesome_swiper___default.a);
 
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vue_timeago___default.a, {
+__webpack_require__(55);
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_6_vue_awesome_swiper___default.a);
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_5_vue_timeago___default.a, {
   name: 'timeago', // component name, `timeago` by default
   locale: 'en-US',
   locales: {
-    'en-US': __webpack_require__(54)
+    'en-US': __webpack_require__(61)
   }
 });
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.config.productionTip = true;
 
 /* eslint-disable no-new */
 
-new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-  el: '#app',
+window.timeLine = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+  el: '#app-timeline',
   components: {
     'app-post': __WEBPACK_IMPORTED_MODULE_1__components_Post___default.a,
-    'app-dialog-option': __WEBPACK_IMPORTED_MODULE_2__components_DialogOption___default.a
+    'app-post-option': __WEBPACK_IMPORTED_MODULE_3__components_DialogOption___default.a,
+    'app-comment-option': __WEBPACK_IMPORTED_MODULE_4__components_CommentDialogOption_vue___default.a
+  }
+});
+
+window.appNotification = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+  el: '#app-notification',
+  components: {
+    'app-notification': __WEBPACK_IMPORTED_MODULE_2__components_AppNotification___default.a
   }
 });
 
@@ -17204,7 +17218,7 @@ var axios = window.axios;
         getDefaultData: function getDefaultData() {
             var that = this;
             var username = '';
-            var paginate = 50;
+            var paginate = 4;
             var _token = $("meta[name=_token]").attr('content');
             axios({
                 method: 'post',
@@ -17221,10 +17235,17 @@ var axios = window.axios;
                     $.each(posts, function (key, val) {
                         that.itemList.push(val);
                     });
+                    setTimeout(function () {
+                        hashtagify();
+                        mentionify();
+                    }, 1000);
                 }
             }).catch(function (error) {
                 console.log(error);
             });
+        },
+        postNewPost: function postNewPost(i) {
+            alert(i);
         }
     },
     mounted: function mounted() {
@@ -17660,6 +17681,10 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(62)
+}
 var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(29)
@@ -17668,7 +17693,7 @@ var __vue_template__ = __webpack_require__(30)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -17740,34 +17765,56 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
-        timelineData: {},
+        postData: {},
         date: ''
     },
     data: function data() {
         return {
             autoUpdate: 60,
-            defaultImage: 'default.png'
+            defaultImage: 'default.png',
+            timeLineData: {}
         };
     },
     computed: {
         since: function since() {
             return this.date != '' ? new Date(this.date).getTime() : '';
         },
+        locationLink: function locationLink() {
+            return this.postData.location !== '' ? base_url + 'get-location/' + this.postData.location : '';
+        },
         userLink: function userLink() {
-            return base_url + this.timelineData.username;
+            return base_url + this.timeLineData.username;
         },
         userAtTitle: function userAtTitle() {
-            return '@' + this.timelineData.username;
+            return '@' + this.timeLineData.username;
         },
         userAvatar: function userAvatar() {
-            return this.timelineData.avatar_url.length !== 0 ? base_url + this.timelineData.avatar_url[0].source : base_url + this.defaultImage;
+            return this.timeLineData.avatar_url !== undefined ? base_url + 'user/avatar/' + this.timeLineData.avatar_url[0].source : base_url + this.defaultImage;
         }
     },
     methods: {
-        openPostDialog: function openPostDialog() {}
+        openPostDialog: function openPostDialog() {
+            $('#post-option-dialog').addClass('ft-dialog--open');
+        }
+    },
+    mounted: function mounted() {
+        this.timeLineData = this.postData.timeline;
     }
 });
 
@@ -17781,13 +17828,22 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "panel-heading no-bg" }, [
     _c("div", { staticClass: "post-author" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "post-options" }, [
+        _c(
+          "a",
+          {
+            attrs: { href: "javascript:;" },
+            on: { click: _vm.openPostDialog }
+          },
+          [_c("i", { staticClass: "icon icon-options" })]
+        )
+      ]),
       _vm._v(" "),
       _c(
         "a",
         {
           staticClass: "user-avatar",
-          style: { backgroundColor: _vm.userAvatar },
+          style: { backgroundImage: "url(" + _vm.userAvatar + ")" },
           attrs: { href: _vm.userLink, title: _vm.userAtTitle }
         },
         [
@@ -17796,15 +17852,15 @@ var render = function() {
             attrs: {
               src: _vm.userAvatar,
               alt: _vm.userAvatar.name,
-              title: _vm.timelineData.name
+              title: _vm.timeLineData.name
             }
           })
         ]
       ),
       _vm._v(" "),
       _c("div", { staticClass: "user-post-details" }, [
-        _c("ul", { staticClass: "list-unstyled no-margin" }, [
-          _c("li", [
+        _c("div", { staticClass: "no-margin" }, [
+          _c("div", { staticClass: "meta-font" }, [
             _c(
               "a",
               {
@@ -17820,7 +17876,7 @@ var render = function() {
               [
                 _vm._v(
                   "\n                        " +
-                    _vm._s(_vm.timelineData.name) +
+                    _vm._s(_vm.timeLineData.name) +
                     "\n                    "
                 )
               ]
@@ -17829,35 +17885,44 @@ var render = function() {
             _c("div", { staticClass: "small-text" })
           ]),
           _vm._v(" "),
-          _c(
-            "li",
-            [
-              _c("timeago", {
-                staticClass: "timeago",
-                attrs: { since: _vm.since, "auto-update": _vm.autoUpdate }
-              })
-            ],
-            1
-          )
+          _c("div", { staticClass: "md-layout meta-font" }, [
+            _c(
+              "div",
+              { staticClass: "ft-timeago sub-meta-info" },
+              [
+                _c("timeago", {
+                  staticClass: "timeago",
+                  attrs: { since: _vm.since, "auto-update": _vm.autoUpdate }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _vm.locationLink !== ""
+              ? _c("div", { staticClass: "ft-location layout-m-l-0" }, [
+                  _c("span", { staticClass: "post-place" }, [
+                    _c(
+                      "a",
+                      { attrs: { target: "_blank", href: _vm.locationLink } },
+                      [
+                        _c("i", { staticClass: "fa fa-map-marker" }),
+                        _vm._v(
+                          " " +
+                            _vm._s(_vm.postData.location) +
+                            "\n                      "
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              : _vm._e()
+          ])
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "post-options" }, [
-      _c(
-        "a",
-        { staticClass: "dropdown-togle", attrs: { href: "javascript:;" } },
-        [_c("i", { staticClass: "icon icon-options" })]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -17954,7 +18019,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.comment-textfield{\n    position: relative;\n}\n.comment-textfield .loading-wrapper {\n    position: absolute;\n    top:0;\n    left:0;\n    height: 100%;\n    width: 100%;\n    display: none;\n}\n.comment-textfield.is-loading {\n    pointer-events: none;\n    cursor: wait;\n}\n.comment-textfield .ft-loading {\n    background-color: rgba(0,0,0,.12);\n}\n.comment-textfield.is-loading .loading-wrapper {\n    display: block;\n}\n.comment-list-action{\n    max-height: 320px;\n    overflow-y: auto;\n}\n.ft-loading{\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    flex-wrap: nowrap;\n    height: 48px;\n    background-color: #FAFBFC;\n}\n.ft-loading__dot{\n    background: #333;\n    display: block;\n    height: 8px;\n    float: left;\n    margin: 0 2px;\n    opacity: 0;\n    width: 8px;\n    border-radius: 50%;\n    animation: dot 1s cubic-bezier(0.77, 0, 0.175, 1) 0s infinite;\n}\n.ft-loading .ft-loading__dot:nth-child(1) {\n    animation-delay: 0.15s;\n}\n.ft-loading .ft-loading__dot:nth-child(2) {\n    animation-delay: 0.3s;\n}\n.ft-loading .ft-loading__dot:nth-child(3) {\n    animation-delay: 0.45s;\n}\n@keyframes dot {\n0% {\n        opacity: 0;\n}\n25% {\n        opacity: 1;\n}\n100% {\n        opacity: 0;\n}\n}\n.comment-textfield .form-control{\n    height: 48px;\n    border-top: none;\n    border-left:none;\n    border-right:none;\n    border-radius: 0;\n    padding-left: 15px;\n    padding-right: 15px;\n    background-color: #FAFBFC;\n}\n.md-list__item-icon {\n    margin-top: 2px;\n    height: 32px;\n    width: 32px;\n    align-self: flex-start;\n    margin-right: 16px;\n    flex-shrink: 0;\n}\n.user-avatar {\n    background-size: cover;\n}\n.md-list {\n    background-color: #FAFBFC;\n    padding: 4px 0;\n    width: 100%;\n    display: block;\n    list-style: none;\n}\n.md-list .md-list__item {\n    border-bottom: 1px solid rgba(0,0,0,.12);\n}\n.md-list .md-list__item:last-child {\n    border-bottom: none\n}\n.md-list--dense .md-list__item {\n    min-height: 40px;\n    font-size: 14px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    font-weight: 400;\n    color: rgba(0,0,0,.87);\n    letter-spacing: .04em;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    align-items: center;\n    cursor: default;\n    overflow: hidden;\n    line-height: 1;\n    padding-left: 16px;\n    padding-top:10px;\n    padding-bottom:10px;\n}\n.md-list__item-content {\n    flex: 1 1 100%;\n    display: flex;\n    position: relative;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    line-height: 20px;\n    justify-content: space-between;\n    padding-right: 16px;\n}\n.md-list__item-text-body{\n    line-height: 18px;\n    color: rgba(0,0,0,.54);\n    padding: 0;\n    font-size: 12px;\n}\n.md-list__item-secondary{\n    display: flex;\n    margin-left: 8px;\n}\n.md-list__item-secondary-action {\n    height: 20px;\n    width: 20px;\n    padding: 2px;\n    text-align: center;\n    font-size: 11px;\n    color: #333;\n}\n.md-list__item-secondary-action.ft-expression{\n    height: 20px;\n    width: 20px;\n}\n.md-list__item-secondary-action .icon{\n    font-size: 1.4rem;\n}\n.ft-socialite {\n    background-color: #fff;\n    padding: 10px 15px;\n    border: none;\n}\n.ft-expression {\n    display: flex;\n    height: 32px;\n    width: 48px;\n    text-align: center;\n    justify-content: center;\n    align-items: center;\n    color: #333;\n}\n.ft-expression .hidden-default {\n    display: none;\n}\n.ft-expression--liked,\n.ft-expression--liked:focus,\n.ft-expression--liked:hover {\n    color: #EB5757;\n}\n.ft-expression--liked .hidden-default {\n    display: block;\n}\n.ft-expression--liked .visible-default {\n    display: none;\n}\n.ft-expression i {\n    font-size: 24px;\n}\n.ft-comment {\n    flex-wrap: wrap;\n    align-items: center;\n}\n.ft-comment__item {\n    display: flex;\n}\n.ft-comment__item--grow {\n    flex-grow: 1;\n}\n.ft-expression--meta {\n    font-size: 13px;\n    height: 24px;\n    min-width: 24px;\n    width: auto;\n    padding: 0 7px;\n    line-height: 24px;\n}\n.ft-expression--meta i {\n    font-size: 14px;\n}\n.ft-expression--meta-text {\n    margin-left: 5px;\n}\n", ""]);
+exports.push([module.i, "\n.icon {\n    pointer-events: none;\n}\n.text-center.ft-menu__item {\n    text-align: center !important;\n}\n.zippy {\n    height: 0;\n}\n.zippy.zippy--open,\n.zippy.zippy--animating {\n    height: auto;\n}\n.comment-textfield{\n    position: relative;\n}\n.comment-textfield .loading-wrapper {\n    position: absolute;\n    top:0;\n    left:0;\n    height: 100%;\n    width: 100%;\n    display: none;\n}\n.comment-textfield.is-loading {\n    pointer-events: none;\n    cursor: wait;\n}\n.comment-textfield .ft-loading {\n    background-color: rgba(0,0,0,.12);\n}\n.comment-textfield.is-loading .loading-wrapper {\n    display: block;\n}\n/*.comment-list-action{\n    max-height: 320px;\n    overflow-y: auto;\n}*/\n.ft-loading{\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    flex-wrap: nowrap;\n    height: 48px;\n    background-color: #FAFBFC;\n}\n.ft-loading__dot{\n    background: #333;\n    display: block;\n    height: 8px;\n    float: left;\n    margin: 0 2px;\n    opacity: 0;\n    width: 8px;\n    border-radius: 50%;\n    animation: dot 1s cubic-bezier(0.77, 0, 0.175, 1) 0s infinite;\n}\n.ft-loading .ft-loading__dot:nth-child(1) {\n    animation-delay: 0.15s;\n}\n.ft-loading .ft-loading__dot:nth-child(2) {\n    animation-delay: 0.3s;\n}\n.ft-loading .ft-loading__dot:nth-child(3) {\n    animation-delay: 0.45s;\n}\n@keyframes dot {\n0% {\n        opacity: 0;\n}\n25% {\n        opacity: 1;\n}\n100% {\n        opacity: 0;\n}\n}\n.comment-textfield .form-control{\n    height: 48px;\n    border-top: none;\n    border-left:none;\n    border-right:none;\n    border-radius: 0;\n    padding-left: 15px;\n    padding-right: 15px;\n    padding-top: 15px;\n    background-color: #FAFBFC;\n}\n.md-list__item-icon {\n    margin-top: 2px;\n    height: 32px;\n    width: 32px;\n    align-self: flex-start;\n    margin-right: 16px;\n    flex-shrink: 0;\n}\n.user-avatar {\n    background-size: cover;\n}\n.md-list {\n    background-color: #FAFBFC;\n    padding: 4px 0;\n    width: 100%;\n    display: block;\n    list-style: none;\n}\n.md-list .md-list__item {\n    border-bottom: 1px solid rgba(0,0,0,.12);\n}\n.md-list .md-list__item:last-child {\n    border-bottom: none\n}\n.md-list--dense .md-list__item {\n    min-height: 32px;\n    font-size: 14px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    font-weight: 400;\n    color: rgba(0,0,0,.87);\n    letter-spacing: .04em;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    align-items: center;\n    cursor: default;\n    overflow: hidden;\n    line-height: 1;\n    padding-left: 16px;\n    padding-top:5px;\n    padding-bottom:5px;\n}\n.md-list__item-content {\n    flex: 1 1 100%;\n    display: flex;\n    position: relative;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    line-height: 20px;\n    justify-content: space-between;\n    padding-right: 16px;\n}\n.md-list__item-text-body{\n    line-height: 18px;\n    color: rgba(0,0,0,.54);\n    padding: 0;\n    font-size: 12px;\n}\n.md-list__item-secondary{\n    display: flex;\n    margin-left: 8px;\n}\n.md-list__item-secondary-action {\n    height: 20px;\n    width: 20px;\n    padding: 2px;\n    text-align: center;\n    font-size: 11px;\n    color: #333;\n}\n.md-list__item-secondary-action.ft-expression{\n    height: 20px;\n    width: 20px;\n}\n.md-list__item-secondary-action .icon{\n    font-size: 1.4rem;\n}\n.ft-socialite {\n    background-color: #fff;\n    padding: 7.5px 15px;\n    padding-bottom: 2px;\n    border: none;\n}\n.ft-expression {\n    display: flex;\n    height: 32px;\n    width: 36px;\n    text-align: center;\n    justify-content: center;\n    align-items: center;\n    color: #333;\n}\n.ft-expression .hidden-default {\n    display: none;\n}\n.ft-expression--liked,\n.ft-expression--liked:focus,\n.ft-expression--liked:hover {\n    color: #EB5757;\n}\n.ft-expression--liked .hidden-default {\n    display: block;\n}\n.ft-expression--liked .visible-default {\n    display: none;\n}\n.ft-expression i {\n    font-size: 22px;\n}\n.ft-comment {\n    flex-wrap: wrap;\n    align-items: center;\n}\n.ft-comment__item {\n    display: flex;\n}\n.ft-comment__item--grow {\n    flex-grow: 1;\n}\n.ft-expression--meta {\n    font-size: 13px;\n    height: 24px;\n    min-width: 24px;\n    width: auto;\n    padding: 0 7px;\n    line-height: 24px;\n}\n.ft-expression--meta i {\n    font-size: 14px;\n}\n.ft-expression--meta-text {\n    margin-left: 5px;\n}\n", ""]);
 
 // exports
 
@@ -18276,14 +18341,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-// let Zippy = window.Zippy
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
         postId: ''
     },
     data: function data() {
         return {
+            base_url: base_url,
             postCommentsCount: 0,
             postLikesCount: 0,
             userLiked: 0,
@@ -18291,7 +18369,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             commentInteract: false,
             commentHasMore: true,
             commentItemList: [],
-            commentIsPosting: false
+            commentIsPosting: false,
+            offset: 0
         };
     },
     computed: {
@@ -18309,7 +18388,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         getDefaultData: function getDefaultData() {
             var that = this;
-            var paginate = 50;
             var _token = $("meta[name=_token]").attr('content');
             axios({
                 method: 'post',
@@ -18369,6 +18447,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             $('#' + this.expandID).Zippy('update');
         },
         postComment: function postComment(e) {
+            if (e.shiftKey) {
+                if (e.which == 13) {
+                    return true;
+                }
+            } else {
+                if (e.which != 13) {
+                    return true;
+                }
+            }
             e.preventDefault();
             var input = e.target;
             var value = e.target.value;
@@ -18378,34 +18465,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (value == '') {
                 return;
             }
-            //this.commentIsPosting = true
-            // appending html for loading
             loadingWrapper.html('<div class="ft-loading">' + '<span class="ft-loading__dot"></span>' + '<span class="ft-loading__dot"></span>' + '<span class="ft-loading__dot"></span>' + '</div>');
             var that = this;
             var _token = $("meta[name=_token]").attr('content');
-            return;
             axios({
                 method: 'post',
                 responseType: 'json',
                 url: base_url + '/ajax/post-comment',
                 data: {
                     post_id: that.postId,
-                    description: value,
+                    description: that.nl2br(value),
                     _token: _token
                 }
             }).then(function (response) {
+                console.log(response);
                 if (response.status == 200) {
                     input.value = '';
                     that.postCommentsCount++;
-                    $(input).removeClass('is-loading');
+                    $(e.target).parent().addClass('is-loading');
+                    loadingWrapper.html('');
                     that.commentIsPosting = false;
                     that.commentInteract = true;
-                    /*that.commentItemList.push({
-                        comment: value,
-                        timestamp: new Date().getTime(),
-                        userId: '',
-                        userAvatar: ''
-                    })*/
+                    that.commentItemList.push({
+                        created_at: new Date().toString(),
+                        id: response.data.comment_id,
+                        description: that.nl2br(value),
+                        media_id: null,
+                        parent_id: null,
+                        post_id: that.postId,
+                        user: response.data.user_info
+                    });
+                    that.userCommented++;
+                    that.updateZippy();
                 }
             }).catch(function (error) {
                 console.log(error);
@@ -18414,32 +18505,63 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         fetchComment: function fetchComment() {
             var _token = $("meta[name=_token]").attr('content');
             var that = this;
+            var paginate = 5;
+            that.commentInteract = true;
             axios({
                 method: 'post',
                 responseType: 'json',
                 url: base_url + 'get-comments',
                 data: {
                     post_id: that.postId,
-                    offset: 0,
+                    paginate: paginate,
+                    offset: that.offset,
                     _token: _token
                 }
             }).then(function (response) {
                 console.log(response);
                 if (response.status == 200) {
+                    console.log(response);
                     var comments = response.data[0].comments;
-                    console.log(comments.length);
+                    var hasMore = response.data[0].hasMore;
                     for (var i = 0; i < comments.length; i++) {
+                        comments[i]['isLiked'] = true;
                         that.commentItemList.push(comments[i]);
                     }
-                    that.commentInteract = true;
-
                     setTimeout(function () {
                         that.updateZippy();
-                    }, 1000);
+                    }, 500);
+                    that.offset += comments.length;
+                    that.commentHasMore = hasMore;
                 }
             }).catch(function (error) {
                 console.log(error);
             });
+        },
+        nl2br: function nl2br(str, is_xhtml) {
+            var breakTag = is_xhtml || typeof is_xhtml === 'undefined' ? '<br />' : '<br>';
+            return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+        },
+        openCommentDialog: function openCommentDialog() {
+            $('#comment-option-dialog').addClass('ft-dialog--open');
+        },
+        likeUnlikeComment: function likeUnlikeComment(e, index) {
+            console.log(e, index);
+            var _token = $("meta[name=_token]").attr('content');
+            var commentId = $(this).data('comment-id');
+            var that = this;
+            $.post(SP_source() + 'ajax/comment-like', { comment_id: commentId, _token: _token }, function (data) {
+                if (data.status == 200) {
+                    if (data.liked == true) {
+                        that.commentItemList[index].isLiked = true;
+                    } else {
+                        that.commentItemList[index].isLiked = false;
+                    }
+                }
+            });
+            that.commentItemList[index].isLiked = !that.commentItemList[index].isLiked;
+        },
+        loadMore: function loadMore() {
+            this.fetchComment();
         }
     },
     mounted: function mounted() {
@@ -18462,7 +18584,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "panel-footer ft-socialite" }, [
+    _c("div", { staticClass: "panel-footer ft-socialite meta-font" }, [
       _c("div", { staticClass: "ft-comment md-layout md-layout--row" }, [
         _c(
           "div",
@@ -18507,7 +18629,6 @@ var render = function() {
               "a",
               {
                 staticClass: "ft-expression ft-expression--meta",
-                class: { "ft-expression--liked": _vm.userLiked },
                 attrs: { href: "javascript:;" }
               },
               [
@@ -18529,7 +18650,6 @@ var render = function() {
               "a",
               {
                 staticClass: "ft-expression ft-expression--meta",
-                class: { "ft-expression--liked": _vm.userCommented },
                 attrs: { href: "javascript:;" }
               },
               [
@@ -18577,14 +18697,13 @@ var render = function() {
                           rows: "1"
                         },
                         on: {
-                          keyup: function($event) {
+                          keydown: function($event) {
                             if (
                               !("button" in $event) &&
-                              _vm._k($event.keyCode, "enter", 13, $event.key)
+                              $event.keyCode !== 13
                             ) {
                               return null
                             }
-                            $event.preventDefault()
                             _vm.postComment($event)
                           }
                         }
@@ -18601,111 +18720,160 @@ var render = function() {
                           staticClass:
                             "comment-list-action md-list md-list--dense"
                         },
-                        _vm._l(_vm.reverseCommentItemList, function(item) {
-                          return _c(
-                            "div",
-                            { staticClass: "md-list__item has-divider" },
-                            [
-                              _c("a", {
-                                staticClass: "md-list__item-icon user-avatar",
-                                staticStyle: {
-                                  "background-image":
-                                    "url('http://localhost:3008/fitmetix/public/images/default.png')"
-                                },
-                                attrs: {
-                                  href:
-                                    "//localhost:3008/fitmetix/public/Uppal",
-                                  title: "@Uppal"
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "md-list__item-content" },
-                                [
-                                  _c(
-                                    "div",
-                                    { staticClass: "md-list__item-primary" },
-                                    [
-                                      _c(
-                                        "a",
-                                        {
-                                          staticClass:
-                                            "user-name user ft-user-name",
-                                          attrs: {
-                                            href:
-                                              "//localhost:3008/fitmetix/public/Uppal",
-                                            title: "@Uppal",
-                                            "data-original-title": "@Uppal"
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                    Sidhant\n                                "
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "md-list__item-text-body"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                    " +
-                                              _vm._s(item.description) +
-                                              "\n                                "
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "md-list__item-secondary md-layout md-layout--row"
-                                    },
-                                    [
-                                      _vm._m(1, true),
-                                      _vm._v(" "),
-                                      _c(
-                                        "a",
-                                        {
-                                          staticClass:
-                                            "md-list__item-secondary-action ft-expression",
-                                          class: {
-                                            "ft-expression--liked":
-                                              _vm.userLiked
+                        [
+                          _vm._l(_vm.reverseCommentItemList, function(
+                            item,
+                            index
+                          ) {
+                            return _c(
+                              "div",
+                              {
+                                staticClass: "md-list__item has-divider",
+                                attrs: { "data-comment-id": item.id }
+                              },
+                              [
+                                _c("a", {
+                                  staticClass: "md-list__item-icon user-avatar",
+                                  style: {
+                                    backgroundImage:
+                                      "url(" + item.user.avatar + ")"
+                                  },
+                                  attrs: {
+                                    "data-theme": "m",
+                                    href:
+                                      "//localhost:3008/fitmetix/public/Uppal",
+                                    title: "@" + item.user.username
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "md-list__item-content" },
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "md-list__item-primary" },
+                                      [
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "user-name user ft-user-name",
+                                            attrs: {
+                                              href:
+                                                _vm.base_url +
+                                                item.user.username,
+                                              title: "@Uppal",
+                                              "data-original-title": "@Uppal"
+                                            }
                                           },
-                                          attrs: { href: "javascript:;" },
-                                          on: { click: _vm.toggleLikePost }
-                                        },
-                                        [
-                                          _c("i", {
+                                          [
+                                            _vm._v(
+                                              "\n                                    " +
+                                                _vm._s(item.user.name) +
+                                                "\n                                "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("div", {
+                                          staticClass:
+                                            "md-list__item-text-body",
+                                          domProps: {
+                                            innerHTML: _vm._s(item.description)
+                                          }
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "md-list__item-secondary md-layout md-layout--row"
+                                      },
+                                      [
+                                        _c(
+                                          "a",
+                                          {
                                             staticClass:
-                                              "icon icon-like visible-default"
-                                          }),
-                                          _vm._v(" "),
-                                          _c("i", {
+                                              "md-list__item-secondary-action ft-expression",
+                                            class: {
+                                              "ft-expression--liked":
+                                                item.isLiked
+                                            },
+                                            attrs: {
+                                              href: "javascript:;",
+                                              "data-comment-id": item.id
+                                            },
+                                            on: {
+                                              click: function($event) {
+                                                _vm.likeUnlikeComment(
+                                                  $event,
+                                                  index
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "icon icon-like visible-default"
+                                            }),
+                                            _vm._v(" "),
+                                            _c("i", {
+                                              staticClass:
+                                                "icon icon-liked hidden-default"
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "a",
+                                          {
                                             staticClass:
-                                              "icon icon-liked hidden-default"
-                                          })
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            ]
-                          )
-                        })
+                                              "md-list__item-secondary-action",
+                                            attrs: { href: "javascript:;" },
+                                            on: { click: _vm.openCommentDialog }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "icon icon-options"
+                                            })
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          }),
+                          _vm._v(" "),
+                          _vm.commentHasMore
+                            ? _c("div", { staticClass: "ft-menu" }, [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "text-center ft-menu__item btn",
+                                    attrs: { type: "submit" },
+                                    on: { click: _vm.loadMore }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                            Load More\n                        "
+                                    )
+                                  ]
+                                )
+                              ])
+                            : _vm._e()
+                        ],
+                        2
                       )
                     : _vm._e()
                 ]
-              : [_vm._m(2)]
+              : [_vm._m(1)]
           ],
           2
         )
@@ -18725,16 +18893,6 @@ var staticRenderFns = [
         [_c("i", { staticClass: "icon icon-share" })]
       )
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "md-list__item-secondary-action", attrs: { href: "#" } },
-      [_c("i", { staticClass: "icon icon-options" })]
-    )
   },
   function() {
     var _vm = this
@@ -18781,10 +18939,7 @@ var render = function() {
               },
               [
                 _c("post-header", {
-                  attrs: {
-                    "timeline-data": postItem.timeline,
-                    date: postItem.created_at
-                  }
+                  attrs: { "post-data": postItem, date: postItem.created_at }
                 }),
                 _vm._v(" "),
                 _c(
@@ -18949,7 +19104,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/DialogOption.vue"
+Component.options.__file = "resources/assets/js/components/AppNotification.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -18959,9 +19114,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-38f73714", Component.options)
+    hotAPI.createRecord("data-v-27ce82c5", Component.options)
   } else {
-    hotAPI.reload("data-v-38f73714", Component.options)
+    hotAPI.reload("data-v-27ce82c5", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -18982,13 +19137,13 @@ var content = __webpack_require__(39);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(2)("b8d06624", content, false);
+var update = __webpack_require__(2)("70605473", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-38f73714\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./DialogOption.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-38f73714\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./DialogOption.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-27ce82c5\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./AppNotification.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-27ce82c5\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./AppNotification.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -19006,7 +19161,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.navbar.socialite{\n    z-index: 10 !important;\n}\n.ft-dialog {\n    background-color: rgba(0,0,0,.5);\n    bottom: 0;\n    justify-content: space-between;\n    left: 0;\n    overflow-y: auto;\n    position: fixed;\n    right: 0;\n    top: 0;\n    z-index: 12;\n    display: none;\n}\n.ft-dialog--open {\n    display: block;\n}\n.ft-dialog__inner-layer {\n    bottom: 0;\n    left: 0;\n    position: fixed;\n    right: 0;\n    top: 0;\n    z-index: 11\n}\n.ft-dialog__wrapper{\n    padding: 0 40px;\n    position: relative;\n    pointer-events: none;\n    -webkit-transform: translate3d(0,0,0);\n    transform: translate3d(0,0,0);\n    display: flex;\n    min-height: 100%;\n    overflow: auto;\n    width: auto;\n    z-index: 11;\n}\n.ft-dialog__surface {\n    align-items: center;\n    margin: auto;\n    max-width: 935px;\n    pointer-events: auto;\n    width: 100%;\n}\n.ft-dialog-option{\n    width: 100%;\n    min-height: 100%;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n}\n.ft-dialog-option__item {\n    background: #fff;\n    border: none;\n    color: #262626;\n    cursor: pointer;\n    font-size: 16px;\n    font-weight: 400;\n    line-height: 50px;\n    margin: 0;\n    overflow: hidden;\n    border-radius: 0;\n    padding: 0 16px;\n    text-align: center;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n    width: 100%;\n    max-width: 510px;\n    border-bottom: 1px solid #dbdbdb;\n}\n.ft-dialog-option__item:hover,\n.ft-dialog-option__item:focus,\n.ft-dialog-option__item:active{\n    background-color: #efefef;\n}\n.ft-dialog__btn{\n    position: fixed;\n    top:15px;\n    right:15px;\n    font-size: 24px;\n    z-index: 14;\n    cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n.font-large {\n        font-size: 24px;\n}\n.loader {\n        position: relative;\n        width:24px;\n        height: 24px;\n}\n.spinner {\n    border: 2px solid #333;\n    border-right-color: transparent;\n    border-radius: 50%;\n    height: 16px;\n    left: 50%;\n    position: absolute;\n    top: 50%;\n    width: 16px;\n    animation: spinner 1s linear 0s infinite;\n}\n.spinner--small {\n    width: 12px;\n    height: 12px;\n}\n@keyframes spinner {\n0% {\n        transform: rotate(0deg);\n}\n100% {\n        transform: rotate(360deg);\n}\n}\n", ""]);
 
 // exports
 
@@ -19098,11 +19253,469 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            noMessage: false,
+            isLoading: false,
+            conversations: [],
+            newConversation: false,
+            recipients: [],
+            currentConversation: {
+                conversationMessages: [],
+                user: []
+            },
+            messageBody: '',
+            ntCount: '',
+            ntCommonMessages: '',
+            ntSeeAll: '',
+            ntMessageNo: '',
+            ntSeeAllLink: '',
+            isShowUCM: false,
+            pusher: ''
+        };
+    },
+    mounted: function mounted() {
+        this.subscribeToPrivateMessageChannel(current_username);
+        this.getConversations();
+        //$('.coversations-thread').bind('scroll',this.chk_scroll);
+        //$('.coversations-list').bind('scroll',this.chk_scroll);
+        this.initStateVariable();
+    },
+
+    methods: {
+        subscribeToPrivateMessageChannel: function subscribeToPrivateMessageChannel(receiverUsername) {
+            var that = this;
+            // pusher configuration
+            this.pusher = new Pusher(pusherConfig.PUSHER_KEY, {
+                encrypted: true,
+                auth: {
+                    headers: {
+                        'X-CSRF-Token': pusherConfig.token
+                    },
+                    params: {
+                        username: current_username
+                    }
+                }
+            });
+
+            this.MessageChannel = this.pusher.subscribe(receiverUsername + '-message-created');
+            this.MessageChannel.bind('App\\Events\\MessagePublished', function (data) {
+                data.message.user = data.sender;
+                if (that.currentConversation.id == data.message.thread_id) {
+                    that.currentConversation.conversationMessages.push(data.message);
+                    setTimeout(function () {
+                        that.autoScroll('.coversations-thread');
+                    }, 100);
+                } else {
+                    indexes = $.map(that.conversations.data, function (thread, key) {
+                        if (thread.id == data.message.thread_id) {
+                            return key;
+                        }
+                    });
+                    if (indexes != '') {
+                        that.conversations.data[indexes[0]].unread = true;
+                        that.conversations.data[indexes[0]].lastMessage = data.message;
+                    } else {
+                        that.$http.post(base_url + 'ajax/get-message/' + data.message.thread_id).then(function (response) {
+                            that.conversations.data.unshift(response.data.data);
+                        });
+                    }
+                }
+            });
+        },
+        getConversations: function getConversations() {
+            var that = this;
+            axios.post(base_url + 'ajax/get-messages').then(function (response) {
+                that.conversations = response.data.data;
+                that.showConversation(that.conversations.data[0]);
+            });
+        },
+
+        showConversation: function showConversation(conversation) {
+            this.newConversation = false;
+            if (conversation) {
+                if (conversation.id != this.currentConversation.id) {
+                    conversation.unread = false;
+                    var that = this;
+                    axios.post(base_url + 'ajax/get-conversation/' + conversation.id).then(function (response) {
+                        that.currentConversation = response.data.data;
+                        that.currentConversation.user = conversation.user;
+                        setTimeout(function () {
+                            that.autoScroll('.coversations-thread');
+                        }, 100);
+                    });
+                }
+            }
+        },
+        postMessage: function postMessage(conversation) {
+
+            messageBody = this.messageBody;
+            this.messageBody = '';
+            var that = this;
+            axios.post(base_url + 'ajax/post-message/' + conversation.id, { message: messageBody }).then(function (response) {
+                if (response.status) {
+                    that.currentConversation.conversationMessages.data.push(response.data.data);
+                    $('#messageReceipient').focus();
+                    setTimeout(function () {
+                        that.autoScroll('.coversations-thread');
+                    }, 100);
+                }
+            });
+        },
+        postNewConversation: function postNewConversation() {
+            if (this.recipients.length) {
+                var that = this;
+                var newThread = void 0,
+                    _indexes = void 0;
+                axios.post(base_url + 'ajax/create-message', { message: this.messageBody, recipients: this.recipients }).then(function (response) {
+                    if (response.status) {
+                        newThread = response.data.data;
+                        _indexes = $.map(that.conversations.data, function (thread, key) {
+                            if (thread.id == newThread.id) {
+                                return key;
+                            }
+                        });
+
+                        if (_indexes != '') {
+                            that.conversations.data[_indexes[0]].unread = true;
+                            that.conversations.data[_indexes[0]].lastMessage = newThread.lastMessage;
+                        } else {
+                            that.conversations.data.unshift(response.data.data);
+                        }
+
+                        $('#messageReceipient').focus();
+                        that.recipients = [];
+                        that.newConversation = false;
+                        that.messageBody = "";
+                        that.showConversation(that.conversations.data[0]);
+                        setTimeout(function () {
+                            that.autoScroll('.coversations-thread');
+                        }, 100);
+                    }
+                });
+            }
+        },
+        autoScroll: function autoScroll(element) {
+            // $(element).animate({scrollTop: $(element)[0].scrollHeight + 600 }, 2000);
+        },
+        chk_scroll: function chk_scroll(e) {
+            var elem = $(e.currentTarget);
+
+            if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
+                if (elem.data('type') == "threads") {
+                    this.getMoreConversations();
+                } else {
+                    this.getMoreConversationMessages();
+                }
+            }
+        },
+        getMoreConversationMessages: function getMoreConversationMessages() {
+            if (this.currentConversation.conversationMessages.data.length < this.currentConversation.conversationMessages.total) {
+                var that = this;
+                axios.post(this.currentConversation.conversationMessages.next_page_url).then(function (response) {
+                    var latestConversations = response.data.data;
+                    that.currentConversation.conversationMessages.last_page = latestConversations.conversationMessages.last_page;
+                    that.currentConversation.conversationMessages.next_page_url = latestConversations.conversationMessages.next_page_url;
+                    that.currentConversation.conversationMessages.per_page = latestConversations.conversationMessages.per_page;
+                    that.currentConversation.conversationMessages.prev_page_url = latestConversations.conversationMessages.prev_page_url;
+                    $.each(latestConversations.conversationMessages.data, function (i, latestConversation) {
+                        that.currentConversation.conversationMessages.data.unshift(latestConversation);
+                    });
+                });
+            }
+        },
+        getMoreConversations: function getMoreConversations() {
+            if (this.conversations.data.length < this.conversations.total) {
+                var that = this;
+                axios.post(this.conversations.next_page_url).then(function (response) {
+                    var latestConversations = response.data.data;
+                    that.conversations.last_page = latestConversations.last_page;
+                    that.conversations.next_page_url = latestConversations.next_page_url;
+                    that.conversations.per_page = latestConversations.per_page;
+                    that.conversations.prev_page_url = latestConversations.prev_page_url;
+                    $.each(latestConversations.data, function (i, latestConversation) {
+                        that.conversations.data.unshift(latestConversation);
+                    });
+                });
+            }
+        },
+        showNewConversation: function showNewConversation() {
+            this.newConversation = true;
+            this.currentConversation = {
+                user: []
+            };
+            $('#messageReceipient').focus();
+            var that = this;
+            setTimeout(function () {
+                that.toggleUsersSelectize();
+            }, 10);
+        },
+        toggleUsersSelectize: function toggleUsersSelectize() {
+            var that = this;
+            var selectizeUsers = $('#messageReceipient').selectize({
+                valueField: 'id',
+                labelField: 'name',
+                searchField: 'name',
+                render: {
+                    option: function option(item, escape) {
+                        return '<div class="media big-search-dropdown">' + '<a class="media-left" href="#">' + '<img src="' + item.avatar + '" alt="...">' + '</a>' + '<div class="media-body">' + '<h4 class="media-heading">' + escape(item.name) + '</h4>' + '<p>' + item.username + '</p>' + '</div>' + '</div>';
+                    }
+
+                },
+                onChange: function onChange(value) {
+                    $('[name="user_tags"]').val(value);
+                    // $('.user-tags-added').find('.user-tag-names').append('<a href="#">' + value  + '</a>');
+                    var selectize = selectizeUsers[0].selectize;
+                    that.recipients = selectize.items;
+                },
+                load: function load(query, callback) {
+                    if (!query.length) return callback();
+                    $.ajax({
+                        url: base_url + 'api/v1/users',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {
+                            search: query
+                        },
+                        error: function error() {
+                            callback();
+                        },
+                        success: function success(res) {
+                            callback(res.data);
+                        }
+                    });
+                }
+            });
+        },
+        initStateVariable: function initStateVariable() {
+            var ntCount = $("input[name='nt-count']").val();
+            var ntCommonMessages = $("input[name='nt-common-messages']").val();
+            var ntSeeAll = $("input[name='nt-common-see_all']").val();
+            var ntMessageNo = $("input[name='nt-no_messages']").val();
+            var ntSeeAllLink = $("input[name='see-all-messages']").val();
+            this.ntCount = ntCount;
+            this.ntCommonMessages = ntCommonMessages;
+            this.ntSeeAll = ntSeeAll;
+            this.ntMessageNo = ntMessageNo;
+            this.ntSeeAllLink = ntSeeAllLink;
+        },
+        showConversations: function showConversations() {
+            // TODO
+        }
+    }
+});
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _vm.isLoading
+        ? [_vm._m(0)]
+        : [
+            _c("div", { staticClass: "pos-rel" }, [
+              _c(
+                "a",
+                {
+                  staticClass:
+                    "has-hover-effect fm-nav__item dropdown font-large hidden-sm hidden-xs",
+                  attrs: {
+                    href: "#",
+                    "data-toggle": "dropdown",
+                    role: "button",
+                    "aria-haspopup": "true",
+                    "aria-expanded": "false"
+                  },
+                  on: { click: _vm.showConversations }
+                },
+                [
+                  _c("span", { staticClass: "icon icon-chat" }),
+                  _vm._v(" "),
+                  _c("span", {
+                    staticClass: "unread-notification",
+                    class: { "is-visible": _vm.isShowUCM }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "ul",
+                {
+                  staticClass: "dropdown-menu dropdown-menu ft-menu",
+                  attrs: { "data-width": "3" }
+                },
+                [
+                  _c(
+                    "li",
+                    { staticClass: "dropdown-menu-header ft-menu__item" },
+                    [
+                      _c("span", { staticClass: "side-left" }, [
+                        _vm._v(_vm._s(_vm.ntCommonMessages))
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm.noMessage
+                    ? _c(
+                        "li",
+                        {
+                          staticClass:
+                            "no-messages ft-menu__item ft-menu__item--icon"
+                        },
+                        [
+                          _c("i", { staticClass: "fa fa-commenting-o" }),
+                          _vm._v(" "),
+                          _c("p", [_vm._v(_vm._s(_vm.ntMessageNo))])
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.conversations.data, function(conversation) {
+                    return _c("li", { staticClass: "inbox-message" }, [
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href: "#",
+                            "data-user-id": conversation.user.id,
+                            onclick: "chatBoxes.sendMessageOnClick(this)"
+                          }
+                        },
+                        [
+                          _c("div", { staticClass: "media" }, [
+                            _c("div", { staticClass: "media-left" }, [
+                              _c("img", {
+                                staticClass: "media-object img-icon",
+                                attrs: {
+                                  src: conversation.user.avatar,
+                                  alt: "images"
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "media-body" }, [
+                              _c("h4", { staticClass: "media-heading" }, [
+                                _c("span", { staticClass: "message-heading" }, [
+                                  _vm._v("@" + _vm._s(conversation.user.name))
+                                ]),
+                                _vm._v(" "),
+                                _c("span", {
+                                  staticClass: "online-status hidden"
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "message-text" })
+                            ])
+                          ])
+                        ]
+                      )
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      staticClass:
+                        "dropdown-menu-footer ft-menu__item ft-menu__item--icon"
+                    },
+                    [
+                      _c("a", { attrs: { href: _vm.ntSeeAllLink } }, [
+                        _vm._v(_vm._s(_vm.ntSeeAll))
+                      ])
+                    ]
+                  )
+                ],
+                2
+              )
+            ])
+          ]
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "loader" }, [
+      _c("div", { staticClass: "spinner spinner--small" })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-27ce82c5", module.exports)
+  }
+}
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(45)
+/* template */
+var __vue_template__ = __webpack_require__(46)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/DialogOption.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-38f73714", Component.options)
+  } else {
+    hotAPI.reload("data-v-38f73714", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 43 */,
+/* 44 */,
+/* 45 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
@@ -19143,61 +19756,69 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 41 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "ft-dialog" }, [
-    _c("div", {
-      staticClass: "ft-dialog__inner-layer",
-      on: { click: _vm.closeDialog }
-    }),
-    _vm._v(" "),
-    _c(
-      "button",
-      { staticClass: "ft-dialog__btn", on: { click: _vm.closeDialog } },
-      [_c("i", { staticClass: "icon icon-close" })]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "ft-dialog__wrapper" }, [
-      _c("div", { staticClass: "ft-dialog__surface" }, [
-        _c("div", { staticClass: "ft-dialog-option" }, [
-          _c(
-            "a",
-            {
-              staticClass: "btn ft-dialog-option__item",
-              attrs: { href: "javascript:;", "data-value": "post" },
-              on: { click: _vm.emitAction }
-            },
-            [_vm._v("\n                    Go to post\n                ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "btn ft-dialog-option__item",
-              attrs: { href: "javascript:;", "data-value": "embed" },
-              on: { click: _vm.emitAction }
-            },
-            [_vm._v("\n                    Embed\n                ")]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "btn ft-dialog-option__item",
-              attrs: { href: "javascript:;", "data-value": "cancel" },
-              on: { click: _vm.emitAction }
-            },
-            [_vm._v("\n                    Cancel\n                ")]
-          )
+  return _c(
+    "div",
+    { staticClass: "ft-dialog", attrs: { id: "comment-option-dialog" } },
+    [
+      _c("div", {
+        staticClass: "ft-dialog__inner-layer",
+        on: { click: _vm.closeDialog }
+      }),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "ft-dialog__btn",
+          attrs: { href: "javascript:;" },
+          on: { click: _vm.closeDialog }
+        },
+        [_c("i", { staticClass: "icon icon-close" })]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "ft-dialog__wrapper" }, [
+        _c("div", { staticClass: "ft-dialog__surface" }, [
+          _c("div", { staticClass: "ft-dialog-option" }, [
+            _c(
+              "a",
+              {
+                staticClass: "btn ft-dialog-option__item",
+                attrs: { href: "javascript:;", "data-value": "post" },
+                on: { click: _vm.emitAction }
+              },
+              [_vm._v("\n                    Go to post\n                ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "btn ft-dialog-option__item",
+                attrs: { href: "javascript:;", "data-value": "embed" },
+                on: { click: _vm.emitAction }
+              },
+              [_vm._v("\n                    Embed\n                ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "btn ft-dialog-option__item",
+                attrs: { href: "javascript:;", "data-value": "cancel" },
+                on: { click: _vm.emitAction }
+              },
+              [_vm._v("\n                    Cancel\n                ")]
+            )
+          ])
         ])
       ])
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -19210,182 +19831,8 @@ if (false) {
 }
 
 /***/ }),
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-(function (global, factory) {
-   true ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global.VueTimeago = factory());
-}(this, (function () { 'use strict';
-
-var MINUTE = 60;
-var HOUR = MINUTE * 60;
-var DAY = HOUR * 24;
-var WEEK = DAY * 7;
-var MONTH = DAY * 30;
-var YEAR = DAY * 365;
-
-function pluralOrSingular(data, locale) {
-  if (data === 'just now') {
-    return locale
-  }
-  var count = Math.round(data);
-  if (Array.isArray(locale)) {
-    return count > 1
-      ? locale[1].replace(/%s/, count)
-      : locale[0].replace(/%s/, count)
-  }
-  return locale.replace(/%s/, count)
-}
-
-function formatTime(time) {
-  var d = new Date(time);
-  return d.toLocaleString()
-}
-
-function install(
-  Vue,
-  ref
-) {
-  if ( ref === void 0 ) ref = {};
-  var name = ref.name; if ( name === void 0 ) name = 'timeago';
-  var locale = ref.locale; if ( locale === void 0 ) locale = 'en-US';
-  var locales = ref.locales; if ( locales === void 0 ) locales = null;
-
-  if (!locales || Object.keys(locales).length === 0) {
-    throw new TypeError('Expected locales to have at least one locale.')
-  }
-
-  var VueTimeago = {
-    props: {
-      since: {
-        required: true
-      },
-      locale: String,
-      maxTime: Number,
-      autoUpdate: Number,
-      format: Function
-    },
-    data: function data() {
-      return {
-        now: new Date().getTime()
-      }
-    },
-    computed: {
-      currentLocale: function currentLocale() {
-        var current = locales[this.locale || locale];
-        if (!current) {
-          return locales[locale]
-        }
-        return current
-      },
-      sinceTime: function sinceTime() {
-        return new Date(this.since).getTime()
-      },
-      timeForTitle: function timeForTitle() {
-        var seconds = this.now / 1000 - this.sinceTime / 1000;
-
-        if (this.maxTime && seconds > this.maxTime) {
-          return null
-        }
-
-        return this.format
-          ? this.format(this.sinceTime)
-          : formatTime(this.sinceTime)
-      },
-      timeago: function timeago() {
-        var seconds = this.now / 1000 - this.sinceTime / 1000;
-
-        if (this.maxTime && seconds > this.maxTime) {
-          clearInterval(this.interval);
-          return this.format
-            ? this.format(this.sinceTime)
-            : formatTime(this.sinceTime)
-        }
-
-        var ret =
-          seconds <= 5
-            ? pluralOrSingular('just now', this.currentLocale[0])
-            : seconds < MINUTE
-              ? pluralOrSingular(seconds, this.currentLocale[1])
-              : seconds < HOUR
-                ? pluralOrSingular(seconds / MINUTE, this.currentLocale[2])
-                : seconds < DAY
-                  ? pluralOrSingular(seconds / HOUR, this.currentLocale[3])
-                  : seconds < WEEK
-                    ? pluralOrSingular(seconds / DAY, this.currentLocale[4])
-                    : seconds < MONTH
-                      ? pluralOrSingular(seconds / WEEK, this.currentLocale[5])
-                      : seconds < YEAR
-                        ? pluralOrSingular(
-                            seconds / MONTH,
-                            this.currentLocale[6]
-                          )
-                        : pluralOrSingular(
-                            seconds / YEAR,
-                            this.currentLocale[7]
-                          );
-
-        return ret
-      }
-    },
-    mounted: function mounted() {
-      if (this.autoUpdate) {
-        this.update();
-      }
-    },
-    render: function render(h) {
-      return h(
-        'time',
-        {
-          attrs: {
-            datetime: new Date(this.since),
-            title: this.timeForTitle
-          }
-        },
-        this.timeago
-      )
-    },
-    watch: {
-      autoUpdate: function autoUpdate(newAutoUpdate) {
-        this.stopUpdate();
-        // only update when it's not falsy value
-        // which means you cans set it to 0 to disable auto-update
-        if (newAutoUpdate) {
-          this.update();
-        }
-      }
-    },
-    methods: {
-      update: function update() {
-        var this$1 = this;
-
-        var period = this.autoUpdate * 1000;
-        this.interval = setInterval(function () {
-          this$1.now = new Date().getTime();
-        }, period);
-      },
-      stopUpdate: function stopUpdate() {
-        clearInterval(this.interval);
-        this.interval = null;
-      }
-    },
-    beforeDestroy: function beforeDestroy() {
-      this.stopUpdate();
-    }
-  };
-
-  Vue.component(name, VueTimeago);
-}
-
-return install;
-
-})));
-
-
-/***/ }),
-/* 43 */
+/* 47 */,
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -19394,8 +19841,8 @@ return install;
  */
 
 var Swiper = __webpack_require__(4)
-var SwiperComponent = __webpack_require__(44)
-var SlideComponent = __webpack_require__(47)
+var SwiperComponent = __webpack_require__(49)
+var SlideComponent = __webpack_require__(52)
 SwiperComponent = SwiperComponent.default || SwiperComponent
 SlideComponent = SlideComponent.default || SlideComponent
 if (typeof window !== 'undefined') {
@@ -19416,15 +19863,15 @@ module.exports = swiper
 
 
 /***/ }),
-/* 44 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(45)
+var __vue_script__ = __webpack_require__(50)
 /* template */
-var __vue_template__ = __webpack_require__(46)
+var __vue_template__ = __webpack_require__(51)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -19464,7 +19911,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 45 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19550,7 +19997,7 @@ if (browser) window.Swiper = __webpack_require__(4);
 });
 
 /***/ }),
-/* 46 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -19592,15 +20039,15 @@ if (false) {
 }
 
 /***/ }),
-/* 47 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(48)
+var __vue_script__ = __webpack_require__(53)
 /* template */
-var __vue_template__ = __webpack_require__(49)
+var __vue_template__ = __webpack_require__(54)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -19640,7 +20087,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 48 */
+/* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19687,7 +20134,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 49 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -19707,13 +20154,13 @@ if (false) {
 }
 
 /***/ }),
-/* 50 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(51);
+var content = __webpack_require__(56);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -19721,7 +20168,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(52)(content, options);
+var update = __webpack_require__(57)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -19738,7 +20185,7 @@ if(false) {
 }
 
 /***/ }),
-/* 51 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(undefined);
@@ -19752,7 +20199,7 @@ exports.push([module.i, "/**\n * Swiper 3.4.2\n * Most modern mobile touch slide
 
 
 /***/ }),
-/* 52 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -19798,7 +20245,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(53);
+var	fixUrls = __webpack_require__(58);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -20111,7 +20558,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 53 */
+/* 58 */
 /***/ (function(module, exports) {
 
 
@@ -20206,10 +20653,394 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 54 */
+/* 59 */,
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function (global, factory) {
+   true ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global.VueTimeago = factory());
+}(this, (function () { 'use strict';
+
+var MINUTE = 60;
+var HOUR = MINUTE * 60;
+var DAY = HOUR * 24;
+var WEEK = DAY * 7;
+var MONTH = DAY * 30;
+var YEAR = DAY * 365;
+
+function pluralOrSingular(data, locale) {
+  if (data === 'just now') {
+    return locale
+  }
+  var count = Math.round(data);
+  if (Array.isArray(locale)) {
+    return count > 1
+      ? locale[1].replace(/%s/, count)
+      : locale[0].replace(/%s/, count)
+  }
+  return locale.replace(/%s/, count)
+}
+
+function formatTime(time) {
+  var d = new Date(time);
+  return d.toLocaleString()
+}
+
+function install(
+  Vue,
+  ref
+) {
+  if ( ref === void 0 ) ref = {};
+  var name = ref.name; if ( name === void 0 ) name = 'timeago';
+  var locale = ref.locale; if ( locale === void 0 ) locale = 'en-US';
+  var locales = ref.locales; if ( locales === void 0 ) locales = null;
+
+  if (!locales || Object.keys(locales).length === 0) {
+    throw new TypeError('Expected locales to have at least one locale.')
+  }
+
+  var VueTimeago = {
+    props: {
+      since: {
+        required: true
+      },
+      locale: String,
+      maxTime: Number,
+      autoUpdate: Number,
+      format: Function
+    },
+    data: function data() {
+      return {
+        now: new Date().getTime()
+      }
+    },
+    computed: {
+      currentLocale: function currentLocale() {
+        var current = locales[this.locale || locale];
+        if (!current) {
+          return locales[locale]
+        }
+        return current
+      },
+      sinceTime: function sinceTime() {
+        return new Date(this.since).getTime()
+      },
+      timeForTitle: function timeForTitle() {
+        var seconds = this.now / 1000 - this.sinceTime / 1000;
+
+        if (this.maxTime && seconds > this.maxTime) {
+          return null
+        }
+
+        return this.format
+          ? this.format(this.sinceTime)
+          : formatTime(this.sinceTime)
+      },
+      timeago: function timeago() {
+        var seconds = this.now / 1000 - this.sinceTime / 1000;
+
+        if (this.maxTime && seconds > this.maxTime) {
+          clearInterval(this.interval);
+          return this.format
+            ? this.format(this.sinceTime)
+            : formatTime(this.sinceTime)
+        }
+
+        var ret =
+          seconds <= 5
+            ? pluralOrSingular('just now', this.currentLocale[0])
+            : seconds < MINUTE
+              ? pluralOrSingular(seconds, this.currentLocale[1])
+              : seconds < HOUR
+                ? pluralOrSingular(seconds / MINUTE, this.currentLocale[2])
+                : seconds < DAY
+                  ? pluralOrSingular(seconds / HOUR, this.currentLocale[3])
+                  : seconds < WEEK
+                    ? pluralOrSingular(seconds / DAY, this.currentLocale[4])
+                    : seconds < MONTH
+                      ? pluralOrSingular(seconds / WEEK, this.currentLocale[5])
+                      : seconds < YEAR
+                        ? pluralOrSingular(
+                            seconds / MONTH,
+                            this.currentLocale[6]
+                          )
+                        : pluralOrSingular(
+                            seconds / YEAR,
+                            this.currentLocale[7]
+                          );
+
+        return ret
+      }
+    },
+    mounted: function mounted() {
+      if (this.autoUpdate) {
+        this.update();
+      }
+    },
+    render: function render(h) {
+      return h(
+        'time',
+        {
+          attrs: {
+            datetime: new Date(this.since),
+            title: this.timeForTitle
+          }
+        },
+        this.timeago
+      )
+    },
+    watch: {
+      autoUpdate: function autoUpdate(newAutoUpdate) {
+        this.stopUpdate();
+        // only update when it's not falsy value
+        // which means you cans set it to 0 to disable auto-update
+        if (newAutoUpdate) {
+          this.update();
+        }
+      }
+    },
+    methods: {
+      update: function update() {
+        var this$1 = this;
+
+        var period = this.autoUpdate * 1000;
+        this.interval = setInterval(function () {
+          this$1.now = new Date().getTime();
+        }, period);
+      },
+      stopUpdate: function stopUpdate() {
+        clearInterval(this.interval);
+        this.interval = null;
+      }
+    },
+    beforeDestroy: function beforeDestroy() {
+      this.stopUpdate();
+    }
+  };
+
+  Vue.component(name, VueTimeago);
+}
+
+return install;
+
+})));
+
+
+/***/ }),
+/* 61 */
 /***/ (function(module, exports) {
 
-module.exports = ["just now",["%s second ago","%s seconds ago"],["%s minute ago","%s minutes ago"],["%s hour ago","%s hours ago"],["%s day ago","%s days ago"],["%s week ago","%s weeks ago"],["%s month ago","%s months ago"],["%s year ago","%s years ago"]]
+module.exports = ["just now",["%s s","%s s"],["%s m","%s m"],["%s h","%s h"],["%s d","%s d"],["%s w","%s w"],["%s month ago","%s months ago"],["%s year ago","%s years ago"]]
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(63);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("85cafd9c", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-12bd2f92\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./postHeader.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-12bd2f92\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./postHeader.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.panel-default .sub-meta-info {\n    color: rgba(0,0,0,.54)\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(65)
+/* template */
+var __vue_template__ = __webpack_require__(66)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/CommentDialogOption.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0f539c75", Component.options)
+  } else {
+    hotAPI.reload("data-v-0f539c75", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 65 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {};
+    },
+    computed: {},
+    methods: {
+        closeDialog: function closeDialog() {
+            $(this.$el).removeClass('ft-dialog--open');
+        },
+        emitAction: function emitAction(e) {
+            console.log(e.target.getAttribute('data-value'));
+        }
+    },
+    mounted: function mounted() {}
+});
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "ft-dialog", attrs: { id: "comment-option-dialog" } },
+    [
+      _c("div", {
+        staticClass: "ft-dialog__inner-layer",
+        on: { click: _vm.closeDialog }
+      }),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "ft-dialog__btn",
+          attrs: { href: "javascript:;" },
+          on: { click: _vm.closeDialog }
+        },
+        [_c("i", { staticClass: "icon icon-close" })]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "ft-dialog__wrapper" }, [
+        _c("div", { staticClass: "ft-dialog__surface" }, [
+          _c("div", { staticClass: "ft-dialog-option" }, [
+            _c(
+              "a",
+              {
+                staticClass: "btn ft-dialog-option__item",
+                attrs: { href: "javascript:;", "data-value": "post" },
+                on: { click: _vm.emitAction }
+              },
+              [_vm._v("\n                    Go to post\n                ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "btn ft-dialog-option__item",
+                attrs: { href: "javascript:;", "data-value": "embed" },
+                on: { click: _vm.emitAction }
+              },
+              [_vm._v("\n                    Embed\n                ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "btn ft-dialog-option__item",
+                attrs: { href: "javascript:;", "data-value": "cancel" },
+                on: { click: _vm.emitAction }
+              },
+              [_vm._v("\n                    Cancel\n                ")]
+            )
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0f539c75", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

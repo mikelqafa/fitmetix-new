@@ -32,7 +32,7 @@
         </template>
         <template v-else="">
             <div v-for="postItem in itemList" class="panel panel-default timeline-posts__item panel-post" :id="postItem.id">
-                <post-header :timeline-data="postItem.timeline" :date="postItem.created_at"></post-header>
+                <post-header :post-data="postItem" :date="postItem.created_at"></post-header>
                 <div class="panel-body">
                     <post-description :post-html="postItem.description"></post-description>
                     <post-youtube :post-you-tube="postItem.youtube_video_id" :you-tube-title="postItem.youtube_title"></post-youtube>
@@ -78,7 +78,7 @@
             getDefaultData: function () {
                 let that = this
                 let username = ''
-                let paginate = 50
+                let paginate = 4
                 let _token = $("meta[name=_token]").attr('content')
                 axios({
                     method: 'post',
@@ -95,10 +95,18 @@
                         $.each(posts, function(key, val) {
                             that.itemList.push(val);
                         });
+                        setTimeout(function () {
+                            hashtagify()
+                            mentionify()
+                        }, 1000)
+
                     }
                 }).catch(function(error) {
                     console.log(error)
                 })
+            },
+            postNewPost: function (i) {
+                alert(i)
             }
         },
         mounted () {

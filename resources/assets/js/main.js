@@ -2,7 +2,9 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Post from './components/Post'
-import DialogOption from './components/DialogOption'
+import AppNotification from './components/AppNotification'
+import postDialogOption from './components/DialogOption'
+import commentDialogOption from './components/CommentDialogOption.vue'
 import VueTimeago from 'vue-timeago'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 require('swiper/dist/css/swiper.css')
@@ -20,10 +22,18 @@ Vue.config.productionTip = true
 
 /* eslint-disable no-new */
 
-new Vue({
-  el: '#app',
+window.timeLine = new Vue({
+  el: '#app-timeline',
   components: {
     'app-post': Post,
-    'app-dialog-option': DialogOption
+    'app-post-option': postDialogOption,
+    'app-comment-option': commentDialogOption
+  }
+})
+
+window.appNotification = new Vue({
+  el: '#app-notification',
+  components: {
+    'app-notification': AppNotification
   }
 })
