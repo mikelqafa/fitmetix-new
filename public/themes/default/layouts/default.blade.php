@@ -45,6 +45,9 @@
         {!! Setting::get('google_analytics') !!}
     @endif
     <style>
+        .btn.switch-language {
+            display: none !important;
+        }
         .navbar.socialite{
             z-index: 10 !important;
         }

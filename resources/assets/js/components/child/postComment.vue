@@ -408,7 +408,7 @@
                     let that = this
                     setTimeout(function () {
                         that.fetchComment()
-                    }, 1000)
+                    }, 400)
                 }
             },
             updateZippy: function () {
@@ -469,7 +469,9 @@
                             user: response.data.user_info
                          })
                         that.userCommented++
-                        that.updateZippy()
+                        setTimeout(function () {
+                            that.updateZippy()
+                        }, 300)
                     }
                 }).catch(function (error) {
                     console.log(error)
@@ -481,6 +483,9 @@
                 let that = this
                 let paginate = 5
                 that.commentInteract = true
+                if(this.postCommentsCount == 0) {
+                    return
+                }
                 axios({
                     method: 'post',
                     responseType: 'json',

@@ -244,7 +244,6 @@ $(function () {
         hashtagify();
         mentionify();
         //$('.post-description').linkify()
-        console.log(responseText.data.id)
         window.timeLine.$options.components["app-post"].methods.fetchNewOnePost(responseText.data.id)
         //$('[data-toggle="tooltip"]').tooltip();
         $('[name="description"]').focus();

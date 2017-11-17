@@ -37,6 +37,7 @@
 
 						<div class="timeline-posts">
                             <div id="app-timeline">
+								<input type="hidden" id="newPostId">
 								<app-post-option></app-post-option>
 								<app-comment-option></app-comment-option>
                                 <app-post>

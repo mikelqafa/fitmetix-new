@@ -47,6 +47,16 @@
                     </div>
                 </div>
             </template>
+            <div v-for="postItem in currentItemList" class="panel panel-default timeline-posts__item panel-post" :id="postItem.id">
+                <post-header :post-data="postItem" :date="postItem.created_at"></post-header>
+                <div class="panel-body">
+                    <post-description :post-html="postItem.description"></post-description>
+                    <post-youtube :post-you-tube="postItem.youtube_video_id" :you-tube-title="postItem.youtube_title"></post-youtube>
+                    <post-image :post-images="dummy"></post-image>
+                    <post-sound-cloud :soundcloud="postItem.soundcloud_id"></post-sound-cloud>
+                </div>
+                <post-comment :post-id="postItem.id"></post-comment>
+            </div>
             <div v-for="postItem in itemList" class="panel panel-default timeline-posts__item panel-post" :id="postItem.id">
                 <post-header :post-data="postItem" :date="postItem.created_at"></post-header>
                 <div class="panel-body">
@@ -56,6 +66,14 @@
                     <post-sound-cloud :soundcloud="postItem.soundcloud_id"></post-sound-cloud>
                 </div>
                 <post-comment :post-id="postItem.id"></post-comment>
+            </div>
+            <div v-if="isFetchingBottom" class="ft-loading">
+                <span class="ft-loading__dot"></span>
+                <span class="ft-loading__dot"></span>
+                <span class="ft-loading__dot"></span>
+            </div>
+            <div class="text-center" v-if="!hasMorePost">
+                No more posts to fetch
             </div>
         </template>
     </div>
@@ -74,16 +92,23 @@
     import postComment from './child/postComment'
 
     let axios = window.axios
+    let custTomData = {
+        isFetchingBottom: false,
+        itemList: [],
+        currentItemList: [],
+        isLoadingCurrent: false,
+        autoUpdate: 60,
+        dummy: [],
+        inProgress: false,
+        hasMorePost: true,
+        offset: 0
+    }
     export default {
+        props: {
+            newPostAdded: false
+        },
         data: function () {
-            return {
-                itemList: [],
-                isLoadingCurrent: false,
-                autoUpdate: 60,
-                dummy: [],
-                inProgress: false,
-                hasMorePost: false
-            }
+            return custTomData
         },
         computed: {
             isLoading () {
@@ -124,6 +149,8 @@
                         that.inProgress = false
                         that.hasMorePost = i == paginate;
                         that.offset += i
+                        console.log(that.offset, that.hasMorePost)
+                        that.isFetchingBottom = false
                     }
                 }).catch(function(error) {
                     console.log(error)
@@ -137,6 +164,7 @@
                 $(window).scroll(function() {
                     if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
                         if(!that.inProgress && that.hasMorePost ){
+                            that.isFetchingBottom = true
                             that.getDefaultData()
                             that.inProgress = true
                         }
@@ -144,8 +172,10 @@
                 });
             },
             fetchNewOnePost: function (postId) {
-                this.isLoadingCurrent = true
-                let that = this
+                this.fetchNew(postId)
+            },
+            fetchNew: function (postId){
+                custTomData.isLoadingCurrent = true
                 let _token = $("meta[name=_token]").attr('content')
                 axios({
                     method: 'post',
@@ -158,23 +188,14 @@
                         post_id: postId
                     }
                 }).then( function (response) {
-                    that.isLoadingCurrent = false
+                    custTomData.isLoadingCurrent = false
                     if (response.status ==  200) {
-                        console.log(response)
-                        return
-                        let posts = response.data[0].posts;
-                        let i = 0
-                        $.each(posts, function(key, val) {
-                            that.itemList.push(val);
-                            i++
-                        });
+                        let post = response.data[0].post;
+                        custTomData.currentItemList.push(post[0]);
                         setTimeout(function () {
                             hashtagify()
                             mentionify()
                         }, 1000)
-                        that.inProgress = false
-                        that.hasMorePost = i == paginate;
-                        that.offset += i
                     }
                 }).catch(function(error) {
                     console.log(error)
