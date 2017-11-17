@@ -2801,7 +2801,7 @@ class TimelineController extends AppBaseController
     public function singlePostAPI(Request $request) {
         $timeline = Timeline::where('username', $request->username)->first();
 
-        $post = $timeline->posts()->where([['active', 1],['post_id',$request->post_id]])->with('timeline')->get();
+        $post = $timeline->posts()->where([['active', 1],['id',$request->post_id]])->with('timeline')->get();
 
         if($post->images()->count() > 0) {
             $post['images'] = $post->images()->get();
