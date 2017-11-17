@@ -31,6 +31,22 @@
             </div>
         </template>
         <template v-else="">
+            <template v-if="isLoadingCurrent">
+                <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
+                    <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
+                        <div class="user-avatar lg-loadable"></div>
+                        <div class="md-layout md-layout--column">
+                            <div class="user-meta-info lg-loadable"></div>
+                            <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="lg-loadable lg-loadable--text"></div>
+                        <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
+                        <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
+                    </div>
+                </div>
+            </template>
             <div v-for="postItem in itemList" class="panel panel-default timeline-posts__item panel-post" :id="postItem.id">
                 <post-header :post-data="postItem" :date="postItem.created_at"></post-header>
                 <div class="panel-body">
@@ -62,6 +78,7 @@
         data: function () {
             return {
                 itemList: [],
+                isLoadingCurrent: false,
                 autoUpdate: 60,
                 dummy: [],
                 inProgress: false,
@@ -100,13 +117,13 @@
                             that.itemList.push(val);
                             i++
                         });
-                        console.log(response)
                         setTimeout(function () {
                             hashtagify()
                             mentionify()
                         }, 1000)
                         that.inProgress = false
                         that.hasMorePost = i == paginate;
+                        that.offset += i
                     }
                 }).catch(function(error) {
                     console.log(error)
@@ -125,6 +142,43 @@
                         }
                     }
                 });
+            },
+            fetchNewOnePost: function (postId) {
+                this.isLoadingCurrent = true
+                let that = this
+                let _token = $("meta[name=_token]").attr('content')
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url + 'get-single-post',
+
+                    data: {
+                        username: current_username,
+                        _token: _token,
+                        post_id: postId
+                    }
+                }).then( function (response) {
+                    that.isLoadingCurrent = false
+                    if (response.status ==  200) {
+                        console.log(response)
+                        return
+                        let posts = response.data[0].posts;
+                        let i = 0
+                        $.each(posts, function(key, val) {
+                            that.itemList.push(val);
+                            i++
+                        });
+                        setTimeout(function () {
+                            hashtagify()
+                            mentionify()
+                        }, 1000)
+                        that.inProgress = false
+                        that.hasMorePost = i == paginate;
+                        that.offset += i
+                    }
+                }).catch(function(error) {
+                    console.log(error)
+                })
             }
         },
         mounted () {

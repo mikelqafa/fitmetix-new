@@ -35,6 +35,7 @@
 						<div class="timeline-posts">
                             <div id="app-timeline">
 								<app-post-option></app-post-option>
+								<app-comment-option></app-comment-option>
                                 <app-post>
                                     <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
                                         <div class="panel-heading no-bg post-avatar md-layout md-layout--row">

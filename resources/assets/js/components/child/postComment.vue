@@ -335,7 +335,7 @@
                 userLiked: 0,
                 userCommented: 0,
                 commentInteract: false,
-                commentHasMore: true,
+                commentHasMore: false,
                 commentItemList: [],
                 commentIsPosting: false,
                 offset: 0
@@ -459,7 +459,7 @@
                         loadingWrapper.html('')
                         that.commentIsPosting = false
                         that.commentInteract = true
-                        that.commentItemList.push({
+                        that.commentItemList.unshift({
                             created_at: new Date().toString(),
                             id: response.data.comment_id,
                             description: that.nl2br(value),
@@ -498,7 +498,7 @@
                         let hasMore = response.data[0].hasMore
                         for(let i = 0; i < comments.length;  i++) {
                             comments[i]['isLiked'] = false
-                            that.commentItemList.push(comments[i])
+                            that.commentItemList.unshift(comments[i])
                         }
                         setTimeout(function () {
                             that.updateZippy()

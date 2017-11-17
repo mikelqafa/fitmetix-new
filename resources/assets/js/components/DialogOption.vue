@@ -1,5 +1,5 @@
 <template>
-    <div class="ft-dialog" id="comment-option-dialog">
+    <div class="ft-dialog" id="post-option-dialog">
         <div class="ft-dialog__inner-layer" @click="closeDialog"></div>
         <a class="ft-dialog__btn" href="javascript:;" @click="closeDialog"><i class="icon icon-close"></i> </a>
         <div class="ft-dialog__wrapper">

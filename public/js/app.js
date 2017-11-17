@@ -217,8 +217,7 @@ $(function () {
       create_post_button.attr('disabled', false).find('.fa-spinner').addClass('hidden');
       if (responseText.status == 200)
       {
-        $('.timeline-posts').prepend(responseText.data.original);
-        console.log(window.timeLine)
+        // console.log(window.timeLine)
         // jQuery("time.timeago").timeago();
         $('.no-posts').hide();
         // Resetting the create post form after successfull message
@@ -245,10 +244,12 @@ $(function () {
         hashtagify();
         mentionify();
         //$('.post-description').linkify()
-        window.timeLine.$options.components["app-post"].methods.postNewPost(2)
+        console.log(responseText.data.id)
+        window.timeLine.$options.components["app-post"].methods.fetchNewOnePost(responseText.data.id)
         //$('[data-toggle="tooltip"]').tooltip();
         $('[name="description"]').focus();
         notify('Your post has been successfully published');
+
       }
       else
       {

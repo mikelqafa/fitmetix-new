@@ -2,7 +2,7 @@
     <div class="panel-heading no-bg">
         <div class="post-author">
             <div class="post-options">
-                <a href="javascript:;"  v-on:click="openPostDialog">
+                <a href="javascript:;" class="ft-btn--icon"  v-on:click="openPostDialog">
                     <i class="icon icon-options"></i>
                 </a>
             </div>
@@ -40,6 +40,13 @@
 <style>
     .panel-default .sub-meta-info {
         color: rgba(0,0,0,.54)
+    }
+    .ft-btn--icon {
+        height: 24px;
+        width: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 </style>
 <script>

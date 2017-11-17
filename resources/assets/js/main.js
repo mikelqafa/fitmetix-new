@@ -4,7 +4,7 @@ import Vue from 'vue'
 import Post from './components/Post'
 import AppNotification from './components/AppNotification'
 import postDialogOption from './components/DialogOption'
-import commentDialogOption from './components/CommentDialogOption.vue'
+import commentDialogOption from './components/CommentDialogOption'
 import VueTimeago from 'vue-timeago'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 require('swiper/dist/css/swiper.css')

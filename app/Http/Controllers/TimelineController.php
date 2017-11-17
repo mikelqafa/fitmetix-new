@@ -565,10 +565,10 @@ class TimelineController extends AppBaseController
         }
 
         // $post->users_tagged = $post->users_tagged();
-        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('ajax');
-        $postHtml = $theme->scope('timeline/post', compact('post', 'timeline'))->render();
+        // $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('ajax');
+        // $postHtml = $theme->scope('timeline/post', compact('post', 'timeline'))->render();
         
-        return response()->json(['status' => '200', 'data' => $postHtml]);
+        return response()->json(['status' => '200', 'data' => $post]);
     }
 
     public function editPost(Request $request)
@@ -2831,7 +2831,8 @@ class TimelineController extends AppBaseController
             $hasMore = true;
         }
 
-        $comment_likes = $comments->comments_liked()->get();
+        // $comment_likes = $comments->comments_liked()->get();
+        $comment_likes = [];
 
         return response()->json(['status' => '200', ['comments'=>$comments,'hasMore'=>$hasMore,'comment_likes'=>$comment_likes]]);
     }
