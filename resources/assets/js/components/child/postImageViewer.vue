@@ -106,9 +106,10 @@
         },
         mounted () {
             let that = this
+            var url = 'http://assets.fitmetix.com/'
             $.each(this.postImg, function(key, val) {
                 // "/var/www/html/fitmetix/storage/uploads/users/gallery/"
-                that.images.push('../storage/uploads/users/gallery/'+val.source)
+                that.images.push(url+'uploads/users/gallery/'+val.source)
             });
         },
         computed: {
