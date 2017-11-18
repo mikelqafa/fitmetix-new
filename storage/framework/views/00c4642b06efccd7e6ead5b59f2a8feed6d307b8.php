@@ -13,21 +13,22 @@
     </nav>
 <?php else: ?>
     <nav class="navbar ft-custom socialite navbar-default no-bg hidden-sm hidden-xs">
-        <div class="container md-layout md-layout--row">
+        <div class="container md-layout md-layout--row" style="max-width: 960px;">
             <div class="no-float navbar-header">
                 <a class="navbar-brand socialite" href="<?php echo e(url('/')); ?>">
                     <img class="socialite-logo" src="<?php echo url('setting/'.Setting::get('logo')); ?>"
                          alt="<?php echo e(Setting::get('site_name')); ?>" title="<?php echo e(Setting::get('site_name')); ?>">
                 </a>
             </div>
+            <div class="md-layout-spacer"></div>
             <form class="no-float navbar-form navbar-left form-left" role="search">
                 <div class="input-group no-margin">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
                         </span>
-                    <input type="text" id="navbar-search" data-url="<?php echo e(URL::to('api/v1/timelines')); ?>"
+                    <input type="text" id="navbar-search" style="width: 200px" data-url="<?php echo e(URL::to('api/v1/timelines')); ?>"
                            class="form-control"
-                           placeholder="<?php echo e(trans('messages.search_placeholder')); ?>">
+                           placeholder="Search">
                 </div>
             </form>
             <div class="md-layout-spacer"></div>

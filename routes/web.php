@@ -53,9 +53,9 @@ Route::group(['middleware' => ['web']], function () {
 
 
 // Redirect to facebook to authenticate
-Route::get('login/facebook', 'Auth\RegisterController@facebookRedirect');
+Route::get('social/login/redirect/facebook', 'Auth\RegisterController@facebookRedirect');
 // Get back to redirect url
-Route::get('account/facebook', 'Auth\RegisterController@facebook');
+Route::get('social/login/facebook', 'Auth\RegisterController@facebook');
 
 // Redirect to google to authenticate
 Route::get('google', 'Auth\RegisterController@googleRedirect');
