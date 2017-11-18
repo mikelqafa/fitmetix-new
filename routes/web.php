@@ -53,7 +53,7 @@ Route::group(['middleware' => ['web']], function () {
 
 
 // Redirect to facebook to authenticate
-Route::get('facebook', 'Auth\RegisterController@facebookRedirect');
+Route::get('login/facebook', 'Auth\RegisterController@facebookRedirect');
 // Get back to redirect url
 Route::get('account/facebook', 'Auth\RegisterController@facebook');
 

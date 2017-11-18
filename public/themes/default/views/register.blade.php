@@ -74,7 +74,7 @@
                         <div class="md-layout-spacer"></div>
                         <div class="form-group mobile-full-width md-layout layout-m-l-1 layout-m-l-0--sm">
                             <button type="submit" id="submit" class="btn btn-primary btn-submit">{{ trans('auth.register') }}</button>
-                            <a href="{!! url('facebook') !!}" class="btn btn--icon btn-primary layout-m-l-0">
+                            <a href="{!! url('login/facebook') !!}" class="btn btn--icon btn-primary layout-m-l-0">
                                 <object type="image/svg+xml" data="{{asset('fonts/facebook.svg')}}" class="splash">
                                 </object>
                             </a>
