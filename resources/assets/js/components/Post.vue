@@ -52,7 +52,7 @@
                 <div class="panel-body">
                     <post-description :post-html="postItem.description"></post-description>
                     <post-youtube :post-you-tube="postItem.youtube_video_id" :you-tube-title="postItem.youtube_title"></post-youtube>
-                    <post-image-viewer :post-img="hasMorePost"></post-image-viewer>
+                    <post-image-viewer :post-img="postItem.images"></post-image-viewer>
                     <post-sound-cloud :soundcloud="postItem.soundcloud_id"></post-sound-cloud>
                 </div>
                 <post-comment :post-id="postItem.id"></post-comment>
