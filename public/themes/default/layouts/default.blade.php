@@ -23,7 +23,7 @@
     <link href="{{ asset('fitmetixfont/font.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ Theme::asset()->url('css/custom.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/swiper.css') }}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -45,6 +45,10 @@
         {!! Setting::get('google_analytics') !!}
     @endif
     <style>
+        .blueimp-gallery > .slides > .slide-loading {
+            background: url({{asset('imgaes/loading.gif')}}) center no-repeat;
+            background-size: 64px 64px;
+        }
         .form-left .form-control {
             min-width: 0;
         }

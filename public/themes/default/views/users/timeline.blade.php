@@ -135,7 +135,7 @@
 					{!! Theme::partial('user-header',compact('user','timeline','liked_pages','joined_groups','followRequests','following_count','followers_count','follow_confirm','user_post','joined_groups_count','guest_events')) !!}
                     <br>
                     <p>
-                        {!! ($user->about != NULL) ? userAbout($user->about) : trans('messages.no_description') !!}
+                        {{--{!! ($user->about != NULL) ? userAbout($user->about) : trans('messages.no_description') !!}--}}
                     </p>
                     <ul class="list-inline list-unstyled social-links-list">
                         @if($user->facebook_link != NULL)

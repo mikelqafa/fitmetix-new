@@ -14,15 +14,14 @@
                     </a>
                 </div>
                 <div class="ft-comment__item md-align md-align--center-center ft-comment__item--grow">
-                    <a href="javascript:;" class="ft-expression ft-expression--meta">
-                        <i class="icon icon-like visible-default"></i>
-                        <i class="icon icon-liked hidden-default"></i>
+                    <a v-show="postLikesCount" href="javascript:;" class="ft-expression ft-expression--meta">
+                        <span class="icon icon-liked visible-default"></span>
                     <span class="ft-expression--meta-text">
                         {{postLikesCount}}
                     </span>
                     </a>
-                    <a href="javascript:;" class="ft-expression ft-expression--meta">
-                        <i class="icon icon-comment"></i>
+                    <a v-show="postCommentsCount" href="javascript:;" class="ft-expression ft-expression--meta">
+                        <span class="icon icon-commentcount"></span>
                     <span class="ft-expression--meta-text">
                         {{postCommentsCount}}
                     </span>
@@ -306,20 +305,28 @@
     }
 
     .ft-expression--meta {
-        font-size: 13px;
+        font-size: 11px;
         height: 24px;
         min-width: 24px;
         width: auto;
-        padding: 0 7px;
+        padding: 0 4px;
         line-height: 24px;
     }
 
-    .ft-expression--meta i {
-        font-size: 14px;
+    .ft-expression--meta .icon {
+        font-size: 12px;
+        margin-top: 4px;
     }
 
     .ft-expression--meta-text {
-        margin-left: 5px;
+        margin-left: 2px;
+    }
+
+    @media screen and (max-width: 599px) {
+        .main-content > .container > .row > .col-lg-6 {
+            padding-left: 0;
+            padding-right: 0;
+        }
     }
 </style>
 <script>

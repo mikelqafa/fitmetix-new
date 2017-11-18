@@ -52,7 +52,7 @@
                 <div class="panel-body">
                     <post-description :post-html="postItem.description"></post-description>
                     <post-youtube :post-you-tube="postItem.youtube_video_id" :you-tube-title="postItem.youtube_title"></post-youtube>
-                    <post-image :post-images="dummy"></post-image>
+                    <post-image-viewer :post-img="hasMorePost"></post-image-viewer>
                     <post-sound-cloud :soundcloud="postItem.soundcloud_id"></post-sound-cloud>
                 </div>
                 <post-comment :post-id="postItem.id"></post-comment>
@@ -62,7 +62,7 @@
                 <div class="panel-body">
                     <post-description :post-html="postItem.description"></post-description>
                     <post-youtube :post-you-tube="postItem.youtube_video_id" :you-tube-title="postItem.youtube_title"></post-youtube>
-                    <post-image :post-images="dummy"></post-image>
+                    <post-image-viewer :post-img="postItem.images"></post-image-viewer>
                     <post-sound-cloud :soundcloud="postItem.soundcloud_id"></post-sound-cloud>
                 </div>
                 <post-comment :post-id="postItem.id"></post-comment>
@@ -85,7 +85,7 @@
 </style>
 <script>
     import postDescription from './child/postDescription'
-    import postImage from './child/postImage'
+    import postImageViewer from './child/postImageViewer'
     import postYouTube from './child/postYouTube'
     import postSoundCloud from './child/postSoundCloud'
     import postHeader from './child/postHeader'
@@ -122,7 +122,7 @@
             getDefaultData: function () {
                 let that = this
                 let username = ''
-                let paginate = 4
+                let paginate = 2
                 let _token = $("meta[name=_token]").attr('content')
                 axios({
                     method: 'post',
@@ -135,6 +135,7 @@
                         offset: that.offset
                     }
                 }).then( function (response) {
+                    console.log(response)
                     if (response.status ==  200) {
                         let posts = response.data[0].posts;
                         let i = 0
@@ -188,6 +189,7 @@
                         post_id: postId
                     }
                 }).then( function (response) {
+                    console.log(response)
                     custTomData.isLoadingCurrent = false
                     if (response.status ==  200) {
                         let post = response.data[0].post;
@@ -211,7 +213,7 @@
         },
         components: {
             'post-description': postDescription,
-            'post-image': postImage,
+            'post-image-viewer': postImageViewer,
             'post-sound-cloud': postSoundCloud,
             'post-youtube': postYouTube,
             'post-header': postHeader,

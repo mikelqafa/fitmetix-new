@@ -7,10 +7,12 @@ import postDialogOption from './components/DialogOption'
 import commentDialogOption from './components/CommentDialogOption'
 import VueTimeago from 'vue-timeago'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import VueGallery from 'vue-gallery';
 require('swiper/dist/css/swiper.css')
 
 Vue.use(VueAwesomeSwiper)
 
+Vue.component('gallery',VueGallery)
 Vue.use(VueTimeago, {
   name: 'timeago', // component name, `timeago` by default
   locale: 'en-US',
