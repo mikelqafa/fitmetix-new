@@ -38,6 +38,7 @@
             return "{{ url('/') }}/";
         }
         var base_url = "{{ url('/') }}/";
+        var asset_url = "{{env('STORAGE_URL')}}";
         var theme_url = "{!! Theme::asset()->url('') !!}";
         var current_username = "{{ Auth::user()->username }}";
     </script>

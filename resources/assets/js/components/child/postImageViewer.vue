@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!noImage">
+    <div v-if="!noImage" class="post-image--wrapper">
         <gallery :images="images" :index="index" @close="index = null"></gallery>
         <template v-if="isMultiple">
             <swiper :options="swiperOption" class="deal-card-slider">
@@ -22,9 +22,11 @@
     .item__background--post{
         width: 100%;
         background-size: cover;
+        background-position: center;
     }
     .img-viewer{
         cursor: pointer;
+        pointer-events: none;
     }
     .fkd-slider-wrapper {
         min-height: 300px;
@@ -52,6 +54,10 @@
         .swiper-slide .item__background {
             max-height: 200px;
             min-height: 180px;
+        }
+        .panel-post .panel-body .post-image--wrapper{
+            margin-left:-15px;
+            margin-right:-15px;
         }
     }
 
@@ -107,14 +113,18 @@
         mounted () {
             let that = this
             var url = 'http://assets.fitmetix.com/'
-            $.each(this.postImg, function(key, val) {
-                // "/var/www/html/fitmetix/storage/uploads/users/gallery/"
-                that.images.push(url+'uploads/users/gallery/'+val.source)
-            });
+            if (this.postImg !== undefined) {
+                $.each(this.postImg, function(key, val) {
+                    // "/var/www/html/fitmetix/storage/uploads/users/gallery/"
+                    console.log(val)
+                    let s = val.source !== undefined ? val.source : ''
+                    that.images.push(asset_url+'uploads/users/gallery/'+s)
+                });
+            }
         },
         computed: {
             isMultiple: function () {
-                return this.images.length !== 1
+                return this.images.length !== 1 && this.images.length !== 0
             },
             noImage: function () {
                 return this.images.length === 0

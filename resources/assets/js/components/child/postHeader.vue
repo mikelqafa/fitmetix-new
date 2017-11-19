@@ -76,7 +76,9 @@
                 return '@' + this.timeLineData.username
             },
             userAvatar () {
-                return this.timeLineData.avatar_url  !== undefined ? base_url + 'user/avatar/' + this.timeLineData.avatar_url[0].source : base_url + this.defaultImage
+                // console.log(this.timeLineData.avatar_url[0].source)
+                // return this.timeLineData.avatar_url  !== undefined ? base_url + 'user/avatar/' : base_url + this.defaultImage
+                return base_url + 'images/' + this.defaultImage
             }
         },
         methods: {
