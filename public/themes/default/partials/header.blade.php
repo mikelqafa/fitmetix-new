@@ -38,7 +38,7 @@
                         <i class="fa fa-plus"></i> Inspire
                     </span>
                 </a>
-                <a href="{{ url('events') }}" class="has-hover-effect fm-nav__item">
+                <a href="{{ url(Auth::user()->username.'/events') }}" class="has-hover-effect fm-nav__item">
                     Events
                 </a>
                 <div id="app-notification">

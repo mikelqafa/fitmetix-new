@@ -38,7 +38,7 @@
                         <i class="fa fa-plus"></i> Inspire
                     </span>
                 </a>
-                <a href="<?php echo e(url('events')); ?>" class="has-hover-effect fm-nav__item">
+                <a href="<?php echo e(url(Auth::user()->username.'/events')); ?>" class="has-hover-effect fm-nav__item">
                     Events
                 </a>
                 <div id="app-notification">

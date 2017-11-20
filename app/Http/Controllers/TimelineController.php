@@ -2791,6 +2791,9 @@ class TimelineController extends AppBaseController
             if($post->images()->count() > 0) {
                 $post['images'] = $post->images()->get();
             }
+            if($post->comments()->count() > 0) {
+                $post['comments'] = $post->comments()->where('user_id',$post->user_id)->get();
+            }
         }
 
         $image_path = storage_path().'/uploads/users/gallery/';

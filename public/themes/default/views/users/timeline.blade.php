@@ -182,10 +182,7 @@
                     <div class="panel-heading">Event</div>
                     <div class="panel-body">
                         <div class="calendar hidden-print">
-                            <header>
-                                <h2 class="month"><?php echo isset($monthNames[$cMonth-1]) ? $monthNames[$cMonth-1] : 'Undefined'; ?></h2>
-                                <a class="btn-prev fa fa-angle-left" href="{{ url($timeline->username.'?month='.$prev_month.'&year='.$prev_year) }}"></a> <a class="btn-next fa fa-angle-right" href="{{ url($timeline->username.'?month='.$next_month.'&year='.$next_year) }}"></a>
-                            </header>
+                            
                             <div class="table-responsive">
                                 <table class="table table-bordered table-hover table-condensed">
                                     <thead>
@@ -200,32 +197,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <?php
-                                    $timestamp = mktime(0,0,0,$cMonth,1,$cYear);
-                                    $maxday = date("t",$timestamp);
-                                    $thismonth = getdate ($timestamp);
-                                    $startday = $thismonth['wday'];
-                                    for ($i=0; $i<($maxday+$startday); $i++) {
-                                        if(($i % 7) == 0 ) { echo "<tr>"; }
-                                        if($i < $startday) { echo "<td></td>"; }
-                                        else {
-                                            if(date('d') == ($i - $startday + 1) && date('m') == $cMonth) {
-                                                if(in_array(($i - $startday + 1), $event_date)) {
-                                                    echo "<td date-day='".($i - $startday + 1)."' date-month='".$cMonth."' class='current-day event'>".($i - $startday + 1)."</td>";
-                                                } else {
-                                                    echo "<td date-day='".($i - $startday + 1)."' date-month='".$cMonth."' class='current-day'>".($i - $startday + 1)."</td>";
-                                                }
-                                            } else {
-                                                if(in_array(($i - $startday + 1), $event_date)) {
-                                                    echo "<td date-day='".($i - $startday + 1)."' date-month='".$cMonth."' class='event'>".($i - $startday + 1) . "</td>";
-                                                } else {
-                                                    echo "<td date-day='".($i - $startday + 1)."' date-month='".$cMonth."'>".($i - $startday + 1)."</td>";
-                                                }
-                                            }
-                                        }
-                                        if(($i % 7) == 6 ) { echo "</tr>"; }
-                                    }
-                                    ?>
+                                   
                                     </tbody>
                                 </table>
                             </div>
@@ -307,7 +279,7 @@
 			<div class="col-md-3 hidden-sm hidden-xs">
 				<div class="calendar hidden-print">
                     <div class="list">
-                        {!! $event_list !!}
+                        {{-- {!! $event_list !!} --}}
                     </div>
                 </div>
 				{{--{!! Theme::partial('timeline-rightbar') !!}--}}
