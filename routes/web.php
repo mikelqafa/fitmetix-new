@@ -236,7 +236,7 @@ Route::group(['prefix' => '/{username}', 'middleware' => 'auth'], function ($use
     Route::get('/edit-event/{id}', 'TimelineController@eventsList');
     
     Route::get('/event-posts', 'TimelineController@getEventPosts');
-    Route::get('/invite-guests', 'UserController@guestList');
+    
     Route::get('/eventguests', 'TimelineController@displayGuests');
     Route::get('/add-eventmembers', 'UserController@getEventGuests');
 
