@@ -11,9 +11,6 @@
             <li class="divider">&nbsp;</li>
             <li class=""><a href="#users" data-toggle="pill" class="header-text">{{ trans('common.users') }}<span>{{ count($user_reports) }}</span></a></li>
             <li class="divider">&nbsp;</li>
-           	<li class=""><a href="#pages" data-toggle="pill" class="header-text">{{ trans('common.pages') }}<span>{{ count($page_reports) }}</span></a></li>
-           	<li class="divider">&nbsp;</li>
-           	<li class=""><a href="#groups" data-toggle="pill" class="header-text">{{ trans('common.groups') }}<span>{{ count($group_reports) }}</span></a></li>
         </ul>
     </div>
     <div class="tab-content nopadding">

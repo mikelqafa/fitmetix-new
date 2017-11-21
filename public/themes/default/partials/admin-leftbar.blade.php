@@ -41,20 +41,6 @@
     </div>
     <span class="clearfix"></span>
 </a>
-    <a href="{{ url('/admin/custom-pages') }}" class="list-group-item">
-
-        <div class="list-icon socialite-icon {{ Request::segment(2) == 'custom-pages' ? 'active' : '' }}">
-            <i class="fa fa-files-o"></i>
-        </div>
-        <div class="list-text">
-            <span class="badge pull-right"></span>
-            {{ trans('common.custom_pages') }}
-            <div class="text-muted">
-                {{ trans('common.custom_pages_text') }}
-            </div>
-        </div>
-        <span class="clearfix"></span>
-    </a>
 
     <a href="{{ url('/admin/wallpapers') }}" class="list-group-item">
   
@@ -85,34 +71,7 @@
         </div>
         <span class="clearfix"></span>
     </a>
-<a href="{{ url('/admin/page-settings') }}" class="list-group-item">
 
-    <div class="list-icon socialite-icon {{ Request::segment(2) == 'page-settings' ? 'active' : '' }}">
-        <i class="fa fa-comments"></i>
-    </div>
-    <div class="list-text">
-        <span class="badge pull-right"></span>
-        {{ trans('common.page_settings') }}
-        <div class="text-muted">
-            {{ trans('common.page_settings_text') }}
-        </div>
-    </div>
-    <span class="clearfix"></span>
-</a>
-<a href="{{ url('/admin/group-settings') }}" class="list-group-item">
-
-    <div class="list-icon socialite-icon {{ Request::segment(2) == 'group-settings' ? 'active' : '' }}">
-        <i class="fa fa-group"></i>
-    </div>
-    <div class="list-text">
-        <span class="badge pull-right"></span>
-        {{ trans('common.group_settings') }}
-        <div class="text-muted">
-            {{ trans('common.group_settings_text') }}
-        </div>
-    </div>
-    <span class="clearfix"></span>
-</a>
 <a href="{{ url('/admin/event-settings') }}" class="list-group-item">
 
     <div class="list-icon socialite-icon {{ Request::segment(2) == 'event-settings' ? 'active' : '' }}">
@@ -156,34 +115,7 @@
         </div>
         <span class="clearfix"></span>
     </a>
-    <a href="{{ url('/admin/pages') }}" class="list-group-item">
 
-        <div class="list-icon socialite-icon {{ Request::segment(2) == 'pages' ? 'active' : '' }}">
-            <i class="fa fa-file-text"></i>
-        </div>
-        <div class="list-text">
-            <span class="badge pull-right"></span>
-            {{ trans('common.manage_pages') }}
-            <div class="text-muted">
-                {{ trans('common.manage_pages_text') }}
-            </div>
-        </div>
-        <span class="clearfix"></span>
-    </a>
-    <a href="{{ url('/admin/groups') }}" class="list-group-item">
-
-        <div class="list-icon socialite-icon {{ Request::segment(2) == 'groups' ? 'active' : '' }}">
-            <i class="fa fa-group"></i>
-        </div>
-        <div class="list-text">
-            <span class="badge pull-right"></span>
-            {{ trans('common.manage_groups') }}
-            <div class="text-muted">
-                {{ trans('common.manage_groups_text') }}
-            </div>
-        </div>
-        <span class="clearfix"></span>
-    </a>
      <a href="{{ url('/admin/events') }}" class="list-group-item">
 
         <div class="list-icon socialite-icon {{ Request::segment(2) == 'events' ? 'active' : '' }}">
