@@ -3,17 +3,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="visible-lg col-lg-2">
-					<?php echo Theme::partial('home-leftbar',compact('trending_tags')); ?>
 
-
-					<div class="btn-group-vertical">
-					    <button type="button" class="btn btn-warning btn-xs switch-language" data-language="en">English</button>
-					    <button type="button" class="btn btn-warning btn-xs switch-language" data-language="de">German</button>
-					    <button type="button" class="btn btn-warning btn-xs switch-language" data-language="it">Italian</button>
-					    <button type="button" class="btn btn-warning btn-xs switch-language" data-language="fr">French</button>
-					    <button type="button" class="btn btn-warning btn-xs switch-language" data-language="es">Spanish</button>
-					    <button type="button" class="btn btn-warning btn-xs switch-language" data-language="tr">Turkish</button>
-					 </div> 
 				</div>
               
                 <div class="col-md-7 col-lg-6">
@@ -26,7 +16,7 @@
 
 					<?php if(isset($active_announcement)): ?>
 						<div class="announcement alert alert-info">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							<a href="javascript:;" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 							<h3><?php echo e($active_announcement->title); ?></h3>
 							<p><?php echo e($active_announcement->description); ?></p>
 						</div>
@@ -86,10 +76,6 @@
 					<?php endif; ?>
 				</div><!-- /col-md-6 -->
 
-				<div class="col-md-5 col-lg-4">
-					<?php echo Theme::partial('home-rightbar',compact('suggested_users', 'suggested_groups', 'suggested_pages')); ?>
-
-				</div>
 			</div>
 		</div>
 	<!-- </div> -->

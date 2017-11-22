@@ -1,17 +1,25 @@
 <template>
-    <div>
+    <div style="width: 100%">
         <div class="panel-footer ft-socialite meta-font">
             <div class="ft-comment md-layout md-layout--row">
                 <div class="ft-comment__item md-layout md-layout--row">
-                    <a href="javascript:;" class="ft-expression" v-bind:class="{ 'ft-expression--liked': userLiked }"
+                    <a href="javascript:;" class="ft-expression ft-expression--likes" v-bind:class="{ 'ft-expression--liked': userLiked }"
                        @click="toggleLikePost">
                         <i class="icon icon-like visible-default"></i>
                         <i class="icon icon-liked hidden-default"></i>
                     </a>
-                    <a href="javascript:;" class="ft-expression" v-bind:class="{ 'ft-expression--liked': userCommented }"
-                       @click="commentOnPost">
-                        <i class="icon icon-comment"></i>
-                    </a>
+                    <template v-if="!showTheater">
+                        <a href="javascript:;" class="ft-expression ft-expression--comment" v-bind:class="{ 'ft-expression--liked': userCommented }"
+                           @click="commentOnPost">
+                            <i class="icon icon-comment"></i>
+                        </a>
+                    </template>
+                    <template v-else="">
+                        <a href="javascript:;" class="ft-expression" @click="closeDilaogFocusComment" v-bind:class="{ 'ft-expression--liked': userCommented }">
+                            <i class="icon icon-comment"></i>
+                        </a>
+                    </template>
+
                 </div>
                 <div class="ft-comment__item md-align md-align--center-center ft-comment__item--grow">
                     <a v-show="postLikesCount" href="javascript:;" class="ft-expression ft-expression--meta">
@@ -20,7 +28,7 @@
                         {{postLikesCount}}
                     </span>
                     </a>
-                    <a v-show="postCommentsCount" href="javascript:;" class="ft-expression ft-expression--meta">
+                    <a v-show="postCommentsCount" href="javascript:;" class="ft-expression  ft-expression--meta">
                         <span class="icon icon-commentcount"></span>
                     <span class="ft-expression--meta-text">
                         {{postCommentsCount}}
@@ -34,52 +42,54 @@
                 </div>
             </div>
         </div>
-        <section class="zippy suggestion-list-expand" :id="expandID">
-            <div class="zippy__wrapper">
-                <template v-if="commentInteract">
-                    <div class="comment-textfield">
-                        <form action="#">
-                            <textarea v-on:keydown.13="postComment" class="form-control"  autocomplete="off" data-post-id="" data-comment-id="" name="post_comment" placeholder="Write a comment" rows="1"></textarea>
-                        </form>
-                        <div class="loading-wrapper"></div>
-                    </div>
-                    <div class="comment-list-action md-list md-list--dense" v-if="commentItemList.length">
-                        <div class="md-list__item has-divider" v-for="(item, index) in commentItemList" :data-comment-id="item.id">
-                            <a :style="{ backgroundImage: 'url(' + item.user.avatar + ')'}" data-theme="m" href="//localhost:3008/fitmetix/public/Uppal" :title="'@'+item.user.username" class="md-list__item-icon user-avatar"></a>
-                            <div class="md-list__item-content">
-                                <div class="md-list__item-primary">
-                                    <a :href="base_url+item.user.username" title="@Uppal" data-original-title="@Uppal" class="user-name user ft-user-name">
-                                        {{item.user.name}}
-                                    </a>
-                                    <div class="md-list__item-text-body" v-html="item.description"></div>
-                                </div>
-                                <div class="md-list__item-secondary md-layout md-layout--row">
-                                    <a href="javascript:;" class="md-list__item-secondary-action ft-expression" :data-comment-id="item.id" v-on:click="likeUnlikeComment($event, index)"  v-bind:class="{ 'ft-expression--liked': item.isLiked }">
-                                        <i class="icon icon-like visible-default"></i>
-                                        <i class="icon icon-liked hidden-default"></i>
-                                    </a>
-                                    <a class="md-list__item-secondary-action" href="javascript:;" v-on:click="openCommentDialog">
-                                        <i class="icon icon-options"></i>
-                                    </a>
+        <template v-if="!showTheater">
+            <section class="zippy suggestion-list-expand" :id="expandID">
+                <div class="zippy__wrapper">
+                    <template v-if="commentInteract">
+                        <div class="comment-textfield">
+                            <form action="#">
+                                <textarea v-on:keydown.13="postComment" class="ft-post__comment-form form-control"  autocomplete="off" data-post-id="" data-comment-id="" name="post_comment" placeholder="Write a comment" rows="1"></textarea>
+                            </form>
+                            <div class="loading-wrapper"></div>
+                        </div>
+                        <div class="comment-list-action md-list md-list--dense" v-if="commentItemList.length">
+                            <div class="md-list__item has-divider" v-for="(item, index) in commentItemList" :data-comment-id="item.id">
+                                <a :style="{ backgroundImage: 'url(' + item.user.avatar + ')'}" data-theme="m" href="//localhost:3008/fitmetix/public/Uppal" :title="'@'+item.user.username" class="md-list__item-icon user-avatar"></a>
+                                <div class="md-list__item-content">
+                                    <div class="md-list__item-primary">
+                                        <a :href="base_url+item.user.username" title="@Uppal" data-original-title="@Uppal" class="user-name user ft-user-name">
+                                            {{item.user.name}}
+                                        </a>
+                                        <div class="md-list__item-text-body" v-html="item.description"></div>
+                                    </div>
+                                    <div class="md-list__item-secondary md-layout md-layout--row">
+                                        <a href="javascript:;" class="md-list__item-secondary-action ft-expression" :data-comment-id="item.id" v-on:click="likeUnlikeComment($event, index)"  v-bind:class="{ 'ft-expression--liked': item.isLiked }">
+                                            <i class="icon icon-like visible-default"></i>
+                                            <i class="icon icon-liked hidden-default"></i>
+                                        </a>
+                                        <a class="md-list__item-secondary-action" href="javascript:;" v-on:click="openCommentDialog">
+                                            <i class="icon icon-options"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="ft-menu" v-if="commentHasMore">
+                                <button type="submit" class="text-center ft-menu__item btn" v-on:click="loadMore">
+                                    Load More
+                                </button>
+                            </div>
                         </div>
-                        <div class="ft-menu" v-if="commentHasMore">
-                            <button type="submit" class="text-center ft-menu__item btn" v-on:click="loadMore">
-                                Load More
-                            </button>
+                    </template>
+                    <template v-else="">
+                        <div class="ft-loading">
+                            <span class="ft-loading__dot"></span>
+                            <span class="ft-loading__dot"></span>
+                            <span class="ft-loading__dot"></span>
                         </div>
-                    </div>
-                </template>
-                <template v-else="">
-                    <div class="ft-loading">
-                        <span class="ft-loading__dot"></span>
-                        <span class="ft-loading__dot"></span>
-                        <span class="ft-loading__dot"></span>
-                    </div>
-                </template>
-            </div>
-        </section>
+                    </template>
+                </div>
+            </section>
+        </template>
     </div>
 </template>
 <style>
@@ -332,14 +342,15 @@
 <script>
     export default {
         props: {
-            postId: ''
+            postId: '',
+            showTheater: false,
+            postItem: '',
+            showSidebar: false,
+            postIndex: ''
         },
         data: function () {
             return {
                 base_url: base_url,
-                postCommentsCount: 0,
-                postLikesCount: 0,
-                userLiked: 0,
                 userCommented: 0,
                 commentInteract: false,
                 commentHasMore: false,
@@ -357,9 +368,21 @@
             },
             reverseCommentItemList: function() {
                 return this.commentItemList.slice().reverse();
+            },
+            postCommentsCount: function() {
+                return this.$store.state.postItemList[this.postIndex].postMetaInfo !== undefined ? this.$store.state.postItemList[this.postIndex].postMetaInfo.postCommentsCount : 0
+            },
+            postLikesCount: function() {
+                return this.$store.state.postItemList[this.postIndex].postMetaInfo !== undefined ? this.$store.state.postItemList[this.postIndex].postMetaInfo.postLikesCount : 0
+            },
+            userLiked: function (){
+                return this.$store.state.postItemList[this.postIndex].postMetaInfo !== undefined ? this.$store.state.postItemList[this.postIndex].postMetaInfo.userLiked : false
             }
         },
         methods: {
+            closeDilaogFocusComment: function () {
+                this.$emit('focuscomment')
+            },
             getDefaultData: function () {
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
@@ -369,13 +392,17 @@
                     url: base_url + 'get-likes-comments-count',
                     data: {
                         post_id: that.postId,
-                        _token: _token,
+                        _token: _token
                     }
                 }).then(function (response) {
+                    console.log(response.data[0])
                     if (response.status == 200) {
-                        that.postCommentsCount = response.data[0].post_comment_count;
-                        that.postLikesCount = response.data[0].post_likes_count;
-                        that.userLiked = response.data[0].user_liked
+                        that.$store.commit('SET_POST_META', {
+                            index: that.postIndex,
+                            postCommentsCount: response.data[0].post_comment_count,
+                            postLikesCount: response.data[0].post_likes_count,
+                            userLiked: response.data[0].user_liked
+                        })
                     }
                 }).catch(function (error) {
                     console.log(error)
@@ -395,19 +422,23 @@
                     }
                 }).then(function (response) {
                     if (response.status == 200) {
-                        that.userLiked = response.data.liked
+                        that.$store.commit('SET_POST_META_USER_LIKED', {
+                            index: that.postIndex,
+                            userLiked: response.data.liked
+                        })
                     }
                     console.log(response)
                 }).catch(function (error) {
                     console.log(error)
                 })
-                this.userLiked = !this.userLiked
-                if (this.userLiked) {
-                    this.postLikesCount++
-                } else {
-                    this.postLikesCount--
-                }
-
+                this.$store.commit('SET_POST_META_USER_LIKED', {
+                    index: that.postIndex,
+                    userLiked: !this.userLiked
+                })
+                this.$store.commit('SET_POST_META_LIKES_COUNT', {
+                    index: this.postIndex,
+                    postLikesCount: this.userLiked ? this.postLikesCount - 1 : this.postLikesCount + 1
+                })
             },
             commentOnPost: function () {
                 $('#' + this.expandID).Zippy('toggle')
@@ -488,7 +519,7 @@
             fetchComment: function () {
                 let _token = $("meta[name=_token]").attr('content')
                 let that = this
-                let paginate = 5
+                let paginate = 3
                 that.commentInteract = true
                 if(this.postCommentsCount == 0) {
                     return
@@ -555,6 +586,7 @@
                 }).catch(function (error) {
                     console.log(error)
                 })
+
                 that.commentItemList[index].isLiked = !that.commentItemList[index].isLiked
             },
             loadMore: function () {
@@ -567,6 +599,14 @@
                 that.getDefaultData()
             }, 1000)
             $('#' + this.expandID).Zippy();
+            if(this.postItem.comments !== undefined) {
+                this.userCommented = 1
+            }
+            if(this.showSidebar) {
+                if($(window).width() > 599)  {
+                    this.commentOnPost()
+                }
+            }
         },
         components: {}
     }

@@ -1,4 +1,32 @@
 document_title = document.title;
+(function (global) {
+
+  if(typeof (global) === "undefined") {
+    throw new Error("window is undefined");
+  }
+  global.firstHash = true
+  var _hash = "!";
+  var noBack = function () {
+    global.location.href += "#!"
+  };
+  var resetBack = function () {
+    global.location.hash = '';
+    console.log('reset call')
+  }
+  global.onhashchange = function () {
+    if (!global.firstHash) {
+      $('#' + global.dialogId).MaterialDialog('hide')
+      global.location.hash = '';
+      global.firstHash = !global.firstHash
+    }
+    else {
+      global.firstHash = !global.firstHash
+    }
+  };
+  global.noBack = noBack
+  global.resetBack = resetBack
+})(window);
+
 function hashtagify()
 {
   // Lets turn hashtags in the post clickable
@@ -247,7 +275,8 @@ $(function () {
         window.timeLine.$options.components["app-post"].methods.fetchNewOnePost(responseText.data.id)
         //$('[data-toggle="tooltip"]').tooltip();
         $('[name="description"]').focus();
-        notify('Your post has been successfully published');
+        // notify('Your post has been successfully published');
+        materialSnackBar({messageText: 'Your post has been successfully published', autoClose: true })
 
       }
       else

@@ -22,21 +22,30 @@
                 <a class="dropdown-toggle ft-header-nav__item--user-img" data-toggle="dropdown" @click.prevent="showNotifications" role="button" aria-haspopup="true"
                    aria-expanded="false">
                     <div class="user-avatar" style="background-image: url(//localhost:3000/fitmetix/public/user/avatar/2017-10-22-14-07-04athletebookprofilepage.png)"></div>
-                    <ul style="left: auto; right: 0;" class="dropdown-menu">
+                    <ul style="left: auto; right: 0;" data-width="3" class="ft-menu dropdown-menu">
                         <li class="{{ (Request::segment(1) == Auth::user()->username && Request::segment(2) == '') ? 'active' : '' }}">
-                            <a href="{{ url(Auth::user()->username.'/create-event') }}">
+                            <a href="{{ url(Auth::user()->username.'/create-event') }}" class="ft-menu__item  ft-menu__item--icon">
                                 <i class="icon icon-add"></i> Inspire
                             </a>
                         </li>
                         <li class="{{ (Request::segment(1) == Auth::user()->username && Request::segment(2) == '') ? 'active' : '' }}">
-                            <a href="{{ url(Auth::user()->username) }}">
+                            <a href="{{ url(Auth::user()->username) }}" class="ft-menu__item  ft-menu__item--icon">
                                 <i class="icon icon-participant"></i> {{ trans('common.my_profile') }}
                             </a>
                         </li>
                         <li class="{{ Request::segment(3) == 'general' ? 'active' : '' }}">
-                            <a href="{{ url('/'.Auth::user()->username.'/settings/general') }}">
+                            <a href="{{ url('/'.Auth::user()->username.'/settings/general') }}" class="ft-menu__item ft-menu__item--icon">
                                 <i class="icon icon-settings-o"></i> {{ trans('common.settings') }}
                             </a>
+                        </li>
+                        <li>
+                            <form action="{{ url('/logout') }}" method="post" style="height: 40px">
+                            {{ csrf_field() }}
+
+                                <button type="submit" class="ft-menu__item ft-menu__item--icon btn btn-logout">
+                                    <i class="fa fa-unlock" aria-hidden="true"></i>{{ trans('common.logout') }}
+                                </button>
+                            </form>
                         </li>
                     </ul>
                 </a>

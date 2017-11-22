@@ -9,6 +9,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta name="viewport"
           content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
+
+
+    <!-- Add to home screen for Android and modern mobile browsers -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#FFFFFF">
+
+    <!-- Add to home screen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="apple-mobile-web-app-title" content="Fitmetix">
+    <link rel="apple-touch-icon" href="/setting/logo.png">
+    <!-- Add to home screen for Windows -->
+    <meta name="msapplication-TileImage" content="/setting/logo.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+
+
     <meta name="keywords" content="{{ Setting::get('meta_keywords') }}">
     <meta name="description" content="{{ Setting::get('meta_description') }}">
     <meta name="_token" content="{{ csrf_token() }}">
@@ -24,6 +40,8 @@
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ Theme::asset()->url('css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('css/swiper.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/dialog.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/snackbar.css') }}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -46,6 +64,9 @@
         {!! Setting::get('google_analytics') !!}
     @endif
     <style>
+        body.is-dialog-open {
+            padding-right: 0 !important;
+        }
         .blueimp-gallery > .slides > .slide-loading {
             background: url({{asset('imgaes/loading.gif')}}) center no-repeat;
             background-size: 64px 64px;
@@ -594,6 +615,33 @@
         }
 
     </style>
+    <style>
+        body.is-dialog-open{
+            transition-property: none !important;
+        }
+        .md-dialog--md .md-dialog__surface{
+            max-width: 600px;
+            width: 90%;
+        }
+        .md-dialog__surface{
+            margin-top: 16px;
+            margin-bottom: 16px;
+        }
+        .md-dialog--md .md-dialog__body--scrollable{
+            max-height: 240px;
+        }
+        .md-dialog{
+            overflow-y: auto;
+        }
+        .md-dialog__wrapper {
+            position: relative;
+            min-height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
 </head>
 <body @if(Setting::get('enable_rtl') == 'on') class="direction-rtl" @endif>
 
@@ -605,8 +653,6 @@
     {!! Theme::content() !!}
     <app-dialog-option></app-dialog-option>
 </div>
-
-{!! Theme::partial('right-sidebar') !!}
 
 {!! Theme::partial('footer') !!}
 
@@ -620,6 +666,7 @@
             };
 </script>
 <script src="{{ asset('js/bundle.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/dialog.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
 @if (in_array(!Route::currentRouteName(), ['contact', 'login', 'register']))
     <script src="{{ asset('js/notification.js') }}" type="text/javascript"></script>

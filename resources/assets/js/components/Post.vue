@@ -1,5 +1,6 @@
 <template>
     <div>
+        <post-theater-view></post-theater-view>
         <template v-if="isLoading">
             <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
                 <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
@@ -47,7 +48,7 @@
                     </div>
                 </div>
             </template>
-            <div v-for="postItem in currentItemList" class="panel panel-default timeline-posts__item panel-post" :id="postItem.id">
+            <div v-for="postItem in currentItemList" class="panel panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
                 <post-header :post-data="postItem" :date="postItem.created_at"></post-header>
                 <div class="panel-body">
                     <post-description :post-html="postItem.description"></post-description>
@@ -57,15 +58,15 @@
                 </div>
                 <post-comment :post-id="postItem.id"></post-comment>
             </div>
-            <div v-for="postItem in itemList" class="panel panel-default timeline-posts__item panel-post" :id="postItem.id">
+            <div v-for="(postItem, index) in itemList" class="panel panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
                 <post-header :post-data="postItem" :date="postItem.created_at"></post-header>
                 <div class="panel-body">
                     <post-description :post-html="postItem.description"></post-description>
                     <post-youtube :post-you-tube="postItem.youtube_video_id" :you-tube-title="postItem.youtube_title"></post-youtube>
-                    <post-image-viewer :post-img="postItem.images"></post-image-viewer>
+                    <post-image-viewer :post-index="index" :post-img="postItem.images"></post-image-viewer>
                     <post-sound-cloud :soundcloud="postItem.soundcloud_id"></post-sound-cloud>
                 </div>
-                <post-comment :post-id="postItem.id"></post-comment>
+                <post-comment :post-index="index" :post-id="postItem.id" :post-item="postItem"></post-comment>
             </div>
             <div v-if="isFetchingBottom" class="ft-loading">
                 <span class="ft-loading__dot"></span>
@@ -90,11 +91,12 @@
     import postSoundCloud from './child/postSoundCloud'
     import postHeader from './child/postHeader'
     import postComment from './child/postComment'
+    import postTheaterView from './child/postTheaterView'
+    import { mapGetters } from 'vuex'
 
     let axios = window.axios
     let custTomData = {
         isFetchingBottom: false,
-        itemList: [],
         currentItemList: [],
         isLoadingCurrent: false,
         autoUpdate: 60,
@@ -110,11 +112,6 @@
         data: function () {
             return custTomData
         },
-        computed: {
-            isLoading () {
-                return this.itemList.length === 0
-            }
-        },
         methods: {
             since(date) {
                 return new Date(date).getTime()
@@ -122,7 +119,7 @@
             getDefaultData: function () {
                 let that = this
                 let username = ''
-                let paginate = 2
+                let paginate = 4
                 let _token = $("meta[name=_token]").attr('content')
                 axios({
                     method: 'post',
@@ -135,12 +132,11 @@
                         offset: that.offset
                     }
                 }).then( function (response) {
-                    console.log(response)
                     if (response.status ==  200) {
                         let posts = response.data[0].posts;
                         let i = 0
                         $.each(posts, function(key, val) {
-                            that.itemList.push(val);
+                            that.$store.commit('ADD_POST_ITEM_LIST', val)
                             i++
                         });
                         setTimeout(function () {
@@ -150,7 +146,7 @@
                         that.inProgress = false
                         that.hasMorePost = i == paginate;
                         that.offset += i
-                        console.log(that.offset, that.hasMorePost)
+                        //console.log(that.offset, that.hasMorePost)
                         that.isFetchingBottom = false
                     }
                 }).catch(function(error) {
@@ -189,11 +185,11 @@
                         post_id: postId
                     }
                 }).then( function (response) {
-                    console.log(response)
+                    let that = this
                     custTomData.isLoadingCurrent = false
                     if (response.status ==  200) {
                         let post = response.data[0].post;
-                        custTomData.currentItemList.push(post[0]);
+                        that.$store.commit('ADD_POST_ITEM_LIST', post)
                         setTimeout(function () {
                             hashtagify()
                             mentionify()
@@ -217,7 +213,16 @@
             'post-sound-cloud': postSoundCloud,
             'post-youtube': postYouTube,
             'post-header': postHeader,
-            'post-comment': postComment
+            'post-comment': postComment,
+            'post-theater-view': postTheaterView
+        },
+        computed: {
+            ...mapGetters({
+                itemList: 'postItemList'
+            }),
+            isLoading () {
+                return this.itemList.length === 0
+            }
         }
     }
 </script>

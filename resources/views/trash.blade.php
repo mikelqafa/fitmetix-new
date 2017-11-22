@@ -187,3 +187,36 @@
         </div>
     </div>
 </div>
+
+
+
+
+<template v-if="postItem !== null">
+    <image-theater-surface  :post-index="theaterPostItem.postIndex" :post-img="postItem.images" :post-index="theaterPostItem.postIndex"></image-theater-surface>
+</template>
+
+computed: {
+...mapGetters({
+theaterPostItem: 'theaterPostItem'
+}),
+postItem: function () {
+return this.theaterPostItem.postIndex !== undefined ? this.$store.state.postItemList[this.theaterPostItem.postIndex] : null
+}
+}
+
+
+<image-theater-surface   :post-index="theaterPostItem.postIndex"></image-theater-surface>
+
+<template v-if="isMultiple">
+            <swiper :options="swiperOption" class="deal-card-slider">
+                <swiper-slide :key="imageIndex" v-for="(image, imageIndex) in images">
+                    <a href="javascript:;" :key="imageIndex" class="item__background"
+                       :style="{ backgroundImage: 'url(' + image + ')' }"></a>
+                </swiper-slide>
+                <div class="swiper-pagination" slot="pagination"></div>
+            </swiper>
+        </template>
+        <template v-else="">
+            <div class="image-responsive item__background--post img-viewer" v-for="(image, imageIndex) in images"
+                 :style="{ backgroundImage: 'url(' + image + ')', height: '250px' }"></div>
+        </template>
