@@ -117,7 +117,7 @@
             if (this.postImg !== undefined) {
                 $.each(this.postImg, function(key, val) {
                     let s = val.source !== undefined ? val.source : ''
-                    that.images.push(asset_url+'uploads/users/gallery/'+s)
+                    that.images.push(url+'uploads/users/gallery/'+s)
                 });
             }
         },
