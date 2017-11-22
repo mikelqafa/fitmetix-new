@@ -275,9 +275,7 @@ $(function () {
         window.timeLine.$options.components["app-post"].methods.fetchNewOnePost(responseText.data.id)
         //$('[data-toggle="tooltip"]').tooltip();
         $('[name="description"]').focus();
-        // notify('Your post has been successfully published');
         materialSnackBar({messageText: 'Your post has been successfully published', autoClose: true })
-
       }
       else
       {

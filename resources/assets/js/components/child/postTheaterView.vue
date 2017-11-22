@@ -3,7 +3,7 @@
         <div class="md-dialog__wrapper">
             <div class="md-dialog__shadow"></div>
             <div class="md-dialog__surface">
-                <header class="md-dialog__header panel-post hidden visible-xs">
+                <header class="md-dialog__header panel-post hidden md-dialog__header--xs visible-xs">
                     <template v-if="holaMola">
                         <post-header style="flex-grow: 1" :post-data="postItem" :date="postItem.created_at"></post-header>
                     </template>
@@ -48,6 +48,7 @@
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
+            min-height: 520px;
         }
         .md-dialog--theater .md-dialog__surface .img-responsive {
             max-height: calc(100vh - 30px);
@@ -57,10 +58,16 @@
         }
         .md-dialog--dark .stage{
             background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .stage-photo-sidebar {
             flex-grow: 1;
             flex-shrink: 1;
+            max-height: 570px;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
         .stage-photo-sidebar .text-wrapper {
             padding: 0 15px;
@@ -140,6 +147,11 @@
         padding-top: 0;
     }
     @media screen and (max-width: 767px) {
+        .md-dialog__header--xs{
+            display: flex !important;
+            flex-direction: row;
+            flex-wrap: nowrap;
+        }
         .md-dialog--theater .md-dialog__surface {
             height: 100vh;
             color: #fff;

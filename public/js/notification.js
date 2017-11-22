@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -274,7 +274,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(18)
+var listToStyles = __webpack_require__(19)
 
 /*
 type StyleObject = {
@@ -484,7 +484,7 @@ function applyToTag (styleElement, obj) {
  * @author Surmon.me
  */
 
-var Swiper = __webpack_require__(7)
+var Swiper = __webpack_require__(8)
 var SwiperComponent = __webpack_require__(27)
 var SlideComponent = __webpack_require__(30)
 SwiperComponent = SwiperComponent.default || SwiperComponent
@@ -12072,7 +12072,7 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(12).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(13).setImmediate))
 
 /***/ }),
 /* 6 */
@@ -12103,6 +12103,54 @@ module.exports = g;
 
 /***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(21)
+/* template */
+var __vue_template__ = __webpack_require__(22)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/child/postDescription.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-31462242", Component.options)
+  } else {
+    hotAPI.reload("data-v-31462242", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -17462,7 +17510,7 @@ else if (typeof define === 'function' && define.amd) {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -17514,7 +17562,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -17566,21 +17614,21 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(12);
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Post__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Post__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Post___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_Post__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_AppNotification__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_AppNotification___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_AppNotification__);
@@ -17635,7 +17683,7 @@ window.appNotification = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 });
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -17688,13 +17736,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(13);
+__webpack_require__(14);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -17884,10 +17932,10 @@ exports.clearImmediate = clearImmediate;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(14)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(15)))
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -18077,17 +18125,17 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(16)
+  __webpack_require__(17)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(19)
+var __vue_script__ = __webpack_require__(20)
 /* template */
 var __vue_template__ = __webpack_require__(58)
 /* template functional */
@@ -18129,13 +18177,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(17);
+var content = __webpack_require__(18);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -18155,7 +18203,7 @@ if(false) {
 }
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(undefined);
@@ -18169,7 +18217,7 @@ exports.push([module.i, "\n.user-avatar {\n    overflow: hidden;\n}\n", ""]);
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports) {
 
 /**
@@ -18202,12 +18250,12 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__child_postDescription__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__child_postDescription__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__child_postDescription___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__child_postDescription__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__child_postImageViewer__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__child_postImageViewer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__child_postImageViewer__);
@@ -18215,9 +18263,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__child_postYouTube___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__child_postYouTube__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__child_postSoundCloud__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__child_postSoundCloud___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__child_postSoundCloud__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__child_postHeader__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__child_postHeader__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__child_postHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__child_postHeader__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__child_postComment__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__child_postComment__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__child_postComment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__child_postComment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__child_postTheaterView__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__child_postTheaterView___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__child_postTheaterView__);
@@ -18452,54 +18500,6 @@ var custTomData = {
         }
     })
 });
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(21)
-/* template */
-var __vue_template__ = __webpack_require__(22)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/child/postDescription.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-31462242", Component.options)
-  } else {
-    hotAPI.reload("data-v-31462242", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
 
 /***/ }),
 /* 21 */
@@ -18864,7 +18864,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 var browser = typeof window !== 'undefined';
-if (browser) window.Swiper = __webpack_require__(7);
+if (browser) window.Swiper = __webpack_require__(8);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'swiper',
   props: {
@@ -20788,7 +20788,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n@media screen  and (min-width: 768px){\n.md-dialog--theater .md-dialog__body {\n        width: 1020px;\n        max-width: 100%;\n        display: flex;\n        flex-direction: row;\n        flex-wrap: nowrap;\n}\n.md-dialog--theater .md-dialog__surface .img-responsive {\n        max-height: calc(100vh - 30px);\n}\n.md-dialog--theater .stage {\n        width: 660px;\n}\n.md-dialog--dark .stage{\n        background-color: #000;\n}\n.stage-photo-sidebar {\n        flex-grow: 1;\n        flex-shrink: 1;\n}\n.stage-photo-sidebar .text-wrapper {\n        padding: 0 15px;\n}\n}\n.md-dialog__header.panel-post{\n    padding-left:0;\n    padding-right: 0;\n}\n.md-dialog__header .panel-heading {\n    border-left: none !important;\n    border-right:none !important;\n}\n.md-button {\n    background: transparent;\n    border: none;\n    border-radius: 2px;\n    color: rgba(0,0,0,.84);\n    position: relative;\n    height: 36px;\n    min-width: 64px;\n    padding: 0 16px;\n    display: inline-block;\n    font-family: Roboto,sans-serif;\n    font-size: 14px;\n    font-weight: 500;\n    text-transform: uppercase;\n    letter-spacing: 0;\n    overflow: hidden;\n    will-change: box-shadow;\n    transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);\n    -webkit-transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);\n    outline: none;\n    cursor: pointer;\n    text-decoration: none;\n    text-align: center;\n    line-height: 36px;\n    vertical-align: middle;\n}\n.md-button--icon{\n    border-radius: 50%;\n    font-size: 24px;\n    height: 32px;\n    margin-left: 0;\n    margin-right: 0;\n    min-width: 32px;\n    width: 32px;\n    padding: 0;\n    overflow: hidden;\n    line-height: normal;\n}\n.md-button--icon .icon {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-12px,-12px);\n    transform: translate(-12px,-12px);\n    line-height: 24px;\n    width: 24px;\n    font-size: 24px;\n}\n.md-dialog__header .post-options {\n    display: none;\n}\n.md-dialog--theater .md-dialog__shadow {\n    background-color: rgba(0,0,0,.7);\n}\n.md-dialog--theater .md-dialog__body {\n    padding-left: 0;\n    padding-right: 0;\n    margin-top: 0;\n    padding-bottom: 0;\n}\n.md-dialog--theater .md-dialog__header {\n    padding-bottom: 0;\n    padding-top: 0;\n}\n@media screen and (max-width: 767px) {\n.md-dialog--theater .md-dialog__surface {\n        height: 100vh;\n        color: #fff;\n}\n.md-dialog--theater .md-dialog__body {\n        justify-content: center;\n        align-items: center;\n        display: flex;\n}\n.md-dialog--dark .md-dialog__surface{\n        background-color: #0A0A0A;\n}\n.md-dialog--dark .panel-heading.no-bg{\n        background-color: transparent !important;\n        border-top:none !important;\n        border-bottom:none !important;\n}\n.md-dialog--dark .ft-socialite{\n        background-color: transparent;\n}\n.md-dialog--dark .ft-expression{\n        color: #fff;\n}\n}\n", ""]);
+exports.push([module.i, "\n@media screen  and (min-width: 768px){\n.md-dialog--theater .md-dialog__body {\n        width: 1020px;\n        max-width: 100%;\n        display: flex;\n        flex-direction: row;\n        flex-wrap: nowrap;\n        min-height: 520px;\n}\n.md-dialog--theater .md-dialog__surface .img-responsive {\n        max-height: calc(100vh - 30px);\n}\n.md-dialog--theater .stage {\n        width: 660px;\n}\n.md-dialog--dark .stage{\n        background-color: #000;\n        display: flex;\n        justify-content: center;\n        align-items: center;\n}\n.stage-photo-sidebar {\n        flex-grow: 1;\n        flex-shrink: 1;\n        max-height: 570px;\n        overflow-y: auto;\n        overflow-x: hidden;\n}\n.stage-photo-sidebar .text-wrapper {\n        padding: 0 15px;\n}\n}\n.md-dialog__header.panel-post{\n    padding-left:0;\n    padding-right: 0;\n}\n.md-dialog__header .panel-heading {\n    border-left: none !important;\n    border-right:none !important;\n}\n.md-button {\n    background: transparent;\n    border: none;\n    border-radius: 2px;\n    color: rgba(0,0,0,.84);\n    position: relative;\n    height: 36px;\n    min-width: 64px;\n    padding: 0 16px;\n    display: inline-block;\n    font-family: Roboto,sans-serif;\n    font-size: 14px;\n    font-weight: 500;\n    text-transform: uppercase;\n    letter-spacing: 0;\n    overflow: hidden;\n    will-change: box-shadow;\n    transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);\n    -webkit-transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);\n    outline: none;\n    cursor: pointer;\n    text-decoration: none;\n    text-align: center;\n    line-height: 36px;\n    vertical-align: middle;\n}\n.md-button--icon{\n    border-radius: 50%;\n    font-size: 24px;\n    height: 32px;\n    margin-left: 0;\n    margin-right: 0;\n    min-width: 32px;\n    width: 32px;\n    padding: 0;\n    overflow: hidden;\n    line-height: normal;\n}\n.md-button--icon .icon {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-12px,-12px);\n    transform: translate(-12px,-12px);\n    line-height: 24px;\n    width: 24px;\n    font-size: 24px;\n}\n.md-dialog__header .post-options {\n    display: none;\n}\n.md-dialog--theater .md-dialog__shadow {\n    background-color: rgba(0,0,0,.7);\n}\n.md-dialog--theater .md-dialog__body {\n    padding-left: 0;\n    padding-right: 0;\n    margin-top: 0;\n    padding-bottom: 0;\n}\n.md-dialog--theater .md-dialog__header {\n    padding-bottom: 0;\n    padding-top: 0;\n}\n@media screen and (max-width: 767px) {\n.md-dialog__header--xs{\n        display: flex !important;\n        flex-direction: row;\n        flex-wrap: nowrap;\n}\n.md-dialog--theater .md-dialog__surface {\n        height: 100vh;\n        color: #fff;\n}\n.md-dialog--theater .md-dialog__body {\n        justify-content: center;\n        align-items: center;\n        display: flex;\n}\n.md-dialog--dark .md-dialog__surface{\n        background-color: #0A0A0A;\n}\n.md-dialog--dark .panel-heading.no-bg{\n        background-color: transparent !important;\n        border-top:none !important;\n        border-bottom:none !important;\n}\n.md-dialog--dark .ft-socialite{\n        background-color: transparent;\n}\n.md-dialog--dark .ft-expression{\n        color: #fff;\n}\n}\n", ""]);
 
 // exports
 
@@ -20801,15 +20801,27 @@ exports.push([module.i, "\n@media screen  and (min-width: 768px){\n.md-dialog--t
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__imageTheaterSurface__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__imageTheaterSurface___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__imageTheaterSurface__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__postHeader__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__postHeader__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__postHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__postHeader__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__postComment__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__postComment__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__postComment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__postComment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__postDescription__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__postDescription__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__postDescription___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__postDescription__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -21392,7 +21404,10 @@ var render = function() {
         _c("div", { staticClass: "md-dialog__surface" }, [
           _c(
             "header",
-            { staticClass: "md-dialog__header panel-post hidden visible-xs" },
+            {
+              staticClass:
+                "md-dialog__header panel-post hidden md-dialog__header--xs visible-xs"
+            },
             [
               _vm.holaMola
                 ? [
