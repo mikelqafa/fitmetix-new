@@ -34,24 +34,23 @@ export const store = new Vuex.Store({
       let obj = {
         postCommentsCount: data.postCommentsCount,
         postLikesCount: data.postLikesCount,
-        postMetaInfo: data.userLiked
+        userLiked: data.userLiked,
+        userCommented: data.userCommented
       }
       Vue.set(state.postItemList[data.index], 'postMetaInfo', obj)
     },
     SET_POST_META_COUNT (state, data) {
       // state.slider = slider
-      let obj = {
-        postCommentsCount: data.postCommentsCount,
-        postLikesCount: data.postLikesCount,
-        userLiked: data.userLiked
-      }
       Vue.set(state.postItemList[data.index].postMetaInfo, 'postCommentsCount', data.postCommentsCount)
     },
     SET_POST_META_LIKES_COUNT (state, data) {
       Vue.set(state.postItemList[data.index].postMetaInfo, 'postLikesCount', data.postLikesCount)
     },
     SET_POST_META_USER_LIKED (state, data) {
-      Vue.set(state.postItemList[data.index], 'userLiked', data.userLiked)
+      Vue.set(state.postItemList[data.index].postMetaInfo, 'userLiked', data.userLiked)
+    },
+    SET_POST_META_USER_COMMENTED (state, data) {
+      Vue.set(state.postItemList[data.index].postMetaInfo, 'userCommented', data.userCommented)
     }
   },
   actions: {

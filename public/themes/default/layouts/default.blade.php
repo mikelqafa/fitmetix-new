@@ -64,6 +64,11 @@
         {!! Setting::get('google_analytics') !!}
     @endif
     <style>
+        .timeline-posts__item,.panel-create {
+            max-width: 600px;
+            margin-left:auto;
+            margin-right:auto;
+        }
         body.is-dialog-open {
             padding-right: 0 !important;
         }

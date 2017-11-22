@@ -351,12 +351,12 @@
         data: function () {
             return {
                 base_url: base_url,
-                userCommented: 0,
                 commentInteract: false,
                 commentHasMore: false,
                 commentItemList: [],
                 commentIsPosting: false,
-                offset: 0
+                offset: 0,
+                showUserComment: 0
             }
         },
         computed: {
@@ -376,7 +376,10 @@
                 return this.$store.state.postItemList[this.postIndex].postMetaInfo !== undefined ? this.$store.state.postItemList[this.postIndex].postMetaInfo.postLikesCount : 0
             },
             userLiked: function (){
-                return this.$store.state.postItemList[this.postIndex].postMetaInfo !== undefined ? this.$store.state.postItemList[this.postIndex].postMetaInfo.userLiked : false
+                return this.$store.state.postItemList[this.postIndex].postMetaInfo !== undefined ? this.$store.state.postItemList[this.postIndex].postMetaInfo.userLiked : 0
+            },
+            userCommented: function (){
+                return this.$store.state.postItemList[this.postIndex].postMetaInfo !== undefined ? this.$store.state.postItemList[this.postIndex].postMetaInfo.userCommented : 0
             }
         },
         methods: {
@@ -401,7 +404,8 @@
                             index: that.postIndex,
                             postCommentsCount: response.data[0].post_comment_count,
                             postLikesCount: response.data[0].post_likes_count,
-                            userLiked: response.data[0].user_liked
+                            userLiked: response.data[0].user_liked,
+                            userCommented: that.postItem.comments !== undefined
                         })
                     }
                 }).catch(function (error) {
@@ -410,7 +414,6 @@
             },
             toggleLikePost: function () {
                 let that = this
-                let paginate = 50
                 let _token = $("meta[name=_token]").attr('content')
                 axios({
                     method: 'post',
@@ -421,23 +424,26 @@
                         _token: _token
                     }
                 }).then(function (response) {
+                    console.log(response)
                     if (response.status == 200) {
-                        that.$store.commit('SET_POST_META_USER_LIKED', {
+                        /*that.$store.commit('SET_POST_META_USER_LIKED', {
                             index: that.postIndex,
                             userLiked: response.data.liked
-                        })
+                        })*/
                     }
-                    console.log(response)
                 }).catch(function (error) {
                     console.log(error)
                 })
+                console.log(this.userLiked)
+                let like = !this.userLiked
+                console.log(like)
                 this.$store.commit('SET_POST_META_USER_LIKED', {
                     index: that.postIndex,
-                    userLiked: !this.userLiked
+                    userLiked: like
                 })
                 this.$store.commit('SET_POST_META_LIKES_COUNT', {
                     index: this.postIndex,
-                    postLikesCount: this.userLiked ? this.postLikesCount - 1 : this.postLikesCount + 1
+                    postLikesCount: !like ? this.postLikesCount - 1 : this.postLikesCount + 1
                 })
             },
             commentOnPost: function () {
@@ -497,6 +503,7 @@
                         loadingWrapper.html('')
                         that.commentIsPosting = false
                         that.commentInteract = true
+                        that.userCommented
                         that.commentItemList.unshift({
                             created_at: new Date().toString(),
                             id: response.data.comment_id,
@@ -599,9 +606,6 @@
                 that.getDefaultData()
             }, 1000)
             $('#' + this.expandID).Zippy();
-            if(this.postItem.comments !== undefined) {
-                this.userCommented = 1
-            }
             if(this.showSidebar) {
                 if($(window).width() > 599)  {
                     this.commentOnPost()

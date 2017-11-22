@@ -139,7 +139,7 @@
         methods: {
             sourceImagePath: function (s) {
                 let url = 'http://assets.fitmetix.com/'
-                return url+'uploads/users/gallery/'+s
+                return asset_url+'uploads/users/gallery/'+s
             }
         },
         computed: {

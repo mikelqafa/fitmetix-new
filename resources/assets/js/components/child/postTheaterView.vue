@@ -40,8 +40,17 @@
 </template>
 
 <style>
-
+    .text-wrapper + .post-image--wrapper {
+        margin-top: 15px;
+    }
     @media screen  and (min-width: 768px){
+        .md-dialog--theater {
+            overflow-x: auto;
+        }
+        .md-dialog--theater .md-dialog__surface {
+            max-width: 100%;
+            min-width: 900px;
+        }
         .md-dialog--theater .md-dialog__body {
             width: 1020px;
             max-width: 100%;
@@ -49,9 +58,14 @@
             flex-direction: row;
             flex-wrap: nowrap;
             min-height: 520px;
+            height: 90vh;
+            max-height: 636px;
+        }
+        .md-dialog--theater .md-dialog__wrapper {
+            justify-content: center;
         }
         .md-dialog--theater .md-dialog__surface .img-responsive {
-            max-height: calc(100vh - 30px);
+            max-height: calc(100% - 30px);
         }
         .md-dialog--theater .stage {
             width: 660px;
@@ -60,6 +74,7 @@
             background-color: #000;
             display: flex;
             justify-content: center;
+            flex-shrink: 0;
             align-items: center;
         }
         .stage-photo-sidebar {
@@ -205,6 +220,7 @@
             }
         },
         mounted () {
+            let that = this
           let dialog = $('#post-image-theater-dialog').MaterialDialog({show:false});
             dialog.on('ca.dialog.shown', function () {
                 noBack();
@@ -213,6 +229,7 @@
             dialog.on('ca.dialog.hidden', function () {
                 resetBack();
                 window.dialogId = ''
+                that.$store.commit('SET_THEATER_ITEM', {postIndex: undefined, imageIndex: undefined})
             });
         },
         computed: {
