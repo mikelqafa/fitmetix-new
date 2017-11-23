@@ -1,4 +1,4 @@
-<!-- <div class="main-content"> -->
+<div class="main-content">
 			<!-- List of user events-->
 				<div class="post-filters pages-groups">
 					
@@ -20,7 +20,23 @@
 								<li class="list-group-item deleteevent">
 									<div class="connect-list">
 										<div class="connect-link side-left">
+
+											{{-- use the following data for event cards  
 											
+											@if($user_event->timeline->cover) }}
+												<img src="{{ env('STORAGE_URL').'uploads/events/covers/'.$user_event->timeline->cover['source'] }}">
+											@endif
+											{{ $user_event->timeline->name }}
+											{{ $user_event->location }}
+											{{ $user_event->gender }}
+											{{ $user_event->price }}
+											{{ $user_event->start_date }}
+											{{ $user_event->end_date }}
+											{{ $user_event->frequency }}
+											{{ $user_event->timeline->about }} 
+											
+											--}}
+
 											<a href="{{ url($user_event->timeline->username) }}">
 												<img src=" @if(Auth::user()->timeline->avatar) {{ url('user/avatar/'.Auth::user()->timeline->avatar->source) }} @else {{ url('group/avatar/default-group-avatar.png') }} @endif" alt="{{ $user_event->timeline->name }}" title="{{ $user_event->timeline->name }}">{{ $user_event->timeline->name }}
 											</a>
@@ -43,4 +59,4 @@
 					</div>
 
 				</div><!-- /panel -->
-<!-- </div> --><!-- /main-content -->
+<!-- </div> --><!-- /main-content

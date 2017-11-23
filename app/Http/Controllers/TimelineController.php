@@ -1916,7 +1916,7 @@ class TimelineController extends AppBaseController
 
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
         
-        $user_events = Event::where('user_id', Auth::user()->id)->get();
+        $user_events = Event::where('user_id', Auth::user()->id)->with('timeline')->get();
         $id = Auth::id();
 
         $trending_tags = trendingTags();
@@ -2857,9 +2857,9 @@ class TimelineController extends AppBaseController
     public function commentsAPI(Request $request) {
         $total_comments = Comment::where('post_id',$request->post_id)->count();
 
-        $comments = Comment::where('post_id',$request->post_id)->limit(10)->with('user')->offset($request->offset)->get();
+        $comments = Comment::where('post_id',$request->post_id)->limit(3)->with('user')->offset($request->offset)->get();
 
-        $limit = 10 + $request->offset;
+        $limit = 3 + $request->offset;
         $hasMore = false;
         if($total_comments > $limit) {
             $hasMore = true;

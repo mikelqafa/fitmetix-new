@@ -135,6 +135,7 @@ class RegisterController extends Controller
         //Create timeline record for the user
         $timeline = Timeline::create([
             'username' => $request->username,
+            'name'     => $request->username,
             'type'     => 'user',
             'about'    => 'write something about yourself'
             ]);

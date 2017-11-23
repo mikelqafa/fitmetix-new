@@ -19,7 +19,7 @@
                 <div class="icon icon-search"></div>
             </a>
             <div class="dropdown ft-header-nav__item pos-rel">
-                <a class="dropdown-toggle ft-header-nav__item--user-img" data-toggle="dropdown" @click.prevent="showNotifications" role="button" aria-haspopup="true"
+                <a class="dropdown-toggle ft-header-nav__item--user-img" data-toggle="dropdown" @click.prevent="showNotifications" role="button" href="javascript:;" aria-haspopup="true"
                    aria-expanded="false">
                     <div class="user-avatar" style="background-image: url(//localhost:3000/fitmetix/public/user/avatar/2017-10-22-14-07-04athletebookprofilepage.png)"></div>
                     <ul style="left: auto; right: 0;" data-width="3" class="ft-menu dropdown-menu">
