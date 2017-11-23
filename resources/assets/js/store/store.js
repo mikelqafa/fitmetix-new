@@ -51,12 +51,18 @@ export const store = new Vuex.Store({
     },
     SET_POST_META_USER_COMMENTED (state, data) {
       Vue.set(state.postItemList[data.index].postMetaInfo, 'userCommented', data.userCommented)
+    },
+    SET_POST_WHO_LIKES (state, data) {
+      let whoLikes = {
+        itemList: [ {} ],
+        hasMore: true
+      }
+      Vue.set(state.postItemList[data.index].whoLikes, 'postCommentsCount', data.postCommentsCount)
     }
   },
   actions: {
     showTheater: (context) => {
       alert()
-      //
     }
   }
 })

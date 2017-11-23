@@ -20154,6 +20154,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         updateZippy: function updateZippy() {
             $('#' + this.expandID).Zippy('update');
         },
+        showLikesCount: function showLikesCount() {
+            var that = this;
+            var _token = $("meta[name=_token]").attr('content');
+            axios({
+                method: 'post',
+                responseType: 'json',
+                url: base_url + '/ajax/get-likes-details',
+                data: {
+                    post_id: that.postId,
+                    paginate: 4,
+                    offset: 0,
+                    _token: _token
+                }
+            }).then(function (response) {
+                console.log(response);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
         postComment: function postComment(e) {
             if (e.shiftKey) {
                 if (e.which == 13) {
@@ -20387,7 +20406,8 @@ var render = function() {
                     }
                   ],
                   staticClass: "ft-expression ft-expression--meta",
-                  attrs: { href: "javascript:;" }
+                  attrs: { href: "javascript:;" },
+                  on: { click: _vm.showLikesCount }
                 },
                 [
                   _c("span", {
@@ -20416,7 +20436,8 @@ var render = function() {
                     }
                   ],
                   staticClass: "ft-expression  ft-expression--meta",
-                  attrs: { href: "javascript:;" }
+                  attrs: { href: "javascript:;" },
+                  on: { click: _vm.commentOnPost }
                 },
                 [
                   _c("span", { staticClass: "icon icon-commentcount" }),
@@ -23006,12 +23027,18 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     },
     SET_POST_META_USER_COMMENTED: function SET_POST_META_USER_COMMENTED(state, data) {
       __WEBPACK_IMPORTED_MODULE_0_vue___default.a.set(state.postItemList[data.index].postMetaInfo, 'userCommented', data.userCommented);
+    },
+    SET_POST_WHO_LIKES: function SET_POST_WHO_LIKES(state, data) {
+      var whoLikes = {
+        itemList: [{}],
+        hasMore: true
+      };
+      __WEBPACK_IMPORTED_MODULE_0_vue___default.a.set(state.postItemList[data.index].whoLikes, 'postCommentsCount', data.postCommentsCount);
     }
   },
   actions: {
     showTheater: function showTheater(context) {
       alert();
-      //
     }
   }
 });

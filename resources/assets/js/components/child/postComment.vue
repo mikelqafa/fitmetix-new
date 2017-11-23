@@ -22,13 +22,13 @@
 
                 </div>
                 <div class="ft-comment__item md-align md-align--center-center ft-comment__item--grow">
-                    <a v-show="postLikesCount" href="javascript:;" class="ft-expression ft-expression--meta">
+                    <a v-show="postLikesCount"  @click="showLikesCount" href="javascript:;" class="ft-expression ft-expression--meta">
                         <span class="icon icon-liked visible-default"></span>
                     <span class="ft-expression--meta-text">
                         {{postLikesCount}}
                     </span>
                     </a>
-                    <a v-show="postCommentsCount" href="javascript:;" class="ft-expression  ft-expression--meta">
+                    <a v-show="postCommentsCount" @click="commentOnPost" href="javascript:;" class="ft-expression  ft-expression--meta">
                         <span class="icon icon-commentcount"></span>
                     <span class="ft-expression--meta-text">
                         {{postCommentsCount}}
@@ -457,6 +457,25 @@
             },
             updateZippy: function () {
                 $('#' + this.expandID).Zippy('update')
+            },
+            showLikesCount: function () {
+                let that = this
+                let _token = $("meta[name=_token]").attr('content')
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url + '/ajax/get-likes-details',
+                    data: {
+                        post_id: that.postId,
+                        paginate: 4,
+                        offset: 0,
+                        _token: _token
+                    }
+                }).then(function (response) {
+                    console.log(response)
+                }).catch(function (error) {
+                    console.log(error)
+                })
             },
             postComment: function (e) {
                 if (e.shiftKey) {
