@@ -2810,6 +2810,21 @@ class TimelineController extends AppBaseController
         return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'imagePath'=>$image_path]]);
     }
 
+    public function fetchPostLikes(Request $request) {
+
+        $post_likes_by = DB::table('post_likes')->where('post_id',$request->post_id)->limit($request->paginate)->with('user')->offset($request->offset)->get();
+
+        $total_likes = DB::table('post_likes')->where('post_id',$request->post_id)->count();
+
+        $hasMore = false;
+        if($total_likes > $request->paginate) {
+            $hasMore = true;
+        }
+       
+        return response()->json(['status' => '200', ['post_likes_by'=>$post_likes_by,'has_more_likes'=>$hasMore]]);
+
+    }
+
     public function singlePostAPI(Request $request) {
         $timeline = Timeline::where('username', $request->username)->first();
 
