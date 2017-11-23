@@ -1,6 +1,7 @@
 <template>
     <div>
         <post-theater-view></post-theater-view>
+        <post-wholikes-view></post-wholikes-view>
         <template v-if="isLoading">
             <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
                 <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
@@ -58,7 +59,7 @@
                 </div>
                 <post-comment :post-id="postItem.id"></post-comment>
             </div>
-            <div v-for="(postItem, index) in itemList" class="panel panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
+            <div v-for="(postItem, index) in itemList" :key="postItem.id" class="panel panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
                 <post-header :post-data="postItem" :date="postItem.created_at"></post-header>
                 <div class="panel-body">
                     <post-description :post-html="postItem.description"></post-description>
@@ -92,6 +93,7 @@
     import postHeader from './child/postHeader'
     import postComment from './child/postComment'
     import postTheaterView from './child/postTheaterView'
+    import postWhoLikesView from './child/postWhoLikesView'
     import { mapGetters } from 'vuex'
 
     let axios = window.axios
@@ -105,6 +107,7 @@
         hasMorePost: true,
         offset: 0
     }
+    let vmThat;
     export default {
         props: {
             newPostAdded: false
@@ -153,9 +156,6 @@
                     console.log(error)
                 })
             },
-            postNewPost: function (i) {
-                alert(i)
-            },
             scrollFetchInit: function () {
                 let that = this
                 $(window).scroll(function() {
@@ -189,7 +189,7 @@
                     custTomData.isLoadingCurrent = false
                     if (response.status ==  200) {
                         let post = response.data[0].post;
-                        that.$store.commit('ADD_POST_ITEM_LIST', post)
+                        vmThat.$store.commit('ADD_POST_ITEM_LIST',{data:post[0], postFrom: 'timeline'})
                         setTimeout(function () {
                             hashtagify()
                             mentionify()
@@ -202,6 +202,7 @@
         },
         mounted () {
             let that = this
+            vmThat = this
             setTimeout(function () {
                 that.getDefaultData()
                 that.scrollFetchInit()
@@ -214,7 +215,8 @@
             'post-youtube': postYouTube,
             'post-header': postHeader,
             'post-comment': postComment,
-            'post-theater-view': postTheaterView
+            'post-theater-view': postTheaterView,
+            'post-wholikes-view': postWhoLikesView
         },
         computed: {
             ...mapGetters({

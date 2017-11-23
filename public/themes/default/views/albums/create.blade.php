@@ -1,15 +1,15 @@
-<!-- main-section -->	
+<!-- main-section -->
 <div class="container">
-	<div class="row">              
+	<div class="row">
 		<div class="col-md-8 col-lg-8">
 			<div class="panel panel-default">
 				<div class="panel-heading no-bg panel-settings">
 					<h3 class="panel-title">{{ trans('common.create_album') }}</h3>
 				</div>
 
-				<div class="panel-body nopadding">  
+				<div class="panel-body nopadding">
 					<div class="socialite-form">
-						@include('flash::message')                         
+						@include('flash::message')
 						<form class="margin-right" method="POST" action="{{ url('/'.Auth::user()->username.'/album/create') }}" files="true" enctype="multipart/form-data">
 							{{ csrf_field() }}
 
@@ -57,7 +57,7 @@
 									{{ Form::text('album_videos[]', null, ['class' => 'form-control youtube_link', 'placeholder' => trans('common.copy_paste_youtube_link')] ) }}
 								</div>
 							</fieldset>
-							
+
 							<fieldset class="form-group">
 								<div class="pull-right">
 									{{ Form::submit(trans('common.create_album'), ['class' => 'btn btn-success']) }}
@@ -67,12 +67,12 @@
 						</form>
 					</div><!-- /Fitmetix-form -->
 				</div>
-			</div><!-- /panel -->		
+			</div><!-- /panel -->
 		</div><!-- /col-md-8 -->
 
 		<div class="col-md-4 col-lg-4">
 			{!! Theme::partial('home-rightbar',compact('suggested_users','suggested_groups','suggested_pages','timeline')) !!}
 		</div>
 	</div>
-</div>	
+</div>
 <!-- /main-section -->

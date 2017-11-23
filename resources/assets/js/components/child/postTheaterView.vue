@@ -64,8 +64,18 @@
         .md-dialog--theater .md-dialog__wrapper {
             justify-content: center;
         }
-        .md-dialog--theater .md-dialog__surface .img-responsive {
-            max-height: calc(100% - 30px);
+        .md-dialog--theater .md-dialog__surface .img-viewer,
+        .md-dialog--theater .md-dialog__surface .post-image--wrapper {
+            height: 100%;
+        }
+        .md-dialog--theater .md-dialog__surface .img-viewer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .md-dialog--theater .md-dialog__surface .img-responsive{
+            max-height: 100%;
         }
         .md-dialog--theater .stage {
             width: 660px;
@@ -224,11 +234,9 @@
           let dialog = $('#post-image-theater-dialog').MaterialDialog({show:false});
             dialog.on('ca.dialog.shown', function () {
                 noBack();
-                window.dialogId = 'post-image-theater-dialog'
             });
             dialog.on('ca.dialog.hidden', function () {
                 resetBack();
-                window.dialogId = ''
                 that.$store.commit('SET_THEATER_ITEM', {postIndex: undefined, imageIndex: undefined})
             });
         },
