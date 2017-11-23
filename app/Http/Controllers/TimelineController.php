@@ -2812,11 +2812,16 @@ class TimelineController extends AppBaseController
 
     public function fetchPostLikes(Request $request) {
 
-        $post_likes_by = DB::table('post_likes')->where('post_id',$request->post_id)->limit($request->paginate)->with('user')->offset($request->offset)->get();
+        $posts = Post::where('id',$request->post_id)->get();
+
+        $hasMore = false;
+
+        foreach ($posts as $post) {
+            $post_likes_by = $post->users_liked()->limit($request->paginate)->offset($request->offset)->get();
+        }
 
         $total_likes = DB::table('post_likes')->where('post_id',$request->post_id)->count();
 
-        $hasMore = false;
         if($total_likes > $request->paginate) {
             $hasMore = true;
         }
