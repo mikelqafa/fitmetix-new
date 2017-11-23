@@ -1,4 +1,4 @@
-<form action="{{ url('') }}" method="post" class="create-post-form">
+<form action="{{ url('') }}" method="post" class="create-post-form" enctype="multipart/form-data">
   {{ csrf_field() }}
 
     <div class="panel panel-default panel-create"> <!-- panel-create -->
@@ -90,7 +90,7 @@
                   <li><a href="{!! url($username.'/groupevent/'.$timeline->groups->id) !!}" class="btn btn-default">{{ trans('common.create_event') }}</a></li>
                 @endif
 
-                <li><button type="submit" class="btn btn-submit btn-success">{{ trans('common.post') }}</button></li>
+                <li><button type="submit" class="btn btn-submit ft-btn-primary">{{ trans('common.post') }}</button></li>
             </ul>
 
             <div class="clearfix"></div>

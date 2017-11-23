@@ -340,6 +340,7 @@
     }
 </style>
 <script>
+    import { mapGetters } from 'vuex'
     export default {
         props: {
             postId: '',
@@ -351,35 +352,7 @@
         data: function () {
             return {
                 base_url: base_url,
-                commentInteract: false,
-                commentHasMore: false,
-                commentItemList: [],
-                commentIsPosting: false,
-                offset: 0,
                 showUserComment: 0
-            }
-        },
-        computed: {
-            userAvatar () {
-                return 'hello'
-            },
-            expandID () {
-                return 'comment-expand-' + this.postId
-            },
-            reverseCommentItemList: function() {
-                return this.commentItemList.slice().reverse();
-            },
-            postCommentsCount: function() {
-                return this.$store.state.postItemList[this.postIndex].postMetaInfo !== undefined ? this.$store.state.postItemList[this.postIndex].postMetaInfo.postCommentsCount : 0
-            },
-            postLikesCount: function() {
-                return this.$store.state.postItemList[this.postIndex].postMetaInfo !== undefined ? this.$store.state.postItemList[this.postIndex].postMetaInfo.postLikesCount : 0
-            },
-            userLiked: function (){
-                return this.$store.state.postItemList[this.postIndex].postMetaInfo !== undefined ? this.$store.state.postItemList[this.postIndex].postMetaInfo.userLiked : 0
-            },
-            userCommented: function (){
-                return this.$store.state.postItemList[this.postIndex].postMetaInfo !== undefined ? this.$store.state.postItemList[this.postIndex].postMetaInfo.userCommented : 0
             }
         },
         methods: {
@@ -398,10 +371,9 @@
                         _token: _token
                     }
                 }).then(function (response) {
-                    console.log(response.data[0])
                     if (response.status == 200) {
                         that.$store.commit('SET_POST_META', {
-                            index: that.postIndex,
+                            postIndex: that.postIndex,
                             postCommentsCount: response.data[0].post_comment_count,
                             postLikesCount: response.data[0].post_likes_count,
                             userLiked: response.data[0].user_liked,
@@ -425,12 +397,7 @@
                     }
                 }).then(function (response) {
                     console.log(response)
-                    if (response.status == 200) {
-                        /*that.$store.commit('SET_POST_META_USER_LIKED', {
-                            index: that.postIndex,
-                            userLiked: response.data.liked
-                        })*/
-                    }
+                    if (response.status == 200) {}
                 }).catch(function (error) {
                     console.log(error)
                 })
@@ -438,11 +405,11 @@
                 let like = !this.userLiked
                 console.log(like)
                 this.$store.commit('SET_POST_META_USER_LIKED', {
-                    index: that.postIndex,
+                    postIndex: that.postIndex,
                     userLiked: like
                 })
                 this.$store.commit('SET_POST_META_LIKES_COUNT', {
-                    index: this.postIndex,
+                    postIndex: this.postIndex,
                     postLikesCount: !like ? this.postLikesCount - 1 : this.postLikesCount + 1
                 })
             },
@@ -453,12 +420,25 @@
                     setTimeout(function () {
                         that.fetchComment()
                     }, 400)
+                } else {
+                    this.updateZippy()
                 }
             },
             updateZippy: function () {
                 $('#' + this.expandID).Zippy('update')
             },
             showLikesCount: function () {
+                this.$store.commit('SET_WHO_LIKES_ITEM', {postIndex: this.postIndex})
+                let offset = 0
+                if(this.$store.state.postItemList[this.postIndex].whoLikes !== undefined ) {
+                    offset = this.$store.state.postItemList[this.postIndex].whoLikes.offset
+                    offset = this.$store.state.postItemList[this.postIndex].whoLikes.offset
+                    if(!this.$store.state.postItemList[this.postIndex].whoLikes.hasMore) {
+                        $('#post-who-likes-dialog').MaterialDialog('show')
+                        return
+                    }
+                }
+                $('#post-who-likes-dialog').MaterialDialog('show')
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
                 axios({
@@ -468,11 +448,29 @@
                     data: {
                         post_id: that.postId,
                         paginate: 4,
-                        offset: 0,
+                        offset: offset,
                         _token: _token
                     }
                 }).then(function (response) {
                     console.log(response)
+                    if(response.status == 200) {
+                        let likesBy = response.data[0].post_likes_by;
+                        let itemArr = []
+                        for(let i = 0; i < likesBy.length;  i++) {
+                            itemArr.unshift({
+                                name: likesBy[i].name,
+                                username: likesBy[i].username,
+                                avatar: likesBy[i].avatar
+                            })
+                            offset++
+                        }
+                        that.$store.commit('SET_POST_WHO_LIKES', {
+                            postIndex: that.postIndex,
+                            hasMore: response.data[0].has_more_likes,
+                            itemList: itemArr,
+                            offset: offset
+                        })
+                    }
                 }).catch(function (error) {
                     console.log(error)
                 })
@@ -504,6 +502,7 @@
                         '</div>')
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
+                this.$store.commit('SET_POST_COMMENT_INTERACT',  {postIndex: that.postIndex, commentInteract: true})
                 axios({
                     method: 'post',
                     responseType: 'json',
@@ -517,22 +516,25 @@
                     console.log(response)
                     if (response.status == 200) {
                         input.value = ''
-                        that.postCommentsCount++
+                        that.$store.commit('SET_POST_META_COUNT',  {postIndex: that.postIndex, postCommentsCount: that.postCommentsCount+1})
                         $(e.target).parent().addClass('is-loading')
                         loadingWrapper.html('')
-                        that.commentIsPosting = false
-                        that.commentInteract = true
-                        that.userCommented
-                        that.commentItemList.unshift({
-                            created_at: new Date().toString(),
-                            id: response.data.comment_id,
-                            description: that.nl2br(value),
-                            media_id: null,
-                            parent_id: null,
-                            post_id: that.postId,
-                            user: response.data.user_info
-                         })
-                        that.userCommented++
+                        //that.userCommented
+                        that.$store.commit('ADD_POST_COMMENT_ONLY',
+                                {
+                                    postIndex: that.postIndex,
+                                    postComments: {
+                                        created_at: new Date().toString(),
+                                        id: response.data.comment_id,
+                                        description: that.nl2br(value),
+                                        media_id: null,
+                                        parent_id: null,
+                                        post_id: that.postId,
+                                        user: response.data.user_info
+                                    }
+                                }
+                        )
+                        //that.userCommented++
                         setTimeout(function () {
                             that.updateZippy()
                         }, 300)
@@ -546,8 +548,8 @@
                 let _token = $("meta[name=_token]").attr('content')
                 let that = this
                 let paginate = 3
-                that.commentInteract = true
                 if(this.postCommentsCount == 0) {
+                    that.$store.commit('SET_POST_COMMENT_INTERACT',  {postIndex: that.postIndex, commentInteract: true})
                     return
                 }
                 axios({
@@ -561,19 +563,35 @@
                         _token: _token
                     }
                 }).then(function (response) {
-                    console.log(response)
+                    that.$store.commit('SET_POST_COMMENT_INTERACT',  {postIndex: that.postIndex, commentInteract: true})
                     if (response.status == 200) {
+                        console.log(response.data[0])
                         let comments = response.data[0].comments
                         let hasMore = response.data[0].hasMore
+                        let offset = 0
+                        let commentItemList = []
+                        if(that.postItemList[that.postIndex].postComments !== undefined) {
+                            if(that.postItemList[that.postIndex].commentHasMore) {
+                                offset = that.postItemList[that.postIndex].offset
+                            } else {
+                                return
+                            }
+                        }
                         for(let i = 0; i < comments.length;  i++) {
                             comments[i]['isLiked'] = false
-                            that.commentItemList.unshift(comments[i])
+                            commentItemList.unshift(comments[i])
+                        }
+                        offset += comments.length
+                        if(that.postItemList[that.postIndex].postComments !== undefined) {
+                            // data already in the store, add new data
+                            that.$store.commit('ADD_POST_COMMENT',  {hasMore: hasMore, offset: offset, postIndex: that.postIndex, postComments: commentItemList})
+                        } else {
+                            // data not initialized, so data need to init
+                            that.$store.commit('SET_POST_COMMENT',  {hasMore: hasMore, offset: offset, postIndex: that.postIndex, postComments: commentItemList})
                         }
                         setTimeout(function () {
                             that.updateZippy()
                         }, 500)
-                        that.offset += comments.length
-                        that.commentHasMore = hasMore
                     }
                 }).catch(function (error) {
                     console.log(error)
@@ -627,10 +645,46 @@
             $('#' + this.expandID).Zippy();
             if(this.showSidebar) {
                 if($(window).width() > 599)  {
+                    if(this.postCommentsCount)
                     this.commentOnPost()
                 }
             }
         },
-        components: {}
+        components: {},
+        computed: {
+            ...mapGetters({
+                    postItemList: 'postItemList'
+                }),
+            userAvatar () {
+                return 'hello'
+            },
+            expandID () {
+                return Math.floor((Math.random() * 10) + 1)+'comment-expand-' + this.postId
+            },
+            reverseCommentItemList: function() {
+                return this.commentItemList.slice().reverse();
+            },
+            postCommentsCount: function() {
+                return this.postItemList[this.postIndex].postMetaInfo !== undefined ? this.postItemList[this.postIndex].postMetaInfo.postCommentsCount : 0
+            },
+            postLikesCount: function() {
+                return this.postItemList[this.postIndex].postMetaInfo !== undefined ? this.postItemList[this.postIndex].postMetaInfo.postLikesCount : 0
+            },
+            userLiked: function (){
+                return this.postItemList[this.postIndex].postMetaInfo !== undefined ? this.postItemList[this.postIndex].postMetaInfo.userLiked : 0
+            },
+            userCommented: function (){
+                return this.postItemList[this.postIndex].postMetaInfo !== undefined ? this.postItemList[this.postIndex].postMetaInfo.userCommented : 0
+            },
+            commentHasMore: function () {
+                return this.postItemList[this.postIndex].commentHasMore !== undefined ? this.postItemList[this.postIndex].commentHasMore : 0
+            },
+            commentItemList: function () {
+                return this.postItemList[this.postIndex].postComments !== undefined ? this.postItemList[this.postIndex].postComments : []
+            },
+            commentInteract: function () {
+                return this.postItemList[this.postIndex].commentInteract !== undefined ? this.postItemList[this.postIndex].commentInteract : false
+            }
+        }
     }
 </script>

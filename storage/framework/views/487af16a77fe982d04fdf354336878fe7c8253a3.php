@@ -1,4 +1,4 @@
-<form action="<?php echo e(url('')); ?>" method="post" class="create-post-form">
+<form action="<?php echo e(url('')); ?>" method="post" class="create-post-form" enctype="multipart/form-data">
   <?php echo e(csrf_field()); ?>
 
 
@@ -94,7 +94,7 @@
                   <li><a href="<?php echo url($username.'/groupevent/'.$timeline->groups->id); ?>" class="btn btn-default"><?php echo e(trans('common.create_event')); ?></a></li>
                 <?php endif; ?>
 
-                <li><button type="submit" class="btn btn-submit btn-success"><?php echo e(trans('common.post')); ?></button></li>
+                <li><button type="submit" class="btn btn-submit ft-btn-primary"><?php echo e(trans('common.post')); ?></button></li>
             </ul>
 
             <div class="clearfix"></div>

@@ -13,7 +13,7 @@
 
     <!-- Add to home screen for Android and modern mobile browsers -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#FFFFFF">
+    <meta name="theme-color" content="#1E7C82">
 
     <!-- Add to home screen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -64,6 +64,10 @@
         {!! Setting::get('google_analytics') !!}
     @endif
     <style>
+        .ft-btn-primary, .ft-btn-primary:hover, .ft-btn-primary:focus {
+            background-color: #1E7C82;
+            color: #fff;
+        }
         .timeline-posts__item,.panel-create {
             max-width: 600px;
             margin-left:auto;

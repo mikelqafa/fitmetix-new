@@ -1,5 +1,5 @@
 <template>
-    <div  class="post-image--wrapper">
+    <div  class="post-image--wrapper" v-bind:class="{ 'post-image--wrapper--slider': isMultiple }">
         <template v-if="!noImage">
             <template v-if="isMultiple">
                 <swiper :options="swiperOption" class="deal-card-slider">
@@ -22,6 +22,16 @@
     </div>
 </template>
 <style>
+    .post-image--wrapper--slider {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    .post-image--wrapper--slider .swiper-container{
+        width: 100%;
+    }
     .item__background--post{
         width: 100%;
         background-size: cover;
@@ -31,7 +41,6 @@
         max-width: 100%;
         display: block;
         margin: 0 auto;
-        max-height: 80vh;
     }
     .img-viewer{
         cursor: pointer;
@@ -118,24 +127,13 @@
                     paginationClickable: true,
                     spaceBetween: 0,
                     loop: false,
-                    autoHeight: true,
                     pagination: '.swiper-pagination',
                     prevButton: '.swiper-button-prev',
                     nextButton: '.swiper-button-next'
                 }
             }
         },
-        mounted () {
-            let that = this
-            let url = 'http://assets.fitmetix.com/'
-            /*if (this.postImg !== undefined) {
-                $.each(this.postImg, function(key, val) {
-                    let s = val.source !== undefined ? val.source : ''
-                    that.images.push(asset_url+'uploads/users/gallery/'+s)
-                });
-            }*/
-            console.log(this.postImg)
-        },
+        mounted () {},
         methods: {
             sourceImagePath: function (s) {
                 let url = 'http://assets.fitmetix.com/'
