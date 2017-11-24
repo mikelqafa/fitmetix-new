@@ -677,6 +677,15 @@
 <script src="{{ asset('js/bundle.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/dialog.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/drawer.js') }}"></script>
+<script type="text/javascript">
+    $(function() {
+        $('.ft-card__img-wrapper').click(function() {
+            //alert("working")
+            //$('#drawer-1').MaterialDrawer('show')
+        })
+    })
+</script>
 @if (in_array(!Route::currentRouteName(), ['contact', 'login', 'register']))
     <script src="{{ asset('js/notification.js') }}" type="text/javascript"></script>
 @endif
