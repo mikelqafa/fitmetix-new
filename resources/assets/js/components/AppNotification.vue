@@ -20,7 +20,7 @@
                         <p>{{ ntMessageNo }}</p>
                     </li>
                     <li class="inbox-message" v-for="conversation in conversations.data">
-                        <a href="#" :data-user-id="conversation.user.id" onclick="chatBoxes.sendMessageOnClick(this)">
+                        <a href="javascript:;" :data-user-id="conversation.user.id" onclick="chatBoxes.sendMessageOnClick(this)">
                             <div class="media">
                                 <div class="media-left">
                                     <img class="media-object img-icon" v-bind:src="conversation.user.avatar" alt="images">

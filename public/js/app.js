@@ -7,11 +7,10 @@ document_title = document.title;
   global.firstHash = true
   var _hash = "!";
   var noBack = function () {
-    global.location.href += "#!"
+    global.location.href += "#!!"
   };
   var resetBack = function () {
     global.location.hash = '';
-    console.log('reset call')
   }
   global.onhashchange = function () {
     if (!global.firstHash) {

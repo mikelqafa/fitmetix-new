@@ -5,7 +5,7 @@
                 <swiper :options="swiperOption" class="deal-card-slider">
                     <swiper-slide :key="imageIndex" v-for="(image, imageIndex) in postImg">
                         <div :key="imageIndex" class="">
-                            <img :src="sourceImagePath(image.source)" class="img-responsive">
+                            <img :data-src="sourceImagePath(image.source)" :src="sourceImagePath(image.source)" class="swiper-lazy img-responsive">
                         </div>
                     </swiper-slide>
                     <div class="swiper-button-prev" slot="button-prev"></div>
@@ -22,15 +22,17 @@
     </div>
 </template>
 <style>
-    .post-image--wrapper--slider {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-    }
-    .post-image--wrapper--slider .swiper-container{
-        width: 100%;
+    @media screen and (min-width: 600px) {
+        .post-image--wrapper--slider {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+        }
+        .post-image--wrapper--slider .swiper-container{
+            width: 100%;
+        }
     }
     .item__background--post{
         width: 100%;
@@ -129,6 +131,8 @@
                     loop: false,
                     pagination: '.swiper-pagination',
                     prevButton: '.swiper-button-prev',
+                    preloadImages: false,
+                    lazyLoading: true,
                     nextButton: '.swiper-button-next'
                 }
             }

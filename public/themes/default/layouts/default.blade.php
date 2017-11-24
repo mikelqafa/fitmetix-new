@@ -48,7 +48,6 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <link href="{{ asset('css/prakash.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/zippy.css') }}" rel="stylesheet">
     <script type="text/javascript">
@@ -680,9 +679,20 @@
 <script src="{{ asset('js/drawer.js') }}"></script>
 <script type="text/javascript">
     $(function() {
-        $('.ft-card__img-wrapper').click(function() {
-            //alert("working")
-            //$('#drawer-1').MaterialDrawer('show')
+        $('#drawer-1').MaterialDrawer({
+            show: false,
+            permanent: true
+        });
+        $('.ft-card_drawer-trigger').click(function(e) {
+            if(!$('body').hasClass('is-drawer-open')) {
+                $('#drawer-1').MaterialDrawer('toggle');
+                $('#drawer-1').find('.ft-card').addClass('hidden');
+                $('#drawer-1').find( '.ft-card[data-index="'+ $(this).attr('data-index') +'"]').removeClass('hidden')
+            } else {
+                e.preventDefault();
+                $('#drawer-1').find('.ft-card').addClass('hidden');
+                $('#drawer-1').find( '.ft-card[data-index="'+ $(this).attr('data-index') +'"]').removeClass('hidden')
+            }
         })
     })
 </script>

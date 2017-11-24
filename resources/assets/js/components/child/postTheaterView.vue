@@ -185,6 +185,7 @@
             justify-content: center;
             align-items: center;
             display: flex;
+            flex-basis: 100%;
         }
         .md-dialog--dark .md-dialog__surface{
             background-color: #0A0A0A;
@@ -231,12 +232,17 @@
         },
         mounted () {
             let that = this
-          let dialog = $('#post-image-theater-dialog').MaterialDialog({show:false});
+            let dialog = $('#post-image-theater-dialog').MaterialDialog({show:false});
             dialog.on('ca.dialog.shown', function () {
-                noBack();
+                if($(window).width()<600) {
+                    noBack()
+                    window.dialogId = 'post-image-theater-dialog'
+                }
             });
             dialog.on('ca.dialog.hidden', function () {
-                resetBack();
+                if($(window).width()<600) {
+                    resetBack()
+                }
                 that.$store.commit('SET_THEATER_ITEM', {postIndex: undefined, imageIndex: undefined})
             });
         },
