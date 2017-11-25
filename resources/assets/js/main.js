@@ -7,6 +7,7 @@ import postDialogOption from './components/DialogOption'
 import commentDialogOption from './components/CommentDialogOption'
 import VueTimeago from 'vue-timeago'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import AppEventCalendar from './components/appEventCalendar'
 import {store} from './store/store'
 require('swiper/dist/css/swiper.css')
 
@@ -38,3 +39,4 @@ window.appNotification = new Vue({
     'app-notification': AppNotification
   }
 })
+

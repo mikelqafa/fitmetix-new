@@ -194,7 +194,6 @@
 		</div>
 		@endif
 	</div><!-- /panel-body -->
-	
 </div>			
 <!-- </div> -->
 
