@@ -675,6 +675,7 @@
 </script>
 <script src="{{ asset('js/bundle.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/dialog.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/bootstrap-datetimepicker.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/drawer.js') }}"></script>
 <script type="text/javascript">

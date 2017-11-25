@@ -1,3 +1,20 @@
+<style type="text/css">
+::-webkit-input-placeholder {
+   text-align: center;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   text-align: center;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   text-align: center;  
+}
+
+:-ms-input-placeholder {  
+   text-align: center; 
+}
+</style>
 <!-- <div class="main-content"> -->	
 <div class="panel panel-default">
 	<div class="panel-heading no-bg panel-settings">
@@ -30,18 +47,34 @@
 				<fieldset class="form-group required {{ $errors->has('name') ? ' has-error' : '' }}">
 					<label>Upload Cover</label>
 					<input type="file" name="event_images_upload" class="form-control">
+					<br/>
+					{{-- {{ Form::label('name', trans('common.name_of_your_event'), ['class' => 'control-label']) }} --}}
+					{{ Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => trans('common.name_of_your_event'),'maxlength'=>30]) }}
+					@if ($errors->has('name'))
+						<span class="help-block">
+							{{ $errors->first('name') }}
+						</span>
+					@endif
+					<br/>	
 					<div class="row">
-						<div class="col-md-6">
-							{{ Form::label('name', trans('common.name_of_your_event'), ['class' => 'control-label']) }}
-							{{ Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => trans('common.name_of_your_event')]) }}
-							@if ($errors->has('name'))
+						<div class="col-md-4">
+							{{-- {{ Form::label('type', trans('common.privacy'), ['class' => 'control-label']) }} --}}
+							{{ Form::select('type', array('' => trans('common.privacy'), 'private' => trans('common.private'), 'public' => trans('common.public')), null ,array('class' => 'form-control')) }}
+							@if ($errors->has('type'))
 								<span class="help-block">
-									{{ $errors->first('name') }}
+									{{ $errors->first('type') }}
 								</span>
 							@endif
 						</div>
-						<div class="col-md-6">
-							{{ Form::label('gender', 'Gender: ', ['class' => 'control-label']) }}
+						<div class="col-md-4">
+							<fieldset class="form-group">
+								{{-- {{ Form::label('frequency', 'Frequency: ', ['class' => 'control-label']) }} --}}
+								{{ Form::select('frequency', array('' => 'Frequency', 'once' => 'Once', 'daily' => 'Daily', 'weekly'=>'Weekly','monthly'=>'Monthly'), null ,array('class' => 'form-control')) }}
+							
+							</fieldset>
+						</div>
+						<div class="col-md-4">
+							{{-- {{ Form::label('gender', 'Gender: ', ['class' => 'control-label']) }} --}}
 							{{ Form::select('gender', array('' => trans('admin.please_select'), 'male' => 'Male', 'female' => 'female', 'all' => 'All'), 'all' ,array('class' => 'form-control')) }}
 							@if ($errors->has('name'))
 								<span class="help-block">
@@ -53,43 +86,30 @@
 				</fieldset>
 
 				<fieldset class="form-group required {{ $errors->has('type') ? ' has-error' : '' }}">
-					<div class="row">
-						<div class="col-md-6">
-							{{ Form::label('type', trans('common.type'), ['class' => 'control-label']) }}
-							{{ Form::select('type', array('' => trans('admin.please_select'), 'private' => trans('common.private'), 'public' => trans('common.public')), null ,array('class' => 'form-control')) }}
-							@if ($errors->has('type'))
-								<span class="help-block">
-									{{ $errors->first('type') }}
-								</span>
-							@endif
-						</div>
-						<div class="col-md-6">
-							{{--{{ Form::label('user_limit', 'User Liimt', ['class' => 'control-label']) }}--}}
-							<label for="user_limit">User Limit: <small>(Provide <code>0</code> for Unlimited User)</small></label>
-							{{ Form::number('user_limit', old('user_limit'), ['class' => 'form-control', 'placeholder' => 'Max. user (Provide 0 for unlimited)']) }}
-							@if ($errors->has('type'))
-								<span class="help-block">
-									{{ $errors->first('type') }}
-								</span>
-							@endif
-						</div>
-					</div>
+				    {{-- {{ Form::label('location', trans('common.location')) }} --}}
+					{{ Form::text('location', old('location'), ['class' => 'form-control', 'id' => 'location-input', 'autocomplete' => 'off','placeholder' => trans('common.enter_location'), 'onKeyPress' => "return initMap(event)" ]) }}
+					@if ($errors->has('location'))
+						<span class="help-block">
+							{{ $errors->first('location') }}
+						</span>
+					@endif	
 				</fieldset>
 
 				<fieldset class="form-group required {{ $errors->has('location') || $errors->has('price') ? ' has-error' : '' }}">
 					<div class="row">
 						<div class="col-md-6">
-							{{ Form::label('location', trans('common.location')) }}
-							{{ Form::text('location', old('location'), ['class' => 'form-control', 'id' => 'location-input', 'autocomplete' => 'off','placeholder' => trans('common.enter_location'), 'onKeyPress' => "return initMap(event)" ]) }}
-							@if ($errors->has('location'))
+							{{--{{ Form::label('user_limit', 'User Liimt', ['class' => 'control-label']) }}--}}
+							{{-- <label for="user_limit">User Limit: </label> --}}
+							{{ Form::number('user_limit', old('user_limit'), ['class' => 'form-control', 'placeholder' => 'Number of participants','min'=>1]) }}
+							@if ($errors->has('type'))
 								<span class="help-block">
-									{{ $errors->first('location') }}
+									{{ $errors->first('type') }}
 								</span>
 							@endif
 						</div>
 						<div class="col-md-6">
-							<label for="price">Price: <small>(Provide <code>0</code> for FREE Event)</small></label>
-							{{ Form::text('price', old('price'), ['class' => 'form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price' ]) }}
+							{{-- <label for="price">Price: <small>(Provide <code>0</code> for FREE Event)</small></label> --}}
+							{{ Form::number('price', old('price'), ['class' => 'form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price' ,'max'=>10000]) }}
 							@if ($errors->has('price'))
 								<span class="help-block">
 									{{ $errors->first('price') }}
@@ -102,11 +122,11 @@
 				<fieldset class="form-group required {{ $errors->has('start_date') || $errors->has('end_date') ? ' has-error' : '' }}">
 					<div class="row">
 						<div class="col-md-6">
-							{{ Form::label('start_date', trans('admin.start_date'), ['class' => 'control-label']) }}
+							{{-- {{ Form::label('start_date', trans('admin.start_date'), ['class' => 'control-label']) }} --}}
 
 							<div class="input-group date form_datetime">												
 
-								<input type="text" class="form-control" name="start_date" placeholder="01/01/1970" value="{{ old('start_date') }}">
+								<input type="text" class="datepick2 form-control" name="start_date" placeholder="Start Time" value="{{ old('start_date') }}">
 
 								<span class="input-group-addon addon-right calendar-addon">
 									<span class="fa fa-calendar"></span>
@@ -123,10 +143,10 @@
 							@endif
 						</div>
 						<div class="col-md-6">
-							{{ Form::label('end_date', trans('admin.end_date'), ['class' => 'control-label']) }}
+							{{-- {{ Form::label('end_date', trans('admin.end_date'), ['class' => 'control-label']) }} --}}
 							<div class="input-group date form_datetime">
 
-								<input value="{{ old('end_date') }}" type="text" class="form-control" name="end_date" placeholder="01/01/1970">
+								<input value="{{ old('end_date') }}" type="text" class="datepick2 form-control" name="end_date" placeholder="End Time">
 
 								<span class="input-group-addon addon-right calendar-addon">
 									<span class="fa fa-calendar"></span>
@@ -146,24 +166,17 @@
 				</fieldset>
 
 				<fieldset class="form-group">
-					{{ Form::label('about', trans('common.about'), ['class' => 'control-label']) }}							
-					{{ Form::textarea('about', old('about'), ['class' => 'form-control','placeholder' => trans('common.about')]) }}									
+					{{-- {{ Form::label('about', trans('common.about'), ['class' => 'control-label']) }}							 --}}
+					{{ Form::textarea('about', old('about'), ['class' => 'form-control','placeholder' => trans('common.description'), 'maxlength'=>500]) }}									
 				</fieldset>
 
-				<fieldset class="form-group">
+				{{-- <fieldset class="form-group">
 					{{ Form::label('focus', 'Focus: ', ['class' => 'control-label']) }}
 					{{ Form::radio('focus', 'training', true) }} Training
                     {{ Form::radio('focus', 'motivation') }} Motivation
                     {{ Form::radio('focus', 'learning') }} Learning (mix)
-				</fieldset>
-
-				<fieldset class="form-group">
-					{{ Form::label('frequency', 'Frequency: ', ['class' => 'control-label']) }}
-					{{ Form::radio('frequency', 'once', true) }} Once
-					{{ Form::radio('frequency', 'daily') }} Daily
-					{{ Form::radio('frequency', 'weekly') }} Weekly
-					{{ Form::radio('frequency', 'monthly') }} Monthly
-				</fieldset>
+				</fieldset> --}}
+				<input type="hidden" name="focus" value="training">
 
 				{!! Form::hidden('group_id', $group_id) !!}		
 
@@ -221,12 +234,4 @@ async defer></script>
     return true; 
 } 
 }
-
-$(".form_datetime").datetimepicker({
-	format: "mm/dd/yyyy H P",
-	autoclose: true,
-	minView: 1,
-	startView: "decade",
-	showMeridian: true
-});
 </script>

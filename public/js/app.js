@@ -207,8 +207,17 @@ $(function () {
   // This will show modal when the settings are saved and flashed with overlay
   $('#flash-overlay-modal').modal();
 
-  /*$("#datepick2").datepicker();*/
+  // $(".datepick2").datepicker();
   /*jQuery("time.timeago").timeago();*/
+
+  $(".datepick2").datetimepicker({
+    format: "mm/dd/yyyy H P",
+    autoclose: true,
+    minView: 1,
+    startView: "decade",
+    showMeridian: true
+  });
+
 
   $('.create-post-form').ajaxForm({
     url: SP_source() + 'ajax/create-post',

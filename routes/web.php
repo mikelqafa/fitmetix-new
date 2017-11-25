@@ -219,6 +219,7 @@ Route::group(['prefix' => '/{username}', 'middleware' => 'auth'], function ($use
     
     Route::get('/members/{group_id}', 'TimelineController@getGroupMember');
 
+    Route::get('/events/{event_id}/delete', 'AdminController@removeUserEvent');
     Route::get('/groupadmin/{group_id}', 'TimelineController@getAdminMember');
     Route::get('/groupposts/{group_id}', 'TimelineController@getGroupPosts');
     Route::get('/page-posts', 'TimelineController@getPagePosts');

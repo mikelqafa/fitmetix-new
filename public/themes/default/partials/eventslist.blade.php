@@ -53,16 +53,19 @@
 		margin-bottom: 4px;
 	}
 
-   .main-content > .container > .row > .col-md-7.col-lg-6 {
-   	 width: 100% !important;
-   }
-   .md-drawer--permanent {
-	   width: auto;
-	   padding-right: 0px;
-	   padding-left: 0;
-	   padding-top: 64px;
-	   z-index: 1;
-   }
+    .main-content > .container > .row > .col-md-7.col-lg-6 {
+   	    width: 100% !important;
+    }
+    .md-drawer--permanent {
+		width: auto;
+		padding-right: 0px;
+		padding-left: 0;
+		padding-top: 64px;
+		z-index: -1;
+    }
+    .md-drawer--permanent.md-drawer--visible {
+        z-index: 1;
+    }
    @media screen and (min-width: 960px) {
 	   .md-drawer {
 		   left: auto;
@@ -137,7 +140,7 @@
 						<div class="pan">
 							@if(count($user_events))
 							   <div class="ft-grid">
-								   <?php $i = 0; ?>
+								   @php $i = 0; @endphp
 							   @foreach($user_events as $user_event)
 									<div class="ft-grid__item">
 										<div class="ft-card">
@@ -181,7 +184,7 @@
 											</div>
 										</div>
 									</div>
-										   <?php $i++ ?>
+										   @php $i++ @endphp
 								@endforeach
 								</div>
 
@@ -193,9 +196,9 @@
 													&times;
 												</a>
 											</div>
-											<?php $i = 0; ?>
+											@php $i = 0; @endphp
 									@foreach($user_events as $user_event)
-											<a href="javascript:;" class="ft-card hidden" data-index="{{$i}}">
+											<a href="{{ url($user_event->timeline->username) }}" class="ft-card hidden" data-index="{{$i}}">
 												<div class="ft-card__img-wrapper">
 													@if($user_event->timeline->cover)
 														<img class="ft-card__img" src="{{ env('STORAGE_URL').'uploads/events/covers/'.$user_event->timeline->cover['source'] }}" alt="Event Cover">
@@ -253,7 +256,7 @@
 													</div>
 												</div>
 											</a>
-										<?php $i++ ?>
+										@php $i++ @endphp
 									@endforeach
 										</div>
 									</aside>

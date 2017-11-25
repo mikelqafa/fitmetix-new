@@ -1047,15 +1047,23 @@ class TimelineController extends AppBaseController
         $users = $event->users()->get();
 
         if (!$event->users->contains(Auth::user()->id)) {
-            $event->users()->attach(Auth::user()->id);
-
-            foreach ($users as $user) {
-                if ($user->id != Auth::user()->id) {
-                    //Notify the user for event join
-                    Notification::create(['user_id' => $user->id, 'timeline_id' => $request->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.attending_your_event'), 'type' => 'join_event']);
-                }
+            if($event->user_limit < $event->users()->count()){
+                return response()->json(['status' => '200', 'joined' => false, 'message' => 'Limit reached']);
             }
-            return response()->json(['status' => '200', 'joined' => true, 'message' => 'successfully joined']);
+            else if($event->gender != Auth::user()->gender){
+                return response()->json(['status' => '200', 'joined' => false, 'message' => 'Gender mismatch']);   
+            }
+            else {
+                $event->users()->attach(Auth::user()->id);
+
+                foreach ($users as $user) {
+                    if ($user->id != Auth::user()->id) {
+                        //Notify the user for event join
+                        Notification::create(['user_id' => $user->id, 'timeline_id' => $request->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.attending_your_event'), 'type' => 'join_event']);
+                    }
+                }
+                return response()->json(['status' => '200', 'joined' => true, 'message' => 'successfully joined']);
+            }
         } else {
             $event->users()->detach([Auth::user()->id]);
 
@@ -2020,6 +2028,7 @@ class TimelineController extends AppBaseController
                 'timeline_id' => $timeline->id,
                 'type'        => $request->type,
                 'user_id'     => Auth::user()->id,
+                'user_limit'  => $request->user_limit,
                 'location'    => $request->location,
                 'start_date'  => date('Y-m-d H:i', strtotime($request->start_date)),
                 'end_date'    => date('Y-m-d H:i', strtotime($request->end_date)),
@@ -2869,5 +2878,38 @@ class TimelineController extends AppBaseController
         $comment_likes = [];
 
         return response()->json(['status' => '200', ['comments'=>$comments,'hasMore'=>$hasMore,'comment_likes'=>$comment_likes]]);
+    }
+
+    public function removeUserEvent($event_id)
+    {
+        $event = Event::find($event_id);
+        
+        //Deleting Events
+        $event->users()->detach();
+
+            // Deleting event posts
+        $event_posts = $event->timeline()->with('posts')->first();
+        
+        if (count($event_posts->posts) != 0) {
+            foreach ($event_posts->posts as $post) {
+                $post->deleteMe();
+            }
+        }
+
+                //Deleting event notifications
+        $timeline_alerts = $event->timeline()->with('notifications')->first();
+
+        if (count($timeline_alerts->notifications) != 0) {
+            foreach ($timeline_alerts->notifications as $notification) {
+                $notification->delete();
+            }
+        }
+
+        $event_timeline = $event->timeline();
+        $event->delete();
+        $event_timeline->delete();
+
+        Flash::success(trans('messages.event_deleted_success'));
+        return redirect()->back();
     }
 }
