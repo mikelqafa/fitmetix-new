@@ -33,6 +33,7 @@
         methods: {
             viewMore: function () {
                 this.postHtmlViewAble = this.postHtml
+                window.emojify.run()
             }
         },
         computed: {
@@ -44,6 +45,7 @@
             }
         },
         mounted() {
+            window.emojify.run()
             this.postHtmlViewAble =  (this.postHtml.length < 160 && this.postHtml.length > this.textLimit) ? this.postHtml : (this.postHtml.length > this.textLimit) ? this.postHtml.substr(0, this.textLimit) : this.postHtml
         }
     }
