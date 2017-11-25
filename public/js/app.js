@@ -284,6 +284,7 @@ $(function () {
         //$('[data-toggle="tooltip"]').tooltip();
         $('[name="description"]').focus();
         materialSnackBar({messageText: 'Your post has been successfully published', autoClose: true })
+        emojify.run()
       }
       else
       {
