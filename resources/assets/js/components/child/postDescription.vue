@@ -1,6 +1,6 @@
 <template>
     <div class="text-wrapper_desc">
-        <span class="text-wrapper" v-if="hasItem" v-html="postHtmlViewAble"></span>
+        <div class="text-wrapper" v-if="hasItem" v-html="postHtmlViewAble"></div>
         <template v-if="isMoreViewable">
             <span>...</span>
         </template>

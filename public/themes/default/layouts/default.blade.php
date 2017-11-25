@@ -651,7 +651,7 @@
         }
     </style>
 </head>
-<body @if(Setting::get('enable_rtl') == 'on') class="direction-rtl" @endif>
+<body id="fitmetix-app" @if(Setting::get('enable_rtl') == 'on') class="direction-rtl" @endif>
 
 <div class="padding-10">
     {!! Theme::partial('header') !!}

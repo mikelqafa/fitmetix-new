@@ -143,13 +143,13 @@
                             i++
                         });
                         setTimeout(function () {
-                            hashtagify()
-                            mentionify()
-                        }, 1000)
+                            emojify.run();
+                            hashtagify();
+                            mentionify();
+                        }, 500)
                         that.inProgress = false
                         that.hasMorePost = i == paginate;
                         that.offset += i
-                        //console.log(that.offset, that.hasMorePost)
                         that.isFetchingBottom = false
                     }
                 }).catch(function(error) {

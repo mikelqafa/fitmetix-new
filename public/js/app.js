@@ -47,6 +47,10 @@ function mentionify()
   });
 }
 $(function () {
+  emojify.setConfig({
+    img_dir : base_url + 'images/emoji/basic',
+    mode: 'img'
+  });
   var validFiles = [];
   //Admin panel user sorting
   $('.usersort').on('change', function() {
@@ -203,7 +207,6 @@ $(function () {
     }
   });
 
-  emojify.setConfig({img_dir : theme_url + 'images/emoji/basic'});
   // This will show modal when the settings are saved and flashed with overlay
   $('#flash-overlay-modal').modal();
 
@@ -276,9 +279,6 @@ $(function () {
         $('[name="user_tags[]"]').val('');
         $('.user-tags').val('');
         $('.user-tag-names').empty('');
-        emojify.run();
-        hashtagify();
-        mentionify();
         //$('.post-description').linkify()
         window.timeLine.$options.components["app-post"].methods.fetchNewOnePost(responseText.data.id)
         //$('[data-toggle="tooltip"]').tooltip();
@@ -331,7 +331,8 @@ $(function () {
       $.get( SP_source() + 'ajax/load-emoji')
           .done(function( data ) {
             $('.emoticons-wrapper').html(data.data);
-            emojify.run();
+            emojify.run()
+            console.log('hello')
             emoticonButton.addClass('loaded-emoji')
           });
     }
@@ -1259,7 +1260,6 @@ $(function () {
   });
 
   hashtagify();
-  emojify.run();
   mentionify();
 
   $('form.change-cover-form').ajaxForm({
