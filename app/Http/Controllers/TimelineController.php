@@ -478,8 +478,8 @@ class TimelineController extends AppBaseController
         $post = Post::create($input);
         $post->notifications_user()->sync([Auth::user()->id], true);
 
-        if ($request->file('post_images_upload_modified')) {
-            foreach ($request->file('post_images_upload_modified') as $postImage) {
+        if ($request->file('post_images_upload')) {
+            foreach ($request->file('post_images_upload') as $postImage) {
                 $strippedName = str_replace(' ', '', $postImage->getClientOriginalName());
                 $photoName = date('Y-m-d-H-i-s').$strippedName;
 

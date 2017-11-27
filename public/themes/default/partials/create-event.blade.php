@@ -14,6 +14,39 @@
 :-ms-input-placeholder {  
    text-align: center; 
 }
+
+.bdp-input {
+    border-radius: 2px;
+    padding: 0 3px;
+    border: 1px solid rgba(34, 36, 38, .15);
+    cursor: pointer;
+}
+
+.bdp-input.disabled {
+    color: #AAA;
+    cursor: default;
+}
+
+.bdp-popover {
+    min-width: 110px;
+}
+
+.bdp-popover input {
+    display: inline;
+    margin-bottom: 3px;
+    width: 60px;
+}
+
+.bdp-block {
+    display: inline-block;
+    line-height: 1;
+    text-align: center;
+    padding: 5px 3px;
+}
+
+.bdp-label {
+    font-size: 70%;
+}
 </style>
 <!-- <div class="main-content"> -->	
 <div class="panel panel-default">
@@ -75,7 +108,7 @@
 						</div>
 						<div class="col-md-4">
 							{{-- {{ Form::label('gender', 'Gender: ', ['class' => 'control-label']) }} --}}
-							{{ Form::select('gender', array('' => trans('admin.please_select'), 'male' => 'Male', 'female' => 'female', 'all' => 'All'), 'all' ,array('class' => 'form-control')) }}
+							{{ Form::select('gender', array('' => trans('common.gender'), 'male' => 'Male', 'female' => 'female', 'all' => 'All'), null ,array('class' => 'form-control')) }}
 							@if ($errors->has('name'))
 								<span class="help-block">
 									{{ $errors->first('name') }}
@@ -146,11 +179,13 @@
 							{{-- {{ Form::label('end_date', trans('admin.end_date'), ['class' => 'control-label']) }} --}}
 							<div class="input-group date form_datetime">
 
-								<input value="{{ old('end_date') }}" type="text" class="datepick2 form-control" name="end_date" placeholder="End Time">
+								<input value="{{ old('end_date') }}" type="text" name="end_date" class="form-control" id="duration">
+
+								{{-- <input value="{{ old('end_date') }}" type="text" class="datepick2 form-control" name="end_date" placeholder="End Time">
 
 								<span class="input-group-addon addon-right calendar-addon">
 									<span class="fa fa-calendar"></span>
-								</span>
+								</span> --}}
 								
 								{{-- <span class="input-group-addon addon-right angle-addon">
 									<span class="fa fa-angle-down"></span>

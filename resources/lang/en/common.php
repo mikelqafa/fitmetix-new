@@ -205,7 +205,7 @@ return [
     'date_time'                         => 'Date / Time',
     'public'                            => 'Public',
     'private'                           => 'Private',
-    'name_of_your_event'                => 'Name of your event',
+    'name_of_your_event'                => 'Event title',
     'only_guests'                       => 'Guests',
     'invitemembers'                     => 'Invite Members',
     'guests'                            => 'Guests',

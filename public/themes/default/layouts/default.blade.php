@@ -678,6 +678,7 @@
 <script src="{{ asset('js/bootstrap-datetimepicker.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/drawer.js') }}"></script>
+<script src="{{ asset('js/bootstrap-duration-picker.js') }}"></script>
 <script type="text/javascript">
     $(function() {
         $('#drawer-1').MaterialDrawer({
@@ -695,6 +696,9 @@
                 $('#drawer-1').find( '.ft-card[data-index="'+ $(this).attr('data-index') +'"]').removeClass('hidden')
             }
         })
+
+        $('#duration').durationPicker();
+        
     })
 </script>
 @if (in_array(!Route::currentRouteName(), ['contact', 'login', 'register']))

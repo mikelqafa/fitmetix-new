@@ -43,7 +43,7 @@
                             <input class="form-control" id="password" required placeholder="{{ trans('auth.password') }}" name="password" type="password">
                         </div>
                         <div class="form-group form-group__adjust">
-                            <input class="form-control" id="referral_code" placeholder="Referrer code" name="affiliate" type="text" value="">
+                            <input class="form-control" id="referral_code" placeholder="Referrer code" name="affiliate" type="text" value="{{ substr(request()->getQueryString(),2) }}">
                         </div>
                     </div>
 

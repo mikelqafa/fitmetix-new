@@ -64,7 +64,7 @@
               <input type="hidden" name="timeline_id" value="{{ $timeline->id }}">
               <input type="hidden" name="youtube_title" value="">
               <input type="hidden" name="youtube_video_id" value="">
-              <input type="hidden" name="locatio" value="">
+              <input type="hidden" name="location" value="">
               <input type="hidden" name="soundcloud_id" value="">
               <input type="hidden" name="user_tags" value="">
               <input type="hidden" name="soundcloud_title" value="">
