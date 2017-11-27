@@ -67,7 +67,7 @@
 		width: auto;
 		padding-right: 0px;
 		padding-left: 0;
-		padding-top: 64px;
+		padding-top: 60px;
 		z-index: -1;
     }
     .md-drawer--permanent.md-drawer--visible {
@@ -126,6 +126,10 @@
 		   max-width: 1170px;
 		   width: 100%;
 	   }
+	   .is-drawer-open .main-content .container {
+		   max-width: 930px;
+		   width: 100%;
+	   }
    }
 	.ft-filter {
 		display: flex;
@@ -135,6 +139,13 @@
 	.ft-filter .form-group {
 		margin: 0 15px;
 		margin-bottom: 30px;
+	}
+	.md-drawer__upper-tab {
+		height: 40px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		flex-shrink: 0;
 	}
 </style>
 
@@ -221,7 +232,7 @@
 								<aside class="md-drawer md-drawer--permanent" id="drawer-1" data-permanent="true">
 									    <div class="md-drawer__shadow"></div>
 									    <div class="md-drawer__surface">
-											<div style="">
+											<div class="md-drawer__upper-tab">
 												<a class="btn" href="javascript:;" onclick="$('#drawer-1').MaterialDrawer('toggle')">
 													&times;
 												</a>

@@ -14,7 +14,6 @@
                 <div class="user-tags-added" style="display:none">
                     &nbsp; -- {{ trans('common.with') }}
                     <div class="user-tag-names">
-                        
                     </div>
                 </div>
                 <div class="user-tags-addon post-addon" style="display: none">

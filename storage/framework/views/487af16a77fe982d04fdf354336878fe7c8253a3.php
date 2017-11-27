@@ -11,16 +11,12 @@
         </div>
         <div class="panel-body">        
             <textarea name="description" class="form-control createpost-form comment" cols="30" rows="3" id="createPost" cols="30" rows="2" placeholder="<?php echo e(trans('messages.post-placeholder')); ?>"></textarea>
-            <div id="app-create-post">
-                <app-create-post></app-create-post>
-            </div>
-
+               
 
                 <div class="user-tags-added" style="display:none">
                     &nbsp; -- <?php echo e(trans('common.with')); ?>
 
                     <div class="user-tag-names">
-                        
                     </div>
                 </div>
                 <div class="user-tags-addon post-addon" style="display: none">

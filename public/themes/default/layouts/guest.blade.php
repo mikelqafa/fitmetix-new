@@ -54,7 +54,6 @@
         <script src="{{ asset('js/login.js') }}" type="text/javascript"></script>
         <link href="{{asset('js/owl/dist/assets/owl.carousel.min.css')}}" rel="stylesheet">
         <link href="{{asset('js/owl/dist/assets/owl.theme.default.css')}}" rel="stylesheet">
-        <script src="{{asset('js/jquery.min.js')}}" type="text/javascript"></script>
         <script src="{{asset('js/owl/dist/owl.carousel.min.js')}}" type="text/javascript"></script>
         <script>
             $(document).ready(function () {
