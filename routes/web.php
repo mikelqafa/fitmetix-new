@@ -20,12 +20,14 @@ Route::post('/contact', 'PageController@saveContact');
 Route::get('/share-post/{id}', 'PageController@sharePost');
 Route::get('/get-location/{location}', 'TimelineController@getLocation');
 
+Route::get('/locate-on-map','TimelineController@redirectToLocation');
+
 Route::group(['prefix' => 'api', 'middleware' => ['auth', 'cors'], 'namespace' => 'API'], function () {
     Route::group(['prefix' => 'v1'], function () {
         require config('infyom.laravel_generator.path.api_routes');
     });
 });
-
+    
 Route::post('pusher/auth', function (Illuminate\Http\Request $request, Pusher $pusher) {
     return $pusher->presence_auth(
         $request->input('channel_name'),
@@ -379,6 +381,8 @@ Route::post('get-likes-comments-count','TimelineController@commentsCountAPI');
 Route::post('ajax/switch-language', 'TimelineController@switchLanguage');
 
 Route::post('ajax/get-likes-details', 'TimelineController@fetchPostLikes');
+
+Route::post('filter-events','TimelineController@eventsListFiltered');
 
 Route::post('ajax/comment-like', 'TimelineController@likeComment');
 Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {

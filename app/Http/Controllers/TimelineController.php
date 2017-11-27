@@ -1940,6 +1940,28 @@ class TimelineController extends AppBaseController
         ->render();
     }
 
+    public function eventsListFiltered(Request $request)
+    {
+        $mode = "eventlist";
+
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+        
+        $user_events = Event::where([['user_id', Auth::user()->id],[$request->filter_type,$request->filter_value]])->with('timeline')->get();
+        $id = Auth::id();
+
+        $trending_tags = trendingTags();
+        $suggested_users = suggestedUsers();
+        $suggested_groups = suggestedGroups();
+        $suggested_pages = suggestedPages();
+
+        $next_page_url = url('ajax/get-more-feed?page=2&ajax=true&hashtag='.$request->hashtag.'&username='.$username);
+
+        $theme->setTitle(trans('common.events').' | '.Setting::get('site_title').' | '.Setting::get('site_tagline'));
+
+        return $theme->scope('home', compact('next_page_url', 'trending_tags', 'suggested_users', 'suggested_groups', 'suggested_pages', 'mode', 'user_events', 'username'))
+        ->render();
+    }
+
     public function addEvent($username, $group_id = null)
     {
         $timeline_name = '';
@@ -2911,5 +2933,11 @@ class TimelineController extends AppBaseController
 
         Flash::success(trans('messages.event_deleted_success'));
         return redirect()->back();
+    }
+
+    public function redirectToLocation(Request $request){
+        $location = str_replace(' ', '+', $request->location);
+        $map_url = 'http://www.google.com/maps/place/'.$location;
+        return redirect($map_url);
     }
 }
