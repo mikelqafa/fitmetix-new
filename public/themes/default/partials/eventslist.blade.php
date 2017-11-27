@@ -127,15 +127,38 @@
 		   width: 100%;
 	   }
    }
+	.ft-filter {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.ft-filter .form-group {
+		margin: 0 15px;
+		margin-bottom: 30px;
+	}
 </style>
 
 
 <div class="main-content">
 			<!-- List of user events-->
-				<div class="post-filters pages-groups">
+	<form class="ft-filter">
+		<fieldset class="form-group required " style="margin-left: 0">
+			<input class="form-control" id="filter-location-input" autocomplete="off" placeholder="By Location" name="location" type="text" style="position: relative; overflow: hidden;">
+		</fieldset>
+		<fieldset class="form-group required ">
+			<input class="form-control" id="filter-date" autocomplete="off" placeholder="By Date" name="date" type="text" style="position: relative; overflow: hidden;">
+		</fieldset>
+		<fieldset class="form-group required ">
+			<input class="form-control" id="filter-tag" autocomplete="off" placeholder="By Tag" name="tag" type="text" style="position: relative; overflow: hidden;">
+		</fieldset>
+		<fieldset class="form-group required " style="margin-right: 0">
+			<input class="form-control" id="filter-title" autocomplete="off" placeholder="By Title" name="tag" type="text" style="position: relative; overflow: hidden;">
+		</fieldset>
+	</form>
+	<div class="post-filters pages-groups">
 					<div class="pane">
 					@include('flash::message')
-						<div class="panel-heading no-bg panel-settings">						
+						<div class="panel-heading no-bg">
 							<div class="side-right">
 								<a href="{{ url(Auth::user()->username.'/create-event') }}" class="btn btn-success">{{ trans('common.create_event') }}</a>
 							</div>
@@ -276,4 +299,4 @@
 						</div>
 					</div>
 				</div><!-- /panel -->
-<!-- </div> -->
+</div>
