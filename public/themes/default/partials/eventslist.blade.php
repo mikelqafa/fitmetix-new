@@ -240,6 +240,10 @@
 															<div class="icon icon-label-o"></div>
 															<div class="card-desc">
 																{{ $user_event->price }}
+
+																@if(Auth::user()->id != $user_event->user_id)
+																	<button href="{{ url($user_event->timeline->username) }}">Register</button>
+																@endif
 															</div>
 														</div>
 														<div class="ft-card__list">
