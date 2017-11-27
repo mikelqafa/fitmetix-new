@@ -255,8 +255,6 @@ $(function () {
       create_post_button.attr('disabled', false).find('.fa-spinner').addClass('hidden');
       if (responseText.status == 200)
       {
-        // console.log(window.timeLine)
-        // jQuery("time.timeago").timeago();
         $('.no-posts').hide();
         // Resetting the create post form after successfull message
         $('.video-addon').hide();
@@ -1388,6 +1386,9 @@ $(function () {
     });
 
     $('.post-images-selected').find('span').text(count);
+    if(!count) {
+      $('.post-images-selected').hide('slow');
+    }
   });
 
 

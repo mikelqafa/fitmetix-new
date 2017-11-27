@@ -88,7 +88,7 @@
     <div class="ft-login__slider">
         <div id="slider-owl"  class="owl-carousel ft-carousel owl-theme">
             <div class="item">
-                <div class="ft-carousel__cover" style="background-image: url({{asset('images/jogging-2343558_640.png')}})">
+                <div class="ft-carousel__cover" style="background-image: url({{asset('images/back1-min.jpg')}})">
                     <div class="container pos-rel">
                         <div class="appearContainer ft-carousel__text ft-carousel__text--register">
                             <span class="font-curl">
@@ -99,7 +99,7 @@
                 </div>
             </div>
             <div class="item">
-                <div class="ft-carousel__cover" style="background-image: url({{asset('images/2.jpeg')}})">
+                <div class="ft-carousel__cover" style="background-image: url({{asset('images/back2-min.jpg')}})">
                     <div class="container pos-rel">
                         <div class="appearContainer ft-carousel__text ft-carousel__text--register">
                             <span class="font-curl">
@@ -111,7 +111,18 @@
                 </div>
             </div>
             <div class="item">
-                <div class="ft-carousel__cover" style="background-image: url({{asset('images/4.jpeg')}})">
+                <div class="ft-carousel__cover" style="background-image: url({{asset('images/back3-min.jpg')}})">
+                    <div class="container pos-rel">
+                        <div class="appearContainer ft-carousel__text ft-carousel__text--register">
+                            <span class="font-curl">
+                                Eat well, live well...
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ft-carousel__cover" style="background-image: url({{asset('images/back4-min.jpg')}})">
                     <div class="container pos-rel">
                         <div class="appearContainer ft-carousel__text ft-carousel__text--register">
                             <span class="font-curl">

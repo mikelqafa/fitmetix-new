@@ -67,7 +67,7 @@
               <input type="hidden" name="soundcloud_id" value="">
               <input type="hidden" name="user_tags" value="">
               <input type="hidden" name="soundcloud_title" value="">
-              <input type="file"   class="post-images-upload hidden" multiple="multiple"  accept="image/jpeg,image/png,image/gif" name="post_images_upload[]" id="post_images_upload[]">
+              <input type="file"   class="post-images-upload hidden" multiple="multiple"  accept="image/jpeg,image/png,image/gif" name="post_images_upload[]" id="post_images_upload">
               <input type="file" class="post-video-upload hidden"  accept="video/mp4" name="post_video_upload" >
               <div id="post-image-holder"></div>
         </div><!-- panel-body -->
