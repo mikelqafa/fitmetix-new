@@ -49,8 +49,15 @@
 	.ft-card__list {
 		display: flex;
 		flex-direction: row;
-		flex-wrap: wrap;
-		margin-bottom: 4px;
+		flex-wrap: nowrap;
+		margin-bottom: 15px;
+	}
+	.ft-card__list .icon {
+		margin-right: 10px;
+		height: 24px;
+		width: 24px;
+		line-height: 24px;
+		text-align: center;
 	}
 
     .main-content > .container > .row > .col-md-7.col-lg-6 {
@@ -157,29 +164,29 @@
 												</div>
 												<div class="ft-card__list-wrapper">
 													<div class="ft-card__list">
-													<div class="icon"></div>
-													<div class="card-desc">
-														{{ $user_event->location }}
+														<div class="icon icon-location-o"></div>
+														<div class="card-desc">
+															{{ $user_event->location }}
+														</div>
 													</div>
-												</div>
 												<div class="ft-card__list">
-													<div class="icon"></div>
+													<div class="icon icon-participant"></div>
 													<div class="card-desc">
 														{{ $user_event->gender }}
 													</div>
 												</div>
 												<div class="ft-card__list">
-													<div class="icon"></div>
+													<div class="icon icon-time-o"></div>
 													<div class="card-desc">
 														{{ $user_event->start_date }} to {{ $user_event->end_date }}
 													</div>
 												</div>
-												<div class="ft-card__list">
-													<div class="icon"></div>
-													<div class="card-desc">
-														{{ $user_event->price }}
+													<div class="ft-card__list">
+														<div class="icon icon-label-o"></div>
+														<div class="card-desc">
+															{{ $user_event->price }}
+														</div>
 													</div>
-												</div>
 												</div>
 											</div>
 										</div>
@@ -212,31 +219,31 @@
 													</div>
 													<div class="ft-card__list-wrapper">
 														<div class="ft-card__list">
-															<div class="icon"></div>
+															<div class="icon icon-location-o"></div>
 															<div class="card-desc">
 																{{ $user_event->location }}
 															</div>
 														</div>
 														<div class="ft-card__list">
-															<div class="icon"></div>
+															<div class="icon icon-participant"></div>
 															<div class="card-desc">
 																{{ $user_event->gender }}
 															</div>
 														</div>
 														<div class="ft-card__list">
-															<div class="icon"></div>
+															<div class="icon icon-time-o"></div>
 															<div class="card-desc">
 																{{ $user_event->start_date }} to {{ $user_event->end_date }}
 															</div>
 														</div>
 														<div class="ft-card__list">
-															<div class="icon"></div>
+															<div class="icon icon-label-o"></div>
 															<div class="card-desc">
 																{{ $user_event->price }}
 															</div>
 														</div>
 														<div class="ft-card__list">
-															<div class="icon"></div>
+															<div class="icon icon-participant"></div>
 															<div class="card-desc">
 																{{ $user_event->users()->count() }}
 															</div>
@@ -247,12 +254,9 @@
 																{{ $user_event->frequency }}
 															</div>
 														</div>
-														<div class="ft-card__list">
-															<div class="icon"></div>
-															<div class="card-desc">
-																{{ $user_event->timeline->about }}
-															</div>
-														</div>
+													</div>
+													<div class="ft-card__desc">
+														{{ $user_event->timeline->about }}
 													</div>
 												</div>
 											</a>

@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Post from './components/Post'
+import createPost from './components/createPost'
 import AppNotification from './components/AppNotification'
 import postDialogOption from './components/DialogOption'
 import commentDialogOption from './components/CommentDialogOption'
@@ -39,4 +40,9 @@ window.appNotification = new Vue({
     'app-notification': AppNotification
   }
 })
-
+window.createPost = new Vue({
+  el: '#app-create-post',
+  components: {
+    'app-create-post': createPost
+  }
+})

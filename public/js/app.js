@@ -239,8 +239,7 @@ $(function () {
       validFiles = []; // making array empty
 
       if (!hasFile && !$('.post-video-upload').val() && !form.description.value && !form.youtube_video_id.value && !form.location.value && !form.soundcloud_id.value) {
-        alert("Your post cannot be empty!")
-
+        materialSnackBar({messageText: 'Your post cannot be empty!', autoClose: true })
         return false;
       }
 
@@ -288,7 +287,7 @@ $(function () {
       }
       else
       {
-        $('.login-errors').html(responseText.message);
+        materialSnackBar({messageText: responseText.message, autoClose: true })
       }
 
     }

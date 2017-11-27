@@ -31,6 +31,7 @@
             }
         },
         methods: {
+
             viewMore: function () {
                 this.postHtmlViewAble = this.postHtml
                 window.emojify.run()
