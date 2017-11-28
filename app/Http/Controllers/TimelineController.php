@@ -1050,7 +1050,7 @@ class TimelineController extends AppBaseController
             if($event->user_limit < $event->users()->count()){
                 return response()->json(['status' => '200', 'joined' => false, 'message' => 'Limit reached']);
             }
-            else if($event->gender != Auth::user()->gender){
+            else if(($event->gender != 'all') && ($event->gender != Auth::user()->gender)){
                 return response()->json(['status' => '200', 'joined' => false, 'message' => 'Gender mismatch']);   
             }
             else {
@@ -1924,7 +1924,7 @@ class TimelineController extends AppBaseController
 
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
         
-        $user_events = Event::where('user_id', Auth::user()->id)->with('timeline')->get();
+        $user_events = Event::with('timeline')->latest()->get();
         $id = Auth::id();
 
         $trending_tags = trendingTags();
@@ -1932,21 +1932,35 @@ class TimelineController extends AppBaseController
         $suggested_groups = suggestedGroups();
         $suggested_pages = suggestedPages();
 
+        $event_tags = NULL;
+        foreach ($user_events as $user_event) {
+            $user_event['registered'] = true;
+            if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
+                $event_tags['tags'] = $matches[0];
+                $event_tags['event_id'] = $user_event->id;
+            }
+            if($user_event->users->contains(Auth::user()->id)){
+                $user_event['registered'] = true;
+            }
+        }
+
         $next_page_url = url('ajax/get-more-feed?page=2&ajax=true&hashtag='.$request->hashtag.'&username='.$username);
 
         $theme->setTitle(trans('common.events').' | '.Setting::get('site_title').' | '.Setting::get('site_tagline'));
 
-        return $theme->scope('home', compact('next_page_url', 'trending_tags', 'suggested_users', 'suggested_groups', 'suggested_pages', 'mode', 'user_events', 'username'))
+        return $theme->scope('home', compact('event_tags','next_page_url', 'trending_tags', 'suggested_users', 'suggested_groups', 'suggested_pages', 'mode', 'user_events', 'username'))
         ->render();
     }
 
-    public function eventsListFiltered(Request $request)
+    public function eventsListFilteredLocation(Request $request)
     {
         $mode = "eventlist";
 
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
         
-        $user_events = Event::where([['user_id', Auth::user()->id],[$request->filter_type,$request->filter_value]])->with('timeline')->get();
+        $location = '%'.$request->location.'%';
+
+        $user_events = Event::where([['user_id', Auth::user()->id],['location','LIKE',$location]])->with('timeline')->latest()->get();
         $id = Auth::id();
 
         $trending_tags = trendingTags();
@@ -1954,11 +1968,137 @@ class TimelineController extends AppBaseController
         $suggested_groups = suggestedGroups();
         $suggested_pages = suggestedPages();
 
-        $next_page_url = url('ajax/get-more-feed?page=2&ajax=true&hashtag='.$request->hashtag.'&username='.$username);
+        $event_tags = NULL;
+        if($user_events) {
+            foreach ($user_events as $user_event) {
+                if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
+                    $event_tags['tags'] = $matches[0];
+                    $event_tags['event_id'] = $user_event->id;
+                }
+            }
+        }
+
+        // $next_page_url = url('ajax/get-more-feed?page=2&ajax=true&hashtag='.$request->hashtag.'&username='.$username);
 
         $theme->setTitle(trans('common.events').' | '.Setting::get('site_title').' | '.Setting::get('site_tagline'));
 
-        return $theme->scope('home', compact('next_page_url', 'trending_tags', 'suggested_users', 'suggested_groups', 'suggested_pages', 'mode', 'user_events', 'username'))
+        return $theme->scope('home', compact('event_tags','next_page_url', 'trending_tags', 'suggested_users', 'suggested_groups', 'suggested_pages', 'mode', 'user_events', 'username'))
+        ->render();
+    }
+
+    public function eventsListFilteredTags(Request $request)
+    {
+        $mode = "eventlist";
+
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+        
+        $tags = "#".$request->tags;
+
+        $user_events_all = Event::where('user_id', Auth::user()->id)->with('timeline')->latest()->get();
+        $id = Auth::id();
+
+        $user_events = NULL;
+        foreach ($user_events_all as $key => $value) {
+            if(strpos($value->timeline->about, $tags) !== false){
+                $user_events[$key] = $value;
+            }
+        }
+
+        $event_tags = NULL;
+        if($user_events) {
+            foreach ($user_events as $user_event) {
+                if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
+                    $event_tags['tags'] = $matches[0];
+                    $event_tags['event_id'] = $user_event->id;
+                }
+            }
+        }
+
+        $trending_tags = trendingTags();
+        $suggested_users = suggestedUsers();
+        $suggested_groups = suggestedGroups();
+        $suggested_pages = suggestedPages();
+
+        // $next_page_url = url('ajax/get-more-feed?page=2&ajax=true&hashtag='.$request->hashtag.'&username='.$username);
+
+        $theme->setTitle(trans('common.events').' | '.Setting::get('site_title').' | '.Setting::get('site_tagline'));
+
+        return $theme->scope('home', compact('event_tags','next_page_url', 'trending_tags', 'suggested_users', 'suggested_groups', 'suggested_pages', 'mode', 'user_events', 'username'))
+        ->render();
+    }
+
+    public function eventsListFilteredDate(Request $request)
+    {
+        $mode = "eventlist";
+
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+        
+        $date = $request->date;
+
+        $user_events = Event::where([['user_id', Auth::user()->id],['start_date','<=',$date],['end_date','>=',$date]])->with('timeline')->latest()->get();
+        $id = Auth::id();
+
+        $trending_tags = trendingTags();
+        $suggested_users = suggestedUsers();
+        $suggested_groups = suggestedGroups();
+        $suggested_pages = suggestedPages();
+
+        // $next_page_url = url('ajax/get-more-feed?page=2&ajax=true&hashtag='.$request->hashtag.'&username='.$username);
+
+        $event_tags = NULL;
+        if($user_events) {
+            foreach ($user_events as $user_event) {
+                if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
+                    $event_tags['tags'] = $matches[0];
+                    $event_tags['event_id'] = $user_event->id;
+                }
+            }
+        }
+
+        $theme->setTitle(trans('common.events').' | '.Setting::get('site_title').' | '.Setting::get('site_tagline'));
+
+        return $theme->scope('home', compact('event_tags','next_page_url', 'trending_tags', 'suggested_users', 'suggested_groups', 'suggested_pages', 'mode', 'user_events', 'username'))
+        ->render();
+    }
+
+    public function eventsListFilteredTitle(Request $request)
+    {
+        $mode = "eventlist";
+
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+        
+        $title = $request->title;
+
+        $user_events_all = Event::where('user_id', Auth::user()->id)->with('timeline')->latest()->get();
+        $id = Auth::id();
+
+        $user_events = NULL;
+        foreach ($user_events_all as $key => $value) {
+            if(strpos($value->timeline->name, $title) !== false){
+                $user_events[$key] = $value;
+            }
+        }
+
+        $event_tags = NULL;
+        if($user_events) {
+            foreach ($user_events as $user_event) {
+                if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
+                    $event_tags['tags'] = $matches[0];
+                    $event_tags['event_id'] = $user_event->id;
+                }
+            }
+        }
+
+        $trending_tags = trendingTags();
+        $suggested_users = suggestedUsers();
+        $suggested_groups = suggestedGroups();
+        $suggested_pages = suggestedPages();
+
+        // $next_page_url = url('ajax/get-more-feed?page=2&ajax=true&hashtag='.$request->hashtag.'&username='.$username);
+
+        $theme->setTitle(trans('common.events').' | '.Setting::get('site_title').' | '.Setting::get('site_tagline'));
+
+        return $theme->scope('home', compact('event_tags','next_page_url', 'trending_tags', 'suggested_users', 'suggested_groups', 'suggested_pages', 'mode', 'user_events', 'username'))
         ->render();
     }
 

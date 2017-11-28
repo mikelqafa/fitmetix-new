@@ -25,9 +25,6 @@
 					<?php if($mode != "eventlist"): ?>
 						<?php echo Theme::partial('create-post',compact('timeline','user_post')); ?>
 
-						<div id="app-event-calendar">
-							<app-event-calendar></app-event-calendar>
-						</div>
 						<div class="timeline-posts">
                             <div id="app-timeline">
 								<input type="hidden" id="newPostId">
@@ -74,7 +71,7 @@
 							<?php endif; ?>
 						</div>
 					<?php else: ?>
-						<?php echo Theme::partial('eventslist',compact('user_events','username')); ?>
+						<?php echo Theme::partial('eventslist',compact('user_events','username','event_tags')); ?>
 
 					<?php endif; ?>
 				</div><!-- /col-md-6 -->

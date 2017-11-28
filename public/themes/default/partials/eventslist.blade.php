@@ -67,7 +67,7 @@
 		width: auto;
 		padding-right: 0px;
 		padding-left: 0;
-		padding-top: 60px;
+		padding-top: 64px;
 		z-index: -1;
     }
     .md-drawer--permanent.md-drawer--visible {
@@ -126,10 +126,6 @@
 		   max-width: 1170px;
 		   width: 100%;
 	   }
-	   .is-drawer-open .main-content .container {
-		   max-width: 930px;
-		   width: 100%;
-	   }
    }
 	.ft-filter {
 		display: flex;
@@ -140,32 +136,12 @@
 		margin: 0 15px;
 		margin-bottom: 30px;
 	}
-	.md-drawer__upper-tab {
-		height: 40px;
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		flex-shrink: 0;
-	}
 </style>
 
 
 <div class="main-content">
 			<!-- List of user events-->
-	<form class="ft-filter">
-		<fieldset class="form-group required " style="margin-left: 0">
-			<input class="form-control" id="filter-location-input" autocomplete="off" placeholder="By Location" name="location" type="text" style="position: relative; overflow: hidden;">
-		</fieldset>
-		<fieldset class="form-group required ">
-			<input class="form-control" id="filter-date" autocomplete="off" placeholder="By Date" name="date" type="text" style="position: relative; overflow: hidden;">
-		</fieldset>
-		<fieldset class="form-group required ">
-			<input class="form-control" id="filter-tag" autocomplete="off" placeholder="By Tag" name="tag" type="text" style="position: relative; overflow: hidden;">
-		</fieldset>
-		<fieldset class="form-group required " style="margin-right: 0">
-			<input class="form-control" id="filter-title" autocomplete="off" placeholder="By Title" name="tag" type="text" style="position: relative; overflow: hidden;">
-		</fieldset>
-	</form>
+	
 	<div class="post-filters pages-groups">
 					<div class="pane">
 					@include('flash::message')
@@ -173,9 +149,42 @@
 							<div class="side-right">
 								<a href="{{ url(Auth::user()->username.'/create-event') }}" class="btn btn-success">{{ trans('common.create_event') }}</a>
 							</div>
-							<h3 class="panel-title">
-								{{ trans('messages.events-manage') }}
-							</h3>
+							<center>
+								<h3 class="panel-title" style="font-weight: 700;">
+									{{ trans('messages.events-manage') }}
+								</h3>
+							</center>
+						</div>
+						<br/>
+						<div class="ft-filter">
+							<fieldset class="form-group required " style="margin-left: 0">
+								<form action="{{ url('filter-events-by-location') }}" method="POST">
+									{{ csrf_field() }}
+								<input class="form-control" id="filter-location-input" autocomplete="off" placeholder="By Location" name="location" type="text" style="position: relative; overflow: hidden;">
+								<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
+								</form>
+							</fieldset>
+							<fieldset class="form-group required ">
+								<form action="{{ url('filter-events-by-date') }}" method="POST">
+									{{ csrf_field() }}
+								<input class="form-control" name="date" id="filter-date" autocomplete="off" placeholder="By Date" type="text" style="position: relative; overflow: hidden;">
+								<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
+								</form>
+							</fieldset>
+							<fieldset class="form-group required ">
+								<form action="{{ url('filter-events-by-tags') }}" method="POST">
+									{{ csrf_field() }}
+								<input class="form-control" id="filter-tag" name="tags" autocomplete="off" placeholder="By Tag" type="text" style="position: relative; overflow: hidden;">
+								<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
+								</form>
+							</fieldset>
+							<fieldset class="form-group required " style="margin-right: 0">
+								<form action="{{ url('filter-events-by-title') }}" method="POST">
+									{{ csrf_field() }}
+								<input class="form-control" id="filter-title" name="title" autocomplete="off" placeholder="By Title" type="text" style="position: relative; overflow: hidden;">
+								<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
+								</form>
+							</fieldset>
 						</div>
 
 						<div class="pan">
@@ -200,27 +209,38 @@
 													<div class="ft-card__list">
 														<div class="icon icon-location-o"></div>
 														<div class="card-desc">
-															{{ $user_event->location }}
+														  <a href="{{ url('locate-on-map/'.$user_event->location.'') }}" target="_blank">{{ $user_event->location }}</a>
 														</div>
 													</div>
-												<div class="ft-card__list">
-													<div class="icon icon-participant"></div>
-													<div class="card-desc">
-														{{ $user_event->gender }}
+													<div class="ft-card__list">
+														<div class="icon icon-participant"></div>
+														<div class="card-desc">
+															{{ $user_event->gender }}
+														</div>
 													</div>
-												</div>
-												<div class="ft-card__list">
-													<div class="icon icon-time-o"></div>
-													<div class="card-desc">
-														{{ $user_event->start_date }} to {{ $user_event->end_date }}
+													<div class="ft-card__list">
+														<div class="icon icon-time-o"></div>
+														<div class="card-desc">
+															{{ $user_event->start_date }} to {{ $user_event->end_date }}
+														</div>
 													</div>
-												</div>
 													<div class="ft-card__list">
 														<div class="icon icon-label-o"></div>
 														<div class="card-desc">
-															{{ $user_event->price }}
+															@if(!$user_event->price)
+																{{ "FREE" }}
+															@else
+															    {{ $user_event->price }}
+															@endif
 														</div>
 													</div>
+													@if($user_event->id == $event_tags['event_id'])
+														<div class="ft-card__list">
+															<div class="card-desc" style="color: #1E7C82">	
+															    {{ $event_tags['tags'][0] }}
+															</div>
+														</div>
+													@endif
 												</div>
 											</div>
 										</div>
@@ -232,14 +252,14 @@
 								<aside class="md-drawer md-drawer--permanent" id="drawer-1" data-permanent="true">
 									    <div class="md-drawer__shadow"></div>
 									    <div class="md-drawer__surface">
-											<div class="md-drawer__upper-tab">
+											<div style="">
 												<a class="btn" href="javascript:;" onclick="$('#drawer-1').MaterialDrawer('toggle')">
 													&times;
 												</a>
 											</div>
 											@php $i = 0; @endphp
 									@foreach($user_events as $user_event)
-											<a href="{{ url($user_event->timeline->username) }}" class="ft-card hidden" data-index="{{$i}}">
+											<div class="ft-card hidden" data-index="{{$i}}">
 												<div class="ft-card__img-wrapper">
 													@if($user_event->timeline->cover)
 														<img class="ft-card__img" src="{{ env('STORAGE_URL').'uploads/events/covers/'.$user_event->timeline->cover['source'] }}" alt="Event Cover">
@@ -270,20 +290,28 @@
 																{{ $user_event->start_date }} to {{ $user_event->end_date }}
 															</div>
 														</div>
+
 														<div class="ft-card__list">
 															<div class="icon icon-label-o"></div>
 															<div class="card-desc">
-																{{ $user_event->price }}
-
 																@if(Auth::user()->id != $user_event->user_id)
-																	<button href="{{ url($user_event->timeline->username) }}">Register</button>
+																	@if(($user_event->gender == 'all') || ($user_event->gender == Auth::user()->gender))
+																		@if($user_event->registered)
+																		    <button class="btn btn-primary">Registered</button>
+																		@else
+																		    <button class="btn btn-primary join-event-btn" data-timeline = "{{ $user_event->timeline->id }}">Register</button>
+																		@endif	
+																	@else
+																	    <button disabled class="btn" data-timeline = "{{ $user_event->timeline->id }}">Register</button>
+																	@endif
 																@endif
+																
 															</div>
 														</div>
 														<div class="ft-card__list">
 															<div class="icon icon-participant"></div>
 															<div class="card-desc">
-																{{ $user_event->users()->count() }}
+																<p class="show_participants" data-eventID = "{{ $user_event->id }}">{{ $user_event->users()->count() }}</p>
 															</div>
 														</div>
 														<div class="ft-card__list">
@@ -297,7 +325,7 @@
 														{{ $user_event->timeline->about }}
 													</div>
 												</div>
-											</a>
+											</div>
 										@php $i++ @endphp
 									@endforeach
 										</div>

@@ -473,6 +473,24 @@ $(function () {
     });
   });
 
+  $(".join-event-btn").click(function(){
+      let btn = $(this);
+      $.post(
+        SP_source() + "ajax/join-event",
+        { 'timeline_id' : $(this).data('timeline') },
+        function(data){
+            if(data.status == 200){
+                if(data.joined == true) {
+                    btn.html("Registered");
+                }
+                else {
+                    btn.html("Register");   
+                }
+            }
+        },"json"
+      );
+  });
+
   // Join/Joined the event guests  by  logged user
   $('.join-guest').on('click',function(e){
     e.preventDefault();

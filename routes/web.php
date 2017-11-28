@@ -20,7 +20,7 @@ Route::post('/contact', 'PageController@saveContact');
 Route::get('/share-post/{id}', 'PageController@sharePost');
 Route::get('/get-location/{location}', 'TimelineController@getLocation');
 
-Route::get('/locate-on-map','TimelineController@redirectToLocation');
+Route::get('/locate-on-map/{location}','TimelineController@redirectToLocation');
 
 Route::group(['prefix' => 'api', 'middleware' => ['auth', 'cors'], 'namespace' => 'API'], function () {
     Route::group(['prefix' => 'v1'], function () {
@@ -382,7 +382,10 @@ Route::post('ajax/switch-language', 'TimelineController@switchLanguage');
 
 Route::post('ajax/get-likes-details', 'TimelineController@fetchPostLikes');
 
-Route::post('filter-events','TimelineController@eventsListFiltered');
+Route::post('filter-events-by-location','TimelineController@eventsListFilteredLocation');
+Route::post('filter-events-by-tags','TimelineController@eventsListFilteredTags');
+Route::post('filter-events-by-date','TimelineController@eventsListFilteredDate');
+Route::post('filter-events-by-title','TimelineController@eventsListFilteredTitle');
 
 Route::post('ajax/comment-like', 'TimelineController@likeComment');
 Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {

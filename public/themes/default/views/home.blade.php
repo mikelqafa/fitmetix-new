@@ -69,7 +69,7 @@
 							@endif
 						</div>
 					@else
-						{!! Theme::partial('eventslist',compact('user_events','username')) !!}
+						{!! Theme::partial('eventslist',compact('user_events','username','event_tags')) !!}
 					@endif
 				</div><!-- /col-md-6 -->
 

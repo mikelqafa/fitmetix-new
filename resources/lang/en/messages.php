@@ -144,7 +144,7 @@ return [
     'new_category_added'                  => 'New category added',
     'category_updated_success'            => 'Category updated successfully',
     'category_deleted_success'            => 'Category deleted successfully',
-    'events-manage'                       => 'Events you manage',
+    'events-manage'                       => 'find events and stay healthy',
     'no_events'                           => 'No events added yet!',
     'event_settings_updated_success'      => 'Event settings updated successfully',
     'event_updated_success'               => 'Event updated successfully',
