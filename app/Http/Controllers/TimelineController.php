@@ -3084,4 +3084,15 @@ class TimelineController extends AppBaseController
         $map_url = 'http://www.google.com/maps/place/'.$location;
         return redirect($map_url);
     }
+
+    public function getParticipants(Request $request) {
+        $event = Event::find($request->event_id);
+        $event_users = $event->users()->get();
+        return $event_users;
+    }
+
+    public function getEventByDate(Request $request) {
+        $events = Event::where([['start_date','<=',$request->date],['end_date','>=',$request->date]])->get();
+        return response()->json(['status' => '200', ['events'=>$events]]);
+    }
 }

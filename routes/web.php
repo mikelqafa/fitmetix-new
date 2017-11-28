@@ -382,6 +382,10 @@ Route::post('ajax/switch-language', 'TimelineController@switchLanguage');
 
 Route::post('ajax/get-likes-details', 'TimelineController@fetchPostLikes');
 
+Route::post('ajax/get-event-by-date','TimelineController@getEventByDate');
+
+Route::post('ajax/get-participants','TimelineController@getParticipants');
+
 Route::post('filter-events-by-location','TimelineController@eventsListFilteredLocation');
 Route::post('filter-events-by-tags','TimelineController@eventsListFilteredTags');
 Route::post('filter-events-by-date','TimelineController@eventsListFilteredDate');
