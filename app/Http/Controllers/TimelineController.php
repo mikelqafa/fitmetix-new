@@ -1935,12 +1935,16 @@ class TimelineController extends AppBaseController
         $event_tags = NULL;
         foreach ($user_events as $user_event) {
             $user_event['registered'] = true;
+            $user_event['expired'] = true;
             if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
                 $event_tags['tags'] = $matches[0];
                 $event_tags['event_id'] = $user_event->id;
             }
             if($user_event->users->contains(Auth::user()->id)){
                 $user_event['registered'] = true;
+            }
+            if($user_event->end_date > Carbon::now()){
+                $user_event['expired'] = true;
             }
         }
 

@@ -294,15 +294,19 @@
 														<div class="ft-card__list">
 															<div class="icon icon-label-o"></div>
 															<div class="card-desc">
-																@if(Auth::user()->id != $user_event->user_id)
-																	@if(($user_event->gender == 'all') || ($user_event->gender == Auth::user()->gender))
-																		@if($user_event->registered)
-																		    <button class="btn btn-primary">Registered</button>
+																@if($user_event->expired == true)
+																    <button class="btn" disabled>Register</button>
+																@else
+																    @if(Auth::user()->id != $user_event->user_id)
+																		@if(($user_event->gender == 'all') || ($user_event->gender == Auth::user()->gender))
+																			@if($user_event->registered == true)
+																			    <button class="btn btn-primary">Registered</button>
+																			@else
+																			    <button class="btn btn-primary join-event-btn" data-timeline = "{{ $user_event->timeline->id }}">Register</button>
+																			@endif	
 																		@else
-																		    <button class="btn btn-primary join-event-btn" data-timeline = "{{ $user_event->timeline->id }}">Register</button>
-																		@endif	
-																	@else
-																	    <button disabled class="btn" data-timeline = "{{ $user_event->timeline->id }}">Register</button>
+																		    <button disabled class="btn" data-timeline = "{{ $user_event->timeline->id }}">Register</button>
+																		@endif
 																	@endif
 																@endif
 																
