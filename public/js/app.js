@@ -1,3 +1,21 @@
+function unjoin_event(el){
+    var timeline_id = el.getAttribute('data-timeline');
+      $.post(
+        SP_source() + "ajax/join-event",
+        { 'timeline_id' : timeline_id },
+        function(data){
+            if(data.status == 200){
+                if(data.joined == false) {
+                    $(el).parent().find('.btn-primary').html("Register");
+                    $(el).remove();
+                }
+                else {
+                    $(el).html("Unregister");   
+                }
+            }
+        },"json"
+      );
+  }
 document_title = document.title;
 (function (global) {
 
@@ -475,13 +493,15 @@ $(function () {
 
   $(".join-event-btn").click(function(){
       let btn = $(this);
+      let timeline_id = $(this).data('timeline');
       $.post(
         SP_source() + "ajax/join-event",
-        { 'timeline_id' : $(this).data('timeline') },
+        { 'timeline_id' : timeline_id },
         function(data){
             if(data.status == 200){
                 if(data.joined == true) {
                     btn.html("Registered");
+                    btn.parent().append('<button onclick="unjoin_event(this)" class="btn btn-warning" data-timeline='+timeline_id+'>Unregister</button>');
                 }
                 else {
                     btn.html("Register");   
@@ -1016,6 +1036,30 @@ $(function () {
             if (data.deleted == true) {
               pagedelete_btn.find('.delete_page').closest('.deletepage').slideToggle();
               notify('Page deleted successfully');
+            }
+          }
+        });
+      },
+      cancel: function(){
+
+      }
+    });
+  });
+
+  $(document).on('click','.delete-own-event',function(e){
+    $.confirm({
+      title: 'Confirm!',
+      content: 'Are you sure you want to delete this event entirely?',
+      confirmButton: 'Yes, delete',
+      cancelButton: 'Cancel',
+      confirmButtonClass: 'btn-primary',
+      cancelButtonClass: 'btn-danger',
+
+      confirm: function(){
+        $.post(SP_source() + 'ajax/event-delete', {event_id: event_id}, function(data) {
+          if (data.status == 200) {
+            if (data.deleted == true) {
+              location.reload();
             }
           }
         });
@@ -2126,6 +2170,8 @@ $(document).on('click','.unjoin-page',function(e){
 
     }
   });
+
+  
 
 });
 

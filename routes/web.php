@@ -383,6 +383,8 @@ Route::post('ajax/switch-language', 'TimelineController@switchLanguage');
 Route::post('ajax/get-likes-details', 'TimelineController@fetchPostLikes');
 
 Route::post('ajax/get-event-by-date','TimelineController@getEventByDate');
+Route::post('ajax/get-event-by-id','TimelineController@getEventById');
+Route::post('ajax/edit-event/{id}','TimelineController@editEvent');
 
 Route::post('ajax/get-participants','TimelineController@getParticipants');
 

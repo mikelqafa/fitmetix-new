@@ -496,6 +496,19 @@ class TimelineController extends AppBaseController
             }
         }
 
+        if($request->post_images_upload){
+            foreach ($request->post_images_upload as $postImage) {
+
+                $media = Media::create([
+                      'title'  => $postImage,
+                      'type'   => 'image',
+                      'source' => $postImage,
+                    ]);
+
+                $post->images()->attach($media);
+            }   
+        }
+
         if ($request->hasFile('post_video_upload')) {
             $uploadedFile = $request->file('post_video_upload');
             $s3 = Storage::disk('uploads');
@@ -1934,8 +1947,8 @@ class TimelineController extends AppBaseController
 
         $event_tags = NULL;
         foreach ($user_events as $user_event) {
-            $user_event['registered'] = true;
-            $user_event['expired'] = true;
+            $user_event['registered'] = false;
+            $user_event['expired'] = false;
             if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
                 $event_tags['tags'] = $matches[0];
                 $event_tags['event_id'] = $user_event->id;
@@ -1943,7 +1956,7 @@ class TimelineController extends AppBaseController
             if($user_event->users->contains(Auth::user()->id)){
                 $user_event['registered'] = true;
             }
-            if($user_event->end_date > Carbon::now()){
+            if($user_event->start_date < Carbon::now()){
                 $user_event['expired'] = true;
             }
         }
@@ -1975,9 +1988,17 @@ class TimelineController extends AppBaseController
         $event_tags = NULL;
         if($user_events) {
             foreach ($user_events as $user_event) {
+                $user_event['registered'] = false;
+                $user_event['expired'] = false;
                 if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
                     $event_tags['tags'] = $matches[0];
                     $event_tags['event_id'] = $user_event->id;
+                }
+                if($user_event->users->contains(Auth::user()->id)){
+                    $user_event['registered'] = true;
+                }
+                if($user_event->start_date < Carbon::now()){
+                    $user_event['expired'] = true;
                 }
             }
         }
@@ -2011,9 +2032,17 @@ class TimelineController extends AppBaseController
         $event_tags = NULL;
         if($user_events) {
             foreach ($user_events as $user_event) {
+                $user_event['registered'] = false;
+                $user_event['expired'] = false;
                 if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
                     $event_tags['tags'] = $matches[0];
                     $event_tags['event_id'] = $user_event->id;
+                }
+                if($user_event->users->contains(Auth::user()->id)){
+                    $user_event['registered'] = true;
+                }
+                if($user_event->start_date < Carbon::now()){
+                    $user_event['expired'] = true;
                 }
             }
         }
@@ -2052,9 +2081,17 @@ class TimelineController extends AppBaseController
         $event_tags = NULL;
         if($user_events) {
             foreach ($user_events as $user_event) {
+                $user_event['registered'] = false;
+                $user_event['expired'] = false;
                 if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
                     $event_tags['tags'] = $matches[0];
                     $event_tags['event_id'] = $user_event->id;
+                }
+                if($user_event->users->contains(Auth::user()->id)){
+                    $user_event['registered'] = true;
+                }
+                if($user_event->start_date < Carbon::now()){
+                    $user_event['expired'] = true;
                 }
             }
         }
@@ -2086,9 +2123,17 @@ class TimelineController extends AppBaseController
         $event_tags = NULL;
         if($user_events) {
             foreach ($user_events as $user_event) {
+                $user_event['registered'] = false;
+                $user_event['expired'] = false;
                 if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
                     $event_tags['tags'] = $matches[0];
                     $event_tags['event_id'] = $user_event->id;
+                }
+                if($user_event->users->contains(Auth::user()->id)){
+                    $user_event['registered'] = true;
+                }
+                if($user_event->start_date < Carbon::now()){
+                    $user_event['expired'] = true;
                 }
             }
         }
@@ -2204,6 +2249,15 @@ class TimelineController extends AppBaseController
                 'gender' => $request->gender,
                 'frequency' => $request->frequency,
                 ]);
+
+            $post = Post::create([
+                'type' => 'event',
+                'description' => $request->about,
+                'timeline_id' => $timeline->id,
+                'user_id'     => Auth::user()->id,
+                'active'      => '1',
+                'location'    => $request->location,
+            ]);
 
             if ($request->group_id) {
                 $event->group_id = $request->group_id;
@@ -2957,10 +3011,14 @@ class TimelineController extends AppBaseController
     public function postAPI(Request $request)
     {
         $timeline = Timeline::where('username', $request->username)->first();
+        $id = Auth::user()->id;
+        $posts = Post::whereIn('user_id', function ($query) use ($id) {
+                $query->select('leader_id')
+                    ->from('followers')
+                    ->where('follower_id', $id);
+            })->orWhere('user_id', $id)->where('active', 1)->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
 
-        $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
-        // $theme = Theme::uses('default')->layout('default');
-        // $posts['user_info'] = $timeline;
+        // $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
 
         foreach ($posts as $post) {
             if($post->images()->count() > 0) {
@@ -2976,6 +3034,16 @@ class TimelineController extends AppBaseController
             if($post['likes_count'] > 0) {
                 if($post->users_liked()->where('user_id',Auth::user()->id)->count()) {
                     $post['user_liked'] = true;
+                }
+            }
+
+            if($post->type == 'event'){
+                $post['event'] = Events::where('timeline_id',$post->timeline_id)->latest()->get();
+                if($user_event->users->contains(Auth::user()->id)){
+                    $user_event['registered'] = true;
+                }
+                if($user_event->start_date < Carbon::now()){
+                    $user_event['expired'] = true;
                 }
             }
         }
@@ -3092,7 +3160,16 @@ class TimelineController extends AppBaseController
     }
 
     public function getEventByDate(Request $request) {
-        $events = Event::where([['start_date','<=',$request->date],['end_date','>=',$request->date]])->get();
+        $events = Event::where([['user_id',Auth::user()->id],['start_date','<=',$request->start_date],['end_date','>=',$request->end_date]])->get();
         return response()->json(['status' => '200', ['events'=>$events]]);
+    }
+
+    public function getEventById(Request $request) {
+        $events = Event::where('id',$request->event_id)->with('timeline')->get();
+        foreach ($events as $event) {
+            $event['description'] = $event->timeline->about;
+            $event['title'] = $event->timeline->name;
+        }
+        return response()->json(['status'=>'200',['events'=>$events]]);
     }
 }
