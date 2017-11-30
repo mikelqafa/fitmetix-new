@@ -1,9 +1,8 @@
 <template>
     <div>
-        <app-event-calender></app-event-calender>
         <div class="ft-calendar">
             <header>
-                <h2 class="ft-calendar-h2">September</h2>
+                <h2 class="ft-calendar-h2">{{month}}</h2>
                 <a class="btn-prev svg-icon" href="javascript:;">
                     <svg fill="#1E7C82" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/>
@@ -118,15 +117,6 @@
         border-spacing: 0;
     }
 
-    .ft-calendar .container {
-        height: 538px;
-        left: 50%;
-        margin: -255px 0 0 -245px;
-        position: absolute;
-        top: 50%;
-        width: 510px;
-    }
-
     .ft-calendar {
         text-align: center;
     }
@@ -173,7 +163,7 @@
     }
 
     .ft-calendar .svg-icon > svg {
-        margin-top: 8px;
+        margin-top: 6px;
     }
 
     .ft-calendar .current-day {
@@ -213,7 +203,7 @@
         line-height: 40px;
         margin: 12px;
         position: absolute;
-        top: 50%;
+        top: 0;
         width: 40px;
     }
 
@@ -224,26 +214,43 @@
     }
 
     .ft-calendar .btn-prev {
-        left: 6em;
+        left: 6em
     }
 
     .ft-calendar .btn-next {
         right: 6em;
+        transform: rotate(180deg);
     }
 </style>
 <script>
     import calPanel from './vueEventCalendar.vue'
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     export default {
         data: function () {
             return {
-                test: 'hola'
+                test: 'hola',
+                current: {
+                    month: '',
+                    year: '',
+                    days: ''
+                },
+                currentDate: new Date()
             }
         },
         methods: {},
         mounted () {
-
+            console.log(this.currentDate.getMonth())
+            window.meow = this.currentDate
+            console.log(this.firstDay, this.currentDate.getFullYear(), this.currentDate.getMonth())
         },
-        computed: {},
+        computed: {
+            month () {
+                return months[this.currentDate.getMonth()]
+            },
+            firstDay () {
+                return new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1).getDay();
+            }
+        },
         components: {
             'app-event-calender': calPanel
         }

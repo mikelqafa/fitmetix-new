@@ -139,7 +139,7 @@
 </style>
 
 
-<div class="main-content">
+<div class="" style="margin-top: 30px">
 			<!-- List of user events-->
 	
 	<div class="post-filters pages-groups">

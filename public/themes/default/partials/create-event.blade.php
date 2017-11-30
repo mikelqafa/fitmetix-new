@@ -110,12 +110,14 @@
 				{{ session()->get('message') }}
 			</div>
 			@endif                         
-			<form class="margin-right" method="POST" action="{{ url('/'.$username.'/create-event/') }}">
+			<form class="margin-right" method="POST" action="{{ url('/'.$username.'/create-event/') }}" enctype="multipart/form-data">
 				{{ csrf_field() }}
 
 				<fieldset class="form-group required {{ $errors->has('name') ? ' has-error' : '' }}">
 					<label class="event_images_upload--label" for="event_images_upload" style="background-image: url({{url('images/no-image.png')}})">
-						<input id="event_images_upload" type="file" name="event_images_upload" class="event_images_upload form-control">
+						<input id="event_images_upload" required type="file" multiple="multiple"
+							   accept="image/jpeg,image/png,image/gif"
+							   name="event_images_upload[]" class="event_images_upload form-control">
 						<i class="hidden icon icon-add"></i>
 						<div id="event_images_upload--image"></div>
 					</label>
@@ -199,7 +201,7 @@
 
 							<div class="input-group date form_datetime">												
 
-								<input type="text" class="datepick2 form-control" name="start_date" placeholder="Start Time" value="{{ old('start_date') }}">
+								<input type="text" class="datepick2--event form-control" name="start_date" placeholder="Start Time" value="{{ old('start_date') }}">
 
 								<span class="input-group-addon addon-right calendar-addon">
 									<span class="fa fa-calendar"></span>

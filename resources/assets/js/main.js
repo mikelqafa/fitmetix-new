@@ -47,3 +47,10 @@ window.createPost = new Vue({
     'app-create-post': createPost
   }
 })
+
+window.eventCalendar = new Vue({
+  el: '#app-create-event',
+  components: {
+    'app-event-calender': AppEventCalendar
+  }
+})

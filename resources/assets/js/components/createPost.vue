@@ -232,7 +232,6 @@
                 return (html + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
             },
             createNewPost: function () {
-                let that = this
                 let _token = $(".create-post-form input[name=_token]").val()
                 let youtubeText = $(".create-post-form input[name=youtubeText]").val()
                 let location = $(".create-post-form input[name=location]").val()
@@ -242,15 +241,33 @@
                 let soundcloud_id = $(".create-post-form input[name=soundcloud_id]").val()
                 let user_tags = $(".create-post-form input[name=user_tags]").val()
                 let soundcloud_title = $(".create-post-form input[name=soundcloud_title]").val()
+                this.replaceImgEmoji()
+                let description = this.nl2br($('.replace-with').html())
+                let $imageInputs = $('.create-post-form input[name="upload-image-name[]"]')
+                if($imageInputs.length == 0 && youtubeText == '' && location =='' && youtube_title == '' && youtube_video_id == ''
+                        && soundcloud_id == '' && user_tags == '' && soundcloud_title == '' &&  description == '' ) {
+                    materialSnackBar({messageText: 'Your post cannot be empty!', autoClose: true })
+                    return false;
+                }
+                let imageUploaded = true
+                $imageInputs.each(function(){
+                    console.log($(this).val())
+                    if($(this).val() == '') {
+                        imageUploaded = false
+                    }
+                })
+                if(!imageUploaded) {
+                    materialSnackBar({messageText: 'Please wait while images are being uploading', autoClose: true })
+                    return;
+                }
+                let that = this
                 // set loading state
                 let create_post_form = $('.create-post-form')
                 let post_images_upload = []
-                $('input[name="upload-image-name[]"]').each(function(){
+                $imageInputs.each(function(){
                     post_images_upload.push($(this).val())
                 })
                 let create_post_button = create_post_form.find('.btn-submit')
-                this.replaceImgEmoji()
-                let description = this.nl2br($('.replace-with').html())
                 create_post_button.attr('disabled', true).append(' <i class="fa fa-spinner fa-pulse "></i>');
                 create_post_form.find('.post-message').fadeOut('fast');
                 let data = {
@@ -272,7 +289,6 @@
                     url: base_url + 'ajax/create-post',
                     data: data
                 }).then(function (response) {
-                    console.log(response.data.data.id)
                     if (response.status == 200) {
                         window.timeLine.$options.components["app-post"].methods.fetchNewOnePost(response.data.data.id)
                         materialSnackBar({messageText: 'Your post has been successfully published', autoClose: true })
@@ -284,8 +300,6 @@
             },
             uploadPostImage: function (key, files) {
                 let that = this
-                //that.imageFile.push({index: key, inProgress:true })
-                //Vue.set(that.imageFile, key, value)
                 $('.create-post-form').append('<input type="hidden" data-key="'+ key +'"  name="upload-image-name[]" value="">')
                 console.log(key)
                 $.ajaxSetup({
@@ -294,7 +308,7 @@
                     }
                 });
                 let create_post_button = $('.create-post-form .btn-submit')
-                create_post_button.attr('disabled', true)
+                //create_post_button.attr('disabled', true)
                 var data = new FormData();
                 data.append('post_images_upload', files[key], files[key].name);
                 let loaderDiv = $('.create-post-form .pip[data-index="'+key+'"]').find('.image-loader-progress')
@@ -317,9 +331,9 @@
                                     percent = Math.ceil(position / total * 100);
                                 }
                                 loaderDiv.css('width',percent+'%');
-                                if(!create_post_button.attr('disabled')) {
+                                /*if(!create_post_button.attr('disabled')) {
                                     create_post_button.attr('disabled', true)
-                                }
+                                }*/
                             }, true);
                         }
                         return xhr;
@@ -378,7 +392,6 @@
             },
             processEditOperation: function (operation) {
                 this.backContent = operation.api.origElements.innerHTML
-                console.log(operation.api.origElements)
             }
         }
     }

@@ -732,13 +732,8 @@
 </script>
 @if (in_array(!Route::currentRouteName(), ['contact', 'login', 'register']))
     <script src="{{ asset('js/notification.js') }}" type="text/javascript"></script>
+    <script type="text/javascript" src="{{asset('js/caleandar.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/event.js')}}"></script>
 @endif
-<form action="{{ url('/logout') }}" method="post" style="opacity:.1;position:fixed; bottom: 0; left: 0; z-index: 11">
-    {{ csrf_field() }}
-
-    <button type="submit" class="btn-logout">
-        <i class="fa fa-unlock" aria-hidden="true"></i>{{ trans('common.logout') }}
-    </button>
-</form>
 </body>
 </html>

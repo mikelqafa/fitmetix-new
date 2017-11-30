@@ -18,6 +18,9 @@
     .text-wrapper_desc {
         margin-bottom: 8px;
     }
+    .text-wrapper {
+        word-break: break-all;
+    }
 </style>
 <script>
     export default {
@@ -39,7 +42,7 @@
         },
         computed: {
             hasItem () {
-                return this.postHtml !== ''
+                return this.postHtml !== '' && this.postHtml !== null
             },
             isMoreViewable () {
                 return this.postHtmlViewAble.length < this.postHtml.length

@@ -1,4 +1,4 @@
-<form action="<?php echo e(url('')); ?>" method="post" class="create-post-form" enctype="multipart/form-data">
+<form action="<?php echo e(url('')); ?>" method="post" class="create-post-form">
     <?php echo e(csrf_field()); ?>
 
 

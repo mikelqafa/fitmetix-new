@@ -17765,6 +17765,13 @@ window.createPost = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   }
 });
 
+window.eventCalendar = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+  el: '#app-create-event',
+  components: {
+    'app-event-calender': __WEBPACK_IMPORTED_MODULE_8__components_appEventCalendar___default.a
+  }
+});
+
 /***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -18623,7 +18630,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.viewAll {\n    margin-left: 4px;\n    color: #1E7C82;\n}\n.md-button--link {\n    margin-bottom: 4px;\n}\n.text-wrapper_desc {\n    margin-bottom: 8px;\n}\n", ""]);
+exports.push([module.i, "\n.viewAll {\n    margin-left: 4px;\n    color: #1E7C82;\n}\n.md-button--link {\n    margin-bottom: 4px;\n}\n.text-wrapper_desc {\n    margin-bottom: 8px;\n}\n.text-wrapper {\n    word-break: break-all;\n}\n", ""]);
 
 // exports
 
@@ -18634,6 +18641,9 @@ exports.push([module.i, "\n.viewAll {\n    margin-left: 4px;\n    color: #1E7C82
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
 //
 //
 //
@@ -18675,7 +18685,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         hasItem: function hasItem() {
-            return this.postHtml !== '';
+            return this.postHtml !== '' && this.postHtml !== null;
         },
         isMoreViewable: function isMoreViewable() {
             return this.postHtmlViewAble.length < this.postHtml.length;
@@ -19440,7 +19450,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         hasItem: function hasItem() {
-            return this.postYouTube !== '';
+            return this.postYouTube !== '' && this.postYouTube !== null;
         },
         youTubeSrc: function youTubeSrc() {
             return 'https://www.youtube.com/embed/' + this.postYouTube;
@@ -19543,7 +19553,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         hasItem: function hasItem() {
-            return this.soundcloud !== '';
+            return this.soundcloud !== '' && this.soundcloud !== null;
         },
         soundcloudSrc: function soundcloudSrc() {
             return 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/' + this.soundcloud;
@@ -22805,7 +22815,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return (html + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
         },
         createNewPost: function createNewPost() {
-            var that = this;
             var _token = $(".create-post-form input[name=_token]").val();
             var youtubeText = $(".create-post-form input[name=youtubeText]").val();
             var location = $(".create-post-form input[name=location]").val();
@@ -22815,15 +22824,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var soundcloud_id = $(".create-post-form input[name=soundcloud_id]").val();
             var user_tags = $(".create-post-form input[name=user_tags]").val();
             var soundcloud_title = $(".create-post-form input[name=soundcloud_title]").val();
+            this.replaceImgEmoji();
+            var description = this.nl2br($('.replace-with').html());
+            var $imageInputs = $('.create-post-form input[name="upload-image-name[]"]');
+            if ($imageInputs.length == 0 && youtubeText == '' && location == '' && youtube_title == '' && youtube_video_id == '' && soundcloud_id == '' && user_tags == '' && soundcloud_title == '' && description == '') {
+                materialSnackBar({ messageText: 'Your post cannot be empty!', autoClose: true });
+                return false;
+            }
+            var imageUploaded = true;
+            $imageInputs.each(function () {
+                console.log($(this).val());
+                if ($(this).val() == '') {
+                    imageUploaded = false;
+                }
+            });
+            if (!imageUploaded) {
+                materialSnackBar({ messageText: 'Please wait while images are being uploading', autoClose: true });
+                return;
+            }
+            var that = this;
             // set loading state
             var create_post_form = $('.create-post-form');
             var post_images_upload = [];
-            $('input[name="upload-image-name[]"]').each(function () {
+            $imageInputs.each(function () {
                 post_images_upload.push($(this).val());
             });
             var create_post_button = create_post_form.find('.btn-submit');
-            this.replaceImgEmoji();
-            var description = this.nl2br($('.replace-with').html());
             create_post_button.attr('disabled', true).append(' <i class="fa fa-spinner fa-pulse "></i>');
             create_post_form.find('.post-message').fadeOut('fast');
             var data = {
@@ -22845,7 +22871,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 url: base_url + 'ajax/create-post',
                 data: data
             }).then(function (response) {
-                console.log(response.data.data.id);
                 if (response.status == 200) {
                     window.timeLine.$options.components["app-post"].methods.fetchNewOnePost(response.data.data.id);
                     materialSnackBar({ messageText: 'Your post has been successfully published', autoClose: true });
@@ -22857,8 +22882,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         uploadPostImage: function uploadPostImage(key, files) {
             var that = this;
-            //that.imageFile.push({index: key, inProgress:true })
-            //Vue.set(that.imageFile, key, value)
             $('.create-post-form').append('<input type="hidden" data-key="' + key + '"  name="upload-image-name[]" value="">');
             console.log(key);
             $.ajaxSetup({
@@ -22867,7 +22890,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             });
             var create_post_button = $('.create-post-form .btn-submit');
-            create_post_button.attr('disabled', true);
+            //create_post_button.attr('disabled', true)
             var data = new FormData();
             data.append('post_images_upload', files[key], files[key].name);
             var loaderDiv = $('.create-post-form .pip[data-index="' + key + '"]').find('.image-loader-progress');
@@ -22890,9 +22913,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                 percent = Math.ceil(position / total * 100);
                             }
                             loaderDiv.css('width', percent + '%');
-                            if (!create_post_button.attr('disabled')) {
-                                create_post_button.attr('disabled', true);
-                            }
+                            /*if(!create_post_button.attr('disabled')) {
+                                create_post_button.attr('disabled', true)
+                            }*/
                         }, true);
                     }
                     return xhr;
@@ -22951,7 +22974,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         processEditOperation: function processEditOperation(operation) {
             this.backContent = operation.api.origElements.innerHTML;
-            console.log(operation.api.origElements);
         }
     }
 });
@@ -32451,7 +32473,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.ft-calendar {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    max-width: 510px;\n    margin: 0 auto;\n}\n.ft-calendar header {\n    width: 100%;\n}\n.ft-calendar-h2 {\n    font-size: 2em;\n    line-height: 1.25em;\n    margin: .25em 0;\n}\n.ft-calendar-h3 {\n    font-size: 1.5em;\n    line-height: 1em;\n    margin: .33em 0;\n}\n.ft-calendar__table {\n    border-collapse: collapse;\n    width: 100%;\n    border-spacing: 0;\n}\n.ft-calendar .container {\n    height: 538px;\n    left: 50%;\n    margin: -255px 0 0 -245px;\n    position: absolute;\n    top: 50%;\n    width: 510px;\n}\n.ft-calendar {\n    text-align: center;\n}\n.ft-calendar header {\n    position: relative;\n}\n.ft-calendar h2 {\n    text-transform: uppercase;\n}\n.ft-calendar thead {\n    font-weight: 600;\n    text-transform: uppercase;\n}\n.ft-calendar tbody {\n    color: #7c8a95;\n}\n.ft-calendar tbody td:hover {\n    border: 2px solid #1E7C82;\n}\n.ft-calendar td {\n    border: 2px solid transparent;\n    border-radius: 50%;\n    display: inline-block;\n    height: 4em;\n    line-height: 4em;\n    text-align: center;\n    width: 4em;\n}\n.ft-calendar .prev-month,\n.ft-calendar .next-month {\n    color: #cbd1d2;\n}\n.ft-calendar .prev-month:hover,\n.ft-calendar .next-month:hover {\n    border: 2px solid #cbd1d2;\n}\n.ft-calendar .svg-icon > svg {\n    margin-top: 8px;\n}\n.ft-calendar .current-day {\n    background: #1E7C82;\n    color: #f9f9f9;\n}\n.ft-calendar .event {\n    cursor: pointer;\n    position: relative;\n}\n.ft-calendar .event:after {\n    background: #1E7C82;\n    border-radius: 50%;\n    bottom: .5em;\n    display: block;\n    content: '';\n    height: .5em;\n    left: 50%;\n    margin: -.25em 0 0 -.25em;\n    position: absolute;\n    width: .5em;\n}\n.ft-calendar .event.current-day:after {\n    background: #f9f9f9;\n}\n.ft-calendar .btn-prev,\n.ft-calendar .btn-next {\n    border: 2px solid #cbd1d2;\n    border-radius: 50%;\n    color: #cbd1d2;\n    height: 40px;\n    font-size: .75em;\n    line-height: 40px;\n    margin: 12px;\n    position: absolute;\n    top: 50%;\n    width: 40px;\n}\n.ft-calendar .btn-prev:hover,\n.ft-calendar .btn-next:hover {\n    background: #cbd1d2;\n    color: #f9f9f9;\n}\n.ft-calendar .btn-prev {\n    left: 6em;\n}\n.ft-calendar .btn-next {\n    right: 6em;\n}\n", ""]);
+exports.push([module.i, "\n.ft-calendar {\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    max-width: 510px;\n    margin: 0 auto;\n}\n.ft-calendar header {\n    width: 100%;\n}\n.ft-calendar-h2 {\n    font-size: 2em;\n    line-height: 1.25em;\n    margin: .25em 0;\n}\n.ft-calendar-h3 {\n    font-size: 1.5em;\n    line-height: 1em;\n    margin: .33em 0;\n}\n.ft-calendar__table {\n    border-collapse: collapse;\n    width: 100%;\n    border-spacing: 0;\n}\n.ft-calendar {\n    text-align: center;\n}\n.ft-calendar header {\n    position: relative;\n}\n.ft-calendar h2 {\n    text-transform: uppercase;\n}\n.ft-calendar thead {\n    font-weight: 600;\n    text-transform: uppercase;\n}\n.ft-calendar tbody {\n    color: #7c8a95;\n}\n.ft-calendar tbody td:hover {\n    border: 2px solid #1E7C82;\n}\n.ft-calendar td {\n    border: 2px solid transparent;\n    border-radius: 50%;\n    display: inline-block;\n    height: 4em;\n    line-height: 4em;\n    text-align: center;\n    width: 4em;\n}\n.ft-calendar .prev-month,\n.ft-calendar .next-month {\n    color: #cbd1d2;\n}\n.ft-calendar .prev-month:hover,\n.ft-calendar .next-month:hover {\n    border: 2px solid #cbd1d2;\n}\n.ft-calendar .svg-icon > svg {\n    margin-top: 6px;\n}\n.ft-calendar .current-day {\n    background: #1E7C82;\n    color: #f9f9f9;\n}\n.ft-calendar .event {\n    cursor: pointer;\n    position: relative;\n}\n.ft-calendar .event:after {\n    background: #1E7C82;\n    border-radius: 50%;\n    bottom: .5em;\n    display: block;\n    content: '';\n    height: .5em;\n    left: 50%;\n    margin: -.25em 0 0 -.25em;\n    position: absolute;\n    width: .5em;\n}\n.ft-calendar .event.current-day:after {\n    background: #f9f9f9;\n}\n.ft-calendar .btn-prev,\n.ft-calendar .btn-next {\n    border: 2px solid #cbd1d2;\n    border-radius: 50%;\n    color: #cbd1d2;\n    height: 40px;\n    font-size: .75em;\n    line-height: 40px;\n    margin: 12px;\n    position: absolute;\n    top: 0;\n    width: 40px;\n}\n.ft-calendar .btn-prev:hover,\n.ft-calendar .btn-next:hover {\n    background: #cbd1d2;\n    color: #f9f9f9;\n}\n.ft-calendar .btn-prev {\n    left: 6em\n}\n.ft-calendar .btn-next {\n    right: 6em;\n    transform: rotate(180deg);\n}\n", ""]);
 
 // exports
 
@@ -32688,27 +32710,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            test: 'hola'
+            test: 'hola',
+            current: {
+                month: '',
+                year: '',
+                days: ''
+            },
+            currentDate: new Date()
         };
     },
     methods: {},
-    mounted: function mounted() {},
+    mounted: function mounted() {
+        console.log(this.currentDate.getMonth());
+        window.meow = this.currentDate;
+        console.log(this.firstDay, this.currentDate.getFullYear(), this.currentDate.getMonth());
+    },
 
-    computed: {},
+    computed: {
+        month: function month() {
+            return months[this.currentDate.getMonth()];
+        },
+        firstDay: function firstDay() {
+            return new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1).getDay();
+        }
+    },
     components: {
         'app-event-calender': __WEBPACK_IMPORTED_MODULE_0__vueEventCalendar_vue___default.a
     }
@@ -33304,83 +33335,76 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("app-event-calender"),
-      _vm._v(" "),
-      _c("div", { staticClass: "ft-calendar" }, [
-        _c("header", [
-          _c("h2", { staticClass: "ft-calendar-h2" }, [_vm._v("September")]),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "btn-prev svg-icon",
-              attrs: { href: "javascript:;" }
-            },
-            [
-              _c(
-                "svg",
-                {
-                  attrs: {
-                    fill: "#1E7C82",
-                    height: "24",
-                    viewBox: "0 0 24 24",
-                    width: "24",
-                    xmlns: "http://www.w3.org/2000/svg"
-                  }
-                },
-                [
-                  _c("path", {
-                    attrs: {
-                      d: "M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("path", { attrs: { d: "M0-.5h24v24H0z", fill: "none" } })
-                ]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "btn-next  svg-icon",
-              attrs: { href: "javascript:;" }
-            },
-            [
-              _c(
-                "svg",
-                {
-                  attrs: {
-                    fill: "#1E7C82",
-                    height: "24",
-                    viewBox: "0 0 24 24",
-                    width: "24",
-                    xmlns: "http://www.w3.org/2000/svg"
-                  }
-                },
-                [
-                  _c("path", {
-                    attrs: {
-                      d: "M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("path", { attrs: { d: "M0-.5h24v24H0z", fill: "none" } })
-                ]
-              )
-            ]
-          )
+  return _c("div", [
+    _c("div", { staticClass: "ft-calendar" }, [
+      _c("header", [
+        _c("h2", { staticClass: "ft-calendar-h2" }, [
+          _vm._v(_vm._s(_vm.month))
         ]),
         _vm._v(" "),
-        _vm._m(0)
-      ])
-    ],
-    1
-  )
+        _c(
+          "a",
+          { staticClass: "btn-prev svg-icon", attrs: { href: "javascript:;" } },
+          [
+            _c(
+              "svg",
+              {
+                attrs: {
+                  fill: "#1E7C82",
+                  height: "24",
+                  viewBox: "0 0 24 24",
+                  width: "24",
+                  xmlns: "http://www.w3.org/2000/svg"
+                }
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    d: "M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"
+                  }
+                }),
+                _vm._v(" "),
+                _c("path", { attrs: { d: "M0-.5h24v24H0z", fill: "none" } })
+              ]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "btn-next  svg-icon",
+            attrs: { href: "javascript:;" }
+          },
+          [
+            _c(
+              "svg",
+              {
+                attrs: {
+                  fill: "#1E7C82",
+                  height: "24",
+                  viewBox: "0 0 24 24",
+                  width: "24",
+                  xmlns: "http://www.w3.org/2000/svg"
+                }
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    d: "M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"
+                  }
+                }),
+                _vm._v(" "),
+                _c("path", { attrs: { d: "M0-.5h24v24H0z", fill: "none" } })
+              ]
+            )
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {

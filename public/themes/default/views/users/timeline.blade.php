@@ -118,19 +118,12 @@
         }
     }
 </style>
-
+<link href="{{ asset('css/theme1.css') }}" rel="stylesheet">
 <!-- main-section -->
 	<div class="container-fluid section-container @if($timeline->hide_cover) no-cover @endif">
 		<div class="row">
-            <div class="col-md-3 hidden-sm hidden-xs">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Left Side of Profile</div>
-                    <div class="panel-body">
-                        <p>Left Side of Body</p>
-                    </div>
-                </div>
-            </div>
-			<div class="col-md-6">
+            <div class="visible-lg col-md-2 col-lg-2"></div>
+			<div class="col-md-6 col-lg-6">
 				@if($timeline->type == "user")
 					{!! Theme::partial('user-header',compact('user','timeline','liked_pages','joined_groups','followRequests','following_count','followers_count','follow_confirm','user_post','joined_groups_count','guest_events')) !!}
                     <br>
@@ -176,56 +169,21 @@
 				@elseif($timeline->type == "event")
 					{!! Theme::partial('event-header',compact('event','timeline')) !!}
 				@endif
+                <ul class="nav nav-justified" style="border-top: 1px solid #333;border-bottom: 1px solid #333;">
+                    <li><a style="color:#000" href="{{ url($timeline->username) }}">Posts</a></li>
+                    <li><a style="color: #000;" href="{{ url($timeline->username.'/albums') }}" class="">Gallery</a></li>
+                    <li><a style="color: #000;" href="{{ url($timeline->username.'/events') }}" class="">Events</a></li>
+                </ul>
 			</div>
-			<div class="col-md-3 hidden-sm hidden-xs">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Event</div>
-                    <div class="panel-body">
-                        <div class="calendar hidden-print">
-                            
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-hover table-condensed">
-                                    <thead>
-                                    <tr>
-                                        <td>Mon</td>
-                                        <td>Tue</td>
-                                        <td>Wed</td>
-                                        <td>Thu</td>
-                                        <td>Fri</td>
-                                        <td>Sat</td>
-                                        <td>Sun</td>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                   
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+			<div class="col-md-4 col-lg-4 hidden-sm hidden-xs">
+                <div id="caleandar"></div>
 			</div>
 		</div>
 		<div class="row">
-            <div class="col-md-3">
-                @if($timeline->type == "user")
-                    {!! Theme::partial('user-leftbar',compact('timeline','user','follow_user_status','own_pages','own_groups','user_events')) !!}
-                @elseif($timeline->type == "page")
-                    {!! Theme::partial('page-leftbar',compact('timeline','page','page_members')) !!}
-                @elseif($timeline->type == "group")
-                    {!! Theme::partial('group-leftbar',compact('timeline','group','group_members','group_events','ongoing_events','upcoming_events')) !!}
-                @elseif($timeline->type == "event")
-                    {!! Theme::partial('event-leftbar',compact('event','timeline')) !!}
-                @endif
-            </div>
-
-			<div class="col-md-6">
+            <div class="visible-lg col-md-2 col-lg-2"></div>
+            <div class="col-md-6 col-lg-6">
                 <div class="row">
-                    <ul class="nav nav-justified" style="border-top: 1px solid #333;border-bottom: 1px solid #333;">
-                        <li><a style="color:#000" href="{{ url($timeline->username) }}">Posts</a></li>
-                        <li><a style="color: #000;" href="{{ url($timeline->username.'/albums') }}" class="">Gallery</a></li>
-                        <li><a style="color: #000;" href="{{ url($timeline->username.'/events') }}" class="">Events</a></li>
-                    </ul>
+
                 </div>
 				<div class="row">
 					<div class="timeline">
@@ -246,8 +204,7 @@
                                 {!! Theme::partial('create-post',compact('timeline','user_post')) !!}
                             @endif
                         @endif
-
-                        <div class="timeline-posts">
+                        {{--<div class="timeline-posts">
                             @if($user_post == "user" || $user_post == "page" || $user_post == "group")
                                 @if(count($posts) > 0)
                                     @foreach($posts as $post)
@@ -271,12 +228,51 @@
                                     <div class="no-posts alert alert-warning">{{ trans('messages.private_posts') }}</div>
                                 @endif
                             @endif
+                        </div>--}}
+
+                        <div class="timeline-posts">
+                            <div id="app-timeline">
+                                <input type="hidden" id="newPostId">
+                                <app-post-option></app-post-option>
+                                <app-comment-option></app-comment-option>
+                                <app-post>
+                                    <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
+                                        <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
+                                            <div class="user-avatar lg-loadable"></div>
+                                            <div class="md-layout md-layout--column">
+                                                <div class="user-meta-info lg-loadable"></div>
+                                                <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="lg-loadable lg-loadable--text"></div>
+                                            <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
+                                            <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
+                                        </div>
+                                    </div>
+                                    <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
+                                        <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
+                                            <div class="user-avatar lg-loadable"></div>
+                                            <div class="md-layout md-layout--column">
+                                                <div class="user-meta-info lg-loadable"></div>
+                                                <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="lg-loadable lg-loadable--text"></div>
+                                            <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
+                                            <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
+                                        </div>
+                                    </div>
+                                </app-post>
+                                <div id="scroll-bt"></div>
+                            </div>
                         </div>
                     </div>
 				</div><!-- /row -->
 			</div><!-- /col-md-10 -->
 
-			<div class="col-md-3 hidden-sm hidden-xs">
+			<div class="col-md-4 col-lg-4 hidden-sm hidden-xs">
 				<div class="calendar hidden-print">
                     <div class="list">
                         {{-- {!! $event_list !!} --}}
@@ -287,41 +283,3 @@
 
 		</div><!-- /row -->
 	</div>
-<script>
-    var calendar = {
-
-        init: function() {
-
-            var d = new Date();
-            var strDate = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate();
-            var monthNumber = d.getMonth() + 1;
-
-            $('tbody td').on('click', function(e) {
-                if ($(this).hasClass('event')) {
-                    $('tbody td').removeClass('active');
-                    $(this).addClass('active');
-                } else {
-                    $('tbody td').removeClass('active');
-                }
-            });
-
-            $('tbody td').on('click', function(e) {
-                $('.day-event').hide('fast');
-                var monthEvent = $(this).attr('date-month');
-                var dayEvent = $(this).attr('date-day');
-                console.log(monthEvent+" "+dayEvent);
-                $('.day-event[date-day="' + dayEvent + '"]').show('fast');
-            });
-
-            $('.print-btn').click(function() {
-                window.print();
-            });
-        }
-    };
-
-    $(document).ready(function() {
-
-        calendar.init();
-
-    });
-</script>

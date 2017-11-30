@@ -20395,6 +20395,7 @@ body.direction-rtl .manage-table table tbody td ul {
 .user-bio-block .bio-description {
     padding: 13px 0px;
     color: #5B6B81;
+    word-break: break-all;
 }
 .user-bio-block .bio-list {
     margin-bottom: 0px;

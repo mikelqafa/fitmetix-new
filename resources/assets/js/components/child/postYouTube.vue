@@ -14,7 +14,7 @@
         },
         computed: {
             hasItem () {
-                return this.postYouTube !== ''
+                return this.postYouTube !== '' && this.postYouTube !== null
             },
             youTubeSrc () {
                 return 'https://www.youtube.com/embed/' + this.postYouTube

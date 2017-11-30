@@ -1,4 +1,4 @@
-<form action="{{ url('') }}" method="post" class="create-post-form" enctype="multipart/form-data">
+<form action="{{ url('') }}" method="post" class="create-post-form">
     {{ csrf_field() }}
 
     <div class="panel panel-default panel-create"> <!-- panel-create -->

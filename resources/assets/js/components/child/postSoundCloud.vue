@@ -13,7 +13,7 @@
         },
         computed: {
             hasItem () {
-                return this.soundcloud !== ''
+                return this.soundcloud !== '' && this.soundcloud !== null
             },
             soundcloudSrc () {
                 return 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/' + this.soundcloud

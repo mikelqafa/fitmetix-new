@@ -1,0 +1,139 @@
+.cld-main{
+  width: 330px;
+  margin: 0 auto;
+}
+.cld-main a{
+  color: #333;
+
+  font-weight: bold;
+}
+  .cld-datetime{
+    position: relative;
+    width: 100%;
+    min-width: 100px;
+    margin: auto;
+    padding: 15px 0;
+    overflow: hidden;
+  }
+  .cld-datetime .today{
+    position: relative;
+    float: left;
+    width: calc(100% - 80px);
+    margin: auto;
+    text-align: center;
+    font-size: 2em;
+    line-height: 1.25em;
+  }
+  .cld-nav{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #cbd1d2;
+    border-radius: 50%;
+    color: #cbd1d2;
+    font-size: .75em;
+    line-height: 40px;
+    top: 0;
+  }
+  .cld-nav:hover{
+    background: #cbd1d2;
+  }
+  .cld-nav svg {
+    transform: translate(6px,6px);
+  }
+  .cld-fwd.cld-nav {
+    transform: rotate(180deg);
+  }
+  .cld-nav:hover{
+    cursor: pointer;
+  }
+  .cld-nav:hover svg{
+      fill: #666;
+  }
+  .cld-rwd{
+    float: left;
+  }
+  .cld-fwd{
+    float: right;
+  }
+    .cld-nav svg:hover{
+
+    }
+.cld-labels, .cld-days{
+  padding-left: 0;
+}
+  .cld-label, .cld-day{
+    display: inline-block;
+    width: 14.28%;
+    text-align: center;
+  }
+  .cld-day.today .cld-number{
+    background: #1E7C82;
+    color: #f9f9f9;
+  }
+  .cld-day.disableDay{
+    opacity: 0.5;
+  }
+  .cld-day.nextMonth, .cld-day.prevMonth{
+    opacity: 0.33;
+  }
+    .cld-number{
+      position: relative;
+      border: 2px solid transparent;
+      border-radius: 50%;
+      display: inline-block;
+      height: 52px;
+      line-height: 52px;
+      text-align: center;
+      width: 52px;
+      margin: 0;
+      user-select: none;
+      cursor: default;
+    }
+    .cld-number:hover,
+    .cld-number:focus{
+      border: 2px solid #1E7C82;
+    }
+      .cld-title{
+        position: absolute;
+        z-index: 5;
+        display: none;
+        top: 45px;
+        left: 7px;
+        padding: 5px 10px;
+        background: #fff;
+        white-space: nowrap;
+        border: 1px solid #1E7C82;
+        border-radius: 5px;
+        font-size: 12px;
+        line-height: 1.6;
+      }
+      .cld-number:hover .cld-title{
+        display: block;
+      }
+      .cld-title::before{
+        content: '';
+        position: absolute;
+        top: -7.5px; left: 7.5px;
+        width: 0;
+        height: 0;
+        border-left: 7.5px solid transparent;
+        border-right: 7.5px solid transparent;
+
+        border-bottom: 7.5px solid #ccc;
+      }
+      .cld-number.eventday::after{
+        background: #1E7C82;
+        border-radius: 50%;
+        bottom: .5em;
+        display: block;
+        content: '';
+        height: .5em;
+        left: 50%;
+        margin: 0 0 -3px -3px;
+        position: absolute;
+        width: .5em;
+      }
+      .cld-number.eventday:hover{
+        cursor: pointer;
+      }
