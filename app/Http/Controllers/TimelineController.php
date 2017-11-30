@@ -3171,20 +3171,6 @@ class TimelineController extends AppBaseController
 
     public function getEventByDate(Request $request) {
 
-        $events = Event::where([['start_date','<=',$request->start_date],['end_date','>=',$request->end_date]])->get();
-
-        foreach ($events as $event) {
-            if($event->users()->contains(Auth::user()->id)){
-                $event['details_link'] = $event->timeline->username;
-                $event['to_be_shown'] = true;
-            }
-        }
-        return response()->json(['status' => '200', ['events'=>$events]]);
-
-    }
-
-    public function getEventByDate(Request $request) {
-
         $events_all = Event::where('start_date','>=',$request->start_date)->get();
         $events = [];
         foreach ($events_all as $key => $event) {
