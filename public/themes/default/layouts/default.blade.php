@@ -63,6 +63,32 @@
         {!! Setting::get('google_analytics') !!}
     @endif
     <style>
+        .text-wrapper > div {
+            display: inline-block;
+        }
+        #medium-editor-toolbar-1{
+            display:none
+        }
+        .pip {
+            margin-left: 5px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .image-loader {
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255,255,255,.5);
+        }
+        .image-loader-progress {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease;
+            background-color: #1E7C82;
+            opacity: .54;
+        }
         .ft-btn-primary, .ft-btn-primary:hover, .ft-btn-primary:focus {
             background-color: #1E7C82;
             color: #fff;
@@ -307,6 +333,9 @@
 
         .navbar-collapse.collapse.in {
             height: 100vh !important;
+        }
+        .smiley-pics-content{
+            min-height: 90px;
         }
     </style>
     <style>

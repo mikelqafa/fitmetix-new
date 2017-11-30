@@ -40,6 +40,7 @@ window.appNotification = new Vue({
     'app-notification': AppNotification
   }
 })
+
 window.createPost = new Vue({
   el: '#app-create-post',
   components: {

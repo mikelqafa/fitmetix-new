@@ -47,6 +47,42 @@
 .bdp-label {
     font-size: 70%;
 }
+	.event_images_upload{
+		visibility: hidden;
+		width: 0;
+		height: 0;
+	}
+	.event_images_upload--label {
+		height: 312px;
+		width: 100%;
+		display: block;
+		position: relative;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 200px auto;
+		cursor: pointer;
+	}
+	.event_images_upload--label.image-added {
+		background-image: none;
+	}
+	#event_images_upload--image {
+		width: 100%;
+		overflow: hidden;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	#event_images_upload--image img{
+		max-width: 100%;
+		display: block;
+		max-height: 100%;
+	}
+	#event_images_upload--image .event-remove-thumb {
+		position: absolute;
+		top:15px;
+		right: 15px;
+	}
 </style>
 <!-- <div class="main-content"> -->	
 <div class="panel panel-default">
@@ -78,8 +114,12 @@
 				{{ csrf_field() }}
 
 				<fieldset class="form-group required {{ $errors->has('name') ? ' has-error' : '' }}">
-					<label>Upload Cover</label>
-					<input type="file" name="event_images_upload" class="form-control">
+					<label class="event_images_upload--label" for="event_images_upload" style="background-image: url({{url('images/no-image.png')}})">
+						<input id="event_images_upload" type="file" name="event_images_upload" class="event_images_upload form-control">
+						<i class="hidden icon icon-add"></i>
+						<div id="event_images_upload--image"></div>
+					</label>
+
 					<br/>
 					{{-- {{ Form::label('name', trans('common.name_of_your_event'), ['class' => 'control-label']) }} --}}
 					{{ Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => trans('common.name_of_your_event'),'maxlength'=>30]) }}
@@ -164,10 +204,6 @@
 								<span class="input-group-addon addon-right calendar-addon">
 									<span class="fa fa-calendar"></span>
 								</span>
-
-								{{-- <span class="input-group-addon addon-right angle-addon">
-									<span class="fa fa-angle-down"></span>
-								</span> --}}
 							</div>
 							@if ($errors->has('start_date'))
 							<span class="help-block">
@@ -175,27 +211,16 @@
 							</span>
 							@endif
 						</div>
-						<div class="col-md-6">
-							{{-- {{ Form::label('end_date', trans('admin.end_date'), ['class' => 'control-label']) }} --}}
-							<div class="input-group date form_datetime">
-
-								<input value="{{ old('end_date') }}" type="text" name="end_date" class="form-control" id="duration">
-
-								{{-- <input value="{{ old('end_date') }}" type="text" class="datepick2 form-control" name="end_date" placeholder="End Time">
-
-								<span class="input-group-addon addon-right calendar-addon">
-									<span class="fa fa-calendar"></span>
-								</span> --}}
-								
-								{{-- <span class="input-group-addon addon-right angle-addon">
-									<span class="fa fa-angle-down"></span>
-								</span> --}}
-							</div>
-							@if ($errors->has('end_date'))
-							<span class="help-block">
-								{{ $errors->first('end_date') }}
-							</span>
+						<div class="col-md-6 hidden">
+							{{ Form::number('duration', old('duration'), ['class' => 'form-control', 'id' => 'duration', 'autocomplete' => 'off','placeholder' => 'duration' ,'max'=>2]) }}
+							@if ($errors->has('duration'))
+								<span class="help-block">
+									{{ $errors->first('duration') }}
+								</span>
 							@endif
+						</div>
+						<div class="col-md-6">
+							{{ Form::number('duration', old('duration'), ['class' => 'form-control', 'id' => 'duration', 'autocomplete' => 'off','placeholder' => 'duration' ,'max'=>2]) }}
 						</div>
 					</div>
 				</fieldset>
@@ -216,12 +241,12 @@
 				{!! Form::hidden('group_id', $group_id) !!}		
 
 				<div class="pull-right">
-					@if($group_id != null)
+					{{--@if($group_id != null)
 					<a href="{!! url($username) !!}" class="btn btn-default">Cancel</a>								    
 					@else
 					<a href="{!! url($username.'/events') !!}" class="btn btn-default">Cancel</a>								    
-					@endif									
-					{{ Form::submit(trans('common.create_event'), ['class' => 'btn btn-success']) }}
+					@endif--}}
+					{{ Form::submit(trans('common.create_event'), ['class' => 'btn ft-btn-primary']) }}
 				</div>
 				<div class="clearfix"></div>
 

@@ -240,8 +240,9 @@ $(function () {
   });
 
 
-  $('.create-post-form').ajaxForm({
+  $('.create-post-formd').ajaxForm({
     url: SP_source() + 'ajax/create-post',
+
     beforeSubmit : function validate(formData, jqForm, options) {
       var form = jqForm[0];
       //Uploading selected images on create post box
@@ -262,6 +263,7 @@ $(function () {
       }
 
     },
+
     beforeSend: function() {
       create_post_form = $('.create-post-form');
       create_post_button = create_post_form.find('.btn-submit');
@@ -305,8 +307,8 @@ $(function () {
       {
         materialSnackBar({messageText: responseText.message, autoClose: true })
       }
-
     }
+
   });
 
   // Toggle youtube input in create post form
@@ -339,22 +341,6 @@ $(function () {
     $('.location-addon').slideToggle();
   });
   // Toggle emoticons input in create post form
-  $('#emoticons').on('click',function(e){
-    e.preventDefault();
-    var emoticonButton = $(this);
-    if(!emoticonButton.hasClass('loaded-emoji'))
-    {
-      $.get( SP_source() + 'ajax/load-emoji')
-          .done(function( data ) {
-            $('.emoticons-wrapper').html(data.data);
-            emojify.run()
-            console.log('hello')
-            emoticonButton.addClass('loaded-emoji')
-          });
-    }
-
-    $('.emoticons-wrapper').slideToggle();
-  });
 
   // Fetch the youtube title and id when keyup
   $('#youtubeText').on('keyup',function(){
@@ -727,12 +713,7 @@ $(function () {
   });
 
   // smiley's on posts
-  $(document).on('click','.smiley-post',function(e){
-    e.preventDefault();
-    textbox = $("#createPost");
-    textbox.val(textbox.val() +' '+$(this).data('smiley-id'));
-    textbox.focus();
-  });
+
 
   // Page Like/Liked the timeline user  by  logged user
   $('.page-like').on('click',function(e){
@@ -1366,91 +1347,12 @@ $(function () {
   });
 
   //Image upload trigger on create post    // Change cover button click event
-  $(document).on('click','#imageUpload',function(e){
-    e.preventDefault();
-    $('.post-images-upload').trigger('click');
-  });
+
 
 
   $(document).on('click','#selfVideoUpload',function(e){
     e.preventDefault();
     $('.post-video-upload').trigger('click');
-  });
-
-
-  // Image upload on create post on timeline
-  $(document).on('change','.post-images-upload',function(e){
-    e.preventDefault();
-       var files = !!this.files ? this.files : [];             
-       $('.post-images-selected').find('span').text(files.length);
-       $('.post-images-selected').show('slow');
-        if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
-
-         var countFiles = $(this)[0].files.length;
-         var imgPath = $(this)[0].value;
-         var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
-         var image_holder = $("#post-image-holder");
-         image_holder.empty();
-          if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") 
-          {
-            if (typeof(FileReader) != "undefined") 
-            {
-              validFiles = [];
-               //loop for each file selected for uploaded.             
-               $.each(files, function(key,val) {      
-                 validFiles.push(files[key]); 
-
-                 var reader = new FileReader();
-                 reader.onload = function(e) {
-                   var file = e.target;       
-                   var image = new Image();
-                   image.src = file.result;
-                   image.onload = function(){
-                      if(this.width < 600 || this.height < 150) {
-                        alert("Please select a larger image");
-                        imgPath = '';
-                        validFiles = [];
-                        image_holder.empty();
-                        files.length = 0;
-                        $('.post-images-selected').hide('slow');
-                        $('.post-images-selected').find('span').text(files.length);
-                        return ;
-                      }
-                    };           
-                   $("<span class=\"pip\">" +
-                    "<img class=\"thumb-image\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-                    "<a data-id=" + (key) + " class='remove-thumb'><i class='fa fa-times'></i></a>" +
-                    "</span>").appendTo(image_holder);                
-                 }
-                 image_holder.show();
-                 reader.readAsDataURL(files[key]);             
-               });
-            } else {
-               alert("This browser does not support FileReader.");
-            }
-          } else {
-             alert("Pls select only images");
-          }
-  });
-
-  // Removing selected image here
-  $('body').on('click','.remove-thumb',function(e){
-    e.preventDefault()
-    var count = 0;
-    var key = $(this).data('id');
-    validFiles[key] = null;
-    $(this).parent(".pip").remove();
-
-    $.each(validFiles, function(key,val) {
-      if(val != null){
-        count++;
-      }
-    });
-
-    $('.post-images-selected').find('span').text(count);
-    if(!count) {
-      $('.post-images-selected').hide('slow');
-    }
   });
 
 
@@ -2213,5 +2115,67 @@ $(document).on('click','.unjoin-page-timeline',function(e){
 $(document).on('click', '.change-theme', function(e){
   var color = $(this).attr('data-theme');
   $('body').attr('data-theme', color)
+})
+
+// Image upload on create post on timeline
+$(document).on('change','#event_images_upload',function(e){
+  e.preventDefault();
+  var files = !!this.files ? this.files : [];
+  if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+  var imgPath = $(this)[0].value;
+  var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+  var image_holder = $("#event_images_upload--image");
+  image_holder.empty();
+  if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg")
+  {
+    if (typeof(FileReader) != "undefined")
+    {
+      let validFiles = [];
+      //loop for each file selected for uploaded.
+      $.each(files, function(key,val) {
+        validFiles.push(files[key]);
+
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          var file = e.target;
+          var image = new Image();
+          image.src = file.result;
+          $("<span class=\"pip\" data-index='"+ key +"'>" +
+              "<img class=\"thumb-image\" src='" + e.target.result + "'/>" +
+              "<a data-id=" + (key) + " class='event-remove-thumb'><i class='icon icon-close'></i></a>" +
+              "<div class='image-loader'>" +
+              "<div class='image-loader-progress'></div>" +
+              "</div>" +
+              "</span>").appendTo(image_holder);
+          $('.event_images_upload--label').addClass('image-added')
+          image.onload = function(){
+            if(this.width < 600 || this.height < 150) {
+              alert("Please select a larger image");
+              imgPath = '';
+              validFiles = [];
+              image_holder.empty();
+              files.length = 0;
+              $('.post-images-selected').hide('slow');
+              $('.post-images-selected').find('span').text(files.length);
+              return;
+            }
+          };
+        }
+        image_holder.show();
+        reader.readAsDataURL(files[key]);
+      });
+    } else {
+      alert("This browser does not support FileReader.");
+    }
+  } else {
+    alert("Please select only images");
+  }
+});
+
+$(document).on('click','.event-remove-thumb',function(e) {
+  e.preventDefault()
+  $('#event_images_upload--image').empty();
+  $('#event_images_upload').val('')
+  $('.event_images_upload--label').removeClass('image-added')
 })
 

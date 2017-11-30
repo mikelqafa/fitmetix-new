@@ -246,6 +246,7 @@
                 });
 
             }
+
             function run(el, replacer) {
 
                 // Check if an element was not passed.

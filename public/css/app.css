@@ -20918,8 +20918,6 @@ body.direction-rtl .manage-table table tbody td ul {
 #post-image-holder img {
     width: auto !important;
     height: 60px !important;
-    margin-right: 5px;
-    padding-left: 13px;
 }
 .post-image-holder a {
     width: 32.5%;

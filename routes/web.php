@@ -395,8 +395,8 @@ Route::post('filter-events-by-title','TimelineController@eventsListFilteredTitle
 
 Route::post('ajax/comment-like', 'TimelineController@likeComment');
 Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {
+    Route::post('upload-post-images', 'TimelineController@uploadPostImages');
     Route::post('create-post', 'TimelineController@createPost');
-
     Route::post('get-youtube-video', 'TimelineController@getYoutubeVideo');
     Route::post('like-post', 'TimelineController@likePost');
     Route::post('follow-post', 'TimelineController@follow');

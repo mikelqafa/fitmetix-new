@@ -469,6 +469,19 @@ class TimelineController extends AppBaseController
         }
     }
 
+    public function uploadPostImages(Request $request)
+    {
+        if ($request->file('post_images_upload')) {
+            $postImage = $request->file('post_images_upload');
+            $strippedName = str_replace(' ', '', $postImage->getClientOriginalName());
+            $photoName = 'post'.time().$strippedName;
+            $avatar = Image::make($postImage->getRealPath());
+            $avatar->save(storage_path().'/uploads/users/gallery/'.$photoName, 60);
+            return response()->json(['status' => '200', $photoName]);
+        }
+
+    }
+
     public function createPost(Request $request)
     {
         $input = $request->all();
@@ -478,36 +491,28 @@ class TimelineController extends AppBaseController
         $post = Post::create($input);
         $post->notifications_user()->sync([Auth::user()->id], true);
 
-        if ($request->file('post_images_upload')) {
-            foreach ($request->file('post_images_upload') as $postImage) {
-                $strippedName = str_replace(' ', '', $postImage->getClientOriginalName());
-                $photoName = date('Y-m-d-H-i-s').$strippedName;
-
-                $avatar = Image::make($postImage->getRealPath());
-                $avatar->save(storage_path().'/uploads/users/gallery/'.$photoName, 60);
+        if($request->post_images_upload){
+            foreach ($request->post_images_upload as $postImage) {
 
                 $media = Media::create([
-                      'title'  => $photoName,
-                      'type'   => 'image',
-                      'source' => $photoName,
-                    ]);
+                    'title'  => $postImage,
+                    'type'   => 'image',
+                    'source' => $postImage,
+                ]);
 
                 $post->images()->attach($media);
             }
         }
 
-        if($request->post_images_upload){
-            foreach ($request->post_images_upload as $postImage) {
+        $post->notifications_user()->sync([Auth::user()->id], true);
 
-                $media = Media::create([
-                      'title'  => $postImage,
-                      'type'   => 'image',
-                      'source' => $postImage,
-                    ]);
-
-                $post->images()->attach($media);
-            }   
-        }
+//        $media = Media::create([
+//            'title'  => $photoName,
+//            'type'   => 'image',
+//            'source' => $photoName,
+//        ]);
+//
+//        $post->images()->attach($media);
 
         if ($request->hasFile('post_video_upload')) {
             $uploadedFile = $request->file('post_video_upload');
@@ -2180,7 +2185,7 @@ class TimelineController extends AppBaseController
         return Validator::make($data, [
             'name'        => 'required|max:30|min:5',
             'start_date'  => 'required',
-            'end_date'    => 'required',
+            'duration'    => 'required|max:2:min:1',
             'location'    => 'required',
             'type'        => 'required',
         ]);
@@ -2197,8 +2202,10 @@ class TimelineController extends AppBaseController
         }
 
         $start_date = date('Y-m-d H:i', strtotime($request->start_date));
-        $end_date  = date('Y-m-d H:i', strtotime($request->end_date));
-        
+        // $end_date  = date('Y-m-d H:i', strtotime($request->end_date));
+
+        $end_date = Carbon::parse($start_date);
+        $end_date = $end_date->addDays($request->duration);
         if ($start_date >= date('Y-m-d', strtotime(Carbon::now())) && $end_date >= $start_date) {
             $user_timeline = Timeline::where('username', $username)->first();
 
@@ -2241,8 +2248,8 @@ class TimelineController extends AppBaseController
                 'user_id'     => Auth::user()->id,
                 'user_limit'  => $request->user_limit,
                 'location'    => $request->location,
-                'start_date'  => date('Y-m-d H:i', strtotime($request->start_date)),
-                'end_date'    => date('Y-m-d H:i', strtotime($request->end_date)),
+                'start_date'  => date('Y-m-d H:i', strtotime($start_date)),
+                'end_date'    => date('Y-m-d H:i', strtotime($end_date)),
                 'invite_privacy'        => Setting::get('invite_privacy'),
                 'timeline_post_privacy' => Setting::get('event_timeline_post_privacy'),
                 'focus' => $request->focus,
