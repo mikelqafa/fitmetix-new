@@ -260,20 +260,22 @@
 											@php $i = 0; @endphp
 									@foreach($user_events as $user_event)
 											<div class="ft-card hidden" data-index="{{$i}}">
-												 <div class="dropdown">
-												    <a href="javascript:;" class="dropdrown-toggle" data-toggle="dropdown"><i class="icon icon-options"></i></a>
-												    <ul class="dropdown-menu">
-												    	@if($user_event->user_id != Auth::user()->id)
-											    	        <li><a href="javascript:;">Report</a></li>
-													        <li><a href="javascript:;">Save</a></li>
-													        <li><a href="javascript:;">Share on facebook</a></li>
-												    	@else
-													    	<li><a href="javascript:;" class="">Edit</a></li>
-													        <li><a href="javascript:;" class="delete-own-event">Delete</a></li>
-													        <li><a href="javascript:;">Share on facebook</a></li>
-												    	@endif
-												    </ul>
-												  </div>
+												    <div class="dropdown">
+													    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+													        <div class="icon icon-options"></div>
+													    </a>
+													    <ul class="dropdown-menu">
+													        @if($user_event->user_id != Auth::user()->id)
+													            <li><a href="javascript:;">Report</a></li>
+													            <li><a href="javascript:;">Save</a></li>
+													            <li><a href="javascript:;">Share on facebook</a></li>
+													        @else
+													            <li><a href="javascript:;" class="">Edit</a></li>
+													            <li><a href="javascript:;" class="delete-own-event">Delete</a></li>
+													            <li><a href="javascript:;">Share on facebook</a></li>
+													        @endif
+													    </ul>
+													</div>
 												<div class="ft-card__img-wrapper">
 													@if($user_event->timeline->cover)
 														<img class="ft-card__img" src="{{ env('STORAGE_URL').'uploads/events/covers/'.$user_event->timeline->cover['source'] }}" alt="Event Cover">

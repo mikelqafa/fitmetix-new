@@ -21029,7 +21029,8 @@ body.direction-rtl .manage-table table tbody td ul {
     margin-left: 0px;
 }
 .socialite-logo {
-    height: 46px;
+    height: 32px;
+    margin-top: 7px;
 }
 a:hover {
     text-decoration: none;
