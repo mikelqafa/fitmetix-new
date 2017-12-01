@@ -3,7 +3,7 @@
         <template v-if="isMultiple">
             <swiper :options="swiperOption" class="deal-card-slider">
                 <swiper-slide :key="imageIndex" v-for="(image, imageIndex) in images">
-                    <a href="javascript:;" :key="imageIndex" @click="showTheater(imageIndex)" class="item__background item__background--swiper"
+                    <a href="javascript:;" :key="imageIndex" @click="showTheater(imageIndex)" class="item__background"
                        :style="{ backgroundImage: 'url(' + image + ')' }"></a>
                 </swiper-slide>
                 <div class="swiper-pagination" slot="pagination"></div>
@@ -26,10 +26,6 @@
     }
     .img-viewer{
         cursor: pointer;
-    }
-    .item__background--swiper {
-        width: 100% !important;
-        height: auto !important;
     }
     .fkd-slider-wrapper {
         min-height: 300px;
@@ -75,7 +71,7 @@
 
     .item__background {
         height: 360px;
-        width: 100vw;
+        width: 100%;
         position: relative;
         background-size: auto 100%;
         background-position: center;
