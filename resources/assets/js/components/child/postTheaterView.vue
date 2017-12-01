@@ -238,6 +238,9 @@
                     noBack()
                     window.dialogId = 'post-image-theater-dialog'
                 }
+                window.setTimeout(function(){
+                    window.emojify.run()
+                }, 300)
             });
             dialog.on('ca.dialog.hidden', function () {
                 if($(window).width()<600) {

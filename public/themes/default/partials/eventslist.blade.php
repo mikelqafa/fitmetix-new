@@ -136,6 +136,14 @@
 		margin: 0 15px;
 		margin-bottom: 30px;
 	}
+	.dropdown-wrapper {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+	aside .ft-card__img-wrapper {
+		margin-top: 4px;
+	}
 </style>
 
 
@@ -260,21 +268,23 @@
 											@php $i = 0; @endphp
 									@foreach($user_events as $user_event)
 											<div class="ft-card hidden" data-index="{{$i}}">
-												    <div class="dropdown">
-													    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-													        <div class="icon icon-options"></div>
-													    </a>
-													    <ul class="dropdown-menu">
-													        @if($user_event->user_id != Auth::user()->id)
-													            <li><a href="javascript:;">Report</a></li>
-													            <li><a href="javascript:;">Save</a></li>
-													            <li><a href="javascript:;">Share on facebook</a></li>
-													        @else
-													            <li><a href="javascript:;" class="">Edit</a></li>
-													            <li><a href="javascript:;" class="delete-own-event">Delete</a></li>
-													            <li><a href="javascript:;">Share on facebook</a></li>
-													        @endif
-													    </ul>
+												    <div class="dropdown-wrapper">
+														<div class="dropdown">
+															<a href="javascript:;" class="btn btn-icon dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
+																<span class="icon icon-options"></span>
+															</a>
+															<ul class="dropdown-menu" style="left: auto; right:0;">
+																@if($user_event->user_id != Auth::user()->id)
+																	<li><a href="javascript:;">Report</a></li>
+																	<li><a href="javascript:;">Save</a></li>
+																	<li><a href="javascript:;">Share on facebook</a></li>
+																@else
+																	<li><a href="javascript:;" class="">Edit</a></li>
+																	<li><a href="javascript:;" class="delete-own-event">Delete</a></li>
+																	<li><a href="javascript:;">Share on facebook</a></li>
+																@endif
+															</ul>
+														</div>
 													</div>
 												<div class="ft-card__img-wrapper">
 													@if($user_event->timeline->cover)

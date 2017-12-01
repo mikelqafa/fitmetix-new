@@ -190,7 +190,8 @@
                                         $('.post-images-selected').find('span').text(files.length);
                                         return;
                                     } else {
-                                        that.uploadPostImage(key, files)
+                                        let loaderDiv = $('.create-post-form .pip[data-index="'+key+'"]').find('.image-loader-progress')
+                                        that.uploadPostImage(key, files, loaderDiv)
                                     }
                                 };
                             }
@@ -298,7 +299,7 @@
                     console.log(error)
                 })
             },
-            uploadPostImage: function (key, files) {
+            uploadPostImage: function (key, files, loaderDiv) {
                 let that = this
                 $('.create-post-form').append('<input type="hidden" data-key="'+ key +'"  name="upload-image-name[]" value="">')
                 console.log(key)
@@ -307,11 +308,8 @@
                         'X-CSRF-TOKEN': $(".create-post-form input[name=_token]").val()
                     }
                 });
-                let create_post_button = $('.create-post-form .btn-submit')
-                //create_post_button.attr('disabled', true)
                 var data = new FormData();
                 data.append('post_images_upload', files[key], files[key].name);
-                let loaderDiv = $('.create-post-form .pip[data-index="'+key+'"]').find('.image-loader-progress')
                 $.ajax({
                     url : base_url + 'ajax/upload-post-images',
                     type: "post",
@@ -331,9 +329,6 @@
                                     percent = Math.ceil(position / total * 100);
                                 }
                                 loaderDiv.css('width',percent+'%');
-                                /*if(!create_post_button.attr('disabled')) {
-                                    create_post_button.attr('disabled', true)
-                                }*/
                             }, true);
                         }
                         return xhr;
@@ -345,8 +340,6 @@
                     console.log(data)
                     loaderDiv.parent().remove()
                     $('input[name="upload-image-name[]"][data-key="'+key+'"]').val(data[0])
-                    create_post_button.html(create_post_button.text())
-                    create_post_button.attr('disabled', false)
                     /*var string = '';
                      progress.css('width','100%');
                      btnBrowse.attr('disabled',true);

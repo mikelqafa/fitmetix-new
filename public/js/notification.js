@@ -18502,6 +18502,7 @@ var vmThat = void 0;
                     offset: that.offset
                 }
             }).then(function (response) {
+                console.log(response);
                 if (response.status == 200) {
                     var posts = response.data[0].posts;
                     var i = 0;
@@ -21328,6 +21329,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 noBack();
                 window.dialogId = 'post-image-theater-dialog';
             }
+            window.setTimeout(function () {
+                window.emojify.run();
+            }, 300);
         });
         dialog.on('ca.dialog.hidden', function () {
             if ($(window).width() < 600) {
@@ -22771,7 +22775,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                     $('.post-images-selected').find('span').text(files.length);
                                     return;
                                 } else {
-                                    that.uploadPostImage(key, files);
+                                    var loaderDiv = $('.create-post-form .pip[data-index="' + key + '"]').find('.image-loader-progress');
+                                    that.uploadPostImage(key, files, loaderDiv);
                                 }
                             };
                         };
@@ -22880,7 +22885,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
         },
-        uploadPostImage: function uploadPostImage(key, files) {
+        uploadPostImage: function uploadPostImage(key, files, loaderDiv) {
             var that = this;
             $('.create-post-form').append('<input type="hidden" data-key="' + key + '"  name="upload-image-name[]" value="">');
             console.log(key);
@@ -22889,11 +22894,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     'X-CSRF-TOKEN': $(".create-post-form input[name=_token]").val()
                 }
             });
-            var create_post_button = $('.create-post-form .btn-submit');
-            //create_post_button.attr('disabled', true)
             var data = new FormData();
             data.append('post_images_upload', files[key], files[key].name);
-            var loaderDiv = $('.create-post-form .pip[data-index="' + key + '"]').find('.image-loader-progress');
             $.ajax({
                 url: base_url + 'ajax/upload-post-images',
                 type: "post",
@@ -22913,9 +22915,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                 percent = Math.ceil(position / total * 100);
                             }
                             loaderDiv.css('width', percent + '%');
-                            /*if(!create_post_button.attr('disabled')) {
-                                create_post_button.attr('disabled', true)
-                            }*/
                         }, true);
                     }
                     return xhr;
@@ -22928,8 +22927,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(data);
                 loaderDiv.parent().remove();
                 $('input[name="upload-image-name[]"][data-key="' + key + '"]').val(data[0]);
-                create_post_button.html(create_post_button.text());
-                create_post_button.attr('disabled', false);
                 /*var string = '';
                  progress.css('width','100%');
                  btnBrowse.attr('disabled',true);

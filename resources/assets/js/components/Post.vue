@@ -135,6 +135,7 @@
                         offset: that.offset
                     }
                 }).then( function (response) {
+                    console.log(response)
                     if (response.status ==  200) {
                         let posts = response.data[0].posts;
                         let i = 0
