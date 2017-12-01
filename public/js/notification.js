@@ -18839,7 +18839,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.item__background--post{\n    width: 100%;\n    background-size: cover;\n    background-position: center;\n}\n.img-viewer{\n    cursor: pointer;\n}\n.fkd-slider-wrapper {\n    min-height: 300px;\n    position: relative;\n}\n.item__background--home-slider{\n    max-height: 300px;\n}\n@media screen and (max-width: 599px){\n.loading-state-wrapper{\n        height: auto;\n        min-height: 200px;\n        width: 100%;\n}\n.loading-state-relative{\n        width: 100%;\n}\n.fkd-slider-wrapper{\n        min-height: 180px;\n}\n.item__background{\n        background-size: cover;\n}\n.swiper-slide .item__background {\n        max-height: 200px;\n        min-height: 180px;\n}\n.panel-post .panel-body .post-image--wrapper{\n        margin-left:-15px;\n        margin-right:-15px;\n}\n}\n.component-loading-state {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    z-index: 2;\n}\n.item__background {\n    height: 360px;\n    width: 100vw;\n    position: relative;\n    background-size: auto 100%;\n    background-position: center;\n    display: block;\n}\n.swiper-pagination-bullet-active{\n    background-color: #1E7C82;\n}\n.swiper-button-prev, .swiper-container-rtl .swiper-button-next{\n    background-image: url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='#81C784'/></svg>\");\n    transform: scale(.7);\n}\n.swiper-button-next, .swiper-container-rtl .swiper-button-prev{\n    background-image: url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='#81C784'/></svg>\");\n    transform: scale(.7);\n}\n", ""]);
+exports.push([module.i, "\n.item__background--post{\n    width: 100%;\n    background-size: cover;\n    background-position: center;\n}\n.img-viewer{\n    cursor: pointer;\n}\n.item__background--swiper {\n    width: 100% !important;\n    height: auto !important;\n}\n.fkd-slider-wrapper {\n    min-height: 300px;\n    position: relative;\n}\n.item__background--home-slider{\n    max-height: 300px;\n}\n@media screen and (max-width: 599px){\n.loading-state-wrapper{\n        height: auto;\n        min-height: 200px;\n        width: 100%;\n}\n.loading-state-relative{\n        width: 100%;\n}\n.fkd-slider-wrapper{\n        min-height: 180px;\n}\n.item__background{\n        background-size: cover;\n}\n.swiper-slide .item__background {\n        max-height: 200px;\n        min-height: 180px;\n}\n.panel-post .panel-body .post-image--wrapper{\n        margin-left:-15px;\n        margin-right:-15px;\n}\n}\n.component-loading-state {\n    position: absolute;\n    top: 0;\n    left: 0;\n    width: 100%;\n    height: 100%;\n    z-index: 2;\n}\n.item__background {\n    height: 360px;\n    width: 100vw;\n    position: relative;\n    background-size: auto 100%;\n    background-position: center;\n    display: block;\n}\n.swiper-pagination-bullet-active{\n    background-color: #1E7C82;\n}\n.swiper-button-prev, .swiper-container-rtl .swiper-button-next{\n    background-image: url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='#81C784'/></svg>\");\n    transform: scale(.7);\n}\n.swiper-button-next, .swiper-container-rtl .swiper-button-prev{\n    background-image: url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='#81C784'/></svg>\");\n    transform: scale(.7);\n}\n", ""]);
 
 // exports
 
@@ -18852,6 +18852,10 @@ exports.push([module.i, "\n.item__background--post{\n    width: 100%;\n    backg
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_awesome_swiper__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_awesome_swiper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_awesome_swiper__);
+//
+//
+//
+//
 //
 //
 //
@@ -19313,7 +19317,8 @@ var render = function() {
                       return _c("swiper-slide", { key: imageIndex }, [
                         _c("a", {
                           key: imageIndex,
-                          staticClass: "item__background",
+                          staticClass:
+                            "item__background item__background--swiper",
                           style: { backgroundImage: "url(" + image + ")" },
                           attrs: { href: "javascript:;" },
                           on: {
