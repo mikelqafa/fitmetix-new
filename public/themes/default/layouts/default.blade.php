@@ -678,6 +678,14 @@
             align-items: center;
             flex-direction: column;
         }
+        .item__background {
+            height: 360px;
+            width: 100% !important;
+            position: relative;
+            background-size: auto 100%;
+            background-position: center;
+            display: block;
+        }
     </style>
 </head>
 <body id="fitmetix-app" @if(Setting::get('enable_rtl') == 'on') class="direction-rtl" @endif>

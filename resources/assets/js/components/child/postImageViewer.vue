@@ -68,15 +68,6 @@
         height: 100%;
         z-index: 2;
     }
-
-    .item__background {
-        height: 360px;
-        width: 100%;
-        position: relative;
-        background-size: auto 100%;
-        background-position: center;
-        display: block;
-    }
     .swiper-pagination-bullet-active{
         background-color: #1E7C82;
     }
