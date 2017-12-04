@@ -2208,6 +2208,7 @@ class TimelineController extends AppBaseController
         $end_date = $end_date->addDays($request->duration);
         if ($start_date >= date('Y-m-d', strtotime(Carbon::now())) && $end_date >= $start_date) {
             $user_timeline = Timeline::where('username', $username)->first();
+            $i = 0;
 
             if ($request->file('event_images_upload')) {
                 foreach ($request->file('event_images_upload') as $eventImage) {
@@ -2222,6 +2223,9 @@ class TimelineController extends AppBaseController
                       'type'   => 'image',
                       'source' => $photoName,
                     ]);
+
+                    $media_to_attach[$i] = $media;
+                    $i++;
 
                     $timeline = Timeline::create([
                         'username'  => $user_timeline->gen_num(),
@@ -2239,8 +2243,22 @@ class TimelineController extends AppBaseController
                     'about'     => $request->about,
                     'type'      => 'event',
                     ]);
+
             }
 
+            $post = Post::create([
+                'type' => 'event',
+                'description' => $request->about,
+                'timeline_id' => $timeline->id,
+                'user_id'     => Auth::user()->id,
+                'active'      => '1',
+                'location'    => $request->location,
+            ]);
+            if($i != 0){
+                foreach($media_to_attach as $attach_media){
+                    $post->images()->attach($attach_media);
+                }
+            }
 
             $event = Event::create([
                 'timeline_id' => $timeline->id,
@@ -2256,15 +2274,6 @@ class TimelineController extends AppBaseController
                 'gender' => $request->gender,
                 'frequency' => $request->frequency,
                 ]);
-
-            $post = Post::create([
-                'type' => 'event',
-                'description' => $request->about,
-                'timeline_id' => $timeline->id,
-                'user_id'     => Auth::user()->id,
-                'active'      => '1',
-                'location'    => $request->location,
-            ]);
 
             if ($request->group_id) {
                 $event->group_id = $request->group_id;
@@ -3058,9 +3067,10 @@ class TimelineController extends AppBaseController
             }
         }
 
-        $image_path = storage_path().'/uploads/users/gallery/';
+        $post_image_path = storage_path().'/uploads/users/gallery/';
+        $event_image_path = storage_path().'/uploads/events/covers/';
 
-        return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'imagePath'=>$image_path]]);
+        return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
     }
 
     public function fetchPostLikes(Request $request) {
