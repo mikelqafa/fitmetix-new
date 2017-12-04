@@ -40,6 +40,9 @@
         height: inherit;
         line-height: 20px;
     }
+    .write-post__text{
+        min-height: 70px;
+    }
     .smiley-post {
         cursor: pointer;
     }

@@ -83,7 +83,7 @@
         },
         methods: {
             openPostDialog: function () {
-                $('#post-option-dialog').addClass('ft-dialog--open')
+                $('#post-option-dialog').MaterialDialog('show')
             }
         },
         mounted () {

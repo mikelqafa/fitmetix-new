@@ -47,9 +47,6 @@
         .fkd-slider-wrapper{
             min-height: 180px;
         }
-        .item__background{
-            background-size: cover;
-        }
         .swiper-slide .item__background {
             max-height: 200px;
             min-height: 180px;
@@ -86,7 +83,8 @@
     export default {
         props: {
             postImg: {},
-            postIndex: 0
+            postIndex: 0,
+            postEvent: {}
         },
         data: function () {
             return {
@@ -104,11 +102,12 @@
         },
         mounted () {
             let that = this
+            console.log(this.isTypeEvent)
             var url = 'http://assets.fitmetix.com/'
             if (this.postImg !== undefined) {
                 $.each(this.postImg, function(key, val) {
                     let s = val.source !== undefined ? val.source : ''
-                    that.images.push(asset_url+'uploads/users/gallery/'+s)
+                    that.images.push(this.isTypeEvent ? 'http://meow/' : asset_url+'uploads/users/gallery/'+s)
                 });
             }
         },
@@ -124,6 +123,9 @@
             },
             noImage: function () {
                 return this.images.length === 0
+            },
+            isTypeEvent: function () {
+                return this.postEvent !== undefined && this.postEvent !== ''
             }
         },
         components: {

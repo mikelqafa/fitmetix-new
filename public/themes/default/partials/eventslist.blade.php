@@ -270,12 +270,12 @@
 											<div class="ft-card hidden" data-index="{{$i}}">
 												    <div class="dropdown-wrapper">
 														<div class="dropdown">
-															<a href="javascript:;" class="btn btn-icon dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">
+															<a href="javascript:;" class="btn btn-icon dropdown-toggle"  data-toggle="dropdown">
 																<span class="icon icon-options"></span>
 															</a>
 															<ul class="dropdown-menu" style="left: auto; right:0;">
 																@if($user_event->user_id != Auth::user()->id)
-																	<li><a href="javascript:;">Report</a></li>
+																	<li><a href="javascript:;" class="event-report">Report</a></li>
 																	<li><a href="javascript:;">Save</a></li>
 																	<li><a href="javascript:;">Share on facebook</a></li>
 																@else

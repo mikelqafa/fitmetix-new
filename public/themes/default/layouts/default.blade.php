@@ -679,11 +679,12 @@
             flex-direction: column;
         }
         .item__background {
-            height: 360px;
+            min-height: 250px;
             width: 100% !important;
             position: relative;
-            background-size: auto 100%;
+            background-size: 100% auto;
             background-position: center;
+            background-repeat: no-repeat;
             display: block;
         }
     </style>
@@ -727,6 +728,7 @@
                 $('#drawer-1').MaterialDrawer('toggle');
                 $('#drawer-1').find('.ft-card').addClass('hidden');
                 $('#drawer-1').find( '.ft-card[data-index="'+ $(this).attr('data-index') +'"]').removeClass('hidden')
+                $('.dropdown-toggle').dropdown()
             } else {
                 e.preventDefault();
                 $('#drawer-1').find('.ft-card').addClass('hidden');

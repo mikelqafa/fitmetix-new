@@ -49,22 +49,13 @@
                     </div>
                 </div>
             </template>
-            <div v-for="postItem in currentItemList" class="panel panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
-                <post-header :post-data="postItem" :date="postItem.created_at"></post-header>
-                <div class="panel-body">
-                    <post-description :post-html="postItem.description"></post-description>
-                    <post-youtube :post-you-tube="postItem.youtube_video_id" :you-tube-title="postItem.youtube_title"></post-youtube>
-                    <post-image-viewer :post-img="postItem.images"></post-image-viewer>
-                    <post-sound-cloud :soundcloud="postItem.soundcloud_id"></post-sound-cloud>
-                </div>
-                <post-comment :post-id="postItem.id"></post-comment>
-            </div>
             <div v-for="(postItem, index) in itemList" :key="postItem.id" class="panel panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
                 <post-header :post-data="postItem" :date="postItem.created_at"></post-header>
                 <div class="panel-body">
                     <post-description :post-html="postItem.description"></post-description>
                     <post-youtube :post-you-tube="postItem.youtube_video_id" :you-tube-title="postItem.youtube_title"></post-youtube>
-                    <post-image-viewer :post-index="index" :post-img="postItem.images"></post-image-viewer>
+                    <post-image-viewer :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
+                    <post-event :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-event>
                     <post-sound-cloud :soundcloud="postItem.soundcloud_id"></post-sound-cloud>
                 </div>
                 <post-comment :post-index="index" :post-id="postItem.id" :post-item="postItem"></post-comment>
@@ -88,6 +79,7 @@
 <script>
     import postDescription from './child/postDescription'
     import postImageViewer from './child/postImageViewer'
+    import postEvent from './child/postEvent'
     import postYouTube from './child/postYouTube'
     import postSoundCloud from './child/postSoundCloud'
     import postHeader from './child/postHeader'
@@ -135,6 +127,7 @@
                         offset: that.offset
                     }
                 }).then( function (response) {
+                    console.log(response)
                     if (response.status ==  200) {
                         let posts = response.data[0].posts;
                         let i = 0
@@ -214,6 +207,7 @@
             'post-sound-cloud': postSoundCloud,
             'post-youtube': postYouTube,
             'post-header': postHeader,
+            'post-event': postEvent,
             'post-comment': postComment,
             'post-theater-view': postTheaterView,
             'post-wholikes-view': postWhoLikesView
