@@ -179,6 +179,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'role:admin']], fun
     Route::get('/events/{username}/edit', 'AdminController@editEvent');
     Route::post('/events/{username}/edit', 'AdminController@updateEvent');
     Route::get('/events/{event_id}/delete', 'AdminController@removeEvent');
+    
+    Route::get('/manage-scouts', 'AdminController@manageScouts');
 
     Route::get('/event-settings', 'AdminController@eventSettings');
     Route::post('/event-settings', 'AdminController@updateEventSettings');

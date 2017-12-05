@@ -162,6 +162,22 @@
         </div>
         <span class="clearfix"></span>
     </a>
+
+     <a href="{{ url('/admin/manage-scouts') }}" class="list-group-item">
+
+        <div class="list-icon socialite-icon {{ Request::segment(2) == 'manage-scouts' ? 'active' : '' }}">
+            <i class="fa fa-user-plus"></i>
+        </div>
+        <div class="list-text">
+            <span class="badge pull-right"></span>
+            {{ "Scouts" }}
+            <div class="text-muted">
+                {{ "Create scout account" }}
+            </div>
+        </div>
+        <span class="clearfix"></span>
+    </a>
+
     <a href="{{ url('/admin/get-env') }}" class="list-group-item">
 
         <div class="list-icon socialite-icon {{ Request::segment(2) == 'get-env' ? 'active' : '' }}">

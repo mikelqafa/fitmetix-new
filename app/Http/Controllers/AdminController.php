@@ -1655,4 +1655,9 @@ class AdminController extends Controller
         Flash::success(trans('messages.homepage_settings_success'));
         return redirect()->back();
     }
+
+    public function manageScouts() {
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('admin');
+        return $theme->scope('admin/create-scout')->render();
+    }
 }

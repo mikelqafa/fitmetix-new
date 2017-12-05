@@ -3057,6 +3057,9 @@ class TimelineController extends AppBaseController
                 $post['event'] = Event::where('timeline_id',$post->timeline_id)->latest()->get();
                 foreach ($post['event'] as $user_event) {
                     $user_event['event_details'] = $user_event->timeline->username;
+                    if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
+                        $user_event['event_tags'] = $matches[0];
+                    }
                     if($user_event->users->contains(Auth::user()->id)){
                         $user_event['registered'] = true;
                     }
