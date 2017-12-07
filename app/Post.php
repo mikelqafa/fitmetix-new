@@ -219,6 +219,7 @@ class Post extends Model
     {
         $this->users_liked()->detach();
         $this->shares()->detach();
+        $this->usersSaved()->detach();
         $this->notifications_user()->detach();
         $this->reports()->detach();
         $this->users_tagged()->detach();
@@ -236,7 +237,7 @@ class Post extends Model
         // $this->comments()->delete();
         $this->notifications()->delete();
         if ($this->shared_post_id != null) {
-            $this->update(['shared_post_id' => null])->save();
+            $this->update(['shared_post_id' => null]);
         }
         if (count($this->sharedPost()->first()) != 0) {
             $this->sharedPost->delete();

@@ -58,6 +58,7 @@
         var asset_url = "{{env('STORAGE_URL')}}";
         var theme_url = "{!! Theme::asset()->url('') !!}";
         var current_username = "{{ Auth::user()->username }}";
+        var user_id = "{{ Auth::user()->id }}";
     </script>
     @if(Setting::get('google_analytics') != NULL)
         {!! Setting::get('google_analytics') !!}
@@ -744,6 +745,23 @@
     <script src="{{ asset('js/notification.js') }}" type="text/javascript"></script>
     <script type="text/javascript" src="{{asset('js/caleandar.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/event.js')}}"></script>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '217416572121069',
+                xfbml      : true,
+                version    : 'v2.10'
+            });
+            FB.AppEvents.logPageView();
+        };
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
 @endif
 </body>
 </html>

@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import Post from './components/Post'
 import createPost from './components/createPost'
+//import editPost from './components/child/editPost'
 import AppNotification from './components/AppNotification'
 import postDialogOption from './components/DialogOption'
 import commentDialogOption from './components/CommentDialogOption'

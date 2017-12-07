@@ -614,7 +614,8 @@ class TimelineController extends AppBaseController
             $post->save();
         }
 
-        return redirect('post/'.$post->id);
+//        return redirect('post/'.$post->id);
+          return response()->json(['status' => '200', 'data' => 'Post has been edited successfully']);
     }
 
     public function getSoundCloudResults(Request $request)

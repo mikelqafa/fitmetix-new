@@ -53,6 +53,14 @@
             window.setTimeout(function(){
                 window.emojify.run()
             }, 300)
+        },
+        watch: {
+            postHtml: function (val) {
+                this.postHtmlViewAble = this.postHtml
+                setTimeout(function () {
+                    window.emojify.run()
+                }, 100)
+            }
         }
     }
 </script>

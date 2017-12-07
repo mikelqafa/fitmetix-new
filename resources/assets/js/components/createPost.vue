@@ -39,6 +39,7 @@
         position: relative;
         height: inherit;
         line-height: 20px;
+        word-break: break-all;
     }
     .write-post__text{
         min-height: 70px;

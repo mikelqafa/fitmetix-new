@@ -1,152 +1,47 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/drawer.css') }}">
-<style type="text/css">
-   .ft-card{
-       min-height: 300px;
-       width: 100%;
-       background-color: #fff;
-       border-radius: 2px;
-       display: flex;
-	   min-width: 300px;
-       flex-direction: column;
-       margin-bottom: 16px;
-   }
-
-   .ft-card__img-wrapper {
-        min-height: 200px;
-		background-color: #fafafa;
-		display: flex;
-		justify-content: center;
-   }
-
-   .ft-card__img {
-   	   max-width: 100%;
-   	   margin: 0 auto;
-	   display: block;
-	   max-height: 204px;
-   }
-  
-   .ft-card__primary {
-   	    padding: 16px;
-   	    font-size: 16px;
-   }
-
-   .ft-card__title {
-   	    font-size: 16px;
-   	    line-height: 24px;
-   	    color: inherit;
-   }
-
-   .card-desc {
-        color: rgba(0,0,0,.54);
-        font-size: 14px;
-        line-height: 20px;
-   }
-	.ft-card__list-wrapper {
-		display: flex;
-		flex-direction: column;
-		font-size: 13px;
-	}
-	.ft-card__list {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: nowrap;
-		margin-bottom: 15px;
-	}
-	.ft-card__list .icon {
-		margin-right: 10px;
-		height: 24px;
-		width: 24px;
-		line-height: 24px;
-		text-align: center;
-	}
-
-    .main-content > .container > .row > .col-md-7.col-lg-6 {
-   	    width: 100% !important;
-    }
-    .md-drawer--permanent {
+<style>
+	.md-drawer--permanent {
 		width: auto;
 		padding-right: 0px;
 		padding-left: 0;
 		padding-top: 64px;
 		z-index: -1;
-    }
-    .md-drawer--permanent.md-drawer--visible {
-        z-index: 1;
-    }
-   @media screen and (min-width: 960px) {
-	   .md-drawer {
-		   left: auto;
-		   right:0;
-		   width: 360px;
-		   -webkit-transform: translateX(0px);
-		   transform: translateX(0px);
-	   }
-	   .md-drawer--permanent {
-		   -webkit-transform: translateX(0px);
-		   transform: translateX(0px);
-		   max-width:100%;
-		   width: 360px;
-	   }
-	   .md-drawer--permanent .md-drawer__surface {
-		   -webkit-transform:translateX(360px);
-		   transform:translateX(360px);
-		   width:360px;
-		   max-width: none;
-	   }
-	   .md-drawer--animating .md-drawer__surface {
-		   -webkit-transform:translateX(360px);
-		   transform:translateX(360px)
-	   }
+	}
+	.md-drawer--permanent.md-drawer--visible {
+		z-index: 1;
+	}
+	@media screen and (min-width: 960px) {
+		.md-drawer {
+			left: auto;
+			right:0;
+			width: 360px;
+			-webkit-transform: translateX(0px);
+			transform: translateX(0px);
+		}
+		.md-drawer--permanent {
+			-webkit-transform: translateX(0px);
+			transform: translateX(0px);
+			max-width:100%;
+			width: 360px;
+		}
+		.md-drawer--permanent .md-drawer__surface {
+			-webkit-transform:translateX(360px);
+			transform:translateX(360px);
+			width:360px;
+			max-width: none;
+		}
+		.md-drawer--animating .md-drawer__surface {
+			-webkit-transform:translateX(360px);
+			transform:translateX(360px)
+		}
 
-	   body.has-permanent-drawer.is-drawer-open {
-		   padding-right: 360px;
-		   padding-left: 0 !important;
-	   }
-   }
-	.ft-grid {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		padding-top: 16px;
-		margin: 0 -16px;
-	}
-	.ft-grid__item {
-		padding: 16px;
-		width: 33.33333%;
-		transition-duration: .3s;
-		transition-timing-function: cubic-bezier(.4,0,.2,1);
-		transition-property: all;
-	}
-   	body.is-drawer-open .ft-grid__item {
-		width: 50%;
+		body.has-permanent-drawer.is-drawer-open {
+			padding-right: 360px;
+			padding-left: 0 !important;
+		}
 	}
 
-   @media (min-width: 1200px) {
-	   .main-content .container {
-		   max-width: 1170px;
-		   width: 100%;
-	   }
-   }
-	.ft-filter {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-	}
-	.ft-filter .form-group {
-		margin: 0 15px;
-		margin-bottom: 30px;
-	}
-	.dropdown-wrapper {
-		position: absolute;
-		top: 0;
-		right: 0;
-	}
-	aside .ft-card__img-wrapper {
-		margin-top: 4px;
-	}
 </style>
-
-
 <div class="" style="margin-top: 30px">
 			<!-- List of user events-->
 	

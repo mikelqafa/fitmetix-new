@@ -18,65 +18,6 @@
         </template>
     </div>
 </template>
-<style>
-    .item__background--post{
-        width: 100%;
-        background-size: cover;
-        background-position: center;
-    }
-    .img-viewer{
-        cursor: pointer;
-    }
-    .fkd-slider-wrapper {
-        min-height: 300px;
-        position: relative;
-    }
-    .item__background--home-slider{
-        max-height: 300px;
-    }
-
-    @media screen and (max-width: 599px){
-        .loading-state-wrapper{
-            height: auto;
-            min-height: 200px;
-            width: 100%;
-        }
-        .loading-state-relative{
-            width: 100%;
-        }
-        .fkd-slider-wrapper{
-            min-height: 180px;
-        }
-        .swiper-slide .item__background {
-            max-height: 200px;
-            min-height: 180px;
-        }
-        .panel-post .panel-body .post-image--wrapper{
-            margin-left:-15px;
-            margin-right:-15px;
-        }
-    }
-
-    .component-loading-state {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 2;
-    }
-    .swiper-pagination-bullet-active{
-        background-color: #1E7C82;
-    }
-    .swiper-button-prev, .swiper-container-rtl .swiper-button-next{
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M0,22L22,0l2.1,2.1L4.2,22l19.9,19.9L22,44L0,22L0,22L0,22z' fill='#81C784'/></svg>");
-        transform: scale(.7);
-    }
-    .swiper-button-next, .swiper-container-rtl .swiper-button-prev{
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 27 44'><path d='M27,22L27,22L5,44l-2.1-2.1L22.8,22L2.9,2.1L5,0L27,22L27,22z' fill='#81C784'/></svg>");
-        transform: scale(.7);
-    }
-</style>
 <script>
 
     import { swiper, swiperSlide } from 'vue-awesome-swiper'
@@ -95,19 +36,19 @@
                     autoplay: false,
                     paginationClickable: true,
                     spaceBetween: 0,
-                    loop: true,
+                    loop: false,
                     pagination: '.swiper-pagination'
                 }
             }
         },
         mounted () {
             let that = this
-            console.log(this.isTypeEvent)
             var url = 'http://assets.fitmetix.com/'
             if (this.postImg !== undefined) {
+                let eventUrl = '/var/www/html/fitmetix/storage/uploads/events/covers/'
                 $.each(this.postImg, function(key, val) {
                     let s = val.source !== undefined ? val.source : ''
-                    that.images.push(this.isTypeEvent ? 'http://meow/' : asset_url+'uploads/users/gallery/'+s)
+                    that.images.push(that.isTypeEvent ? asset_url + 'uploads/events/covers/'+s : asset_url+'uploads/users/gallery/'+s)
                 });
             }
         },

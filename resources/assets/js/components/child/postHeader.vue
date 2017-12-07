@@ -53,7 +53,8 @@
     export default {
         props: {
             postData: {},
-            date: ''
+            date: '',
+            postIndex: 0
         },
         data: function () {
             return {
@@ -64,7 +65,7 @@
         },
         computed: {
             since () {
-                return this.date != '' ? new Date(this.date + ' UTC').getTime() : ''
+                return this.date != '' ? new Date(this.date + ' UTC').getTime() : new Date().getTime()
             },
             locationLink () {
                 return this.postData.location !== '' ? base_url + 'get-location/' + this.postData.location : ''
@@ -83,6 +84,7 @@
         },
         methods: {
             openPostDialog: function () {
+                this.$store.commit('SET_OPTIONS_MENU_ITEM', {postIndex: this.postIndex})
                 $('#post-option-dialog').MaterialDialog('show')
             }
         },

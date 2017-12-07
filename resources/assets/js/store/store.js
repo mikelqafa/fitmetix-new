@@ -6,15 +6,20 @@ export const store = new Vuex.Store({
     pageTitle: 'FreeKaaDeal | Best Online Deals, Offers and Coupons',
     postItemList: [],
     theaterPostItem: {},
+    optionMenuPostItem: {},
     postWhoLikes: {}
   },
   getters: {
     postItemList: state => state.postItemList,
     theaterPostItem: state => state.theaterPostItem,
+    optionMenuPostItem: state => state.optionMenuPostItem,
     postWhoLikes: state => state.postWhoLikes
   },
   mutations: {
     /* eslint-disable no-param-reassign */
+    SET_OPTIONS_MENU_ITEM (state, postObj) {
+      Vue.set(state.optionMenuPostItem, 'postIndex', postObj.postIndex)
+    },
     ADD_POST_ITEM_LIST (state, postItem) {
       if(postItem.postFrom !== undefined) {
         state.postItemList.unshift(postItem.data)
@@ -23,10 +28,13 @@ export const store = new Vuex.Store({
       }
     },
     REMOVE_POST_ITEM_LIST (state, index) {
-      state.slider = slider
+      state.postItemList.splice(index, 1)
     },
     RESET_POST_ITEM_LIST (state) {
       state.postItemList = []
+    },
+    EDIT_POST_ITEM (state, obj) {
+      Vue.set(state.postItemList[obj.index], 'description', obj.description)
     },
     SET_POST_FOR_THEATER (state, postItems) {
       state.postItemList = postItems
