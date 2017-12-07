@@ -64,6 +64,7 @@ function mentionify()
     ));
   });
 }
+
 $(function () {
   emojify.setConfig({
     img_dir : base_url + 'images/emoji/basic',

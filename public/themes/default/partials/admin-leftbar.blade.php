@@ -172,7 +172,7 @@
             <span class="badge pull-right"></span>
             {{ "Scouts" }}
             <div class="text-muted">
-                {{ "Create scout account" }}
+                {{ "Manage scout accounts" }}
             </div>
         </div>
         <span class="clearfix"></span>

@@ -77,7 +77,59 @@
             };
        </script>
 
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            $('#scout_form').on('submit', function (ev) {
+              alert("working")
+              ev.preventDefault();
+              var post_url = 'register';
+              var formData = {
+                'email' : $('input[name=email]').val(),
+                'username' : $('input[name=username]').val(),
+                'birthday' : $('input[name=birthday]').val(),
+                'gender' : $('#gender').val(),
+                'password' : $('input[name=password]').val(),
+                '_token': $('input[name=_token]').val()
+              };
+              var submitBtn = $('#submit');
+              submitBtn.prop('disabled',true);
+              $.ajax({
+                url : post_url,
+                type: "post",
+                data: formData
+              }).done(function(e){ 
+                
+                if(e.status == 200) {
+                  location.reload();
+                } else {
+                  console.log(e.err_result)
+                  var c = 0;
+                  $.each(e.err_result, function( index, value ) {
+                    var config = {
+                      messageText:  value,
+                      alignCenter: false,
+                      autoClose: true
+                    }
+                    setTimeout(function(){
+                      window.materialSnackBar(config)
+                    }, 2000*c)
+                    c++;
+                  });
+                }
+              }).always(function(e){
+                submitBtn.prop('disabled',false)
+              }).fail(function(e){
+                var config = {
+                  messageText:  'Authentication failed. Please try again!',
+                  alignCenter: false,
+                  autoClose: true
+                }
+                window.materialSnackBar(config)
+              })
+            })
+        </script>
+
         {!! Theme::asset()->container('footer')->scripts() !!}
-        <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

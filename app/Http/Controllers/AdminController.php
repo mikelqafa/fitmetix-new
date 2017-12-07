@@ -1656,8 +1656,19 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function manageScouts() {
+    public function manageScouts(Request $request) {
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('admin');
-        return $theme->scope('admin/create-scout')->render();
+        $timelines = '';
+
+        if ($request->all()) {
+            if ($request->sort) {
+                $timelines = $this->manageSortings($request->sort, $type = 'user');
+            } elseif ($request->page) {
+                $timelines = $this->manageSortings($request->page, $type = 'user');
+            }
+        } else {
+            $timelines = Timeline::where('type', 'user')->paginate(Setting::get('items_page', 10));
+        }
+        return $theme->scope('admin/create-scout',compact('timelines'))->render();
     }
 }
