@@ -1,62 +1,26 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/drawer.css') }}">
 <style>
-	.md-drawer--permanent {
-		width: auto;
-		padding-right: 0px;
-		padding-left: 0;
-		padding-top: 64px;
-		z-index: -1;
-	}
-	.md-drawer--permanent.md-drawer--visible {
-		z-index: 1;
-	}
-	@media screen and (min-width: 960px) {
-		.md-drawer {
-			left: auto;
-			right:0;
-			width: 360px;
-			-webkit-transform: translateX(0px);
-			transform: translateX(0px);
-		}
-		.md-drawer--permanent {
-			-webkit-transform: translateX(0px);
-			transform: translateX(0px);
-			max-width:100%;
-			width: 360px;
-		}
-		.md-drawer--permanent .md-drawer__surface {
-			-webkit-transform:translateX(360px);
-			transform:translateX(360px);
-			width:360px;
-			max-width: none;
-		}
-		.md-drawer--animating .md-drawer__surface {
-			-webkit-transform:translateX(360px);
-			transform:translateX(360px)
-		}
-
-		body.has-permanent-drawer.is-drawer-open {
-			padding-right: 360px;
-			padding-left: 0 !important;
-		}
-	}
 
 </style>
-<div class="" style="margin-top: 30px">
+<div class="no-margin-sm" style="margin-top: 30px">
 			<!-- List of user events-->
 	
 	<div class="post-filters pages-groups">
 					<div class="pane">
 					@include('flash::message')
 						<div class="panel-heading no-bg">
-							<div class="side-right">
-								<a href="{{ url(Auth::user()->username.'/create-event') }}" class="btn btn-success">{{ trans('common.create_event') }}</a>
+							<div class="row">
+								<div class="col-md-12 col-sm-6 col-xs-12 center-sm">
+									<a href="{{ url(Auth::user()->username.'/create-event') }}" class="btn btn-success">{{ trans('common.create_event') }}</a>
+								</div>
+								<div class="col-md-12 col-sm-6 col-xs-12 center-sm">
+									<div class="">
+										<h3 class="panel-title" style="font-weight: 700;">
+											{{ trans('messages.events-manage') }}
+										</h3>
+									</div>
+								</div>
 							</div>
-							<center>
-								<h3 class="panel-title" style="font-weight: 700;">
-									{{ trans('messages.events-manage') }}
-								</h3>
-							</center>
 						</div>
 						<br/>
 						<div class="ft-filter">

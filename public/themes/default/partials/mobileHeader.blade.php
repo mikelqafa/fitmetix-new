@@ -4,7 +4,7 @@
             <a class="ft-header-nav__item {{ Request::is('/') ? 'is-active' : '' }}" href="{{ url('/') }}">
                 <div class="icon" data-icon="n"></div>
             </a>
-            <a class="ft-header-nav__item {{ Request::is(Auth::user()->username.'/create-event') ? 'is-active' : '' }}" style="padding: 0" href="{!! url(Auth::user()->username.'/create-event') !!}">
+            <a href="{{ url(Auth::user()->username.'/events') }}" class="has-hover-effect fm-nav__item">
                 <div class="icon icon-eventpage" style="font-size: 50px; line-height: 45px"></div>
             </a>
             <a class="ft-header-nav__item pos-rel {{ Request::is('messages') ? 'is-active' : '' }}" href="{!! url('notifications') !!}">
@@ -21,7 +21,7 @@
             <div class="dropdown ft-header-nav__item pos-rel">
                 <a class="dropdown-toggle ft-header-nav__item--user-img" data-toggle="dropdown" @click.prevent="showNotifications" role="button" href="javascript:;" aria-haspopup="true"
                    aria-expanded="false">
-                    <div class="user-avatar" style="background-image: url(//localhost:3000/fitmetix/public/user/avatar/2017-10-22-14-07-04athletebookprofilepage.png)"></div>
+                    <div class="user-avatar" style="background-image: url({{asset('images/default.png')}})"></div>
                     <ul style="left: auto; right: 0;" data-width="3" class="ft-menu dropdown-menu">
                         <li class="{{ (Request::segment(1) == Auth::user()->username && Request::segment(2) == '') ? 'active' : '' }}">
                             <a href="{{ url(Auth::user()->username.'/create-event') }}" class="ft-menu__item  ft-menu__item--icon">

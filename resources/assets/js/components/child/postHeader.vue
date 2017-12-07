@@ -65,7 +65,8 @@
         },
         computed: {
             since () {
-                return this.date != '' ? new Date(this.date + ' UTC').getTime() : new Date().getTime()
+                console.log(this.date)
+                return this.date != '' ? new Date(this.date + 'Z').getTime() : new Date().getTime()
             },
             locationLink () {
                 return this.postData.location !== '' ? base_url + 'get-location/' + this.postData.location : ''

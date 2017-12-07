@@ -169,8 +169,93 @@
     transition-timing-function: cubic-bezier(.4,0,.2,1);
     transition-property: all;
 }
-body.is-drawer-open .ft-grid__item {
-    width: 50%;
+.md-drawer--permanent {
+    width: auto;
+    padding-right: 0px;
+    padding-left: 0;
+    padding-top: 64px;
+    z-index: -1;
+}
+.md-drawer--permanent.md-drawer--visible {
+    z-index: 1;
+}
+@media screen and (min-width: 960px) {
+    .md-drawer {
+        left: auto;
+        right:0;
+        width: 360px;
+        -webkit-transform: translateX(0px);
+        transform: translateX(0px);
+    }
+    .md-drawer--permanent {
+        -webkit-transform: translateX(0px);
+        transform: translateX(0px);
+        max-width:100%;
+        width: 360px;
+    }
+    .md-drawer--permanent .md-drawer__surface {
+        -webkit-transform:translateX(360px);
+        transform:translateX(360px);
+        width:360px;
+        max-width: none;
+    }
+    .md-drawer--animating .md-drawer__surface {
+        -webkit-transform:translateX(360px);
+        transform:translateX(360px)
+    }
+
+    body.has-permanent-drawer.is-drawer-open {
+        padding-right: 360px;
+        padding-left: 0 !important;
+    }
+}
+@media (min-width: 600px) and (max-width: 959px) {
+    .ft-grid__item{
+        width: 50%;
+    }
+    .ft-filter {
+        flex-wrap: wrap;
+    }
+    .ft-filter  > fieldset {
+        flex-basis: 50%;
+    }
+}
+@media screen and (max-width: 959px) {
+    .md-drawer--permanent{
+        padding-top: 56px;
+    }
+    .no-margin-sm {
+        margin-top: 0 !important;
+    }
+    .md-drawer--permanent .md-drawer__surface {
+        max-width: 320px;
+        -webkit-transform: translateX(-330px);
+        transform: translateX(-330px);
+    }
+    .center-sm{
+        text-align: center;
+    }
+    .ft-filter .form-group {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-bottom: 8px !important;
+    }
+}
+@media (max-width: 599px) {
+    .ft-grid__item{
+        width: 100%;
+    }
+    .ft-filter {
+        flex-wrap: wrap;
+    }
+    .ft-filter  > fieldset {
+        flex-basis: 100%;
+    }
+}
+@media screen and (min-width: 960px) {
+    body.is-drawer-open .ft-grid__item {
+        width: 50%;
+    }
 }
 
 @media (min-width: 1200px) {
