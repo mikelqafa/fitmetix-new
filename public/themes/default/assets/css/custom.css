@@ -316,6 +316,6 @@ aside .ft-card__img-wrapper {
 .post-image--wrapper {
     min-height: 200px;
 }
-#post-image-theater-dialog .md-dialog--theater .md-dialog__body {
+.md-dialog--theater .md-dialog__body {
     justify-content: flex-start; !important;
 }
