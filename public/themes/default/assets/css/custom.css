@@ -313,3 +313,6 @@ aside .ft-card__img-wrapper {
     max-height: 80vh;
     min-height: 300px;
 }
+.post-image--wrapper {
+    min-height: 300px;
+}
