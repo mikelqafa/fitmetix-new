@@ -8,20 +8,6 @@
 	<div class="post-filters pages-groups">
 					<div class="pane">
 					@include('flash::message')
-						<div class="panel-heading no-bg">
-							<div class="row">
-								<div class="col-md-12 col-sm-6 col-xs-12 center-sm">
-									<a href="{{ url(Auth::user()->username.'/create-event') }}" class="btn btn-success">{{ trans('common.create_event') }}</a>
-								</div>
-								<div class="col-md-12 col-sm-6 col-xs-12 center-sm">
-									<div class="">
-										<h3 class="panel-title" style="font-weight: 700;">
-											{{ trans('messages.events-manage') }}
-										</h3>
-									</div>
-								</div>
-							</div>
-						</div>
 						<br/>
 						<div class="ft-filter">
 							<fieldset class="form-group required " style="margin-left: 0">
@@ -68,7 +54,7 @@
 													<img class="ft-card__img" src="{{ env('STORAGE_URL').'uploads/events/covers/default-cover-event.png' }}" alt="Event Cover">
 												@endif
 											</a>
-											<div class="ft-card__primary">
+											<div class="ft-card__primary hidden-sm hidden-xs">
 												<div class="ft-card__title">
 													<h5 class="ft-event-card__title">{{ $user_event->timeline->name }}</h5>
 												</div>
@@ -236,5 +222,5 @@
 							@endif
 						</div>
 					</div>
-				</div><!-- /panel -->
+	</div>
 </div>

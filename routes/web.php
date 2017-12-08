@@ -427,7 +427,7 @@ Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {
     Route::get('get-users-mentions', 'UserController@getUsersMentions');
     Route::post('groupmember-remove', 'TimelineController@removeGroupMember');
     Route::post('group-join', 'TimelineController@timelineGroups');
-    Route::post('7-post', 'TimelineController@reportPost');
+    Route::post('report-post', 'TimelineController@reportPost');
     Route::post('follow-user-confirm', 'TimelineController@userFollowRequest');
     Route::post('post-message/{id}', 'MessageController@update');
     Route::post('create-message', 'MessageController@store');

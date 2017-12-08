@@ -211,16 +211,35 @@
 }
 @media (min-width: 600px) and (max-width: 959px) {
     .ft-grid__item{
-        width: 50%;
+        width: 33.3333%;
     }
     .ft-filter {
         flex-wrap: wrap;
     }
     .ft-filter  > fieldset {
-        flex-basis: 50%;
+        flex-basis: 33.3333%;
+    }
+    .post-filters .ft-card{
+        height: 150px !important;
     }
 }
 @media screen and (max-width: 959px) {
+    .ft-grid{
+        margin-left:-8px;
+        margin-right:-8px;
+    }
+    .post-filters .ft-card{
+        min-width: 0;
+        min-height: 100px;
+        height: 200px;
+        margin-bottom: 0;
+    }
+    .ft-grid__item{
+        padding: 8px;
+    }
+    .post-filters .ft-card__img-wrapper{
+        min-height: 100px;
+    }
     .md-drawer--permanent{
         padding-top: 56px;
     }
@@ -243,7 +262,10 @@
 }
 @media (max-width: 599px) {
     .ft-grid__item{
-        width: 100%;
+        width: 50%;
+    }
+    .post-filters .ft-card{
+       height: 100px;
     }
     .ft-filter {
         flex-wrap: wrap;
@@ -283,4 +305,7 @@ aside .ft-card__img-wrapper {
 }
 .ft-event-card__title{
     font-size: 16px;
+}
+.md-dialog--center .md-dialog__wrapper{
+    justify-content: center;
 }

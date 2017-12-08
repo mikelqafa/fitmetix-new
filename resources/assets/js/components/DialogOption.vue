@@ -1,5 +1,7 @@
 <template>
     <div>
+        <app-confirm :unid="unid" :body="body"></app-confirm>
+        <report-post-option v-if="!authUser && (postItem !== '')" :post-item="postItem"></report-post-option>
         <edit-post-option :index="optionMenuPostItem.postIndex" v-if="(postItem !== '') && initEdit"  :post-item="postItem"></edit-post-option>
         <div class="md-dialog md-dialog--maintain-width md-dialog--post-option md-dialog--full-screen" id="post-option-dialog">
             <div class="md-dialog__wrapper">
@@ -11,7 +13,7 @@
                                 <a href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="editPost">
                                     Edit Post
                                 </a>
-                                <a href="javascript:;" class="btn ft-dialog-option__item" @click="deletePost">
+                                <a href="javascript:;" class="btn ft-dialog-option__item" @click="confirmDeletePost">
                                     Delete Post
                                 </a>
                                 <a href="javascript:;" data-value="cancel" class="btn ft-dialog-option__item" @click="shareTo('facebook')">
@@ -19,7 +21,7 @@
                                 </a>
                             </template>
                             <template v-else="">
-                                <a href="javascript:;" class="btn ft-dialog-option__item" @click="reportPost">
+                                <a href="javascript:;" class="btn ft-dialog-option__item" @click="initReportPost">
                                     Report Post
                                 </a>
                                 <a href="javascript:;" data-value="cancel" class="btn ft-dialog-option__item" @click="shareTo('facebook')">
@@ -89,10 +91,14 @@
 </style>
 <script>
     import editPostOption from './child/editPost'
+    import reportPostOption from './child/sendReport'
     import { mapGetters } from 'vuex'
+    import appConfirm from './child/appConfirm'
     export default {
         data: function () {
             return {
+                unid: 'app-confirm-delete-post',
+                body: 'Do you really want to delete this post?',
                 isLoading: false,
                 initEdit: false
             }
@@ -101,57 +107,42 @@
             emitAction: function(e) {
                 console.log(e.target.getAttribute('data-value'))
             },
-            reportPost: function() {
+            initReportPost: function() {
+                $('#post-report-dialog').MaterialDialog('show')
+            },
+            confirmDeletePost: function () {
+                let confirmDialog = $('#'+ this.unid)
+                confirmDialog.MaterialDialog('show')
+                let that = this
+                confirmDialog.on('ca.dialog.affirmative.action', function(){
+                    that.deletePost()
+                });
+            },
+            deletePost: function() {
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
                 this.isLoading = true
+                $('#post-image-theater-dialog').MaterialDialog('hide')
                 axios({
                     method: 'post',
                     responseType: 'json',
-                    url: base_url + 'ajax/report-post',
+                    url: base_url + 'ajax/post-delete',
                     data: {
                         _token: _token,
                         post_id: that.postItem.id
                     }
                 }).then( function (response) {
-                    console.log(response)
                     if (response.status ==  200) {
-                        materialSnackBar({messageText: response.data.message, autoClose: true })
+                        that.$store.commit('REMOVE_POST_ITEM_LIST', that.optionMenuPostItem.postIndex)
                         $('#post-option-dialog').MaterialDialog('hide')
+                        materialSnackBar({messageText: response.data.message, autoClose: true })
                     }
                     that.isLoading = false
                 }).catch(function(error) {
+                    $('#post-option-dialog').MaterialDialog('hide')
                     materialSnackBar({messageText: error, autoClose: true })
                     that.isLoading = false
                 })
-            },
-            deletePost: function () {
-                if(confirm('Do you really want to delete this post?')) {
-                    let that = this
-                    let _token = $("meta[name=_token]").attr('content')
-                    this.isLoading = true
-                    $('#post-image-theater-dialog').MaterialDialog('hide')
-                    axios({
-                        method: 'post',
-                        responseType: 'json',
-                        url: base_url + 'ajax/post-delete',
-                        data: {
-                            _token: _token,
-                            post_id: that.postItem.id
-                        }
-                    }).then( function (response) {
-                        if (response.status ==  200) {
-                            that.$store.commit('REMOVE_POST_ITEM_LIST', that.optionMenuPostItem.postIndex)
-                            $('#post-option-dialog').MaterialDialog('hide')
-                            materialSnackBar({messageText: response.data.message, autoClose: true })
-                        }
-                        that.isLoading = false
-                    }).catch(function(error) {
-                        $('#post-option-dialog').MaterialDialog('hide')
-                        materialSnackBar({messageText: error, autoClose: true })
-                        that.isLoading = false
-                    })
-                }
             },
             savePost: function () {
                 let that = this
@@ -206,7 +197,9 @@
             }
         },
         components: {
-            'edit-post-option': editPostOption
+            'edit-post-option': editPostOption,
+            'report-post-option': reportPostOption,
+            'app-confirm': appConfirm
         },
         mounted () {
             let that = this
