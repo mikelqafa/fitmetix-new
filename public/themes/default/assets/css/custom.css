@@ -309,3 +309,7 @@ aside .ft-card__img-wrapper {
 .md-dialog--center .md-dialog__wrapper{
     justify-content: center;
 }
+.item__background--post .img-responsive {
+    max-height: 80vh;
+    min-height: 300px;
+}
