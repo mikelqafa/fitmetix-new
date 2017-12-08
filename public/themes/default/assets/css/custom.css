@@ -311,8 +311,8 @@ aside .ft-card__img-wrapper {
 }
 .item__background--post .img-responsive {
     max-height: 80vh;
-    min-height: 300px;
+    min-height: 200px;
 }
 .post-image--wrapper {
-    min-height: 300px;
+    min-height: 200px;
 }
