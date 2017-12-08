@@ -316,6 +316,10 @@ aside .ft-card__img-wrapper {
 .post-image--wrapper {
     min-height: 200px;
 }
-.md-dialog--theater .md-dialog__body {
-    justify-content: flex-start; !important;
+
+@media screen and (max-width: 767px) {
+    .md-dialog--theater .md-dialog__body {
+        justify-content: flex-start; !important;
+    }
 }
+
