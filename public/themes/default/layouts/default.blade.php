@@ -38,7 +38,7 @@
     <title>{{ Theme::get('title') }}</title>
     <link href="{{ asset('fitmetixfont/font.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ Theme::asset()->url('css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('css/swiper.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dialog.css') }}" rel="stylesheet">
     <link href="{{ asset('css/snackbar.css') }}" rel="stylesheet">
