@@ -319,7 +319,7 @@ aside .ft-card__img-wrapper {
 
 @media screen and (max-width: 767px) {
     .md-dialog--theater .md-dialog__body {
-        justify-content: flex-start; !important;
+        justify-content: flex-start !important;
     }
 }
 
