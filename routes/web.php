@@ -374,6 +374,10 @@ Route::group(['prefix' => '/{username}/event-settings', 'middleware' => ['auth',
 
 Route::post('get-posts','TimelineController@postAPI');
 
+Route::post('get-posts-by-location','TimelineController@postByLocationAPI');
+
+Route::post('get-posts-by-hashtag','TimelineController@postByHashtagAPI');
+
 Route::post('get-single-post','TimelineController@singlePostAPI');
 
 Route::post('get-comments','TimelineController@commentsAPI');
@@ -428,6 +432,7 @@ Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {
     Route::post('groupmember-remove', 'TimelineController@removeGroupMember');
     Route::post('group-join', 'TimelineController@timelineGroups');
     Route::post('report-post', 'TimelineController@reportPost');
+    Route::post('report-comment', 'TimelineController@reportPost');
     Route::post('follow-user-confirm', 'TimelineController@userFollowRequest');
     Route::post('post-message/{id}', 'MessageController@update');
     Route::post('create-message', 'MessageController@store');
@@ -532,3 +537,7 @@ Route::get('album/{filename}', function ($filename) {
 Route::get('wallpaper/{filename}', function ($filename) {
     return Image::make(storage_path().'/uploads/wallpapers/'.$filename)->response();
 });
+
+Route::post('paypal', array('as' => 'addmoney.paypal','uses' => 'AddMoneyController@postPaymentWithpaypal',));
+
+Route::get('paypal', array('as' => 'payment.status','uses' => 'AddMoneyController@getPaymentStatus',));

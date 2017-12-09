@@ -1073,6 +1073,9 @@ class TimelineController extends AppBaseController
                 return response()->json(['status' => '200', 'joined' => false, 'message' => 'Gender mismatch']);   
             }
             else {
+                if($event->price != NULL) {
+                    return response()->json(['status' => '200', 'joined' => false, 'message' => 'Paid event']);
+                }
                 $event->users()->attach(Auth::user()->id);
 
                 foreach ($users as $user) {
@@ -1913,6 +1916,19 @@ class TimelineController extends AppBaseController
             Notification::create(['user_id' => $post->user_id, 'post_id' => $request->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.reported_your_post'), 'type' => 'report_post']);
 
             return response()->json(['status' => '200', 'reported' => true, 'message' => 'Post successfully reported']);
+        }
+    }
+
+    public function reportComment(Request $request)
+    {
+        $comment = Comment::where('id', '=', $request->comment_id)->first();
+        $reported = $comment->manageCommentReport($request->comment_id, Auth::user()->id);
+
+        if ($reported) {
+            //Notify the user for reporting his comment
+            Notification::create(['user_id' => $comment->user_id, 'comment_id' => $request->comment_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.reported'), 'type' => 'report_comment']);
+
+            return response()->json(['status' => '200', 'reported' => true, 'message' => 'Comment successfully reported']);
         }
     }
 
@@ -3034,6 +3050,110 @@ class TimelineController extends AppBaseController
                     ->from('followers')
                     ->where('follower_id', $id);
             })->orWhere('user_id', $id)->where('active', 1)->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
+
+        // $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
+
+        foreach ($posts as $post) {
+            if($post->images()->count() > 0) {
+                $post['images'] = $post->images()->get();
+            }
+            if($post->comments()->count() > 0) {
+                $post['comments'] = $post->comments()->where('user_id',$post->user_id)->get();
+            }
+
+            $post['likes_count'] = $post->users_liked()->count();
+            $post['user_liked'] = false;
+
+            if($post['likes_count'] > 0) {
+                if($post->users_liked()->where('user_id',Auth::user()->id)->count()) {
+                    $post['user_liked'] = true;
+                }
+            }
+
+            if($post->type == 'event'){
+                $post['event'] = Event::where('timeline_id',$post->timeline_id)->latest()->get();
+                foreach ($post['event'] as $user_event) {
+                    $user_event['event_details'] = $user_event->timeline->username;
+                    if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
+                        $user_event['event_tags'] = $matches[0];
+                    }
+                    if($user_event->users->contains(Auth::user()->id)){
+                        $user_event['registered'] = true;
+                    }
+                    if($user_event->start_date < Carbon::now()){
+                        $user_event['expired'] = true;
+                    }
+                }
+            }
+        }
+
+        $post_image_path = storage_path().'/uploads/users/gallery/';
+        $event_image_path = storage_path().'/uploads/events/covers/';
+
+        return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
+    }
+
+    public function postByLocationAPI(Request $request) {
+        $timeline = Timeline::where('username', $request->username)->first();
+        $location = '%'.$request->location.'%';
+        $id = Auth::user()->id;
+        $posts = Post::whereIn('user_id', function ($query) use ($id) {
+                $query->select('leader_id')
+                    ->from('followers')
+                    ->where('follower_id', $id);
+            })->orWhere('user_id', $id)->where([['active', 1],['location','like',$location]])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
+
+        // $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
+
+        foreach ($posts as $post) {
+            if($post->images()->count() > 0) {
+                $post['images'] = $post->images()->get();
+            }
+            if($post->comments()->count() > 0) {
+                $post['comments'] = $post->comments()->where('user_id',$post->user_id)->get();
+            }
+
+            $post['likes_count'] = $post->users_liked()->count();
+            $post['user_liked'] = false;
+
+            if($post['likes_count'] > 0) {
+                if($post->users_liked()->where('user_id',Auth::user()->id)->count()) {
+                    $post['user_liked'] = true;
+                }
+            }
+
+            if($post->type == 'event'){
+                $post['event'] = Event::where('timeline_id',$post->timeline_id)->latest()->get();
+                foreach ($post['event'] as $user_event) {
+                    $user_event['event_details'] = $user_event->timeline->username;
+                    if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
+                        $user_event['event_tags'] = $matches[0];
+                    }
+                    if($user_event->users->contains(Auth::user()->id)){
+                        $user_event['registered'] = true;
+                    }
+                    if($user_event->start_date < Carbon::now()){
+                        $user_event['expired'] = true;
+                    }
+                }
+            }
+        }
+
+        $post_image_path = storage_path().'/uploads/users/gallery/';
+        $event_image_path = storage_path().'/uploads/events/covers/';
+
+        return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
+    }
+
+    public function postByDescriptionAPI(Request $request) {
+        $timeline = Timeline::where('username', $request->username)->first();
+        $hashtag = '%'.$request->hashtag.'%';
+        $id = Auth::user()->id;
+        $posts = Post::whereIn('user_id', function ($query) use ($id) {
+                $query->select('leader_id')
+                    ->from('followers')
+                    ->where('follower_id', $id);
+            })->orWhere('user_id', $id)->where([['active', 1],['description','like',$hashtag]])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
 
         // $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
 
