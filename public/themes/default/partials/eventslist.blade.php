@@ -5,6 +5,10 @@
 <div class="no-margin-sm" style="margin-top: 30px">
 			<!-- List of user events-->
 	
+	@if (Session::has('msg'))
+        <li>{!! session('msg') !!}</li>
+    @endif
+
 	<div class="post-filters pages-groups">
 					<div class="pane">
 					@include('flash::message')
@@ -184,7 +188,21 @@
 																			    <button disabled class="btn" data-timeline = "{{ $user_event->timeline->id }}">Register</button>
 
 																			@else
+																			    @if(!$user_event->price)
+
 																			    <button class="btn btn-primary join-event-btn" data-timeline = "{{ $user_event->timeline->id }}">Register</button>
+																			    
+																			    @else
+
+																			    <form class="form-horizontal" method="POST" id="payment-form" role="form" action="{!! URL::route('addmoney.paypal') !!}" >
+														                        {{ csrf_field() }}
+														                        <input id="amount" type="hidden" class="form-control" name="amount" value="{{ $user_event->price }}">
+														                        <input id="currency" type="hidden" class="form-control" name="currency" value="USD">
+																			    <button type="submit" class="btn btn-primary" data-timeline = "{{ $user_event->timeline->id }}">Register</button>
+
+																				</form>
+
+																			    @endif
 																			@endif	
 																		@else
 																		    <button disabled class="btn" data-timeline = "{{ $user_event->timeline->id }}">Register</button>

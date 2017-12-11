@@ -1099,6 +1099,24 @@ class TimelineController extends AppBaseController
         }
     }
 
+    public function joiningPaidEvent(Request $request)
+    {   
+        $timeline_id = $request->session()->get('event_timeline_id');
+        $request->session()->forget('event_timeline_id');
+        $event = Event::where('timeline_id', '=', $timeline_id)->first();
+        $users = $event->users()->get();
+
+        $event->users()->attach(Auth::user()->id);
+
+        foreach ($users as $user) {
+            if ($user->id != Auth::user()->id) {
+                //Notify the user for event join
+                Notification::create(['user_id' => $user->id, 'timeline_id' => $timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.attending_your_event'), 'type' => 'join_event']);
+            }
+        }
+        return redirect('events')->with('msg','Successfully joined');
+    }
+
     public function joiningClosedGroup(Request $request)
     {
         $user_role_id = Role::where('name', '=', 'user')->first();
@@ -3045,6 +3063,57 @@ class TimelineController extends AppBaseController
     {
         $timeline = Timeline::where('username', $request->username)->first();
         $id = Auth::user()->id;
+        $posts = Post::whereIn('user_id', function ($query) use ($id) {
+                $query->select('leader_id')
+                    ->from('followers')
+                    ->where('follower_id', $id);
+            })->orWhere('user_id', $id)->where('active', 1)->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
+
+        // $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
+
+        foreach ($posts as $post) {
+            if($post->images()->count() > 0) {
+                $post['images'] = $post->images()->get();
+            }
+            if($post->comments()->count() > 0) {
+                $post['comments'] = $post->comments()->where('user_id',$post->user_id)->get();
+            }
+
+            $post['likes_count'] = $post->users_liked()->count();
+            $post['user_liked'] = false;
+
+            if($post['likes_count'] > 0) {
+                if($post->users_liked()->where('user_id',Auth::user()->id)->count()) {
+                    $post['user_liked'] = true;
+                }
+            }
+
+            if($post->type == 'event'){
+                $post['event'] = Event::where('timeline_id',$post->timeline_id)->latest()->get();
+                foreach ($post['event'] as $user_event) {
+                    $user_event['event_details'] = $user_event->timeline->username;
+                    if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
+                        $user_event['event_tags'] = $matches[0];
+                    }
+                    if($user_event->users->contains(Auth::user()->id)){
+                        $user_event['registered'] = true;
+                    }
+                    if($user_event->start_date < Carbon::now()){
+                        $user_event['expired'] = true;
+                    }
+                }
+            }
+        }
+
+        $post_image_path = storage_path().'/uploads/users/gallery/';
+        $event_image_path = storage_path().'/uploads/events/covers/';
+
+        return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
+    }
+
+    public function userPostAPI(Request $request) {
+        $timeline = Timeline::where('username', $request->username)->first();
+        $id = $timeline->user->id;
         $posts = Post::whereIn('user_id', function ($query) use ($id) {
                 $query->select('leader_id')
                     ->from('followers')

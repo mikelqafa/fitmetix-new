@@ -5,24 +5,34 @@
             {{ "Manage Scout Account" }}
         </h3>
     </div>
+    @if (Session::has('msg'))
+         <br/>
+        <div class="alert alert-success alert-dismissable" style="text-align: center;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {!! session('msg') !!}
+        </div>
+        <br/>
+    @endif
     <br/>
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#view">View</a></li>
-        <li><a data-toggle="tab" href="#create">Create</a></li>
+        <li class="active"><a data-toggle="tab" href="#view_all">View all users</a></li>
+        <li><a data-toggle="tab" href="#view_scouts">View Scout Accounts</a></li>
+        <li><a data-toggle="tab" href="#create">Create new scout account</a></li>
     </ul>
     <div class="panel-body">
         
         <div class="tab-content">
             <div id="create" class="tab-pane fade">
                 
-                <form method="POST" id="scout_form" class="mobile-align-center md-layout md-layout--column ft-login__wrapper md-align md-align--center-start" action="{{ url('/register') }}">
-
+                <form method="POST" class="mobile-align-center md-layout md-layout--column ft-login__wrapper md-align md-align--center-start" action="{{ url('admin/create-scout') }}">
+                    {{ csrf_field() }}
                     <div class="md-layout layout-m-b-1 layout-m-b-1--register md-layout-spacer mobile-layout-column__register mobile-layout-column md-layout--row md-align md-align-start-center">
                         <div class="mail-form  form-group form-group__adjust">
-                            <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                            <input class="form-control" id="username" required placeholder="Affiliate Code" name="username" type="text">
+                            <input class="form-control" id="username" required placeholder="{{ trans('auth.name') }}" name="username" type="text">
                         </div>
                         <div class="form-group form-group__adjust">
+                            <input class="form-control" id="scout_code" required placeholder="Scout Code" name="scout_code" type="text">
+                            <br/>
                             <input class="form-control" id="email" required placeholder="{{ trans('auth.email_address') }}" name="email" type="email" value="">
                         </div>
                     </div>
@@ -57,7 +67,7 @@
                 </form>
 
             </div>
-            <div id="view" class="tab-pane fade in active">
+            <div id="view_all" class="tab-pane fade in active">
                 @if(count($timelines) > 0)
             <div class="table table-responsive manage-table">
                 <table class="table existing-products-table socialite">
@@ -66,7 +76,7 @@
                             <th>&nbsp;</th>
                             <th>{{ trans('admin.id') }}</th> 
                             <th>{{ trans('auth.name') }}</th>
-                            <th>Affiliate Link</th>
+                            <th>Type</th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
@@ -76,7 +86,27 @@
                             <td>&nbsp;</td> 
                             <td>{{ $timeline->user->id }}</td>
                             <td><a href="#"><img src=" @if($timeline->avatar_id != null) {{ url('user/avatar/'.$timeline->avatar->source) }} @else {{ url('user/avatar/default-'.$timeline->user->gender.'-avatar.png') }} @endif" alt="images"></a><a href="{{ url($timeline->username) }}"> {{ $timeline->name }}</a></td>
-                            <td>{{ url('register?affiliate='.$timeline->username) }}</td>
+                            @if($timeline->user->custom_option1)
+                                <td>Scout</td>
+                            @else
+                                @if($timeline->user->gender == 'male')
+                                    <td>
+                                        <form action="{{ url('admin/make-scout') }}" method="POST">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="user_id" value="{{ $timeline->user->id }}">
+                                            <button type="submit" class="btn btn-defualt btn-xs">Make him scout</button>
+                                        </form>
+                                    </td>
+                                @else
+                                    <td>
+                                        <form action="{{ url('admin/make-scout') }}" method="POST">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="user_id" value="{{ $timeline->user->id }}">
+                                            <button type="submit" class="btn btn-defualt btn-xs">Make her scout</button>
+                                        </form>
+                                    </td>
+                                @endif
+                            @endif
                             <td>&nbsp;</td> 
                         </tr>
                         @endforeach
@@ -90,6 +120,41 @@
                 <div class="alert alert-warning">{{ trans('messages.no_users') }}</div>
             @endif
             </div>
+
+            <div id="view_scouts" class="tab-pane fade">
+                @if(count($scout_timelines) > 1)
+            <div class="table table-responsive manage-table">
+                <table class="table existing-products-table socialite">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>{{ trans('admin.id') }}</th> 
+                            <th>{{ trans('auth.name') }}</th>
+                            <th>Scout Code</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($scout_timelines as $timeline)
+                        @if($timeline->user->custom_option1)
+                        <tr>
+                            <td>&nbsp;</td> 
+                            <td>{{ $timeline->user->id }}</td>
+                            <td><a href="#"><img src=" @if($timeline->avatar_id != null) {{ url('user/avatar/'.$timeline->avatar->source) }} @else {{ url('user/avatar/default-'.$timeline->user->gender.'-avatar.png') }} @endif" alt="images"></a><a href="{{ url($timeline->username) }}"> {{ $timeline->name }}</a></td>
+                            <td>{{ $timeline->username }}</td>
+                            <td>&nbsp;</td> 
+                        </tr>
+                        
+                        @endif
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>  
+            @else
+                <div class="alert alert-warning">{{ trans('messages.no_users') }}</div>
+            @endif
+            </div>
+
         </div>
 
 	</div>

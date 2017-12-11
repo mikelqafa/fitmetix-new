@@ -71,18 +71,20 @@
 		</div>
 		<div class="clearfix"></div>
 	</a>
-	<a href="{{ url('/'.Auth::user()->username.'/settings/affliates') }}" class="list-group-item">
-		<div class="list-icon socialite-icon {{ Request::segment(3) == 'affliates' ? 'active' : '' }}">
-			<i class="fa fa-user-plus"></i>
-		</div>
-		<div class="list-text">
-			{{ trans('common.my_affiliates') }}
-			<div class="text-muted">
-				{{ trans('messages.menu_message_affiliates') }}
+	@if(Auth::user()->custom_option1 == 'scout')
+	    <a href="{{ url('/'.Auth::user()->username.'/settings/affliates') }}" class="list-group-item">
+			<div class="list-icon socialite-icon {{ Request::segment(3) == 'affliates' ? 'active' : '' }}">
+				<i class="fa fa-user-plus"></i>
 			</div>
-		</div>
-		<div class="clearfix"></div>
-	</a>
+			<div class="list-text">
+				{{ trans('common.my_affiliates') }}
+				<div class="text-muted">
+					{{ trans('messages.menu_message_affiliates') }}
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</a>
+	@endif
 	<a href="{{ url('/'.Auth::user()->username.'/settings/deactivate') }}" class="list-group-item">
 		<div class="list-icon socialite-icon {{ Request::segment(3) == 'deactive' ? 'active' : '' }}">
 			<i class="fa fa-trash"></i>

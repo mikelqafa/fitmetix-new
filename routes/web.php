@@ -181,6 +181,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'role:admin']], fun
     Route::get('/events/{event_id}/delete', 'AdminController@removeEvent');
     
     Route::get('/manage-scouts', 'AdminController@manageScouts');
+    Route::post('/create-scout', 'AdminController@createScout');
+    Route::post('/make-scout', 'AdminController@makeScout');
 
     Route::get('/event-settings', 'AdminController@eventSettings');
     Route::post('/event-settings', 'AdminController@updateEventSettings');
@@ -209,6 +211,8 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'role:admin']], fun
 
 Route::group(['prefix' => '/{username}', 'middleware' => 'auth'], function ($username) {
     Route::get('/', 'TimelineController@showTimeline');
+
+    Route::post('get-user-posts','TimelineController@userPostAPI');
 
     Route::get('/followers', 'UserController@followers');
 

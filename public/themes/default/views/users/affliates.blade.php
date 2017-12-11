@@ -28,9 +28,20 @@
 									<a href="https://twitter.com/intent/tweet?text={{ url('register?affiliate='.Auth::user()->username) }}" class="btn btn-default btn-twitter"><i class="fa fa-twitter-square"></i>Twitter {{ trans('common.share') }}</a>
 								</div>
 							</div>
-							<ul class="list-group affliate-followers">
-								@if(count($referrals) > 0)
-								@foreach($referrals as $referral)
+							<ul class="list-group">
+								<li class="list-group-item list-group-item-info">
+								 <em>Profiles using my code : </em> &nbsp; <strong>{{ count($referrals) }}</strong></li>
+								 <hr/>
+							     @php $sum = 0; @endphp
+								 @if(count($referrals))
+								     @foreach($referrals as $referral)
+								         @php $sum += $referral->custom_option2; @endphp
+								     @endforeach
+								 @endif
+								 <li class="list-group-item list-group-item-warning">
+								 <em>Amount of money spent : </em> &nbsp; <strong>{{ $sum }}</strong></li>
+
+								{{-- @foreach($referrals as $referral)
 								<li class="list-group-item">
 									<div class="connect-link pull-left">
 										<a href="{{ url('/'.$referral->username) }}">
@@ -57,7 +68,7 @@
 									@if($referrals != NULL)
 									{{ $referrals->render() }}
 									@endif	
-								</div>
+								</div> --}}
 							</ul>
 							
 						</div>

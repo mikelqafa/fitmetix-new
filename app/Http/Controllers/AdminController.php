@@ -1659,6 +1659,7 @@ class AdminController extends Controller
     public function manageScouts(Request $request) {
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('admin');
         $timelines = '';
+        $scout_timelines = Timeline::where('type','user')->get();
 
         if ($request->all()) {
             if ($request->sort) {
@@ -1669,6 +1670,69 @@ class AdminController extends Controller
         } else {
             $timelines = Timeline::where('type', 'user')->paginate(Setting::get('items_page', 10));
         }
-        return $theme->scope('admin/create-scout',compact('timelines'))->render();
+
+        return $theme->scope('admin/create-scout',compact('timelines','scout_timelines'))->render();
     }
+
+    public function createScout(Request $request) {
+        $affiliate_id = null;
+        
+        //Create timeline record for the user
+        $timeline = Timeline::create([
+            'username' => $request->scout_code,
+            'name'     => $request->username,
+            'type'     => 'user',
+            'about'    => 'write something about yourself'
+            ]);
+
+        $mail_verification = null;
+        
+        //Create user record
+        $user = User::create([
+            'email'             => $request->email,
+            'password'          => bcrypt($request->password),
+            'timeline_id'       => $timeline->id,
+            'gender'            => $request->gender,
+            'affiliate_id'      => $affiliate_id,
+            'verification_code' => str_random(30),
+            'remember_token'    => str_random(10),
+            'custom_option1'    => 'scout',
+            'email_verified'    => $mail_verification
+            ]);
+        if (Setting::get('birthday') == 'on' && $request->birthday != '') {
+            $user->birthday = date('Y-m-d', strtotime($request->birthday));
+            $user->save();
+        }
+
+        if (Setting::get('city') == 'on' && $request->city != '') {
+            $user->city = $request->city;
+            $user->save();
+        }
+
+        $user->name = $timeline->name;
+        $user->email = $request->email;
+
+        //saving default settings to user settings
+        $user_settings = [
+          'user_id'               => $user->id,
+          'confirm_follow'        => Setting::get('confirm_follow'),
+          'follow_privacy'        => Setting::get('follow_privacy'),
+          'comment_privacy'       => Setting::get('comment_privacy'),
+          'timeline_post_privacy' => Setting::get('user_timeline_post_privacy'),
+          'post_privacy'          => Setting::get('post_privacy'),
+          'message_privacy'       => Setting::get('user_message_privacy'), ];
+
+        //Create a record in user settings table.
+        $userSettings = DB::table('user_settings')->insert($user_settings);
+
+        return redirect('/admin/manage-scouts')->with('msg','Scout Account Created');
+    }
+
+    public function makeScout(Request $request) {
+        $user = User::find($request->user_id);
+        $user->custom_option1 = 'scout';
+        $user->save();
+        return redirect('/admin/manage-scouts')->with('msg','Scout position assigned');
+    }
+
 }

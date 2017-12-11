@@ -6,6 +6,8 @@ use App\Http\Requests;
 
 use Illuminate\Http\Request;
 
+use App\User;
+
 use Validator;
 
 use URL;
@@ -91,6 +93,13 @@ class AddMoneyController extends Controller
     public function postPaymentWithpaypal(Request $request)
 
     {
+        $request->session()->put('event_timeline_id', $request->timeline_id);
+        
+        $request->session()->put('amount', $request->amount);
+
+        $user_id = Auth::user()->id;
+
+        $request->session()->put('user_id', $user_id);
 
     	$paypal_conf = \Config::get('paypal');
 
@@ -209,35 +218,27 @@ class AddMoneyController extends Controller
 
     }
 
-    public function getPaymentStatus()
+    public function getPaymentStatus(Request $request)
 
     {
 
         /** Get the payment ID before session clear **/
 
-        $payment_id = Session::get('paypal_payment_id');
+        $payment_id = $request->session()->get('paypal_payment_id');
 
         /** clear the session payment ID **/
 
-        Session::forget('paypal_payment_id');
+        $request->session()->forget('paypal_payment_id');
 
         if (empty(Input::get('PayerID')) || empty(Input::get('token'))) {
 
-            \Session::put('error','Payment failed');
+            $request->session()->put('error','Payment failed');
 
             return Redirect::route('addmoney.paywithpaypal');
 
         }
 
         $payment = Payment::get($payment_id, $this->_api_context);
-
-        /** PaymentExecution object includes information necessary **/
-
-        /** to execute a PayPal account payment. **/
-
-        /** The payer_id is added to the request query parameters **/
-
-        /** when the user is redirected from paypal back to your site **/
 
         $execution = new PaymentExecution();
 
@@ -247,23 +248,35 @@ class AddMoneyController extends Controller
 
         $result = $payment->execute($execution, $this->_api_context);
 
-        /** dd($result);exit; /** DEBUG RESULT, remove it later **/
-
         if ($result->getState() == 'approved') { 
 
+            $request->session()->put('success','Payment success');
+
+            $user_id = $request->session()->get('user_id');
+            $balance = $request->session()->get('amount');
+
+            $referer = Auth::user()->affiliate_id;
+
+            $affiliate_balance = 0.1 * $balance;
+
+            $scout = User::find($referer)->increment('balance',$affiliate_balance);
             
+            $user = User::find($user_id);
+            $spent = $user->custom_option2 + $balance;
+            $spent = (string) $spent;
+            $user->custom_option2 = $spent;
+            $user->save();
 
-            /** it's all right **/
+            
+            $request->session()->forget('user_id');
+            $request->session()->forget('amount');
 
-            /** Here Write your database logic like that insert record or value in database if you want **/
-
-            \Session::put('success','Payment success');
-
-            return Redirect::route('addmoney.paywithpaypal');
+            // return Redirect::route('addmoney.paywithpaypal');
+            app('App\Http\Controllers\TimeLineController')->joiningPaidEvent();
 
         }
 
-        \Session::put('error','Payment failed');
+        $request->session()->put('error','Payment failed');
 
         return Redirect::route('addmoney.paywithpaypal');
 
