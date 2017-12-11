@@ -87,6 +87,13 @@
         mounted () {
             this.userImage = $('#user-image').val()
             this.placeholder = $('#post-placeholder').val()
+            let username = current_username
+            if($('#timeline_username').length) {
+                username =  $('#timeline_username').val()
+            }
+            if(username !== current_username) {
+                this.placeholder = 'Write something on ' + username
+            }
             let that = this
             $(document).on('click', '.smiley-post', function(e){
                 e.preventDefault();

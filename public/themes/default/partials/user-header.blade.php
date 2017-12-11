@@ -102,182 +102,184 @@
 		</div><!-- /timeline-list -->
 	</div><!-- timeline-cover-section -->
 </div>
-<div class="user-profile-buttons">
-	<div class="row follow-links pagelike-links">
-		@if(Auth::user()->username != $timeline->username)
-            <?php
-            $user_follow ="";
-            $confirm_follow ="";
-            $message_privacy ="";
-            $othersSettings = $user->getOthersSettings($timeline->username);
-            if($othersSettings) {
-                if ($othersSettings->follow_privacy == "only_follow") {
-                    $user_follow = "only_follow";
-                } elseif ($othersSettings->follow_privacy == "everyone") {
-                    $user_follow = "everyone";
-                }
-                if ($othersSettings->confirm_follow == "yes") {
-                    $confirm_follow = "yes";
-                } elseif ($othersSettings->confirm_follow == "no") {
-                    $confirm_follow = "no";
-                }
-                if ($othersSettings->message_privacy == "only_follow") {
-                    $message_privacy = "only_follow";
-                } elseif ($othersSettings->message_privacy == "everyone") {
-                    $message_privacy = "everyone";
-                }
-            }
-            ?>
-			@if($confirm_follow == "no")
-				@if(($user->followers->contains(Auth::user()->id) && $user_follow == "only_follow") || ($user_follow == "everyone"))
-					@if(!$user->followers->contains(Auth::user()->id))
-						@if($message_privacy == "everyone")
-							<div class="col-md-6 col-sm-6 col-xs-6 left-col">
-								<a href="#" class="btn btn-options btn-block follow-user btn-default follow" data-timeline-id="{{ $timeline->id }}">
-									<i class="fa fa-heart"></i> {{ trans('common.follow') }}
-								</a>
-							</div>
+<div class="row">
+	<div class="user-profile-buttons">
+		<div class="row follow-links pagelike-links">
+			@if(Auth::user()->username != $timeline->username)
+				<?php
+				$user_follow ="";
+				$confirm_follow ="";
+				$message_privacy ="";
+				$othersSettings = $user->getOthersSettings($timeline->username);
+				if($othersSettings) {
+					if ($othersSettings->follow_privacy == "only_follow") {
+						$user_follow = "only_follow";
+					} elseif ($othersSettings->follow_privacy == "everyone") {
+						$user_follow = "everyone";
+					}
+					if ($othersSettings->confirm_follow == "yes") {
+						$confirm_follow = "yes";
+					} elseif ($othersSettings->confirm_follow == "no") {
+						$confirm_follow = "no";
+					}
+					if ($othersSettings->message_privacy == "only_follow") {
+						$message_privacy = "only_follow";
+					} elseif ($othersSettings->message_privacy == "everyone") {
+						$message_privacy = "everyone";
+					}
+				}
+				?>
+				@if($confirm_follow == "no")
+					@if(($user->followers->contains(Auth::user()->id) && $user_follow == "only_follow") || ($user_follow == "everyone"))
+						@if(!$user->followers->contains(Auth::user()->id))
+							@if($message_privacy == "everyone")
+								<div class="col-md-6 col-sm-6 col-xs-6 left-col">
+									<a href="#" class="btn btn-options btn-block follow-user btn-default follow" data-timeline-id="{{ $timeline->id }}">
+										<i class="fa fa-heart"></i> {{ trans('common.follow') }}
+									</a>
+								</div>
+							@else
+								<div class="col-md-12 col-sm-6 col-xs-6">
+									<a href="#" class="btn btn-options btn-block follow-user btn-default follow" data-timeline-id="{{ $timeline->id }}">
+										<i class="fa fa-heart"></i> {{ trans('common.follow') }}
+									</a>
+								</div>
+							@endif
+							@if($message_privacy == "everyone")
+								<div class="col-md-6 col-sm-6 col-xs-6 hidden">
+									<a href="#" class="btn btn-options btn-block follow-user btn-success unfollow" data-timeline-id="{{ $timeline->id }}">
+										<i class="fa fa-check"></i> {{ trans('common.following') }}
+									</a>
+								</div>
+							@else
+								<div class="col-md-12 col-sm-6 col-xs-6 hidden">
+									<a href="#" class="btn btn-options btn-block follow-user btn-success unfollow" data-timeline-id="{{ $timeline->id }}">
+										<i class="fa fa-check"></i> {{ trans('common.following') }}
+									</a>
+								</div>
+							@endif
 						@else
-							<div class="col-md-12 col-sm-6 col-xs-6">
-								<a href="#" class="btn btn-options btn-block follow-user btn-default follow" data-timeline-id="{{ $timeline->id }}">
-									<i class="fa fa-heart"></i> {{ trans('common.follow') }}
-								</a>
-							</div>
-						@endif
-						@if($message_privacy == "everyone")
 							<div class="col-md-6 col-sm-6 col-xs-6 hidden">
-								<a href="#" class="btn btn-options btn-block follow-user btn-success unfollow" data-timeline-id="{{ $timeline->id }}">
-									<i class="fa fa-check"></i> {{ trans('common.following') }}
+								<a href="#" class="btn btn-options btn-block follow-user btn-default follow " data-timeline-id="{{ $timeline->id }}">
+									<i class="fa fa-heart"></i> {{ trans('common.follow') }}
 								</a>
 							</div>
-						@else
-							<div class="col-md-12 col-sm-6 col-xs-6 hidden">
-								<a href="#" class="btn btn-options btn-block follow-user btn-success unfollow" data-timeline-id="{{ $timeline->id }}">
-									<i class="fa fa-check"></i> {{ trans('common.following') }}
-								</a>
-							</div>
-						@endif
-					@else
-						<div class="col-md-6 col-sm-6 col-xs-6 hidden">
-							<a href="#" class="btn btn-options btn-block follow-user btn-default follow " data-timeline-id="{{ $timeline->id }}">
-								<i class="fa fa-heart"></i> {{ trans('common.follow') }}
-							</a>
-						</div>
-						<div class="col-md-6 col-sm-6 col-xs-6 left-col">
-							<a href="#" class="btn btn-options btn-block follow-user btn-success unfollow" data-timeline-id="{{ $timeline->id }}">	<i class="fa fa-check"></i> {{ trans('common.following') }}
-							</a>
-						</div>
-					@endif
-				@elseif(($user->following->contains(Auth::user()->id) && $user_follow == "only_follow") || ($user_follow == "everyone"))
-
-					@if(!$user->followers->contains(Auth::user()->id))
-						@if($message_privacy == "everyone")
 							<div class="col-md-6 col-sm-6 col-xs-6 left-col">
-								<a href="#" class="btn btn-options btn-block follow-user btn-default follow" data-timeline-id="{{ $timeline->id }}">
-									<i class="fa fa-heart"></i> {{ trans('common.follow') }}
-								</a>
-							</div>
-						@else
-							<div class="col-md-12 col-sm-6 col-xs-6 left-col">
-								<a href="#" class="btn btn-options btn-block follow-user btn-default follow" data-timeline-id="{{ $timeline->id }}">
-									<i class="fa fa-heart"></i> {{ trans('common.follow') }}
+								<a href="#" class="btn btn-options btn-block follow-user btn-success unfollow" data-timeline-id="{{ $timeline->id }}">	<i class="fa fa-check"></i> {{ trans('common.following') }}
 								</a>
 							</div>
 						@endif
+					@elseif(($user->following->contains(Auth::user()->id) && $user_follow == "only_follow") || ($user_follow == "everyone"))
 
-						@if($message_privacy == "everyone")
+						@if(!$user->followers->contains(Auth::user()->id))
+							@if($message_privacy == "everyone")
+								<div class="col-md-6 col-sm-6 col-xs-6 left-col">
+									<a href="#" class="btn btn-options btn-block follow-user btn-default follow" data-timeline-id="{{ $timeline->id }}">
+										<i class="fa fa-heart"></i> {{ trans('common.follow') }}
+									</a>
+								</div>
+							@else
+								<div class="col-md-12 col-sm-6 col-xs-6 left-col">
+									<a href="#" class="btn btn-options btn-block follow-user btn-default follow" data-timeline-id="{{ $timeline->id }}">
+										<i class="fa fa-heart"></i> {{ trans('common.follow') }}
+									</a>
+								</div>
+							@endif
+
+							@if($message_privacy == "everyone")
+								<div class="col-md-6 col-sm-6 col-xs-6 hidden">
+									<a href="#" class="btn btn-options btn-block follow-user btn-success unfollow" data-timeline-id="{{ $timeline->id }}">
+										<i class="fa fa-check"></i> {{ trans('common.following') }}
+									</a>
+								</div>
+							@else
+								<div class="col-md-12 col-sm-6 col-xs-6 hidden">
+									<a href="#" class="btn btn-options btn-block follow-user btn-success unfollow" data-timeline-id="{{ $timeline->id }}">
+										<i class="fa fa-check"></i> {{ trans('common.following') }}
+									</a>
+								</div>
+							@endif
+
+						@else
 							<div class="col-md-6 col-sm-6 col-xs-6 hidden">
-								<a href="#" class="btn btn-options btn-block follow-user btn-success unfollow" data-timeline-id="{{ $timeline->id }}">
-									<i class="fa fa-check"></i> {{ trans('common.following') }}
-								</a>
-							</div>
-						@else
-							<div class="col-md-12 col-sm-6 col-xs-6 hidden">
-								<a href="#" class="btn btn-options btn-block follow-user btn-success unfollow" data-timeline-id="{{ $timeline->id }}">
-									<i class="fa fa-check"></i> {{ trans('common.following') }}
-								</a>
-							</div>
-						@endif
-
-					@else
-						<div class="col-md-6 col-sm-6 col-xs-6 hidden">
-							<a href="#" class="btn btn-options btn-block follow-user btn-default follow " data-timeline-id="{{ $timeline->id }}">
-								<i class="fa fa-heart"></i> {{ trans('common.follow') }}
-							</a>
-						</div>
-
-						<div class="col-md-6 col-sm-6 col-xs-6 left-col">
-							<a href="#" class="btn btn-options btn-block follow-user btn-success unfollow" data-timeline-id="{{ $timeline->id }}">	<i class="fa fa-heart"></i> {{ trans('common.following') }}
-							</a>
-						</div>
-					@endif
-				@endif	<!-- End of [if-3]-->
-
-			@elseif($confirm_follow == "yes")
-			<!-- This [if-4] is for checking usersettings follow_privacy showing follow/following || message button -->
-				@if(($user->followers->contains(Auth::user()->id) && $user_follow == "only_follow") || ($user_follow == "everyone"))
-					@if(!$user->followers->contains(Auth::user()->id))
-						@if($message_privacy == "everyone")
-							<div class="col-md-6 col-sm-6 col-xs-6 left-col">
-								<a href="#" class="btn btn-options btn-block btn-default follow-user-confirm follow" data-timeline-id="{{ $timeline->id }}-{{ $follow_user_status }}">
+								<a href="#" class="btn btn-options btn-block follow-user btn-default follow " data-timeline-id="{{ $timeline->id }}">
 									<i class="fa fa-heart"></i> {{ trans('common.follow') }}
 								</a>
 							</div>
-						@else
-							<div class="col-md-12 col-sm-6 col-xs-6">
-								<a href="#" class="btn btn-options btn-block btn-default follow-user-confirm follow" data-timeline-id="{{ $timeline->id }}-{{ $follow_user_status }}">
-									<i class="fa fa-heart"></i> {{ trans('common.follow') }}
-								</a>
-							</div>
-						@endif
 
-						@if($message_privacy == "everyone")
-							<div class="col-md-6 col-sm-6 col-xs-6 hidden">
-								<a href="#" class="btn btn-options btn-block follow-user-confirm btn-warning followrequest" data-timeline-id="{{ $timeline->id }}-{{ $follow_user_status }}">
-									<i class="fa fa-check"></i> {{ trans('common.requested') }}
-								</a>
-							</div>
-						@else
-							<div class="col-md-12 col-sm-6 col-xs-6 hidden">
-								<a href="#" class="btn btn-options btn-block follow-user-confirm btn-warning followrequest" data-timeline-id="{{ $timeline->id }}-{{ $follow_user_status }}">
-									<i class="fa fa-check"></i> {{ trans('common.requested') }}
-								</a>
-							</div>
-						@endif
-					@else
-						<div class="col-md-6 col-sm-6 col-xs-6 hidden">
-							<a href="#" class="btn btn-options btn-block btn-default follow-user-confirm  follow " data-timeline-id="{{ $timeline->id }}-{{ $follow_user_status }}">
-								<i class="fa fa-heart"></i> {{ trans('common.follow') }}
-							</a>
-						</div>
-
-						@if($follow_user_status == "pending")
 							<div class="col-md-6 col-sm-6 col-xs-6 left-col">
-								<a href="#" class="btn btn-options btn-block follow-user-confirm btn-warning followrequest" data-timeline-id="{{ $timeline->id }}-{{ $follow_user_status }}">
-									<i class="fa fa-check"></i> {{ trans('common.requested') }}
+								<a href="#" class="btn btn-options btn-block follow-user btn-success unfollow" data-timeline-id="{{ $timeline->id }}">	<i class="fa fa-heart"></i> {{ trans('common.following') }}
 								</a>
 							</div>
-						@endif
-						@if($follow_user_status == "approved")
-							<div class="col-md-6 col-sm-6 col-xs-6 left-col">
-								<a href="#" class="btn btn-options btn-block follow-user-confirm btn-primary unfollow" data-timeline-id="{{ $timeline->id }}-{{ $follow_user_status }}">
-									<i class="fa fa-check"></i> {{ trans('common.following') }}
-								</a>
-							</div>
-						@endif
-					@endif
-				@endif	<!-- End of [if-4]-->
-			@endif	<!-- End of [if-2]-->
-			@if(($user->followers->contains(Auth::user()->id) && $message_privacy == "only_follow") || ($message_privacy == "everyone"))
-				<div class="col-md-6 col-sm-6 col-xs-6 right-col">
-					<a href="#" class="btn btn-options btn-block btn-default" onClick="chatBoxes.sendMessage({{ $timeline->user->id }})">
-						<i class="fa fa-inbox"></i> {{ trans('common.message') }}
-					</a>
-				</div>
-			@endif
-		@else
-	@endif <!-- End of [if-1]-->
+							@endif
+							@endif	<!-- End of [if-3]-->
 
+							@elseif($confirm_follow == "yes")
+									<!-- This [if-4] is for checking usersettings follow_privacy showing follow/following || message button -->
+							@if(($user->followers->contains(Auth::user()->id) && $user_follow == "only_follow") || ($user_follow == "everyone"))
+								@if(!$user->followers->contains(Auth::user()->id))
+									@if($message_privacy == "everyone")
+										<div class="col-md-6 col-sm-6 col-xs-6 left-col">
+											<a href="#" class="btn btn-options btn-block btn-default follow-user-confirm follow" data-timeline-id="{{ $timeline->id }}-{{ $follow_user_status }}">
+												<i class="fa fa-heart"></i> {{ trans('common.follow') }}
+											</a>
+										</div>
+									@else
+										<div class="col-md-12 col-sm-6 col-xs-6">
+											<a href="#" class="btn btn-options btn-block btn-default follow-user-confirm follow" data-timeline-id="{{ $timeline->id }}-{{ $follow_user_status }}">
+												<i class="fa fa-heart"></i> {{ trans('common.follow') }}
+											</a>
+										</div>
+									@endif
+
+									@if($message_privacy == "everyone")
+										<div class="col-md-6 col-sm-6 col-xs-6 hidden">
+											<a href="#" class="btn btn-options btn-block follow-user-confirm btn-warning followrequest" data-timeline-id="{{ $timeline->id }}-{{ $follow_user_status }}">
+												<i class="fa fa-check"></i> {{ trans('common.requested') }}
+											</a>
+										</div>
+									@else
+										<div class="col-md-12 col-sm-6 col-xs-6 hidden">
+											<a href="#" class="btn btn-options btn-block follow-user-confirm btn-warning followrequest" data-timeline-id="{{ $timeline->id }}-{{ $follow_user_status }}">
+												<i class="fa fa-check"></i> {{ trans('common.requested') }}
+											</a>
+										</div>
+									@endif
+								@else
+									<div class="col-md-6 col-sm-6 col-xs-6 hidden">
+										<a href="#" class="btn btn-options btn-block btn-default follow-user-confirm  follow " data-timeline-id="{{ $timeline->id }}-{{ $follow_user_status }}">
+											<i class="fa fa-heart"></i> {{ trans('common.follow') }}
+										</a>
+									</div>
+
+									@if($follow_user_status == "pending")
+										<div class="col-md-6 col-sm-6 col-xs-6 left-col">
+											<a href="#" class="btn btn-options btn-block follow-user-confirm btn-warning followrequest" data-timeline-id="{{ $timeline->id }}-{{ $follow_user_status }}">
+												<i class="fa fa-check"></i> {{ trans('common.requested') }}
+											</a>
+										</div>
+									@endif
+									@if($follow_user_status == "approved")
+										<div class="col-md-6 col-sm-6 col-xs-6 left-col">
+											<a href="#" class="btn btn-options btn-block follow-user-confirm btn-primary unfollow" data-timeline-id="{{ $timeline->id }}-{{ $follow_user_status }}">
+												<i class="fa fa-check"></i> {{ trans('common.following') }}
+											</a>
+										</div>
+										@endif
+										@endif
+										@endif	<!-- End of [if-4]-->
+										@endif	<!-- End of [if-2]-->
+										@if(($user->followers->contains(Auth::user()->id) && $message_privacy == "only_follow") || ($message_privacy == "everyone"))
+											<div class="col-md-6 col-sm-6 col-xs-6 right-col">
+												<a href="#" class="btn btn-options btn-block btn-default" onClick="chatBoxes.sendMessage({{ $timeline->user->id }})">
+													<i class="fa fa-inbox"></i> {{ trans('common.message') }}
+												</a>
+											</div>
+											@endif
+											@else
+											@endif <!-- End of [if-1]-->
+
+		</div>
 	</div>
 </div>
 <script type="text/javascript">

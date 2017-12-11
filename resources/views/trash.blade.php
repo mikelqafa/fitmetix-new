@@ -2473,3 +2473,65 @@ return this.theaterPostItem.postIndex !== undefined ? this.$store.state.postItem
 
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 </script>
+
+
+
+<div id="user-login" class="md-menu-wrapper hidden" data-position="top right" data-location="top" data-width="3">
+    <div class="md-menu">
+        <a class="md-menu__item md-button" data-value="login" href="javascript:;">
+            <span>Login</span>
+        </a>
+        <li class="inbox-message" v-for="conversation in conversations.data">
+            <a href="javascript:;" class="md-menu__item md-button" :data-user-id="conversation.user.id" onclick="chatBoxes.sendMessageOnClick(this)">
+                <div class="media">
+                    <div class="media-left">
+                        <img class="media-object img-icon" v-bind:src="conversation.user.avatar" alt="images">
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                            <span class="message-heading">@{{ conversation.user.name }}</span>
+                            <span class="online-status hidden"></span>
+                            <!--TODO timeago -->
+                        </h4>
+                        <p class="message-text">
+                            <!--@{{ conversation.lastMessage.body }}-->
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </li>
+    </div>
+</div>
+
+
+<ul class="dropdown-menu dropdown-menu ft-menu" data-width="3">
+    <li class="dropdown-menu-header ft-menu__item">
+        <span class="side-left">{{ ntCommonMessages }}</span>
+    </li>
+    <li class="no-messages ft-menu__item ft-menu__item--icon" v-if="noMessage">
+        <i class="fa fa-commenting-o"></i>
+        <p>{{ ntMessageNo }}</p>
+    </li>
+    <li class="inbox-message" v-for="conversation in conversations.data">
+        <a href="javascript:;" :data-user-id="conversation.user.id" onclick="chatBoxes.sendMessageOnClick(this)">
+            <div class="media">
+                <div class="media-left">
+                    <img class="media-object img-icon" v-bind:src="conversation.user.avatar" alt="images">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        <span class="message-heading">@{{ conversation.user.name }}</span>
+                        <span class="online-status hidden"></span>
+                        <!--TODO timeago -->
+                    </h4>
+                    <p class="message-text">
+                        <!--@{{ conversation.lastMessage.body }}-->
+                    </p>
+                </div>
+            </div>
+        </a>
+    </li>
+    <li class="dropdown-menu-footer ft-menu__item ft-menu__item--icon">
+        <a :href="ntSeeAllLink">{{ ntSeeAll }}</a>
+    </li>
+</ul>

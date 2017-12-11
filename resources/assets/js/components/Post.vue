@@ -2,7 +2,7 @@
     <div>
         <post-theater-view></post-theater-view>
         <post-wholikes-view></post-wholikes-view>
-        <template v-if="isLoading">
+        <template v-if="isLoading && !noPostFound">
             <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
                 <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
                     <div class="user-avatar lg-loadable"></div>
@@ -29,6 +29,13 @@
                     <div class="lg-loadable lg-loadable--text"></div>
                     <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
                     <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
+                </div>
+            </div>
+        </template>
+        <template v-else-if="noPostFound">
+            <div class="panel panel-default timeline-posts__item panel-post">
+                <div class="well text-center">
+                    <p>No Post found</p>
                 </div>
             </div>
         </template>
@@ -97,7 +104,8 @@
         dummy: [],
         inProgress: false,
         hasMorePost: true,
-        offset: 0
+        offset: 0,
+        noPostFound: false
     }
     let vmThat;
     export default {
@@ -113,7 +121,10 @@
             },
             getDefaultData: function () {
                 let that = this
-                let username = ''
+                let username = current_username
+                if($('#timeline_username').length) {
+                    username =  $('#timeline_username').val()
+                }
                 let paginate = 4
                 let _token = $("meta[name=_token]").attr('content')
                 axios({
@@ -121,7 +132,7 @@
                     responseType: 'json',
                     url: base_url + 'get-posts',
                     data: {
-                        username: current_username,
+                        username: username,
                         paginate: paginate,
                         _token: _token,
                         offset: that.offset
@@ -134,6 +145,9 @@
                             that.$store.commit('ADD_POST_ITEM_LIST', val)
                             i++
                         });
+                        if(!i) {
+                            that.noPostFound = true
+                        }
                         setTimeout(function () {
                             emojify.run();
                             hashtagify();
@@ -166,13 +180,19 @@
             fetchNew: function (postId){
                 custTomData.isLoadingCurrent = true
                 let _token = $("meta[name=_token]").attr('content')
+
+                let username = current_username
+                if($('#timeline_username').length) {
+                    username =  $('#timeline_username').val()
+                }
+
                 axios({
                     method: 'post',
                     responseType: 'json',
                     url: base_url + 'get-single-post',
 
                     data: {
-                        username: current_username,
+                        username: username,
                         _token: _token,
                         post_id: postId
                     }
@@ -199,7 +219,6 @@
                 that.getDefaultData()
                 that.scrollFetchInit()
             }, 1000)
-            console.log(this.postItem)
         },
         components: {
             'post-description': postDescription,

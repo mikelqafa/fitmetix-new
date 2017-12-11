@@ -7,16 +7,21 @@ export const store = new Vuex.Store({
     postItemList: [],
     theaterPostItem: {},
     optionMenuPostItem: {},
-    postWhoLikes: {}
+    postWhoLikes: {},
+    pusher: null
   },
   getters: {
     postItemList: state => state.postItemList,
     theaterPostItem: state => state.theaterPostItem,
     optionMenuPostItem: state => state.optionMenuPostItem,
-    postWhoLikes: state => state.postWhoLikes
+    postWhoLikes: state => state.postWhoLikes,
+    pusher: state => state.pusher
   },
   mutations: {
     /* eslint-disable no-param-reassign */
+    SET_PUSHER (state, pusher) {
+      state.pusher = pusher
+    },
     SET_OPTIONS_MENU_ITEM (state, postObj) {
       Vue.set(state.optionMenuPostItem, 'postIndex', postObj.postIndex)
     },
@@ -106,6 +111,29 @@ export const store = new Vuex.Store({
   actions: {
     showTheater: (context) => {
       alert()
+    },
+    sendNotification: (context, data) => {
+      console.log(context, data)
+    },
+    likePostByPusher: (context, data) => {
+      console.log(data)
+      if(data.type !== undefined && (data.type === 'like_post' || data.type === 'unlike_post')) {
+        let index = -1
+        for(let i=0; i < context.state.postItemList.length; i++) {
+          if(data.post_id == context.state.postItemList[i].id ) {
+            index = i
+            break
+          }
+        }
+        if(index>-1) {
+          let likeCount = context.state.postItemList[index].postMetaInfo.postLikesCount
+          console.log(likeCount)
+          likeCount = parseInt(likeCount)
+          data.type === 'like_post' ? likeCount++ : likeCount--
+          console.log('hola', likeCount)
+          context.commit('SET_POST_META_LIKES_COUNT', {postIndex: index, postLikesCount:likeCount})
+        }
+      }
     }
   }
 })

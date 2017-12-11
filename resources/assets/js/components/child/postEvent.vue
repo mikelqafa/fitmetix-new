@@ -68,7 +68,7 @@
             }
         },
         mounted() {
-            console.log(this.postItem)
+
         }
     }
 </script>

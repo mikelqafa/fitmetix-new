@@ -105,7 +105,6 @@
                     <button type="submit" class="btn btn-submit ft-btn-primary"><?php echo e(trans('common.post')); ?></button>
                 </li>
             </ul>
-
             <div class="clearfix"></div>
         </div>
     </div>
@@ -122,7 +121,6 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_vuWi_hzMDDeenNYwaNAj0PHzzS2GAx8&libraries=places&callback=initMap"
         async defer></script>
-
 <script>
     function initMap(event) {
         var key;

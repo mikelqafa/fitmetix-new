@@ -183,7 +183,6 @@
             <div class="visible-lg col-md-2 col-lg-2"></div>
             <div class="col-md-6 col-lg-6">
                 <div class="row">
-
                 </div>
 				<div class="row">
 					<div class="timeline">
@@ -231,6 +230,7 @@
                         </div>--}}
 
                         <div class="timeline-posts">
+                            <input type="hidden" id="timeline_username" value="{{$username}}" />
                             <div id="app-timeline">
                                 <input type="hidden" id="newPostId">
                                 <app-post-option></app-post-option>
@@ -269,9 +269,8 @@
                             </div>
                         </div>
                     </div>
-				</div><!-- /row -->
-			</div><!-- /col-md-10 -->
-
+				</div>
+			</div>
 			<div class="col-md-4 col-lg-4 hidden-sm hidden-xs">
 				<div class="calendar hidden-print">
                     <div class="list">
@@ -280,6 +279,5 @@
                 </div>
 				{{--{!! Theme::partial('timeline-rightbar') !!}--}}
 			</div>
-
-		</div><!-- /row -->
+		</div>
 	</div>

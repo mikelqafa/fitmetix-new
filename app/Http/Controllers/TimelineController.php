@@ -40,6 +40,7 @@ use Teepluss\Theme\Facades\Theme;
 use Validator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
+use LaravelPusher;
 
 class TimelineController extends AppBaseController
 {
@@ -706,6 +707,7 @@ class TimelineController extends AppBaseController
             if ($post->user->id != Auth::user()->id) {
                 Notification::create(['user_id' => $post->user->id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.$notify_message, 'type' => $notify_type]);
             }
+            LaravelPusher::trigger('PRAKASH', 'PRAKASH_EVENT', ['message' => $notify_message]);
 
             return response()->json(['status' => '200', 'liked' => true, 'message' => $status_message, 'likecount' => $like_count]);
         } //Unlike the post
@@ -3062,7 +3064,7 @@ class TimelineController extends AppBaseController
     public function postAPI(Request $request)
     {
         $timeline = Timeline::where('username', $request->username)->first();
-        $id = Auth::user()->id;
+        $id = $timeline->user->id;
         $posts = Post::whereIn('user_id', function ($query) use ($id) {
                 $query->select('leader_id')
                     ->from('followers')
@@ -3321,10 +3323,14 @@ class TimelineController extends AppBaseController
             $hasMore = true;
         }
 
-        // $comment_likes = $comments->comments_liked()->get();
-        $comment_likes = [];
+        foreach ($comments as $comment) {
+            $likedBy = DB::table('comment_likes')->where([['comment_id',$comment->id],['user_id',$comment->user_id]])->get();
+            if($likedBy){
+                $comment->commentLikes = $likedBy;
+            }
+        }
 
-        return response()->json(['status' => '200', ['comments'=>$comments,'hasMore'=>$hasMore,'comment_likes'=>$comment_likes]]);
+        return response()->json(['status' => '200', ['comments'=>$comments,'hasMore'=>$hasMore]]);
     }
 
     public function removeUserEvent($event_id)

@@ -1424,141 +1424,6 @@ var index_esm = {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(28)
-}
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(30)
-/* template */
-var __vue_template__ = __webpack_require__(31)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/child/postDescription.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-31462242", Component.options)
-  } else {
-    hotAPI.reload("data-v-31462242", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Vue-awesome-swiper
- * @author Surmon.me
- */
-
-var Swiper = __webpack_require__(10)
-var SwiperComponent = __webpack_require__(33)
-var SlideComponent = __webpack_require__(36)
-SwiperComponent = SwiperComponent.default || SwiperComponent
-SlideComponent = SlideComponent.default || SlideComponent
-if (typeof window !== 'undefined') {
-  window.Swiper = Swiper
-}
-
-var swiper = {
-  swiperSlide: SlideComponent,
-  swiper: SwiperComponent,
-  swiperPlugins: Swiper.prototype.plugins,
-  install: function(Vue) {
-    Vue.component(SwiperComponent.name, SwiperComponent)
-    Vue.component(SlideComponent.name, SlideComponent)
-  }
-}
-
-module.exports = swiper
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(46)
-}
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(48)
-/* template */
-var __vue_template__ = __webpack_require__(49)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/child/postHeader.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-12bd2f92", Component.options)
-  } else {
-    hotAPI.reload("data-v-12bd2f92", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
  * Vue.js v2.5.3
@@ -12177,6 +12042,141 @@ Vue$3.compile = compileToFunctions;
 module.exports = Vue$3;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(20).setImmediate))
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(28)
+}
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(30)
+/* template */
+var __vue_template__ = __webpack_require__(31)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/child/postDescription.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-31462242", Component.options)
+  } else {
+    hotAPI.reload("data-v-31462242", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Vue-awesome-swiper
+ * @author Surmon.me
+ */
+
+var Swiper = __webpack_require__(10)
+var SwiperComponent = __webpack_require__(33)
+var SlideComponent = __webpack_require__(36)
+SwiperComponent = SwiperComponent.default || SwiperComponent
+SlideComponent = SlideComponent.default || SlideComponent
+if (typeof window !== 'undefined') {
+  window.Swiper = Swiper
+}
+
+var swiper = {
+  swiperSlide: SlideComponent,
+  swiper: SwiperComponent,
+  swiperPlugins: Swiper.prototype.plugins,
+  install: function(Vue) {
+    Vue.component(SwiperComponent.name, SwiperComponent)
+    Vue.component(SlideComponent.name, SlideComponent)
+  }
+}
+
+module.exports = swiper
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(46)
+}
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(48)
+/* template */
+var __vue_template__ = __webpack_require__(49)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/child/postHeader.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-12bd2f92", Component.options)
+  } else {
+    hotAPI.reload("data-v-12bd2f92", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
 
 /***/ }),
 /* 8 */
@@ -26192,7 +26192,7 @@ module.exports = __webpack_require__(19);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Post__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Post___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_Post__);
@@ -26206,7 +26206,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_CommentDialogOption___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_CommentDialogOption__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_timeago__ = __webpack_require__(101);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_vue_timeago___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_vue_timeago__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_awesome_swiper__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_awesome_swiper__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_vue_awesome_swiper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_vue_awesome_swiper__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_appEventCalendar__ = __webpack_require__(102);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_appEventCalendar___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_appEventCalendar__);
@@ -26250,6 +26250,7 @@ window.timeLine = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
 window.appNotification = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: '#app-notification',
+  store: __WEBPACK_IMPORTED_MODULE_9__store_store__["a" /* store */],
   components: {
     'app-notification': __WEBPACK_IMPORTED_MODULE_3__components_AppNotification___default.a
   }
@@ -26842,7 +26843,7 @@ module.exports = function listToStyles (parentId, list) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__child_postDescription__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__child_postDescription__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__child_postDescription___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__child_postDescription__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__child_postImageViewer__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__child_postImageViewer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__child_postImageViewer__);
@@ -26852,7 +26853,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__child_postYouTube___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__child_postYouTube__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__child_postSoundCloud__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__child_postSoundCloud___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__child_postSoundCloud__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__child_postHeader__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__child_postHeader__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__child_postHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__child_postHeader__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__child_postComment__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__child_postComment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__child_postComment__);
@@ -26863,6 +26864,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_vuex__ = __webpack_require__(3);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -26962,7 +26970,8 @@ var custTomData = {
     dummy: [],
     inProgress: false,
     hasMorePost: true,
-    offset: 0
+    offset: 0,
+    noPostFound: false
 };
 var vmThat = void 0;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -26979,7 +26988,10 @@ var vmThat = void 0;
 
         getDefaultData: function getDefaultData() {
             var that = this;
-            var username = '';
+            var username = current_username;
+            if ($('#timeline_username').length) {
+                username = $('#timeline_username').val();
+            }
             var paginate = 4;
             var _token = $("meta[name=_token]").attr('content');
             axios({
@@ -26987,7 +26999,7 @@ var vmThat = void 0;
                 responseType: 'json',
                 url: base_url + 'get-posts',
                 data: {
-                    username: current_username,
+                    username: username,
                     paginate: paginate,
                     _token: _token,
                     offset: that.offset
@@ -27000,6 +27012,9 @@ var vmThat = void 0;
                         that.$store.commit('ADD_POST_ITEM_LIST', val);
                         i++;
                     });
+                    if (!i) {
+                        that.noPostFound = true;
+                    }
                     setTimeout(function () {
                         emojify.run();
                         hashtagify();
@@ -27032,13 +27047,19 @@ var vmThat = void 0;
         fetchNew: function fetchNew(postId) {
             custTomData.isLoadingCurrent = true;
             var _token = $("meta[name=_token]").attr('content');
+
+            var username = current_username;
+            if ($('#timeline_username').length) {
+                username = $('#timeline_username').val();
+            }
+
             axios({
                 method: 'post',
                 responseType: 'json',
                 url: base_url + 'get-single-post',
 
                 data: {
-                    username: current_username,
+                    username: username,
                     _token: _token,
                     post_id: postId
                 }
@@ -27065,7 +27086,6 @@ var vmThat = void 0;
             that.getDefaultData();
             that.scrollFetchInit();
         }, 1000);
-        console.log(this.postItem);
     },
 
     components: {
@@ -27259,7 +27279,7 @@ if (false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_awesome_swiper__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_awesome_swiper__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_awesome_swiper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_awesome_swiper__);
 //
 //
@@ -27318,8 +27338,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         showTheater: function showTheater(imageIndex) {
-            this.$store.commit('SET_THEATER_ITEM', { postIndex: this.postIndex, imageIndex: imageIndex });
-            $('#post-image-theater-dialog').MaterialDialog('show');
+            if (!this.detectmob()) {
+                this.$store.commit('SET_THEATER_ITEM', { postIndex: this.postIndex, imageIndex: imageIndex });
+                $('#post-image-theater-dialog').MaterialDialog('show');
+            }
+        },
+        detectmob: function detectmob() {
+            if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)) {
+                return true;
+            } else {
+                return false;
+            }
         }
     },
     computed: {
@@ -27798,9 +27827,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return base_url + this.postItem.timeline.username;
         }
     },
-    mounted: function mounted() {
-        console.log(this.postItem);
-    }
+    mounted: function mounted() {}
 });
 
 /***/ }),
@@ -28139,7 +28166,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         since: function since() {
-            console.log(this.date);
             return this.date != '' ? new Date(this.date + 'Z').getTime() : new Date().getTime();
         },
         locationLink: function locationLink() {
@@ -28318,7 +28344,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.icon {\n    pointer-events: none;\n}\n.text-center.ft-menu__item {\n    text-align: center !important;\n}\n.zippy {\n    height: 0;\n}\n.zippy.zippy--open,\n.zippy.zippy--animating {\n    height: auto;\n}\n.comment-textfield{\n    position: relative;\n}\n.comment-textfield .loading-wrapper {\n    position: absolute;\n    top:0;\n    left:0;\n    height: 100%;\n    width: 100%;\n    display: none;\n}\n.comment-textfield.is-loading {\n    pointer-events: none;\n    cursor: wait;\n}\n.comment-textfield .ft-loading {\n    background-color: rgba(0,0,0,.12);\n}\n.comment-textfield.is-loading .loading-wrapper {\n    display: block;\n}\n/*.comment-list-action{\n    max-height: 320px;\n    overflow-y: auto;\n}*/\n.ft-loading{\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n    justify-content: center;\n    flex-wrap: nowrap;\n    height: 48px;\n    background-color: #FAFBFC;\n}\n.ft-loading__dot{\n    background: #333;\n    display: block;\n    height: 8px;\n    float: left;\n    margin: 0 2px;\n    opacity: 0;\n    width: 8px;\n    border-radius: 50%;\n    animation: dot 1s cubic-bezier(0.77, 0, 0.175, 1) 0s infinite;\n}\n.ft-loading .ft-loading__dot:nth-child(1) {\n    animation-delay: 0.15s;\n}\n.ft-loading .ft-loading__dot:nth-child(2) {\n    animation-delay: 0.3s;\n}\n.ft-loading .ft-loading__dot:nth-child(3) {\n    animation-delay: 0.45s;\n}\n@keyframes dot {\n0% {\n        opacity: 0;\n}\n25% {\n        opacity: 1;\n}\n100% {\n        opacity: 0;\n}\n}\n.comment-textfield .form-control{\n    height: 48px;\n    border-top: none;\n    border-left:none;\n    border-right:none;\n    border-radius: 0;\n    padding-left: 15px;\n    padding-right: 15px;\n    padding-top: 15px;\n    background-color: #FAFBFC;\n}\n.md-list__item-icon {\n    margin-top: 2px;\n    height: 32px;\n    width: 32px;\n    align-self: flex-start;\n    margin-right: 16px;\n    flex-shrink: 0;\n}\n.user-avatar {\n    background-size: cover;\n}\n.md-list {\n    background-color: #FAFBFC;\n    padding: 4px 0;\n    width: 100%;\n    display: block;\n    list-style: none;\n}\n.md-list .md-list__item {\n    border-bottom: 1px solid rgba(0,0,0,.12);\n}\n.md-list .md-list__item:last-child {\n    border-bottom: none\n}\n.md-list--dense .md-list__item {\n    min-height: 32px;\n    font-size: 14px;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    font-weight: 400;\n    color: rgba(0,0,0,.87);\n    letter-spacing: .04em;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    align-items: center;\n    cursor: default;\n    overflow: hidden;\n    line-height: 1;\n    padding-left: 16px;\n    padding-top:5px;\n    padding-bottom:5px;\n}\n.md-list__item-content {\n    flex: 1 1 100%;\n    display: flex;\n    position: relative;\n    flex-direction: row;\n    flex-wrap: nowrap;\n    line-height: 20px;\n    justify-content: space-between;\n    padding-right: 16px;\n}\n.md-list__item-text-body{\n    line-height: 18px;\n    color: rgba(0,0,0,.54);\n    padding: 0;\n    font-size: 12px;\n}\n.md-list__item-secondary{\n    display: flex;\n    margin-left: 8px;\n}\n.md-list__item-secondary-action {\n    height: 20px;\n    width: 20px;\n    padding: 2px;\n    text-align: center;\n    font-size: 11px;\n    color: #333;\n}\n.md-list__item-secondary-action.ft-expression{\n    height: 20px;\n    width: 20px;\n}\n.md-list__item-secondary-action .icon{\n    font-size: 1.4rem;\n}\n.ft-socialite {\n    background-color: #fff;\n    padding: 7.5px 15px;\n    padding-bottom: 2px;\n    border: none;\n}\n.ft-expression {\n    display: flex;\n    height: 32px;\n    width: 36px;\n    text-align: center;\n    justify-content: center;\n    align-items: center;\n    color: #333;\n}\n.ft-expression .hidden-default {\n    display: none;\n}\n.ft-expression--liked,\n.ft-expression--liked:focus,\n.ft-expression--liked:hover {\n    color: #EB5757;\n}\n.ft-expression--liked .hidden-default {\n    display: block;\n}\n.ft-expression--liked .visible-default {\n    display: none;\n}\n.ft-expression i {\n    font-size: 22px;\n}\n.ft-comment {\n    flex-wrap: wrap;\n    align-items: center;\n}\n.ft-comment__item {\n    display: flex;\n}\n.ft-comment__item--grow {\n    flex-grow: 1;\n}\n.ft-expression--meta {\n    font-size: 11px;\n    height: 24px;\n    min-width: 24px;\n    width: auto;\n    padding: 0 4px;\n    line-height: 24px;\n}\n.ft-expression--meta .icon {\n    font-size: 12px;\n    margin-top: 4px;\n}\n.ft-expression--meta-text {\n    margin-left: 2px;\n}\n@media screen and (max-width: 599px) {\n.main-content > .container > .row > .col-lg-6 {\n        padding-left: 0;\n        padding-right: 0;\n}\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -28330,6 +28356,8 @@ exports.push([module.i, "\n.icon {\n    pointer-events: none;\n}\n.text-center.f
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -28428,251 +28456,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -28735,9 +28519,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }).catch(function (error) {
                 console.log(error);
             });
-            console.log(this.userLiked);
             var like = !this.userLiked;
-            console.log(like);
             this.$store.commit('SET_POST_META_USER_LIKED', {
                 postIndex: that.postIndex,
                 userLiked: like
@@ -28905,6 +28687,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     }
                     for (var i = 0; i < comments.length; i++) {
                         comments[i]['isLiked'] = false;
+
+                        if (comments[i].commentLikes !== undefined) {
+                            for (var j = 0; j < comments[i].commentLikes.length; j++) {
+                                if (comments[i].commentLikes[j].user_id == user_id) {
+                                    comments[i]['isLiked'] = true;
+                                    break;
+                                }
+                            }
+                            comments[i]['likesCount'] = comments[i].commentLikes.length;
+                        }
                         commentItemList.unshift(comments[i]);
                     }
                     offset += comments.length;
@@ -28931,11 +28723,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             $('#comment-option-dialog').addClass('ft-dialog--open');
         },
         likeUnlikeComment: function likeUnlikeComment(e, index) {
-            console.log(e, index);
             var _token = $("meta[name=_token]").attr('content');
-            var commentId = $(this).data('comment-id');
+            var commentId = $(e.target).data('comment-id');
             var that = this;
-
+            var _Vue = __WEBPACK_IMPORTED_MODULE_1_vue___default.a;
             axios({
                 method: 'post',
                 responseType: 'json',
@@ -28945,19 +28736,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     _token: _token
                 }
             }).then(function (response) {
-                console.log(response);
                 if (response.status == 200) {
+                    console.log(response.data);
                     if (response.data.liked == true) {
-                        that.commentItemList[index].isLiked = true;
+                        __WEBPACK_IMPORTED_MODULE_1_vue___default.a.set(that.commentItemList[index], 'isLiked', true);
                     } else {
-                        that.commentItemList[index].isLiked = false;
+                        __WEBPACK_IMPORTED_MODULE_1_vue___default.a.set(that.commentItemList[index], 'isLiked', false);
                     }
+                    that.$store.dispatch('sendNotification', { meow: 'meow' });
                 }
             }).catch(function (error) {
                 console.log(error);
             });
-
-            that.commentItemList[index].isLiked = !that.commentItemList[index].isLiked;
+            __WEBPACK_IMPORTED_MODULE_1_vue___default.a.set(that.commentItemList[index], 'isLiked', !that.commentItemList[index].isLiked);
         },
         loadMore: function loadMore() {
             this.fetchComment();
@@ -29249,7 +29040,9 @@ var render = function() {
                                                       href:
                                                         _vm.base_url +
                                                         item.user.username,
-                                                      title: "@Uppal",
+                                                      title:
+                                                        "@" +
+                                                        item.user.username,
                                                       "data-original-title":
                                                         "@Uppal"
                                                     }
@@ -29471,12 +29264,12 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__imageTheaterSurface__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__imageTheaterSurface___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__imageTheaterSurface__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__postHeader__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__postHeader__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__postHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__postHeader__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__postComment__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__postComment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__postComment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__postDescription__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__postDescription__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__postDescription___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__postDescription__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -29633,7 +29426,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_awesome_swiper__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_awesome_swiper__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_awesome_swiper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_awesome_swiper__);
 //
 //
@@ -30328,95 +30121,97 @@ var render = function() {
       _vm._v(" "),
       _c("post-wholikes-view"),
       _vm._v(" "),
-      _vm.isLoading
+      _vm.isLoading && !_vm.noPostFound
         ? [_vm._m(0), _vm._v(" "), _vm._m(1)]
-        : [
-            _vm.isLoadingCurrent ? [_vm._m(2)] : _vm._e(),
-            _vm._v(" "),
-            _vm._l(_vm.itemList, function(postItem, index) {
-              return _c(
-                "div",
-                {
-                  key: postItem.id,
-                  staticClass:
-                    "panel panel-default timeline-posts__item panel-post",
-                  attrs: { id: "ft-post" + postItem.id }
-                },
-                [
-                  _c("post-header", {
-                    attrs: {
-                      "post-data": postItem,
-                      "post-index": index,
-                      date: postItem.created_at
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "panel-body" },
-                    [
-                      _c("post-description", {
-                        attrs: { "post-html": postItem.description }
-                      }),
-                      _vm._v(" "),
-                      _c("post-youtube", {
-                        attrs: {
-                          "post-you-tube": postItem.youtube_video_id,
-                          "you-tube-title": postItem.youtube_title
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("post-image-viewer", {
-                        attrs: {
-                          "post-event": postItem.event,
-                          "post-index": index,
-                          "post-img": postItem.images
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("post-event", {
-                        attrs: {
-                          "post-item": postItem,
-                          "post-index": index,
-                          "post-img": postItem.images
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("post-sound-cloud", {
-                        attrs: { soundcloud: postItem.soundcloud_id }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("post-comment", {
-                    attrs: {
-                      "post-index": index,
-                      "post-id": postItem.id,
-                      "post-item": postItem
-                    }
-                  })
-                ],
-                1
-              )
-            }),
-            _vm._v(" "),
-            _vm.isFetchingBottom
-              ? _c("div", { staticClass: "ft-loading" }, [
-                  _c("span", { staticClass: "ft-loading__dot" }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "ft-loading__dot" }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "ft-loading__dot" })
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.hasMorePost
-              ? _c("div", { staticClass: "text-center" }, [
-                  _vm._v("\n            No more posts to fetch\n        ")
-                ])
-              : _vm._e()
-          ]
+        : _vm.noPostFound
+          ? [_vm._m(2)]
+          : [
+              _vm.isLoadingCurrent ? [_vm._m(3)] : _vm._e(),
+              _vm._v(" "),
+              _vm._l(_vm.itemList, function(postItem, index) {
+                return _c(
+                  "div",
+                  {
+                    key: postItem.id,
+                    staticClass:
+                      "panel panel-default timeline-posts__item panel-post",
+                    attrs: { id: "ft-post" + postItem.id }
+                  },
+                  [
+                    _c("post-header", {
+                      attrs: {
+                        "post-data": postItem,
+                        "post-index": index,
+                        date: postItem.created_at
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "panel-body" },
+                      [
+                        _c("post-description", {
+                          attrs: { "post-html": postItem.description }
+                        }),
+                        _vm._v(" "),
+                        _c("post-youtube", {
+                          attrs: {
+                            "post-you-tube": postItem.youtube_video_id,
+                            "you-tube-title": postItem.youtube_title
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("post-image-viewer", {
+                          attrs: {
+                            "post-event": postItem.event,
+                            "post-index": index,
+                            "post-img": postItem.images
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("post-event", {
+                          attrs: {
+                            "post-item": postItem,
+                            "post-index": index,
+                            "post-img": postItem.images
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("post-sound-cloud", {
+                          attrs: { soundcloud: postItem.soundcloud_id }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("post-comment", {
+                      attrs: {
+                        "post-index": index,
+                        "post-id": postItem.id,
+                        "post-item": postItem
+                      }
+                    })
+                  ],
+                  1
+                )
+              }),
+              _vm._v(" "),
+              _vm.isFetchingBottom
+                ? _c("div", { staticClass: "ft-loading" }, [
+                    _c("span", { staticClass: "ft-loading__dot" }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "ft-loading__dot" }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "ft-loading__dot" })
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.hasMorePost
+                ? _c("div", { staticClass: "text-center" }, [
+                    _vm._v("\n            No more posts to fetch\n        ")
+                  ])
+                : _vm._e()
+            ]
     ],
     2
   )
@@ -30506,6 +30301,20 @@ var staticRenderFns = [
           _c("div", {
             staticClass: "lg-loadable lg-loadable--text--sm lg-loadable--text"
           })
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "panel panel-default timeline-posts__item panel-post" },
+      [
+        _c("div", { staticClass: "well text-center" }, [
+          _c("p", [_vm._v("No Post found")])
         ])
       ]
     )
@@ -30753,6 +30562,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         this.userImage = $('#user-image').val();
         this.placeholder = $('#post-placeholder').val();
+        var username = current_username;
+        if ($('#timeline_username').length) {
+            username = $('#timeline_username').val();
+        }
+        if (username !== current_username) {
+            this.placeholder = 'Write something on ' + username;
+        }
         var that = this;
         $(document).on('click', '.smiley-post', function (e) {
             e.preventDefault();
@@ -31113,10 +30929,6 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(72)
-}
 var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(74)
@@ -31125,7 +30937,7 @@ var __vue_template__ = __webpack_require__(75)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -31161,51 +30973,20 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 72 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(73);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(2)("70605473", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-27ce82c5\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./AppNotification.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-27ce82c5\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./AppNotification.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 73 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(1)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "\n.font-large {\n        font-size: 24px;\n}\n.loader {\n        position: relative;\n        width:24px;\n        height: 24px;\n}\n.spinner {\n    border: 2px solid #333;\n    border-right-color: transparent;\n    border-radius: 50%;\n    height: 16px;\n    left: 50%;\n    position: absolute;\n    top: 50%;\n    width: 16px;\n    animation: spinner 1s linear 0s infinite;\n}\n.spinner--small {\n    width: 12px;\n    height: 12px;\n}\n@keyframes spinner {\n0% {\n        transform: rotate(0deg);\n}\n100% {\n        transform: rotate(360deg);\n}\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 72 */,
+/* 73 */,
 /* 74 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__child_appNotification__ = __webpack_require__(120);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__child_appNotification___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__child_appNotification__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__child_appMessage__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__child_appMessage___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__child_appMessage__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__child_appChat__ = __webpack_require__(121);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__child_appChat___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__child_appChat__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vuex__ = __webpack_require__(3);
 //
 //
 //
@@ -31213,116 +30994,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+
+
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {
-            noMessage: false,
-            isLoading: false,
-            conversations: [],
-            newConversation: false,
-            recipients: [],
-            currentConversation: {
-                conversationMessages: [],
-                user: []
-            },
-            messageBody: '',
-            ntCount: '',
-            ntCommonMessages: '',
-            ntSeeAll: '',
-            ntMessageNo: '',
-            ntSeeAllLink: '',
-            isShowUCM: false,
-            pusher: ''
-        };
+        return {};
     },
     mounted: function mounted() {
-        this.subscribeToPrivateMessageChannel(current_username);
-        this.getConversations();
-        //$('.coversations-thread').bind('scroll',this.chk_scroll);
-        //$('.coversations-list').bind('scroll',this.chk_scroll);
-        this.initStateVariable();
+        this.init();
     },
 
     methods: {
-        subscribeToPrivateMessageChannel: function subscribeToPrivateMessageChannel(receiverUsername) {
-            var that = this;
-            // pusher configuration
-            this.pusher = new Pusher(pusherConfig.PUSHER_KEY, {
+        init: function init() {
+            var pusher = new Pusher(pusherConfig.PUSHER_KEY, {
                 encrypted: true,
                 auth: {
                     headers: {
@@ -31333,211 +31021,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }
             });
-
-            this.MessageChannel = this.pusher.subscribe(receiverUsername + '-message-created');
-            this.MessageChannel.bind('App\\Events\\MessagePublished', function (data) {
-                data.message.user = data.sender;
-                if (that.currentConversation.id == data.message.thread_id) {
-                    that.currentConversation.conversationMessages.push(data.message);
-                    setTimeout(function () {
-                        that.autoScroll('.coversations-thread');
-                    }, 100);
-                } else {
-                    indexes = $.map(that.conversations.data, function (thread, key) {
-                        if (thread.id == data.message.thread_id) {
-                            return key;
-                        }
-                    });
-                    if (indexes != '') {
-                        that.conversations.data[indexes[0]].unread = true;
-                        that.conversations.data[indexes[0]].lastMessage = data.message;
-                    } else {
-                        that.$http.post(base_url + 'ajax/get-message/' + data.message.thread_id).then(function (response) {
-                            that.conversations.data.unshift(response.data.data);
-                        });
-                    }
-                }
-            });
-        },
-        getConversations: function getConversations() {
-            var that = this;
-            axios.post(base_url + 'ajax/get-messages').then(function (response) {
-                that.conversations = response.data.data;
-                that.showConversation(that.conversations.data[0]);
-            });
-        },
-
-        showConversation: function showConversation(conversation) {
-            this.newConversation = false;
-            if (conversation) {
-                if (conversation.id != this.currentConversation.id) {
-                    conversation.unread = false;
-                    var that = this;
-                    axios.post(base_url + 'ajax/get-conversation/' + conversation.id).then(function (response) {
-                        that.currentConversation = response.data.data;
-                        that.currentConversation.user = conversation.user;
-                        setTimeout(function () {
-                            that.autoScroll('.coversations-thread');
-                        }, 100);
-                    });
-                }
-            }
-        },
-        postMessage: function postMessage(conversation) {
-
-            messageBody = this.messageBody;
-            this.messageBody = '';
-            var that = this;
-            axios.post(base_url + 'ajax/post-message/' + conversation.id, { message: messageBody }).then(function (response) {
-                if (response.status) {
-                    that.currentConversation.conversationMessages.data.push(response.data.data);
-                    $('#messageReceipient').focus();
-                    setTimeout(function () {
-                        that.autoScroll('.coversations-thread');
-                    }, 100);
-                }
-            });
-        },
-        postNewConversation: function postNewConversation() {
-            if (this.recipients.length) {
-                var that = this;
-                var newThread = void 0,
-                    _indexes = void 0;
-                axios.post(base_url + 'ajax/create-message', { message: this.messageBody, recipients: this.recipients }).then(function (response) {
-                    if (response.status) {
-                        newThread = response.data.data;
-                        _indexes = $.map(that.conversations.data, function (thread, key) {
-                            if (thread.id == newThread.id) {
-                                return key;
-                            }
-                        });
-
-                        if (_indexes != '') {
-                            that.conversations.data[_indexes[0]].unread = true;
-                            that.conversations.data[_indexes[0]].lastMessage = newThread.lastMessage;
-                        } else {
-                            that.conversations.data.unshift(response.data.data);
-                        }
-
-                        $('#messageReceipient').focus();
-                        that.recipients = [];
-                        that.newConversation = false;
-                        that.messageBody = "";
-                        that.showConversation(that.conversations.data[0]);
-                        setTimeout(function () {
-                            that.autoScroll('.coversations-thread');
-                        }, 100);
-                    }
-                });
-            }
-        },
-        autoScroll: function autoScroll(element) {
-            // $(element).animate({scrollTop: $(element)[0].scrollHeight + 600 }, 2000);
-        },
-        chk_scroll: function chk_scroll(e) {
-            var elem = $(e.currentTarget);
-
-            if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
-                if (elem.data('type') == "threads") {
-                    this.getMoreConversations();
-                } else {
-                    this.getMoreConversationMessages();
-                }
-            }
-        },
-        getMoreConversationMessages: function getMoreConversationMessages() {
-            if (this.currentConversation.conversationMessages.data.length < this.currentConversation.conversationMessages.total) {
-                var that = this;
-                axios.post(this.currentConversation.conversationMessages.next_page_url).then(function (response) {
-                    var latestConversations = response.data.data;
-                    that.currentConversation.conversationMessages.last_page = latestConversations.conversationMessages.last_page;
-                    that.currentConversation.conversationMessages.next_page_url = latestConversations.conversationMessages.next_page_url;
-                    that.currentConversation.conversationMessages.per_page = latestConversations.conversationMessages.per_page;
-                    that.currentConversation.conversationMessages.prev_page_url = latestConversations.conversationMessages.prev_page_url;
-                    $.each(latestConversations.conversationMessages.data, function (i, latestConversation) {
-                        that.currentConversation.conversationMessages.data.unshift(latestConversation);
-                    });
-                });
-            }
-        },
-        getMoreConversations: function getMoreConversations() {
-            if (this.conversations.data.length < this.conversations.total) {
-                var that = this;
-                axios.post(this.conversations.next_page_url).then(function (response) {
-                    var latestConversations = response.data.data;
-                    that.conversations.last_page = latestConversations.last_page;
-                    that.conversations.next_page_url = latestConversations.next_page_url;
-                    that.conversations.per_page = latestConversations.per_page;
-                    that.conversations.prev_page_url = latestConversations.prev_page_url;
-                    $.each(latestConversations.data, function (i, latestConversation) {
-                        that.conversations.data.unshift(latestConversation);
-                    });
-                });
-            }
-        },
-        showNewConversation: function showNewConversation() {
-            this.newConversation = true;
-            this.currentConversation = {
-                user: []
-            };
-            $('#messageReceipient').focus();
-            var that = this;
-            setTimeout(function () {
-                that.toggleUsersSelectize();
-            }, 10);
-        },
-        toggleUsersSelectize: function toggleUsersSelectize() {
-            var that = this;
-            var selectizeUsers = $('#messageReceipient').selectize({
-                valueField: 'id',
-                labelField: 'name',
-                searchField: 'name',
-                render: {
-                    option: function option(item, escape) {
-                        return '<div class="media big-search-dropdown">' + '<a class="media-left" href="#">' + '<img src="' + item.avatar + '" alt="...">' + '</a>' + '<div class="media-body">' + '<h4 class="media-heading">' + escape(item.name) + '</h4>' + '<p>' + item.username + '</p>' + '</div>' + '</div>';
-                    }
-
-                },
-                onChange: function onChange(value) {
-                    $('[name="user_tags"]').val(value);
-                    // $('.user-tags-added').find('.user-tag-names').append('<a href="#">' + value  + '</a>');
-                    var selectize = selectizeUsers[0].selectize;
-                    that.recipients = selectize.items;
-                },
-                load: function load(query, callback) {
-                    if (!query.length) return callback();
-                    $.ajax({
-                        url: base_url + 'api/v1/users',
-                        type: 'GET',
-                        dataType: 'json',
-                        data: {
-                            search: query
-                        },
-                        error: function error() {
-                            callback();
-                        },
-                        success: function success(res) {
-                            callback(res.data);
-                        }
-                    });
-                }
-            });
-        },
-        initStateVariable: function initStateVariable() {
-            var ntCount = $("input[name='nt-count']").val();
-            var ntCommonMessages = $("input[name='nt-common-messages']").val();
-            var ntSeeAll = $("input[name='nt-common-see_all']").val();
-            var ntMessageNo = $("input[name='nt-no_messages']").val();
-            var ntSeeAllLink = $("input[name='see-all-messages']").val();
-            this.ntCount = ntCount;
-            this.ntCommonMessages = ntCommonMessages;
-            this.ntSeeAll = ntSeeAll;
-            this.ntMessageNo = ntMessageNo;
-            this.ntSeeAllLink = ntSeeAllLink;
-        },
-        showConversations: function showConversations() {
-            // TODO
+            this.$store.commit('SET_PUSHER', pusher);
         }
+    },
+    components: {
+        'app-notification': __WEBPACK_IMPORTED_MODULE_0__child_appNotification___default.a,
+        'app-message': __WEBPACK_IMPORTED_MODULE_1__child_appMessage___default.a,
+        'app-chat': __WEBPACK_IMPORTED_MODULE_2__child_appChat___default.a
     }
 });
 
@@ -31549,142 +31039,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _vm.isLoading
-        ? [_vm._m(0)]
-        : [
-            _c("div", { staticClass: "pos-rel" }, [
-              _c(
-                "a",
-                {
-                  staticClass:
-                    "has-hover-effect fm-nav__item dropdown font-large hidden-sm hidden-xs",
-                  attrs: {
-                    href: "#",
-                    "data-toggle": "dropdown",
-                    role: "button",
-                    "aria-haspopup": "true",
-                    "aria-expanded": "false"
-                  },
-                  on: { click: _vm.showConversations }
-                },
-                [
-                  _c("span", { staticClass: "icon icon-chat" }),
-                  _vm._v(" "),
-                  _c("span", {
-                    staticClass: "unread-notification",
-                    class: { "is-visible": _vm.isShowUCM }
-                  })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "ul",
-                {
-                  staticClass: "dropdown-menu dropdown-menu ft-menu",
-                  attrs: { "data-width": "3" }
-                },
-                [
-                  _c(
-                    "li",
-                    { staticClass: "dropdown-menu-header ft-menu__item" },
-                    [
-                      _c("span", { staticClass: "side-left" }, [
-                        _vm._v(_vm._s(_vm.ntCommonMessages))
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _vm.noMessage
-                    ? _c(
-                        "li",
-                        {
-                          staticClass:
-                            "no-messages ft-menu__item ft-menu__item--icon"
-                        },
-                        [
-                          _c("i", { staticClass: "fa fa-commenting-o" }),
-                          _vm._v(" "),
-                          _c("p", [_vm._v(_vm._s(_vm.ntMessageNo))])
-                        ]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm._l(_vm.conversations.data, function(conversation) {
-                    return _c("li", { staticClass: "inbox-message" }, [
-                      _c(
-                        "a",
-                        {
-                          attrs: {
-                            href: "javascript:;",
-                            "data-user-id": conversation.user.id,
-                            onclick: "chatBoxes.sendMessageOnClick(this)"
-                          }
-                        },
-                        [
-                          _c("div", { staticClass: "media" }, [
-                            _c("div", { staticClass: "media-left" }, [
-                              _c("img", {
-                                staticClass: "media-object img-icon",
-                                attrs: {
-                                  src: conversation.user.avatar,
-                                  alt: "images"
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "media-body" }, [
-                              _c("h4", { staticClass: "media-heading" }, [
-                                _c("span", { staticClass: "message-heading" }, [
-                                  _vm._v("@" + _vm._s(conversation.user.name))
-                                ]),
-                                _vm._v(" "),
-                                _c("span", {
-                                  staticClass: "online-status hidden"
-                                })
-                              ]),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "message-text" })
-                            ])
-                          ])
-                        ]
-                      )
-                    ])
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    {
-                      staticClass:
-                        "dropdown-menu-footer ft-menu__item ft-menu__item--icon"
-                    },
-                    [
-                      _c("a", { attrs: { href: _vm.ntSeeAllLink } }, [
-                        _vm._v(_vm._s(_vm.ntSeeAll))
-                      ])
-                    ]
-                  )
-                ],
-                2
-              )
-            ])
-          ]
-    ],
-    2
-  )
+  return _c("div", [_c("app-notification")], 1)
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "loader" }, [
-      _c("div", { staticClass: "spinner spinner--small" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -32020,7 +31377,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return this.optionMenuPostItem.postIndex !== undefined ? this.$store.state.postItemList[this.optionMenuPostItem.postIndex] : {};
         },
         authUser: function authUser() {
-            return this.postItem.user_id !== undefined ? this.postItem.user_id == user_id : false;
+            return this.postItem !== undefined ? this.postItem.user_id == user_id : false;
         }
     })
 });
@@ -32126,7 +31483,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue2_medium_editor__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue2_medium_editor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue2_medium_editor__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__postDescription__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__postDescription__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__postDescription___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__postDescription__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__postImageViewer__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__postImageViewer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__postImageViewer__);
@@ -32136,7 +31493,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__postYouTube___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__postYouTube__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__postSoundCloud__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__postSoundCloud___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__postSoundCloud__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__postHeader__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__postHeader__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__postHeader___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__postHeader__);
 //
 //
@@ -34875,7 +34232,7 @@ if (false) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(3);
 
@@ -34887,7 +34244,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     postItemList: [],
     theaterPostItem: {},
     optionMenuPostItem: {},
-    postWhoLikes: {}
+    postWhoLikes: {},
+    pusher: null
   },
   getters: {
     postItemList: function postItemList(state) {
@@ -34901,10 +34259,16 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     },
     postWhoLikes: function postWhoLikes(state) {
       return state.postWhoLikes;
+    },
+    pusher: function pusher(state) {
+      return state.pusher;
     }
   },
   mutations: {
     /* eslint-disable no-param-reassign */
+    SET_PUSHER: function SET_PUSHER(state, pusher) {
+      state.pusher = pusher;
+    },
     SET_OPTIONS_MENU_ITEM: function SET_OPTIONS_MENU_ITEM(state, postObj) {
       __WEBPACK_IMPORTED_MODULE_0_vue___default.a.set(state.optionMenuPostItem, 'postIndex', postObj.postIndex);
     },
@@ -34994,6 +34358,29 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
   actions: {
     showTheater: function showTheater(context) {
       alert();
+    },
+    sendNotification: function sendNotification(context, data) {
+      console.log(context, data);
+    },
+    likePostByPusher: function likePostByPusher(context, data) {
+      console.log(data);
+      if (data.type !== undefined && (data.type === 'like_post' || data.type === 'unlike_post')) {
+        var index = -1;
+        for (var i = 0; i < context.state.postItemList.length; i++) {
+          if (data.post_id == context.state.postItemList[i].id) {
+            index = i;
+            break;
+          }
+        }
+        if (index > -1) {
+          var likeCount = context.state.postItemList[index].postMetaInfo.postLikesCount;
+          console.log(likeCount);
+          likeCount = parseInt(likeCount);
+          data.type === 'like_post' ? likeCount++ : likeCount--;
+          console.log('hola', likeCount);
+          context.commit('SET_POST_META_LIKES_COUNT', { postIndex: index, postLikesCount: likeCount });
+        }
+      }
     }
   }
 });
@@ -35502,6 +34889,1226 @@ module.exports = function (css) {
 /***/ (function(module, exports) {
 
 module.exports = ["just now",["%s s","%s s"],["%s m","%s m"],["%s h","%s h"],["%s d","%s d"],["%s w","%s w"],["%s month ago","%s months ago"],["%s year ago","%s years ago"]]
+
+/***/ }),
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(123)
+/* template */
+var __vue_template__ = __webpack_require__(124)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/child/appNotification.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-217aae9c", Component.options)
+  } else {
+    hotAPI.reload("data-v-217aae9c", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = null
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/child/appChat.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(125)
+/* template */
+var __vue_template__ = __webpack_require__(126)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/child/appMessage.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5d1e4b10", Component.options)
+  } else {
+    hotAPI.reload("data-v-5d1e4b10", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 123 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(3);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            ntSeeAllLink: '',
+            notifications: [],
+            unreadNotifications: 0,
+            notificationsLoaded: false,
+            notificationsLoading: false,
+            config: {}
+        };
+    },
+    mounted: function mounted() {
+        // init the pusher
+        //this.getConversations();
+        //let that = this
+        //$('.coversations-thread').bind('scroll',that.chk_scroll);
+        //$('.coversations-list').bind('scroll',that.chk_scroll);
+        //this.initStateVariable()
+
+        // Get if there are any unread notifications or conversations
+        this.getNotificationsCounter();
+        this.fetchOldNotification();
+    },
+
+    methods: {
+        subscribeToPrivateMessageChannel: function subscribeToPrivateMessageChannel(receiverUsername) {
+            var that = this;
+            // pusher configuration
+
+            this.NotificationChannel = this.pusher.subscribe(current_username + '-notification-created');
+            this.NotificationChannel.bind('App\\Events\\NotificationPublished', function (data) {
+                that.unreadNotifications = that.unreadNotifications + 1;
+                data.notification.notified_from = data.notified_from;
+                if (that.notifications != null) {
+                    that.notifications.unshift(data.notification);
+                }
+                materialSnackBar({ messageText: data.notification.description, autoClose: true, timeout: 5000 });
+                that.$store.dispatch('likePostByPusher', data.notification);
+                $.playSound(theme_url + '/sounds/notification');
+            });
+        },
+        autoScroll: function autoScroll(element) {
+            // $(element).animate({scrollTop: $(element)[0].scrollHeight + 600 }, 2000);
+        },
+        chk_scroll: function chk_scroll(e) {
+            var elem = $(e.currentTarget);
+            if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
+                if (elem.data('type') == "threads") {
+                    this.getMoreConversations();
+                } else {
+                    this.getMoreConversationMessages();
+                }
+            }
+        },
+        getNotificationsCounter: function getNotificationsCounter() {
+            // Lets get the unread notifications once the Vue instance is ready
+            var that = this;
+            axios.post(base_url + 'ajax/get-unread-notifications').then(function (response) {
+                if (response.data.status == 200) {
+                    that.unreadNotifications = response.data.unread_notifications;
+                }
+            });
+        },
+        fetchOldNotification: function fetchOldNotification() {
+            var that = this;
+            axios.post(base_url + 'ajax/get-notifications').then(function (response) {
+                if (response.data.status == 200) {
+                    var notifications = response.data.notifications;
+                    that.config.last_page = notifications.last_page;
+                    that.config.next_page_url = notifications.next_page_url;
+                    that.config.per_page = notifications.per_page;
+                    that.config.prev_page_url = notifications.prev_page_url;
+                    $.each(notifications.data, function (i, latestNotification) {
+                        that.notifications.push(latestNotification);
+                    });
+                }
+            });
+        },
+        showNotifications: function showNotifications(el) {
+            if (!$('#ft-notification').hasClass('is-open')) {
+                this.unreadNotifications = 0;
+                var rect = el.currentTarget.getBoundingClientRect();
+                $('#ft-notification').css({ left: rect.right - $('#ft-notification').width() + 'px', top: 60 + 'px' });
+                $('#ft-notification').addClass('is-open');
+            } else {
+                $('#ft-notification').addClass('is-leaving');
+                setTimeout(function () {
+                    $('#ft-notification').removeClass('is-open').removeClass('is-leaving');
+                }, 200);
+            }
+            /*if (!this.notificationsLoaded) {
+             this.notificationsLoading = true;
+             this.$http.post(base_url + 'ajax/get-notifications').then(function (response) {
+             this.notifications = JSON.parse(response.body).notifications;
+             setTimeout(function () {
+             jQuery("time.timeago").timeago();
+             }, 10);
+             this.notificationsLoading = false;
+             });
+             this.notificationsLoaded = true;
+             }*/
+        },
+        getMoreNotifications: function getMoreNotifications() {
+            if (this.notifications.data.length < this.notifications.total) {
+                this.notificationsLoading = true;
+                this.$http.post(this.notifications.next_page_url).then(function (response) {
+                    var latestNotifications = JSON.parse(response.body).notifications;
+
+                    this.notifications.last_page = latestNotifications.last_page;
+                    this.notifications.next_page_url = latestNotifications.next_page_url;
+                    this.notifications.per_page = latestNotifications.per_page;
+                    this.notifications.prev_page_url = latestNotifications.prev_page_url;
+
+                    var vm = this;
+                    $.each(latestNotifications.data, function (i, latestNotification) {
+                        vm.notifications.data.push(latestNotification);
+                    });
+                    this.notificationsLoading = false;
+                    setTimeout(function () {
+                        jQuery("time.timeago").timeago();
+                    }, 10);
+                });
+            }
+        },
+        markNotificationsRead: function markNotificationsRead() {
+
+            this.$http.post(base_url + 'ajax/mark-all-notifications').then(function (response) {
+                this.unreadNotifications = 0;
+                var vm = this;
+                $.map(this.notifications, function (notification, key) {
+                    vm.notifications[key].seen = true;
+                });
+            });
+        }
+    },
+    watch: {
+        pusher: function pusher(val) {
+            if (val !== null) {
+                this.subscribeToPrivateMessageChannel(current_username);
+            }
+        }
+    },
+    computed: _extends({
+        isShowUCM: function isShowUCM() {
+            return this.unreadNotifications > 0;
+        }
+    }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+        pusher: 'pusher'
+    }))
+});
+
+/***/ }),
+/* 124 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "a",
+      {
+        staticClass: "pos-rel has-hover-effect fm-nav__item font-large",
+        attrs: { href: "javascript:;" },
+        on: {
+          click: function($event) {
+            _vm.showNotifications($event)
+          }
+        }
+      },
+      [
+        _c("span", { staticClass: "icon icon-like" }),
+        _vm._v(" "),
+        _c("span", {
+          staticClass: "unread-notification",
+          class: { "is-visible": _vm.isShowUCM }
+        })
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "md-menu__container ft-chat",
+        attrs: { id: "ft-notification", "data-width": "5" }
+      },
+      [
+        _vm.notifications.length
+          ? [
+              _c("div", { staticClass: "ft-chat__header" }, [
+                _vm._v("Notifications")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "md-menu" },
+                [
+                  _vm._l(_vm.notifications, function(item) {
+                    return _c(
+                      "a",
+                      {
+                        staticClass: "md-menu__item ft-chat__item",
+                        attrs: { href: "javascript:;", "data-user-id": "26" }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "md-list__item  has-divider" },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "md-list__item-content" },
+                              [
+                                _vm._m(0, true),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "md-list__item-primary" },
+                                  [
+                                    _c("div", [_vm._v("Prakash")]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "md-list__item-text-body"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(item.description) +
+                                            "\n                                "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _vm._m(1, true)
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _vm._m(3)
+                ],
+                2
+              )
+            ]
+          : [
+              _c("div", { staticClass: "ft-chat__header" }, [
+                _vm._v("No Notifications")
+              ])
+            ]
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "md-list__item-icon" }, [
+      _c("img", {
+        staticClass: "md-list__item-avatar",
+        attrs: {
+          src:
+            "http://localhost/fitmetix/public/user/avatar/default-male-avatar.png",
+          alt: "Mikel"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "md-list__item-secondary" }, [
+      _c("div", { staticClass: "md-list__item-secondary-info" }, [
+        _vm._v("1m")
+      ]),
+      _vm._v(" "),
+      _c(
+        "a",
+        { staticClass: "md-list__item-secondary-action", attrs: { href: "#" } },
+        [_c("i", { staticClass: "material-icons" }, [_vm._v("star")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "md-menu__item ft-chat__item",
+        attrs: { href: "javascript:;", "data-user-id": "26" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "md-list__item md-list__item--three-line has-divider"
+          },
+          [
+            _c("div", { staticClass: "md-list__item-content" }, [
+              _c("span", { staticClass: "md-list__item-icon" }, [
+                _c("img", {
+                  staticClass: "md-list__item-avatar",
+                  attrs: {
+                    src:
+                      "http://localhost/fitmetix/public/user/avatar/default-male-avatar.png",
+                    alt: "Mikel"
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "md-list__item-primary" }, [
+                _c("div", [_vm._v("Single-line item")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "md-list__item-text-body" }, [
+                  _vm._v(
+                    "\n                                    Bryan Cranston played the role.\n                                "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "md-list__item-secondary" }, [
+                _c("div", { staticClass: "md-list__item-secondary-info" }, [
+                  _vm._v("20m")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "hidden md-list__item-secondary-action",
+                    attrs: { href: "#" }
+                  },
+                  [_c("i", { staticClass: "icon ico" }, [_vm._v("star")])]
+                )
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("span", { staticClass: "media hidden" }, [
+          _c("span", { staticClass: "media-left" }, [
+            _c("img", {
+              staticClass: "media-object img-icon",
+              attrs: {
+                src:
+                  "http://localhost/fitmetix/public/user/avatar/default-male-avatar.png",
+                alt: "images"
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "media-body" }, [
+            _c("h4", { staticClass: "media-heading" }, [
+              _c("span", { staticClass: "message-heading" }, [
+                _vm._v("@Prakash")
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "online-status hidden" })
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "message-text" })
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "ft-chat__item",
+        attrs: { href: "javascript:;", "data-user-id": "26" }
+      },
+      [
+        _c("div", { staticClass: "md-list__item md-list__item--see-all" }, [
+          _c("div", { staticClass: "md-list__item-content" }, [
+            _c("span", [_vm._v("SEE ALL")])
+          ])
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-217aae9c", module.exports)
+  }
+}
+
+/***/ }),
+/* 125 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            noMessage: false,
+            isLoading: false,
+            conversations: [],
+            newConversation: false,
+            recipients: [],
+            currentConversation: {
+                conversationMessages: [],
+                user: []
+            },
+            messageBody: '',
+            ntCount: '',
+            ntCommonMessages: '',
+            ntSeeAll: '',
+            ntMessageNo: '',
+            ntSeeAllLink: '',
+            unreadConversations: 0,
+            conversationsLoaded: false,
+            conversationsLoading: false,
+            pusher: null
+        };
+    },
+    mounted: function mounted() {
+        // init the pusher
+        this.pusher = this.$store.state.pusher;
+        console.log(this.pusher);
+        this.subscribeToPrivateMessageChannel(current_username);
+        //this.getConversations();
+        //let that = this
+        //$('.coversations-thread').bind('scroll',that.chk_scroll);
+        //$('.coversations-list').bind('scroll',that.chk_scroll);
+        //this.initStateVariable()
+
+        // Get if there are any unread notifications or conversations
+        this.getConversationsCounter();
+    },
+
+    methods: {
+        subscribeToPrivateMessageChannel: function subscribeToPrivateMessageChannel(receiverUsername) {
+            var that = this;
+            this.MessageChannel = this.pusher.subscribe(receiverUsername + '-message-created');
+            this.MessageChannel.bind('App\\Events\\MessagePublished', function (data) {
+                data.message.user = data.sender;
+                if (that.currentConversation.id == data.message.thread_id) {
+                    that.currentConversation.conversationMessages.push(data.message);
+                    setTimeout(function () {
+                        that.autoScroll('.coversations-thread');
+                    }, 100);
+                } else {
+                    indexes = $.map(that.conversations.data, function (thread, key) {
+                        if (thread.id == data.message.thread_id) {
+                            return key;
+                        }
+                    });
+                    if (indexes != '') {
+                        that.conversations.data[indexes[0]].unread = true;
+                        that.conversations.data[indexes[0]].lastMessage = data.message;
+                    } else {
+                        that.$http.post(base_url + 'ajax/get-message/' + data.message.thread_id).then(function (response) {
+                            that.conversations.data.unshift(response.data.data);
+                        });
+                    }
+                }
+            });
+
+            this.NotificationChannel = this.pusher.subscribe(current_username + '-notification-created');
+            this.NotificationChannel.bind('App\\Events\\NotificationPublished', function (data) {
+                that.unreadNotifications = that.unreadNotifications + 1;
+                data.notification.notified_from = data.notified_from;
+                if (that.notifications.data != null) {
+                    that.notifications.data.unshift(data.notification);
+                }
+                // that.notify(data.notification.description);
+                console.log('unread notification', data.notification);
+                // $.playSound(theme_url + '/sounds/notification');
+                //jQuery("time.timeago").timeago(); TODO timeago
+            });
+        },
+        getConversations: function getConversations() {
+            var that = this;
+            axios.post(base_url + 'ajax/get-messages').then(function (response) {
+                that.conversations = response.data.data;
+                that.showConversation(that.conversations.data[0]);
+            });
+        },
+        showConversation: function showConversation(conversation) {
+            this.newConversation = false;
+            if (conversation) {
+                if (conversation.id != this.currentConversation.id) {
+                    conversation.unread = false;
+                    var that = this;
+                    axios.post(base_url + 'ajax/get-conversation/' + conversation.id).then(function (response) {
+                        that.currentConversation = response.data.data;
+                        that.currentConversation.user = conversation.user;
+                        setTimeout(function () {
+                            that.autoScroll('.coversations-thread');
+                        }, 100);
+                    });
+                }
+            }
+        },
+        postMessage: function postMessage(conversation) {
+            messageBody = this.messageBody;
+            this.messageBody = '';
+            var that = this;
+            axios.post(base_url + 'ajax/post-message/' + conversation.id, { message: messageBody }).then(function (response) {
+                if (response.status) {
+                    that.currentConversation.conversationMessages.data.push(response.data.data);
+                    $('#messageReceipient').focus();
+                    setTimeout(function () {
+                        that.autoScroll('.coversations-thread');
+                    }, 100);
+                }
+            });
+        },
+        postNewConversation: function postNewConversation() {
+            if (this.recipients.length) {
+                var that = this;
+                var newThread = void 0,
+                    _indexes = void 0;
+                axios.post(base_url + 'ajax/create-message', { message: this.messageBody, recipients: this.recipients }).then(function (response) {
+                    if (response.status) {
+                        newThread = response.data.data;
+                        _indexes = $.map(that.conversations.data, function (thread, key) {
+                            if (thread.id == newThread.id) {
+                                return key;
+                            }
+                        });
+                        if (_indexes != '') {
+                            that.conversations.data[_indexes[0]].unread = true;
+                            that.conversations.data[_indexes[0]].lastMessage = newThread.lastMessage;
+                        } else {
+                            that.conversations.data.unshift(response.data.data);
+                        }
+                        $('#messageReceipient').focus();
+                        that.recipients = [];
+                        that.newConversation = false;
+                        that.messageBody = "";
+                        that.showConversation(that.conversations.data[0]);
+                        setTimeout(function () {
+                            that.autoScroll('.coversations-thread');
+                        }, 100);
+                    }
+                });
+            }
+        },
+        autoScroll: function autoScroll(element) {
+            // $(element).animate({scrollTop: $(element)[0].scrollHeight + 600 }, 2000);
+        },
+        chk_scroll: function chk_scroll(e) {
+            var elem = $(e.currentTarget);
+            if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
+                if (elem.data('type') == "threads") {
+                    this.getMoreConversations();
+                } else {
+                    this.getMoreConversationMessages();
+                }
+            }
+        },
+        getMoreConversationMessages: function getMoreConversationMessages() {
+            if (this.currentConversation.conversationMessages.data.length < this.currentConversation.conversationMessages.total) {
+                var that = this;
+                axios.post(this.currentConversation.conversationMessages.next_page_url).then(function (response) {
+                    var latestConversations = response.data.data;
+                    that.currentConversation.conversationMessages.last_page = latestConversations.conversationMessages.last_page;
+                    that.currentConversation.conversationMessages.next_page_url = latestConversations.conversationMessages.next_page_url;
+                    that.currentConversation.conversationMessages.per_page = latestConversations.conversationMessages.per_page;
+                    that.currentConversation.conversationMessages.prev_page_url = latestConversations.conversationMessages.prev_page_url;
+                    $.each(latestConversations.conversationMessages.data, function (i, latestConversation) {
+                        that.currentConversation.conversationMessages.data.unshift(latestConversation);
+                    });
+                });
+            }
+        },
+        getMoreConversations: function getMoreConversations() {
+            if (this.conversations.data.length < this.conversations.total) {
+                var that = this;
+                axios.post(this.conversations.next_page_url).then(function (response) {
+                    var latestConversations = response.data.data;
+                    that.conversations.last_page = latestConversations.last_page;
+                    that.conversations.next_page_url = latestConversations.next_page_url;
+                    that.conversations.per_page = latestConversations.per_page;
+                    that.conversations.prev_page_url = latestConversations.prev_page_url;
+                    $.each(latestConversations.data, function (i, latestConversation) {
+                        that.conversations.data.unshift(latestConversation);
+                    });
+                });
+            }
+        },
+        showNewConversation: function showNewConversation() {
+            this.newConversation = true;
+            this.currentConversation = {
+                user: []
+            };
+            $('#messageReceipient').focus();
+            var that = this;
+            setTimeout(function () {
+                that.toggleUsersSelectize();
+            }, 10);
+        },
+        toggleUsersSelectize: function toggleUsersSelectize() {
+            var that = this;
+            var selectizeUsers = $('#messageReceipient').selectize({
+                valueField: 'id',
+                labelField: 'name',
+                searchField: 'name',
+                render: {
+                    option: function option(item, escape) {
+                        return '<div class="media big-search-dropdown">' + '<a class="media-left" href="#">' + '<img src="' + item.avatar + '" alt="...">' + '</a>' + '<div class="media-body">' + '<h4 class="media-heading">' + escape(item.name) + '</h4>' + '<p>' + item.username + '</p>' + '</div>' + '</div>';
+                    }
+
+                },
+                onChange: function onChange(value) {
+                    $('[name="user_tags"]').val(value);
+                    // $('.user-tags-added').find('.user-tag-names').append('<a href="#">' + value  + '</a>');
+                    var selectize = selectizeUsers[0].selectize;
+                    that.recipients = selectize.items;
+                },
+                load: function load(query, callback) {
+                    if (!query.length) return callback();
+                    $.ajax({
+                        url: base_url + 'api/v1/users',
+                        type: 'GET',
+                        dataType: 'json',
+                        data: {
+                            search: query
+                        },
+                        error: function error() {
+                            callback();
+                        },
+                        success: function success(res) {
+                            callback(res.data);
+                        }
+                    });
+                }
+            });
+        },
+        initStateVariable: function initStateVariable() {
+            var ntCount = $("input[name='nt-count']").val();
+            var ntCommonMessages = $("input[name='nt-common-messages']").val();
+            var ntSeeAll = $("input[name='nt-common-see_all']").val();
+            var ntMessageNo = $("input[name='nt-no_messages']").val();
+            var ntSeeAllLink = $("input[name='see-all-messages']").val();
+            this.ntCount = ntCount;
+            this.ntCommonMessages = ntCommonMessages;
+            this.ntSeeAll = ntSeeAll;
+            this.ntMessageNo = ntMessageNo;
+            this.ntSeeAllLink = ntSeeAllLink;
+        },
+        showConversations: function showConversations(el) {
+            if (!$('#ft-notification').hasClass('is-open')) {
+                var rect = el.currentTarget.getBoundingClientRect();
+                $('#ft-notification').css({ left: rect.right - $('#ft-notification').width() + 'px', top: 60 + 'px' });
+                $('#ft-notification').addClass('is-open');
+            } else {
+                $('#ft-notification').addClass('is-leaving');
+                setTimeout(function () {
+                    $('#ft-notification').removeClass('is-open').removeClass('is-leaving');
+                }, 200);
+            }
+        },
+        getConversationsCounter: function getConversationsCounter() {
+            // Lets get the unread  messages once the Vue instance is ready
+            /*this.$http.post(base_url + 'ajax/get-unread-messages').then(function (response) {
+             this.unreadConversations = JSON.parse(response.body).unread_conversations;
+             });*/
+            var that = this;
+            axios.post(base_url + 'ajax/get-unread-messages').then(function (response) {
+                // that.unreadNotifications = JSON.parse(response.body).unread_notifications;
+                console.log(response);
+            });
+        }
+    },
+    computed: {
+        isShowUCN: function isShowUCN() {
+            return this.unreadNotifications > 0;
+        }
+    }
+});
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "a",
+      {
+        staticClass: "has-hover-effect fm-nav__item font-large",
+        attrs: { href: "javascript:;" },
+        on: {
+          click: function($event) {
+            _vm.showConversations($event)
+          }
+        }
+      },
+      [
+        _c("span", { staticClass: "icon icon-chat" }),
+        _vm._v(" "),
+        _c("span", {
+          staticClass: "unread-notification",
+          class: { "is-visible": _vm.isShowUCN }
+        })
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "md-menu__container ft-chat",
+        attrs: { id: "ft-message", "data-width": "5" }
+      },
+      [
+        _vm.notifications.length
+          ? [
+              _c("div", { staticClass: "ft-chat__header" }, [
+                _vm._v("Notifications")
+              ]),
+              _vm._v(" "),
+              _vm._m(0)
+            ]
+          : [
+              _c("div", { staticClass: "ft-chat__header" }, [
+                _vm._v("No notifications")
+              ])
+            ]
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "md-menu" }, [
+      _c(
+        "a",
+        {
+          staticClass: "md-menu__item ft-chat__item",
+          attrs: { href: "javascript:;", "data-user-id": "26" }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "md-list__item md-list__item--three-line has-divider"
+            },
+            [
+              _c("div", { staticClass: "md-list__item-content" }, [
+                _c("span", { staticClass: "md-list__item-icon" }, [
+                  _c("img", {
+                    staticClass: "md-list__item-avatar",
+                    attrs: {
+                      src:
+                        "http://localhost/fitmetix/public/user/avatar/default-male-avatar.png",
+                      alt: "Mikel"
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "md-list__item-primary" }, [
+                  _c("div", [_vm._v("Single-line item")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "md-list__item-text-body" }, [
+                    _vm._v(
+                      "\n                                    Bryan Cranston played the role.\n                                "
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "md-list__item-secondary" }, [
+                  _c("div", { staticClass: "md-list__item-secondary-info" }, [
+                    _vm._v("1m")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "md-list__item-secondary-action",
+                      attrs: { href: "#" }
+                    },
+                    [
+                      _c("i", { staticClass: "material-icons" }, [
+                        _vm._v("star")
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "md-menu__item ft-chat__item",
+          attrs: { href: "javascript:;", "data-user-id": "26" }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "md-list__item md-list__item--three-line has-divider"
+            },
+            [
+              _c("div", { staticClass: "md-list__item-content" }, [
+                _c("span", { staticClass: "md-list__item-icon" }, [
+                  _c("img", {
+                    staticClass: "md-list__item-avatar",
+                    attrs: {
+                      src:
+                        "http://localhost/fitmetix/public/user/avatar/default-male-avatar.png",
+                      alt: "Mikel"
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "md-list__item-primary" }, [
+                  _c("div", [_vm._v("Single-line item")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "md-list__item-text-body" }, [
+                    _vm._v(
+                      "\n                                    Bryan Cranston played the role.\n                                "
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "md-list__item-secondary" }, [
+                  _c("div", { staticClass: "md-list__item-secondary-info" }, [
+                    _vm._v("20m")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "hidden md-list__item-secondary-action",
+                      attrs: { href: "#" }
+                    },
+                    [_c("i", { staticClass: "icon ico" }, [_vm._v("star")])]
+                  )
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c("span", { staticClass: "media hidden" }, [
+            _c("span", { staticClass: "media-left" }, [
+              _c("img", {
+                staticClass: "media-object img-icon",
+                attrs: {
+                  src:
+                    "http://localhost/fitmetix/public/user/avatar/default-male-avatar.png",
+                  alt: "images"
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "media-body" }, [
+              _c("h4", { staticClass: "media-heading" }, [
+                _c("span", { staticClass: "message-heading" }, [
+                  _vm._v("@Prakash")
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "online-status hidden" })
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "message-text" })
+            ])
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "ft-chat__item",
+          attrs: { href: "javascript:;", "data-user-id": "26" }
+        },
+        [
+          _c("div", { staticClass: "md-list__item md-list__item--see-all" }, [
+            _c("div", { staticClass: "md-list__item-content" }, [
+              _c("span", [_vm._v("SEE ALL")])
+            ])
+          ])
+        ]
+      )
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5d1e4b10", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

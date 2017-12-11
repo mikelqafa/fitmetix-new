@@ -217,7 +217,7 @@
                 return this.optionMenuPostItem.postIndex !== undefined ? this.$store.state.postItemList[this.optionMenuPostItem.postIndex] : {}
             },
             authUser: function () {
-                return this.postItem.user_id !== undefined ? this.postItem.user_id == user_id : false
+                return this.postItem !== undefined ? this.postItem.user_id == user_id : false
             }
         }
     }

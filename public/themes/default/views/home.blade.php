@@ -6,7 +6,7 @@
 
 				</div>
               
-                <div class="col-md-7 col-lg-6">
+                <div class="col-md-7 col-lg-6 full-width">
 			   		@if (Session::has('message'))
 				        <div class="alert alert-{{ Session::get('status') }}" role="alert">
 				            {!! Session::get('message') !!}

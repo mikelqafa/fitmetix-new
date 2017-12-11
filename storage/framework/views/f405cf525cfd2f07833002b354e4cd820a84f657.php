@@ -6,7 +6,7 @@
 
 				</div>
               
-                <div class="col-md-7 col-lg-6">
+                <div class="col-md-7 col-lg-6 full-width">
 			   		<?php if(Session::has('message')): ?>
 				        <div class="alert alert-<?php echo e(Session::get('status')); ?>" role="alert">
 				            <?php echo Session::get('message'); ?>

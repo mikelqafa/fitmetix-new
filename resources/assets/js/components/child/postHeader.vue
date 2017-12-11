@@ -65,7 +65,6 @@
         },
         computed: {
             since () {
-                console.log(this.date)
                 return this.date != '' ? new Date(this.date + 'Z').getTime() : new Date().getTime()
             },
             locationLink () {

@@ -57,7 +57,7 @@
                                 <a :style="{ backgroundImage: 'url(' + item.user.avatar + ')'}" data-theme="m" href="//localhost:3008/fitmetix/public/Uppal" :title="'@'+item.user.username" class="md-list__item-icon user-avatar"></a>
                                 <div class="md-list__item-content">
                                     <div class="md-list__item-primary">
-                                        <a :href="base_url+item.user.username" title="@Uppal" data-original-title="@Uppal" class="user-name user ft-user-name">
+                                        <a :href="base_url+item.user.username" :title="'@'+ item.user.username " data-original-title="@Uppal" class="user-name user ft-user-name">
                                             {{item.user.name}}
                                         </a>
                                         <div class="md-list__item-text-body" v-html="item.description"></div>
@@ -93,254 +93,10 @@
     </div>
 </template>
 <style>
-    .icon {
-        pointer-events: none;
-    }
-    .text-center.ft-menu__item {
-        text-align: center !important;
-    }
-    .zippy {
-        height: 0;
-    }
-    .zippy.zippy--open,
-    .zippy.zippy--animating {
-        height: auto;
-    }
-    .comment-textfield{
-        position: relative;
-    }
-    .comment-textfield .loading-wrapper {
-        position: absolute;
-        top:0;
-        left:0;
-        height: 100%;
-        width: 100%;
-        display: none;
-    }
-    .comment-textfield.is-loading {
-        pointer-events: none;
-        cursor: wait;
-    }
-    .comment-textfield .ft-loading {
-        background-color: rgba(0,0,0,.12);
-    }
-    .comment-textfield.is-loading .loading-wrapper {
-        display: block;
-    }
-    /*.comment-list-action{
-        max-height: 320px;
-        overflow-y: auto;
-    }*/
-    .ft-loading{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: nowrap;
-        height: 48px;
-        background-color: #FAFBFC;
-    }
-    .ft-loading__dot{
-        background: #333;
-        display: block;
-        height: 8px;
-        float: left;
-        margin: 0 2px;
-        opacity: 0;
-        width: 8px;
-        border-radius: 50%;
-        animation: dot 1s cubic-bezier(0.77, 0, 0.175, 1) 0s infinite;
-    }
-    .ft-loading .ft-loading__dot:nth-child(1) {
-        animation-delay: 0.15s;
-    }
-    .ft-loading .ft-loading__dot:nth-child(2) {
-        animation-delay: 0.3s;
-    }
-    .ft-loading .ft-loading__dot:nth-child(3) {
-        animation-delay: 0.45s;
-    }
-    @keyframes dot {
-        0% {
-            opacity: 0;
-        }
-        25% {
-            opacity: 1;
-        }
-        100% {
-            opacity: 0;
-        }
-    }
-    .comment-textfield .form-control{
-        height: 48px;
-        border-top: none;
-        border-left:none;
-        border-right:none;
-        border-radius: 0;
-        padding-left: 15px;
-        padding-right: 15px;
-        padding-top: 15px;
-        background-color: #FAFBFC;
-    }
-    .md-list__item-icon {
-        margin-top: 2px;
-        height: 32px;
-        width: 32px;
-        align-self: flex-start;
-        margin-right: 16px;
-        flex-shrink: 0;
-    }
-    .user-avatar {
-        background-size: cover;
-    }
-    .md-list {
-        background-color: #FAFBFC;
-        padding: 4px 0;
-        width: 100%;
-        display: block;
-        list-style: none;
-    }
-    .md-list .md-list__item {
-        border-bottom: 1px solid rgba(0,0,0,.12);
-    }
-
-    .md-list .md-list__item:last-child {
-        border-bottom: none
-    }
-    .md-list--dense .md-list__item {
-        min-height: 32px;
-        font-size: 14px;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        font-weight: 400;
-        color: rgba(0,0,0,.87);
-        letter-spacing: .04em;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-items: center;
-        cursor: default;
-        overflow: hidden;
-        line-height: 1;
-        padding-left: 16px;
-        padding-top:5px;
-        padding-bottom:5px;
-    }
-    .md-list__item-content {
-        flex: 1 1 100%;
-        display: flex;
-        position: relative;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        line-height: 20px;
-        justify-content: space-between;
-        padding-right: 16px;
-    }
-    .md-list__item-text-body{
-        line-height: 18px;
-        color: rgba(0,0,0,.54);
-        padding: 0;
-        font-size: 12px;
-    }
-    .md-list__item-secondary{
-        display: flex;
-        margin-left: 8px;
-    }
-
-    .md-list__item-secondary-action {
-        height: 20px;
-        width: 20px;
-        padding: 2px;
-        text-align: center;
-        font-size: 11px;
-        color: #333;
-    }
-    .md-list__item-secondary-action.ft-expression{
-        height: 20px;
-        width: 20px;
-    }
-    .md-list__item-secondary-action .icon{
-        font-size: 1.4rem;
-    }
-    .ft-socialite {
-        background-color: #fff;
-        padding: 7.5px 15px;
-        padding-bottom: 2px;
-        border: none;
-    }
-
-    .ft-expression {
-        display: flex;
-        height: 32px;
-        width: 36px;
-        text-align: center;
-        justify-content: center;
-        align-items: center;
-        color: #333;
-    }
-
-    .ft-expression .hidden-default {
-        display: none;
-    }
-
-    .ft-expression--liked,
-    .ft-expression--liked:focus,
-    .ft-expression--liked:hover {
-        color: #EB5757;
-    }
-
-    .ft-expression--liked .hidden-default {
-        display: block;
-    }
-
-    .ft-expression--liked .visible-default {
-        display: none;
-    }
-
-    .ft-expression i {
-        font-size: 22px;
-    }
-
-    .ft-comment {
-        flex-wrap: wrap;
-        align-items: center;
-    }
-
-    .ft-comment__item {
-        display: flex;
-    }
-
-    .ft-comment__item--grow {
-        flex-grow: 1;
-    }
-
-    .ft-expression--meta {
-        font-size: 11px;
-        height: 24px;
-        min-width: 24px;
-        width: auto;
-        padding: 0 4px;
-        line-height: 24px;
-    }
-
-    .ft-expression--meta .icon {
-        font-size: 12px;
-        margin-top: 4px;
-    }
-
-    .ft-expression--meta-text {
-        margin-left: 2px;
-    }
-
-    @media screen and (max-width: 599px) {
-        .main-content > .container > .row > .col-lg-6 {
-            padding-left: 0;
-            padding-right: 0;
-        }
-    }
 </style>
 <script>
     import { mapGetters } from 'vuex'
+    import Vue from 'vue'
     export default {
         props: {
             postId: '',
@@ -401,9 +157,7 @@
                 }).catch(function (error) {
                     console.log(error)
                 })
-                console.log(this.userLiked)
                 let like = !this.userLiked
-                console.log(like)
                 this.$store.commit('SET_POST_META_USER_LIKED', {
                     postIndex: that.postIndex,
                     userLiked: like
@@ -579,6 +333,16 @@
                         }
                         for(let i = 0; i < comments.length;  i++) {
                             comments[i]['isLiked'] = false
+
+                            if(comments[i].commentLikes !== undefined) {
+                                for(let j = 0; j < comments[i].commentLikes.length; j++) {
+                                    if(comments[i].commentLikes[j].user_id == user_id) {
+                                        comments[i]['isLiked'] = true
+                                        break;
+                                    }
+                                }
+                                comments[i]['likesCount'] = comments[i].commentLikes.length
+                            }
                             commentItemList.unshift(comments[i])
                         }
                         offset += comments.length
@@ -605,11 +369,10 @@
                 $('#comment-option-dialog').addClass('ft-dialog--open')
             },
             likeUnlikeComment: function (e, index) {
-                console.log(e, index)
                 let _token = $("meta[name=_token]").attr('content')
-                let commentId = $(this).data('comment-id')
+                let commentId = $(e.target).data('comment-id')
                 let that = this
-
+                let _Vue = Vue
                 axios({
                     method: 'post',
                     responseType: 'json',
@@ -619,19 +382,19 @@
                         _token: _token
                     }
                 }).then(function (response) {
-                    console.log(response)
                     if (response.status == 200) {
+                        console.log(response.data)
                         if (response.data.liked == true) {
-                            that.commentItemList[index].isLiked = true
+                            Vue.set(that.commentItemList[index], 'isLiked', true)
                         } else {
-                            that.commentItemList[index].isLiked = false
+                            Vue.set(that.commentItemList[index], 'isLiked', false)
                         }
+                        that.$store.dispatch('sendNotification', {meow: 'meow'})
                     }
                 }).catch(function (error) {
                     console.log(error)
                 })
-
-                that.commentItemList[index].isLiked = !that.commentItemList[index].isLiked
+                Vue.set(that.commentItemList[index], 'isLiked', !that.commentItemList[index].isLiked)
             },
             loadMore: function () {
                 this.fetchComment()

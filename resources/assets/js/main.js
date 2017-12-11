@@ -37,6 +37,7 @@ window.timeLine = new Vue({
 
 window.appNotification = new Vue({
   el: '#app-notification',
+  store,
   components: {
     'app-notification': AppNotification
   }

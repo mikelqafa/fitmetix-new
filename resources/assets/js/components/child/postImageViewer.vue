@@ -54,8 +54,25 @@
         },
         methods: {
             showTheater: function(imageIndex) {
-                this.$store.commit('SET_THEATER_ITEM', {postIndex: this.postIndex, imageIndex: imageIndex})
-                $('#post-image-theater-dialog').MaterialDialog('show')
+                if(!this.detectmob()) {
+                    this.$store.commit('SET_THEATER_ITEM', {postIndex: this.postIndex, imageIndex: imageIndex})
+                    $('#post-image-theater-dialog').MaterialDialog('show')
+                }
+            },
+            detectmob: function () {
+                if (
+                        navigator.userAgent.match(/Android/i) ||
+                        navigator.userAgent.match(/webOS/i) ||
+                        navigator.userAgent.match(/iPhone/i) ||
+                        navigator.userAgent.match(/iPad/i) ||
+                        navigator.userAgent.match(/iPod/i) ||
+                        navigator.userAgent.match(/BlackBerry/i) ||
+                        navigator.userAgent.match(/Windows Phone/i)
+                ) {
+                    return true
+                } else {
+                    return false
+                }
             }
         },
         computed: {
