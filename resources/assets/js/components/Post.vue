@@ -2,40 +2,35 @@
     <div>
         <post-theater-view></post-theater-view>
         <post-wholikes-view></post-wholikes-view>
-        <template v-if="isLoading && !noPostFound">
-            <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
-                <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
-                    <div class="user-avatar lg-loadable"></div>
-                    <div class="md-layout md-layout--column">
-                        <div class="user-meta-info lg-loadable"></div>
-                        <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+        <template v-if="isLoading">
+            <div  v-show="!noPostFound">
+                <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
+                    <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
+                        <div class="user-avatar lg-loadable"></div>
+                        <div class="md-layout md-layout--column">
+                            <div class="user-meta-info lg-loadable"></div>
+                            <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="lg-loadable lg-loadable--text"></div>
+                        <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
+                        <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
                     </div>
                 </div>
-                <div class="panel-body">
-                    <div class="lg-loadable lg-loadable--text"></div>
-                    <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
-                    <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
-                </div>
-            </div>
-            <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
-                <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
-                    <div class="user-avatar lg-loadable"></div>
-                    <div class="md-layout md-layout--column">
-                        <div class="user-meta-info lg-loadable"></div>
-                        <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+                <div v-show="!singlePost" class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
+                    <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
+                        <div class="user-avatar lg-loadable"></div>
+                        <div class="md-layout md-layout--column">
+                            <div class="user-meta-info lg-loadable"></div>
+                            <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="panel-body">
-                    <div class="lg-loadable lg-loadable--text"></div>
-                    <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
-                    <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
-                </div>
-            </div>
-        </template>
-        <template v-else-if="noPostFound">
-            <div class="panel panel-default timeline-posts__item panel-post">
-                <div class="well text-center">
-                    <p>No Post found</p>
+                    <div class="panel-body">
+                        <div class="lg-loadable lg-loadable--text"></div>
+                        <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
+                        <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
+                    </div>
                 </div>
             </div>
         </template>
@@ -76,6 +71,13 @@
                 No more posts to fetch
             </div>
         </template>
+        <template v-if="noPostFound">
+            <div class="panel panel-default timeline-posts__item panel-post">
+                <div class="well text-center">
+                    <p>No Post found</p>
+                </div>
+            </div>
+        </template>
     </div>
 </template>
 <style>
@@ -105,7 +107,8 @@
         inProgress: false,
         hasMorePost: true,
         offset: 0,
-        noPostFound: false
+        noPostFound: false,
+        singlePost: false
     }
     let vmThat;
     export default {
@@ -122,18 +125,34 @@
             getDefaultData: function () {
                 let that = this
                 let username = current_username
+                let url = base_url + 'get-posts'
+                let location = ''
+                let hashtag = ''
                 if($('#timeline_username').length) {
                     username =  $('#timeline_username').val()
+                    url = base_url + 'get-user-posts'
+                }
+                if($('#postByLocation').length && $('#postByLocation').val() !== '') {
+                    username =  current_username
+                    location =   $('#postByLocation').val()
+                    url = base_url + 'get-posts-by-location'
+                }
+                if($('#postByHashTag').length && $('#postByHashTag').val() !== '') {
+                    username =  current_username
+                    hashtag =   $('#postByHashTag').val()
+                    url = base_url + 'get-posts-by-hashtag'
                 }
                 let paginate = 4
                 let _token = $("meta[name=_token]").attr('content')
                 axios({
                     method: 'post',
                     responseType: 'json',
-                    url: base_url + 'get-posts',
+                    url: url,
                     data: {
                         username: username,
                         paginate: paginate,
+                        location: location,
+                        hashtag: hashtag,
                         _token: _token,
                         offset: that.offset
                     }
@@ -215,9 +234,16 @@
         mounted () {
             let that = this
             vmThat = this
+            if($('#post-id').length) {
+                this.singlePost = true
+            }
             setTimeout(function () {
-                that.getDefaultData()
-                that.scrollFetchInit()
+                if(!that.singlePost) {
+                    that.getDefaultData()
+                    that.scrollFetchInit()
+                } else {
+                    that.fetchNewOnePost($('#post-id').val())
+                }
             }, 1000)
         },
         components: {

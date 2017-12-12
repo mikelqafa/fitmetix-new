@@ -332,7 +332,7 @@ class TimelineController extends AppBaseController
 
         $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
-        return $theme->scope('home', compact('timeline', 'posts', 'next_page_url', 'trending_tags', 'suggested_users', 'active_announcement', 'suggested_groups', 'suggested_pages', 'mode', 'user_post'))
+        return $theme->scope('home', compact('timeline','hashtag' ,'posts', 'next_page_url', 'trending_tags', 'suggested_users', 'active_announcement', 'suggested_groups', 'suggested_pages', 'mode', 'user_post'))
         ->render();
     }
 
@@ -3052,7 +3052,7 @@ class TimelineController extends AppBaseController
 
         $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
-        return $theme->scope('home', compact('timeline', 'posts', 'next_page_url', 'trending_tags', 'suggested_users', 'active_announcement', 'suggested_groups', 'suggested_pages', 'mode', 'user_post'))
+        return $theme->scope('home', compact('timeline', 'location' , 'posts', 'next_page_url', 'trending_tags', 'suggested_users', 'active_announcement', 'suggested_groups', 'suggested_pages', 'mode', 'user_post'))
         ->render();
         
     }
@@ -3121,11 +3121,7 @@ class TimelineController extends AppBaseController
     public function userPostAPI(Request $request) {
         $timeline = Timeline::where('username', $request->username)->first();
         $id = $timeline->user->id;
-        $posts = Post::whereIn('user_id', function ($query) use ($id) {
-                $query->select('leader_id')
-                    ->from('followers')
-                    ->where('follower_id', $id);
-            })->orWhere('user_id', $id)->where('active', 1)->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
+        $posts = Post::Where([['user_id', $id],['active',1]])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
 
         // $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
 
@@ -3173,11 +3169,11 @@ class TimelineController extends AppBaseController
         $timeline = Timeline::where('username', $request->username)->first();
         $location = '%'.$request->location.'%';
         $id = Auth::user()->id;
-        $posts = Post::whereIn('user_id', function ($query) use ($id) {
+        $posts = Post::where([['active', 1],['location','like',$location]])->whereIn('user_id', function ($query) use ($id) {
                 $query->select('leader_id')
                     ->from('followers')
                     ->where('follower_id', $id);
-            })->orWhere('user_id', $id)->where([['active', 1],['location','like',$location]])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
+            })->orWhere([['user_id', $id],['location','like',$location]])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
 
         // $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
 
@@ -3225,11 +3221,11 @@ class TimelineController extends AppBaseController
         $timeline = Timeline::where('username', $request->username)->first();
         $hashtag = '%'.$request->hashtag.'%';
         $id = Auth::user()->id;
-        $posts = Post::whereIn('user_id', function ($query) use ($id) {
+        $posts = Post::where([['active', 1],['description','like',$hashtag]])->whereIn('user_id', function ($query) use ($id) {
                 $query->select('leader_id')
                     ->from('followers')
                     ->where('follower_id', $id);
-            })->orWhere('user_id', $id)->where([['active', 1],['description','like',$hashtag]])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
+            })->orWhere([['user_id', $id],['description','like',$hashtag]])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
 
         // $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
 
@@ -3404,5 +3400,58 @@ class TimelineController extends AppBaseController
             $event['title'] = $event->timeline->name;
         }
         return response()->json(['status'=>'200',['events'=>$events]]);
+    }
+
+    public function getHashtag(Request $request, $hashtag)
+    {
+
+        $mode = "showfeed";
+        $user_post = 'showfeed';
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+
+        $timeline = Timeline::where('username', Auth::user()->username)->first();
+
+        $id = Auth::id();
+
+        $trending_tags = trendingTags();
+        $suggested_users = suggestedUsers();
+        $suggested_groups = suggestedGroups();
+        $suggested_pages = suggestedPages();
+
+        // Check for hashtag
+        if ($request->hashtag) {
+            $hashtag = '#'.$request->hashtag;
+
+            $posts = Post::where([['description', 'like', "%{$hashtag}%"],['active',1]])->latest()->paginate(Setting::get('items_page'));
+        } // else show the normal feed
+        else {
+            $posts = Post::whereIn('user_id', function ($query) use ($id) {
+                $query->select('leader_id')
+                    ->from('followers')
+                    ->where('follower_id', $id);
+            })->orWhere('user_id', $id)->where('active', 1)->latest()->paginate(Setting::get('items_page'));
+        }
+
+
+        $announcement = Announcement::find(Setting::get('announcement'));
+        if ($announcement != null) {
+            $chk_isExpire = $announcement->chkAnnouncementExpire($announcement->id);
+
+            if ($chk_isExpire == 'notexpired') {
+                $active_announcement = $announcement;
+                if (!$announcement->users->contains(Auth::user()->id)) {
+                    $announcement->users()->attach(Auth::user()->id);
+                }
+            }
+        }
+
+
+        // $next_page_url = url('ajax/get-more-feed-by-location?page=2&ajax=true&hashtag='.$request->hashtag.'&username='.Auth::user()->username);
+
+        $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+
+        return $theme->scope('home', compact('timeline', 'hashtag' ,'posts', 'next_page_url', 'trending_tags', 'suggested_users', 'active_announcement', 'suggested_groups', 'suggested_pages', 'mode', 'user_post'))
+            ->render();
+
     }
 }

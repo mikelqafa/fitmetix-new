@@ -19,6 +19,7 @@ Route::get('/contact', 'PageController@contact');
 Route::post('/contact', 'PageController@saveContact');
 Route::get('/share-post/{id}', 'PageController@sharePost');
 Route::get('/get-location/{location}', 'TimelineController@getLocation');
+Route::get('/hashtag/{hashtag}', 'TimelineController@getHashtag');
 
 Route::get('/locate-on-map/{location}','TimelineController@redirectToLocation');
 
@@ -212,8 +213,6 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'role:admin']], fun
 Route::group(['prefix' => '/{username}', 'middleware' => 'auth'], function ($username) {
     Route::get('/', 'TimelineController@showTimeline');
 
-    Route::post('get-user-posts','TimelineController@userPostAPI');
-
     Route::get('/followers', 'UserController@followers');
 
     Route::get('/following', 'UserController@following');
@@ -377,10 +376,12 @@ Route::group(['prefix' => '/{username}/event-settings', 'middleware' => ['auth',
 */
 
 Route::post('get-posts','TimelineController@postAPI');
+Route::post('get-user-posts','TimelineController@userPostAPI');
+
 
 Route::post('get-posts-by-location','TimelineController@postByLocationAPI');
 
-Route::post('get-posts-by-hashtag','TimelineController@postByHashtagAPI');
+Route::post('get-posts-by-hashtag','TimelineController@postByDescriptionAPI');
 
 Route::post('get-single-post','TimelineController@singlePostAPI');
 

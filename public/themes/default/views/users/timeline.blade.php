@@ -187,7 +187,9 @@
 				<div class="row">
 					<div class="timeline">
                         @if($timeline->type == "user" && $timeline_post == true)
-                            {!! Theme::partial('create-post',compact('timeline','user_post')) !!}
+                            @if($timeline->username == Auth::user()->username)
+                             {!! Theme::partial('create-post',compact('timeline','user_post')) !!}
+                            @endif
                         @elseif($timeline->type == "page")
                             @if(($page->timeline_post_privacy == "only_admins" && $page->is_admin(Auth::user()->id)) || ($page->timeline_post_privacy == "everyone"))
                                 {!! Theme::partial('create-post',compact('timeline','user_post')) !!}

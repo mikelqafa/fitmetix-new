@@ -153,7 +153,7 @@
 }
 
 .main-content > .container > .row > .col-md-7.col-lg-6 {
-    width: 100% !important;
+   /* width: 100% !important;*/
 }
 .ft-grid {
     display: flex;
@@ -1236,7 +1236,7 @@ a{
     background-color: #fff;
 }
 .ft-chat .md-menu__item{
-    height: 48px;
+    min-height: 60px;
 }
 .ft-chat .md-list__item-secondary{
     flex-direction: column;
@@ -1249,9 +1249,13 @@ a{
     margin-bottom: 0;
 }
 .ft-chat .md-list__item-icon {
-    height: 40px;
-    width: 40px;
-    margin-top: 0;
+    height: 44px;
+    width: 44px;
+    margin-top: 2px;
+}
+.ft-chat .md-list__item-avatar {
+    height: 44px;
+    width: 44px;
 }
 .md-list__item {
     display: -webkit-box;
@@ -1383,4 +1387,8 @@ a{
     padding: 4px 16px;
     border-bottom: 1px solid rgba(0,0,0,.12);
     line-height: 20px;
+}
+
+.comment-list-action .md-list__item-primary {
+    flex-grow: 1;
 }

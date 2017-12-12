@@ -28,6 +28,12 @@
 						<div class="timeline-posts">
                             <div id="app-timeline">
 								<input type="hidden" id="newPostId">
+								<?php if(isset($location)): ?>
+									<input type="hidden" id="postByLocation" value="<?php echo e($location); ?>">
+								<?php endif; ?>
+								<?php if(isset($hashtag)): ?>
+									<input type="hidden" id="postByHashTag" value="<?php echo e($hashtag); ?>">
+								<?php endif; ?>
 								<app-post-option></app-post-option>
 								<app-comment-option></app-comment-option>
                                 <app-post>

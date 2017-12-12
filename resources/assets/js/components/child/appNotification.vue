@@ -8,61 +8,33 @@
             <template v-if="notifications.length">
                 <div class="ft-chat__header">Notifications</div>
                 <div class="md-menu">
-                    <a href="javascript:;" v-for="item in notifications" data-user-id="26" class="md-menu__item ft-chat__item">
+                    <a :href="notificationUrl(item)" v-for="item in notifications" data-user-id="26" class="md-menu__item ft-chat__item">
                         <div class="md-list__item  has-divider">
                             <div class="md-list__item-content">
-                            <span class="md-list__item-icon">
-                                <img src="http://localhost/fitmetix/public/user/avatar/default-male-avatar.png" alt="Mikel" class="md-list__item-avatar">
-                            </span>
+                                <a :href="userLink(item.notified_from.username)" class="md-list__item-icon">
+                                    <img :src="item.notified_from.avatar" alt="Mikel" class="md-list__item-avatar">
+                                </a>
                                 <div class="md-list__item-primary">
-                                    <div>Prakash</div>
+                                    <a :href="userLink(item.notified_from.username)">{{item.notified_from.name}}</a>
                                     <div class="md-list__item-text-body">
                                         {{item.description}}
                                     </div>
                                 </div>
+                                <div class="md-list__image" v-if="notificationImageUrl(item) !== ''" v-bind:style="{ backgroundImage: 'url(' + notificationImageUrl(item) + ')' }"></div>
                                 <div class="md-list__item-secondary">
-                                    <div class="md-list__item-secondary-info">1m</div>
-                                    <a class="md-list__item-secondary-action" href="#">
-                                        <i class="material-icons">star</i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="javascript:;" data-user-id="26" class="md-menu__item ft-chat__item">
-                        <div class="md-list__item md-list__item--three-line has-divider">
-                            <div class="md-list__item-content">
-                            <span class="md-list__item-icon">
-                                <img src="http://localhost/fitmetix/public/user/avatar/default-male-avatar.png" alt="Mikel" class="md-list__item-avatar">
-                            </span>
-                                <div class="md-list__item-primary">
-                                    <div>Single-line item</div>
-                                    <div class="md-list__item-text-body">
-                                        Bryan Cranston played the role.
+                                    <div class="md-list__item-secondary-info">
+                                        <timeago :since="since(item.created_at)"
+                                                 :auto-update="autoUpdate"
+                                                 class="timeago"></timeago>
                                     </div>
-                                </div>
-                                <div class="md-list__item-secondary">
-                                    <div class="md-list__item-secondary-info">20m</div>
-                                    <a class="hidden md-list__item-secondary-action" href="#">
-                                        <i class="icon ico">star</i>
+                                    <a class="md-list__item-secondary-action" href="#">
+                                        <i class="hidden material-icons">star</i>
                                     </a>
                                 </div>
                             </div>
                         </div>
-                    <span class="media hidden">
-                        <span class="media-left">
-                            <img src="http://localhost/fitmetix/public/user/avatar/default-male-avatar.png" alt="images" class="media-object img-icon">
-                        </span>
-                        <span class="media-body">
-                            <h4 class="media-heading">
-                                <span class="message-heading">@Prakash</span>
-                                <span class="online-status hidden"></span>
-                            </h4>
-                            <p class="message-text"></p>
-                        </span>
-                    </span>
                     </a>
-                    <a href="javascript:;" data-user-id="26" class="ft-chat__item">
+                    <a :href="allNotificationLink" data-user-id="26" class="ft-chat__item">
                         <div class="md-list__item md-list__item--see-all">
                             <div class="md-list__item-content">
                                 <span>SEE ALL</span>
@@ -77,6 +49,14 @@
         </div>
     </div>
 </template>
+<style>
+    .md-list__image {
+        width: 48px;
+        height: 48px;
+        background-size: cover;
+        background-position: center center;
+    }
+</style>
 <script>
     import { mapGetters } from 'vuex'
     export default {
@@ -84,9 +64,11 @@
             return {
                 ntSeeAllLink: '',
                 notifications: [],
+                autoUpdate: 60,
                 unreadNotifications: 0,
                 notificationsLoaded: false,
                 notificationsLoading: false,
+                allNotificationLink: base_url + 'allnotifications',
                 config: {
                     
                 }
@@ -105,20 +87,72 @@
             this.fetchOldNotification()
         },
         methods: {
+            notificationUrl: function (item) {
+                let url = ''
+                switch(item.type) {
+                    case 'report_post':
+                          url =  base_url + 'post/'+item.post_id
+                    break
+                    case 'like_post':
+                        url =  base_url + 'post/'+item.post_id
+                    break
+                    case 'unlike_post':
+                        url =  base_url + 'post/'+item.post_id
+                    break
+                }
+                return url
+            },
+            notificationImageUrl: function (item) {
+                let url = ''
+                switch(item.type) {
+                    case 'like_post':
+                        if(item.link !== '' && item.link !== null ) {
+                            url =  asset_url + 'uploads/users/gallery/'+item.link
+                        }
+                    break
+                    case 'unlike_post':
+                        if(item.link !== '' && item.link !== null ) {
+                            url =  asset_url + 'uploads/users/gallery/'+item.link
+                        }
+                    break
+                }
+                return url
+            },
+            userLink: function (username) {
+                return base_url + username
+            },
+            since: function (date) {
+                return date != '' ? new Date(date + 'Z').getTime() : new Date().getTime()
+            },
             subscribeToPrivateMessageChannel: function(receiverUsername) {
                 let that = this
                 // pusher configuration
 
                 this.NotificationChannel = this.pusher.subscribe(current_username + '-notification-created');
                 this.NotificationChannel.bind('App\\Events\\NotificationPublished', function(data) {
-                    that.unreadNotifications = that.unreadNotifications + 1;
                     data.notification.notified_from = data.notified_from
                     if(that.notifications != null) {
-                        that.notifications.unshift(data.notification);
+                        switch (data.notification.type) {
+                            case 'like_post':
+                                that.notifications.unshift(data.notification);
+                                that.$store.dispatch('likePostByPusher', data.notification)
+                                if(!data.notification.seen) {
+                                    that.unreadNotifications = that.unreadNotifications + 1;
+                                }
+                            break;
+                            case 'unlike_post':
+                                that.$store.dispatch('likePostByPusher', data.notification)
+                            break;
+                            default:
+                                that.notifications.unshift(data.notification);
+                                if(!data.notification.seen) {
+                                    that.unreadNotifications = that.unreadNotifications + 1;
+                                    materialSnackBar({messageText: data.notification.description, autoClose: true, timeout: 5000 })
+                                    $.playSound(theme_url + '/sounds/notification');
+                                }
+                        }
+
                     }
-                    materialSnackBar({messageText: data.notification.description, autoClose: true, timeout: 5000 })
-                    that.$store.dispatch('likePostByPusher', data.notification)
-                    $.playSound(theme_url + '/sounds/notification');
                 });
             },
             autoScroll : function(element) {
@@ -161,7 +195,7 @@
             },
             showNotifications: function (el) {
                 if(!$('#ft-notification').hasClass('is-open')) {
-                    this.unreadNotifications = 0
+                    this.markNotificationsRead()
                     let rect = el.currentTarget.getBoundingClientRect()
                     $('#ft-notification').css({left: rect.right- ($('#ft-notification').width())+'px', top: 60+'px'})
                     $('#ft-notification').addClass('is-open')
@@ -171,17 +205,6 @@
                         $('#ft-notification').removeClass('is-open').removeClass('is-leaving')
                     }, 200);
                 }
-                /*if (!this.notificationsLoaded) {
-                 this.notificationsLoading = true;
-                 this.$http.post(base_url + 'ajax/get-notifications').then(function (response) {
-                 this.notifications = JSON.parse(response.body).notifications;
-                 setTimeout(function () {
-                 jQuery("time.timeago").timeago();
-                 }, 10);
-                 this.notificationsLoading = false;
-                 });
-                 this.notificationsLoaded = true;
-                 }*/
             },
             getMoreNotifications: function () {
                 if (this.notifications.data.length < this.notifications.total) {
@@ -206,12 +229,14 @@
                 }
             },
             markNotificationsRead: function () {
-
-                this.$http.post(base_url + 'ajax/mark-all-notifications').then(function (response) {
-                    this.unreadNotifications = 0;
-                    var vm = this;
-                    $.map(this.notifications, function (notification, key) {
-                        vm.notifications[key].seen = true;
+                let that = this
+                if(!this.notifications.length) {
+                    return
+                }
+                axios.post(base_url + 'ajax/mark-all-notifications').then(function (response) {
+                    that.unreadNotifications = 0;
+                    $.map(that.notifications, function (notification, key) {
+                        that.notifications[key].seen = true;
                     });
                 });
             }

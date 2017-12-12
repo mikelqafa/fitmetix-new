@@ -50,7 +50,7 @@ function hashtagify()
   $('.text-wrapper').each(function() {
     $(this).html($(this).html().replace(
         /#([a-zA-Z0-9]+)/g,
-        '<a class="hashtag" href="' + SP_source() + '?hashtag=$1">#$1</a>'
+        '<a class="hashtag" href="' + SP_source() + 'hashtag/$1">#$1</a>'
     ));
   });
 }

@@ -132,6 +132,20 @@ export const store = new Vuex.Store({
           data.type === 'like_post' ? likeCount++ : likeCount--
           console.log('hola', likeCount)
           context.commit('SET_POST_META_LIKES_COUNT', {postIndex: index, postLikesCount:likeCount})
+          if(data.type== 'like_post' && !data.seen) {
+            if(likeCount > 2) {
+              materialSnackBar({messageText: data.notified_from.name +' and '+ likeCount-1  +' others like your post', autoClose: true, timeout: 5000 })
+              $.playSound(theme_url + '/sounds/notification');
+            } else {
+              materialSnackBar({messageText: data.description, autoClose: true, timeout: 5000 })
+              $.playSound(theme_url + '/sounds/notification');
+            }
+          }
+        } else {
+          if(data.type== 'like_post' && !data.seen) {
+            materialSnackBar({messageText: data.description, autoClose: true, timeout: 5000 })
+            $.playSound(theme_url + '/sounds/notification');
+          }
         }
       }
     }

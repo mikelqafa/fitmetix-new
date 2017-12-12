@@ -26,6 +26,12 @@
 						<div class="timeline-posts">
                             <div id="app-timeline">
 								<input type="hidden" id="newPostId">
+								@if(isset($location))
+									<input type="hidden" id="postByLocation" value="{{$location}}">
+								@endif
+								@if(isset($hashtag))
+									<input type="hidden" id="postByHashTag" value="{{$hashtag}}">
+								@endif
 								<app-post-option></app-post-option>
 								<app-comment-option></app-comment-option>
                                 <app-post>
