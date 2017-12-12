@@ -5,6 +5,7 @@
             {{ "Manage Scout Account" }}
         </h3>
     </div>
+    {{-- {{ dd($scouts) }} --}}
     @if (Session::has('msg'))
          <br/>
         <div class="alert alert-success alert-dismissable" style="text-align: center;">

@@ -1674,8 +1674,8 @@ class AdminController extends Controller
         $scouts = User::where('custom_option1','scout')->get();
 
         foreach ($scouts as $scout) {
-            $scout['user_count'] = User::where('affiliate_id',$scout->timeline->id)->count() ;
-            $scout['amount_spent'] = User::where('affiliate_id',$scout->timeline->id)->sum('custom_option2') ;
+            $scout['user_count'] = User::where('affiliate_id',$scout->id)->count() ;
+            $scout['amount_spent'] = User::where('affiliate_id',$scout->id)->sum('custom_option2');
         }
 
         return $theme->scope('admin/create-scout',compact('timelines','scouts'))->render();
