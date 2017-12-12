@@ -122,7 +122,7 @@
             </div>
 
             <div id="view_scouts" class="tab-pane fade">
-                @if(count($scout_timelines) > 1)
+                @if(count($scouts) > 1)
             <div class="table table-responsive manage-table">
                 <table class="table existing-products-table socialite">
                     <thead>
@@ -131,21 +131,20 @@
                             <th>{{ trans('admin.id') }}</th> 
                             <th>{{ trans('auth.name') }}</th>
                             <th>Scout Code</th>
-                            <th>&nbsp;</th>
+                            <th>Users Connected</th>
+                            <th>Total Amount Spent</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($scout_timelines as $timeline)
-                        @if($timeline->user->custom_option1)
+                        @foreach($scouts as $scout)
                         <tr>
                             <td>&nbsp;</td> 
-                            <td>{{ $timeline->user->id }}</td>
-                            <td><a href="#"><img src=" @if($timeline->avatar_id != null) {{ url('user/avatar/'.$timeline->avatar->source) }} @else {{ url('user/avatar/default-'.$timeline->user->gender.'-avatar.png') }} @endif" alt="images"></a><a href="{{ url($timeline->username) }}"> {{ $timeline->name }}</a></td>
-                            <td>{{ $timeline->username }}</td>
-                            <td>&nbsp;</td> 
+                            <td>{{ $scout->id }}</td>
+                            <td><a href="#"><img src=" @if($scout->timeline->avatar_id != null) {{ url('user/avatar/'.$scout->timeline->avatar->source) }} @else {{ url('user/avatar/default-'.$scout->gender.'-avatar.png') }} @endif" alt="images"></a><a href="{{ url($scout->timeline->username) }}"> {{ $scout->timeline->name }}</a></td>
+                            <td>{{ $scout->timeline->username }}</td>
+                            <td>{{ $scout->user_count }}</td>
+                            <td>{{ $scout->amount_spent }}</td>
                         </tr>
-                        
-                        @endif
                         @endforeach
                         </tbody>
                     </table>

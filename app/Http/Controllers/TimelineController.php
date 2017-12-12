@@ -685,6 +685,11 @@ class TimelineController extends AppBaseController
         $posted_user = $post->user;
         $like_count = $post->users_liked()->count();
 
+        $post_image = null;
+        if($post->images()->count() > 0) {
+            $post_image = $post->images()->first()->source;
+        }
+
         //Like the post
         if (!$post->users_liked->contains(Auth::user()->id)) {
             $post->users_liked()->attach(Auth::user()->id, ['created_at' => Carbon::now(), 'updated_at' => Carbon::now()]);
@@ -705,7 +710,7 @@ class TimelineController extends AppBaseController
             $status_message = 'successfully liked';
 
             if ($post->user->id != Auth::user()->id) {
-                Notification::create(['user_id' => $post->user->id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.$notify_message, 'type' => $notify_type]);
+                Notification::create(['user_id' => $post->user->id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.$notify_message, 'link' =>$post_image, 'type' => $notify_type]);
             }
             LaravelPusher::trigger('PRAKASH', 'PRAKASH_EVENT', ['message' => $notify_message]);
 
