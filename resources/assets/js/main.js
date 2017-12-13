@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Post from './components/Post'
+import HasTagPost from './components/HasTagPost'
 import createPost from './components/createPost'
 //import editPost from './components/child/editPost'
 import AppNotification from './components/AppNotification'
@@ -30,6 +31,7 @@ window.timeLine = new Vue({
   store,
   components: {
     'app-post': Post,
+    'app-post-hashtag': HasTagPost,
     'app-post-option': postDialogOption,
     'app-comment-option': commentDialogOption
   }

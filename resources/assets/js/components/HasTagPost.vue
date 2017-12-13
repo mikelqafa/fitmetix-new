@@ -3,87 +3,50 @@
         <post-theater-view></post-theater-view>
         <post-wholikes-view></post-wholikes-view>
         <template v-if="isLoading">
-            <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
-                <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
-                    <div class="user-avatar lg-loadable"></div>
-                    <div class="md-layout md-layout--column">
-                        <div class="user-meta-info lg-loadable"></div>
-                        <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="lg-loading-skeleton ft-image-post">
+                            <div class="ft-image-post__item lg-loadable">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="panel-body">
-                    <div class="lg-loadable lg-loadable--text"></div>
-                    <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
-                    <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
-                </div>
-            </div>
-            <div v-show="!singlePost" class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
-                <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
-                    <div class="user-avatar lg-loadable"></div>
-                    <div class="md-layout md-layout--column">
-                        <div class="user-meta-info lg-loadable"></div>
-                        <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+                    <div class="col-md-4">
+                        <div class="lg-loading-skeleton ft-image-post">
+                            <div class="ft-image-post__item lg-loadable">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="panel-body">
-                    <div class="lg-loadable lg-loadable--text"></div>
-                    <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
-                    <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
+                    <div class="col-md-4">
+                        <div class="lg-loading-skeleton ft-image-post">
+                            <div class="ft-image-post__item lg-loadable">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </template>
         <template v-else="">
-            <template v-if="isLoadingCurrent">
-                <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
-                    <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
-                        <div class="user-avatar lg-loadable"></div>
-                        <div class="md-layout md-layout--column">
-                            <div class="user-meta-info lg-loadable"></div>
-                            <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
-                        </div>
-                    </div>
-                    <div class="panel-body">
-                        <div class="lg-loadable lg-loadable--text"></div>
-                        <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
-                        <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
+            <div class="container">
+                <div class="row">
+                    <div v-for="(postItem, index) in itemList" :key="postItem.id" class="col-md-4" :id="'ft-post'+postItem.id">
+                        <post-image-viewer :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
                     </div>
                 </div>
-            </template>
-            <div v-for="(postItem, index) in itemList" :key="postItem.id" class="panel panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
-                <post-header :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
-                <div class="panel-body">
-                    <post-description :post-html="postItem.description"></post-description>
-                    <post-youtube :post-you-tube="postItem.youtube_video_id" :you-tube-title="postItem.youtube_title"></post-youtube>
-                    <post-image-viewer :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
-                    <post-event :post-item="postItem" :post-index="index" :post-img="postItem.images"></post-event>
-                    <post-sound-cloud :soundcloud="postItem.soundcloud_id"></post-sound-cloud>
-                </div>
-                <post-comment :post-index="index" :post-id="postItem.id" :post-item="postItem"></post-comment>
             </div>
             <div v-if="isFetchingBottom" class="ft-loading">
                 <span class="ft-loading__dot"></span>
                 <span class="ft-loading__dot"></span>
                 <span class="ft-loading__dot"></span>
             </div>
-            <div class="text-center" v-if="!hasMorePost && !singlePost">
-                No more posts to fetch
+            <div class="text-center" v-if="!hasMorePost">
+                That&apos;s all for now
             </div>
         </template>
     </div>
 </template>
-<style>
-    .user-avatar {
-        overflow: hidden;
-    }
-</style>
 <script>
-    import postDescription from './child/postDescription'
-    import postImageViewer from './child/postImageViewer'
-    import postEvent from './child/postEvent'
-    import postYouTube from './child/postYouTube'
-    import postSoundCloud from './child/postSoundCloud'
-    import postHeader from './child/postHeader'
-    import postComment from './child/postComment'
+    import postImageViewer from './child/bgImageViewer'
     import postTheaterView from './child/postTheaterView'
     import postWhoLikesView from './child/postWhoLikesView'
     import { mapGetters } from 'vuex'
@@ -97,7 +60,10 @@
         dummy: [],
         inProgress: false,
         hasMorePost: true,
-        offset: 0
+        offset: 0,
+        noPostFound: false,
+        singlePost: false,
+        onlyImagePost: false
     }
     let vmThat;
     export default {
@@ -113,16 +79,31 @@
             },
             getDefaultData: function () {
                 let that = this
-                let username = ''
+                let username = current_username
+                let url = base_url + 'get-posts'
+                let location = ''
+                let hashtag = ''
+                username =  current_username
+                hashtag =   $('#postByHashTag').val()
+                url = base_url + 'get-posts-by-hashtag'
+                this.onlyImagePost = true
+                /*if($('#postByLocation').length && $('#postByLocation').val() !== '') {
+                    username =  current_username
+                    location =   $('#postByLocation').val()
+                    url = base_url + 'get-posts-by-location'
+                    this.onlyImagePost = true
+                }*/
                 let paginate = 4
                 let _token = $("meta[name=_token]").attr('content')
                 axios({
                     method: 'post',
                     responseType: 'json',
-                    url: base_url + 'get-posts',
+                    url: url,
                     data: {
-                        username: current_username,
+                        username: username,
                         paginate: paginate,
+                        location: location,
+                        hashtag: hashtag,
                         _token: _token,
                         offset: that.offset
                     }
@@ -134,6 +115,9 @@
                             that.$store.commit('ADD_POST_ITEM_LIST', val)
                             i++
                         });
+                        if(!i) {
+                            that.noPostFound = true
+                        }
                         setTimeout(function () {
                             emojify.run();
                             hashtagify();
@@ -166,13 +150,19 @@
             fetchNew: function (postId){
                 custTomData.isLoadingCurrent = true
                 let _token = $("meta[name=_token]").attr('content')
+
+                let username = current_username
+                if($('#timeline_username').length) {
+                    username =  $('#timeline_username').val()
+                }
+
                 axios({
                     method: 'post',
                     responseType: 'json',
                     url: base_url + 'get-single-post',
 
                     data: {
-                        username: current_username,
+                        username: username,
                         _token: _token,
                         post_id: postId
                     }
@@ -208,23 +198,17 @@
             }, 1000)
         },
         components: {
-            'post-description': postDescription,
             'post-image-viewer': postImageViewer,
-            'post-sound-cloud': postSoundCloud,
-            'post-youtube': postYouTube,
-            'post-header': postHeader,
-            'post-event': postEvent,
-            'post-comment': postComment,
             'post-theater-view': postTheaterView,
             'post-wholikes-view': postWhoLikesView
         },
         computed: {
             ...mapGetters({
-                    itemList: 'postItemList'
-                }),
+                itemList: 'postItemList'
+            }),
             isLoading () {
-            return this.itemList.length === 0
-        }
+                return this.itemList.length === 0
+            }
         }
     }
 </script>

@@ -2883,6 +2883,7 @@ class TimelineController extends AppBaseController
             return response()->json(['status' => '200', 'join' => true, 'username'=> Auth::user()->username, 'message' => 'successfully unjoined']);
         }
     }
+
     public function saveWallpaperSettings($username, Request $request)
     {
         if($request->wallpaper == null)
@@ -3052,9 +3053,58 @@ class TimelineController extends AppBaseController
 
         $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
-        return $theme->scope('home', compact('timeline', 'location' , 'posts', 'next_page_url', 'trending_tags', 'suggested_users', 'active_announcement', 'suggested_groups', 'suggested_pages', 'mode', 'user_post'))
+        return $theme->scope('location', compact('timeline', 'location' , 'posts', 'next_page_url', 'trending_tags', 'suggested_users', 'active_announcement', 'suggested_groups', 'suggested_pages', 'mode', 'user_post'))
         ->render();
         
+    }
+
+    public function getEventByHashtag(Request $request) {
+        $mode = "eventlist";
+
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+
+        $tags = "#".$request->tags;
+
+        $user_events_all = Event::where('user_id', Auth::user()->id)->with('timeline')->latest()->get();
+        $id = Auth::id();
+
+        $user_events = NULL;
+        foreach ($user_events_all as $key => $value) {
+            if(strpos($value->timeline->about, $tags) !== false){
+                $user_events[$key] = $value;
+            }
+        }
+
+        $event_tags = NULL;
+        $request_tags = $request->hashtag;
+        if($user_events) {
+            foreach ($user_events as $user_event) {
+                $user_event['registered'] = false;
+                $user_event['expired'] = false;
+                if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
+                    $event_tags['tags'] = $matches[0];
+                    $event_tags['event_id'] = $user_event->id;
+                }
+                if($user_event->users->contains(Auth::user()->id)){
+                    $user_event['registered'] = true;
+                }
+                if($user_event->start_date < Carbon::now()){
+                    $user_event['expired'] = true;
+                }
+            }
+        }
+
+        $trending_tags = trendingTags();
+        $suggested_users = suggestedUsers();
+        $suggested_groups = suggestedGroups();
+        $suggested_pages = suggestedPages();
+
+        // $next_page_url = url('ajax/get-more-feed?page=2&ajax=true&hashtag='.$request->hashtag.'&username='.$username);
+
+        $theme->setTitle(trans('common.events').' | '.Setting::get('site_title').' | '.Setting::get('site_tagline'));
+
+        return $theme->scope('event-by-hashtag', compact('event_tags','request_tags','next_page_url', 'trending_tags', 'suggested_users', 'suggested_groups', 'suggested_pages', 'mode', 'user_events', 'username'))
+            ->render();
     }
 
     public function editEvent(Request $request, $id){
@@ -3221,14 +3271,19 @@ class TimelineController extends AppBaseController
         $timeline = Timeline::where('username', $request->username)->first();
         $hashtag = '%'.$request->hashtag.'%';
         $id = Auth::user()->id;
-        $posts = Post::where([['active', 1],['description','like',$hashtag]])->whereIn('user_id', function ($query) use ($id) {
+        $allposts = Post::where([['active', 1],['description','like',$hashtag]])->whereIn('user_id', function ($query) use ($id) {
                 $query->select('leader_id')
                     ->from('followers')
                     ->where('follower_id', $id);
             })->orWhere([['user_id', $id],['description','like',$hashtag]])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
 
         // $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
-
+        $posts = [];
+        foreach ($allposts as $key => $value) {
+            if($value->images()->count() > 0) {
+                $posts[$key] = $value;
+            }
+        }
         foreach ($posts as $post) {
             if($post->images()->count() > 0) {
                 $post['images'] = $post->images()->get();
@@ -3450,8 +3505,62 @@ class TimelineController extends AppBaseController
 
         $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
-        return $theme->scope('home', compact('timeline', 'hashtag' ,'posts', 'next_page_url', 'trending_tags', 'suggested_users', 'active_announcement', 'suggested_groups', 'suggested_pages', 'mode', 'user_post'))
+        return $theme->scope('hashtag', compact('timeline', 'hashtag' ,'posts', 'next_page_url', 'trending_tags', 'suggested_users', 'active_announcement', 'suggested_groups', 'suggested_pages', 'mode', 'user_post'))
             ->render();
 
+    }
+
+    public function getImagePostByLocation(Request $request)
+    {
+
+        $mode = "showfeed";
+        $user_post = 'showfeed';
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+
+        $timeline = Timeline::where('username', Auth::user()->username)->first();
+
+        $id = Auth::id();
+
+        /*$trending_tags = trendingTags();
+        $suggested_users = suggestedUsers();
+        $suggested_groups = suggestedGroups();
+        $suggested_pages = suggestedPages();*/
+
+        // Check for location
+        if ($request->location) {
+            $location = $request->location;
+            $posts = Post::where([['location', 'like', "%{$location}%"],['active',1]])->latest()->paginate(Setting::get('items_page'));
+        } // else show the normal feed
+
+        // $next_page_url = url('ajax/get-more-feed-by-location?page=2&ajax=true&hashtag='.$request->hashtag.'&username='.Auth::user()->username);
+
+        $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+
+        return $theme->scope('event-by-location', compact('timeline','location', 'posts', 'next_page_url', 'mode', 'user_post'))
+            ->render();
+
+    }
+
+    public function getEventByLocation(Request $request) {
+        $mode = "eventlist";
+
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+
+        $location = $request->location;
+
+        $user_events = Event::where([['user_id', Auth::user()->id],['location',$location]])->with('timeline')->latest()->get();
+        $id = Auth::id();
+
+        $trending_tags = trendingTags();
+        $suggested_users = suggestedUsers();
+        $suggested_groups = suggestedGroups();
+        $suggested_pages = suggestedPages();
+
+        // $next_page_url = url('ajax/get-more-feed?page=2&ajax=true&hashtag='.$request->hashtag.'&username='.$username);
+
+        $theme->setTitle(trans('common.events').' | '.Setting::get('site_title').' | '.Setting::get('site_tagline'));
+
+        return $theme->scope('event-by-location', compact('location','event_tags','next_page_url', 'trending_tags', 'suggested_users', 'suggested_groups', 'suggested_pages', 'mode', 'user_events', 'username'))
+            ->render();
     }
 }

@@ -18,8 +18,11 @@ Route::get('new/pass', function () {
 Route::get('/contact', 'PageController@contact');
 Route::post('/contact', 'PageController@saveContact');
 Route::get('/share-post/{id}', 'PageController@sharePost');
-Route::get('/get-location/{location}', 'TimelineController@getLocation');
-Route::get('/hashtag/{hashtag}', 'TimelineController@getHashtag');
+Route::get('/gallery/hashtag/{hashtag}', 'TimelineController@getHashtag');
+Route::get('/event/hashtag/{hashtag}', 'TimelineController@getEventByHashtag');
+
+Route::get('/gallery/location/{location}', 'TimelineController@getImagePostByLocation');
+Route::get('/event/location/{location}', 'TimelineController@getEventByLocation');
 
 Route::get('/locate-on-map/{location}','TimelineController@redirectToLocation');
 

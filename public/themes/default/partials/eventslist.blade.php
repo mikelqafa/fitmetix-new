@@ -1,16 +1,16 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/drawer.css') }}">
 <style>
-	.md-drawer--permanent {
-		width: auto;
-		padding-right: 0px;
-		padding-left: 0;
-		padding-top: 64px;
-		z-index: -1;
-	}
-	.md-drawer--permanent.md-drawer--visible {
-		z-index: 1;
-	}
 	@media screen and (min-width: 960px) {
+		.md-drawer--permanent {
+			width: auto;
+			padding-right: 0px;
+			padding-left: 0;
+			padding-top: 64px;
+			z-index: -1;
+		}
+		.md-drawer--permanent.md-drawer--visible {
+			z-index: 1;
+		}
 		.md-drawer {
 			left: auto;
 			right:0;
@@ -52,7 +52,7 @@
 					<div class="pane">
 					@include('flash::message')
 						<br/>
-						<div class="ft-filter">
+						<div class="hidden-sm hidden-xs ft-filter">
 							<fieldset class="form-group required " style="margin-left: 0">
 								<form action="{{ url('filter-events-by-location') }}" method="POST">
 									{{ csrf_field() }}
@@ -83,6 +83,72 @@
 							</fieldset>
 						</div>
 
+						<ul class="nav nav--event-filter nav-justified hidden-lg hidden-md">
+							<li class="active">
+								<a data-toggle="tab" href="#home">
+									<i class="icon icon-location hidden-active"></i>
+									<i class="icon icon-location-o hidden-inactive"></i>
+								</a>
+							</li>
+							<li>
+								<a data-toggle="tab" href="#menu1">
+									<i class="icon icon-time hidden-active"></i>
+									<i class="icon icon-time-o hidden-inactive"></i>
+								</a>
+							</li>
+							<li>
+								<a data-toggle="tab" href="#menu2">
+									<i class="icon icon-tag hidden-active"></i>
+									<i class="icon icon-tag-o hidden-inactive"></i>
+								</a>
+							</li>
+							<li>
+								<a data-toggle="tab" href="#menu3">
+									<i class="icon icon-label hidden-active"></i>
+									<i class="icon icon-label-o hidden-inactive"></i>
+								</a>
+							</li>
+						</ul>
+
+						<div class="tab-content tab-content--event-filter">
+							<div id="home" class="tab-pane fade in active">
+								<fieldset class="form-group required " style="margin-left: 0">
+									<form action="{{ url('filter-events-by-location') }}" method="POST">
+										{{ csrf_field() }}
+										<input class="form-control" id="filter-location-input" autocomplete="off" placeholder="By Location" name="location" type="text" style="position: relative; overflow: hidden;">
+										<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
+									</form>
+								</fieldset>
+							</div>
+							<div id="menu1" class="tab-pane fade">
+								<fieldset class="form-group required ">
+									<form action="{{ url('filter-events-by-date') }}" method="POST">
+										{{ csrf_field() }}
+										<input class="form-control" name="date" id="filter-date" autocomplete="off" placeholder="By Date" type="text" style="position: relative; overflow: hidden;">
+										<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
+									</form>
+								</fieldset>
+							</div>
+							<div id="menu2" class="tab-pane fade">
+								<fieldset class="form-group required ">
+									<form action="{{ url('filter-events-by-tags') }}" method="POST">
+										{{ csrf_field() }}
+										<input class="form-control" id="filter-tag" name="tags" autocomplete="off" placeholder="By Tag" type="text" style="position: relative; overflow: hidden;">
+										<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
+									</form>
+								</fieldset>
+							</div>
+							<div id="menu3" class="tab-pane fade">
+								<fieldset class="form-group required " style="margin-right: 0">
+									<form action="{{ url('filter-events-by-title') }}" method="POST">
+										{{ csrf_field() }}
+										<input class="form-control" id="filter-title" name="title" autocomplete="off" placeholder="By Title" type="text" style="position: relative; overflow: hidden;">
+										<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
+									</form>
+								</fieldset>
+							</div>
+						</div>
+
 						<div class="pan">
 							@if(count($user_events))
 							   <div class="ft-grid">
@@ -90,13 +156,16 @@
 							   @foreach($user_events as $user_event)
 									<div class="ft-grid__item">
 										<div class="ft-card">
-											<a href="javascript:;" class="ft-card__img-wrapper ft-card_drawer-trigger" data-index="{{$i}}">
-												@if($user_event->timeline->cover)
+
+											@if($user_event->timeline->cover)
+												<a href="javascript:;" class="ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" style="background-image: url('{{ env('STORAGE_URL').'uploads/events/covers/'.$user_event->timeline->cover['source'] }}')" data-index="{{$i}}">
 													<img class="ft-card__img" src="{{ env('STORAGE_URL').'uploads/events/covers/'.$user_event->timeline->cover['source'] }}" alt="Event Cover">
-												@else
+												</a>
+											@else
+												<a href="javascript:;" class="ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" style="background-image: url('{{ env('STORAGE_URL').'uploads/events/covers/default-cover-event.png' }}')" data-index="{{$i}}">
 													<img class="ft-card__img" src="{{ env('STORAGE_URL').'uploads/events/covers/default-cover-event.png' }}" alt="Event Cover">
-												@endif
-											</a>
+												</a>
+											@endif
 											<div class="ft-card__primary hidden-sm hidden-xs">
 												<div class="ft-card__title">
 													<h5 class="ft-event-card__title">{{ $user_event->timeline->name }}</h5>
@@ -174,13 +243,18 @@
 															</ul>
 														</div>
 													</div>
-												<div class="ft-card__img-wrapper">
-													@if($user_event->timeline->cover)
+
+												@if($user_event->timeline->cover)
+													<div class="ft-card__img-wrapper ft-card__img-wrapper--background" style="background-image: url('{{ env('STORAGE_URL').'uploads/events/covers/'.$user_event->timeline->cover['source'] }}')">
 														<img class="ft-card__img" src="{{ env('STORAGE_URL').'uploads/events/covers/'.$user_event->timeline->cover['source'] }}" alt="Event Cover">
-													@else
-													    <img class="ft-card__img" src="{{ env('STORAGE_URL').'uploads/events/covers/default-cover-event.png' }}" alt="Event Cover">
-													@endif
-												</div>
+													</div>
+												@else
+													<div class="ft-card__img-wrapper ft-card__img-wrapper--background" style="background-image: url('{{ env('STORAGE_URL').'uploads/events/covers/default-cover-event.png' }}')">
+														<img class="ft-card__img" src="{{ env('STORAGE_URL').'uploads/events/covers/default-cover-event.png' }}" alt="Event Cover">
+													</div>
+												@endif
+
+
 												<div class="ft-card__primary">
 													<div class="ft-card__title">
 														<h5 class="ft-event-card__title">{{ $user_event->timeline->name }}</h5>
@@ -265,6 +339,9 @@
 													</div>
 													<div class="ft-card__desc">
 														{{ $user_event->timeline->about }}
+													</div>
+													<div class="ft-card__desc text-center">
+														<a href="{{url('/'.$user_event->timeline->username)}}" class="btn ft-btn-primary ">Details</a>
 													</div>
 												</div>
 											</div>

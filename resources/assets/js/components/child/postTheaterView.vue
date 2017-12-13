@@ -74,7 +74,8 @@
                     window.dialogId = 'post-image-theater-dialog'
                 }
                 window.setTimeout(function(){
-                    window.emojify.run()
+                    emojify.run()
+                    hashtagify()
                 }, 300)
             });
             dialog.on('ca.dialog.hidden', function () {
