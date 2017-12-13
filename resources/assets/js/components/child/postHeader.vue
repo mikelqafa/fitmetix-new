@@ -68,7 +68,6 @@
                 return this.date != '' ? new Date(this.date + 'Z').getTime() : new Date().getTime()
             },
             locationLink () {
-                console.log(this.postData)
                 return this.postData.type !== null? (this.postData.location !== '' ? base_url + 'locate-on-map/' + this.postData.location : '') : this.postData.location !== '' ? base_url + 'get-location/' + this.postData.location : ''
             },
             userLink () {

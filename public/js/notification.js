@@ -26951,6 +26951,29 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -26974,7 +26997,8 @@ var custTomData = {
     hasMorePost: true,
     offset: 0,
     noPostFound: false,
-    singlePost: false
+    singlePost: false,
+    onlyImagePost: false
 };
 var vmThat = void 0;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -27003,11 +27027,13 @@ var vmThat = void 0;
                 username = current_username;
                 location = $('#postByLocation').val();
                 url = base_url + 'get-posts-by-location';
+                this.onlyImagePost = true;
             }
             if ($('#postByHashTag').length && $('#postByHashTag').val() !== '') {
                 username = current_username;
                 hashtag = $('#postByHashTag').val();
                 url = base_url + 'get-posts-by-hashtag';
+                this.onlyImagePost = true;
             }
             var paginate = 4;
             var _token = $("meta[name=_token]").attr('content');
@@ -28195,7 +28221,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.date != '' ? new Date(this.date + 'Z').getTime() : new Date().getTime();
         },
         locationLink: function locationLink() {
-            console.log(this.postData);
             return this.postData.type !== null ? this.postData.location !== '' ? base_url + 'locate-on-map/' + this.postData.location : '' : this.postData.location !== '' ? base_url + 'get-location/' + this.postData.location : '';
         },
         userLink: function userLink() {
@@ -30163,29 +30188,36 @@ var render = function() {
                 ]
               },
               [
-                _vm._m(0),
+                !_vm.onlyImagePost
+                  ? [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: !_vm.singlePost,
+                              expression: "!singlePost"
+                            }
+                          ],
+                          staticClass:
+                            "lg-loading-skeleton panel panel-default timeline-posts__item panel-post"
+                        },
+                        [_vm._m(1), _vm._v(" "), _vm._m(2)]
+                      )
+                    ]
+                  : _vm._e(),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: !_vm.singlePost,
-                        expression: "!singlePost"
-                      }
-                    ],
-                    staticClass:
-                      "lg-loading-skeleton panel panel-default timeline-posts__item panel-post"
-                  },
-                  [_vm._m(1), _vm._v(" "), _vm._m(2)]
-                )
-              ]
+                [_vm._m(3)]
+              ],
+              2
             )
           ]
         : [
-            _vm.isLoadingCurrent ? [_vm._m(3)] : _vm._e(),
+            _vm.isLoadingCurrent ? [_vm._m(4)] : _vm._e(),
             _vm._v(" "),
             _vm._l(_vm.itemList, function(postItem, index) {
               return _c(
@@ -30194,31 +30226,38 @@ var render = function() {
                   key: postItem.id,
                   staticClass:
                     "panel panel-default timeline-posts__item panel-post",
+                  class: { "post-image": _vm.onlyImagePost },
                   attrs: { id: "ft-post" + postItem.id }
                 },
                 [
-                  _c("post-header", {
-                    attrs: {
-                      "post-data": postItem,
-                      "post-index": index,
-                      date: postItem.created_at
-                    }
-                  }),
+                  !_vm.onlyImagePost
+                    ? _c("post-header", {
+                        attrs: {
+                          "post-data": postItem,
+                          "post-index": index,
+                          date: postItem.created_at
+                        }
+                      })
+                    : _vm._e(),
                   _vm._v(" "),
                   _c(
                     "div",
                     { staticClass: "panel-body" },
                     [
-                      _c("post-description", {
-                        attrs: { "post-html": postItem.description }
-                      }),
+                      !_vm.onlyImagePost
+                        ? _c("post-description", {
+                            attrs: { "post-html": postItem.description }
+                          })
+                        : _vm._e(),
                       _vm._v(" "),
-                      _c("post-youtube", {
-                        attrs: {
-                          "post-you-tube": postItem.youtube_video_id,
-                          "you-tube-title": postItem.youtube_title
-                        }
-                      }),
+                      !_vm.onlyImagePost
+                        ? _c("post-youtube", {
+                            attrs: {
+                              "post-you-tube": postItem.youtube_video_id,
+                              "you-tube-title": postItem.youtube_title
+                            }
+                          })
+                        : _vm._e(),
                       _vm._v(" "),
                       _c("post-image-viewer", {
                         attrs: {
@@ -30236,20 +30275,24 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _c("post-sound-cloud", {
-                        attrs: { soundcloud: postItem.soundcloud_id }
-                      })
+                      !_vm.onlyImagePost
+                        ? _c("post-sound-cloud", {
+                            attrs: { soundcloud: postItem.soundcloud_id }
+                          })
+                        : _vm._e()
                     ],
                     1
                   ),
                   _vm._v(" "),
-                  _c("post-comment", {
-                    attrs: {
-                      "post-index": index,
-                      "post-id": postItem.id,
-                      "post-item": postItem
-                    }
-                  })
+                  !_vm.onlyImagePost
+                    ? _c("post-comment", {
+                        attrs: {
+                          "post-index": index,
+                          "post-id": postItem.id,
+                          "post-item": postItem
+                        }
+                      })
+                    : _vm._e()
                 ],
                 1
               )
@@ -30266,13 +30309,45 @@ var render = function() {
               : _vm._e(),
             _vm._v(" "),
             !_vm.hasMorePost
-              ? _c("div", { staticClass: "text-center" }, [
-                  _vm._v("\n            No more posts to fetch\n        ")
-                ])
+              ? _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.onlyImagePost,
+                        expression: "!onlyImagePost"
+                      }
+                    ],
+                    staticClass: "text-center"
+                  },
+                  [_vm._v("\n            No more posts to fetch\n        ")]
+                )
               : _vm._e()
           ],
       _vm._v(" "),
-      _vm.noPostFound ? [_vm._m(4)] : _vm._e()
+      _vm.noPostFound
+        ? [
+            !_vm.onlyImagePost
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "panel panel-default timeline-posts__item panel-post"
+                  },
+                  [_vm._m(5)]
+                )
+              : _c(
+                  "div",
+                  {
+                    staticClass:
+                      "panel panel-default timeline-posts__item panel-post"
+                  },
+                  [_vm._m(6)]
+                )
+          ]
+        : _vm._e()
     ],
     2
   )
@@ -30410,13 +30485,59 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "panel panel-default timeline-posts__item panel-post" },
+      {
+        staticClass:
+          "lg-loading-skeleton panel panel-default timeline-posts__item panel-post"
+      },
       [
-        _c("div", { staticClass: "well text-center" }, [
-          _c("p", [_vm._v("No Post found")])
+        _c(
+          "div",
+          {
+            staticClass:
+              "panel-heading no-bg post-avatar md-layout md-layout--row"
+          },
+          [
+            _c("div", { staticClass: "user-avatar lg-loadable" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "md-layout md-layout--column" }, [
+              _c("div", { staticClass: "user-meta-info lg-loadable" }),
+              _vm._v(" "),
+              _c("div", {
+                staticClass: "user-meta-info lg-loadable user-meta-info--sm"
+              })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel-body" }, [
+          _c("div", { staticClass: "lg-loadable lg-loadable--text" }),
+          _vm._v(" "),
+          _c("div", {
+            staticClass: "lg-loadable lg-loadable--text--lg lg-loadable--text"
+          }),
+          _vm._v(" "),
+          _c("div", {
+            staticClass: "lg-loadable lg-loadable--text--sm lg-loadable--text"
+          })
         ])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "well text-center" }, [
+      _c("p", [_vm._v("No Post found")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "well text-center" }, [
+      _c("p", [_vm._v("No Gallery found")])
+    ])
   }
 ]
 render._withStripped = true
@@ -32307,15 +32428,20 @@ if (false) {
 /* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(128)
+}
 var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = null
 /* template */
-var __vue_template__ = null
+var __vue_template__ = __webpack_require__(127)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -32331,6 +32457,22 @@ var Component = normalizeComponent(
 Component.options.__file = "resources/assets/js/components/child/appChat.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3fba58c2", Component.options)
+  } else {
+    hotAPI.reload("data-v-3fba58c2", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
 module.exports = Component.exports
 
 
@@ -32342,7 +32484,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("app-notification")], 1)
+  return _c("div", [_c("app-notification"), _vm._v(" "), _c("app-chat")], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -36206,6 +36348,179 @@ module.exports = function (css) {
 /***/ (function(module, exports) {
 
 module.exports = ["just now",["%s s","%s s"],["%s m","%s m"],["%s h","%s h"],["%s d","%s d"],["%s w","%s w"],["%s month ago","%s months ago"],["%s year ago","%s years ago"]]
+
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ft-dock-wrapper" }, [
+      _c("div", { staticClass: "ft-chat-group" }, [
+        _c("div", { staticClass: "ft-chat-wrapper" }, [
+          _c("div", { staticClass: "ft-chat-box" }, [
+            _c("div", { staticClass: "ft-chat-box__inner-wrapper" }, [
+              _c("header", { staticClass: "ft-chat-box__header" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "chat-user margin-left-8",
+                    attrs: { href: "javascript:;" }
+                  },
+                  [_vm._v("Prakash")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "md-layout-spacer" }),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "chat-options",
+                    attrs: { href: "javascript:;" }
+                  },
+                  [_c("i", { staticClass: "icon icon-options" })]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "chat-options margin-right-8",
+                    attrs: { href: "javascript:;" }
+                  },
+                  [_c("i", { staticClass: "icon icon-close" })]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "ft-chat-box__body" }, [
+                _c("div", { staticClass: "inner-chat-wrapper" }, [
+                  _c("div", { staticClass: "inner-chat" })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "ft-chat-box__footer" }, [
+                _c("div", { staticClass: "ft-chat__write" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "notranslate _5rpu",
+                      staticStyle: {
+                        outline: "none",
+                        "user-select": "text",
+                        "white-space": "pre-wrap",
+                        "word-wrap": "break-word"
+                      },
+                      attrs: {
+                        "aria-autocomplete": "list",
+                        "aria-controls": "js_31o",
+                        "aria-expanded": "false",
+                        contenteditable: "true",
+                        role: "combobox",
+                        spellcheck: "true"
+                      }
+                    },
+                    [
+                      _c("div", { attrs: { "data-contents": "true" } }, [
+                        _c(
+                          "div",
+                          {
+                            attrs: {
+                              "data-block": "true",
+                              "data-editor": "65i3r",
+                              "data-offset-key": "rklg-0-0"
+                            }
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "_1mf _1mj",
+                                attrs: { "data-offset-key": "rklg-0-0" }
+                              },
+                              [
+                                _c(
+                                  "span",
+                                  { attrs: { "data-offset-key": "rklg-0-0" } },
+                                  [
+                                    _c(
+                                      "span",
+                                      { attrs: { "data-text": "true" } },
+                                      [_vm._v("d")]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3fba58c2", module.exports)
+  }
+}
+
+/***/ }),
+/* 128 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(129);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("6c3d43e8", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3fba58c2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./appChat.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3fba58c2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./appChat.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 129 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.ft-chat-box__inner-wrapper {\n    height: 320px;\n    display: flex;\n    flex-direction: column;\n}\n.inner-chat-wrapper {\n    background: #fff;\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    flex-grow: 1;\n}\n.ft-chat-box__footer{\n    background-color: #fff;\n    padding-bottom: 25px;\n    position: relative;\n    display: flex;\n    flex-shrink: 0;\n}\n.ft-chat__write {\n    border-top: 1px solid #c9d0da;\n    cursor: text;\n    max-height: 90px;\n    min-height: 16px;\n    overflow-x: hidden;\n    overflow-y: auto;\n    padding: 10px 8px 6px;\n    position: relative;\n    width: 100%;\n}\n.inner-chat {\n    overflow-x: hidden;\n    overflow-y: auto;\n    position: relative;\n}\n.ft-chat-box__body{\n    position: relative;\n    flex-grow: 1;\n    display: flex;\n    flex-direction:column;\n    flex-direction:column;\n}\n.ft-dock-wrapper{\n    bottom: 0;\n    height: 32px;\n    left: 0;\n    position: fixed;\n    right: 0;\n    z-index: 300;\n    display: flex;\n    flex-direction: row;\n    justify-content: flex-end;\n    margin: 0 24px;\n}\n.ft-chat-group{\n    display: flex;\n    flex-direction: row;\n}\n.ft-chat-box {\n    position: absolute;\n    bottom: 0;\n    width: 100%;\n    height: auto;\n    left: auto;\n    box-shadow: 0 1px 4px rgba(0, 0, 0, .3);\n    right: 0;\n}\n.ft-chat-wrapper{\n    position: relative;\n    height: 32px;\n    width: 272px;\n}\n.ft-chat-box__header{\n    background-color: #1E7C82;\n    color: #FFF;\n    display: flex;\n    flex-direction: row;\n    height: 32px;\n    align-items: center;\n    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .20);\n    z-index: 2;\n    border-radius: 3px 3px 0 0;\n}\n.ft-chat-box a {\n    color: inherit;\n}\n.ft-chat-box .chat-options .icon {\n    font-size: 14px;\n}\n.ft-chat-box .chat-options{\n    width: 28px;\n    height: 28px;\n    line-height: 28px;\n}\n.margin-right-8 {\n    margin-right: 8px;\n}\n.margin-left-8 {\n    margin-left: 8px;\n}\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);

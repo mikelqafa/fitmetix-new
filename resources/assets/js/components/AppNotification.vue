@@ -2,7 +2,7 @@
     <div>
         <app-notification></app-notification>
         <!--<app-message></app-message>-->
-        <!--<app-chat></app-chat>-->
+        <app-chat></app-chat>
     </div>
 </template>
 <script>

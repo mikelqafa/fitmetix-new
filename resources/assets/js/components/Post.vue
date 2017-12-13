@@ -3,35 +3,53 @@
         <post-theater-view></post-theater-view>
         <post-wholikes-view></post-wholikes-view>
         <template v-if="isLoading">
-            <div  v-show="!noPostFound">
-                <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
-                    <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
-                        <div class="user-avatar lg-loadable"></div>
-                        <div class="md-layout md-layout--column">
-                            <div class="user-meta-info lg-loadable"></div>
-                            <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+            <div v-show="!noPostFound">
+                <template v-if="!onlyImagePost">
+                    <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
+                        <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
+                            <div class="user-avatar lg-loadable"></div>
+                            <div class="md-layout md-layout--column">
+                                <div class="user-meta-info lg-loadable"></div>
+                                <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="lg-loadable lg-loadable--text"></div>
+                            <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
+                            <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
                         </div>
                     </div>
-                    <div class="panel-body">
-                        <div class="lg-loadable lg-loadable--text"></div>
-                        <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
-                        <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
-                    </div>
-                </div>
-                <div v-show="!singlePost" class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
-                    <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
-                        <div class="user-avatar lg-loadable"></div>
-                        <div class="md-layout md-layout--column">
-                            <div class="user-meta-info lg-loadable"></div>
-                            <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+                    <div v-show="!singlePost" class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
+                        <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
+                            <div class="user-avatar lg-loadable"></div>
+                            <div class="md-layout md-layout--column">
+                                <div class="user-meta-info lg-loadable"></div>
+                                <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="lg-loadable lg-loadable--text"></div>
+                            <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
+                            <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
                         </div>
                     </div>
-                    <div class="panel-body">
-                        <div class="lg-loadable lg-loadable--text"></div>
-                        <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
-                        <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
+                </template>
+                <template>
+                    <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
+                        <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
+                            <div class="user-avatar lg-loadable"></div>
+                            <div class="md-layout md-layout--column">
+                                <div class="user-meta-info lg-loadable"></div>
+                                <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="lg-loadable lg-loadable--text"></div>
+                            <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
+                            <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
+                        </div>
                     </div>
-                </div>
+                </template>
             </div>
         </template>
         <template v-else="">
@@ -51,30 +69,35 @@
                     </div>
                 </div>
             </template>
-            <div v-for="(postItem, index) in itemList" :key="postItem.id" class="panel panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
-                <post-header :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
+            <div v-for="(postItem, index) in itemList" v-bind:class="{'post-image' : onlyImagePost }" :key="postItem.id" class="panel panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
+                <post-header v-if="!onlyImagePost"  :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
                 <div class="panel-body">
-                    <post-description :post-html="postItem.description"></post-description>
-                    <post-youtube :post-you-tube="postItem.youtube_video_id" :you-tube-title="postItem.youtube_title"></post-youtube>
+                    <post-description  v-if="!onlyImagePost" :post-html="postItem.description"></post-description>
+                    <post-youtube v-if="!onlyImagePost" :post-you-tube="postItem.youtube_video_id" :you-tube-title="postItem.youtube_title"></post-youtube>
                     <post-image-viewer :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
                     <post-event :post-item="postItem" :post-index="index" :post-img="postItem.images"></post-event>
-                    <post-sound-cloud :soundcloud="postItem.soundcloud_id"></post-sound-cloud>
+                    <post-sound-cloud v-if="!onlyImagePost" :soundcloud="postItem.soundcloud_id"></post-sound-cloud>
                 </div>
-                <post-comment :post-index="index" :post-id="postItem.id" :post-item="postItem"></post-comment>
+                <post-comment v-if="!onlyImagePost"  :post-index="index" :post-id="postItem.id" :post-item="postItem"></post-comment>
             </div>
             <div v-if="isFetchingBottom" class="ft-loading">
                 <span class="ft-loading__dot"></span>
                 <span class="ft-loading__dot"></span>
                 <span class="ft-loading__dot"></span>
             </div>
-            <div class="text-center" v-if="!hasMorePost">
+            <div v-show="!onlyImagePost" class="text-center" v-if="!hasMorePost">
                 No more posts to fetch
             </div>
         </template>
         <template v-if="noPostFound">
-            <div class="panel panel-default timeline-posts__item panel-post">
+            <div v-if="!onlyImagePost" class="panel panel-default timeline-posts__item panel-post">
                 <div class="well text-center">
                     <p>No Post found</p>
+                </div>
+            </div>
+            <div v-else="" class="panel panel-default timeline-posts__item panel-post">
+                <div class="well text-center">
+                    <p>No Gallery found</p>
                 </div>
             </div>
         </template>
@@ -108,7 +131,8 @@
         hasMorePost: true,
         offset: 0,
         noPostFound: false,
-        singlePost: false
+        singlePost: false,
+        onlyImagePost: false
     }
     let vmThat;
     export default {
@@ -136,11 +160,13 @@
                     username =  current_username
                     location =   $('#postByLocation').val()
                     url = base_url + 'get-posts-by-location'
+                    this.onlyImagePost = true
                 }
                 if($('#postByHashTag').length && $('#postByHashTag').val() !== '') {
                     username =  current_username
                     hashtag =   $('#postByHashTag').val()
                     url = base_url + 'get-posts-by-hashtag'
+                    this.onlyImagePost = true
                 }
                 let paginate = 4
                 let _token = $("meta[name=_token]").attr('content')
