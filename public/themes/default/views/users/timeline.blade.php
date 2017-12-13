@@ -169,11 +169,13 @@
 				@elseif($timeline->type == "event")
 					{!! Theme::partial('event-header',compact('event','timeline')) !!}
 				@endif
-                <ul class="nav nav-justified" style="border-top: 1px solid #333;border-bottom: 1px solid #333;">
-                    <li><a style="color:#000" href="{{ url($timeline->username) }}">Posts</a></li>
-                    <li><a style="color: #000;" href="{{ url($timeline->username.'/albums') }}" class="">Gallery</a></li>
-                    <li><a style="color: #000;" href="{{ url($timeline->username.'/events') }}" class="">Events</a></li>
-                </ul>
+                <div class="ft-header-hashtag">
+                    <ul class="nav nav-justified" >
+                        <li class="active is-active"><a href="{{ url($timeline->username) }}">Posts</a></li>
+                        <li><a href="{{ url($timeline->username.'/albums') }}" class="">Gallery</a></li>
+                        <li><a href="{{ url($timeline->username.'/events') }}" class="">Events</a></li>
+                    </ul>
+                </div>
 			</div>
 			<div class="col-md-4 col-lg-4 hidden-sm hidden-xs">
                 <div id="caleandar"></div>

@@ -388,6 +388,8 @@ Route::post('get-posts-by-location','TimelineController@postByLocationAPI');
 
 Route::post('get-posts-by-hashtag','TimelineController@postByDescriptionAPI');
 
+Route::post('get-posts-by-username','TimelineController@postByUsernameAPI');
+
 Route::post('get-single-post','TimelineController@singlePostAPI');
 
 Route::post('get-comments','TimelineController@commentsAPI');

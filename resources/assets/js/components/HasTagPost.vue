@@ -2,45 +2,52 @@
     <div>
         <post-theater-view></post-theater-view>
         <post-wholikes-view></post-wholikes-view>
-        <template v-if="isLoading">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="lg-loading-skeleton ft-image-post">
-                            <div class="ft-image-post__item lg-loadable">
+        <template v-if="!noPostFound">
+            <template v-if="isLoading">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-6">
+                            <div class="lg-loading-skeleton ft-image-post">
+                                <div class="ft-image-post__item lg-loadable">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="lg-loading-skeleton ft-image-post">
-                            <div class="ft-image-post__item lg-loadable">
+                        <div class="col-md-4 col-sm-4 col-xs-6">
+                            <div class="lg-loading-skeleton ft-image-post">
+                                <div class="ft-image-post__item lg-loadable">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="lg-loading-skeleton ft-image-post">
-                            <div class="ft-image-post__item lg-loadable">
+                        <div class="col-md-4">
+                            <div class="lg-loading-skeleton ft-image-post">
+                                <div class="ft-image-post__item lg-loadable">
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </template>
+            <template v-else="">
+                <div class="post-filters">
+                    <div class="ft-grid">
+                        <div v-for="(postItem, index) in itemList" :key="postItem.id" class="ft-grid__item" :id="'ft-post'+postItem.id">
+                            <post-image-viewer :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="isFetchingBottom" class="ft-loading">
+                    <span class="ft-loading__dot"></span>
+                    <span class="ft-loading__dot"></span>
+                    <span class="ft-loading__dot"></span>
+                </div>
+                <div class="hidden text-center" v-if="!hasMorePost">
+                    That&apos;s all for now
+                </div>
+            </template>
         </template>
-        <template v-else="">
-            <div class="container">
-                <div class="row">
-                    <div v-for="(postItem, index) in itemList" :key="postItem.id" class="col-md-4" :id="'ft-post'+postItem.id">
-                        <post-image-viewer :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
-                    </div>
-                </div>
-            </div>
-            <div v-if="isFetchingBottom" class="ft-loading">
-                <span class="ft-loading__dot"></span>
-                <span class="ft-loading__dot"></span>
-                <span class="ft-loading__dot"></span>
-            </div>
-            <div class="text-center" v-if="!hasMorePost">
-                That&apos;s all for now
+        <template>
+            <div class="text-center">
+                No Gallery Found
             </div>
         </template>
     </div>
@@ -84,15 +91,20 @@
                 let location = ''
                 let hashtag = ''
                 username =  current_username
-                hashtag =   $('#postByHashTag').val()
-                url = base_url + 'get-posts-by-hashtag'
-                this.onlyImagePost = true
-                /*if($('#postByLocation').length && $('#postByLocation').val() !== '') {
-                    username =  current_username
+                if($('#postByLocation').length) {
                     location =   $('#postByLocation').val()
                     url = base_url + 'get-posts-by-location'
-                    this.onlyImagePost = true
-                }*/
+                }
+                if($('#postByUsername').length) {
+                    username =   $('#postByUsername').val()
+                    url = base_url + 'get-posts-by-username'
+                }
+                if($('#postByHashTag').length) {
+                    hashtag =   $('#postByHashTag').val()
+                    url = base_url + 'get-posts-by-hashtag'
+                }
+                console.log(location, hashtag, url)
+                this.onlyImagePost = true
                 let paginate = 4
                 let _token = $("meta[name=_token]").attr('content')
                 axios({

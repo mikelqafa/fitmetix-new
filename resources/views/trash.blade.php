@@ -2535,3 +2535,4 @@ return this.theaterPostItem.postIndex !== undefined ? this.$store.state.postItem
         <a :href="ntSeeAllLink">{{ ntSeeAll }}</a>
     </li>
 </ul>
+allAlbums

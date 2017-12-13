@@ -61,6 +61,7 @@
         var current_username = "{{ Auth::user()->username }}";
         var user_id = "{{ Auth::user()->id }}";
     </script>
+    <script src="{{ asset('js/bundle.js') }}" type="text/javascript"></script>
     @if(Setting::get('google_analytics') != NULL)
         {!! Setting::get('google_analytics') !!}
     @endif
@@ -93,7 +94,6 @@
                 PUSHER_KEY: "{{ config('broadcasting.connections.pusher.key') }}"
             };
 </script>
-<script src="{{ asset('js/bundle.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/dialog.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/bootstrap-datetimepicker.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>

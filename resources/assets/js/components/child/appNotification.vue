@@ -69,6 +69,7 @@
                 notificationsLoaded: false,
                 notificationsLoading: false,
                 allNotificationLink: base_url + 'allnotifications',
+                redirect: false,
                 config: {
                     
                 }
@@ -85,8 +86,17 @@
             // Get if there are any unread notifications or conversations
             this.getNotificationsCounter()
             this.fetchOldNotification()
+            this.init()
         },
         methods: {
+            init: function () {
+                let that = this
+                $('#ft-mobile-nt').click( function (e) {
+                    e.preventDefault()
+                    that.markNotificationsRead()
+                    that.redirect = true
+                });
+            },
             notificationUrl: function (item) {
                 let url = ''
                 switch(item.type) {
@@ -127,7 +137,6 @@
             subscribeToPrivateMessageChannel: function(receiverUsername) {
                 let that = this
                 // pusher configuration
-
                 this.NotificationChannel = this.pusher.subscribe(current_username + '-notification-created');
                 this.NotificationChannel.bind('App\\Events\\NotificationPublished', function(data) {
                     data.notification.notified_from = data.notified_from
@@ -238,6 +247,10 @@
                     $.map(that.notifications, function (notification, key) {
                         that.notifications[key].seen = true;
                     });
+                    if(that.redirect) {
+                        that.redirect = false
+                        window.location.href = base_url + 'allnotifications'
+                    }
                 });
             }
         },
@@ -246,6 +259,13 @@
                 if(val !== null) {
                     this.subscribeToPrivateMessageChannel(current_username);
                 }
+            },
+            isShowUCM: function (val) {
+              if(val) {
+                  $('.is-shown-un').addClass('is-visible')
+              } else {
+                  $('.is-shown-un').removeClass('is-visible')
+              }
             }
         },
         computed: {

@@ -2579,15 +2579,38 @@ class TimelineController extends AppBaseController
 
     public function allAlbums($username)
     {
-        $timeline = Timeline::where('username', $username)->first();
-        $albums = $timeline->albums()->with('photos')->get();
+        $mode = "showfeed";
+        $user_post = 'showfeed';
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+
+        $timeline = Timeline::where('username', Auth::user()->username)->first();
+
+        $id = Auth::id();
 
         $trending_tags = trendingTags();
+        $suggested_users = suggestedUsers();
+        $suggested_groups = suggestedGroups();
+        $suggested_pages = suggestedPages();
 
-        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
-        $theme->setTitle(Auth::user()->name.' '.Setting::get('title_seperator').' '.trans('common.albums').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+        $announcement = Announcement::find(Setting::get('announcement'));
+        if ($announcement != null) {
+            $chk_isExpire = $announcement->chkAnnouncementExpire($announcement->id);
 
-        return $theme->scope('albums/index', compact('timeline', 'albums', 'trending_tags'))->render();
+            if ($chk_isExpire == 'notexpired') {
+                $active_announcement = $announcement;
+                if (!$announcement->users->contains(Auth::user()->id)) {
+                    $announcement->users()->attach(Auth::user()->id);
+                }
+            }
+        }
+
+
+        // $next_page_url = url('ajax/get-more-feed-by-location?page=2&ajax=true&hashtag='.$request->hashtag.'&username='.Auth::user()->username);
+
+        $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+
+        return $theme->scope('albums/index', compact('active_announcement', 'username'))
+            ->render();
     }
 
     public function allPhotos($username)
@@ -2621,7 +2644,7 @@ class TimelineController extends AppBaseController
         }
 
         $albums = $timeline->albums()->get();
-        
+
         if (count($albums) > 0) {
             foreach ($albums as $album) {
                 $photos[] = $album->photos()->where('type', 'youtube')->get();
@@ -2632,7 +2655,7 @@ class TimelineController extends AppBaseController
                 }
             }
         }
-        
+
         $trending_tags = trendingTags();
 
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
@@ -3323,6 +3346,55 @@ class TimelineController extends AppBaseController
 
         return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
     }
+    public function postByUsernameAPI(Request $request) {
+        $timeline = Timeline::where('username', $request->username)->first();
+        $user = User::where('timeline_id', $timeline['id'])->first();
+        $allposts = Post::where([['active', 1],['user_id',$user->id]])->get();
+        $posts = [];
+        foreach ($allposts as $key => $value) {
+            if($value->images()->count() > 0) {
+                $posts[$key] = $value;
+            }
+        }
+        foreach ($posts as $post) {
+            if($post->images()->count() > 0) {
+                $post['images'] = $post->images()->get();
+            }
+            if($post->comments()->count() > 0) {
+                $post['comments'] = $post->comments()->where('user_id',$post->user_id)->get();
+            }
+
+            $post['likes_count'] = $post->users_liked()->count();
+            $post['user_liked'] = false;
+
+            if($post['likes_count'] > 0) {
+                if($post->users_liked()->where('user_id',Auth::user()->id)->count()) {
+                    $post['user_liked'] = true;
+                }
+            }
+
+            if($post->type == 'event'){
+                $post['event'] = Event::where('timeline_id',$post->timeline_id)->latest()->get();
+                foreach ($post['event'] as $user_event) {
+                    $user_event['event_details'] = $user_event->timeline->username;
+                    if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
+                        $user_event['event_tags'] = $matches[0];
+                    }
+                    if($user_event->users->contains(Auth::user()->id)){
+                        $user_event['registered'] = true;
+                    }
+                    if($user_event->start_date < Carbon::now()){
+                        $user_event['expired'] = true;
+                    }
+                }
+            }
+        }
+
+        $post_image_path = storage_path().'/uploads/users/gallery/';
+        $event_image_path = storage_path().'/uploads/events/covers/';
+
+        return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
+    }
 
     public function fetchPostLikes(Request $request) {
 
@@ -3505,7 +3577,7 @@ class TimelineController extends AppBaseController
 
         $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
-        return $theme->scope('hashtag', compact('timeline', 'hashtag' ,'posts', 'next_page_url', 'trending_tags', 'suggested_users', 'active_announcement', 'suggested_groups', 'suggested_pages', 'mode', 'user_post'))
+        return $theme->scope('gallery-by-hashtag', compact('timeline', 'hashtag' ,'posts', 'next_page_url', 'trending_tags', 'suggested_users', 'active_announcement', 'suggested_groups', 'suggested_pages', 'mode', 'user_post'))
             ->render();
 
     }
@@ -3536,13 +3608,54 @@ class TimelineController extends AppBaseController
 
         $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
-        return $theme->scope('event-by-location', compact('timeline','location', 'posts', 'next_page_url', 'mode', 'user_post'))
+        return $theme->scope('gallery-by-location', compact('timeline','location', 'posts', 'next_page_url', 'mode', 'user_post'))
             ->render();
 
     }
 
     public function getEventByLocation(Request $request) {
+
+
         $mode = "eventlist";
+
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+
+        $location = '%'.$request->location.'%';
+
+        $user_events = Event::where([['location','LIKE',$location]])->with('timeline')->latest()->get();
+        $id = Auth::id();
+
+        $trending_tags = trendingTags();
+        $suggested_users = suggestedUsers();
+        $suggested_groups = suggestedGroups();
+        $suggested_pages = suggestedPages();
+
+        $event_tags = NULL;
+        if($user_events) {
+            foreach ($user_events as $user_event) {
+                $user_event['registered'] = false;
+                $user_event['expired'] = false;
+                if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
+                    $event_tags['tags'] = $matches[0];
+                    $event_tags['event_id'] = $user_event->id;
+                }
+                if($user_event->users->contains(Auth::user()->id)){
+                    $user_event['registered'] = true;
+                }
+                if($user_event->start_date < Carbon::now()){
+                    $user_event['expired'] = true;
+                }
+            }
+        }
+
+        // $next_page_url = url('ajax/get-more-feed?page=2&ajax=true&hashtag='.$request->hashtag.'&username='.$username);
+
+        $theme->setTitle(trans('common.events').' | '.Setting::get('site_title').' | '.Setting::get('site_tagline'));
+        $location = $request->location;
+        return $theme->scope('event-by-location', compact('location', 'event_tags','next_page_url', 'trending_tags', 'suggested_users', 'suggested_groups', 'suggested_pages', 'mode', 'user_events', 'username'))
+            ->render();
+
+        /*$mode = "eventlist";
 
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
 
@@ -3561,6 +3674,6 @@ class TimelineController extends AppBaseController
         $theme->setTitle(trans('common.events').' | '.Setting::get('site_title').' | '.Setting::get('site_tagline'));
 
         return $theme->scope('event-by-location', compact('location','event_tags','next_page_url', 'trending_tags', 'suggested_users', 'suggested_groups', 'suggested_pages', 'mode', 'user_events', 'username'))
-            ->render();
+            ->render();*/
     }
 }

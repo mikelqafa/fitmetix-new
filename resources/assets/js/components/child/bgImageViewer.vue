@@ -12,8 +12,9 @@
             </swiper>
         </template>
         <template v-else="">
-            <div class="ft-image-post" v-for="(image, imageIndex) in images" @click="showTheater(0)">
-                <div class="ft-image-post__item" v-bind:style="{ backgroundImage: 'url(' + image +')'}">
+            <div class="ft-card ft-card--only-image" v-for="(image, imageIndex) in images" @click="showTheater(0)">
+                <div class="ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" v-bind:style="{ backgroundImage: 'url(' + image +')'}">
+                    <img class="ft-card__img" :src="image">
                 </div>
             </div>
         </template>

@@ -1,3 +1,46 @@
+<link rel="stylesheet" type="text/css" href="{{ asset('css/drawer.css') }}">
+<style>
+    @media screen and (min-width: 960px) {
+        .md-drawer--permanent {
+            width: auto;
+            padding-right: 0px;
+            padding-left: 0;
+            padding-top: 64px;
+            z-index: -1;
+        }
+        .md-drawer--permanent.md-drawer--visible {
+            z-index: 1;
+        }
+        .md-drawer {
+            left: auto;
+            right:0;
+            width: 360px;
+            -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+        }
+        .md-drawer--permanent {
+            -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+            max-width:100%;
+            width: 360px;
+        }
+        .md-drawer--permanent .md-drawer__surface {
+            -webkit-transform:translateX(360px);
+            transform:translateX(360px);
+            width:360px;
+            max-width: none;
+        }
+        .md-drawer--animating .md-drawer__surface {
+            -webkit-transform:translateX(360px);
+            transform:translateX(360px)
+        }
+
+        body.has-permanent-drawer.is-drawer-open {
+            padding-right: 360px;
+            padding-left: 0 !important;
+        }
+    }
+</style>
 <div class="event-wrapper">
     <div class="container-fluid map-view-under">
         <div class="row">
@@ -24,20 +67,22 @@
                         {!! Session::get('message') !!}
                     </div>
                 @endif
-                {{--<div class="pan">
+                <div class="pan">
                     @if(count($user_events))
                         <div class="ft-grid">
                             @php $i = 0; @endphp
                             @foreach($user_events as $user_event)
                                 <div class="ft-grid__item">
                                     <div class="ft-card">
-                                        <a href="javascript:;" class="ft-card__img-wrapper ft-card_drawer-trigger" data-index="{{$i}}">
-                                            @if($user_event->timeline->cover)
+                                        @if($user_event->timeline->cover)
+                                            <a href="javascript:;" class="ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" style="background-image: url('{{ env('STORAGE_URL').'uploads/events/covers/'.$user_event->timeline->cover['source'] }}')" data-index="{{$i}}">
                                                 <img class="ft-card__img" src="{{ env('STORAGE_URL').'uploads/events/covers/'.$user_event->timeline->cover['source'] }}" alt="Event Cover">
-                                            @else
+                                            </a>
+                                        @else
+                                            <a href="javascript:;" class="ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" style="background-image: url('{{ env('STORAGE_URL').'uploads/events/covers/default-cover-event.png' }}')" data-index="{{$i}}">
                                                 <img class="ft-card__img" src="{{ env('STORAGE_URL').'uploads/events/covers/default-cover-event.png' }}" alt="Event Cover">
-                                            @endif
-                                        </a>
+                                            </a>
+                                        @endif
                                         <div class="ft-card__primary hidden-sm hidden-xs">
                                             <div class="ft-card__title">
                                                 <h5 class="ft-event-card__title">{{ $user_event->timeline->name }}</h5>
@@ -114,13 +159,15 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div class="ft-card__img-wrapper">
-                                            @if($user_event->timeline->cover)
+                                        @if($user_event->timeline->cover)
+                                            <div class="ft-card__img-wrapper ft-card__img-wrapper--background" style="background-image: url('{{ env('STORAGE_URL').'uploads/events/covers/'.$user_event->timeline->cover['source'] }}')">
                                                 <img class="ft-card__img" src="{{ env('STORAGE_URL').'uploads/events/covers/'.$user_event->timeline->cover['source'] }}" alt="Event Cover">
-                                            @else
+                                            </div>
+                                        @else
+                                            <div class="ft-card__img-wrapper ft-card__img-wrapper--background" style="background-image: url('{{ env('STORAGE_URL').'uploads/events/covers/default-cover-event.png' }}')">
                                                 <img class="ft-card__img" src="{{ env('STORAGE_URL').'uploads/events/covers/default-cover-event.png' }}" alt="Event Cover">
-                                            @endif
-                                        </div>
+                                            </div>
+                                        @endif
                                         <div class="ft-card__primary">
                                             <div class="ft-card__title">
                                                 <h5 class="ft-event-card__title">{{ $user_event->timeline->name }}</h5>
@@ -220,7 +267,7 @@
                             {{ trans('messages.no_events') }}
                         </div>
                     @endif
-                </div>--}}
+                </div>
             </div>
         </div>
     </div>

@@ -419,6 +419,7 @@ aside .ft-card__img-wrapper {
 .timeline-posts__item,.panel-create {
     max-width: 600px;
     margin-left:auto;
+    margin-top: 20px;
     margin-right:auto;
 }
 body.is-dialog-open {
@@ -583,7 +584,7 @@ a {
     transform: translate(50%, 50%);
     height: 24px;
     width: 24px;
-    margin-top: -6px;
+    margin-top: -2px;
     margin-left: -8px;
     line-height: 24px;
     text-align: center;
@@ -1458,6 +1459,9 @@ a{
     position: relative;
     z-index: 2;
 }
+.ft-card--only-image{
+    min-height: 0;
+}
 .map-view-under{
     position: absolute;
     top:0px;
@@ -1477,7 +1481,7 @@ a{
     background-color: rgba(0,0,0,.34);
 }
 .upper-layer{
-    z-index: 3;
+    z-index: 11;
     position: relative;
 }
 .upper-layer .jumbotron {

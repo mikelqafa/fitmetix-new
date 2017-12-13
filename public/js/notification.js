@@ -27046,6 +27046,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -27067,7 +27074,11 @@ var custTomData = {
     dummy: [],
     inProgress: false,
     hasMorePost: true,
-    offset: 0
+    offset: 0,
+    singlePost: false,
+    noPostFound: false,
+    alreadyHavePost: true,
+    interact: false
 };
 var vmThat = void 0;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -27084,15 +27095,18 @@ var vmThat = void 0;
 
         getDefaultData: function getDefaultData() {
             var that = this;
-            var username = '';
+            var username = current_username;
             var paginate = 4;
             var _token = $("meta[name=_token]").attr('content');
+            if ($('#timeline_username').length) {
+                username = $('#timeline_username').val();
+            }
             axios({
                 method: 'post',
                 responseType: 'json',
                 url: base_url + 'get-posts',
                 data: {
-                    username: current_username,
+                    username: username,
                     paginate: paginate,
                     _token: _token,
                     offset: that.offset
@@ -27105,6 +27119,16 @@ var vmThat = void 0;
                         that.$store.commit('ADD_POST_ITEM_LIST', val);
                         i++;
                     });
+                    if (!i) {
+                        if (!that.interact) {
+                            that.alreadyHavePost = false;
+                            that.noPostFound = true;
+                        } else {
+                            that.noPostFound = true;
+                        }
+                    } else {
+                        that.interact = true;
+                    }
                     setTimeout(function () {
                         emojify.run();
                         hashtagify();
@@ -28369,18 +28393,14 @@ var render = function() {
             _vm.locationLink !== ""
               ? _c("div", { staticClass: "ft-location layout-m-l-0" }, [
                   _c("span", { staticClass: "post-place" }, [
-                    _c(
-                      "a",
-                      { attrs: { target: "_blank", href: _vm.locationLink } },
-                      [
-                        _c("i", { staticClass: "fa fa-map-marker" }),
-                        _vm._v(
-                          " " +
-                            _vm._s(_vm.postData.location) +
-                            "\n                      "
-                        )
-                      ]
-                    )
+                    _c("a", { attrs: { href: _vm.locationLink } }, [
+                      _c("i", { staticClass: "fa fa-map-marker" }),
+                      _vm._v(
+                        " " +
+                          _vm._s(_vm.postData.location) +
+                          "\n                      "
+                      )
+                    ])
                   ])
                 ])
               : _vm._e()
@@ -30113,113 +30133,123 @@ var render = function() {
       _vm._v(" "),
       _c("post-wholikes-view"),
       _vm._v(" "),
-      _vm.isLoading
+      !_vm.noPostFound || _vm.alreadyHavePost
         ? [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: !_vm.singlePost,
-                    expression: "!singlePost"
-                  }
-                ],
-                staticClass:
-                  "lg-loading-skeleton panel panel-default timeline-posts__item panel-post"
-              },
-              [_vm._m(1), _vm._v(" "), _vm._m(2)]
-            )
-          ]
-        : [
-            _vm.isLoadingCurrent ? [_vm._m(3)] : _vm._e(),
-            _vm._v(" "),
-            _vm._l(_vm.itemList, function(postItem, index) {
-              return _c(
-                "div",
-                {
-                  key: postItem.id,
-                  staticClass:
-                    "panel panel-default timeline-posts__item panel-post",
-                  attrs: { id: "ft-post" + postItem.id }
-                },
-                [
-                  _c("post-header", {
-                    attrs: {
-                      "post-data": postItem,
-                      "post-index": index,
-                      date: postItem.created_at
-                    }
-                  }),
+            _vm.isLoading
+              ? [
+                  _vm._m(0),
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "panel-body" },
-                    [
-                      _c("post-description", {
-                        attrs: { "post-html": postItem.description }
-                      }),
-                      _vm._v(" "),
-                      _c("post-youtube", {
-                        attrs: {
-                          "post-you-tube": postItem.youtube_video_id,
-                          "you-tube-title": postItem.youtube_title
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: !_vm.singlePost,
+                          expression: "!singlePost"
                         }
-                      }),
-                      _vm._v(" "),
-                      _c("post-image-viewer", {
-                        attrs: {
-                          "post-event": postItem.event,
-                          "post-index": index,
-                          "post-img": postItem.images
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("post-event", {
-                        attrs: {
-                          "post-item": postItem,
-                          "post-index": index,
-                          "post-img": postItem.images
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("post-sound-cloud", {
-                        attrs: { soundcloud: postItem.soundcloud_id }
-                      })
-                    ],
-                    1
-                  ),
+                      ],
+                      staticClass:
+                        "lg-loading-skeleton panel panel-default timeline-posts__item panel-post"
+                    },
+                    [_vm._m(1), _vm._v(" "), _vm._m(2)]
+                  )
+                ]
+              : [
+                  _vm.isLoadingCurrent ? [_vm._m(3)] : _vm._e(),
                   _vm._v(" "),
-                  _c("post-comment", {
-                    attrs: {
-                      "post-index": index,
-                      "post-id": postItem.id,
-                      "post-item": postItem
-                    }
-                  })
-                ],
-                1
-              )
-            }),
-            _vm._v(" "),
-            _vm.isFetchingBottom
-              ? _c("div", { staticClass: "ft-loading" }, [
-                  _c("span", { staticClass: "ft-loading__dot" }),
+                  _vm._l(_vm.itemList, function(postItem, index) {
+                    return _c(
+                      "div",
+                      {
+                        key: postItem.id,
+                        staticClass:
+                          "panel panel-default timeline-posts__item panel-post",
+                        attrs: { id: "ft-post" + postItem.id }
+                      },
+                      [
+                        _c("post-header", {
+                          attrs: {
+                            "post-data": postItem,
+                            "post-index": index,
+                            date: postItem.created_at
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "panel-body" },
+                          [
+                            _c("post-description", {
+                              attrs: { "post-html": postItem.description }
+                            }),
+                            _vm._v(" "),
+                            _c("post-youtube", {
+                              attrs: {
+                                "post-you-tube": postItem.youtube_video_id,
+                                "you-tube-title": postItem.youtube_title
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("post-image-viewer", {
+                              attrs: {
+                                "post-event": postItem.event,
+                                "post-index": index,
+                                "post-img": postItem.images
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("post-event", {
+                              attrs: {
+                                "post-item": postItem,
+                                "post-index": index,
+                                "post-img": postItem.images
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("post-sound-cloud", {
+                              attrs: { soundcloud: postItem.soundcloud_id }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("post-comment", {
+                          attrs: {
+                            "post-index": index,
+                            "post-id": postItem.id,
+                            "post-item": postItem
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  }),
                   _vm._v(" "),
-                  _c("span", { staticClass: "ft-loading__dot" }),
+                  _vm.isFetchingBottom
+                    ? _c("div", { staticClass: "ft-loading" }, [
+                        _c("span", { staticClass: "ft-loading__dot" }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "ft-loading__dot" }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "ft-loading__dot" })
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("span", { staticClass: "ft-loading__dot" })
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.hasMorePost && !_vm.singlePost
-              ? _c("div", { staticClass: "text-center" }, [
-                  _vm._v("\n            No more posts to fetch\n        ")
-                ])
-              : _vm._e()
+                  !_vm.hasMorePost && !_vm.singlePost
+                    ? _c("div", { staticClass: "text-center" }, [
+                        _vm._v(
+                          "\n                No more posts to fetch\n            "
+                        )
+                      ])
+                    : _vm._e()
+                ]
+          ]
+        : [
+            _c("div", { staticClass: "text-center" }, [
+              _vm._v("\n            No Post Found\n        ")
+            ])
           ]
     ],
     2
@@ -30472,6 +30502,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -30512,15 +30549,20 @@ var vmThat = void 0;
             var location = '';
             var hashtag = '';
             username = current_username;
-            hashtag = $('#postByHashTag').val();
-            url = base_url + 'get-posts-by-hashtag';
+            if ($('#postByLocation').length) {
+                location = $('#postByLocation').val();
+                url = base_url + 'get-posts-by-location';
+            }
+            if ($('#postByUsername').length) {
+                username = $('#postByUsername').val();
+                url = base_url + 'get-posts-by-username';
+            }
+            if ($('#postByHashTag').length) {
+                hashtag = $('#postByHashTag').val();
+                url = base_url + 'get-posts-by-hashtag';
+            }
+            console.log(location, hashtag, url);
             this.onlyImagePost = true;
-            /*if($('#postByLocation').length && $('#postByLocation').val() !== '') {
-                username =  current_username
-                location =   $('#postByLocation').val()
-                url = base_url + 'get-posts-by-location'
-                this.onlyImagePost = true
-            }*/
             var paginate = 4;
             var _token = $("meta[name=_token]").attr('content');
             axios({
@@ -30717,6 +30759,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -30847,7 +30890,7 @@ var render = function() {
                 return _c(
                   "div",
                   {
-                    staticClass: "ft-image-post",
+                    staticClass: "ft-card ft-card--only-image",
                     on: {
                       click: function($event) {
                         _vm.showTheater(0)
@@ -30855,10 +30898,20 @@ var render = function() {
                     }
                   },
                   [
-                    _c("div", {
-                      staticClass: "ft-image-post__item",
-                      style: { backgroundImage: "url(" + image + ")" }
-                    })
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background",
+                        style: { backgroundImage: "url(" + image + ")" }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "ft-card__img",
+                          attrs: { src: image }
+                        })
+                      ]
+                    )
                   ]
                 )
               })
@@ -30892,52 +30945,64 @@ var render = function() {
       _vm._v(" "),
       _c("post-wholikes-view"),
       _vm._v(" "),
-      _vm.isLoading
-        ? [_vm._m(0)]
-        : [
-            _c("div", { staticClass: "container" }, [
-              _c(
-                "div",
-                { staticClass: "row" },
-                _vm._l(_vm.itemList, function(postItem, index) {
-                  return _c(
-                    "div",
-                    {
-                      key: postItem.id,
-                      staticClass: "col-md-4",
-                      attrs: { id: "ft-post" + postItem.id }
-                    },
-                    [
-                      _c("post-image-viewer", {
-                        attrs: {
-                          "post-event": postItem.event,
-                          "post-index": index,
-                          "post-img": postItem.images
-                        }
+      !_vm.noPostFound
+        ? [
+            _vm.isLoading
+              ? [_vm._m(0)]
+              : [
+                  _c("div", { staticClass: "post-filters" }, [
+                    _c(
+                      "div",
+                      { staticClass: "ft-grid" },
+                      _vm._l(_vm.itemList, function(postItem, index) {
+                        return _c(
+                          "div",
+                          {
+                            key: postItem.id,
+                            staticClass: "ft-grid__item",
+                            attrs: { id: "ft-post" + postItem.id }
+                          },
+                          [
+                            _c("post-image-viewer", {
+                              attrs: {
+                                "post-event": postItem.event,
+                                "post-index": index,
+                                "post-img": postItem.images
+                              }
+                            })
+                          ],
+                          1
+                        )
                       })
-                    ],
-                    1
-                  )
-                })
-              )
-            ]),
-            _vm._v(" "),
-            _vm.isFetchingBottom
-              ? _c("div", { staticClass: "ft-loading" }, [
-                  _c("span", { staticClass: "ft-loading__dot" }),
+                    )
+                  ]),
                   _vm._v(" "),
-                  _c("span", { staticClass: "ft-loading__dot" }),
+                  _vm.isFetchingBottom
+                    ? _c("div", { staticClass: "ft-loading" }, [
+                        _c("span", { staticClass: "ft-loading__dot" }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "ft-loading__dot" }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "ft-loading__dot" })
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("span", { staticClass: "ft-loading__dot" })
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.hasMorePost
-              ? _c("div", { staticClass: "text-center" }, [
-                  _vm._v("\n            That's all for now\n        ")
-                ])
-              : _vm._e()
+                  !_vm.hasMorePost
+                    ? _c("div", { staticClass: "hidden text-center" }, [
+                        _vm._v(
+                          "\n                That's all for now\n            "
+                        )
+                      ])
+                    : _vm._e()
+                ]
           ]
+        : _vm._e(),
+      _vm._v(" "),
+      [
+        _c("div", { staticClass: "text-center" }, [
+          _vm._v("\n            No Gallery Found\n        ")
+        ])
+      ]
     ],
     2
   )
@@ -30949,13 +31014,13 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "container" }, [
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-4" }, [
+        _c("div", { staticClass: "col-md-4 col-sm-4 col-xs-6" }, [
           _c("div", { staticClass: "lg-loading-skeleton ft-image-post" }, [
             _c("div", { staticClass: "ft-image-post__item lg-loadable" })
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }, [
+        _c("div", { staticClass: "col-md-4 col-sm-4 col-xs-6" }, [
           _c("div", { staticClass: "lg-loading-skeleton ft-image-post" }, [
             _c("div", { staticClass: "ft-image-post__item lg-loadable" })
           ])
@@ -31807,6 +31872,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             notificationsLoaded: false,
             notificationsLoading: false,
             allNotificationLink: base_url + 'allnotifications',
+            redirect: false,
             config: {}
         };
     },
@@ -31821,9 +31887,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         // Get if there are any unread notifications or conversations
         this.getNotificationsCounter();
         this.fetchOldNotification();
+        this.init();
     },
 
     methods: {
+        init: function init() {
+            var that = this;
+            $('#ft-mobile-nt').click(function (e) {
+                e.preventDefault();
+                that.markNotificationsRead();
+                that.redirect = true;
+            });
+        },
         notificationUrl: function notificationUrl(item) {
             var url = '';
             switch (item.type) {
@@ -31864,7 +31939,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         subscribeToPrivateMessageChannel: function subscribeToPrivateMessageChannel(receiverUsername) {
             var that = this;
             // pusher configuration
-
             this.NotificationChannel = this.pusher.subscribe(current_username + '-notification-created');
             this.NotificationChannel.bind('App\\Events\\NotificationPublished', function (data) {
                 data.notification.notified_from = data.notified_from;
@@ -31973,6 +32047,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 $.map(that.notifications, function (notification, key) {
                     that.notifications[key].seen = true;
                 });
+                if (that.redirect) {
+                    that.redirect = false;
+                    window.location.href = base_url + 'allnotifications';
+                }
             });
         }
     },
@@ -31980,6 +32058,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         pusher: function pusher(val) {
             if (val !== null) {
                 this.subscribeToPrivateMessageChannel(current_username);
+            }
+        },
+        isShowUCM: function isShowUCM(val) {
+            if (val) {
+                $('.is-shown-un').addClass('is-visible');
+            } else {
+                $('.is-shown-un').removeClass('is-visible');
             }
         }
     },

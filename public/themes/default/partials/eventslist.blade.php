@@ -110,7 +110,7 @@
 							</li>
 						</ul>
 
-						<div class="tab-content tab-content--event-filter">
+						<div class="hidden-lg hidden-md tab-content tab-content--event-filter">
 							<div id="home" class="tab-pane fade in active">
 								<fieldset class="form-group required " style="margin-left: 0">
 									<form action="{{ url('filter-events-by-location') }}" method="POST">

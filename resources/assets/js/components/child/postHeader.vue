@@ -26,7 +26,7 @@
                         </div>
                         <div v-if="locationLink !== ''" class="ft-location layout-m-l-0">
                         <span class="post-place">
-                          <a target="_blank" :href="locationLink">
+                          <a :href="locationLink">
                               <i class="fa fa-map-marker"></i> {{ postData.location }}
                           </a>
                         </span>
