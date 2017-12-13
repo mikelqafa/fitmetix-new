@@ -47,7 +47,7 @@
 		</div>
 		<div class="clearfix"></div>
 	</a>
-	<a href="{{ url('/'.Auth::user()->username.'/settings/wallpaper') }}" class="list-group-item">
+	{{-- <a href="{{ url('/'.Auth::user()->username.'/settings/wallpaper') }}" class="list-group-item">
 		<div class="list-icon socialite-icon {{ Request::segment(3) == 'wallpaper' ? 'active' : '' }}">
 			<i class="fa fa-image"></i>
 		</div>
@@ -58,7 +58,7 @@
 			</div>
 		</div>
 		<div class="clearfix"></div>
-	</a>
+	</a> --}}
 	<a href="{{ url('/'.Auth::user()->username.'/settings/notifications') }}" class="list-group-item">
 		<div class="list-icon socialite-icon {{ Request::segment(3) == 'notifications' ? 'active' : '' }}">
 			<i class="fa fa-comments"></i>

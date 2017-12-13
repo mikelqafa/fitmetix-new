@@ -12,11 +12,11 @@
 				
 					<div class="panel-heading no-bg panel-settings">
 					@include('flash::message')
-						<h3 class="panel-title">
+						{{-- <h3 class="panel-title">
 							{{ trans('common.general_settings') }}
-						</h3>
+						</h3> --}}
 					</div>
-					<div class="panel-body nopadding">
+					{{-- <div class="panel-body nopadding">
 						<div class="socialite-form">							
 							<form method="POST" action="{{ url('/'.$username.'/settings/general/') }}">
 								{{ csrf_field() }}
@@ -257,7 +257,7 @@
 							</div><!-- /Fitmetix-form -->
 						</div>
 					</div>
-					<!-- End of first panel -->
+					<!-- End of first panel --> --}}
 
 					<div class="panel panel-default">
 						<div class="panel-heading no-bg panel-settings">
@@ -305,6 +305,33 @@
 							</div><!-- /Fitmetix-form -->
 						</div>
 					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading no-bg panel-settings">
+							<h3 class="panel-title">
+								Change Language
+							</h3>
+						</div>
+						<div class="panel-body nopadding">
+							<div class="socialite-form">								
+								<form method="POST" action="{{ url('/'.Auth::user()->username.'/settings/language/') }}">
+									{{ csrf_field() }}
+
+									<select name="language" class="form-control">
+										<option value="en">EN</option>
+										<option value="es">ES</option>
+									</select>
+									<br/>
+									<div class="pull-right">
+										{{ Form::submit('Update Language', ['class' => 'btn btn-success']) }}
+									</div>
+									<div class="clearfix"></div>
+								</form>
+							</div><!-- /Fitmetix-form -->
+						</div>
+					</div>
+
+
 					<!-- End of second panel -->
 
 				</div>

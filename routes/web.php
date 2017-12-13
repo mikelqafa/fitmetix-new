@@ -312,6 +312,8 @@ Route::group(['prefix' => '/{username}/settings', 'middleware' => ['auth', 'edit
     Route::get('/password', 'UserController@userPasswordSettings');
     Route::post('/password', 'UserController@saveNewPassword');
 
+    Route::post('/language', 'UserController@changeLanguageSetting');
+
     Route::get('/affliates', 'UserController@affliates');
 
     Route::get('/deactivate', 'UserController@deactivate');

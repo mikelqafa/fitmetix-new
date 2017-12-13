@@ -1271,4 +1271,12 @@ class UserController extends AppBaseController
 
       return $theme->scope('users/saved', compact('event_timelines','group_timelines','page_timelines','trending_tags','suggested_pages','suggested_groups','suggested_users','posts','user'))->render();
     }
+
+    public function changeLanguageSetting(Request $request) {
+        $user = User::find(Auth::user()->id);
+        $user->language = $request->language;
+        $user->save();
+        Flash::success('Language Updated');
+        return redirect()->back();
+    }
 }

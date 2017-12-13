@@ -103,7 +103,7 @@ class AddMoneyController extends Controller
 
     	$paypal_conf = \Config::get('paypal');
 
-        $this->_api_context = new ApiContext(new OAuthTokenCredential($paypal_conf['client_id'], $paypal_conf['secret']));
+        $this->_api_context = new ApiContext(new OAuthTokenCredential($paypal_conf['client_id'], $paypal_conf['secret']),$this->req_id);
 
         $paypal_conf['settings']['currency'] = $request->currency;
 
@@ -230,25 +230,26 @@ class AddMoneyController extends Controller
 
         $request->session()->forget('paypal_payment_id');
 
-        if (empty(Input::get('PayerID')) || empty(Input::get('token'))) {
-
-            $request->session()->put('error','Payment failed');
-
-            return Redirect::route('addmoney.paywithpaypal');
-
-        }
+        $paypal_conf = \Config::get('paypal');
+        $this->_api_context = new ApiContext(new OAuthTokenCredential($paypal_conf['client_id'], $paypal_conf['secret']),$this->req_id);
 
         $payment = Payment::get($payment_id, $this->_api_context);
 
         $execution = new PaymentExecution();
 
-        $execution->setPayerId(Input::get('PayerID'));
+        $execution->setPayerId($_GET['PayerID']);
 
         /**Execute the payment **/
 
         $result = $payment->execute($execution, $this->_api_context);
 
         if ($result->getState() == 'approved') { 
+
+            $transactions = $payment->getTransactions();
+            $relatedResources = $transactions[0]->getRelatedResources();
+            $sale = $relatedResources[0]->getSale();
+            Session::put('sale_id',$sale->getId());
+
 
             $request->session()->put('success','Payment success');
 
@@ -280,6 +281,30 @@ class AddMoneyController extends Controller
 
         return Redirect::route('addmoney.paywithpaypal');
 
+    }
+
+     public function refundPayment(Request $request) {
+        $amt = new Amount();
+        $amt->setTotal($request->amount)->setCurrency('USD');
+        $refund = new Refund();
+        $refund->setAmount($amt);
+        $sale = new Sale();
+        $sale->setId('1L578823YC7793059');
+        $paypal_conf = \Config::get('paypal');
+        $this->_api_context = new ApiContext(new OAuthTokenCredential($paypal_conf['client_id'], $paypal_conf['secret']),$this->req_id);
+        try {
+            $refundedSale = $sale->refund($refund, $this->_api_context);
+        } catch (PayPal\Exception\PayPalConnectionException $ex) {
+            echo $ex->getCode();
+            echo $ex->getData();
+            die($ex);
+        } catch (Exception $ex) {
+            die($ex);
+        }
+
+        Session::put('success','Refund success');
+
+        return Redirect::back();
     }
 
   }

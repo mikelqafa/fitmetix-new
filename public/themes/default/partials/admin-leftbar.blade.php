@@ -13,7 +13,7 @@
         </div>
         <span class="clearfix"></span>
     </a>
-    <a href="{{ url('/admin/general-settings') }}" class="list-group-item">
+{{--     <a href="{{ url('/admin/general-settings') }}" class="list-group-item">
 
         <div class="list-icon socialite-icon {{ Request::segment(2) == 'general-settings' ? 'active' : '' }}">
             <i class="fa fa-shield"></i>
@@ -26,8 +26,8 @@
          </div>
      </div>
      <span class="clearfix"></span>
- </a>
- <a href="{{ url('/admin/user-settings') }}" class="list-group-item">
+ </a> --}}
+{{--  <a href="{{ url('/admin/user-settings') }}" class="list-group-item">
 
     <div class="list-icon socialite-icon {{ Request::segment(2) == 'user-settings' ? 'active' : '' }}">
         <i class="fa fa-user-secret"></i>
@@ -40,9 +40,9 @@
         </div>
     </div>
     <span class="clearfix"></span>
-</a>
+</a> --}}
 
-    <a href="{{ url('/admin/wallpapers') }}" class="list-group-item">
+    {{-- <a href="{{ url('/admin/wallpapers') }}" class="list-group-item">
   
         <div class="list-icon socialite-icon {{ Request::segment(2) == 'wallpapers' ? 'active' : '' }}">
             <i class="fa fa-picture-o"></i>
@@ -70,9 +70,9 @@
             </div>
         </div>
         <span class="clearfix"></span>
-    </a>
+    </a> --}}
 
-<a href="{{ url('/admin/event-settings') }}" class="list-group-item">
+{{-- <a href="{{ url('/admin/event-settings') }}" class="list-group-item">
 
     <div class="list-icon socialite-icon {{ Request::segment(2) == 'event-settings' ? 'active' : '' }}">
         <i class="fa fa-calendar"></i>
@@ -85,8 +85,8 @@
         </div>
     </div>
     <span class="clearfix"></span>
-</a>
-<a href="{{ url('/admin/announcements') }}" class="list-group-item">
+</a> --}}
+{{-- <a href="{{ url('/admin/announcements') }}" class="list-group-item">
 
     <div class="list-icon socialite-icon {{ Request::segment(2) == 'announcements' ? 'active' : '' }}">
         <i class="fa fa-bullhorn"></i>
@@ -99,7 +99,7 @@
         </div>
     </div>
     <span class="clearfix"></span>
-</a>
+</a> --}}
 
     <a href="{{ url('/admin/users') }}" class="list-group-item">
 
@@ -148,7 +148,7 @@
         <span class="clearfix"></span>
     </a>   
 
-    <a href="{{ url('/admin/manage-ads') }}" class="list-group-item">
+   {{--  <a href="{{ url('/admin/manage-ads') }}" class="list-group-item">
 
         <div class="list-icon socialite-icon {{ Request::segment(2) == 'manage-ads' ? 'active' : '' }}">
             <i class="fa fa-send"></i>
@@ -161,7 +161,7 @@
             </div>
         </div>
         <span class="clearfix"></span>
-    </a>
+    </a> --}}
 
      <a href="{{ url('/admin/manage-scouts') }}" class="list-group-item">
 
@@ -170,15 +170,15 @@
         </div>
         <div class="list-text">
             <span class="badge pull-right"></span>
-            {{ "Scouts" }}
+            {{ "Manage Scouts" }}
             <div class="text-muted">
-                {{ "Manage scout accounts" }}
+                {{ "Create/view scout accounts" }}
             </div>
         </div>
         <span class="clearfix"></span>
     </a>
 
-    <a href="{{ url('/admin/get-env') }}" class="list-group-item">
+    {{-- <a href="{{ url('/admin/get-env') }}" class="list-group-item">
 
         <div class="list-icon socialite-icon {{ Request::segment(2) == 'get-env' ? 'active' : '' }}">
             <i class="fa fa-cogs"></i>
@@ -191,7 +191,7 @@
             </div>
         </div>
         <span class="clearfix"></span>
-    </a>
+    </a> --}}
 
 </div>
 
