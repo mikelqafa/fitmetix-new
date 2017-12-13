@@ -1525,3 +1525,15 @@ a{
 .nav--event-filter li.active  .hidden-inactive {
    display: none;
 }
+.swiper-wrapper{
+    align-items: center !important;
+}
+.slider--gallery{
+    height: 204px;
+}
+.slider--gallery .item__background{
+    min-height: 100px;
+    height: 204px;
+    background-size: cover;
+    background-position: center center;
+}

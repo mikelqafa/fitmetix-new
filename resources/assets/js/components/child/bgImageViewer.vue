@@ -1,14 +1,14 @@
 <template>
     <div v-if="!noImage" class="post-image--wrapper">
         <template v-if="isMultiple">
-            <swiper :options="swiperOption" class="deal-card-slider">
+            <swiper :options="swiperOption" class="deal-card-slider slider--gallery">
                 <swiper-slide :key="imageIndex" v-for="(image, imageIndex) in images">
                     <a href="javascript:;" :key="imageIndex" @click="showTheater(imageIndex)" class="item__background"
                        :style="{ backgroundImage: 'url(' + image + ')' }"></a>
                 </swiper-slide>
                 <div class="swiper-pagination" slot="pagination"></div>
-                <div class="swiper-button-prev hidden--lt-sm" slot="button-prev"></div>
-                <div class="swiper-button-next hidden--lt-sm" slot="button-next"></div>
+                <div class="swiper-button-prev hidden" slot="button-prev"></div>
+                <div class="swiper-button-next hidden" slot="button-next"></div>
             </swiper>
         </template>
         <template v-else="">
@@ -39,6 +39,7 @@
                     paginationClickable: true,
                     spaceBetween: 0,
                     loop: false,
+                    autoHeight: false,
                     pagination: '.swiper-pagination'
                 }
             }

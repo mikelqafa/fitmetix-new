@@ -7,8 +7,8 @@
                        :style="{ backgroundImage: 'url(' + image + ')' }"></a>
                 </swiper-slide>
                 <div class="swiper-pagination" slot="pagination"></div>
-                <div class="swiper-button-prev hidden--lt-sm" slot="button-prev"></div>
-                <div class="swiper-button-next hidden--lt-sm" slot="button-next"></div>
+                <div class="swiper-button-prev hidden" slot="button-prev"></div>
+                <div class="swiper-button-next hidden" slot="button-next"></div>
             </swiper>
         </template>
         <template v-else="">

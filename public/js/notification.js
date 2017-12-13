@@ -27819,13 +27819,13 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("div", {
-                      staticClass: "swiper-button-prev hidden--lt-sm",
+                      staticClass: "swiper-button-prev hidden",
                       attrs: { slot: "button-prev" },
                       slot: "button-prev"
                     }),
                     _vm._v(" "),
                     _c("div", {
-                      staticClass: "swiper-button-next hidden--lt-sm",
+                      staticClass: "swiper-button-next hidden",
                       attrs: { slot: "button-next" },
                       slot: "button-next"
                     })
@@ -29531,6 +29531,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 paginationClickable: true,
                 spaceBetween: 0,
                 loop: false,
+                autoHeight: true,
                 pagination: '.swiper-pagination',
                 prevButton: '.swiper-button-prev',
                 preloadImages: false,
@@ -30779,6 +30780,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 paginationClickable: true,
                 spaceBetween: 0,
                 loop: false,
+                autoHeight: false,
                 pagination: '.swiper-pagination'
             }
         };
@@ -30845,7 +30847,7 @@ var render = function() {
                 _c(
                   "swiper",
                   {
-                    staticClass: "deal-card-slider",
+                    staticClass: "deal-card-slider slider--gallery",
                     attrs: { options: _vm.swiperOption }
                   },
                   [
@@ -30872,13 +30874,13 @@ var render = function() {
                     }),
                     _vm._v(" "),
                     _c("div", {
-                      staticClass: "swiper-button-prev hidden--lt-sm",
+                      staticClass: "swiper-button-prev hidden",
                       attrs: { slot: "button-prev" },
                       slot: "button-prev"
                     }),
                     _vm._v(" "),
                     _c("div", {
-                      staticClass: "swiper-button-next hidden--lt-sm",
+                      staticClass: "swiper-button-next hidden",
                       attrs: { slot: "button-next" },
                       slot: "button-next"
                     })
