@@ -1545,3 +1545,6 @@ a{
 .swiper-wrapper{
     align-items: center !important;
 }
+.ft-card {
+    max-width: 360px;
+}

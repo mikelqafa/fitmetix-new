@@ -30527,6 +30527,8 @@ var custTomData = {
     hasMorePost: true,
     offset: 0,
     noPostFound: false,
+    alreadyHavePost: true,
+    interact: false,
     singlePost: false,
     onlyImagePost: false
 };
@@ -30587,7 +30589,14 @@ var vmThat = void 0;
                         i++;
                     });
                     if (!i) {
-                        that.noPostFound = true;
+                        if (!that.interact) {
+                            that.alreadyHavePost = false;
+                            that.noPostFound = true;
+                        } else {
+                            that.noPostFound = true;
+                        }
+                    } else {
+                        that.interact = true;
                     }
                     setTimeout(function () {
                         emojify.run();
@@ -30947,7 +30956,7 @@ var render = function() {
       _vm._v(" "),
       _c("post-wholikes-view"),
       _vm._v(" "),
-      !_vm.noPostFound
+      !_vm.noPostFound || _vm.alreadyHavePost
         ? [
             _vm.isLoading
               ? [_vm._m(0)]

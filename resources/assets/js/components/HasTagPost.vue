@@ -2,7 +2,7 @@
     <div>
         <post-theater-view></post-theater-view>
         <post-wholikes-view></post-wholikes-view>
-        <template v-if="!noPostFound">
+        <template v-if="!noPostFound || alreadyHavePost">
             <template v-if="isLoading">
                 <div class="container">
                     <div class="row">
@@ -69,6 +69,8 @@
         hasMorePost: true,
         offset: 0,
         noPostFound: false,
+        alreadyHavePost: true,
+        interact: false,
         singlePost: false,
         onlyImagePost: false
     }
@@ -128,7 +130,14 @@
                             i++
                         });
                         if(!i) {
-                            that.noPostFound = true
+                            if(!that.interact) {
+                                that.alreadyHavePost = false
+                                that.noPostFound = true
+                            } else {
+                                that.noPostFound = true
+                            }
+                        } else {
+                            that.interact = true
                         }
                         setTimeout(function () {
                             emojify.run();
