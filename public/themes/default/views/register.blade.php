@@ -29,8 +29,9 @@
                 <form method="POST" id="signup-form" class="signup-form mobile-align-center md-layout md-layout--column ft-login__wrapper md-align md-align--center-start" action="{{ url('/register') }}">
 
                     <div class="md-layout layout-m-b-1 layout-m-b-1--register md-layout-spacer mobile-layout-column__register mobile-layout-column md-layout--row md-align md-align-start-center">
-                        <div class="mail-form  form-group form-group__adjust">
+                        <div class="mail-form  form-group form-group__adjust pos-rel">
                             <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                            <span class="hidden-lg hidden-md" style="position: absolute; top: 0; left: 0;;"></span>
                             <input class="form-control" id="username" required placeholder="Username" name="username" type="text">
                         </div>
                         <div class="form-group form-group__adjust">

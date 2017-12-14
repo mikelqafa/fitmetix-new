@@ -4,7 +4,9 @@
             <swiper :options="swiperOption" class="deal-card-slider">
                 <swiper-slide :key="imageIndex" v-for="(image, imageIndex) in images">
                     <a href="javascript:;" :key="imageIndex" @click="showTheater(imageIndex)" class="item__background"
-                       :style="{ backgroundImage: 'url(' + image + ')' }"></a>
+                       :style="{ backgroundImage: 'url(' + image + ')' }">
+                        <img class="swiper-image" :href="image">
+                    </a>
                 </swiper-slide>
                 <div class="swiper-pagination" slot="pagination"></div>
                 <div class="swiper-button-prev hidden" slot="button-prev"></div>

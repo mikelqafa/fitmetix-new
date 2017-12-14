@@ -4,12 +4,18 @@
         <div class="ft-cp__presentation">
             <div class="write-post">
                 <div class="write-post__placeholder" v-if="hasNotContent">{{placeholder}}</div>
-                <medium-editor id="create-post-vue" :text='backContent' :options='options'
+                <mention-at :members="members" v-on:at="fetchUser" name-key="name">
+                    <template slot="item" scope="s">
+                        <img :src="s.item.avatar">
+                        <span v-text="s.item.name"></span>
+                    </template>
+                    <medium-editor id="create-post-vue" :text='backContent' :options='options'
                                class="write-post__text"
                                v-on:edit='processEditOperation'
                                style="outline: none; user-select: text; white-space: pre-wrap; word-wrap: break-word;"
                                custom-tag='div'>
                 </medium-editor>
+                </mention-at>
                 <div class="replace-with"></div>
             </div>
         </div>
@@ -17,6 +23,11 @@
 </template>
 
 <style>
+    .atwho-li img {
+        height: 100%;
+        width: auto;
+        border-radius: 50%;
+    }
     .ft-cp {
         display: flex;
         flex-direction: row;
@@ -72,11 +83,14 @@
 
 <script>
     import editor from 'vue2-medium-editor'
+    import At from 'vue-at'
+
     export default {
         data: function () {
             return {
                 userImage: '',
                 placeholder: '',
+                members: [],
                 content: '',
                 backContent: '',
                 viewContent: '',
@@ -133,7 +147,6 @@
                 $('.post-images-upload').trigger('click');
             });
 
-
             // Removing selected image here
             var validFiles = [];
             $('body').on('click','.remove-thumb',function(e) {
@@ -177,7 +190,6 @@
                         //loop for each file selected for uploaded.
                         $.each(files, function(key,val) {
                             validFiles.push(files[key]);
-
                             var reader = new FileReader();
                             reader.onload = function(e) {
                                 var file = e.target;
@@ -192,14 +204,15 @@
                                         "</span>").appendTo(image_holder);
                                 image.onload = function(){
                                     if(this.width < 600 || this.height < 150) {
-                                        alert("Please select a larger image");
+                                        console.log("Please select a larger image");
                                         imgPath = '';
                                         validFiles = [];
                                         image_holder.empty();
                                         files.length = 0;
-                                        $('.post-images-selected').hide('slow');
-                                        $('.post-images-selected').find('span').text(files.length);
-                                        return;
+                                        //let files_length = parseInt($('.post-images-selected').find('span').text())
+                                        //!files_length? $('.post-images-selected').find('span').text(--files_length): $('.post-images-selected').find('span').text('')
+                                        //$('.post-images-selected').hide('slow');
+                                        // return
                                     } else {
                                         let loaderDiv = $('.create-post-form .pip[data-index="'+key+'"]').find('.image-loader-progress')
                                         that.uploadPostImage(key, files, loaderDiv)
@@ -228,9 +241,35 @@
             }
         },
         components: {
+            'mention-at':At,
             'medium-editor': editor
         },
         methods: {
+            fetchUser: function (data) {
+                if(data == '') {
+                    return
+                }
+                let that = this
+                axios({
+                    method: 'get',
+                    responseType: 'json',
+                    url: base_url + 'ajax/get-users-mentions',
+                    params: {
+                        query: data,
+                        limit: 10
+                    }
+                }).then( function (response) {
+                    that.members = []
+                    if(response.status == 200) {
+                       for(let i=0; i<response.data.length; i++) {
+                           that.members.push({avatar: response.data[i].image, name: response.data[i].username})
+                           //console.log({avatar: response.data[i].image, name: response.data[i].username})
+                       }
+                    }
+                }).catch(function(error) {
+                    console.log(error)
+                })
+            },
             replaceImgEmoji: function () {
                 $('.replace-with').html('')
                 $('.replace-with').html($('#create-post-vue').html())

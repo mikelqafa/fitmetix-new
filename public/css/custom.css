@@ -1453,9 +1453,6 @@ a{
 .container--standard {
     max-width: 1024px !important;
 }
-.ft-chat-box {
-    display: none;
-}
 
 .ft-image-post{
     width: 100%;
@@ -1550,4 +1547,28 @@ a{
     max-width: 360px;
     margin-left:auto;
     margin-right:auto;
+}
+.swiper-image {
+    visibility: hidden;
+    display: block;
+    margin: 0 auto;
+    max-height: 600px;
+    max-width: 100%;
+}
+
+.write-post .atwho-li {
+    height: 38px;
+    padding: 2px 8px;
+}
+.write-post .atwho-li span {
+
+}
+.write-post .atwho-cur{
+    background-color: #1E7C82;
+}
+.write-post .atwho-li img {
+    margin-right: 4px;
+}
+.write-post .atwho-view{
+    min-width: 170px;
 }

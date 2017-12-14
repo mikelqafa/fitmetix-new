@@ -44,8 +44,7 @@ document_title = document.title;
   global.resetBack = resetBack
 })(window);
 
-function hashtagify()
-{
+function hashtagify(){
   // Lets turn hashtags in the post clickable
   $('.text-wrapper').each(function() {
     $(this).html($(this).html().replace(
@@ -54,8 +53,7 @@ function hashtagify()
     ));
   });
 }
-function mentionify()
-{
+function mentionify(){
   // Lets turn usernames in the post clickable
   $('.text-wrapper').each(function() {
     $(this).html($(this).html().replace(
@@ -1294,11 +1292,6 @@ $(function () {
   $(document).on('change','.change-cover-input',function(e){
     e.preventDefault();
     $('form.change-cover-form').submit();
-  });
-
-  $("#createPost").mention({
-    remote: SP_source() + 'ajax/get-users-mentions',
-    limit : 10
   });
 
   hashtagify();

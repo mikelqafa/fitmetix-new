@@ -27416,6 +27416,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -27798,17 +27800,26 @@ var render = function() {
                   [
                     _vm._l(_vm.images, function(image, imageIndex) {
                       return _c("swiper-slide", { key: imageIndex }, [
-                        _c("a", {
-                          key: imageIndex,
-                          staticClass: "item__background",
-                          style: { backgroundImage: "url(" + image + ")" },
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              _vm.showTheater(imageIndex)
+                        _c(
+                          "a",
+                          {
+                            key: imageIndex,
+                            staticClass: "item__background",
+                            style: { backgroundImage: "url(" + image + ")" },
+                            attrs: { href: "javascript:;" },
+                            on: {
+                              click: function($event) {
+                                _vm.showTheater(imageIndex)
+                              }
                             }
-                          }
-                        })
+                          },
+                          [
+                            _c("img", {
+                              staticClass: "swiper-image",
+                              attrs: { href: image }
+                            })
+                          ]
+                        )
                       ])
                     }),
                     _vm._v(" "),
@@ -31142,7 +31153,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.ft-cp {\n    display: flex;\n    flex-direction: row;\n}\n.ft-cp__user {\n    height: 40px;\n    width: 40px;\n    background-size: cover;\n    background-position: center;\n    flex-shrink: 0;\n    margin-left: 12px;\n    margin-top: 12px;\n}\n.ft-cp__presentation {\n    flex-grow: 1;\n    min-height: 110px;\n    padding: 20px 30px 12px 12px;\n}\n.write-post, .write-post__text {\n    position: relative;\n    height: inherit;\n    line-height: 20px;\n    word-break: break-all;\n}\n.write-post__text{\n    min-height: 70px;\n}\n.smiley-post {\n    cursor: pointer;\n}\n#create-post-vue img {\n    vertical-align: initial;\n}\n.write-post__text {\n    z-index: 1;\n}\n.write-post__text[contenteditable=\"true\"] {\n    -webkit-user-modify: read-write-plaintext-only;\n}\n.write-post__placeholder {\n    position: absolute;\n    top:0;\n    left:0;\n    color: #757575;\n    opacity: .54;\n}\n.replace-with {\n    height: 0;\n    width: 0;\n    visibility: hidden;\n}\n", ""]);
+exports.push([module.i, "\n.atwho-li img {\n    height: 100%;\n    width: auto;\n    border-radius: 50%;\n}\n.ft-cp {\n    display: flex;\n    flex-direction: row;\n}\n.ft-cp__user {\n    height: 40px;\n    width: 40px;\n    background-size: cover;\n    background-position: center;\n    flex-shrink: 0;\n    margin-left: 12px;\n    margin-top: 12px;\n}\n.ft-cp__presentation {\n    flex-grow: 1;\n    min-height: 110px;\n    padding: 20px 30px 12px 12px;\n}\n.write-post, .write-post__text {\n    position: relative;\n    height: inherit;\n    line-height: 20px;\n    word-break: break-all;\n}\n.write-post__text{\n    min-height: 70px;\n}\n.smiley-post {\n    cursor: pointer;\n}\n#create-post-vue img {\n    vertical-align: initial;\n}\n.write-post__text {\n    z-index: 1;\n}\n.write-post__text[contenteditable=\"true\"] {\n    -webkit-user-modify: read-write-plaintext-only;\n}\n.write-post__placeholder {\n    position: absolute;\n    top:0;\n    left:0;\n    color: #757575;\n    opacity: .54;\n}\n.replace-with {\n    height: 0;\n    width: 0;\n    visibility: hidden;\n}\n", ""]);
 
 // exports
 
@@ -31155,6 +31166,8 @@ exports.push([module.i, "\n.ft-cp {\n    display: flex;\n    flex-direction: row
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue2_medium_editor__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue2_medium_editor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue2_medium_editor__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_at__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_at___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_at__);
 //
 //
 //
@@ -31227,6 +31240,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -31234,6 +31260,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             userImage: '',
             placeholder: '',
+            members: [],
             content: '',
             backContent: '',
             viewContent: '',
@@ -31329,7 +31356,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     //loop for each file selected for uploaded.
                     $.each(files, function (key, val) {
                         _validFiles.push(files[key]);
-
                         var reader = new FileReader();
                         reader.onload = function (e) {
                             var file = e.target;
@@ -31338,14 +31364,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             $("<span class=\"pip\" data-index='" + key + "'>" + "<img class=\"thumb-image\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" + "<a data-id=" + key + " class='remove-thumb'><i class='fa fa-times'></i></a>" + "<div class='image-loader'>" + "<div class='image-loader-progress'></div>" + "</div>" + "</span>").appendTo(image_holder);
                             image.onload = function () {
                                 if (this.width < 600 || this.height < 150) {
-                                    alert("Please select a larger image");
+                                    console.log("Please select a larger image");
                                     imgPath = '';
                                     _validFiles = [];
                                     image_holder.empty();
                                     files.length = 0;
-                                    $('.post-images-selected').hide('slow');
-                                    $('.post-images-selected').find('span').text(files.length);
-                                    return;
+                                    //let files_length = parseInt($('.post-images-selected').find('span').text())
+                                    //!files_length? $('.post-images-selected').find('span').text(--files_length): $('.post-images-selected').find('span').text('')
+                                    //$('.post-images-selected').hide('slow');
+                                    // return
                                 } else {
                                     var loaderDiv = $('.create-post-form .pip[data-index="' + key + '"]').find('.image-loader-progress');
                                     that.uploadPostImage(key, files, loaderDiv);
@@ -31376,9 +31403,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     components: {
+        'mention-at': __WEBPACK_IMPORTED_MODULE_1_vue_at___default.a,
         'medium-editor': __WEBPACK_IMPORTED_MODULE_0_vue2_medium_editor___default.a
     },
     methods: {
+        fetchUser: function fetchUser(data) {
+            if (data == '') {
+                return;
+            }
+            var that = this;
+            axios({
+                method: 'get',
+                responseType: 'json',
+                url: base_url + 'ajax/get-users-mentions',
+                params: {
+                    query: data,
+                    limit: 10
+                }
+            }).then(function (response) {
+                that.members = [];
+                if (response.status == 200) {
+                    for (var i = 0; i < response.data.length; i++) {
+                        that.members.push({ avatar: response.data[i].image, name: response.data[i].username });
+                        //console.log({avatar: response.data[i].image, name: response.data[i].username})
+                    }
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
         replaceImgEmoji: function replaceImgEmoji() {
             $('.replace-with').html('');
             $('.replace-with').html($('#create-post-vue').html());
@@ -31572,22 +31625,46 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _c("medium-editor", {
-            staticClass: "write-post__text",
-            staticStyle: {
-              outline: "none",
-              "user-select": "text",
-              "white-space": "pre-wrap",
-              "word-wrap": "break-word"
+          _c(
+            "mention-at",
+            {
+              attrs: { members: _vm.members, "name-key": "name" },
+              on: { at: _vm.fetchUser },
+              scopedSlots: _vm._u([
+                {
+                  key: "item",
+                  fn: function(s) {
+                    return [
+                      _c("img", { attrs: { src: s.item.avatar } }),
+                      _vm._v(" "),
+                      _c("span", {
+                        domProps: { textContent: _vm._s(s.item.name) }
+                      })
+                    ]
+                  }
+                }
+              ])
             },
-            attrs: {
-              id: "create-post-vue",
-              text: _vm.backContent,
-              options: _vm.options,
-              "custom-tag": "div"
-            },
-            on: { edit: _vm.processEditOperation }
-          }),
+            [
+              _c("medium-editor", {
+                staticClass: "write-post__text",
+                staticStyle: {
+                  outline: "none",
+                  "user-select": "text",
+                  "white-space": "pre-wrap",
+                  "word-wrap": "break-word"
+                },
+                attrs: {
+                  id: "create-post-vue",
+                  text: _vm.backContent,
+                  options: _vm.options,
+                  "custom-tag": "div"
+                },
+                on: { edit: _vm.processEditOperation }
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "replace-with" })
         ],
@@ -33037,7 +33114,7 @@ exports = module.exports = __webpack_require__(1)(undefined);
 
 
 // module
-exports.push([module.i, "\n.ft-chat-box__inner-wrapper {\n    height: 320px;\n    display: flex;\n    flex-direction: column;\n}\n.inner-chat-wrapper {\n    background: #fff;\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    flex-grow: 1;\n}\n.ft-chat-box__footer{\n    background-color: #fff;\n    padding-bottom: 25px;\n    position: relative;\n    display: flex;\n    flex-shrink: 0;\n}\n.ft-chat__write {\n    border-top: 1px solid #c9d0da;\n    cursor: text;\n    max-height: 90px;\n    min-height: 16px;\n    overflow-x: hidden;\n    overflow-y: auto;\n    padding: 10px 8px 6px;\n    position: relative;\n    width: 100%;\n}\n.inner-chat {\n    overflow-x: hidden;\n    overflow-y: auto;\n    position: relative;\n}\n.ft-chat-box__body{\n    position: relative;\n    flex-grow: 1;\n    display: flex;\n    flex-direction:column;\n    flex-direction:column;\n}\n.ft-dock-wrapper{\n    bottom: 0;\n    height: 32px;\n    left: 0;\n    position: fixed;\n    right: 0;\n    z-index: 300;\n    display: flex;\n    flex-direction: row;\n    justify-content: flex-end;\n    margin: 0 24px;\n}\n.ft-chat-group{\n    display: flex;\n    flex-direction: row;\n}\n.ft-chat-box {\n    position: absolute;\n    bottom: 0;\n    width: 100%;\n    height: auto;\n    left: auto;\n    box-shadow: 0 1px 4px rgba(0, 0, 0, .3);\n    right: 0;\n}\n.ft-chat-wrapper{\n    position: relative;\n    height: 32px;\n    width: 272px;\n}\n.ft-chat-box__header{\n    background-color: #1E7C82;\n    color: #FFF;\n    display: flex;\n    flex-direction: row;\n    height: 32px;\n    align-items: center;\n    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .20);\n    z-index: 2;\n    border-radius: 3px 3px 0 0;\n}\n.ft-chat-box a {\n    color: inherit;\n}\n.ft-chat-box .chat-options .icon {\n    font-size: 14px;\n}\n.ft-chat-box .chat-options{\n    width: 28px;\n    height: 28px;\n    line-height: 28px;\n}\n.margin-right-8 {\n    margin-right: 8px;\n}\n.margin-left-8 {\n    margin-left: 8px;\n}\n", ""]);
+exports.push([module.i, "\n.chat-item__content-wrapper{\n    display: flex;\n    flex-direction: row;\n    flex-wrap: wrap;\n    line-height: 1.28;\n    padding: 0 0 1px 0;\n}\n.chat-item__bubble{\n    min-height: 24px;\n    position: relative;\n    background-color: #fafafa;\n    border: 0;\n    color: #4b4f56;\n    min-height: 22px;\n    min-width: 14px;\n    overflow: hidden;\n    position: relative;\n    white-space: pre-wrap;\n    border-bottom-right-radius: 12px;\n    border-top-right-radius: 12px;\n}\n.chat-item {\n    margin: 10px 9px 10px 9px;\n    position: relative;\n    justify-content: flex-start;\n    align-items: flex-end;\n    display: flex;\n    flex-direction: row;\n}\n.chat-item__content{\n    display: flex;\n    flex: 1 1 auto;\n    flex-direction: column;\n}\n.chat-item__user{\n    position: relative;\n}\n.chat-item__user a {\n    display: inline-block;\n    height: 32px;\n    position: relative;\n    width: 32px;\n}\n.chat-item__user img {\n    border-radius: 50%;\n    height: 32px;\n    width: 32px;\n}\n.user_is-online {\n    background-color: #42b72a;\n    border: 2px solid #fff;\n    height: 7px;\n    width: 7px;\n    border-radius: 50%;\n    bottom: 1px;\n    position: absolute;\n    right: -1px;\n    z-index: 1;\n    box-sizing: content-box;\n}\n.ft-chat__quick-action {\n    position: absolute;\n    bottom: 0;\n    left: 0;\n    width: 100%;\n    height: 28px;\n    display: flex;\n    flex-direction: row;\n    flex-grow: 1;\n    align-items: center;\n    justify-content: space-around;\n}\n.btn--icon{\n    height: 24px;\n    width: 24px;\n    align-items: center;\n    justify-content: center;\n    display: flex;\n}\n.btn--icon .icon {\n    line-height: 1;\n    font-size: 18px;\n}\n.btn--icon--fa{\n    font-size: 20px;\n}\n.ft-chat__write-button-wrapper{\n    position: absolute;\n    top:4px;\n    left:auto;\n    right:11px;\n}\n.ft-chat__write-button-wrapper svg {\n    height: 20px;\n    width: 20px;\n    margin-left: 1px;\n}\n.ft-chat__write-button-wrapper .btn {\n    height: 28px;\n    width: 28px;\n    border-radius: 50%;\n    padding: 3px;\n    background-color: #1E7C82;\n    box-shadow: 0 0 0 1px rgba(0,0,0,.12);\n}\n.ft-chat__write-box {\n    cursor: text;\n    flex-grow: 1;\n    border-radius: 16px;\n    border: 1px solid rgba(0,0,0,.12);\n    padding: 4px 10px;\n    min-height: 32px;\n    max-height: 80px;\n    overflow-x: hidden;\n    overflow-y: auto;\n}\n.ft-chat-box__inner-wrapper {\n    height: 320px;\n    display: flex;\n    flex-direction: column;\n    overflow-x: hidden;\n}\n.inner-chat-wrapper {\n    background: #fff;\n    overflow: hidden;\n    height: 100%;\n    width: 100%;\n    flex-grow: 1;\n}\n.ft-chat-box__footer{\n    background-color: #fff;\n    padding-bottom: 28px;\n    padding-top: 2px;\n    position: relative;\n    display: flex;\n    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);\n    flex-shrink: 0;\n}\n.ft-chat__write {\n    max-height: 90px;\n    min-height: 16px;\n    overflow-x: hidden;\n    overflow-y: auto;\n    padding: 2px 4px;\n    position: relative;\n    width: 100%;\n    display: flex;\n    flex-direction: row;\n    align-items: center;\n}\n.inner-chat {\n    overflow-x: hidden;\n    overflow-y: auto;\n    position: relative;\n}\n.ft-chat-box__body{\n    position: relative;\n    flex-grow: 1;\n    display: flex;\n    flex-direction:column;\n}\n.ft-dock-wrapper{\n    bottom: 0;\n    height: 32px;\n    left: 0;\n    position: fixed;\n    right: 0;\n    z-index: 300;\n    display: flex;\n    flex-direction: row;\n    justify-content: flex-end;\n    margin: 0 24px;\n}\n.ft-chat-group{\n    display: flex;\n    flex-direction: row;\n}\n.ft-chat-box {\n    position: absolute;\n    bottom: 0;\n    width: 100%;\n    height: auto;\n    left: auto;\n    box-shadow: 0 1px 4px rgba(0, 0, 0, .3);\n    right: 0;\n}\n.ft-chat-wrapper{\n    position: relative;\n    height: 32px;\n    width: 270px;\n}\n.ft-chat-box__header{\n    background-color: #1E7C82;\n    color: #FFF;\n    display: flex;\n    flex-direction: row;\n    height: 32px;\n    align-items: center;\n    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .20);\n    z-index: 2;\n    border-radius: 3px 3px 0 0;\n}\n.ft-chat-box a {\n    color: inherit;\n}\n.ft-chat-box .chat-options .icon {\n    font-size: 14px;\n}\n.ft-chat-box .chat-options{\n    width: 28px;\n    height: 28px;\n    line-height: 28px;\n}\n.margin-right-8 {\n    margin-right: 8px;\n}\n.margin-left-8 {\n    margin-left: 8px;\n}\n", ""]);
 
 // exports
 
@@ -33050,119 +33127,223 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "ft-dock-wrapper" }, [
+    _c("div", { staticClass: "ft-chat-group" }, [
+      _c("div", { staticClass: "ft-chat-wrapper" }, [
+        _c("div", { staticClass: "ft-chat-box" }, [
+          _c("div", { staticClass: "ft-chat-box__inner-wrapper" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "ft-chat-box__footer" }, [
+              _c("div", { staticClass: "ft-chat__write" }, [
+                _vm._m(2),
+                _vm._v(" "),
+                _c("div", { staticClass: "ft-chat__write-button-wrapper" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn ft-chat__write-button",
+                      attrs: { type: "submit" }
+                    },
+                    [
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "svg-icon",
+                          attrs: {
+                            fill: "#ffffff",
+                            height: "24",
+                            viewBox: "0 0 24 24",
+                            width: "24",
+                            xmlns: "http://www.w3.org/2000/svg"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            attrs: {
+                              d: "M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("path", {
+                            attrs: { d: "M0 0h24v24H0z", fill: "none" }
+                          })
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(3)
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "ft-dock-wrapper" }, [
-      _c("div", { staticClass: "ft-chat-group" }, [
-        _c("div", { staticClass: "ft-chat-wrapper" }, [
-          _c("div", { staticClass: "ft-chat-box" }, [
-            _c("div", { staticClass: "ft-chat-box__inner-wrapper" }, [
-              _c("header", { staticClass: "ft-chat-box__header" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "chat-user margin-left-8",
-                    attrs: { href: "javascript:;" }
-                  },
-                  [_vm._v("Prakash")]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "md-layout-spacer" }),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "chat-options",
-                    attrs: { href: "javascript:;" }
-                  },
-                  [_c("i", { staticClass: "icon icon-options" })]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "chat-options margin-right-8",
-                    attrs: { href: "javascript:;" }
-                  },
-                  [_c("i", { staticClass: "icon icon-close" })]
-                )
-              ]),
+    return _c("header", { staticClass: "ft-chat-box__header" }, [
+      _c(
+        "a",
+        {
+          staticClass: "chat-user margin-left-8",
+          attrs: { href: "javascript:;" }
+        },
+        [_vm._v("Prakash")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "md-layout-spacer" }),
+      _vm._v(" "),
+      _c(
+        "a",
+        { staticClass: "chat-options", attrs: { href: "javascript:;" } },
+        [_c("i", { staticClass: "icon icon-options" })]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "chat-options margin-right-8",
+          attrs: { href: "javascript:;" }
+        },
+        [_c("i", { staticClass: "icon icon-close" })]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ft-chat-box__body" }, [
+      _c("div", { staticClass: "inner-chat-wrapper" }, [
+        _c("div", { staticClass: "inner-chat" }, [
+          _c("div", { staticClass: "chat-item" }, [
+            _c("div", { staticClass: "chat-item__user" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "_4tdw",
+                  attrs: {
+                    "aria-label": "Prem Bharti Wednesday 7:08pm",
+                    "data-hover": "tooltip",
+                    "data-tooltip-content": "Prem Bharti Wednesday 7:08pm",
+                    "data-tooltip-position": "left",
+                    href: "https://www.facebook.com/prembharti786"
+                  }
+                },
+                [
+                  _c("img", {
+                    staticClass: "img",
+                    attrs: {
+                      src:
+                        "https://scontent.fccu2-1.fna.fbcdn.net/v/t1.0-1/p50x50/14713516_1171655996236869_9059786452811945365_n.jpg?oh=ff46ba9eebd83f610e7dd085a1c301cb&oe=5AC4DE34",
+                      alt: ""
+                    }
+                  })
+                ]
+              ),
               _vm._v(" "),
-              _c("div", { staticClass: "ft-chat-box__body" }, [
-                _c("div", { staticClass: "inner-chat-wrapper" }, [
-                  _c("div", { staticClass: "inner-chat" })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "ft-chat-box__footer" }, [
-                _c("div", { staticClass: "ft-chat__write" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "notranslate _5rpu",
-                      staticStyle: {
-                        outline: "none",
-                        "user-select": "text",
-                        "white-space": "pre-wrap",
-                        "word-wrap": "break-word"
-                      },
-                      attrs: {
-                        "aria-autocomplete": "list",
-                        "aria-controls": "js_31o",
-                        "aria-expanded": "false",
-                        contenteditable: "true",
-                        role: "combobox",
-                        spellcheck: "true"
-                      }
-                    },
-                    [
-                      _c("div", { attrs: { "data-contents": "true" } }, [
-                        _c(
-                          "div",
-                          {
-                            attrs: {
-                              "data-block": "true",
-                              "data-editor": "65i3r",
-                              "data-offset-key": "rklg-0-0"
-                            }
-                          },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "_1mf _1mj",
-                                attrs: { "data-offset-key": "rklg-0-0" }
-                              },
-                              [
-                                _c(
-                                  "span",
-                                  { attrs: { "data-offset-key": "rklg-0-0" } },
-                                  [
-                                    _c(
-                                      "span",
-                                      { attrs: { "data-text": "true" } },
-                                      [_vm._v("d")]
-                                    )
-                                  ]
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ]
-                  )
-                ])
+              _c("div", { staticClass: "user_is-online" })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "chat-item__content" }, [
+              _c("div", { staticClass: "chat-item__content-wrapper" }, [
+                _c("div", { staticClass: "chat-item__content-text" })
               ])
             ])
           ])
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "ft-chat__write-box notranslate _5rpu",
+        staticStyle: {
+          outline: "none",
+          "user-select": "text",
+          "white-space": "pre-wrap",
+          "word-wrap": "break-word"
+        },
+        attrs: {
+          "aria-autocomplete": "list",
+          "aria-controls": "js_31o",
+          "aria-expanded": "false",
+          contenteditable: "true",
+          role: "combobox",
+          spellcheck: "true"
+        }
+      },
+      [
+        _c("div", { attrs: { "data-contents": "true" } }, [
+          _c(
+            "div",
+            {
+              attrs: {
+                "data-block": "true",
+                "data-editor": "65i3r",
+                "data-offset-key": "rklg-0-0"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "_1mf _1mj",
+                  attrs: { "data-offset-key": "rklg-0-0" }
+                },
+                [
+                  _c("span", { attrs: { "data-offset-key": "rklg-0-0" } }, [
+                    _c("span", { attrs: { "data-text": "true" } }, [
+                      _vm._v("d")
+                    ])
+                  ])
+                ]
+              )
+            ]
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ft-chat__quick-action" }, [
+      _c(
+        "a",
+        { staticClass: "btn btn--icon", attrs: { href: "javascript:;" } },
+        [_c("i", { staticClass: "icon icon-add" })]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        { staticClass: "btn btn--icon", attrs: { href: "javascript:;" } },
+        [_c("i", { staticClass: "icon icon-photo" })]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn--icon btn--icon--fa",
+          attrs: { href: "javascript:;" }
+        },
+        [_c("i", { staticClass: "fa fa-smile-o" })]
+      )
     ])
   }
 ]
@@ -37047,6 +37228,1004 @@ module.exports = function (css) {
 /***/ (function(module, exports) {
 
 module.exports = ["just now",["%s s","%s s"],["%s m","%s m"],["%s h","%s h"],["%s d","%s d"],["%s w","%s w"],["%s month ago","%s months ago"],["%s year ago","%s years ago"]]
+
+/***/ }),
+/* 136 */
+/***/ (function(module, exports) {
+
+module.exports =
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+/******/
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  scopeId,
+  cssModules
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  // inject cssModules
+  if (cssModules) {
+    var computed = options.computed || (options.computed = {})
+    Object.keys(cssModules).forEach(function (key) {
+      var module = cssModules[key]
+      computed[key] = function () { return module }
+    })
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["f"] = scrollIntoView;
+/* harmony export (immutable) */ __webpack_exports__["e"] = applyRange;
+/* harmony export (immutable) */ __webpack_exports__["d"] = getRange;
+/* harmony export (immutable) */ __webpack_exports__["a"] = getAtAndIndex;
+/* harmony export (immutable) */ __webpack_exports__["b"] = getOffset;
+/* harmony export (immutable) */ __webpack_exports__["g"] = closest;
+/* harmony export (immutable) */ __webpack_exports__["c"] = getPrecedingRange;
+// bug report: https://github.com/vuejs/awesome-vue/pull/1028
+// https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoViewIfNeeded
+function scrollIntoView(el, scrollParent) {
+  if (el.scrollIntoViewIfNeeded) {
+    el.scrollIntoViewIfNeeded(false); // alignToCenter=false
+  } else {
+    // should not use `el.scrollIntoView(false)` // alignToTop=false
+    // bug report: https://stackoverflow.com/questions/11039885/scrollintoview-causing-the-whole-page-to-move
+    var diff = el.offsetTop - scrollParent.scrollTop;
+    if (diff < 0 || diff > scrollParent.offsetHeight - el.offsetHeight) {
+      scrollParent = scrollParent || el.parentElement;
+      scrollParent.scrollTop = el.offsetTop;
+    }
+  }
+}
+
+function applyRange(range) {
+  var selection = window.getSelection();
+  if (selection) {
+    // 容错
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+}
+function getRange() {
+  var selection = window.getSelection();
+  if (selection && selection.rangeCount > 0) {
+    return selection.getRangeAt(0);
+  }
+}
+
+function getAtAndIndex(text, ats) {
+  return ats.map(function (at) {
+    return { at: at, index: text.lastIndexOf(at) };
+  }).reduce(function (a, b) {
+    return a.index > b.index ? a : b;
+  });
+}
+
+/* eslint-disable */
+// http://stackoverflow.com/questions/26747240/plain-javascript-replication-to-offset-and-position
+function getOffset(element, target) {
+  // var element = document.getElementById(element),
+  //     target  = target ? document.getElementById(target) : window;
+  target = target || window;
+  var offset = { top: element.offsetTop, left: element.offsetLeft },
+      parent = element.offsetParent;
+  while (parent != null && parent != target) {
+    offset.left += parent.offsetLeft;
+    offset.top += parent.offsetTop;
+    parent = parent.offsetParent;
+  }
+  return offset;
+}
+// http://stackoverflow.com/questions/3972014/get-caret-position-in-contenteditable-div
+function closest(el, predicate) {
+  /* eslint-disable */
+  do {
+    if (predicate(el)) return el;
+  } while (el = el && el.parentNode);
+}
+// http://stackoverflow.com/questions/15157435/get-last-character-before-caret-position-in-javascript
+// 修复 "空格+表情+空格+@" range报错 应设(endContainer, 0)
+// stackoverflow上的这段代码有bug
+function getPrecedingRange() {
+  var r = getRange();
+  if (r) {
+    var range = r.cloneRange();
+    range.collapse(true);
+    // var el = closest(range.endContainer, d => d.contentEditable)
+    // range.setStart(el, 0)
+    range.setStart(range.endContainer, 0);
+    return range;
+  }
+}
+/* eslint-enable */
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AtTemplate_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__AtTemplate_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__AtTemplate_vue__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'At',
+  mixins: [__WEBPACK_IMPORTED_MODULE_1__AtTemplate_vue___default.a],
+  props: {
+    at: {
+      type: String,
+      default: null
+    },
+    ats: {
+      type: Array,
+      default: function _default() {
+        return ['@'];
+      }
+    },
+    suffix: {
+      type: String,
+      default: ' '
+    },
+    loop: {
+      type: Boolean,
+      default: true
+    },
+    allowSpaces: {
+      type: Boolean,
+      default: true
+    },
+    avoidEmail: {
+      type: Boolean,
+      default: true
+    },
+    hoverSelect: {
+      type: Boolean,
+      default: true
+    },
+    members: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+    nameKey: {
+      type: String,
+      default: ''
+    },
+    filterMatch: {
+      type: Function,
+      default: function _default(name, chunk, at) {
+        // match at lower-case
+        return name.toLowerCase().indexOf(chunk.toLowerCase()) > -1;
+      }
+    },
+    deleteMatch: {
+      type: Function,
+      default: function _default(name, chunk, suffix) {
+        return chunk === name + suffix;
+      }
+    }
+  },
+
+  data: function data() {
+    return {
+      hasComposition: false,
+      atwho: null
+    };
+  },
+
+  computed: {
+    atItems: function atItems() {
+      return this.at ? [this.at] : this.ats;
+    },
+    style: function style() {
+      if (this.atwho) {
+        var _atwho = this.atwho,
+            list = _atwho.list,
+            cur = _atwho.cur,
+            x = _atwho.x,
+            y = _atwho.y;
+        var wrap = this.$refs.wrap;
+
+        if (wrap) {
+          var offset = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["b" /* getOffset */])(wrap);
+          var left = x + window.pageXOffset - offset.left + 'px';
+          var top = y + window.pageYOffset - offset.top + 'px';
+          return { left: left, top: top };
+        }
+      }
+      return null;
+    }
+  },
+  watch: {
+    'atwho.cur': function atwhoCur(index) {
+      var _this = this;
+
+      if (index != null) {
+        // cur index exists
+        this.$nextTick(function () {
+          _this.scrollToCur();
+        });
+      }
+    },
+    members: function members() {
+      this.handleInput(true);
+    }
+  },
+
+  methods: {
+    itemName: function itemName(v) {
+      var nameKey = this.nameKey;
+
+      return nameKey ? v[nameKey] : v;
+    },
+    isCur: function isCur(index) {
+      return index === this.atwho.cur;
+    },
+    handleItemHover: function handleItemHover(e) {
+      if (this.hoverSelect) {
+        this.selectByMouse(e);
+      }
+    },
+    handleItemClick: function handleItemClick(e) {
+      this.selectByMouse(e);
+      this.insertItem();
+    },
+    handleDelete: function handleDelete(e) {
+      var range = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["c" /* getPrecedingRange */])();
+      if (range) {
+        var atItems = this.atItems,
+            members = this.members,
+            suffix = this.suffix,
+            deleteMatch = this.deleteMatch,
+            itemName = this.itemName;
+
+        var text = range.toString();
+
+        var _getAtAndIndex = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["a" /* getAtAndIndex */])(text, atItems),
+            at = _getAtAndIndex.at,
+            index = _getAtAndIndex.index;
+
+        if (index > -1) {
+          var chunk = text.slice(index + at.length);
+          var has = members.some(function (v) {
+            var name = itemName(v);
+            return deleteMatch(name, chunk, suffix);
+          });
+          if (has) {
+            e.preventDefault();
+            e.stopPropagation();
+            var r = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["d" /* getRange */])();
+            if (r) {
+              r.setStart(r.endContainer, index);
+              r.deleteContents();
+              __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["e" /* applyRange */])(r);
+              this.handleInput();
+            }
+          }
+        }
+      }
+    },
+    handleKeyDown: function handleKeyDown(e) {
+      var atwho = this.atwho;
+
+      if (atwho) {
+        if (e.keyCode === 38 || e.keyCode === 40) {
+          // ↑/↓
+          if (!(e.metaKey || e.ctrlKey)) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.selectByKeyboard(e);
+          }
+          return;
+        }
+        if (e.keyCode === 13) {
+          // enter
+          this.insertItem();
+          e.preventDefault();
+          e.stopPropagation();
+          return;
+        }
+        if (e.keyCode === 27) {
+          // esc
+          this.closePanel();
+          return;
+        }
+      }
+
+      var isChar = e.keyCode >= 48 && e.keyCode <= 90;
+      if (isChar) {
+        setTimeout(this.handleInput, 50);
+      }
+
+      if (e.keyCode === 8) {
+        this.handleDelete(e);
+      }
+    },
+
+
+    // compositionStart -> input -> compositionEnd
+    handleCompositionStart: function handleCompositionStart() {
+      this.hasComposition = true;
+    },
+    handleCompositionEnd: function handleCompositionEnd() {
+      this.hasComposition = false;
+      this.handleInput();
+    },
+    handleInput: function handleInput(keep) {
+      if (this.hasComposition) return;
+      var range = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["c" /* getPrecedingRange */])();
+      if (range) {
+        var atItems = this.atItems,
+            avoidEmail = this.avoidEmail,
+            allowSpaces = this.allowSpaces;
+
+
+        var show = true;
+        var text = range.toString();
+
+        var _getAtAndIndex2 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["a" /* getAtAndIndex */])(text, atItems),
+            at = _getAtAndIndex2.at,
+            index = _getAtAndIndex2.index;
+
+        if (index < 0) show = false;
+        var prev = text[index - 1];
+
+        var chunk = text.slice(index + at.length, text.length);
+
+        if (avoidEmail) {
+          // 上一个字符不能为字母数字 避免与邮箱冲突
+          // 微信则是避免 所有字母数字及半角符号
+          if (/^[a-z0-9]$/i.test(prev)) show = false;
+        }
+
+        if (!allowSpaces && /\s/.test(chunk)) {
+          show = false;
+        }
+
+        // chunk以空白字符开头不匹配 避免`@ `也匹配
+        if (/^\s/.test(chunk)) show = false;
+
+        if (!show) {
+          this.closePanel();
+        } else {
+          var members = this.members,
+              filterMatch = this.filterMatch,
+              itemName = this.itemName;
+
+          if (!keep) {
+            this.$emit('at', chunk);
+          }
+          var matched = members.filter(function (v) {
+            var name = itemName(v);
+            return filterMatch(name, chunk, at);
+          });
+          if (matched.length) {
+            this.openPanel(matched, range, index, at);
+          } else {
+            this.closePanel();
+          }
+        }
+      }
+    },
+    closePanel: function closePanel() {
+      if (this.atwho) {
+        this.atwho = null;
+      }
+    },
+    openPanel: function openPanel(list, range, offset, at) {
+      var _this2 = this;
+
+      var fn = function fn() {
+        var r = range.cloneRange();
+        r.setStart(r.endContainer, offset + at.length); // 从@后第一位开始
+        // todo: 根据窗口空间 判断向上或是向下展开
+        var rect = r.getClientRects()[0];
+        _this2.atwho = {
+          range: range,
+          offset: offset,
+          list: list,
+          x: rect.left,
+          y: rect.top - 4,
+          cur: 0 // todo: 尽可能记录
+        };
+      };
+      if (this.atwho) {
+        fn();
+      } else {
+        // 焦点超出了显示区域 需要提供延时以移动指针 再计算位置
+        setTimeout(fn, 10);
+      }
+    },
+    scrollToCur: function scrollToCur() {
+      var curEl = this.$refs.cur[0];
+      var scrollParent = curEl.parentElement.parentElement; // .atwho-view
+      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["f" /* scrollIntoView */])(curEl, scrollParent);
+    },
+    selectByMouse: function selectByMouse(e) {
+      var el = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["g" /* closest */])(e.target, function (d) {
+        return d.getAttribute('data-index');
+      });
+      var cur = +el.getAttribute('data-index');
+      this.atwho = _extends({}, this.atwho, {
+        cur: cur
+      });
+    },
+    selectByKeyboard: function selectByKeyboard(e) {
+      var offset = e.keyCode === 38 ? -1 : 1;
+      var _atwho2 = this.atwho,
+          cur = _atwho2.cur,
+          list = _atwho2.list;
+
+      var nextCur = this.loop ? (cur + offset + list.length) % list.length : Math.max(0, Math.min(cur + offset, list.length - 1));
+      this.atwho = _extends({}, this.atwho, {
+        cur: nextCur
+      });
+    },
+
+
+    // todo: 抽离成库并测试
+    insertText: function insertText(text, r) {
+      r.deleteContents();
+      var node = r.endContainer;
+      if (node.nodeType === Node.TEXT_NODE) {
+        var cut = r.endOffset;
+        node.data = node.data.slice(0, cut) + text + node.data.slice(cut);
+        r.setEnd(node, cut + text.length);
+      } else {
+        var t = document.createTextNode(text);
+        r.insertNode(t);
+        r.setEndAfter(t);
+      }
+      r.collapse(false); // 参数在IE下必传
+      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["e" /* applyRange */])(r);
+    },
+    insertItem: function insertItem() {
+      var _atwho3 = this.atwho,
+          range = _atwho3.range,
+          offset = _atwho3.offset,
+          list = _atwho3.list,
+          cur = _atwho3.cur;
+      var suffix = this.suffix,
+          atItems = this.atItems,
+          itemName = this.itemName;
+
+      var r = range.cloneRange();
+      var text = range.toString();
+
+      var _getAtAndIndex3 = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["a" /* getAtAndIndex */])(text, atItems),
+          at = _getAtAndIndex3.at,
+          index = _getAtAndIndex3.index;
+
+      var start = index + at.length; // 从@后第一位开始
+      r.setStart(r.endContainer, start);
+      // hack: 连续两次 可以确保click后 focus回来 range真正生效
+      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["e" /* applyRange */])(r);
+      __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__util__["e" /* applyRange */])(r);
+      var t = itemName(list[cur]) + suffix;
+      this.insertText(t, r);
+      this.handleInput();
+    }
+  }
+});
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)();
+// imports
+
+
+// module
+exports.push([module.i, ".atwho-view{color:#000;border-radius:3px;box-shadow:0 0 5px rgba(0,0,0,.1);min-width:120px;z-index:11110!important}.atwho-ul{list-style:none}.atwho-li{display:block}.atwho-view{border-radius:6px;box-shadow:0 0 10px 0 hsla(211,9%,44%,.5)}.atwho-ul{max-height:135px;padding:0;margin:0}.atwho-li{box-sizing:border-box;height:27px;padding:0 12px;white-space:nowrap;display:flex;align-items:center}.atwho-li span{overflow:hidden;text-overflow:ellipsis}.atwho-cur{background:#5bb8ff;color:#fff}.atwho-wrap{position:relative}.atwho-panel{position:absolute}.atwho-inner{position:relative}.atwho-view{position:absolute;bottom:0;left:-.8em;cursor:default;background-color:hsla(0,0%,100%,.94);min-width:140px;max-width:180px;max-height:200px;overflow-y:auto}.atwho-view::-webkit-scrollbar{width:11px;height:11px}.atwho-view::-webkit-scrollbar-track{background-color:#f5f5f5}.atwho-view::-webkit-scrollbar-thumb{min-height:36px;border:2px solid transparent;border-top:3px solid transparent;border-bottom:3px solid transparent;background-clip:padding-box;border-radius:7px;background-color:#c4c4c4}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function() {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		var result = [];
+		for(var i = 0; i < this.length; i++) {
+			var item = this[i];
+			if(item[2]) {
+				result.push("@media " + item[2] + "{" + item[1] + "}");
+			} else {
+				result.push(item[1]);
+			}
+		}
+		return result.join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(2),
+  /* template */
+  null,
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(9)
+
+var Component = __webpack_require__(0)(
+  /* script */
+  null,
+  /* template */
+  __webpack_require__(7),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    ref: "wrap",
+    staticClass: "atwho-wrap",
+    on: {
+      "compositionstart": _vm.handleCompositionStart,
+      "compositionend": _vm.handleCompositionEnd,
+      "input": _vm.handleInput,
+      "keydown": _vm.handleKeyDown
+    }
+  }, [(_vm.atwho) ? _c('div', {
+    staticClass: "atwho-panel",
+    style: (_vm.style)
+  }, [_c('div', {
+    staticClass: "atwho-inner"
+  }, [_c('div', {
+    staticClass: "atwho-view"
+  }, [_c('ul', {
+    staticClass: "atwho-ul"
+  }, _vm._l((_vm.atwho.list), function(item, index) {
+    return _c('li', {
+      ref: _vm.isCur(index) && 'cur',
+      refInFor: true,
+      staticClass: "atwho-li",
+      class: _vm.isCur(index) && 'atwho-cur',
+      attrs: {
+        "data-index": index
+      },
+      on: {
+        "mouseenter": _vm.handleItemHover,
+        "click": _vm.handleItemClick
+      }
+    }, [_vm._t("item", [_c('span', {
+      domProps: {
+        "textContent": _vm._s(_vm.itemName(item))
+      }
+    })], {
+      item: item
+    })], 2)
+  }))])])]) : _vm._e(), _vm._v(" "), _vm._t("default")], 2)
+},staticRenderFns: []}
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+var stylesInDom = {},
+	memoize = function(fn) {
+		var memo;
+		return function () {
+			if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+			return memo;
+		};
+	},
+	isOldIE = memoize(function() {
+		return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+	}),
+	getHeadElement = memoize(function () {
+		return document.head || document.getElementsByTagName("head")[0];
+	}),
+	singletonElement = null,
+	singletonCounter = 0,
+	styleElementsInsertedAtTop = [];
+
+module.exports = function(list, options) {
+	if(typeof DEBUG !== "undefined" && DEBUG) {
+		if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+	}
+
+	options = options || {};
+	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+	// tags it will allow on a page
+	if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+
+	// By default, add <style> tags to the bottom of <head>.
+	if (typeof options.insertAt === "undefined") options.insertAt = "bottom";
+
+	var styles = listToStyles(list);
+	addStylesToDom(styles, options);
+
+	return function update(newList) {
+		var mayRemove = [];
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			domStyle.refs--;
+			mayRemove.push(domStyle);
+		}
+		if(newList) {
+			var newStyles = listToStyles(newList);
+			addStylesToDom(newStyles, options);
+		}
+		for(var i = 0; i < mayRemove.length; i++) {
+			var domStyle = mayRemove[i];
+			if(domStyle.refs === 0) {
+				for(var j = 0; j < domStyle.parts.length; j++)
+					domStyle.parts[j]();
+				delete stylesInDom[domStyle.id];
+			}
+		}
+	};
+}
+
+function addStylesToDom(styles, options) {
+	for(var i = 0; i < styles.length; i++) {
+		var item = styles[i];
+		var domStyle = stylesInDom[item.id];
+		if(domStyle) {
+			domStyle.refs++;
+			for(var j = 0; j < domStyle.parts.length; j++) {
+				domStyle.parts[j](item.parts[j]);
+			}
+			for(; j < item.parts.length; j++) {
+				domStyle.parts.push(addStyle(item.parts[j], options));
+			}
+		} else {
+			var parts = [];
+			for(var j = 0; j < item.parts.length; j++) {
+				parts.push(addStyle(item.parts[j], options));
+			}
+			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+		}
+	}
+}
+
+function listToStyles(list) {
+	var styles = [];
+	var newStyles = {};
+	for(var i = 0; i < list.length; i++) {
+		var item = list[i];
+		var id = item[0];
+		var css = item[1];
+		var media = item[2];
+		var sourceMap = item[3];
+		var part = {css: css, media: media, sourceMap: sourceMap};
+		if(!newStyles[id])
+			styles.push(newStyles[id] = {id: id, parts: [part]});
+		else
+			newStyles[id].parts.push(part);
+	}
+	return styles;
+}
+
+function insertStyleElement(options, styleElement) {
+	var head = getHeadElement();
+	var lastStyleElementInsertedAtTop = styleElementsInsertedAtTop[styleElementsInsertedAtTop.length - 1];
+	if (options.insertAt === "top") {
+		if(!lastStyleElementInsertedAtTop) {
+			head.insertBefore(styleElement, head.firstChild);
+		} else if(lastStyleElementInsertedAtTop.nextSibling) {
+			head.insertBefore(styleElement, lastStyleElementInsertedAtTop.nextSibling);
+		} else {
+			head.appendChild(styleElement);
+		}
+		styleElementsInsertedAtTop.push(styleElement);
+	} else if (options.insertAt === "bottom") {
+		head.appendChild(styleElement);
+	} else {
+		throw new Error("Invalid value for parameter 'insertAt'. Must be 'top' or 'bottom'.");
+	}
+}
+
+function removeStyleElement(styleElement) {
+	styleElement.parentNode.removeChild(styleElement);
+	var idx = styleElementsInsertedAtTop.indexOf(styleElement);
+	if(idx >= 0) {
+		styleElementsInsertedAtTop.splice(idx, 1);
+	}
+}
+
+function createStyleElement(options) {
+	var styleElement = document.createElement("style");
+	styleElement.type = "text/css";
+	insertStyleElement(options, styleElement);
+	return styleElement;
+}
+
+function addStyle(obj, options) {
+	var styleElement, update, remove;
+
+	if (options.singleton) {
+		var styleIndex = singletonCounter++;
+		styleElement = singletonElement || (singletonElement = createStyleElement(options));
+		update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+		remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+	} else {
+		styleElement = createStyleElement(options);
+		update = applyToTag.bind(null, styleElement);
+		remove = function() {
+			removeStyleElement(styleElement);
+		};
+	}
+
+	update(obj);
+
+	return function updateStyle(newObj) {
+		if(newObj) {
+			if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+				return;
+			update(obj = newObj);
+		} else {
+			remove();
+		}
+	};
+}
+
+var replaceText = (function () {
+	var textStore = [];
+
+	return function (index, replacement) {
+		textStore[index] = replacement;
+		return textStore.filter(Boolean).join('\n');
+	};
+})();
+
+function applyToSingletonTag(styleElement, index, remove, obj) {
+	var css = remove ? "" : obj.css;
+
+	if (styleElement.styleSheet) {
+		styleElement.styleSheet.cssText = replaceText(index, css);
+	} else {
+		var cssNode = document.createTextNode(css);
+		var childNodes = styleElement.childNodes;
+		if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+		if (childNodes.length) {
+			styleElement.insertBefore(cssNode, childNodes[index]);
+		} else {
+			styleElement.appendChild(cssNode);
+		}
+	}
+}
+
+function applyToTag(styleElement, obj) {
+	var css = obj.css;
+	var media = obj.media;
+	var sourceMap = obj.sourceMap;
+
+	if (media) {
+		styleElement.setAttribute("media", media);
+	}
+
+	if (sourceMap) {
+		// https://developer.chrome.com/devtools/docs/javascript-debugging
+		// this makes source maps inside style tags work properly in Chrome
+		css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */';
+		// http://stackoverflow.com/a/26603875
+		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+	}
+
+	if (styleElement.styleSheet) {
+		styleElement.styleSheet.cssText = css;
+	} else {
+		while(styleElement.firstChild) {
+			styleElement.removeChild(styleElement.firstChild);
+		}
+		styleElement.appendChild(document.createTextNode(css));
+	}
+}
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(3);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__(8)(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../node_modules/css-loader/index.js!../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-05ccc8af!../node_modules/sass-loader/index.js!./At.scss", function() {
+			var newContent = require("!!../node_modules/css-loader/index.js!../node_modules/vue-loader/lib/style-rewriter.js?id=data-v-05ccc8af!../node_modules/sass-loader/index.js!./At.scss");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ })
+/******/ ]);
+//# sourceMappingURL=vue-at.js.map
 
 /***/ })
 /******/ ]);
