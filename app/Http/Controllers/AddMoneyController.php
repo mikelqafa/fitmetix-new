@@ -50,15 +50,14 @@ class AddMoneyController extends Controller
 
     private $_api_context;
 
-    /**
+    private $req_id;
 
-     * Create a new controller instance.
+    private $sale_id;
 
-     *
-
-     * @return void
-
-     */
+    public function __construct()
+    {
+         $this->req_id = '734389    7';
+    }
 
     /**
 
@@ -69,14 +68,6 @@ class AddMoneyController extends Controller
      * @return \Illuminate\Http\Response
 
      */
-
-    public function payWithPaypal()
-
-    {
-
-        return view('paywithpaypal');
-
-    }
 
     /**
 
@@ -96,10 +87,6 @@ class AddMoneyController extends Controller
         $request->session()->put('event_timeline_id', $request->timeline_id);
         
         $request->session()->put('amount', $request->amount);
-
-        $user_id = Auth::user()->id;
-
-        $request->session()->put('user_id', $user_id);
 
     	$paypal_conf = \Config::get('paypal');
 
@@ -141,7 +128,6 @@ class AddMoneyController extends Controller
             ->setDescription('Your transaction description');
 
         $redirect_urls = new RedirectUrls();
-
         $redirect_urls->setReturnUrl(URL::route('payment.status')) /** Specify return URL **/
 
             ->setCancelUrl(URL::route('payment.status'));
@@ -168,7 +154,7 @@ class AddMoneyController extends Controller
 
                 \Session::put('error','Connection timeout');
 
-                return Redirect::route('addmoney.paywithpaypal');
+                return Redirect::route('events');
 
                 /** echo "Exception: " . $ex->getMessage() . PHP_EOL; **/
 
@@ -178,9 +164,9 @@ class AddMoneyController extends Controller
 
             } else {
 
-                \Session::put('error','Some error occur, sorry for inconvenient');
+                \Session::put('error','Some error occur, sorry for inconvenience');
 
-                return Redirect::route('addmoney.paywithpaypal');
+                return Redirect::route('events');
 
                 /** die('Some error occur, sorry for inconvenient'); **/
 
@@ -214,7 +200,7 @@ class AddMoneyController extends Controller
 
         \Session::put('error','Unknown error occurred');
 
-        return Redirect::route('addmoney.paywithpaypal');
+        return Redirect::route('events');
 
     }
 
@@ -224,12 +210,11 @@ class AddMoneyController extends Controller
 
         /** Get the payment ID before session clear **/
 
-        $payment_id = $request->session()->get('paypal_payment_id');
+        $payment_id = Session::get('paypal_payment_id');
 
         /** clear the session payment ID **/
 
-        $request->session()->forget('paypal_payment_id');
-
+        Session::forget('paypal_payment_id');
         $paypal_conf = \Config::get('paypal');
         $this->_api_context = new ApiContext(new OAuthTokenCredential($paypal_conf['client_id'], $paypal_conf['secret']),$this->req_id);
 
@@ -251,7 +236,7 @@ class AddMoneyController extends Controller
             Session::put('sale_id',$sale->getId());
 
 
-            $request->session()->put('success','Payment success');
+            Session::put('success','Payment success');
 
             $user_id = $request->session()->get('user_id');
             $balance = $request->session()->get('amount');
@@ -272,14 +257,13 @@ class AddMoneyController extends Controller
             $request->session()->forget('user_id');
             $request->session()->forget('amount');
 
-            // return Redirect::route('addmoney.paywithpaypal');
             app('App\Http\Controllers\TimeLineController')->joiningPaidEvent();
 
         }
 
-        $request->session()->put('error','Payment failed');
+        Session::put('error','Payment failed');
 
-        return Redirect::route('addmoney.paywithpaypal');
+        return Redirect::route('events');
 
     }
 
@@ -289,7 +273,7 @@ class AddMoneyController extends Controller
         $refund = new Refund();
         $refund->setAmount($amt);
         $sale = new Sale();
-        $sale->setId('1L578823YC7793059');
+        $sale->setId($request->sale_id);
         $paypal_conf = \Config::get('paypal');
         $this->_api_context = new ApiContext(new OAuthTokenCredential($paypal_conf['client_id'], $paypal_conf['secret']),$this->req_id);
         try {

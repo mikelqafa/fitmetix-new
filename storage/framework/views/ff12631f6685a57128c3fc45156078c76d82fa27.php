@@ -19,10 +19,7 @@
 				<a href="<?php echo e(url('help')); ?>"><?php echo e(trans('Help')); ?></a>
 			<?php endif; ?>
 		</div>
-			<div class="ft-copyright text-center">
-			<?php echo e(trans('common.copyright')); ?> &copy; <?php echo e(date('Y')); ?> <?php echo e(Setting::get('site_name')); ?>. <?php echo e(trans('common.all_rights_reserved')); ?>
-
-		</div>
+			
 		<div class="multi-lang">
 			<?php echo e(csrf_field()); ?>
 

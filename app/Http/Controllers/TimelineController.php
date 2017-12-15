@@ -1080,7 +1080,7 @@ class TimelineController extends AppBaseController
                 return response()->json(['status' => '200', 'joined' => false, 'message' => 'Gender mismatch']);   
             }
             else {
-                if($event->price != NULL) {
+                if(($event->price != NULL) && ($event->price >= 1)) {
                     return response()->json(['status' => '200', 'joined' => false, 'message' => 'Paid event']);
                 }
                 $event->users()->attach(Auth::user()->id);
@@ -1109,11 +1109,14 @@ class TimelineController extends AppBaseController
     public function joiningPaidEvent(Request $request)
     {   
         $timeline_id = $request->session()->get('event_timeline_id');
+        $transaction_id = $request->session()->get('sale_id');
         $request->session()->forget('event_timeline_id');
         $event = Event::where('timeline_id', '=', $timeline_id)->first();
         $users = $event->users()->get();
 
         $event->users()->attach(Auth::user()->id);
+
+        DB::table('event_user')->where([['event_id',$event->id],['user_id',Auth::user()->id]])->update(['transaction'=>$transaction]);
 
         foreach ($users as $user) {
             if ($user->id != Auth::user()->id) {
@@ -1994,6 +1997,7 @@ class TimelineController extends AppBaseController
 
         $event_tags = NULL;
         foreach ($user_events as $user_event) {
+            $user_event['transaction'] = DB::table('event_user')->where('event_id',$user_event->id)->first();
             $user_event['registered'] = false;
             $user_event['expired'] = false;
             if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
@@ -2230,6 +2234,8 @@ class TimelineController extends AppBaseController
             'duration'    => 'required|max:2:min:1',
             'location'    => 'required',
             'type'        => 'required',
+            'event_images_upload' => 'required',
+            'duration'    => 'required',
         ]);
     }
 
@@ -2247,7 +2253,7 @@ class TimelineController extends AppBaseController
         // $end_date  = date('Y-m-d H:i', strtotime($request->end_date));
 
         $end_date = Carbon::parse($start_date);
-        $end_date = $end_date->addDays($request->duration);
+        $end_date = $end_date->addHours($request->duration);
         if ($start_date >= date('Y-m-d', strtotime(Carbon::now())) && $end_date >= $start_date) {
             $user_timeline = Timeline::where('username', $username)->first();
             $i = 0;
@@ -2307,6 +2313,7 @@ class TimelineController extends AppBaseController
                 'type'        => $request->type,
                 'user_id'     => Auth::user()->id,
                 'user_limit'  => $request->user_limit,
+                'price'       => $request->price,
                 'location'    => $request->location,
                 'start_date'  => date('Y-m-d H:i', strtotime($start_date)),
                 'end_date'    => date('Y-m-d H:i', strtotime($end_date)),
@@ -2324,7 +2331,8 @@ class TimelineController extends AppBaseController
 
             $event->users()->attach(Auth::user()->id);
             Flash::success(trans('messages.create_event_success'));
-            return redirect('/'.$timeline->username);
+            $page = Auth::user()->username.'/events';
+            return redirect($page);
         } else {
             $message = 'Invalid date selection';
             return redirect()->back()->with('message', trans('messages.invalid_date_selection'));

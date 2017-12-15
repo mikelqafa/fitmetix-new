@@ -20,9 +20,9 @@
 				<a href="{{ url('help') }}">{{ trans('Help') }}</a>
 			@endif
 		</div>
-			<div class="ft-copyright text-center">
+			{{-- <div class="ft-copyright text-center">
 			{{ trans('common.copyright') }} &copy; {{ date('Y') }} {{ Setting::get('site_name') }}. {{ trans('common.all_rights_reserved') }}
-		</div>
+			</div> --}}
 		<div class="multi-lang">
 			{{csrf_field()}}
 			<a href="javascript:;" class="multi-lang__item cover-bg switch-language" data-language='es'   style="background-image: url({{ asset('images/sp.png') }})"></a>

@@ -14,6 +14,8 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         'ajax/*',
         'api/v1/*',
-
+        'paypal',
+        'payment.status',
+        'addmoney.paypal',
     ];
 }

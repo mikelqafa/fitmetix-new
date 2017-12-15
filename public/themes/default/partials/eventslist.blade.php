@@ -192,10 +192,10 @@
 													<div class="ft-card__list">
 														<div class="icon icon-label-o"></div>
 														<div class="card-desc">
-															@if(!$user_event->price)
+															@if(($user_event->price == NULL) || ($user_event->price < 1))
 																{{ "FREE" }}
 															@else
-															    {{ $user_event->price }}
+															    {{ "$ $user_event->price" }}
 															@endif
 														</div>
 													</div>
@@ -282,10 +282,10 @@
 														<div class="ft-card__list">
 															<div class="icon icon-label-o"></div>
 															<div class="card-desc">
-																@if(!$user_event->price)
+																@if(($user_event->price == NULL) || ($user_event->price < 1))
 																	{{ "FREE" }}
 																@else
-																    {{ $user_event->price }}
+																    {{ "$ $user_event->price" }}
 																@endif
 															    @if(Auth::user()->id != $user_event->user_id)
 																    @if($user_event->expired == true)
@@ -295,25 +295,39 @@
 																			
 																			@if($user_event->registered == true) 
 																			    <button class="btn btn-primary">Registered</button>
+																				@if(($user_event->price == NULL) || ($user_event->price < 1))
+																				    <button onclick="unjoin_event(this)" class="btn btn-warning" data-timeline = "{{ $user_event->timeline->id }}">Unregister</button>
+																				@else
+																						<form class="form-horizontal" method="POST" action="{{ url('refundmoney.paypal') }}" >
+																							{{ csrf_field() }}
+																							<input id="amount" type="hidden" class="form-control" name="amount" value="{{ $user_event->price }}">
+																							<input id="currency" type="hidden" class="form-control" name="currency" value="USD">
+																							<input type="hidden" value="{{ $user_event->timeline->id }}">
+																							<input type="hidden" name="sale_id" value="{{ $user_event->transaction->transaction }}">
+																							<button type="submit" class="btn btn-primary">Unregister</button>
+
+																						</form>
+																			    @endif
+
 																			
 																			@elseif($user_event->users()->count() >= $user_event->user_limit)
 																			
 																			    <button disabled class="btn" data-timeline = "{{ $user_event->timeline->id }}">Register</button>
 
 																			@else
-																			    @if(!$user_event->price)
+																				@if(($user_event->price == NULL) || ($user_event->price < 1))
 
-																			    <button class="btn btn-primary join-event-btn" data-timeline = "{{ $user_event->timeline->id }}">Register</button>
+																			    	<button class="btn btn-primary join-event-btn" data-timeline = "{{ $user_event->timeline->id }}">Register</button>
 																			    
 																			    @else
+																			    	<form class="form-horizontal" method="POST" action="{{ URL::route('addmoney.paypal') }}" target="_blank">
+															                        	{{ csrf_field() }}
+															                        	<input id="amount" type="hidden" class="form-control" name="amount" value="{{ $user_event->price }}">
+															                        	<input id="currency" type="hidden" class="form-control" name="currency" value="USD">
+															                        	<input type="hidden" value="{{ $user_event->timeline->id }}">
+																				    	<button type="submit" class="btn btn-primary">Register</button>
 
-																			    <form class="form-horizontal" method="POST" id="payment-form" role="form" action="{!! URL::route('addmoney.paypal') !!}" >
-														                        {{ csrf_field() }}
-														                        <input id="amount" type="hidden" class="form-control" name="amount" value="{{ $user_event->price }}">
-														                        <input id="currency" type="hidden" class="form-control" name="currency" value="USD">
-																			    <button type="submit" class="btn btn-primary" data-timeline = "{{ $user_event->timeline->id }}">Register</button>
-
-																				</form>
+																					</form>
 
 																			    @endif
 																			@endif	
@@ -340,9 +354,9 @@
 													<div class="ft-card__desc">
 														{{ $user_event->timeline->about }}
 													</div>
-													<div class="ft-card__desc text-center">
+													{{-- <div class="ft-card__desc text-center">
 														<a href="{{url('/'.$user_event->timeline->username)}}" class="btn ft-btn-primary ">Details</a>
-													</div>
+													</div> --}}
 												</div>
 											</div>
 										@php $i++ @endphp

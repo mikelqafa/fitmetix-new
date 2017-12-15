@@ -1279,4 +1279,11 @@ class UserController extends AppBaseController
         Flash::success('Language Updated');
         return redirect()->back();
     }
+
+    public function editProfile($username) {
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+        $theme->setTitle(trans('common.edit_profile').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+
+        return $theme->scope('users/edit-profile', compact('username'))->render();
+    }
 }

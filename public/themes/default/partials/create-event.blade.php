@@ -113,28 +113,28 @@
 			<form class="margin-right" method="POST" action="{{ url('/'.$username.'/create-event/') }}" enctype="multipart/form-data">
 				{{ csrf_field() }}
 
-				<fieldset class="form-group required {{ $errors->has('name') ? ' has-error' : '' }}">
+				<fieldset class="form-group required">
 					<label class="event_images_upload--label" for="event_images_upload" style="background-image: url({{url('images/no-image.png')}})">
 						<input id="event_images_upload" required type="file" multiple="multiple"
 							   accept="image/jpeg,image/png,image/gif"
-							   name="event_images_upload[]" class="event_images_upload form-control">
+							   name="event_images_upload[]" class="event_images_upload form-control" required>
 						<i class="hidden icon icon-add"></i>
 						<div id="event_images_upload--image"></div>
 					</label>
 
 					<br/>
 					{{-- {{ Form::label('name', trans('common.name_of_your_event'), ['class' => 'control-label']) }} --}}
-					{{ Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => trans('common.name_of_your_event'),'maxlength'=>30]) }}
 					@if ($errors->has('name'))
 						<span class="help-block">
 							{{ $errors->first('name') }}
 						</span>
 					@endif
+					{{ Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => trans('common.name_of_your_event'),'maxlength'=>30]) }}
 					<br/>	
 					<div class="row">
 						<div class="col-md-4">
 							{{-- {{ Form::label('type', trans('common.privacy'), ['class' => 'control-label']) }} --}}
-							{{ Form::select('type', array('' => trans('common.privacy'), 'private' => trans('common.private'), 'public' => trans('common.public')), null ,array('class' => 'form-control')) }}
+							{{ Form::select('type', array('' => trans('common.privacy'), 'private' => trans('common.private'), 'public' => trans('common.public')), null ,array('class' => 'form-control','required'=>'required')) }}
 							@if ($errors->has('type'))
 								<span class="help-block">
 									{{ $errors->first('type') }}
@@ -144,18 +144,13 @@
 						<div class="col-md-4">
 							<fieldset class="form-group">
 								{{-- {{ Form::label('frequency', 'Frequency: ', ['class' => 'control-label']) }} --}}
-								{{ Form::select('frequency', array('' => 'Frequency', 'once' => 'Once', 'daily' => 'Daily', 'weekly'=>'Weekly','monthly'=>'Monthly'), null ,array('class' => 'form-control')) }}
+								{{ Form::select('frequency', array('' => 'Frequency', 'once' => 'Once', 'daily' => 'Daily', 'weekly'=>'Weekly','monthly'=>'Monthly'), null ,array('class' => 'form-control','required'=>'required')) }}
 							
 							</fieldset>
 						</div>
 						<div class="col-md-4">
 							{{-- {{ Form::label('gender', 'Gender: ', ['class' => 'control-label']) }} --}}
-							{{ Form::select('gender', array('' => trans('common.gender'), 'male' => 'Male', 'female' => 'female', 'all' => 'All'), null ,array('class' => 'form-control')) }}
-							@if ($errors->has('name'))
-								<span class="help-block">
-									{{ $errors->first('name') }}
-								</span>
-							@endif
+							{{ Form::select('gender', array('' => trans('common.gender'), 'male' => 'Males Only', 'female' => 'Females Only', 'all' => 'Everyone'), null ,array('class' => 'form-control','required'=>'required')) }}
 						</div>
 					</div>
 				</fieldset>
@@ -170,26 +165,16 @@
 					@endif	
 				</fieldset>
 
-				<fieldset class="form-group required {{ $errors->has('location') || $errors->has('price') ? ' has-error' : '' }}">
+				<fieldset class="form-group required">
 					<div class="row">
 						<div class="col-md-6">
 							{{--{{ Form::label('user_limit', 'User Liimt', ['class' => 'control-label']) }}--}}
 							{{-- <label for="user_limit">User Limit: </label> --}}
-							{{ Form::number('user_limit', old('user_limit'), ['class' => 'form-control', 'placeholder' => 'Number of participants','min'=>1]) }}
-							@if ($errors->has('type'))
-								<span class="help-block">
-									{{ $errors->first('type') }}
-								</span>
-							@endif
+							{{ Form::number('user_limit', old('user_limit'), ['class' => 'form-control', 'placeholder' => 'Number of participants','required'=>'required','min'=>1]) }}
 						</div>
 						<div class="col-md-6">
 							{{-- <label for="price">Price: <small>(Provide <code>0</code> for FREE Event)</small></label> --}}
-							{{ Form::number('price', old('price'), ['class' => 'form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price' ,'max'=>10000]) }}
-							@if ($errors->has('price'))
-								<span class="help-block">
-									{{ $errors->first('price') }}
-								</span>
-							@endif
+							{{ Form::number('price', old('price'), ['class' => 'form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price ($)' ,'max'=>10000,'min'=>0]) }}
 						</div>
 					</div>
 				</fieldset>
@@ -201,7 +186,7 @@
 
 							<div class="input-group date form_datetime">												
 
-								<input type="text" class="datepick2--event form-control" name="start_date" placeholder="Start Time" value="{{ old('start_date') }}">
+								<input type="text" class="datepick2--event form-control" required name="start_date" placeholder="Start Time" value="{{ old('start_date') }}">
 
 								<span class="input-group-addon addon-right calendar-addon">
 									<span class="fa fa-calendar"></span>
@@ -214,7 +199,58 @@
 							@endif
 						</div>
 						<div class="col-md-6 hidden">
-							{{ Form::number('duration', old('duration'), ['class' => 'form-control', 'id' => 'duration', 'autocomplete' => 'off','placeholder' => 'duration' ,'max'=>2]) }}
+							{{-- {{ Form::number('duration', old('duration'), ['class' => 'form-control', 'id' => 'duration', 'autocomplete' => 'off','placeholder' => 'duration','max'=>2]) }} --}}
+							<select class="form-control" id="duration" name="duration">
+								<option value="null">Duration (in Hrs)</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+								<option value="24">24</option>
+								<option value="25">25</option>
+								<option value="26">26</option>
+								<option value="27">27</option>
+								<option value="28">28</option>
+								<option value="29">29</option>
+								<option value="30">30</option>
+								<option value="31">31</option>
+								<option value="32">32</option>
+								<option value="33">33</option>
+								<option value="34">34</option>
+								<option value="35">35</option>
+								<option value="36">36</option>
+								<option value="37">37</option>
+								<option value="38">38</option>
+								<option value="39">39</option>
+								<option value="40">40</option>
+								<option value="41">41</option>
+								<option value="42">42</option>
+								<option value="43">43</option>
+								<option value="44">44</option>
+								<option value="45">45</option>
+								<option value="46">46</option>
+								<option value="47">47</option>
+								<option value="48">48</option>
+							</select>
 							@if ($errors->has('duration'))
 								<span class="help-block">
 									{{ $errors->first('duration') }}
@@ -222,7 +258,63 @@
 							@endif
 						</div>
 						<div class="col-md-6">
-							{{ Form::number('duration', old('duration'), ['class' => 'form-control', 'id' => 'duration', 'autocomplete' => 'off','placeholder' => 'duration' ,'max'=>2]) }}
+							@if ($errors->has('duration'))
+								<span class="help-block">
+									{{ $errors->first('duration') }}
+								</span>
+							@endif
+							{{-- {{ Form::number('duration', old('duration'), ['class' => 'form-control', 'id' => 'duration', 'autocomplete' => 'off','placeholder' => 'duration','required'=>'required','max'=>2,'min'=>1]) }} --}}
+							<select class="form-control" id="duration" required name="duration">
+								<option disabled selected value="">Duration (in Hrs)</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+								<option value="13">13</option>
+								<option value="14">14</option>
+								<option value="15">15</option>
+								<option value="16">16</option>
+								<option value="17">17</option>
+								<option value="18">18</option>
+								<option value="19">19</option>
+								<option value="20">20</option>
+								<option value="21">21</option>
+								<option value="22">22</option>
+								<option value="23">23</option>
+								<option value="24">24</option>
+								<option value="25">25</option>
+								<option value="26">26</option>
+								<option value="27">27</option>
+								<option value="28">28</option>
+								<option value="29">29</option>
+								<option value="30">30</option>
+								<option value="31">31</option>
+								<option value="32">32</option>
+								<option value="33">33</option>
+								<option value="34">34</option>
+								<option value="35">35</option>
+								<option value="36">36</option>
+								<option value="37">37</option>
+								<option value="38">38</option>
+								<option value="39">39</option>
+								<option value="40">40</option>
+								<option value="41">41</option>
+								<option value="42">42</option>
+								<option value="43">43</option>
+								<option value="44">44</option>
+								<option value="45">45</option>
+								<option value="46">46</option>
+								<option value="47">47</option>
+								<option value="48">48</option>
+							</select>
 						</div>
 					</div>
 				</fieldset>

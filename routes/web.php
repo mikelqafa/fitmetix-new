@@ -269,6 +269,8 @@ Route::group(['prefix' => '/{username}', 'middleware' => 'auth'], function ($use
 
 Route::group(['prefix' => '/{username}', 'middleware' => ['auth', 'editown']], function ($username) {
 
+    Route::get('edit-profile','UserController@editProfile');
+
     Route::get('/messages', 'UserController@messages');
     Route::get('/follow-requests', 'UserController@followRequests');
 
@@ -550,6 +552,9 @@ Route::get('wallpaper/{filename}', function ($filename) {
     return Image::make(storage_path().'/uploads/wallpapers/'.$filename)->response();
 });
 
-Route::post('paypal', array('as' => 'addmoney.paypal','uses' => 'AddMoneyController@postPaymentWithpaypal',));
+Route::post('paypal', ['as' => 'addmoney.paypal','uses' => 'AddMoneyController@postPaymentWithpaypal']);
+Route::get('paypal', ['as' => 'payment.status','uses' => 'AddMoneyController@getPaymentStatus']);
+Route::post('paypal', ['as' => 'refundmoney.paypal','uses' => 'AddMoneyController@refundPayment']);
 
-Route::get('paypal', array('as' => 'payment.status','uses' => 'AddMoneyController@getPaymentStatus',));
+Route::name('addmoney.paypal')->post('addmoney.paypal')->uses('AddMoneyController@postPaymentWithpaypal');
+Route::name('payment.status')->get('payment.status')->uses('AddMoneyController@getPaymentStatus');
