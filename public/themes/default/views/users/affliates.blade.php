@@ -2,11 +2,12 @@
 <!-- <div class="main-content">
  -->	<div class="container">
 		<div class="row">
-			<div class="col-md-4">
+			{{--<div class="col-md-4">
 				<div class="post-filters">
 					{!! Theme::partial('usermenu-settings') !!}
 				</div>
-			</div>
+			</div>--}}
+            <div class="col-md-2"></div>
 			<div class="col-md-8">
 				<div class="panel panel-default">
 					<div class="panel-heading no-bg panel-settings">
@@ -39,7 +40,7 @@
 								     @endforeach
 								 @endif
 								 <li class="list-group-item list-group-item-warning">
-								 <em>Amount of money spent : </em> &nbsp; <strong>{{ $sum }}</strong></li>
+								 <em>Amount of money spent : </em> &nbsp; <strong>$ {{ $sum }}</strong></li>
 
 								{{-- @foreach($referrals as $referral)
 								<li class="list-group-item">
