@@ -740,15 +740,25 @@ class AdminController extends Controller
     public function showUsers(Request $request)
     {
         $timelines = '';
-
+        $adminRole = DB::table('roles')->where('name','admin')->get()->toArray();
+        $adminRoleId = $adminRole[0]->id;
+        $admins = DB::table('role_user')->where('role_id',$adminRoleId)->get()->toArray();
+        $adminIds = array();
+        foreach ($admins as $key => $value){
+          $adminIds[] = $value->user_id;
+        }
+        $users = DB::table('users')->whereNotIn('id',$adminIds)->get()->toArray();
+        foreach ($users as $key => $value){
+          $timelineIds[] = $value->timeline_id;
+        }
         if ($request->all()) {
             if ($request->sort) {
-                $timelines = $this->manageSortings($request->sort, $type = 'user');
+                $timelines = $this->manageSortings($request->sort, $type = 'user',$timelineIds);
             } elseif ($request->page) {
-                $timelines = $this->manageSortings($request->page, $type = 'user');
+                $timelines = $this->manageSortings($request->page, $type = 'user',$timelineIds);
             }
         } else {
-            $timelines = Timeline::where('type', 'user')->paginate(Setting::get('items_page', 10));
+            $timelines = Timeline::whereIn('id',$timelineIds)->paginate(Setting::get('items_page', 10));
         }
 
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('admin');
@@ -1028,20 +1038,36 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function manageSortings($sort_by, $timeline_type)
+    public function manageSortings($sort_by, $timeline_type, $timelineIds=NULL)
     {
         $timelines = '';
-        if ($sort_by == 'name_asc') {
+        if ($timelineIds == NULL){
+          if ($sort_by == 'name_asc') {
             $timelines = Timeline::orderBy('name', 'ASC')->where('type', $timeline_type)->paginate(Setting::get('items_page', 10));
-        } elseif ($sort_by == 'name_desc') {
+          } elseif ($sort_by == 'name_desc') {
             $timelines = Timeline::orderBy('name', 'DESC')->where('type', $timeline_type)->paginate(Setting::get('items_page', 10));
-        } elseif ($sort_by == 'created_asc') {
+          } elseif ($sort_by == 'created_asc') {
             $timelines = Timeline::orderBy('created_at', 'ASC')->where('type', $timeline_type)->paginate(Setting::get('items_page', 10));
-        } elseif ($sort_by == 'created_desc') {
+          } elseif ($sort_by == 'created_desc') {
             $timelines = Timeline::orderBy('created_at', 'DESC')->where('type', $timeline_type)->paginate(Setting::get('items_page', 10));
-        } elseif ($sort_by) {
+          } elseif ($sort_by) {
             $timelines = Timeline::where('type', $timeline_type)->paginate(Setting::get('items_page', 10));
+          }
         }
+        else{
+          if ($sort_by == 'name_asc') {
+            $timelines = Timeline::orderBy('name', 'ASC')->whereIn('id', $timelineIds)->paginate(Setting::get('items_page', 10));
+          } elseif ($sort_by == 'name_desc') {
+            $timelines = Timeline::orderBy('name', 'DESC')->whereIn('id', $timelineIds)->paginate(Setting::get('items_page', 10));
+          } elseif ($sort_by == 'created_asc') {
+            $timelines = Timeline::orderBy('created_at', 'ASC')->whereIn('id', $timelineIds)->paginate(Setting::get('items_page', 10));
+          } elseif ($sort_by == 'created_desc') {
+            $timelines = Timeline::orderBy('created_at', 'DESC')->whereIn('id', $timelineIds)->paginate(Setting::get('items_page', 10));
+          } elseif ($sort_by) {
+            $timelines = Timeline::whereIn('id', $timelineIds)->paginate(Setting::get('items_page', 10));
+          }
+        }
+
         
         return $timelines;
     }
