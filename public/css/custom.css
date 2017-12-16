@@ -1572,3 +1572,68 @@ a{
 .write-post .atwho-view{
     min-width: 170px;
 }
+.image-pip-holder{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.image-pip-holder .pip img{
+    height: 100px;
+    width: 100px;
+}
+.pip .remove-thumb {
+    cursor: pointer;
+    z-index: 4;
+}
+.image-pip__error{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    overflow: hidden;
+}
+.image-pip__error .error-text{
+    color: #333;
+    font-weight: 600;
+    font-size: 16px;
+}
+.image-pip__error p{
+    z-index: 1;
+    color: #333;
+    margin-bottom: 4px;
+    line-height: 1.2;
+}
+.image-pip__error .file-name{
+    word-break: break-all;
+    overflow: hidden;
+    width: 100%;
+    font-size: 10px;
+}
+.image-pip__error::before{
+    position: absolute;
+    top:0;
+    z-index: 0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(250,250,250,0.9);
+    content: '';
+}
+.ft-btn-accent {
+    background-color: #CE043F;
+    color: #fff !important;
+}
+.ft-loading--abs{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(250,250,250,.7);
+}

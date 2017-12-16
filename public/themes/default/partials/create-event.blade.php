@@ -1,117 +1,132 @@
 <style type="text/css">
-::-webkit-input-placeholder {
-   text-align: center;
-}
+    ::-webkit-input-placeholder {
+        text-align: center;
+    }
 
-:-moz-placeholder { /* Firefox 18- */
-   text-align: center;  
-}
+    :-moz-placeholder { /* Firefox 18- */
+        text-align: center;
+    }
 
-::-moz-placeholder {  /* Firefox 19+ */
-   text-align: center;  
-}
+    ::-moz-placeholder { /* Firefox 19+ */
+        text-align: center;
+    }
 
-:-ms-input-placeholder {  
-   text-align: center; 
-}
+    :-ms-input-placeholder {
+        text-align: center;
+    }
 
-.bdp-input {
-    border-radius: 2px;
-    padding: 0 3px;
-    border: 1px solid rgba(34, 36, 38, .15);
-    cursor: pointer;
-}
+    .event_images_upload {
+        visibility: hidden;
+        width: 0;
+        height: 0;
+    }
 
-.bdp-input.disabled {
-    color: #AAA;
-    cursor: default;
-}
+    .event_images_upload--label {
+        height: 312px;
+        width: 100%;
+        display: block;
+        position: relative;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 200px auto;
+        cursor: pointer;
+    }
 
-.bdp-popover {
-    min-width: 110px;
-}
+    .event_images_upload--label.image-added {
+        background-image: none;
+    }
 
-.bdp-popover input {
-    display: inline;
-    margin-bottom: 3px;
-    width: 60px;
-}
+    #event_images_upload--image {
+        width: 100%;
+        overflow: hidden;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 
-.bdp-block {
-    display: inline-block;
-    line-height: 1;
-    text-align: center;
-    padding: 5px 3px;
-}
+    #event_images_upload--image img {
+        max-width: 100%;
+        display: block;
+        max-height: 100%;
+    }
 
-.bdp-label {
-    font-size: 70%;
-}
-	.event_images_upload{
-		visibility: hidden;
-		width: 0;
-		height: 0;
-	}
-	.event_images_upload--label {
-		height: 312px;
-		width: 100%;
-		display: block;
-		position: relative;
-		background-position: center;
-		background-repeat: no-repeat;
-		background-size: 200px auto;
-		cursor: pointer;
-	}
-	.event_images_upload--label.image-added {
-		background-image: none;
-	}
-	#event_images_upload--image {
-		width: 100%;
-		overflow: hidden;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		left: 0;
-	}
-	#event_images_upload--image img{
-		max-width: 100%;
-		display: block;
-		max-height: 100%;
-	}
-	#event_images_upload--image .event-remove-thumb {
-		position: absolute;
-		top:15px;
-		right: 15px;
-	}
+    #event_images_upload--image .event-remove-thumb {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+
+    .bdp-input {
+        border-radius: 2px;
+        padding: 4px 2px;
+        border: 1px solid rgba(34, 36, 38, .15);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .bdp-input > .black-label {
+        color: #c3c6cb;
+    }
+    .bdp-input.disabled {
+        color: #AAA;
+        cursor: default;
+    }
+
+    .bdp-popover {
+        min-width: 110px;
+    }
+
+    .bdp-popover input {
+        display: inline;
+        margin-bottom: 3px;
+        width: 60px;
+    }
+
+    .bdp-block {
+        display: inline-block;
+        line-height: 1;
+        text-align: center;
+        padding: 5px 3px;
+    }
+
+    .bdp-label {
+        font-size: 90%;
+        margin-left: 4px;
+    }
 </style>
 <!-- <div class="main-content"> -->	
 <div class="panel panel-default">
-	<div class="panel-heading no-bg panel-settings">
-		@if($group_id != null)
-		<h3 class="panel-title">{{ trans('common.create_event_in') }} {!! $timeline_name !!}</h3>
-		@else
-		<h3 class="panel-title">{{ trans('common.create_event') }}</h3>
-		@endif						
-	</div>
-	<div class="panel-body nopadding">
-		@if( env('GOOGLE_MAPS_API_KEY') == NULL)
-		<div class="col-md-12">
-			<div class="alert alert-warning">
-				<i class="fa fa-warning"></i> Please add Google maps API key in "Environment settings" available in admin panel to create an event as it needs location to be added.
-				}
-			</div>
-		</div>
+    <div class="panel-heading no-bg panel-settings">
+        @if($group_id != null)
+            <h3 class="panel-title">{{ trans('common.create_event_in') }} {!! $timeline_name !!}</h3>
+        @else
+            <h3 class="panel-title">{{ trans('common.create_event') }}</h3>
+        @endif
+    </div>
+    <div class="panel-body nopadding">
+        @if( env('GOOGLE_MAPS_API_KEY') == NULL)
+            <div class="col-md-12">
+                <div class="alert alert-warning">
+                    <i class="fa fa-warning"></i> Please add Google maps API key in "Environment settings" available in
+                    admin panel to create an event as it needs location to be added.
+                    }
+                </div>
+            </div>
 
-		@else
-		<div class="socialite-form">
-			@if(session()->has('message'))
-			<div class="alert alert-danger">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				{{ session()->get('message') }}
-			</div>
-			@endif                         
-			<form class="margin-right" method="POST" action="{{ url('/'.$username.'/create-event/') }}" enctype="multipart/form-data">
-				{{ csrf_field() }}
+        @else
+            <div class="container">
+                @if(session()->has('message'))
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
+                <form class="margin-right" method="POST" action="{{ url('/'.$username.'/create-event/') }}"
+                      enctype="multipart/form-data">
+                    {{ csrf_field() }}
 
 				<fieldset class="form-group required">
 					<label class="event_images_upload--label" for="event_images_upload" style="background-image: url({{url('images/no-image.png')}})">
@@ -155,236 +170,128 @@
 					</div>
 				</fieldset>
 
-				<fieldset class="form-group required {{ $errors->has('type') ? ' has-error' : '' }}">
-				    {{-- {{ Form::label('location', trans('common.location')) }} --}}
-					{{ Form::text('location', old('location'), ['class' => 'form-control', 'id' => 'location-input', 'autocomplete' => 'off','placeholder' => trans('common.enter_location'), 'onKeyPress' => "return initMap(event)" ]) }}
-					@if ($errors->has('location'))
-						<span class="help-block">
+                    <fieldset class="form-group required {{ $errors->has('type') ? ' has-error' : '' }}">
+                        {{-- {{ Form::label('location', trans('common.location')) }} --}}
+                        {{ Form::text('location', old('location'), ['class' => 'form-control', 'id' => 'location-input', 'autocomplete' => 'off','placeholder' => trans('common.enter_location'), 'onKeyPress' => "return initMap(event)" ]) }}
+                        @if ($errors->has('location'))
+                            <span class="help-block">
 							{{ $errors->first('location') }}
 						</span>
 					@endif	
 				</fieldset>
 
-				<fieldset class="form-group required">
-					<div class="row">
-						<div class="col-md-6">
-							{{--{{ Form::label('user_limit', 'User Liimt', ['class' => 'control-label']) }}--}}
-							{{-- <label for="user_limit">User Limit: </label> --}}
-							{{ Form::number('user_limit', old('user_limit'), ['class' => 'form-control', 'placeholder' => 'Number of participants','required'=>'required','min'=>1]) }}
-						</div>
-						<div class="col-md-6">
-							{{-- <label for="price">Price: <small>(Provide <code>0</code> for FREE Event)</small></label> --}}
-							{{ Form::number('price', old('price'), ['class' => 'form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price ($)' ,'max'=>10000,'min'=>0]) }}
-						</div>
-					</div>
-				</fieldset>
+                    <fieldset
+                            class="form-group required {{ $errors->has('location') || $errors->has('price') ? ' has-error' : '' }}">
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{--{{ Form::label('user_limit', 'User Liimt', ['class' => 'control-label']) }}--}}
+                                {{-- <label for="user_limit">User Limit: </label> --}}
+                                {{ Form::number('user_limit', old('user_limit'), ['class' => 'form-control', 'placeholder' => 'Number of participants','min'=>1]) }}
+                                @if ($errors->has('type'))
+                                    <span class="help-block">
+									{{ $errors->first('type') }}
+								</span>
+                                @endif
+                            </div>
+                            <div class="col-md-6">
+                                {{-- <label for="price">Price: <small>(Provide <code>0</code> for FREE Event)</small></label> --}}
+                                {{ Form::number('price', old('price'), ['class' => 'form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price' ,'max'=>10000]) }}
+                                @if ($errors->has('price'))
+                                    <span class="help-block">
+									{{ $errors->first('price') }}
+								</span>
+                                @endif
+                            </div>
+                        </div>
+                    </fieldset>
 
-				<fieldset class="form-group required {{ $errors->has('start_date') || $errors->has('end_date') ? ' has-error' : '' }}">
-					<div class="row">
-						<div class="col-md-6">
-							{{-- {{ Form::label('start_date', trans('admin.start_date'), ['class' => 'control-label']) }} --}}
+                    <fieldset
+                            class="form-group required {{ $errors->has('start_date') || $errors->has('end_date') ? ' has-error' : '' }}">
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{-- {{ Form::label('start_date', trans('admin.start_date'), ['class' => 'control-label']) }} --}}
 
-							<div class="input-group date form_datetime">												
+                                <div class="input-group date form_datetime">
 
-								<input type="text" class="datepick2--event form-control" required name="start_date" placeholder="Start Time" value="{{ old('start_date') }}">
+                                    <input type="text" class="datepick2--event form-control" name="start_date"
+                                           placeholder="Start Time" value="{{ old('start_date') }}">
 
 								<span class="input-group-addon addon-right calendar-addon">
 									<span class="fa fa-calendar"></span>
 								</span>
-							</div>
-							@if ($errors->has('start_date'))
-							<span class="help-block">
+                                </div>
+                                @if ($errors->has('start_date'))
+                                    <span class="help-block">
 								{{ $errors->first('start_date') }}
 							</span>
-							@endif
-						</div>
-						<div class="col-md-6 hidden">
-							{{-- {{ Form::number('duration', old('duration'), ['class' => 'form-control', 'id' => 'duration', 'autocomplete' => 'off','placeholder' => 'duration','max'=>2]) }} --}}
-							<select class="form-control" id="duration" name="duration">
-								<option value="null">Duration (in Hrs)</option>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-								<option value="6">6</option>
-								<option value="7">7</option>
-								<option value="8">8</option>
-								<option value="9">9</option>
-								<option value="10">10</option>
-								<option value="11">11</option>
-								<option value="12">12</option>
-								<option value="13">13</option>
-								<option value="14">14</option>
-								<option value="15">15</option>
-								<option value="16">16</option>
-								<option value="17">17</option>
-								<option value="18">18</option>
-								<option value="19">19</option>
-								<option value="20">20</option>
-								<option value="21">21</option>
-								<option value="22">22</option>
-								<option value="23">23</option>
-								<option value="24">24</option>
-								<option value="25">25</option>
-								<option value="26">26</option>
-								<option value="27">27</option>
-								<option value="28">28</option>
-								<option value="29">29</option>
-								<option value="30">30</option>
-								<option value="31">31</option>
-								<option value="32">32</option>
-								<option value="33">33</option>
-								<option value="34">34</option>
-								<option value="35">35</option>
-								<option value="36">36</option>
-								<option value="37">37</option>
-								<option value="38">38</option>
-								<option value="39">39</option>
-								<option value="40">40</option>
-								<option value="41">41</option>
-								<option value="42">42</option>
-								<option value="43">43</option>
-								<option value="44">44</option>
-								<option value="45">45</option>
-								<option value="46">46</option>
-								<option value="47">47</option>
-								<option value="48">48</option>
-							</select>
-							@if ($errors->has('duration'))
-								<span class="help-block">
+                                @endif
+                            </div>
+                            <div class="col-md-6">
+                                {{ Form::text('duration', old('duration'), ['class' => 'form-control', 'id' => 'duration-event', 'autocomplete' => 'off','placeholder' => 'duration']) }}
+                                @if ($errors->has('duration'))
+                                    <span class="help-block">
 									{{ $errors->first('duration') }}
 								</span>
-							@endif
-						</div>
-						<div class="col-md-6">
-							@if ($errors->has('duration'))
-								<span class="help-block">
-									{{ $errors->first('duration') }}
-								</span>
-							@endif
-							{{-- {{ Form::number('duration', old('duration'), ['class' => 'form-control', 'id' => 'duration', 'autocomplete' => 'off','placeholder' => 'duration','required'=>'required','max'=>2,'min'=>1]) }} --}}
-							<select class="form-control" id="duration" required name="duration">
-								<option disabled selected value="">Duration (in Hrs)</option>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-								<option value="6">6</option>
-								<option value="7">7</option>
-								<option value="8">8</option>
-								<option value="9">9</option>
-								<option value="10">10</option>
-								<option value="11">11</option>
-								<option value="12">12</option>
-								<option value="13">13</option>
-								<option value="14">14</option>
-								<option value="15">15</option>
-								<option value="16">16</option>
-								<option value="17">17</option>
-								<option value="18">18</option>
-								<option value="19">19</option>
-								<option value="20">20</option>
-								<option value="21">21</option>
-								<option value="22">22</option>
-								<option value="23">23</option>
-								<option value="24">24</option>
-								<option value="25">25</option>
-								<option value="26">26</option>
-								<option value="27">27</option>
-								<option value="28">28</option>
-								<option value="29">29</option>
-								<option value="30">30</option>
-								<option value="31">31</option>
-								<option value="32">32</option>
-								<option value="33">33</option>
-								<option value="34">34</option>
-								<option value="35">35</option>
-								<option value="36">36</option>
-								<option value="37">37</option>
-								<option value="38">38</option>
-								<option value="39">39</option>
-								<option value="40">40</option>
-								<option value="41">41</option>
-								<option value="42">42</option>
-								<option value="43">43</option>
-								<option value="44">44</option>
-								<option value="45">45</option>
-								<option value="46">46</option>
-								<option value="47">47</option>
-								<option value="48">48</option>
-							</select>
-						</div>
-					</div>
-				</fieldset>
+                                @endif
+                            </div>
+                        </div>
+                    </fieldset>
 
-				<fieldset class="form-group">
-					{{-- {{ Form::label('about', trans('common.about'), ['class' => 'control-label']) }}							 --}}
-					{{ Form::textarea('about', old('about'), ['class' => 'form-control','placeholder' => trans('common.description'), 'maxlength'=>500]) }}									
-				</fieldset>
+                    <fieldset class="form-group">
+                        {{-- {{ Form::label('about', trans('common.about'), ['class' => 'control-label']) }}							 --}}
+                        {{ Form::textarea('about', old('about'), ['class' => 'form-control','placeholder' => trans('common.description'), 'maxlength'=>500]) }}
+                    </fieldset>
+                    <input type="hidden" name="focus" value="training">
 
-				{{-- <fieldset class="form-group">
-					{{ Form::label('focus', 'Focus: ', ['class' => 'control-label']) }}
-					{{ Form::radio('focus', 'training', true) }} Training
-                    {{ Form::radio('focus', 'motivation') }} Motivation
-                    {{ Form::radio('focus', 'learning') }} Learning (mix)
-				</fieldset> --}}
-				<input type="hidden" name="focus" value="training">
+                    {!! Form::hidden('group_id', $group_id) !!}
 
-				{!! Form::hidden('group_id', $group_id) !!}		
+                    <div class="pull-right">
+                        {{--@if($group_id != null)
+                        <a href="{!! url($username) !!}" class="btn btn-default">Cancel</a>
+                        @else
+                        <a href="{!! url($username.'/events') !!}" class="btn btn-default">Cancel</a>
+                        @endif--}}
+                        {{ Form::submit(trans('common.create_event'), ['class' => 'btn ft-btn-primary']) }}
+                    </div>
+                    <div class="clearfix"></div>
 
-				<div class="pull-right">
-					{{--@if($group_id != null)
-					<a href="{!! url($username) !!}" class="btn btn-default">Cancel</a>								    
-					@else
-					<a href="{!! url($username.'/events') !!}" class="btn btn-default">Cancel</a>								    
-					@endif--}}
-					{{ Form::submit(trans('common.create_event'), ['class' => 'btn ft-btn-primary']) }}
-				</div>
-				<div class="clearfix"></div>
-
-			</form>
-		</div>
-		@endif
-	</div><!-- /panel-body -->
-</div>			
+                </form>
+            </div>
+        @endif
+    </div><!-- /panel-body -->
+</div>
 <!-- </div> -->
 
 <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initMap"
-async defer></script>
+        async defer></script>
 
 <script>
-	function initMap(event) 
-	{    
-		var key;  
-		var map = new google.maps.Map(document.getElementById('location-input'), {
-		});
+    function initMap(event) {
+        var key;
+        var map = new google.maps.Map(document.getElementById('location-input'), {});
 
-		var input = /** @type {!HTMLInputElement} */(
-			document.getElementById('location-input'));        
+        var input = /** @type {!HTMLInputElement} */(
+                document.getElementById('location-input'));
 
-		if(window.event)
-		{
-			key = window.event.keyCode; 
+        if (window.event) {
+            key = window.event.keyCode;
 
-		}
-		else 
-		{
-			if(event)
-				key = event.which;      
-		}       
+        }
+        else {
+            if (event)
+                key = event.which;
+        }
 
-		if(key == 13){       
-    //do nothing 
-    return false;       
-    //otherwise 
-} else { 
-	var autocomplete = new google.maps.places.Autocomplete(input);  
-	autocomplete.bindTo('bounds', map);
+        if (key == 13) {
+            //do nothing
+            return false;
+            //otherwise
+        } else {
+            var autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.bindTo('bounds', map);
 
-    //continue as normal (allow the key press for keys other than "enter") 
-    return true; 
-} 
-}
+            //continue as normal (allow the key press for keys other than "enter")
+            return true;
+        }
+    }
 </script>

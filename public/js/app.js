@@ -1809,7 +1809,7 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 
   //date-picker
-  /*$( "#datepicker" ).datepicker();
+/*  $( "#datepicker" ).datepicker();
   $( "#datepicker1" ).datepicker();
   $( "#datepicker2" ).datepicker();*/
 
@@ -2173,3 +2173,11 @@ $(document).on('click','.event-remove-thumb',function(e) {
   $('.event_images_upload--label').removeClass('image-added')
 })
 
+$(function() {
+  $('#app-alert').MaterialDialog({show:false})
+})
+
+function alertApp (text) {
+  $('#app-alert .app-alert__text').html(text)
+  $('#app-alert').MaterialDialog('show')
+}

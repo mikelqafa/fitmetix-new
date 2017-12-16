@@ -11,6 +11,16 @@ $(function() {
     endDate: new Date(today.getFullYear(), today.getMonth()+3, today.getDate()),
     showMeridian: true
   });
+  $('#duration-event').durationPicker({
+    lang: 'en',
+    formatter: function (s) {
+    return s;
+    },
+    showSeconds: false
+  });
+  $(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+  });
 })
 
 function fetchEvent() {
@@ -34,7 +44,6 @@ function fetchEvent() {
         var d = allEvents[i].start_date.substr(8,2);
         events.push({'Date': new Date(y, m-1, d), 'Title': allEvents[i].timeline.name})
       }
-      console.log(events)
       var element = document.getElementById('caleandar');
       caleandar(element, events, {});
     }

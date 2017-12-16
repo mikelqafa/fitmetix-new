@@ -54,6 +54,8 @@
         <link href="{{asset('js/owl/dist/assets/owl.carousel.min.css')}}" rel="stylesheet">
         <link href="{{asset('js/owl/dist/assets/owl.theme.default.css')}}" rel="stylesheet">
         <script src="{{asset('js/owl/dist/owl.carousel.min.js')}}" type="text/javascript"></script>
+        <script src="{{ asset('vendor/datepicker.js') }}" type="text/javascript"></script>
+        <link href="{{asset('vendor/datepicker.css')}}" rel="stylesheet">
         <script>
             $(document).ready(function () {
                 $('#slider-owl').owlCarousel({
@@ -64,6 +66,15 @@
                     dots: false,
                     autoplay:true,
                     animateOut: 'fadeOut'
+                });
+
+                $( "#datepicker1" ).datepicker({
+                    format: 'mm/dd/yyyy',
+                    autoClose: true
+                });
+                $( "#datepicker2" ).datepicker({
+                    format: 'mm/dd/yyyy',
+                    autoClose: true
                 });
             })
         </script>

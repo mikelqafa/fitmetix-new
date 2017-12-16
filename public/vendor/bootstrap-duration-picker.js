@@ -33,12 +33,12 @@
 
       function buildDisplayBlock(id, hidden) {
         return '<div class="bdp-block '+ (hidden ? 'hidden' : '') + '">' +
-            '<span id="bdp-'+ id +'"></span><br>' +
+            '<span id="bdp-'+ id +'"></span>' +
             '<span class="bdp-label" id="' + id + '_label"></span>' +
             '</div>';
       }
 
-      var mainInputReplacer = $('<div class="bdp-input">' +
+      var mainInputReplacer = $('<div class="bdp-input"><span class="black-label">Duration</span>' +
           buildDisplayBlock('days') +
           buildDisplayBlock('hours') +
           buildDisplayBlock('minutes') +

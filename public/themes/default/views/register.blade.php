@@ -2,6 +2,19 @@
     .ft-login__header{
         top:0;
     }
+    .pos-rel {
+        position: relative;
+    }
+    #datepicker-hidden{
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        -webkit-appearance: none;
+        opacity: 0;
+        z-index: 2;
+    }
 </style>
 <script type="text/javascript">
     function redirect_source() {
@@ -50,8 +63,9 @@
 
 
                     <div class="md-layout md-layout-spacer mobile-layout-column__register-group mobile-layout-column md-layout--row md-align md-align-start-center" style="width: 100%">
-                        <div class="mail-form  form-group form-group__adjust">
-                            <input class="form-control" id="datepicker1" placeholder="Birthday" name="birthday" type="date">
+                        <div class="mail-form  form-group form-group__adjust pos-rel">
+                            <input class="form-control" id="datepicker1" placeholder="Birthday" name="birthday" type="text">
+                            {{--<input class="form-control" id="datepicker-hidden" placeholder="Birthday" name="birthday" type="date">--}}
                         </div>
                         <div class="form-group form-group__adjust">
                             <select class="form-control" id="gender" required name="gender">
@@ -139,3 +153,25 @@
     </div>
 </div>
 <a href="{!! url('register') !!}" class="btn btn-success hidden">Create Account</a>
+<script>
+    function  detectmob(){
+        if (
+                navigator.userAgent.match(/Android/i) ||
+                navigator.userAgent.match(/webOS/i) ||
+                navigator.userAgent.match(/iPhone/i) ||
+                navigator.userAgent.match(/iPad/i) ||
+                navigator.userAgent.match(/iPod/i) ||
+                navigator.userAgent.match(/BlackBerry/i) ||
+                navigator.userAgent.match(/Windows Phone/i)
+        ) {
+            return true
+        } else {
+            return false
+        }
+    }
+    /*if(detectmob()) {
+        document.getElementById('datepicker1').setAttribute('type', 'date')
+    } else {
+        document.getElementById('datepicker1').setAttribute('type', 'text')
+    }*/
+</script>

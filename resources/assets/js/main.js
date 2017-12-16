@@ -12,9 +12,11 @@ import VueTimeago from 'vue-timeago'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import AppEventCalendar from './components/appEventCalendar'
 import {store} from './store/store'
+import VueClip from 'vue-clip'
 require('swiper/dist/css/swiper.css')
 
 Vue.use(VueAwesomeSwiper)
+Vue.use(VueClip)
 Vue.use(VueTimeago, {
   name: 'timeago', // component name, `timeago` by default
   locale: 'en-US',

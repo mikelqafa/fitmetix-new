@@ -74,6 +74,23 @@
 </head>
 <body id="fitmetix-app" @if(Setting::get('enable_rtl') == 'on') class="direction-rtl" @endif>
 
+<div id="app-alert" class="md-dialog md-dialog--center md-dialog--confirm" aria-hidden="false">
+    <div class="md-dialog__wrapper">
+        <div class="md-dialog__shadow"></div>
+        <div class="md-dialog__surface">
+            <div class="md-dialog__body">
+                <div class="app-alert__text">
+
+                </div>
+            </div>
+            <footer class="md-dialog__footer">
+                <button data-action="affirmative" class="md-dialog__action md-button md-button--compact">OK
+                </button>
+            </footer>
+        </div>
+    </div>
+</div>
+
 <div class="padding-10">
     {!! Theme::partial('header') !!}
     {!! Theme::partial('mobileHeader') !!}
@@ -98,7 +115,6 @@
 <script src="{{ asset('js/bootstrap-datetimepicker.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/drawer.js') }}"></script>
-<script src="{{ asset('js/bootstrap-duration-picker.js') }}"></script>
 <script type="text/javascript">
     $(function() {
         $('#drawer-1').MaterialDrawer({
@@ -124,6 +140,7 @@
 </script>
 @if (in_array(!Route::currentRouteName(), ['contact', 'login', 'register']))
     <script src="{{ asset('js/notification.js') }}" type="text/javascript"></script>
+    <script src="{{asset('vendor/bootstrap-duration-picker.js')}}" type="text/javascript"></script>
     <script type="text/javascript" src="{{asset('js/caleandar.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/event.js')}}"></script>
     <script>
@@ -144,5 +161,6 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
 @endif
+@yield('js')
 </body>
 </html>

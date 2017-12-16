@@ -1,28 +1,39 @@
 <template>
-    <div class="ft-cp">
-        <div class="ft-cp__user" :style="{ backgroundImage: 'url(\'' + userImage + '\')' }"></div>
-        <div class="ft-cp__presentation">
-            <div class="write-post">
-                <div class="write-post__placeholder" v-if="hasNotContent">{{placeholder}}</div>
-                <mention-at :members="members" v-on:at="fetchUser" name-key="name">
-                    <template slot="item" scope="s">
-                        <img :src="s.item.avatar">
-                        <span v-text="s.item.name"></span>
-                    </template>
-                    <medium-editor id="create-post-vue" :text='backContent' :options='options'
-                               class="write-post__text"
-                               v-on:edit='processEditOperation'
-                               style="outline: none; user-select: text; white-space: pre-wrap; word-wrap: break-word;"
-                               custom-tag='div'>
-                </medium-editor>
-                </mention-at>
-                <div class="replace-with"></div>
+    <div class="pos-rel">
+        <div class="ft-cp">
+            <div class="ft-cp__user" :style="{ backgroundImage: 'url(\'' + userImage + '\')' }"></div>
+            <div class="ft-cp__presentation">
+                <div class="write-post">
+                    <div class="write-post__placeholder" v-if="hasNotContent">{{placeholder}}</div>
+                    <mention-at :members="members" v-on:at="fetchUser" name-key="name">
+                        <template slot="item" scope="s">
+                            <img :src="s.item.avatar">
+                            <span v-text="s.item.name"></span>
+                        </template>
+                        <medium-editor id="create-post-vue" :text='backContent' :options='options'
+                                       class="write-post__text"
+                                       v-on:edit='processEditOperation'
+                                       style="outline: none; user-select: text; white-space: pre-wrap; word-wrap: break-word;"
+                                       custom-tag='div'>
+                        </medium-editor>
+                    </mention-at>
+                    <div class="replace-with"></div>
+                </div>
             </div>
+        </div>
+        <app-image-uploader ref="vue_img"></app-image-uploader>
+        <div v-if="isPosting" class="ft-loading ft-loading--abs">
+            <span class="ft-loading__dot"></span>
+            <span class="ft-loading__dot"></span>
+            <span class="ft-loading__dot"></span>
         </div>
     </div>
 </template>
 
 <style>
+    .upload-action.is-dragging {
+        background: green;
+    }
     .atwho-li img {
         height: 100%;
         width: auto;
@@ -82,6 +93,7 @@
 </style>
 
 <script>
+    import appImageUploader from './child/appImageUploader'
     import editor from 'vue2-medium-editor'
     import At from 'vue-at'
 
@@ -95,7 +107,12 @@
                 backContent: '',
                 viewContent: '',
                 imageFile: [],
-                options: { disableReturn: false }
+                options: { disableReturn: false },
+                optionsFileUpload: {
+                    url: '/upload',
+                    paramName: 'file'
+                },
+                isPosting: false
             }
         },
         mounted () {
@@ -144,90 +161,8 @@
 
             $(document).on('click','#imageUpload',function(e){
                 e.preventDefault();
-                $('.post-images-upload').trigger('click');
-            });
-
-            // Removing selected image here
-            var validFiles = [];
-            $('body').on('click','.remove-thumb',function(e) {
-                e.preventDefault()
-                var count = 0;
-                var key = $(this).data('id');
-                validFiles[key] = null;
-                $(this).parent(".pip").remove();
-                $.each(validFiles, function (key, val) {
-                    if (val != null) {
-                        count++;
-                    }
-                });
-                $('.post-images-selected').find('span').text(count);
-                $('input[name="upload-image-name[]"][data-key="'+key+'"]').remove()
-                if(!count) {
-                    $('.post-images-selected').hide('slow');
-                }
-            })
-
-            // Image upload on create post on timeline
-            $(document).on('change','.post-images-upload',function(e){
-                e.preventDefault();
-                that.imageFile = []
-                $('input[name="upload-image-name"]').remove();
-                var files = !!this.files ? this.files : [];
-                $('.post-images-selected').find('span').text(files.length);
-                $('.post-images-selected').show('slow');
-                if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
-
-                var countFiles = $(this)[0].files.length;
-                var imgPath = $(this)[0].value;
-                var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
-                var image_holder = $("#post-image-holder");
-                image_holder.empty();
-                if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg")
-                {
-                    if (typeof(FileReader) != "undefined")
-                    {
-                        let validFiles = [];
-                        //loop for each file selected for uploaded.
-                        $.each(files, function(key,val) {
-                            validFiles.push(files[key]);
-                            var reader = new FileReader();
-                            reader.onload = function(e) {
-                                var file = e.target;
-                                var image = new Image();
-                                image.src = file.result;
-                                $("<span class=\"pip\" data-index='"+ key +"'>" +
-                                        "<img class=\"thumb-image\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-                                        "<a data-id=" + (key) + " class='remove-thumb'><i class='fa fa-times'></i></a>" +
-                                        "<div class='image-loader'>" +
-                                        "<div class='image-loader-progress'></div>" +
-                                        "</div>" +
-                                        "</span>").appendTo(image_holder);
-                                image.onload = function(){
-                                    if(this.width < 600 || this.height < 150) {
-                                        console.log("Please select a larger image");
-                                        imgPath = '';
-                                        validFiles = [];
-                                        image_holder.empty();
-                                        files.length = 0;
-                                        //let files_length = parseInt($('.post-images-selected').find('span').text())
-                                        //!files_length? $('.post-images-selected').find('span').text(--files_length): $('.post-images-selected').find('span').text('')
-                                        //$('.post-images-selected').hide('slow');
-                                        // return
-                                    } else {
-                                        let loaderDiv = $('.create-post-form .pip[data-index="'+key+'"]').find('.image-loader-progress')
-                                        that.uploadPostImage(key, files, loaderDiv)
-                                    }
-                                };
-                            }
-                            image_holder.show();
-                            reader.readAsDataURL(files[key]);
-                        });
-                    } else {
-                        alert("This browser does not support FileReader.");
-                    }
-                } else {
-                    alert("Please select only images");
-                }
+                //$('.post-images-upload').trigger('click');
+                $('#upload-action-create').trigger('click');
             });
         },
         computed: {
@@ -242,6 +177,7 @@
         },
         components: {
             'mention-at':At,
+            'app-image-uploader': appImageUploader,
             'medium-editor': editor
         },
         methods: {
@@ -294,19 +230,14 @@
                 let soundcloud_title = $(".create-post-form input[name=soundcloud_title]").val()
                 this.replaceImgEmoji()
                 let description = this.nl2br($('.replace-with').html())
-                let $imageInputs = $('.create-post-form input[name="upload-image-name[]"]')
+                let $imageInputs = this.$refs.vue_img.files
                 if($imageInputs.length == 0 && youtubeText == '' && location =='' && youtube_title == '' && youtube_video_id == ''
                         && soundcloud_id == '' && user_tags == '' && soundcloud_title == '' &&  description == '' ) {
                     materialSnackBar({messageText: 'Your post cannot be empty!', autoClose: true })
                     return false;
                 }
                 let imageUploaded = true
-                $imageInputs.each(function(){
-                    console.log($(this).val())
-                    if($(this).val() == '') {
-                        imageUploaded = false
-                    }
-                })
+                // TODO check image all uploaded
                 if(!imageUploaded) {
                     materialSnackBar({messageText: 'Please wait while images are being uploading', autoClose: true })
                     return;
@@ -315,9 +246,35 @@
                 // set loading state
                 let create_post_form = $('.create-post-form')
                 let post_images_upload = []
-                $imageInputs.each(function(){
-                    post_images_upload.push($(this).val())
-                })
+                let response
+                let fileUploaded = true
+                let reason = ''
+                for(let j=0; j<$imageInputs.length;j++) {
+                    console.log($imageInputs[j]['status'])
+                    if($imageInputs[j]['status'] === 'success') {
+                        response = $imageInputs[j].xhrResponse.response
+                        response = JSON.parse(response)
+                        if(response.status == 200) {
+                            post_images_upload.push(response[0])
+                        } else {
+                            fileUploaded = false
+                            reason = response.status
+                        }
+                    } else {
+                        fileUploaded = false
+                        reason = $imageInputs[j]['status']
+                    }
+                    if(!fileUploaded)
+                        break
+                }
+                if(!fileUploaded) {
+                    if(!isNaN(reason)) {
+                        materialSnackBar({messageText: 'Error occurred! Please try again.', autoClose: true })
+                    } else {
+                        materialSnackBar({messageText: 'Please wait while images are uploading...', autoClose: true })
+                    }
+                    return
+                }
                 let create_post_button = create_post_form.find('.btn-submit')
                 create_post_button.attr('disabled', true).append(' <i class="fa fa-spinner fa-pulse "></i>');
                 create_post_form.find('.post-message').fadeOut('fast');
@@ -334,6 +291,7 @@
                     user_tags: user_tags,
                     soundcloud_title: soundcloud_title
                 };
+                this.isPosting = true
                 axios({
                     method: 'post',
                     responseType: 'json',
@@ -346,6 +304,8 @@
                         that.resetCreatePost()
                     }
                 }).catch(function (error) {
+                    that.resetCreatePost()
+                    materialSnackBar({messageText: 'Error occurred! Please try again.', autoClose: true })
                     console.log(error)
                 })
             },
@@ -432,6 +392,8 @@
                 let create_post_button = $('.create-post-form .btn-submit')
                 create_post_button.html(create_post_button.text())
                 create_post_button.attr('disabled', false)
+                this.$refs.vue_img.reset()
+                this.isPosting = false
             },
             processEditOperation: function (operation) {
                 this.backContent = operation.api.origElements.innerHTML
