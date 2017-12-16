@@ -147,7 +147,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    margin-bottom: 15px;
+    margin-bottom: 8px;
 }
 .ft-card__list .icon {
     margin-right: 10px;
@@ -1641,6 +1641,9 @@ a{
     margin-bottom: 0 !important;
 }
 .ft-card__list {
+    align-items: flex-start;
+}
+.lg-loading-skeleton .ft-card__list {
     align-items: center;
 }
 .ft_card, .event-filter-wrapper {
@@ -1795,4 +1798,22 @@ a{
     fill: currentColor;
     height: 24px;
     width: 24px
+}
+.ft-event-card__title{
+    text-align: center;
+}
+.absolute-loader{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.absolute-loader .ft-loading{
+    min-height: 100%;
+    width: 100%;
+    background-color: transparent;
 }

@@ -1500,7 +1500,7 @@ $(function () {
     {
       $('[name="user_tags"]').val(value);
       // $('.user-tags-added').find('.user-tag-names').append('<a href="#">' + value  + '</a>');
-      var selectize =selectizeUsers[0].selectize;
+      var selectize = selectizeUsers[0].selectize;
       var values = selectize.items;
 
       getUsersData();
@@ -1534,12 +1534,6 @@ $(function () {
     });
 
     $('.user-tags-added').find('.user-tag-names').html(selectedUserTags);
-
-    // $.each(values,function(value){
-    // });
-    // return $.map(values, function(value) {
-    //   return selectize.options[value];
-    // });
   }
 
 

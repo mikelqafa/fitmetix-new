@@ -1,5 +1,6 @@
 <template>
     <div>
+        <app-post-share></app-post-share>
         <post-theater-view></post-theater-view>
         <post-wholikes-view></post-wholikes-view>
         <template v-if="!noPostFound || alreadyHavePost">
@@ -93,6 +94,7 @@
     import postComment from './child/postComment'
     import postTheaterView from './child/postTheaterView'
     import postWhoLikesView from './child/postWhoLikesView'
+    import appPostShare from './child/appPostShare'
     import { mapGetters } from 'vuex'
 
     let axios = window.axios
@@ -240,7 +242,8 @@
             'post-event': postEvent,
             'post-comment': postComment,
             'post-theater-view': postTheaterView,
-            'post-wholikes-view': postWhoLikesView
+            'post-wholikes-view': postWhoLikesView,
+            'app-post-share': appPostShare
         },
         computed: {
             ...mapGetters({

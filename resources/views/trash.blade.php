@@ -2536,3 +2536,47 @@ return this.theaterPostItem.postIndex !== undefined ? this.$store.state.postItem
     </li>
 </ul>
 allAlbums
+
+this.selectizeUsers  = $('#share-user-select').selectize({
+valueField: 'id',
+labelField: 'name',
+searchField: 'name',
+maxItems: 5,
+plugins: ['remove_button'],
+render: {
+option: function(item, escape) {
+console.log(item.avatar)
+return '<div class="media big-search-dropdown">' +
+    '<a class="media-left" href="#">' +
+        '<img src="'+ item.avatar + '" alt="...">' +
+        '</a>' +
+    '<div class="media-body">' +
+        '<h4 class="media-heading">' + escape(item.name) + '</h4>' +
+        '</div>' +
+    '</div>';
+}
+},
+onChange: function(value) {
+$('[name="user_tags"]').val(value);
+let selectize = that.selectizeUsers[0].selectize;
+let values = selectize.items;
+that.getUsersData();
+},
+load: function(query, callback) {
+if (!query.length) return callback();
+$.ajax({
+url: base_url  + 'api/v1/users',
+type: 'GET',
+dataType: 'json',
+data: {
+search: query
+},
+error: function() {
+callback();
+},
+success: function(res) {
+callback(res.data);
+}
+});
+}
+});

@@ -39,6 +39,7 @@
     <link href="{{ asset('fitmetixfont/font.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ asset('css/swiper.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/drawer.css') }}">
     <link href="{{ asset('css/dialog.css') }}" rel="stylesheet">
     <link href="{{ asset('css/snackbar.css') }}" rel="stylesheet">
     <link href="{{asset('vendor/datepicker.css')}}" rel="stylesheet">

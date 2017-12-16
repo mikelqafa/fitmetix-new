@@ -1,12 +1,14 @@
 <template>
     <div>
+        <post-theater-view></post-theater-view>
+        <post-wholikes-view></post-wholikes-view>
         <div class="event-filter-wrapper">
             <div class="hidden-sm hidden-xs ft-filter">
                 <fieldset class="form-group">
                     <input v-on:keyup.enter="submit(0)" v-model.trim="filterData[0]" class="form-control" id="filter-location-input" autocomplete="off" placeholder="By Location" name="location" type="text" style="position: relative; overflow: hidden;">
                 </fieldset>
                 <fieldset class="form-group">
-                    <input v-on:keyup.enter="submit(1)" class="form-control filter-date" name="date" id="filter-date" autocomplete="off" placeholder="By Date" type="text" style="position: relative; overflow: hidden;">
+                    <input v-on:keyup.enter="submit(1, $event)" class="form-control filter-date" name="date" id="filter-date" autocomplete="off" placeholder="By Date" type="text" style="position: relative; overflow: hidden;">
                 </fieldset>
                 <fieldset class="form-group">
                     <input v-on:keyup.enter="submit(2)" v-model.trim="filterData[2]" class="form-control" id="filter-tag" name="tags" autocomplete="off" placeholder="By Tag" type="text" style="position: relative; overflow: hidden;">
@@ -79,122 +81,174 @@
         <div class="post-filters pages-groups">
             <div class="pane">
                 <div class="pan">
-                    <div class="ft-grid">
-                        <div class="ft-grid__item lg-loading-skeleton">
-                            <div class="ft_card">
-                                <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
-                                </div>
-                                <div class="ft-card__primary hidden-sm hidden-xs">
-                                    <div class="ft-card__title lg-loadable">
-                                        <h5 class="ft-event-card__title">&nbsp;</h5>
+                    <template v-if="!noPostFound || alreadyHavePost">
+                        <template v-if="isLoading">
+                            <div class="ft-grid">
+                                <div class="ft-grid__item lg-loading-skeleton">
+                                    <div class="ft_card">
+                                        <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                        </div>
+                                        <div class="ft-card__primary hidden-sm hidden-xs">
+                                            <div class="ft-card__title lg-loadable">
+                                                <h5 class="ft-event-card__title">&nbsp;</h5>
+                                            </div>
+                                            <div class="ft-card__list-wrapper">
+                                                <div class="ft-card__list">
+                                                    <div class="icon lg-loadable"></div>
+                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
+                                                <div class="ft-card__list">
+                                                    <div class="icon icon-participant lg-loadable"></div>
+                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
+                                                <div class="ft-card__list">
+                                                    <div class="icon lg-loadable"></div>
+                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
+                                                <div class="ft-card__list">
+                                                    <div class="icon lg-loadable"></div>
+                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="ft-card__list-wrapper">
-                                        <div class="ft-card__list">
-                                            <div class="icon lg-loadable"></div>
-                                            <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                &nbsp;
+                                </div>
+                                <div class="ft-grid__item lg-loading-skeleton">
+                                    <div class="ft_card">
+                                        <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                        </div>
+                                        <div class="ft-card__primary hidden-sm hidden-xs">
+                                            <div class="ft-card__title lg-loadable">
+                                                <h5 class="ft-event-card__title">&nbsp;</h5>
+                                            </div>
+                                            <div class="ft-card__list-wrapper">
+                                                <div class="ft-card__list">
+                                                    <div class="icon lg-loadable"></div>
+                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
+                                                <div class="ft-card__list">
+                                                    <div class="icon icon-participant lg-loadable"></div>
+                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
+                                                <div class="ft-card__list">
+                                                    <div class="icon lg-loadable"></div>
+                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
+                                                <div class="ft-card__list">
+                                                    <div class="icon lg-loadable"></div>
+                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="ft-card__list">
-                                            <div class="icon icon-participant lg-loadable"></div>
-                                            <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                &nbsp;
-                                            </div>
+                                    </div>
+                                </div>
+                                <div class="ft-grid__item lg-loading-skeleton">
+                                    <div class="ft_card">
+                                        <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
                                         </div>
-                                        <div class="ft-card__list">
-                                            <div class="icon lg-loadable"></div>
-                                            <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                &nbsp;
+                                        <div class="ft-card__primary hidden-sm hidden-xs">
+                                            <div class="ft-card__title lg-loadable">
+                                                <h5 class="ft-event-card__title">&nbsp;</h5>
                                             </div>
-                                        </div>
-                                        <div class="ft-card__list">
-                                            <div class="icon lg-loadable"></div>
-                                            <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                &nbsp;
+                                            <div class="ft-card__list-wrapper">
+                                                <div class="ft-card__list">
+                                                    <div class="icon lg-loadable"></div>
+                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
+                                                <div class="ft-card__list">
+                                                    <div class="icon icon-participant lg-loadable"></div>
+                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
+                                                <div class="ft-card__list">
+                                                    <div class="icon lg-loadable"></div>
+                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
+                                                <div class="ft-card__list">
+                                                    <div class="icon lg-loadable"></div>
+                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                        &nbsp;
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="ft-grid__item lg-loading-skeleton">
-                            <div class="ft_card">
-                                <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
-                                </div>
-                                <div class="ft-card__primary hidden-sm hidden-xs">
-                                    <div class="ft-card__title lg-loadable">
-                                        <h5 class="ft-event-card__title">&nbsp;</h5>
-                                    </div>
-                                    <div class="ft-card__list-wrapper">
-                                        <div class="ft-card__list">
-                                            <div class="icon lg-loadable"></div>
-                                            <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                &nbsp;
+                        </template>
+                        <template v-else="">
+                            <div class="ft-grid">
+                                <div v-for="(item, index) in eventList" :key="item.id" class="ft-grid__item">
+                                    <div class="ft_card">
+                                        <a href="javascript:;" @click="showEventPost(item.id)" class="ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" :style="{backgroundImage: 'url(' + getCoverImage(item) + ')'}">
+                                            <img class="ft-card__img" :src="getCoverImage(item)" alt="Event Cover">
+                                        </a>
+                                        <div class="ft-card__primary hidden-sm hidden-xs">
+                                            <div class="ft-card__title lg-loadable">
+                                                <h5 class="ft-event-card__title">{{item.name}}</h5>
                                             </div>
-                                        </div>
-                                        <div class="ft-card__list">
-                                            <div class="icon icon-participant lg-loadable"></div>
-                                            <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                &nbsp;
-                                            </div>
-                                        </div>
-                                        <div class="ft-card__list">
-                                            <div class="icon lg-loadable"></div>
-                                            <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                &nbsp;
-                                            </div>
-                                        </div>
-                                        <div class="ft-card__list">
-                                            <div class="icon lg-loadable"></div>
-                                            <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                &nbsp;
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ft-grid__item lg-loading-skeleton">
-                            <div class="ft_card">
-                                <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
-                                </div>
-                                <div class="ft-card__primary hidden-sm hidden-xs">
-                                    <div class="ft-card__title lg-loadable">
-                                        <h5 class="ft-event-card__title">&nbsp;</h5>
-                                    </div>
-                                    <div class="ft-card__list-wrapper">
-                                        <div class="ft-card__list">
-                                            <div class="icon lg-loadable"></div>
-                                            <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                &nbsp;
-                                            </div>
-                                        </div>
-                                        <div class="ft-card__list">
-                                            <div class="icon icon-participant lg-loadable"></div>
-                                            <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                &nbsp;
-                                            </div>
-                                        </div>
-                                        <div class="ft-card__list">
-                                            <div class="icon lg-loadable"></div>
-                                            <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                &nbsp;
-                                            </div>
-                                        </div>
-                                        <div class="ft-card__list">
-                                            <div class="icon lg-loadable"></div>
-                                            <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                &nbsp;
+                                            <div class="ft-card__list-wrapper">
+                                                <div class="ft-card__list">
+                                                    <div class="icon icon-location-o"></div>
+                                                    <div class="card-desc">
+                                                        <a :href="formatUrl(item.location)" target="_blank">{{ item.location }}</a>
+                                                    </div>
+                                                </div>
+                                                <div class="ft-card__list">
+                                                    <div class="icon icon-participant"></div>
+                                                    <div class="card-desc">
+                                                        {{ formatGender(item.gender) }}
+                                                    </div>
+                                                </div>
+                                                <div class="ft-card__list">
+                                                    <div class="icon icon-time-o"></div>
+                                                    <div class="card-desc">
+                                                        {{ formatDate(item.start_date) }} - {{ formatDate(item.end_date) }}
+                                                    </div>
+                                                </div>
+                                                <div class="ft-card__list">
+                                                    <div class="icon icon-label-o"></div>
+                                                    <div class="card-desc">
+                                                        {{ formatPrice(item.price) }}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </template>
+                    </template>
+                    <template v-else="">
+                        <div class="text-center">
+                            No Post Found
                         </div>
-                    </div>
+                    </template>
                 </div>
             </div>
         </div>
+
         <aside class="md-drawer md-drawer--permanent" id="drawer-1" data-permanent="true">
             <div class="md-drawer__shadow"></div>
             <div class="md-drawer__surface">
@@ -203,151 +257,38 @@
                         <i class="icon icon-close"></i>
                     </a>
                 </div>
-                @php $i = 0; @endphp
-                @foreach($user_events as $user_event)
-                <div class="ft-card hidden" data-index="{{$i}}">
-                    <div class="dropdown-wrapper">
-                        <div class="dropdown">
-                            <a href="javascript:;" class="btn btn-icon dropdown-toggle"  data-toggle="dropdown">
-                                <span class="icon icon-options"></span>
-                            </a>
-                            <ul class="dropdown-menu" style="left: auto; right:0;">
-                                @if($user_event->user_id != Auth::user()->id)
-                                <li><a href="javascript:;" class="event-report">Report</a></li>
-                                <li><a href="javascript:;">Save</a></li>
-                                <li><a href="javascript:;">Share on facebook</a></li>
-                                @else
-                                <li><a href="javascript:;" class="">Edit</a></li>
-                                <li><a href="javascript:;" class="delete-own-event">Delete</a></li>
-                                <li><a href="javascript:;">Share on facebook</a></li>
-                                @endif
-                            </ul>
+                <div class="md-drawer-scroll" style="position: relative">
+                    <div class="md-drawer-scroll__wrapper" v-if="postItem.id !== undefined">
+                        <div class="panel panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
+                            <post-header :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
+                            <div class="panel-body">
+                                <post-description :post-html="postItem.description"></post-description>
+                                <post-image-viewer :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
+                                <post-event :post-item="postItem" :post-index="index" :post-img="postItem.images"></post-event>
+                            </div>
+                            <post-comment :post-index="index" :post-id="postItem.id" :post-item="postItem"></post-comment>
                         </div>
                     </div>
-
-                    @if($user_event->timeline->cover)
-                    <div class="ft-card__img-wrapper ft-card__img-wrapper--background" style="background-image: url('{{ env('STORAGE_URL').'uploads/events/covers/'.$user_event->timeline->cover['source'] }}')">
-                        <img class="ft-card__img" src="{{ env('STORAGE_URL').'uploads/events/covers/'.$user_event->timeline->cover['source'] }}" alt="Event Cover">
-                    </div>
-                    @else
-                    <div class="ft-card__img-wrapper ft-card__img-wrapper--background" style="background-image: url('{{ env('STORAGE_URL').'uploads/events/covers/default-cover-event.png' }}')">
-                        <img class="ft-card__img" src="{{ env('STORAGE_URL').'uploads/events/covers/default-cover-event.png' }}" alt="Event Cover">
-                    </div>
-                    @endif
-
-
-                    <div class="ft-card__primary">
-                        <div class="ft-card__title">
-                            <h5 class="ft-event-card__title">{{ $user_event->timeline->name }}</h5>
+                    <div v-if="showProgress" class="absolute-loader">
+                        <div class="ft-loading">
+                            <span class="ft-loading__dot"></span>
+                            <span class="ft-loading__dot"></span>
+                            <span class="ft-loading__dot"></span>
                         </div>
-                        <div class="ft-card__list-wrapper">
-                            <div class="ft-card__list">
-                                <div class="icon icon-location-o"></div>
-                                <div class="card-desc">
-                                    {{ $user_event->location }}
-                                </div>
-                            </div>
-                            <div class="ft-card__list">
-                                <div class="icon icon-participant"></div>
-                                <div class="card-desc">
-                                    {{ $user_event->gender }}
-                                </div>
-                            </div>
-                            <div class="ft-card__list">
-                                <div class="icon icon-time-o"></div>
-                                <div class="card-desc">
-                                    {{ $user_event->start_date }} to {{ $user_event->end_date }}
-                                </div>
-                            </div>
-
-                            <div class="ft-card__list">
-                                <div class="icon icon-label-o"></div>
-                                <div class="card-desc">
-                                    @if(($user_event->price == NULL) || ($user_event->price < 1))
-                                    {{ "FREE" }}
-                                    @else
-                                    {{ "$ $user_event->price" }}
-                                    @endif
-                                    @if(Auth::user()->id != $user_event->user_id)
-                                    @if($user_event->expired == true)
-                                    <button class="btn" disabled>Register</button>
-                                    @else
-                                    @if(($user_event->gender == 'all') || ($user_event->gender == Auth::user()->gender))
-
-                                    @if($user_event->registered == true)
-                                    <button class="btn btn-primary">Registered</button>
-                                    @if(($user_event->price == NULL) || ($user_event->price < 1))
-                                    <button onclick="unjoin_event(this)" class="btn btn-warning" data-timeline = "{{ $user_event->timeline->id }}">Unregister</button>
-                                    @else
-                                    <form class="form-horizontal" method="POST" action="{{ url('refundmoney.paypal') }}" >
-                                        {{ csrf_field() }}
-                                        <input id="amount" type="hidden" class="form-control" name="amount" value="{{ $user_event->price }}">
-                                        <input id="currency" type="hidden" class="form-control" name="currency" value="USD">
-                                        <input type="hidden" value="{{ $user_event->timeline->id }}">
-                                        <input type="hidden" name="sale_id" value="{{ $user_event->transaction->transaction }}">
-                                        <button type="submit" class="btn btn-primary">Unregister</button>
-
-                                    </form>
-                                    @endif
-
-
-                                    @elseif($user_event->users()->count() >= $user_event->user_limit)
-
-                                    <button disabled class="btn" data-timeline = "{{ $user_event->timeline->id }}">Register</button>
-
-                                    @else
-                                    @if(($user_event->price == NULL) || ($user_event->price < 1))
-
-                                    <button class="btn btn-primary join-event-btn" data-timeline = "{{ $user_event->timeline->id }}">Register</button>
-
-                                    @else
-                                    <form class="form-horizontal" method="POST" action="{{ URL::route('addmoney.paypal') }}" target="_blank">
-                                        {{ csrf_field() }}
-                                        <input id="amount" type="hidden" class="form-control" name="amount" value="{{ $user_event->price }}">
-                                        <input id="currency" type="hidden" class="form-control" name="currency" value="USD">
-                                        <input type="hidden" value="{{ $user_event->timeline->id }}">
-                                        <button type="submit" class="btn btn-primary">Register</button>
-
-                                    </form>
-
-                                    @endif
-                                    @endif
-                                    @else
-                                    <button disabled class="btn" data-timeline = "{{ $user_event->timeline->id }}">Register</button>
-                                    @endif
-                                    @endif
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="ft-card__list">
-                                <div class="icon icon-participant"></div>
-                                <div class="card-desc">
-                                    <p class="show_participants" data-eventID = "{{ $user_event->id }}">{{ $user_event->users()->count() }}</p>
-                                </div>
-                            </div>
-                            <div class="ft-card__list">
-                                <div class="icon"></div>
-                                <div class="card-desc">
-                                    {{ $user_event->frequency }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="ft-card__desc">
-                            {{ $user_event->timeline->about }}
-                        </div>
-                        {{-- <div class="ft-card__desc text-center">
-                        <a href="{{url('/'.$user_event->timeline->username)}}" class="btn ft-btn-primary ">Details</a>
-                    </div> --}}
                     </div>
                 </div>
-                @php $i++ @endphp
-                @endforeach
             </div>
         </aside>
     </div>
 </template>
-<style></style>
 <script>
+    import postDescription from './child/postDescription'
+    import postImageViewer from './child/postImageViewer'
+    import postEvent from './child/postEvent'
+    import postHeader from './child/postHeader'
+    import postComment from './child/postComment'
+    import postTheaterView from './child/postTheaterView'
+    import postWhoLikesView from './child/postWhoLikesView'
     export default {
         data: function () {
             return {
@@ -358,40 +299,67 @@
                     {filter: 'title', content: ''}
                 ],
                 filterData: [],
-                eventList: []
+                eventList: [],
+                alreadyHavePost: true,
+                interact: false,
+                noPostFound: false,
+                postItem: {},
+                showProgress: true
             }
         },
         methods: {
-            submit: function (i) {
-                this.filter[i].content = this.filterData[i]
+            getCoverImage: function(i) {
+                //uploads/events/covers/default-cover-event.png
+                if(false) {
+                    //return asset_url+ 'uploads/events/covers/' + user_event.timeline.cover['source']
+                }  else {
+                    //return asset_url+ 'uploads/events/covers/' + user_event.timeline.cover['source']
+                }
+                return ''
+            },
+            formatGender: function(g) {
+              return g == '' ? 'Everyone' : g == 'male'? 'Male Only' : 'Female Only'
+            },
+            formatDate: function(d) {
+                let obj = new Date(d)
+                let options = {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }
+                return obj.toLocaleString('en-us', options)
+            },
+            formatPrice: function(p) {
+              return p == null ? 'Free' : '$' + p
+            },
+            formatUrl: function(u) {
+                return base_url+ 'locate-on-map/' + u
+            },
+            submit: function (i, e) {
+                if(i==1) {
+                    console.log(e.target.value)
+                    this.filter[i].content = e.target.value
+                } else {
+                    this.filter[i].content = this.filterData[i]
+                }
+                this.showEventPost(e)
+                this.getDefaultData()
             },
             getDefaultData: function () {
                 let that = this
-                let username = current_username
-                let paginate = 4
                 let _token = $("meta[name=_token]").attr('content')
-                if($('#timeline_username').length) {
-                    username =  $('#timeline_username').val()
-                }
+                let url = this.makeUrl()
                 axios({
                     method: 'get',
                     responseType: 'json',
-                    url: base_url + 'ajax/get-events',
-                    data: {
-                        username: username,
-                        paginate: paginate,
-                        _token: _token,
-                        offset: that.offset
-                    }
+                    url: url
                 }).then( function (response) {
+                    console.log(response)
                     if (response.status ==  200) {
-                        let posts = response.data[0].posts;
-                        let i = 0
-                        $.each(posts, function(key, val) {
-                            that.$store.commit('ADD_POST_ITEM_LIST', val)
-                            i++
-                        });
-                        if(!i) {
+                        that.eventList = response.data.data
+                        if(!that.eventList.length) {
                             if(!that.interact) {
                                 that.alreadyHavePost = false
                                 that.noPostFound = true
@@ -401,15 +369,11 @@
                         } else {
                             that.interact = true
                         }
-                        setTimeout(function () {
+                        /*setTimeout(function () {
                             emojify.run();
                             hashtagify();
                             mentionify();
-                        }, 500)
-                        that.inProgress = false
-                        that.hasMorePost = i == paginate;
-                        that.offset += i
-                        that.isFetchingBottom = false
+                        }, 500)*/
                     }
                 }).catch(function(error) {
                     console.log(error)
@@ -417,7 +381,61 @@
             },
             closeDrawer: function () {
                 $('#drawer-1').MaterialDrawer('hide')
-            }
+            },
+            makeUrl: function () {
+                let url = base_url + 'ajax/get-events'
+                let parameterAdded = false
+                for(let i = 0; i< this.filter.length; i++) {
+                    if(this.filter[i].content != '') {
+                        if(!parameterAdded) {
+                            url += '?'+ this.filter[i].filter+'='+this.filter[i].content
+                            parameterAdded = true
+                        } else {
+                            url += '&'+ this.filter[i].filter+'='+this.filter[i].content
+                        }
+                    }
+                }
+                return url
+            },
+            showEventPost: function (e) {
+                this.postItem = {}
+                $('#drawer-1').MaterialDrawer('show')
+                this.fetchNew(248)
+            },
+            closeEventPost: function (e) {
+                this.postItem = {}
+                $('#drawer-1').MaterialDrawer('hide')
+            },
+            fetchNew: function (postId){
+                this.showProgress = true
+                let that = this
+                let _token = $("meta[name=_token]").attr('content')
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url + 'get-single-post',
+                    data: {
+                        username: '0149015297511611',
+                        _token: _token,
+                        post_id: postId
+                    }
+                }).then( function (response) {
+                    that.showProgress = false
+                    if (response.status ==  200) {
+                        let post = response.data[0].post;
+                        if(post.length) {
+                            that.postItem = post[0]
+                        }
+                        setTimeout(function () {
+                            hashtagify()
+                            mentionify()
+                        }, 1000)
+                    }
+                }).catch(function(error) {
+                    console.log(error)
+                    that.showProgress = false
+                })
+            },
         },
         mounted() {
             $( ".filter-date" ).datepicker({
@@ -425,6 +443,22 @@
                 ignoreReadonly: true,
                 allowInputToggle: true
             });
-        }
+            $('#drawer-1').MaterialDrawer({show: false, permanent: true})
+            this.getDefaultData()
+        },
+        computed: {
+            isLoading () {
+                return this.eventList.length === 0
+            }
+        },
+        components: {
+            'post-description': postDescription,
+            'post-image-viewer': postImageViewer,
+            'post-header': postHeader,
+            'post-event': postEvent,
+            'post-comment': postComment,
+            'post-theater-view': postTheaterView,
+            'post-wholikes-view': postWhoLikesView
+        },
     }
 </script>
