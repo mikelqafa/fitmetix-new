@@ -22,7 +22,7 @@
     }
 
     .event_images_upload--label {
-        height: 312px;
+        height: 240px;
         width: 100%;
         display: block;
         position: relative;

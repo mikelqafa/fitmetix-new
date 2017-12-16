@@ -42,114 +42,12 @@
 	}
 </style>
 <div class="no-margin-sm" style="margin-top: 30px">
-			<!-- List of user events-->
-	
-	@if (Session::has('msg'))
-        <li>{!! session('msg') !!}</li>
-    @endif
-
+	<div id="app-timeline">
+		<app-event-list></app-event-list>
+	</div>
 	<div class="post-filters pages-groups">
-					<div class="pane">
-					@include('flash::message')
-						<br/>
-						<div class="hidden-sm hidden-xs ft-filter">
-							<fieldset class="form-group required " style="margin-left: 0">
-								<form action="{{ url('filter-events-by-location') }}" method="POST">
-									{{ csrf_field() }}
-								<input class="form-control" id="filter-location-input" autocomplete="off" placeholder="By Location" name="location" type="text" style="position: relative; overflow: hidden;">
-								<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
-								</form>
-							</fieldset>
-							<fieldset class="form-group required ">
-								<form action="{{ url('filter-events-by-date') }}" method="POST">
-									{{ csrf_field() }}
-								<input class="form-control" name="date" id="filter-date" autocomplete="off" placeholder="By Date" type="text" style="position: relative; overflow: hidden;">
-								<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
-								</form>
-							</fieldset>
-							<fieldset class="form-group required ">
-								<form action="{{ url('filter-events-by-tags') }}" method="POST">
-									{{ csrf_field() }}
-								<input class="form-control" id="filter-tag" name="tags" autocomplete="off" placeholder="By Tag" type="text" style="position: relative; overflow: hidden;">
-								<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
-								</form>
-							</fieldset>
-							<fieldset class="form-group required " style="margin-right: 0">
-								<form action="{{ url('filter-events-by-title') }}" method="POST">
-									{{ csrf_field() }}
-								<input class="form-control" id="filter-title" name="title" autocomplete="off" placeholder="By Title" type="text" style="position: relative; overflow: hidden;">
-								<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
-								</form>
-							</fieldset>
-						</div>
-
-						<ul class="nav nav--event-filter nav-justified hidden-lg hidden-md">
-							<li class="active">
-								<a data-toggle="tab" href="#home">
-									<i class="icon icon-location hidden-active"></i>
-									<i class="icon icon-location-o hidden-inactive"></i>
-								</a>
-							</li>
-							<li>
-								<a data-toggle="tab" href="#menu1">
-									<i class="icon icon-time hidden-active"></i>
-									<i class="icon icon-time-o hidden-inactive"></i>
-								</a>
-							</li>
-							<li>
-								<a data-toggle="tab" href="#menu2">
-									<i class="icon icon-tag hidden-active"></i>
-									<i class="icon icon-tag-o hidden-inactive"></i>
-								</a>
-							</li>
-							<li>
-								<a data-toggle="tab" href="#menu3">
-									<i class="icon icon-label hidden-active"></i>
-									<i class="icon icon-label-o hidden-inactive"></i>
-								</a>
-							</li>
-						</ul>
-
-						<div class="hidden-lg hidden-md tab-content tab-content--event-filter">
-							<div id="home" class="tab-pane fade in active">
-								<fieldset class="form-group required " style="margin-left: 0">
-									<form action="{{ url('filter-events-by-location') }}" method="POST">
-										{{ csrf_field() }}
-										<input class="form-control" id="filter-location-input" autocomplete="off" placeholder="By Location" name="location" type="text" style="position: relative; overflow: hidden;">
-										<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
-									</form>
-								</fieldset>
-							</div>
-							<div id="menu1" class="tab-pane fade">
-								<fieldset class="form-group required ">
-									<form action="{{ url('filter-events-by-date') }}" method="POST">
-										{{ csrf_field() }}
-										<input class="form-control" name="date" id="filter-date" autocomplete="off" placeholder="By Date" type="text" style="position: relative; overflow: hidden;">
-										<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
-									</form>
-								</fieldset>
-							</div>
-							<div id="menu2" class="tab-pane fade">
-								<fieldset class="form-group required ">
-									<form action="{{ url('filter-events-by-tags') }}" method="POST">
-										{{ csrf_field() }}
-										<input class="form-control" id="filter-tag" name="tags" autocomplete="off" placeholder="By Tag" type="text" style="position: relative; overflow: hidden;">
-										<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
-									</form>
-								</fieldset>
-							</div>
-							<div id="menu3" class="tab-pane fade">
-								<fieldset class="form-group required " style="margin-right: 0">
-									<form action="{{ url('filter-events-by-title') }}" method="POST">
-										{{ csrf_field() }}
-										<input class="form-control" id="filter-title" name="title" autocomplete="off" placeholder="By Title" type="text" style="position: relative; overflow: hidden;">
-										<input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;" tabindex="-1" />
-									</form>
-								</fieldset>
-							</div>
-						</div>
-
-						<div class="pan">
+		<div class="pane">
+			<div class="pan">
 							@if(count($user_events))
 							   <div class="ft-grid">
 								   @php $i = 0; @endphp
@@ -369,6 +267,6 @@
 							</div>
 							@endif
 						</div>
-					</div>
+		</div>
 	</div>
 </div>

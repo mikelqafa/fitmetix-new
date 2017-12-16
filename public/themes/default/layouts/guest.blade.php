@@ -70,11 +70,13 @@
 
                 $( "#datepicker1" ).datepicker({
                     format: 'mm/dd/yyyy',
-                    autoClose: true
+                    ignoreReadonly: true,
+                    allowInputToggle: true
                 });
                 $( "#datepicker2" ).datepicker({
                     format: 'mm/dd/yyyy',
-                    autoClose: true
+                    ignoreReadonly: true,
+                    allowInputToggle: true
                 });
             })
         </script>

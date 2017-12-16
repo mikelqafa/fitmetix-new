@@ -15,6 +15,9 @@
         opacity: 0;
         z-index: 2;
     }
+    #datepicker1{
+        background-color: #FFF;
+    }
 </style>
 <script type="text/javascript">
     function redirect_source() {
@@ -64,7 +67,7 @@
 
                     <div class="md-layout md-layout-spacer mobile-layout-column__register-group mobile-layout-column md-layout--row md-align md-align-start-center" style="width: 100%">
                         <div class="mail-form  form-group form-group__adjust pos-rel">
-                            <input class="form-control" id="datepicker1" placeholder="Birthday" name="birthday" type="text">
+                            <input class="form-control" id="datepicker1" placeholder="Birthday" name="birthday" type="text" readonly="true">
                             {{--<input class="form-control" id="datepicker-hidden" placeholder="Birthday" name="birthday" type="date">--}}
                         </div>
                         <div class="form-group form-group__adjust">

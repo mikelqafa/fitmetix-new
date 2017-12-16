@@ -10,7 +10,8 @@ import postDialogOption from './components/DialogOption'
 import commentDialogOption from './components/CommentDialogOption'
 import VueTimeago from 'vue-timeago'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
-import AppEventCalendar from './components/appEventCalendar'
+// import AppEventCalendar from './components/appEventCalendar'
+import AppEventList from './components/appEventList'
 import {store} from './store/store'
 import VueClip from 'vue-clip'
 require('swiper/dist/css/swiper.css')
@@ -35,7 +36,8 @@ window.timeLine = new Vue({
     'app-post': Post,
     'app-post-hashtag': HasTagPost,
     'app-post-option': postDialogOption,
-    'app-comment-option': commentDialogOption
+    'app-comment-option': commentDialogOption,
+    'app-event-list': AppEventList
   }
 })
 
@@ -54,9 +56,9 @@ window.createPost = new Vue({
   }
 })
 
-window.eventCalendar = new Vue({
+/*window.eventCalendar = new Vue({
   el: '#app-create-event',
   components: {
     'app-event-calender': AppEventCalendar
   }
-})
+})*/

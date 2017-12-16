@@ -1,5 +1,5 @@
 <template>
-    <div class="ft-dock-wrapper">
+    <div class="ft-dock-wrapper hidden">
         <div class="ft-chat-group">
             <div class="ft-chat-wrapper">
                 <div class="ft-chat-box">
