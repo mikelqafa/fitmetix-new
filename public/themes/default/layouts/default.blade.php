@@ -41,6 +41,7 @@
     <link href="{{ asset('css/swiper.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dialog.css') }}" rel="stylesheet">
     <link href="{{ asset('css/snackbar.css') }}" rel="stylesheet">
+    <link href="{{asset('vendor/datepicker.css')}}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -115,6 +116,7 @@
 <script src="{{ asset('js/bootstrap-datetimepicker.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/drawer.js') }}"></script>
+<script src="{{ asset('vendor/datepicker.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     $(function() {
         $('#drawer-1').MaterialDrawer({

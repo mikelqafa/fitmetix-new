@@ -36716,6 +36716,10 @@ return install;
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(133)
+}
 var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(124)
@@ -36724,7 +36728,7 @@ var __vue_template__ = __webpack_require__(125)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -36827,10 +36831,366 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {};
+        return {
+            filter: [{ filter: 'location', content: '' }, { filter: 'date', content: '' }, { filter: 'tag', content: '' }, { filter: 'title', content: '' }],
+            filterData: [],
+            eventList: []
+        };
+    },
+    methods: {
+        submit: function submit(i) {
+            this.filter[i].content = this.filterData[i];
+        },
+        getDefaultData: function getDefaultData() {
+            var that = this;
+            var username = current_username;
+            var paginate = 4;
+            var _token = $("meta[name=_token]").attr('content');
+            if ($('#timeline_username').length) {
+                username = $('#timeline_username').val();
+            }
+            axios({
+                method: 'get',
+                responseType: 'json',
+                url: base_url + 'ajax/get-events',
+                data: {
+                    username: username,
+                    paginate: paginate,
+                    _token: _token,
+                    offset: that.offset
+                }
+            }).then(function (response) {
+                if (response.status == 200) {
+                    var posts = response.data[0].posts;
+                    var i = 0;
+                    $.each(posts, function (key, val) {
+                        that.$store.commit('ADD_POST_ITEM_LIST', val);
+                        i++;
+                    });
+                    if (!i) {
+                        if (!that.interact) {
+                            that.alreadyHavePost = false;
+                            that.noPostFound = true;
+                        } else {
+                            that.noPostFound = true;
+                        }
+                    } else {
+                        that.interact = true;
+                    }
+                    setTimeout(function () {
+                        emojify.run();
+                        hashtagify();
+                        mentionify();
+                    }, 500);
+                    that.inProgress = false;
+                    that.hasMorePost = i == paginate;
+                    that.offset += i;
+                    that.isFetchingBottom = false;
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        closeDrawer: function closeDrawer() {
+            $('#drawer-1').MaterialDrawer('hide');
+        }
+    },
+    mounted: function mounted() {
+        $(".filter-date").datepicker({
+            format: 'mm/dd/yyyy',
+            ignoreReadonly: true,
+            allowInputToggle: true
+        });
     }
 });
 
@@ -36838,212 +37198,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "hidden-sm hidden-xs ft-filter" }, [
-        _c(
-          "fieldset",
-          {
-            staticClass: "form-group required ",
-            staticStyle: { "margin-left": "0" }
-          },
-          [
-            _c("input", {
-              staticClass: "form-control",
-              staticStyle: { position: "relative", overflow: "hidden" },
-              attrs: {
-                id: "filter-location-input",
-                autocomplete: "off",
-                placeholder: "By Location",
-                name: "location",
-                type: "text"
-              }
-            })
-          ]
-        ),
-        _vm._v(" "),
-        _c("fieldset", { staticClass: "form-group required " }, [
-          _c("input", {
-            staticClass: "form-control",
-            staticStyle: { position: "relative", overflow: "hidden" },
-            attrs: {
-              name: "date",
-              id: "filter-date",
-              autocomplete: "off",
-              placeholder: "By Date",
-              type: "text"
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("fieldset", { staticClass: "form-group required " }, [
-          _c("input", {
-            staticClass: "form-control",
-            staticStyle: { position: "relative", overflow: "hidden" },
-            attrs: {
-              id: "filter-tag",
-              name: "tags",
-              autocomplete: "off",
-              placeholder: "By Tag",
-              type: "text"
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c(
-          "fieldset",
-          {
-            staticClass: "form-group required ",
-            staticStyle: { "margin-right": "0" }
-          },
-          [
-            _c("input", {
-              staticClass: "form-control",
-              staticStyle: { position: "relative", overflow: "hidden" },
-              attrs: {
-                id: "filter-title",
-                name: "title",
-                autocomplete: "off",
-                placeholder: "By Title",
-                type: "text"
-              }
-            })
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c(
-        "ul",
-        {
-          staticClass: "nav nav--event-filter nav-justified hidden-lg hidden-md"
-        },
-        [
-          _c("li", { staticClass: "active" }, [
-            _c("a", { attrs: { "data-toggle": "tab", href: "#home" } }, [
-              _c("i", { staticClass: "icon icon-location hidden-active" }),
-              _vm._v(" "),
-              _c("i", { staticClass: "icon icon-location-o hidden-inactive" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { "data-toggle": "tab", href: "#menu1" } }, [
-              _c("i", { staticClass: "icon icon-time hidden-active" }),
-              _vm._v(" "),
-              _c("i", { staticClass: "icon icon-time-o hidden-inactive" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { "data-toggle": "tab", href: "#menu2" } }, [
-              _c("i", { staticClass: "icon icon-tag hidden-active" }),
-              _vm._v(" "),
-              _c("i", { staticClass: "icon icon-tag-o hidden-inactive" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("a", { attrs: { "data-toggle": "tab", href: "#menu3" } }, [
-              _c("i", { staticClass: "icon icon-label hidden-active" }),
-              _vm._v(" "),
-              _c("i", { staticClass: "icon icon-label-o hidden-inactive" })
-            ])
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "hidden-lg hidden-md tab-content tab-content--event-filter"
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "tab-pane fade in active", attrs: { id: "home" } },
-            [
-              _c("input", {
-                staticClass: "form-control",
-                staticStyle: { position: "relative", overflow: "hidden" },
-                attrs: {
-                  id: "filter-location-input-mob",
-                  autocomplete: "off",
-                  placeholder: "By Location",
-                  name: "location",
-                  type: "text"
-                }
-              })
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "tab-pane fade", attrs: { id: "menu1" } }, [
-            _c("input", {
-              staticClass: "form-control",
-              staticStyle: { position: "relative", overflow: "hidden" },
-              attrs: {
-                name: "date",
-                id: "filter-date-mob",
-                autocomplete: "off",
-                placeholder: "By Date",
-                type: "text"
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "tab-pane fade", attrs: { id: "menu2" } }, [
-            _c("input", {
-              staticClass: "form-control",
-              staticStyle: { position: "relative", overflow: "hidden" },
-              attrs: {
-                id: "filter-tag-mob",
-                name: "tags",
-                autocomplete: "off",
-                placeholder: "By Tag",
-                type: "text"
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "tab-pane fade", attrs: { id: "menu3" } }, [
-            _c(
-              "fieldset",
-              {
-                staticClass: "form-group required ",
-                staticStyle: { "margin-right": "0" }
-              },
-              [
-                _c("input", {
-                  staticClass: "form-control",
-                  staticStyle: { position: "relative", overflow: "hidden" },
-                  attrs: {
-                    id: "filter-title-mob",
-                    name: "title",
-                    autocomplete: "off",
-                    placeholder: "By Title",
-                    type: "text"
-                  }
-                })
-              ]
-            )
-          ])
-        ]
-      )
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
+module.exports={render:function(){},staticRenderFns:[]}
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
@@ -43048,6 +43203,46 @@ module.exports = function (css) {
 /***/ (function(module, exports) {
 
 module.exports = ["just now",["%s s","%s s"],["%s m","%s m"],["%s h","%s h"],["%s d","%s d"],["%s w","%s w"],["%s month ago","%s months ago"],["%s year ago","%s years ago"]]
+
+/***/ }),
+/* 133 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(134);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("29eed3be", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-40f0e164\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./appEventList.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-40f0e164\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./appEventList.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 134 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);
