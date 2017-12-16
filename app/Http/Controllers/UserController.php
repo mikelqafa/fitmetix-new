@@ -512,7 +512,7 @@ class UserController extends AppBaseController
         $timeline->delete();
         
         
-        return redirect('/');
+        return redirect('/admin/users');
     }
 
     public function emailNotifications($username)
