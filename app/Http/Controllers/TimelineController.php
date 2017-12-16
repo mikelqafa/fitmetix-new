@@ -1937,13 +1937,22 @@ class TimelineController extends AppBaseController
     public function reportPost(Request $request)
     {
         $post = Post::where('id', '=', $request->post_id)->first();
-        $reported = $post->managePostReport($request->post_id, Auth::user()->id);
+        $ifReported = DB::table('post_reports')->where('post_id',$request->post_id)->where('reporter_id',Auth::user()->id)->first();
+        if ($ifReported == NULL){
+          $reported = $post->managePostReport($request->post_id, Auth::user()->id);
+        }
+        else{
+          $reported = FALSE;
+        }
 
         if ($reported) {
             //Notify the user for reporting his post
             Notification::create(['user_id' => $post->user_id, 'post_id' => $request->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.reported_your_post'), 'type' => 'report_post']);
 
             return response()->json(['status' => '200', 'reported' => true, 'message' => 'Post successfully reported']);
+        }
+        else{
+          return response()->json(['status' => '200', 'reported' => true, 'message' => 'Post already reported']);
         }
     }
 
