@@ -197,6 +197,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'role:admin']], fun
 });
 Route::get('/ajax/get-events','TimelineController@getEventApi');
 Route::get('/ajax/who-can-register-event','TimelineController@whoCanRegisterEvent');
+Route::get('/ajax/get-event-post-by-eventid','TimelineController@getEventPostByEventId');
 
 /*
 |--------------------------------------------------------------------------
