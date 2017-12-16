@@ -78,30 +78,23 @@
                             </li>
                         @endif
 
-                        <li class="{{ (Request::segment(1) == Auth::user()->username && Request::segment(2) == '') ? 'active' : '' }}">
-                            <a href="{{ url(Auth::user()->username) }}" class="ft-menu__item ft-menu__item--icon">
-                                <i class="fa fa-user" aria-hidden="true"></i>{{ trans('common.my_profile') }}
-                            </a>
-                        </li>
-
-                        <li class="{{ Request::segment(2) == 'albums' ? 'active' : '' }}">
-                            <a  href="{{ url(Auth::user()->username.'/albums') }}" class="ft-menu__item ft-menu__item--icon">
-                                <i class="fa fa-image" aria-hidden="true"></i>{{ trans('common.my_albums') }}
-                            </a>
-                        </li>
-
-                        <li class="{{ Request::segment(3) == 'events' ? 'active' : '' }}">
-                            <a class="ft-menu__item ft-menu__item--icon"
-                                    href="{{ url(Auth::user()->username.'/events') }}"><i
-                                        class="fa fa-calendar"
-                                        aria-hidden="true"></i>{{ trans('common.my_events') }}</a>
-                        </li>
-
-                        <li class="{{ Request::segment(3) == 'general' ? 'active' : '' }}">
+                        <li class="{{ Request::segment(2) == 'general' ? 'active' : '' }}">
                             <a class="ft-menu__item ft-menu__item--icon" href="{{ url('/'.Auth::user()->username.'/settings/general') }}">
                                 <i class="fa fa-cog" aria-hidden="true"></i>{{ trans('common.settings') }}
                             </a>
                         </li>
+                            <li class="{{ Request::segment(3) == 'general' ? 'active' : '' }}">
+                                <a class="ft-menu__item ft-menu__item--icon" href="{{ url('/'.Auth::user()->username.'/settings/privacy') }}">
+                                    <i class="fa fa-user-secret" aria-hidden="true"></i>{{ trans('common.privacy') }}
+                                </a>
+                            </li>
+                            @if(Auth::user()->custom_option1 == 'scout')
+                                <li class="{{ Request::segment(4) == 'general' ? 'active' : '' }}">
+                                    <a class="ft-menu__item ft-menu__item--icon" href="{{ url('/'.Auth::user()->username.'/settings/affliates') }}">
+                                        <i class="fa fa-user-plus" aria-hidden="true"></i>{{ trans('common.affiliates') }}
+                                    </a>
+                                </li>
+                            @endif
 
                         <li>
                             <form action="{{ url('/logout') }}" method="post">
