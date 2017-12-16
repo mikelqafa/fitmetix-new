@@ -22,6 +22,7 @@
                     <tr>                        
                         <th>{{ trans('admin.reported_by') }}</th>
                         <th>{{ trans('common.post') }}</th>
+                        <th>{{ trans('common.description') }}</th>
                         <th>{{ trans('common.status') }}</th>
                         <th colspan="2">&nbsp;</th>                        
                     </tr>
@@ -48,7 +49,10 @@
                                 {{ trans('admin.id') }}: {{ $post_report->post_id }}
                             </div>
                         </td>
+                        <td>
+                            <span>{{ $post_report->description }}</span>
 
+                        </td>
                         <td>
                             <span class="label label-default">{{ $post_report->status }}</span>
                           

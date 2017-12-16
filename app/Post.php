@@ -82,9 +82,9 @@ class Post extends Model
         return $this->belongsToMany('App\User', 'posts', 'id', 'user_id');
     }
 
-    public function managePostReport($post_id, $user_id)
+    public function managePostReport($post_id, $user_id, $description)
     {
-        $post_report = DB::table('post_reports')->insert(['post_id' => $post_id, 'reporter_id' => $user_id, 'status' => 'pending', 'created_at' => Carbon::now()]);
+        $post_report = DB::table('post_reports')->insert(['post_id' => $post_id, 'reporter_id' => $user_id,'description' => $description, 'status' => 'pending', 'created_at' => Carbon::now()]);
 
         $result = $post_report ? true : false;
 

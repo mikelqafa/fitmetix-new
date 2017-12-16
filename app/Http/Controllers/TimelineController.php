@@ -1939,7 +1939,7 @@ class TimelineController extends AppBaseController
         $post = Post::where('id', '=', $request->post_id)->first();
         $ifReported = DB::table('post_reports')->where('post_id',$request->post_id)->where('reporter_id',Auth::user()->id)->first();
         if ($ifReported == NULL){
-          $reported = $post->managePostReport($request->post_id, Auth::user()->id);
+          $reported = $post->managePostReport($request->post_id, Auth::user()->id,$request->description);
         }
         else{
           $reported = FALSE;
