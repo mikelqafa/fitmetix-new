@@ -2020,6 +2020,40 @@ class TimelineController extends AppBaseController
         ->render();
     }
 
+		public function getEventApi(Request $request) {
+    	$location = $request->location;
+    	$date     = $request->date;
+    	$tag      = $request->tag;
+    	$title    = $request->title;
+			$events = DB::table('events')
+				->join('timelines', 'timelines.id', '=', 'events.timeline_id')
+				->where(function ($query)  use ($location){
+						if($location != '') {
+								$query->where('events.location','like','%'.$location.'%');
+						}
+				})
+				->where(function($query) use ($date){
+						if($date != '') {
+							$query->where('events.start_date','<=',$date)->where('events.end_date','>=',$date);
+						}
+				})
+				->where(function($query) use ($tag){
+						if($tag != '') {
+							$query->where('timelines.about','like','%'.$tag.'%');
+						}
+				})
+				->where(function ($query) use ($title){
+						if($title != '') {
+							$query->where('timelines.name','like',$title.'%');
+						}
+				})
+				->select('events.*', 'timelines.*')
+				->get();
+			$a = 0;
+			$events = $events->all();
+			return response()->json(['status' => '200', 'deleted' => true, 'data' => $events]);
+
+		}
     public function eventsListFilteredLocation(Request $request)
     {
         $mode = "eventlist";
@@ -3684,4 +3718,5 @@ class TimelineController extends AppBaseController
         return $theme->scope('event-by-location', compact('location','event_tags','next_page_url', 'trending_tags', 'suggested_users', 'suggested_groups', 'suggested_pages', 'mode', 'user_events', 'username'))
             ->render();*/
     }
+
 }

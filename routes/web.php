@@ -195,6 +195,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'role:admin']], fun
     Route::post('/wallpapers', 'AdminController@addWallpapers');
     Route::get('/wallpaper/{wallpaper}/delete', 'AdminController@deleteWallpaper');
 });
+Route::get('/ajax/get-events','TimelineController@getEventApi');
 
 
 /*
