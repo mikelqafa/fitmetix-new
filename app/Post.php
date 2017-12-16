@@ -102,7 +102,8 @@ class Post extends Model
 
     public function deleteManageReport($id)
     {
-        $post_report = DB::table('post_reports')->where('id', $id)->delete();
+        $post = DB::table('post_reports')->where('id',$id)->first();
+        $post_report = DB::table('post_reports')->where('post_id', $post->post_id)->delete();
 
         $result = $post_report ? true : false;
 
