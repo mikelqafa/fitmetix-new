@@ -81,6 +81,8 @@
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
                 this.isLoading = true
+                let confirmDialog = $('#'+ this.unid)
+                confirmDialog.off('ca.dialog.affirmative.action');
                 axios({
                     method: 'post',
                     responseType: 'json',
