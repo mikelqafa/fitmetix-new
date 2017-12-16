@@ -95,6 +95,9 @@
         font-size: 90%;
         margin-left: 4px;
     }
+    .padding-bottom{
+        padding-bottom: 16px;
+    }
 </style>
 <!-- <div class="main-content"> -->	
 <div class="panel panel-default">
@@ -124,7 +127,7 @@
                         {{ session()->get('message') }}
                     </div>
                 @endif
-                <form class="margin-right" method="POST" action="{{ url('/'.$username.'/create-event/') }}"
+                <form class="margin-right padding-bottom" method="POST" action="{{ url('/'.$username.'/create-event/') }}"
                       enctype="multipart/form-data">
                     {{ csrf_field() }}
 
@@ -147,25 +150,21 @@
 					{{ Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => trans('common.name_of_your_event'),'maxlength'=>30]) }}
 					<br/>	
 					<div class="row">
-						<div class="col-md-4">
+						<div class="col-md-6">
 							{{-- {{ Form::label('type', trans('common.privacy'), ['class' => 'control-label']) }} --}}
-							{{ Form::select('type', array('' => trans('common.privacy'), 'private' => trans('common.private'), 'public' => trans('common.public')), null ,array('class' => 'form-control','required'=>'required')) }}
+							{{ Form::select('type', array('' => trans('common.privacy'), 'private' => trans('common.private'), 'public' => trans('common.public')), null ,array('class' => 'form-control selectize','required'=>'required')) }}
 							@if ($errors->has('type'))
 								<span class="help-block">
 									{{ $errors->first('type') }}
 								</span>
 							@endif
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-6">
 							<fieldset class="form-group">
 								{{-- {{ Form::label('frequency', 'Frequency: ', ['class' => 'control-label']) }} --}}
-								{{ Form::select('frequency', array('' => 'Frequency', 'once' => 'Once', 'daily' => 'Daily', 'weekly'=>'Weekly','monthly'=>'Monthly'), null ,array('class' => 'form-control','required'=>'required')) }}
-							
+								{{ Form::hidden('frequency', 'once', array('class' => 'form-control','required'=>'required')) }}
+                                {{ Form::select('gender', array('' => trans('common.gender'), 'male' => 'Males Only', 'female' => 'Females Only', 'all' => 'Everyone'), null ,array('class' => 'form-control selectize','required'=>'required')) }}
 							</fieldset>
-						</div>
-						<div class="col-md-4">
-							{{-- {{ Form::label('gender', 'Gender: ', ['class' => 'control-label']) }} --}}
-							{{ Form::select('gender', array('' => trans('common.gender'), 'male' => 'Males Only', 'female' => 'Females Only', 'all' => 'Everyone'), null ,array('class' => 'form-control','required'=>'required')) }}
 						</div>
 					</div>
 				</fieldset>
@@ -195,7 +194,7 @@
                             </div>
                             <div class="col-md-6">
                                 {{-- <label for="price">Price: <small>(Provide <code>0</code> for FREE Event)</small></label> --}}
-                                {{ Form::number('price', old('price'), ['class' => 'form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price' ,'max'=>10000]) }}
+                                {{ Form::number('price', old('price'), ['class' => 'form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price (USD)' ,'min'=>0,'max'=>10000]) }}
                                 @if ($errors->has('price'))
                                     <span class="help-block">
 									{{ $errors->first('price') }}

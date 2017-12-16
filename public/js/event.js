@@ -21,6 +21,7 @@ $(function() {
   $(document).ready(function(){
     $('[data-toggle="popover"]').popover();
   });
+  $('.selectize').selectize()
 })
 
 function fetchEvent() {
