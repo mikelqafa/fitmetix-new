@@ -17,5 +17,6 @@ class VerifyCsrfToken extends BaseVerifier
         'paypal',
         'payment.status',
         'addmoney.paypal',
+				'logout'
     ];
 }

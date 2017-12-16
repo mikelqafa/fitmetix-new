@@ -48,7 +48,7 @@
                             <input class="form-control" id="username" required placeholder="Username" name="username" type="text">
                         </div>
                         <div class="form-group form-group__adjust">
-                            <input class="form-control" id="email" required placeholder="{{ trans('auth.email_address') }}" name="email" type="email" value="">
+                            <input class="form-control" id="email" required placeholder="{{ trans('auth.email_address') }}" name="email" type="email" value="@if(isset($data['email'])) {{ $data['email'] }} @endif">
                         </div>
                     </div>
 
@@ -57,7 +57,7 @@
                             <input class="form-control" id="password" required placeholder="{{ trans('auth.password') }}" name="password" type="password">
                         </div>
                         <div class="form-group form-group__adjust">
-                            <input class="form-control" id="referral_code" placeholder="Referrer code" name="affiliate" type="text" value="{{ substr(request()->getQueryString(),10) }}">
+                            <input class="form-control" id="referral_code" placeholder="Referrer code" name="affiliate" type="text" value="">
                         </div>
                     </div>
 
@@ -70,12 +70,15 @@
                         <div class="form-group form-group__adjust">
                             <select class="form-control" id="gender" required name="gender">
                                 <option value="">Gender</option>
-                                <option value="female">Female</option>
-                                <option value="male">Male</option>
+                                <option value="female" @if(isset($data['gender']) && $data['gender'] == 'female') selected="selected" @endif>Female</option>
+                                <option value="male" @if(isset($data['gender']) && $data['gender'] == 'male') selected="selected" @endif>Male</option>
                             </select>
                         </div>
                     </div>
-
+                    @if(isset($data['social']) && $data['social'])
+                        <input type="hidden" value="{{ $data['avatar'] }}" name="avatar">
+                        <input type="hidden" value="1" name="social">
+                    @endif
                     <div class="layout-m-t-0 layout-m-t-0--register md-layout md-layout-flex layout-p-r-0 adjust-mobile-center" style="width: 100%">
                         <div class="md-layout-spacer"></div>
                         <div class="list-inline layout-p-l-1--sm  list-inline__login  layout-p-r-1--sm">
@@ -89,7 +92,7 @@
                         <div class="md-layout-spacer"></div>
                         <div class="form-group mobile-full-width md-layout layout-m-l-1 layout-m-l-0--sm">
                             <button type="submit" id="submit" class="btn btn-primary btn-submit">{{ trans('auth.register') }}</button>
-                            <a href="{!! url('login/facebook') !!}" class="btn btn--icon btn-primary layout-m-l-0">
+                            <a href="{!! url('social/login/redirect/facebook') !!}" class="btn btn--icon btn-primary layout-m-l-0">
                                 <object type="image/svg+xml" data="{{asset('fonts/facebook.svg')}}" class="splash">
                                 </object>
                             </a>

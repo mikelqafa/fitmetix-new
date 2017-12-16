@@ -18,6 +18,7 @@ use Intervention\Image\Facades\Image;
 use Laravel\Socialite\Facades\Socialite;
 use Teepluss\Theme\Facades\Theme;
 use Validator;
+use URL;
 
 class RegisterController extends Controller
 {
@@ -139,6 +140,21 @@ class RegisterController extends Controller
             'type'     => 'user',
             'about'    => 'write something about yourself'
             ]);
+        $a = $request->social;
+        $b = $request->avatar;
+			if($request->social != '' && $request->avatar != '') {
+				$fileContents = file_get_contents($request->avatar);
+				$photoName = date('Y-m-d-H-i-s').str_random(8).'.png';
+				File::put(storage_path() . '/uploads/users/avatars/' . $photoName, $fileContents);
+
+				$media = Media::create([
+					'title'  => $photoName,
+					'type'   => 'image',
+					'source' => $photoName,
+				]);
+				$timeline->avatar_id = $media->id;
+				$timeline->save();
+			}
         if(Setting::get('mail_verification') == 'off')
         {
             $mail_verification = 1;
@@ -198,8 +214,8 @@ class RegisterController extends Controller
                         $m->to($user->email, $user->name)->subject('Welcome to '.Setting::get('site_name'));
                     });
                 }
-
-                return response()->json(['status' => '200', 'message' => trans('auth.verify_email'), 'emailnotify' => $chk]);
+								$url=URL::to('/');
+                return response()->json(['status' => '200', 'message' => trans('auth.verify_email'), 'emailnotify' => $chk,'url' => $url]);
             }
         }
     }
@@ -223,17 +239,44 @@ class RegisterController extends Controller
 
     public function facebookRedirect()
     {
+			  $a = 0;
         return Socialite::with('facebook')->redirect();
     }
 
     // to get authenticate user data
     public function facebook()
     {
+    	$a = 0;
+    	$user_model = new User();
         $facebook_user = Socialite::with('facebook')->user();
+			if(!isset($facebook_user->test)) {
+				$a = 0;
+			}
+			$data = array();
+				$data = $facebook_user->user;
+				$data['social'] = TRUE;
+				$data['avatar'] = $facebook_user->getAvatar();
+			if(!isset($data['email'])) {
+				$theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('guest');
+				$theme->setTitle(trans('auth.register').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+				return $theme->scope('register',compact('data'))->render();
+			}
+			else {
+				$user_info = $user_model->where('email','=',$data['email'])->get()->toArray();
+				if(empty($user_info)) {
+					$theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('guest');
+					$theme->setTitle(trans('auth.register').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+					return $theme->scope('register',compact('data'))->render();
+				}
+				else {
+					$user = User::firstOrNew(['email' => $data['email']]);
+					Auth::login($user,TRUE);
+					return redirect('/');
+				}
+			}
 
-        $email = $facebook_user->email;
 
-        if ($email == null) {
+        /*if ($email == null) {
             $email = $facebook_user->id.'@facebook.com';
         }
 
@@ -280,7 +323,7 @@ class RegisterController extends Controller
             return redirect('/')->with(['message' => trans('messages.change_username_facebook'), 'status' => 'warning']);
         } else {
             return redirect($timeline->username)->with(['message' => trans('messages.user_login_failed'), 'status' => 'success']);
-        }
+        }*/
     }
 
     public function googleRedirect()

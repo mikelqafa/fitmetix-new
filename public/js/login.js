@@ -48,6 +48,8 @@ var LoginForm = function () {
         'birthday' : $('input[name=birthday]').val(),
         'gender' : $('#gender').val(),
         'password' : $('input[name=password]').val(),
+        'social'   : $('input[name=social]').val(),
+        'avatar'   : $('input[name=avatar]').val(),
         '_token': $('input[name=_token]').val()
       };
       var submitBtn = $('#submit')

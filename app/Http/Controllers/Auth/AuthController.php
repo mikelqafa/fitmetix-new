@@ -136,6 +136,19 @@ class AuthController extends Controller
             'name'     => $request->name,
             'type'     => 'user',
             ]);
+        if($request->social && $request->avatar != '') {
+					$fileContents = file_get_contents($request->avatar);
+					$photoName = date('Y-m-d-H-i-s').str_random(8).'.png';
+					File::put(storage_path() . '/uploads/users/avatars/' . $photoName, $fileContents);
+
+					$media = Media::create([
+						'title'  => $photoName,
+						'type'   => 'image',
+						'source' => $photoName,
+					]);
+					$timeline->avatar_id = $media->id;
+					$timeline->save();
+				}
 
         if(Setting::get('mail_verification') == 'off')
         {
