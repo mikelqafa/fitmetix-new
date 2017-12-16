@@ -16,6 +16,7 @@ use App\Media;
 use App\Notification;
 use App\Page;
 use App\Post;
+use App\PostMedia;
 use App\Repositories\TimelineRepository;
 use App\Role;
 use App\Setting;
@@ -2048,7 +2049,7 @@ class TimelineController extends AppBaseController
 							$query->where('timelines.name','like',$title.'%');
 						}
 				})
-				->select('events.*', 'timelines.*')
+				->select('events.*', 'timelines.*','events.id as event_id')
 				->get();
 			$a = 0;
 			$events = $events->all();
@@ -2082,6 +2083,55 @@ class TimelineController extends AppBaseController
 				return response()->json(['status' => '200', 'register' => FALSE, 'error' => TRUE,'err_msg'=>'Event Not Found']);
 			}
 		}
+
+	public function getEventPostByEventId(Request $request) {
+			$event_id = $request->event_id;
+			if($event_id != '') {
+				$event = array();
+				$user  = array();
+				$timeline = array();
+				$post = array();
+				$post_media = array();
+				$media = array();
+
+				$event_model = new Event();
+				$event = $event_model->where('id', '=', $event_id)->get()->toArray();
+				$event = $event[0];
+				$post_model = new Post();
+				$post = $post_model->where('timeline_id', '=', $event['timeline_id'])
+					->get()
+					->toArray();
+				$post = $post[0];
+				if(!empty($post)) {
+					$user_model = new User();
+					$user = $user_model->where('id', '=', $event['user_id'])
+						->get()
+						->toArray();
+					$user = $user[0];
+					$timeline_model = new Timeline();
+					$timeline = $timeline_model->where('id', '=', $user['timeline_id'])
+						->get()
+						->toArray();
+					$timeline = $timeline[0];
+					$post_media_model = new PostMedia();
+					$post_media = $post_media_model->where('post_id', '=', $post['id'])
+						->get()
+						->toArray();
+					$media_model = new Media();
+					if(!empty($post_media)) {
+						$media = $media_model->where('id', '=', $post_media[0]['media_id'])
+							->get()
+							->toArray();
+						$media = $media[0];
+					}
+				}
+				return response()->json(['status' => '200','error' => FALSE,'err_msg'=>'','event'=>$event,'post'=>$post,'timeline'=>$timeline,'event_media' => $media]);
+			}
+			else {
+				return response()->json(['status' => '200','error' => TRUE,'err_msg'=>'Event Id Not Found']);
+			}
+
+	}
 		
     public function eventsListFilteredLocation(Request $request)
     {
