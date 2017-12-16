@@ -41,6 +41,7 @@ use Validator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use LaravelPusher;
+use App\Follower;
 
 class TimelineController extends AppBaseController
 {
@@ -2054,6 +2055,34 @@ class TimelineController extends AppBaseController
 			return response()->json(['status' => '200', 'deleted' => true, 'data' => $events]);
 
 		}
+
+		public function whoCanRegisterEvent(Request $request) {
+			$event_id = $request->event_id;
+			$user_id  = $request->user_id;
+			$event_model = new Event();
+			$followers_model = new Follower();
+			$event = $event_model->where('id','=',$event_id)->get()->toArray();
+			if(!empty($event)) {
+					if($event[0]['type'] == 'public') {
+						return response()->json(['status' => '200', 'register' => TRUE, 'error' => FALSE,'err_msg'=>'']);
+					}
+					else {
+						$followers = $followers_model->where('leader_id','=',$event[0]['user_id'])
+																					->where('follower_id','=',$user_id)
+																					->where('status','=','approved')->get()->toArray();
+						if(!empty($followers)) {
+							return response()->json(['status' => '200', 'register' => TRUE, 'error' => FALSE,'err_msg'=>'']);
+						}
+						else {
+							return response()->json(['status' => '200', 'register' => FALSE, 'error' => TRUE,'err_msg'=>'User is not a follower']);
+						}
+					}
+			}
+			else {
+				return response()->json(['status' => '200', 'register' => FALSE, 'error' => TRUE,'err_msg'=>'Event Not Found']);
+			}
+		}
+		
     public function eventsListFilteredLocation(Request $request)
     {
         $mode = "eventlist";
