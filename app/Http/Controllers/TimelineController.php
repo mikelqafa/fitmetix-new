@@ -2062,6 +2062,31 @@ class TimelineController extends AppBaseController
 				->get();
 			$a = 0;
 			$events = $events->all();
+			$post_model = new Post();
+			$post_media_model = new PostMedia();
+			$media_model = new Media();
+			$post = array();
+			$post_media = array();
+			foreach ($events as $key => $event) {
+				$event_media = array();
+				$post = $post_model->where('timeline_id','=',$event->id)->get()->toArray();
+				if(!empty($post)) {
+					$post_media = $post_media_model->where('post_id', '=', $post[0]['id'])
+						->get()
+						->toArray();
+					foreach ($post_media as $post_media_key => $item) {
+						$media = $media_model->where('id', '=', $item['media_id'])
+							->get()
+							->toArray();
+						if (isset($media[0])) {
+							$event_media [] = $media[0];
+						}
+					}
+					$a = $events[$key];
+					$events[$key]->media = array();
+					$events[$key]->media = $event_media;
+				}
+			}
 			return response()->json(['status' => '200', 'deleted' => true, 'data' => $events]);
 
 		}
@@ -2102,6 +2127,7 @@ class TimelineController extends AppBaseController
 				$post = array();
 				$post_media = array();
 				$media = array();
+				$user_timeline = array();
 
 				$event_model = new Event();
 				$event = $event_model->where('id', '=', $event_id)->get()->toArray();
@@ -2121,20 +2147,32 @@ class TimelineController extends AppBaseController
 					$timeline = $timeline_model->where('id', '=', $user['timeline_id'])
 						->get()
 						->toArray();
-					$timeline = $timeline[0];
+					if(isset($timeline[0]))
+						$timeline = $timeline[0];
+
+					$user_timeline = $timeline_model->where('id', '=', $user['timeline_id'])
+						->get()
+						->toArray();
+					if(isset($user_timeline[0]))
+							$user_timeline = $user_timeline[0];
 					$post_media_model = new PostMedia();
 					$post_media = $post_media_model->where('post_id', '=', $post['id'])
 						->get()
 						->toArray();
-					$media_model = new Media();
 					if(!empty($post_media)) {
-						$media = $media_model->where('id', '=', $post_media[0]['media_id'])
-							->get()
-							->toArray();
-						$media = $media[0];
+						foreach ($post_media as $key => $item) {
+							$media_model = new Media();
+							if (!empty($post_media)) {
+								$media []= $media_model->where('id', '=', $item['media_id'])
+									->get()
+									->toArray()[0];
+						}
+
+							//$media = $media[0];
+						}
 					}
 				}
-				return response()->json(['status' => '200','error' => FALSE,'err_msg'=>'','event'=>$event,'post'=>$post,'timeline'=>$timeline,'event_media' => $media]);
+				return response()->json(['status' => '200','error' => FALSE,'err_msg'=>'','event'=>$event,'post'=>$post,'event_timeline'=>$timeline,'event_media' => $media,'user_timeline' => $user_timeline]);
 			}
 			else {
 				return response()->json(['status' => '200','error' => TRUE,'err_msg'=>'Event Id Not Found']);
