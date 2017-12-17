@@ -27,7 +27,7 @@
 								<li href="#" class="list-group-item">
 									<fieldset class="form-group">
 										{{ Form::label('confirm_follow', trans('common.label_confirm_request')) }}
-										{{ Form::select('confirm_follow', array('yes' => trans('common.yes'), 'no' => trans('common.no')), $settings->confirm_follow, array('class' => 'form-control follow')) }}
+										{{ Form::select('confirm_follow', array('yes' => trans('common.yes'), 'no' => trans('common.no')), $settings['privacy']->confirm_follow, array('class' => 'form-control follow')) }}
 									</fieldset>
 								</li>
 								{{--<li href="#" class="list-group-item">
@@ -74,6 +74,33 @@
 						{{ Form::close() }}
 					</div>
 				</div><!-- /panel -->
+				<div class="panel panel-default">
+					<div class="panel-heading no-bg panel-settings">
+						<h3 class="panel-title">
+							Blocked Users
+						</h3>
+					</div>
+					<div class="panel-body">
+						<table class="table">
+							<thead>
+							<tr>
+								<th>Username</th>
+								<th>Blocked On</th>
+								<th>Unblock</th>
+							</tr>
+							</thead>
+							@if(!empty($settings['blocklist']))
+								@foreach($settings['blocklist'] as $key => $value)
+									<tr>
+										<td>{{$value->blocked_username}}</td>
+										<td>{{$value->created_at}}</td>
+										<td><a target="_blank" href="{{ URL::to('ajax/unblock-user/'.$value->id) }}" >Unblock</a></td>
+									</tr>
+									@endforeach
+								@endif
+						</table>
+					</div>
+				</div>
 			</div>
 		</div><!-- /row -->
 	</div>

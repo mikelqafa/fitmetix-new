@@ -224,9 +224,10 @@ class UserController extends AppBaseController
         if ($timeline == null) {
             return Redirect::to('/');
         }
-
-        $settings = DB::table('user_settings')->where('user_id', $timeline->user->id)->first();
-
+        $blockList = DB::table('user_blocked')->where('blocker_uid',Auth::user()->id)->get()->toArray();
+        $privacySettings = DB::table('user_settings')->where('user_id', $timeline->user->id)->first();
+        $settings['blocklist'] = $blockList;
+        $settings['privacy'] = $privacySettings;
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
         $theme->setTitle(trans('common.privacy_settings').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
@@ -1305,6 +1306,7 @@ class UserController extends AppBaseController
         ->insert([
           'blocked_uid' => $blockedUser->id,
           'blocked_tid' => $blockedTimeline->id,
+          'blocked_username' => $username,
           'blocker_uid' => $blockerUid,
           'blocker_tid' => $blockerTid,
           'created_at' => Carbon::now(),
@@ -1314,6 +1316,12 @@ class UserController extends AppBaseController
     else {
       $result = 'User already blocked';
     }
+    return $result;
+  }
+
+  public function unblockUser($id) {
+    $unblock = DB::table('user_blocked')->where('id', $id)->delete();
+    $result = $unblock ? 'Successfully unblocked user' : 'Failed to unblock user';
     return $result;
   }
 }

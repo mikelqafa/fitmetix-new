@@ -484,6 +484,7 @@ Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {
     Route::post('save-timeline', 'TimelineController@saveTimeline');
     Route::post('save-post', 'TimelineController@savePost');
     Route::get('block-user/{username}','UserController@blockUser');
+    Route::get('unblock-user/{id}','UserController@unblockUser');
 });
 
 
