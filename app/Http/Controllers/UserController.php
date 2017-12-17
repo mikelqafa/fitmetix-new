@@ -1286,4 +1286,34 @@ class UserController extends AppBaseController
 
         return $theme->scope('users/edit-profile', compact('username'))->render();
     }
+
+  public function blockUser($username) {
+    $blockedTimeline = DB::table('timelines')
+      ->where('username', $username)
+      ->first();
+    $blockedUser = DB::table('users')
+      ->where('timeline_id', $blockedTimeline->id)
+      ->first();
+    $blockerUid = Auth::user()->id;
+    $blockerTid = Auth::user()->timeline_id;
+    $blockExists = DB::table('user_blocked')
+      ->where('blocked_uid', $blockedUser->id)
+      ->where('blocker_uid', $blockerUid)
+      ->first();
+    if ($blockExists == NULL) {
+      $block_user = DB::table('user_blocked')
+        ->insert([
+          'blocked_uid' => $blockedUser->id,
+          'blocked_tid' => $blockedTimeline->id,
+          'blocker_uid' => $blockerUid,
+          'blocker_tid' => $blockerTid,
+          'created_at' => Carbon::now(),
+        ]);
+      $result = $block_user ? 'Successfully blocked user' : 'Failed to block user';
+    }
+    else {
+      $result = 'User already blocked';
+    }
+    return $result;
+  }
 }
