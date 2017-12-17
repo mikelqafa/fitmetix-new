@@ -200,9 +200,7 @@
                             <div class="ft-grid">
                                 <div v-for="(item, index) in eventList" :key="item.id" class="ft-grid__item">
                                     <div class="ft_card">
-                                        <a href="javascript:;" @click="showEventPost(item.event_id)" :data-event-id="item.event_id" class="ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" :style="{backgroundImage: 'url(' + getCoverImage(item) + ')'}">
-                                            <img class="ft-card__img" :src="getCoverImage(item)" alt="Event Cover">
-                                        </a>
+                                        <post-back-viewer v-on:open="showEventPost(item.event_id)" :post-img="item.media"></post-back-viewer>
                                         <div class="ft-card__primary hidden-sm hidden-xs">
                                             <div class="ft-card__title lg-loadable">
                                                 <h5 class="ft-event-card__title">{{item.name}}</h5>
@@ -284,6 +282,7 @@
 </template>
 <script>
     import postDescription from './child/postDescription'
+    import postBackViwer from './child/showOnlySlider'
     import postImageViewer from './child/postImageViewer'
     import postEvent from './child/postEvent'
     import postHeader from './child/postHeader'
@@ -358,7 +357,6 @@
                     responseType: 'json',
                     url: url
                 }).then( function (response) {
-                    console.log(response)
                     if (response.status ==  200) {
                         that.eventList = response.data.data
                         if(!that.eventList.length) {
@@ -423,7 +421,6 @@
                 }).then( function (response) {
                     that.showProgress = false
                     if (response.status ==  200) {
-                        console.log(response)
                         let data = response.data
                         if(data.error) {
                             that.noEventFound = true
@@ -436,14 +433,14 @@
                         obj.description = data.post.description
                         obj.event = [data.event]
                         obj.id = data.post.id
-                        obj.images = []
+                        obj.images = data.event_media
                         obj.likes_count = 0
                         obj.location = ''
                         obj.shared_post_id = data.post.shared_post_id
-                        obj.timeline = data.timeline
+                        obj.timeline = data.event_timeline
                         obj.timeline_id = data.post.timeline_id
                         obj.type = "event"
-                        obj.updated_at = "2017-12-16 10:57:55"
+                        obj.updated_at = ""
                         obj.user_id = data.post.user_id
                         obj.user_liked = false
                         obj.event_media = data.event_media
@@ -475,7 +472,8 @@
             'post-event': postEvent,
             'post-comment': postComment,
             'post-theater-view': postTheaterView,
-            'post-wholikes-view': postWhoLikesView
+            'post-wholikes-view': postWhoLikesView,
+            'post-back-viewer': postBackViwer
         },
         computed: {
             isLoading () {

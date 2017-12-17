@@ -1841,3 +1841,10 @@ aside .md-drawer-scroll__wrapper{
 .layout-m-b-1 {
     margin-bottom: 16px;
 }
+.ft-card__img-wrapper--background.image-default {
+    width: 100%;
+    background-position: center;
+    background-size: 200px auto;
+    background-repeat: no-repeat;
+    background-color: #fff !important;
+}

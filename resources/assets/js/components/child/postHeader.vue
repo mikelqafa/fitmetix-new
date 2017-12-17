@@ -53,6 +53,7 @@
     }
 </style>
 <script>
+    import postImageViewer from './showOnlySlider'
     export default {
         props: {
             postData: {},
