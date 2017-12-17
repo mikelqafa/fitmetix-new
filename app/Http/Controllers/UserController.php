@@ -564,11 +564,11 @@ class UserController extends AppBaseController
 
         $user_settings = [
                             'confirm_follow'        => $input['confirm_follow'],
-                            'comment_privacy'       => $input['comment_privacy'],
-                            'follow_privacy'        => $input['follow_privacy'],
-                            'post_privacy'          => $input['post_privacy'],
-                            'timeline_post_privacy' => $input['timeline_post_privacy'],
-                            'message_privacy'       => $input['message_privacy'], ];
+                            'comment_privacy'       => 'everyone',
+                            'follow_privacy'        => 'everyone',
+                            'post_privacy'          => 'nobody',
+                            'timeline_post_privacy' => 'only_follow',
+                            'message_privacy'       => 'everyone', ];
 
         $privacy = DB::table('user_settings')->where('user_id', $user->id)
                    ->update($user_settings);

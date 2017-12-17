@@ -2,11 +2,12 @@
 <!-- <div class="main-content"> -->
 	<div class="container">
 		<div class="row">
-			<div class="col-md-4">
+			{{--<div class="col-md-4">
 				<div class="post-filters">
 					{!! Theme::partial('usermenu-settings') !!}
 				</div>
-			</div>
+			</div>--}}
+			<div class="col-md-2"></div>
 			<div class="col-md-8">
 				<div class="panel panel-default">
 					<div class="panel-heading no-bg panel-settings">
@@ -24,6 +25,12 @@
 							
 							<ul class="list-group">
 								<li href="#" class="list-group-item">
+									<fieldset class="form-group">
+										{{ Form::label('confirm_follow', trans('common.label_confirm_request')) }}
+										{{ Form::select('confirm_follow', array('yes' => trans('common.yes'), 'no' => trans('common.no')), $settings->confirm_follow, array('class' => 'form-control follow')) }}
+									</fieldset>
+								</li>
+								{{--<li href="#" class="list-group-item">
 									<fieldset class="form-group">
 										{{ Form::label('confirm_follow', trans('common.label_confirm_request')) }}
 										{{ Form::select('confirm_follow', array('yes' => trans('common.yes'), 'no' => trans('common.no')), $settings->confirm_follow, array('class' => 'form-control follow')) }}
@@ -58,9 +65,9 @@
 										{{ Form::label('message_privacy', trans('common.label_message_privacy')) }}
 										{{ Form::select('message_privacy', array('everyone' => trans('common.everyone'), 'only_follow' => trans('common.people_i_follow')), $settings->message_privacy, array('class' => 'form-control')) }}
 									</fieldset>
-								</li>
+								</li>--}}
 							</ul>
-							<div class="pull-right">
+							<div class="full-center">
 								{{ Form::submit(trans('common.save_changes'), ['class' => 'btn btn-success']) }}
 							</div>
 						</div>
