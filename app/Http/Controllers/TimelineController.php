@@ -2136,6 +2136,9 @@ class TimelineController extends AppBaseController
 				$post = $post_model->where('timeline_id', '=', $event['timeline_id'])
 					->get()
 					->toArray();
+                if(!count($post)) {
+                    return response()->json(['status' => '200','error' => TRUE,'err_msg'=>'Event Id Not Found']);
+                }
 				$post = $post[0];
 				if(!empty($post)) {
 					$user_model = new User();

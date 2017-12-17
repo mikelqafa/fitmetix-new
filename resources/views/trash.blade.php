@@ -2580,3 +2580,228 @@ callback(res.data);
 });
 }
 });
+
+<script>
+    {
+        active:1
+        created_at:"2017-12-16 10:57:55"
+        deleted_at:null
+        description:"Going to Laravel"
+        event:Array[1]
+        id:248
+        images:Array[2]
+        likes_count:0
+        location:"Delhi, India"
+        postMetaInfo:Object
+        shared_post_id:null
+        soundcloud_id:null
+        soundcloud_title:null
+        timeline:Object
+        timeline_id:52
+        type:"event"
+        updated_at:"2017-12-16 10:57:55"
+        user_id:26
+        user_liked:false
+        youtube_title:null
+        youtube_video_id:null
+    }
+    {
+        data
+                :
+                err_msg
+                        :
+                        ""
+        error
+                :
+                false
+        event
+                :
+                active
+                        :
+                        1
+        created_at
+                :
+                "2017-12-16 10:57:55"
+        deleted_at
+                :
+                null
+        end_date
+                :
+                "2027-10-27 10:00:00"
+        focus
+                :
+                "training"
+        frequency
+                :
+                "once"
+        gender
+                :
+                "all"
+        group_id
+                :
+                null
+        id
+                :
+                20
+        invite_privacy
+                :
+                "only_admins"
+        location
+                :
+                "Delhi, India"
+        price
+                :
+                "1000.00"
+        start_date
+                :
+                "2017-12-18 10:00:00"
+        timeline_id
+                :
+                52
+        timeline_post_privacy
+                :
+                "only_guests"
+        type
+                :
+                "public"
+        updated_at
+                :
+                "2017-12-16 10:57:55"
+        user_id
+                :
+                26
+        user_limit
+                :
+                30
+        __proto__
+                :
+                Object
+        event_media
+                :
+                created_at
+                        :
+                        "2017-12-16 10:57:54"
+        deleted_at
+                :
+                null
+        id
+                :
+                96
+        source
+                :
+                "2017-12-16-10-57-53IMG_20170319_172506609.jpg"
+        title
+                :
+                "IMG_20170319_172506609.jpg"
+        type
+                :
+                "image"
+        updated_at
+                :
+                "2017-12-16 10:57:54"
+        __proto__
+                :
+                Object
+        post
+                :
+                active
+                        :
+                        1
+        created_at
+                :
+                "2017-12-16 10:57:55"
+        deleted_at
+                :
+                null
+        description
+                :
+                "Going to Laravel"
+        id
+                :
+                248
+        location
+                :
+                "Delhi, India"
+        shared_post_id
+                :
+                null
+        soundcloud_id
+                :
+                null
+        soundcloud_title
+                :
+                null
+        timeline_id
+                :
+                52
+        type
+                :
+                "event"
+        updated_at
+                :
+                "2017-12-16 10:57:55"
+        user_id
+                :
+                26
+        youtube_title
+                :
+                null
+        youtube_video_id
+                :
+                null
+        __proto__
+                :
+                Object
+        status
+                :
+                "200"
+        timeline
+                :
+                about
+                        :
+                        "write something about yourself"
+        avatar_id
+                :
+                null
+        avatar_url
+                :
+                []
+        background_id
+                :
+                null
+        cover_id
+                :
+                null
+        cover_position
+                :
+                null
+        cover_url
+                :
+                []
+        created_at
+                :
+                "2017-11-06 11:50:25"
+        deleted_at
+                :
+                null
+        hide_cover
+                :
+                0
+        id
+                :
+                37
+        name
+                :
+                "Prakash"
+        type
+                :
+                "user"
+        updated_at
+                :
+                "2017-11-06 11:50:25"
+        username
+                :
+                "prakash"
+        verified:0
+    }
+</script>

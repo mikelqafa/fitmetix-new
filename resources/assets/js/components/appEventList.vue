@@ -75,7 +75,6 @@
                         </div>
                     </template>
                 </div>
-                <div class="md-layout-spacer"></div>
             </div>
         </div>
         <div class="post-filters pages-groups">
@@ -201,7 +200,7 @@
                             <div class="ft-grid">
                                 <div v-for="(item, index) in eventList" :key="item.id" class="ft-grid__item">
                                     <div class="ft_card">
-                                        <a href="javascript:;" @click="showEventPost(item.id)" class="ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" :style="{backgroundImage: 'url(' + getCoverImage(item) + ')'}">
+                                        <a href="javascript:;" @click="showEventPost(item.event_id)" :data-event-id="item.event_id" class="ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" :style="{backgroundImage: 'url(' + getCoverImage(item) + ')'}">
                                             <img class="ft-card__img" :src="getCoverImage(item)" alt="Event Cover">
                                         </a>
                                         <div class="ft-card__primary hidden-sm hidden-xs">
@@ -252,28 +251,30 @@
         <aside class="md-drawer md-drawer--permanent" id="drawer-1" data-permanent="true">
             <div class="md-drawer__shadow"></div>
             <div class="md-drawer__surface">
-                <div style="">
-                    <a class="btn" href="javascript:;" @click="closeDrawer">
-                        <i class="icon icon-close"></i>
-                    </a>
-                </div>
                 <div class="md-drawer-scroll" style="position: relative">
-                    <div class="md-drawer-scroll__wrapper" v-if="postItem.id !== undefined">
-                        <div class="panel panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
-                            <post-header :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
+                    <div v-for="(postItem, index) in postItemList" :key="postItem.id" class="md-drawer-scroll__wrapper" :id="'ft-event-post'+postItem.id">
+                        <div class="panel panel--eventlist panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
+                            <post-header event-list="true" v-on:close="closeEventPost" :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
                             <div class="panel-body">
-                                <post-description :post-html="postItem.description"></post-description>
                                 <post-image-viewer :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
-                                <post-event :post-item="postItem" :post-index="index" :post-img="postItem.images"></post-event>
+                                <post-event event-list="true" :post-item="postItem" :post-index="index" :post-img="postItem.images"></post-event>
+                                <post-description :post-html="postItem.description"></post-description>
                             </div>
+                            <div class="md-layout-spacer"></div>
                             <post-comment :post-index="index" :post-id="postItem.id" :post-item="postItem"></post-comment>
                         </div>
                     </div>
-                    <div v-if="showProgress" class="absolute-loader">
+
+                    <div v-if="isEventLoading && !noEventFound" class="absolute-loader">
                         <div class="ft-loading">
                             <span class="ft-loading__dot"></span>
                             <span class="ft-loading__dot"></span>
                             <span class="ft-loading__dot"></span>
+                        </div>
+                    </div>
+                    <div v-if="noEventFound" class="absolute-loader">
+                        <div class="ft-loading text-center">
+                            Event not found or deleted!
                         </div>
                     </div>
                 </div>
@@ -289,6 +290,7 @@
     import postComment from './child/postComment'
     import postTheaterView from './child/postTheaterView'
     import postWhoLikesView from './child/postWhoLikesView'
+    import { mapGetters } from 'vuex'
     export default {
         data: function () {
             return {
@@ -303,8 +305,8 @@
                 alreadyHavePost: true,
                 interact: false,
                 noPostFound: false,
-                postItem: {},
-                showProgress: true
+                showProgress: true,
+                noEventFound: false
             }
         },
         methods: {
@@ -369,11 +371,11 @@
                         } else {
                             that.interact = true
                         }
-                        /*setTimeout(function () {
+                        setTimeout(function () {
                             emojify.run();
                             hashtagify();
                             mentionify();
-                        }, 500)*/
+                        }, 500)
                     }
                 }).catch(function(error) {
                     console.log(error)
@@ -400,36 +402,56 @@
             showEventPost: function (e) {
                 this.postItem = {}
                 $('#drawer-1').MaterialDrawer('show')
-                this.fetchNew(248)
+                this.fetchNew(e)
             },
             closeEventPost: function (e) {
-                this.postItem = {}
                 $('#drawer-1').MaterialDrawer('hide')
             },
             fetchNew: function (postId){
                 this.showProgress = true
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
+                this.$store.commit('RESET_POST_ITEM_LIST')
+                that.noEventFound = false
                 axios({
-                    method: 'post',
+                    method: 'get',
                     responseType: 'json',
-                    url: base_url + 'get-single-post',
+                    url: base_url + 'ajax/get-event-post-by-eventid?event_id='+postId,
                     data: {
-                        username: '0149015297511611',
-                        _token: _token,
-                        post_id: postId
+                        _token: _token
                     }
                 }).then( function (response) {
                     that.showProgress = false
                     if (response.status ==  200) {
-                        let post = response.data[0].post;
-                        if(post.length) {
-                            that.postItem = post[0]
+                        console.log(response)
+                        let data = response.data
+                        if(data.error) {
+                            that.noEventFound = true
+                            return
                         }
+                        console.log(data)
+                        let obj = { }
+                        obj.active = 1
+                        obj.created_at = data.post.created_at
+                        obj.description = data.post.description
+                        obj.event = [data.event]
+                        obj.id = data.post.id
+                        obj.images = []
+                        obj.likes_count = 0
+                        obj.location = ''
+                        obj.shared_post_id = data.post.shared_post_id
+                        obj.timeline = data.timeline
+                        obj.timeline_id = data.post.timeline_id
+                        obj.type = "event"
+                        obj.updated_at = "2017-12-16 10:57:55"
+                        obj.user_id = data.post.user_id
+                        obj.user_liked = false
+                        obj.event_media = data.event_media
+                        that.$store.commit('ADD_POST_ITEM_LIST',{data:obj, postFrom: 'timeline'})
                         setTimeout(function () {
                             hashtagify()
                             mentionify()
-                        }, 1000)
+                        }, 300)
                     }
                 }).catch(function(error) {
                     console.log(error)
@@ -446,11 +468,6 @@
             $('#drawer-1').MaterialDrawer({show: false, permanent: true})
             this.getDefaultData()
         },
-        computed: {
-            isLoading () {
-                return this.eventList.length === 0
-            }
-        },
         components: {
             'post-description': postDescription,
             'post-image-viewer': postImageViewer,
@@ -460,5 +477,16 @@
             'post-theater-view': postTheaterView,
             'post-wholikes-view': postWhoLikesView
         },
+        computed: {
+            isLoading () {
+                return this.eventList.length === 0
+            },
+            isEventLoading () {
+                return this.postItemList.length === 0
+            },
+            ...mapGetters({
+                postItemList: 'postItemList'
+            })
+        }
     }
 </script>

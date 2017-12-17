@@ -1,7 +1,10 @@
 <template>
     <div class="panel-heading no-bg">
         <div class="post-author">
-            <div class="post-options">
+            <div class="post-options md-layout">
+                <a class="ft-btn--icon" href="javascript:;" @click="emitClose" v-if="eventList">
+                    <i class="icon icon-close"></i>
+                </a>
                 <a href="javascript:;" class="ft-btn--icon"  v-on:click="openPostDialog">
                     <i class="icon icon-options"></i>
                 </a>
@@ -13,7 +16,7 @@
                 <div class="no-margin">
                     <div class="meta-font">
                         <a :href="userLink" data-toggle="tooltip" data-placement="top" class="user-name user ft-user-name" :title="userAtTitle" :data-original-title="userAtTitle">
-                            {{ timeLineData.name }}
+                            {{ headerTitle }}
                         </a>
                         <div class="small-text">
                         </div>
@@ -54,7 +57,8 @@
         props: {
             postData: {},
             date: '',
-            postIndex: 0
+            postIndex: 0,
+            eventList:false
         },
         data: function () {
             return {
@@ -80,12 +84,18 @@
                 // console.log(this.timeLineData.avatar_url[0].source)
                 // return this.timeLineData.avatar_url  !== undefined ? base_url + 'user/avatar/' : base_url + this.defaultImage
                 return base_url + 'images/' + this.defaultImage
+            },
+            headerTitle () {
+                return this.eventList ? this.timeLineData.name : this.timeLineData.name
             }
         },
         methods: {
             openPostDialog: function () {
                 this.$store.commit('SET_OPTIONS_MENU_ITEM', {postIndex: this.postIndex})
                 $('#post-option-dialog').MaterialDialog('show')
+            },
+            emitClose: function () {
+                this.$emit('close')
             }
         },
         mounted () {

@@ -143,7 +143,7 @@
             },
         },
         mounted() {
-            $('#post-share-dialog').MaterialDialog({show:true})
+            // $('#post-share-dialog').MaterialDialog({show:true})
             let that = this
         }
     }

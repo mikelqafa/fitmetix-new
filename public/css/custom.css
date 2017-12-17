@@ -1817,3 +1817,27 @@ a{
     width: 100%;
     background-color: transparent;
 }
+aside .md-drawer-scroll__wrapper{
+    height: 100%;
+}
+.md-drawer-scroll__wrapper .panel--eventlist{
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+    min-height: 100%;
+}
+.md-drawer-scroll__wrapper .panel--eventlist .ft-event-card__title{
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+}
+.md-drawer-scroll__wrapper .panel--eventlist .ft-card__primary{
+    padding: 0;
+}
+.md-drawer-scroll__wrapper .panel--eventlist .panel-body{
+    flex-grow: 1;
+}
+.layout-m-b-1 {
+    margin-bottom: 16px;
+}
