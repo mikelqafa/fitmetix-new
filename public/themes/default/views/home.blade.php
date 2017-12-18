@@ -66,13 +66,6 @@
                                 </app-post>
 								<div id="scroll-bt"></div>
                             </div>
-							@if($posts->count() > 0)
-								@foreach($posts as $post)
-									{{--{!! Theme::partial('post',compact('post','timeline','next_page_url')) !!}--}}
-								@endforeach
-							@else
-								<div class="no-posts alert alert-warning">{{ trans('common.no_posts') }}</div>
-							@endif
 						</div>
 					@else
 						{!! Theme::partial('eventslist',compact('user_events','username','event_tags')) !!}
