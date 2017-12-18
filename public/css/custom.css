@@ -1574,7 +1574,8 @@ a{
 .image-pip-holder{
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow-x: auto;
 }
 .image-pip-holder .pip img{
     height: 100px;

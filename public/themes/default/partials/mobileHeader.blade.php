@@ -21,7 +21,7 @@
             <form action="{{ url('/logout') }}" method="post">
                 <a class="dropdown-toggle ft-header-nav__item--user-img" data-toggle="dropdown" @click.prevent="showNotifications" role="button" href="javascript:;" aria-haspopup="true"
                    aria-expanded="false">
-                    <div class="user-avatar" style="background-image: url({{asset('images/default.png')}})"></div>
+                    <div class="user-avatar" style="background-image: url('{{url(Auth::user()->avatar)}}')"></div>
                     <ul style="left: auto; right: 0;" data-width="3" class="ft-menu dropdown-menu">
                         <li class="{{ (Request::segment(1) == Auth::user()->username && Request::segment(2) == '') ? 'active' : '' }}">
                             <a href="{{ url(Auth::user()->username.'/create-event') }}" class="ft-menu__item  ft-menu__item--icon">

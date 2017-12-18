@@ -33633,6 +33633,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -33646,22 +33647,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     message: 'Please upload only image file'
                 },
                 parallelUploads: 2,
-                maxFilesize: 5,
-                maxFiles: 10,
+                maxFilesize: 10,
+                maxFiles: 5,
                 resizeWidth: 800,
                 accept: function accept(file, done) {
-                    alert(file.width);
-                    if (file.size > 5 * 1024 * 1024) {
-                        alertApp('Image file is too large!');
-                        done('Image file is too large');
-                        return;
-                    }
+                    console.log('hola', file);
+                    /*if(file.size > 10*1024*1024) {
+                        done('Image file is too large')
+                        return
+                    }*/
                     done();
                 }
             },
             files: [],
             uploader: '',
-            allValidated: false
+            allValidated: false,
+            alertMaxFileError: false
         };
     },
     mounted: function mounted() {
@@ -33670,6 +33671,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        alertMaxFile: function alertMaxFile() {
+            this.alertMaxFileError = true;
+            alertApp('Max error');
+        },
         validate: function validate(f) {
             return f.status == 'error';
         },
@@ -33692,10 +33697,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // file.addAttribute('id', xhr.response.id)
         },
         addedFile: function addedFile(file) {
-            console.log(file);
-            if (file.errorMessage == '') {
-                this.files.push(file);
+            if (this.alertMaxFileError) {
+                this.alertMaxFileError = false;
+                return;
             }
+            this.files.push(file);
         },
         addMore: function addMore() {
             $('#upload-action-create').trigger('click');
@@ -33738,6 +33744,7 @@ var render = function() {
       ref: "vc",
       attrs: {
         uploaderClass: _vm.uploaderClass,
+        "on-max-files": _vm.alertMaxFile,
         "on-added-file": _vm.addedFile,
         "on-queue-complete": _vm.queueCompleted,
         options: _vm.optionsFileUpload,
@@ -33815,7 +33822,7 @@ var render = function() {
                           ]
                         ),
                         _vm._v(" "),
-                        _vm.isNetworkProblem(file)
+                        _vm.isNetworkProblem(file) || file.status == "error"
                           ? _c(
                               "div",
                               { staticClass: "text-center image-pip__error" },
@@ -33834,7 +33841,7 @@ var render = function() {
                     )
                   }),
                   _vm._v(" "),
-                  _vm.files.length
+                  _vm.files.length && _vm.files.length < 5
                     ? _c("div", {
                         staticClass: "upload-action-add",
                         attrs: { title: "choose a file to upload" },

@@ -1,5 +1,6 @@
 <template>
     <vue-clip ref="vc" :uploaderClass="uploaderClass"
+              :on-max-files = "alertMaxFile"
               :on-added-file="addedFile" :on-queue-complete="queueCompleted"
               :options="optionsFileUpload" :on-complete="complete"
               :on-sending="sending" :on-total-progress="totalProgress">
@@ -17,12 +18,12 @@
                     <div class='image-loader' v-show="file.progress < 100">
                         <div class='image-loader-progress' :style="{width: file.progress+'%'}"></div>
                     </div>
-                    <div class="text-center image-pip__error" v-if="isNetworkProblem(file)">
+                    <div class="text-center image-pip__error" v-if="isNetworkProblem(file) || file.status == 'error'">
                         <p class="error-text">Error</p>
                         <p class="file-name">{{file.name}}</p>
                     </div>
                 </div>
-                <div v-if="files.length" @click="addMore" class="upload-action-add" title="choose a file to upload">
+                <div v-if="files.length && files.length < 5" @click="addMore" class="upload-action-add" title="choose a file to upload">
                 </div>
             </div>
         </template>
@@ -62,22 +63,22 @@
                         message: 'Please upload only image file'
                     },
                     parallelUploads: 2,
-                    maxFilesize:5,
-                    maxFiles:10,
+                    maxFilesize:10,
+                    maxFiles:5,
                     resizeWidth: 800,
                     accept: function (file, done) {
-                        alert(file.width)
-                        if(file.size > 5*1024*1024) {
-                            alertApp('Image file is too large!')
+                        console.log('hola', file)
+                        /*if(file.size > 10*1024*1024) {
                             done('Image file is too large')
                             return
-                        }
+                        }*/
                         done()
                     }
                 },
                 files: [],
                 uploader: '',
-                allValidated: false
+                allValidated: false,
+                alertMaxFileError: false
             }
         },
         mounted() {
@@ -85,6 +86,10 @@
             window.meow = this.uploader
         },
         methods: {
+            alertMaxFile: function () {
+                this.alertMaxFileError = true
+                alertApp('Max error')
+            },
             validate: function (f) {
                 return f.status == 'error'
             },
@@ -107,10 +112,11 @@
                 // file.addAttribute('id', xhr.response.id)
             },
             addedFile: function(file) {
-                console.log(file)
-                if(file.errorMessage == '') {
-                    this.files.push(file)
+                if(this.alertMaxFileError) {
+                    this.alertMaxFileError = false
+                    return
                 }
+                this.files.push(file)
             },
             addMore: function () {
                 $('#upload-action-create').trigger('click');
