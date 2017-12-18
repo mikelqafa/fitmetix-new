@@ -85,7 +85,7 @@
                 if(this.timeLineData.avatar_url === undefined) {
                     return base_url + 'images/' + this.defaultImage
                 }
-                return this.timeLineData.avatar_url.length ? asset_url + 'user/avatar/' + this.timeLineData.avatar_url[0].source :base_url + 'images/' + this.defaultImage
+                return this.timeLineData.avatar_url.length ? asset_url + 'uploads/users/avatars/' + this.timeLineData.avatar_url[0].source :base_url + 'images/' + this.defaultImage
             },
             headerTitle () {
                 return this.eventList ? this.timeLineData.name : this.timeLineData.name
