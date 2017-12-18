@@ -1936,6 +1936,7 @@ aside .md-drawer-scroll__wrapper{
     background-position: center;
     flex-shrink: 0;
     margin-left: 12px;
+    border-radius: 50%;
     margin-top: 12px;
 }
 .ft-cp__presentation {
