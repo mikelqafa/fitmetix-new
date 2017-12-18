@@ -56,10 +56,8 @@
                 <input type="hidden"  name="see-all-messages" value="{{ url('messages') }}">
                 {{--{{ Auth::user() }}--}}
                 <a href="{{ url(Auth::user()->username) }}" class="has-hover-effect fm-nav__item user-image socialite fm-nav__item">
-                    <span class="user-image-wrapper">
-                        <img src="{{ Auth::user()->avatar }}" style="max-width: 100%" alt="{{ Auth::user()->name }}"
-                             class="img-radius img-30" title="{{ Auth::user()->name }}">
-                        <span class="user-name hidden">{{ Auth::user()->name }}</span>
+                    <span class="user-image-wrapper" style="background-image: url('{{url(Auth::user()->avatar)}}')" title="{{ Auth::user()->name }}">
+                        <span class="user-name">{{ substr(Auth::user()->name,0,1) }}</span>
                     </span>
                 </a>
 

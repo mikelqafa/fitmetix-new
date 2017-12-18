@@ -31,11 +31,6 @@
                 </div>
             </div>
         </div>
-        <div class="text-center" v-if="!eventList">
-            <a class="btn btn-submit ft-btn-primary" :href="userLink">
-                Details
-            </a>
-        </div>
         <div class="text-center layout-m-b-1" v-if="eventList">
             <a class="btn btn-submit ft-btn-primary" :href="userLink">
                 Register

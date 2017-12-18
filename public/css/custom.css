@@ -147,7 +147,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    margin-bottom: 8px;
+    margin-bottom: 2px;
 }
 .ft-card__list .icon {
     margin-right: 10px;
@@ -338,7 +338,6 @@
 }
 .ft-filter .form-group {
     margin: 0 15px;
-    margin-bottom: 30px;
 }
 .dropdown-wrapper {
     position: absolute;
@@ -1835,9 +1834,6 @@ aside .md-drawer-scroll__wrapper{
 .md-drawer-scroll__wrapper .panel--eventlist .ft-card__primary{
     padding: 0;
 }
-.md-drawer-scroll__wrapper .panel--eventlist .panel-body{
-    flex-grow: 1;
-}
 .layout-m-b-1 {
     margin-bottom: 16px;
 }
@@ -1846,5 +1842,23 @@ aside .md-drawer-scroll__wrapper{
     background-position: center;
     background-size: 200px auto;
     background-repeat: no-repeat;
-    background-color: #fff !important;
+    background-color: #fafafa !important;
+}
+.ft-grid__item > .ft_card {
+    max-width: 360px;
+    margin: 0 auto;
+}
+.user-image-wrapper{
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    display: inline-block;
+    background-color: #007E83;
+    color: #fff;
+    border-radius: 50%;
+    line-height: 40px;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    font-size: 24px;
 }

@@ -1,11 +1,9 @@
 <template>
-    <div>
-        <post-theater-view></post-theater-view>
-        <post-wholikes-view></post-wholikes-view>
+    <div style="position: relative">
         <div class="event-filter-wrapper">
             <div class="hidden-sm hidden-xs ft-filter">
                 <fieldset class="form-group">
-                    <input v-on:keyup.enter="submit(0)" v-model.trim="filterData[0]" class="form-control" id="filter-location-input" autocomplete="off" placeholder="By Location" name="location" type="text" style="position: relative; overflow: hidden;">
+                    <input v-on:keyup.enter="submit(0)" onKeyPress="return initMapDesk(event)" v-model.trim="filterData[0]" class="pac-input form-control" id="filter-location-input" autocomplete="off" placeholder="By Location" name="location" type="text" style="position: relative; overflow: hidden;">
                 </fieldset>
                 <fieldset class="form-group">
                     <input v-on:keyup.enter="submit(1, $event)" class="form-control filter-date" name="date" id="filter-date" autocomplete="off" placeholder="By Date" type="text" style="position: relative; overflow: hidden;">
@@ -61,6 +59,7 @@
                     </fieldset>
                 </div>
             </div>
+
             <div class="md-layout md-layout--row">
                 <div class="md-layout md-layout--row md-layout--wrap hidden">
                     <template v-for="item in filter">
@@ -77,169 +76,170 @@
                 </div>
             </div>
         </div>
+
         <div class="post-filters pages-groups">
             <div class="pane">
                 <div class="pan">
-                    <template v-if="!noPostFound || alreadyHavePost">
-                        <template v-if="isLoading">
-                            <div class="ft-grid">
-                                <div class="ft-grid__item lg-loading-skeleton">
-                                    <div class="ft_card">
-                                        <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
-                                        </div>
-                                        <div class="ft-card__primary hidden-sm hidden-xs">
-                                            <div class="ft-card__title lg-loadable">
-                                                <h5 class="ft-event-card__title">&nbsp;</h5>
-                                            </div>
-                                            <div class="ft-card__list-wrapper">
-                                                <div class="ft-card__list">
-                                                    <div class="icon lg-loadable"></div>
-                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                        &nbsp;
-                                                    </div>
-                                                </div>
-                                                <div class="ft-card__list">
-                                                    <div class="icon icon-participant lg-loadable"></div>
-                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                        &nbsp;
-                                                    </div>
-                                                </div>
-                                                <div class="ft-card__list">
-                                                    <div class="icon lg-loadable"></div>
-                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                        &nbsp;
-                                                    </div>
-                                                </div>
-                                                <div class="ft-card__list">
-                                                    <div class="icon lg-loadable"></div>
-                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                        &nbsp;
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                    <template v-if="!noEventListFound && isEventListLoading">
+                        <div class="ft-grid">
+                            <div class="ft-grid__item lg-loading-skeleton">
+                                <div class="ft_card">
+                                    <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
                                     </div>
-                                </div>
-                                <div class="ft-grid__item lg-loading-skeleton">
-                                    <div class="ft_card">
-                                        <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                    <div class="ft-card__primary hidden-sm hidden-xs">
+                                        <div class="ft-card__title lg-loadable">
+                                            <h5 class="ft-event-card__title">&nbsp;</h5>
                                         </div>
-                                        <div class="ft-card__primary hidden-sm hidden-xs">
-                                            <div class="ft-card__title lg-loadable">
-                                                <h5 class="ft-event-card__title">&nbsp;</h5>
-                                            </div>
-                                            <div class="ft-card__list-wrapper">
-                                                <div class="ft-card__list">
-                                                    <div class="icon lg-loadable"></div>
-                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                        &nbsp;
-                                                    </div>
-                                                </div>
-                                                <div class="ft-card__list">
-                                                    <div class="icon icon-participant lg-loadable"></div>
-                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                        &nbsp;
-                                                    </div>
-                                                </div>
-                                                <div class="ft-card__list">
-                                                    <div class="icon lg-loadable"></div>
-                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                        &nbsp;
-                                                    </div>
-                                                </div>
-                                                <div class="ft-card__list">
-                                                    <div class="icon lg-loadable"></div>
-                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                        &nbsp;
-                                                    </div>
+                                        <div class="ft-card__list-wrapper">
+                                            <div class="ft-card__list">
+                                                <div class="icon lg-loadable"></div>
+                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                    &nbsp;
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="ft-grid__item lg-loading-skeleton">
-                                    <div class="ft_card">
-                                        <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
-                                        </div>
-                                        <div class="ft-card__primary hidden-sm hidden-xs">
-                                            <div class="ft-card__title lg-loadable">
-                                                <h5 class="ft-event-card__title">&nbsp;</h5>
+                                            <div class="ft-card__list">
+                                                <div class="icon icon-participant lg-loadable"></div>
+                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                    &nbsp;
+                                                </div>
                                             </div>
-                                            <div class="ft-card__list-wrapper">
-                                                <div class="ft-card__list">
-                                                    <div class="icon lg-loadable"></div>
-                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                        &nbsp;
-                                                    </div>
+                                            <div class="ft-card__list">
+                                                <div class="icon lg-loadable"></div>
+                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                    &nbsp;
                                                 </div>
-                                                <div class="ft-card__list">
-                                                    <div class="icon icon-participant lg-loadable"></div>
-                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                        &nbsp;
-                                                    </div>
-                                                </div>
-                                                <div class="ft-card__list">
-                                                    <div class="icon lg-loadable"></div>
-                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                        &nbsp;
-                                                    </div>
-                                                </div>
-                                                <div class="ft-card__list">
-                                                    <div class="icon lg-loadable"></div>
-                                                    <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                                                        &nbsp;
-                                                    </div>
+                                            </div>
+                                            <div class="ft-card__list">
+                                                <div class="icon lg-loadable"></div>
+                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                    &nbsp;
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </template>
-                        <template v-else="">
-                            <div class="ft-grid">
-                                <div v-for="(item, index) in eventList" :key="item.id" class="ft-grid__item">
-                                    <div class="ft_card">
+                            <div class="ft-grid__item lg-loading-skeleton">
+                                <div class="ft_card">
+                                    <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                    </div>
+                                    <div class="ft-card__primary hidden-sm hidden-xs">
+                                        <div class="ft-card__title lg-loadable">
+                                            <h5 class="ft-event-card__title">&nbsp;</h5>
+                                        </div>
+                                        <div class="ft-card__list-wrapper">
+                                            <div class="ft-card__list">
+                                                <div class="icon lg-loadable"></div>
+                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                            <div class="ft-card__list">
+                                                <div class="icon icon-participant lg-loadable"></div>
+                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                            <div class="ft-card__list">
+                                                <div class="icon lg-loadable"></div>
+                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                            <div class="ft-card__list">
+                                                <div class="icon lg-loadable"></div>
+                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ft-grid__item lg-loading-skeleton">
+                                <div class="ft_card">
+                                    <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                    </div>
+                                    <div class="ft-card__primary hidden-sm hidden-xs">
+                                        <div class="ft-card__title lg-loadable">
+                                            <h5 class="ft-event-card__title">&nbsp;</h5>
+                                        </div>
+                                        <div class="ft-card__list-wrapper">
+                                            <div class="ft-card__list">
+                                                <div class="icon lg-loadable"></div>
+                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                            <div class="ft-card__list">
+                                                <div class="icon icon-participant lg-loadable"></div>
+                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                            <div class="ft-card__list">
+                                                <div class="icon lg-loadable"></div>
+                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                            <div class="ft-card__list">
+                                                <div class="icon lg-loadable"></div>
+                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <template v-else-if="!noEventListFound">
+                        <div class="ft-grid">
+                            <div v-for="(item, index) in eventList" :key="item.id" class="ft-grid__item">
+                                <div class="ft_card">
+                                    <div class="ft-card__primary hidden-sm hidden-xs">
                                         <post-back-viewer v-on:open="showEventPost(item.event_id)" :post-img="item.media"></post-back-viewer>
-                                        <div class="ft-card__primary hidden-sm hidden-xs">
-                                            <div class="ft-card__title lg-loadable">
-                                                <h5 class="ft-event-card__title">{{item.name}}</h5>
+                                        <div class="ft-card__title lg-loadable">
+                                            <h5 class="ft-event-card__title">{{item.name}}</h5>
+                                        </div>
+                                        <div class="ft-card__list-wrapper">
+                                            <div class="ft-card__list">
+                                                <div class="icon icon-location-o"></div>
+                                                <div class="card-desc">
+                                                    <a :href="formatUrl(item.location)" target="_blank">{{ item.location }}</a>
+                                                </div>
                                             </div>
-                                            <div class="ft-card__list-wrapper">
-                                                <div class="ft-card__list">
-                                                    <div class="icon icon-location-o"></div>
-                                                    <div class="card-desc">
-                                                        <a :href="formatUrl(item.location)" target="_blank">{{ item.location }}</a>
-                                                    </div>
+                                            <div class="ft-card__list">
+                                                <div class="icon icon-participant"></div>
+                                                <div class="card-desc">
+                                                    {{ formatGender(item.gender) }}
                                                 </div>
-                                                <div class="ft-card__list">
-                                                    <div class="icon icon-participant"></div>
-                                                    <div class="card-desc">
-                                                        {{ formatGender(item.gender) }}
-                                                    </div>
+                                            </div>
+                                            <div class="ft-card__list">
+                                                <div class="icon icon-time-o"></div>
+                                                <div class="card-desc">
+                                                    {{ formatDate(item.start_date) }} - {{ formatDate(item.end_date) }}
                                                 </div>
-                                                <div class="ft-card__list">
-                                                    <div class="icon icon-time-o"></div>
-                                                    <div class="card-desc">
-                                                        {{ formatDate(item.start_date) }} - {{ formatDate(item.end_date) }}
-                                                    </div>
-                                                </div>
-                                                <div class="ft-card__list">
-                                                    <div class="icon icon-label-o"></div>
-                                                    <div class="card-desc">
-                                                        {{ formatPrice(item.price) }}
-                                                    </div>
+                                            </div>
+                                            <div class="ft-card__list">
+                                                <div class="icon icon-label-o"></div>
+                                                <div class="card-desc">
+                                                    {{ formatPrice(item.price) }}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </template>
+                        </div>
                     </template>
                     <template v-else="">
-                        <div class="text-center">
-                            No Post Found
+                        <div v-if="noEventListFound" class="">
+                            <h2 class="ft-loading text-center">
+                                No Event found
+                            </h2>
                         </div>
                     </template>
                 </div>
@@ -278,6 +278,7 @@
                 </div>
             </div>
         </aside>
+
     </div>
 </template>
 <script>
@@ -287,8 +288,6 @@
     import postEvent from './child/postEvent'
     import postHeader from './child/postHeader'
     import postComment from './child/postComment'
-    import postTheaterView from './child/postTheaterView'
-    import postWhoLikesView from './child/postWhoLikesView'
     import { mapGetters } from 'vuex'
     export default {
         data: function () {
@@ -305,7 +304,9 @@
                 interact: false,
                 noPostFound: false,
                 showProgress: true,
-                noEventFound: false
+                noEventFound: false,
+                noEventListFound:false,
+                isFilterEventListLoading: false
             }
         },
         methods: {
@@ -345,13 +346,14 @@
                 } else {
                     this.filter[i].content = this.filterData[i]
                 }
-                this.showEventPost(e)
+                this.eventList = []
                 this.getDefaultData()
             },
             getDefaultData: function () {
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
                 let url = this.makeUrl()
+                this.noEventListFound = false
                 axios({
                     method: 'get',
                     responseType: 'json',
@@ -360,14 +362,9 @@
                     if (response.status ==  200) {
                         that.eventList = response.data.data
                         if(!that.eventList.length) {
-                            if(!that.interact) {
-                                that.alreadyHavePost = false
-                                that.noPostFound = true
-                            } else {
-                                that.noPostFound = true
-                            }
+                            that.noEventListFound = true
                         } else {
-                            that.interact = true
+                            that.noEventListFound = false
                         }
                         setTimeout(function () {
                             emojify.run();
@@ -464,6 +461,8 @@
             });
             $('#drawer-1').MaterialDrawer({show: false, permanent: true})
             this.getDefaultData()
+            initMap()
+            initMapDesk()
         },
         components: {
             'post-description': postDescription,
@@ -471,8 +470,6 @@
             'post-header': postHeader,
             'post-event': postEvent,
             'post-comment': postComment,
-            'post-theater-view': postTheaterView,
-            'post-wholikes-view': postWhoLikesView,
             'post-back-viewer': postBackViwer
         },
         computed: {
@@ -481,6 +478,9 @@
             },
             isEventLoading () {
                 return this.postItemList.length === 0
+            },
+            isEventListLoading () {
+                return this.eventList.length === 0
             },
             ...mapGetters({
                 postItemList: 'postItemList'

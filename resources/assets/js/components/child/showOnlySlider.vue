@@ -13,13 +13,13 @@
         </template>
         <template v-else="">
             <template v-if="!noImage">
-                <div class="ft-card ft-card--only-image" v-for="(image, imageIndex) in images">
+                <div class="ft-card--only-image" v-for="(image, imageIndex) in images">
                     <div class="ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" v-bind:class="{'image-default': defaultImage}" @click="emitOpen" v-bind:style="{ backgroundImage: 'url(' + image +')'}">
                         <img class="ft-card__img" :src="image">
                     </div>
                 </div>
             </template>
-            <div v-else="" class="ft-card ft-card--only-image">
+            <div v-else="" class="ft-card--only-image">
                 <div class="ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" @click="emitOpen" v-bind:style="{ backgroundImage: 'url(' + defaultImageSrc +')'}">
                 </div>
             </div>

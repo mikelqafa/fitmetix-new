@@ -4,7 +4,7 @@
 			width: auto;
 			padding-right: 0px;
 			padding-left: 0;
-			padding-top: 64px;
+			padding-top: 60px;
 			z-index: -1;
 		}
 		.md-drawer--permanent.md-drawer--visible {
@@ -42,6 +42,8 @@
 </style>
 <div class="no-margin-sm" style="margin-top: 30px">
 	<div id="app-timeline">
+		<app-post-option></app-post-option>
+		<app-comment-option></app-comment-option>
 		<app-event-list>
 			<div class="post-filters pages-groups">
 				<div class="pane">
@@ -165,3 +167,63 @@
 		</app-event-list>
 	</div>
 </div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_vuWi_hzMDDeenNYwaNAj0PHzzS2GAx8&libraries=places"
+		async defer></script>
+<script>
+	function initMap(event) {
+		var key;
+		var map = new google.maps.Map(document.getElementById('filter-location-input-mob'), {});
+
+		var input = /** @type {!HTMLInputElement} */(
+				document.getElementById('filter-location-input-mob'));
+
+		if (window.event) {
+			key = window.event.keyCode;
+
+		}
+		else {
+			if (event)
+				key = event.which;
+		}
+
+		if (key == 13) {
+			//do nothing
+			return false;
+			//otherwise
+		} else {
+			var autocomplete = new google.maps.places.Autocomplete(input);
+			autocomplete.bindTo('bounds', map);
+
+			//continue as normal (allow the key press for keys other than "enter")
+			return true;
+		}
+	}
+	function initMapDesk(event) {
+		var key;
+		var map = new google.maps.Map(document.getElementById('filter-location-input'), {});
+
+		var input = /** @type {!HTMLInputElement} */(
+				document.getElementById('filter-location-input'));
+
+		if (window.event) {
+			key = window.event.keyCode;
+
+		}
+		else {
+			if (event)
+				key = event.which;
+		}
+
+		if (key == 13) {
+			//do nothing
+			return false;
+			//otherwise
+		} else {
+			var autocomplete = new google.maps.places.Autocomplete(input);
+			autocomplete.bindTo('bounds', map);
+
+			//continue as normal (allow the key press for keys other than "enter")
+			return true;
+		}
+	}
+</script>

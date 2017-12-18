@@ -3,7 +3,7 @@
         <template v-if="isMultiple">
             <swiper :options="swiperOption" class="deal-card-slider slider--gallery">
                 <swiper-slide :key="imageIndex" v-for="(image, imageIndex) in images">
-                    <a href="javascript:;" :key="imageIndex" @click="showTheater(imageIndex)" class="item__background"
+                    <a href="javascript:;" :key="imageIndex" class="item__background"
                        :style="{ backgroundImage: 'url(' + image + ')' }"></a>
                 </swiper-slide>
                 <div class="swiper-pagination" slot="pagination"></div>
@@ -12,7 +12,7 @@
             </swiper>
         </template>
         <template v-else="">
-            <div class="ft-card ft-card--only-image" v-for="(image, imageIndex) in images" @click="showTheater(0)">
+            <div class="ft-card ft-card--only-image" v-for="(image, imageIndex) in images">
                 <div class="ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" v-bind:style="{ backgroundImage: 'url(' + image +')'}">
                     <img class="ft-card__img" :src="image">
                 </div>
@@ -53,29 +53,6 @@
                     let s = val.source !== undefined ? val.source : ''
                     that.images.push(that.isTypeEvent ? asset_url + 'uploads/events/covers/'+s : asset_url+'uploads/users/gallery/'+s)
                 });
-            }
-        },
-        methods: {
-            showTheater: function(imageIndex) {
-                if(!this.detectmob()) {
-                    this.$store.commit('SET_THEATER_ITEM', {postIndex: this.postIndex, imageIndex: imageIndex})
-                    $('#post-image-theater-dialog').MaterialDialog('show')
-                }
-            },
-            detectmob: function () {
-                if (
-                        navigator.userAgent.match(/Android/i) ||
-                        navigator.userAgent.match(/webOS/i) ||
-                        navigator.userAgent.match(/iPhone/i) ||
-                        navigator.userAgent.match(/iPad/i) ||
-                        navigator.userAgent.match(/iPod/i) ||
-                        navigator.userAgent.match(/BlackBerry/i) ||
-                        navigator.userAgent.match(/Windows Phone/i)
-                ) {
-                    return true
-                } else {
-                    return false
-                }
             }
         },
         computed: {

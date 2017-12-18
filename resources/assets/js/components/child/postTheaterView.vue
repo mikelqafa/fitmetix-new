@@ -24,6 +24,7 @@
                                 <post-description :post-html="postItem.description"></post-description>
                             </template>
                         </header>
+                        <post-event :post-item="postItem" :post-index="index"></post-event>
                         <div class="hidden-xs" v-if="holaMola">
                             <post-comment v-on:focuscomment="focuscomment" :post-index="theaterPostItem.postIndex" show-sidebar="true" :post-item="postItem" :post-id="postItem.id"></post-comment>
                         </div>
@@ -43,6 +44,7 @@
     import imageTheaterSurface from './imageTheaterSurface'
     import postHeader from './postHeader'
     import postComment from './postComment'
+    import postEvent from './postEvent'
     import { mapGetters } from 'vuex'
     import postDescription from './postDescription'
 
@@ -54,7 +56,8 @@
             'image-theater-surface': imageTheaterSurface,
             'post-header': postHeader,
             'post-comment': postComment,
-            'post-description': postDescription
+            'post-description': postDescription,
+            'post-event': postEvent
         },
         methods: {
             focuscomment: function () {

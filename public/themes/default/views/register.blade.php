@@ -31,7 +31,7 @@
 
     <div class="ft-mobile-logo ft-mobile-logo--register md-layout md-align md-align--center-center">
         <a class="ft-header__logo" href="{{ url('/') }}">
-            <img src="{!! url('setting/'.Setting::get('logo')) !!}" alt="{{ Setting::get('site_name') }}" title="{{ Setting::get('site_name') }}" />
+            <img src="{!! url('images/logo.png') !!}" alt="{{ Setting::get('site_name') }}" title="{{ Setting::get('site_name') }}" />
         </a>
     </div>
 
@@ -39,7 +39,7 @@
         <div class="container">
             <div class="md-layout md-layout--row md-align mobile-align-center md-align--start-start">
                 <a class="ft-header__logo" href="{{ url('/') }}">
-                    <img src="{!! url('setting/'.Setting::get('logo')) !!}" alt="{{ Setting::get('site_name') }}" title="{{ Setting::get('site_name') }}" />
+                    <img src="{!! url('images/logo.png') !!}" alt="{{ Setting::get('site_name') }}" title="{{ Setting::get('site_name') }}" />
                 </a>
                 <div class="md-layout-spacer md-layout-spacer--mobile"></div>
                 <form method="POST" id="signup-form" class="signup-form mobile-align-center md-layout md-layout--column ft-login__wrapper md-align md-align--center-start" action="{{ url('/register') }}">
