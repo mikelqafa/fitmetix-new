@@ -11,7 +11,7 @@
             <div id="app-create-post">
                 <app-create-post></app-create-post>
             </div>
-            <input type="hidden" id="user-image" value="{{asset('images/default.png')}}">
+            <input type="hidden" id="user-image" value="{{url(Auth::user()->avatar)}}">
             <input type="hidden" id="post-placeholder" value="{{ trans('messages.post-placeholder') }}">
             <div class="user-tags-added" style="display:none">
                 &nbsp; -- {{ trans('common.with') }}
@@ -29,7 +29,7 @@
             <div class="youtube-iframe"></div>
 
             <div class="video-addon post-addon" style="display: none">
-                <span class="post-addon-icon"><i class="fa fa-film"></i></span>
+                <span class="post-addon-icon"><i class="icon icon-video"></i></span>
                 <div class="form-group">
                     <input type="text" name="youtubeText" id="youtubeText" class="form-control youtube-text"
                            placeholder="{{ trans('messages.what_are_you_watching') }}" value="">
@@ -81,7 +81,7 @@
 
         <div class="panel-footer">
             <ul class="list-inline left-list">
-                <li><a href="javascript:;" class="disabled"><i class="icon icon-video"></i></a></li>
+                {{--<li><a href="javascript:;" id="videoUploadFile"><i class="icon icon-video"></i></a></li>--}}
                 <li><a href="javascript:;" id="imageUpload"><i class="icon icon-photo"></i></a></li>
                 {{-- <li><a href="#" id="selfVideoUpload"><i class="fa fa-film"></i></a></li> --}}
                 @if((env('SOUNDCLOUD_CLIENT_ID') != "" || (env('SOUNDCLOUD_CLIENT_ID') != null)))

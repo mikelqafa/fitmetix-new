@@ -1,5 +1,5 @@
 <template>
-    <div class="md-dialog md-dialog--maintain-width md-dialog--edit-post md-dialog--full-screen" id="post-edit-option-dialog">
+    <div class="md-dialog md-dialog--maintain-width md-dialog--edit-post md-dialog--full-screen" id="event-edit-option-dialog">
         <div class="md-dialog__wrapper">
             <div class="md-dialog__shadow"></div>
             <div class="md-dialog__surface" style="position: relative">
@@ -12,6 +12,64 @@
                         </div>
                     </div>
                     <div class="panel-body">
+                        <post-image-viewer disable-showcase="true" :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
+                        <div class="event-edit-group" style="padding: 24px 0">
+                            <fieldset class="form-group required">
+                                <input class="form-control" placeholder="Name of your event" maxlength="30" name="name" type="text">
+                            </fieldset>
+
+                            <fieldset class="form-group required">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <select class="form-control selectize" required="required">
+                                            <option value="">Privacy</option>
+                                            <option value="Private">Private</option>
+                                            <option value="Public">Public</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control selectize" required="required" name="gender">
+                                            <option value="">Gender</option>
+                                            <option value="male">Males Only</option>
+                                            <option value="female">Females Only</option>
+                                            <option value="everyone">Everyone</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="form-group required">
+                                <input class="form-control" placeholder="Enter location" type="text">
+                            </fieldset>
+
+                            <fieldset class="form-group required">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="number" class="form-control" placeholder="Number of participants" min="1">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" class="form-control" placeholder="Price (USD)" min="0" max="10000">
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="form-group required">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group date form_datetime">
+                                            <input type="text" class="datepick2--event form-control" name="start_date"
+                                                   placeholder="Start Time" value="">
+                                        <span class="input-group-addon addon-right calendar-addon">
+                                            <span class="fa fa-calendar"></span>
+                                        </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" placeholder="duration" id="duration-event">
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
                         <div class="ft-cp ft-cp--edit">
                             <div class="ft-cp__presentation">
                                 <div class="write-post">
@@ -26,15 +84,12 @@
                                 </div>
                             </div>
                         </div>
-                        <post-youtube :post-you-tube="postItem.youtube_video_id" :you-tube-title="postItem.youtube_title"></post-youtube>
-                        <post-image-viewer :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
-                        <post-event :post-item="postItem" :post-index="index" :post-img="postItem.images"></post-event>
-                        <post-sound-cloud :soundcloud="postItem.soundcloud_id"></post-sound-cloud>
+
                     </div>
                     <div class="panel-footer md-layout md-layout--row">
                         <div class="md-layout-spacer"></div>
-                        <button class="btn" @click="cancelSavePost">Cancel</button>
-                        <button style="margin-left: 8px" class="btn btn-edit-submit ft-btn-primary" @click="editSavePost">Save Post</button>
+                        <button class="btn" @click="cancelSaveEvent">Cancel</button>
+                        <button style="margin-left: 8px" class="btn btn-edit-submit ft-btn-primary" @click="editSavePost">Save Event</button>
                     </div>
                 </div>
                 <div v-if="isLoading" class="absolute-loader">
@@ -48,6 +103,78 @@
         </div>
     </div>
 </template>
+
+<style>
+    .replace-with-edit {
+        height: 0;
+        width: 0;
+        visibility: hidden;
+    }
+    .ft-cp--edit .ft-cp__presentation{
+        padding: 0;
+        min-height: 70px;
+    }
+    .post-edit-heading{
+        min-height:40px;
+        line-height: 20px;
+
+    }
+    .md-dialog--edit-post.md-dialog--open {
+        z-index: 27;
+    }
+    .md-dialog--edit-post .md-dialog__body {
+        margin-top: 0;
+        max-width: 590px;
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 0;
+    }
+    .md-dialog--edit-post .md-dialog__wrapper {
+        justify-content: center;
+    }
+    .bdp-input {
+        border-radius: 2px;
+        padding: 4px 2px;
+        border: 1px solid rgba(34, 36, 38, .15);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .bdp-input > .black-label {
+        color: #c3c6cb;
+    }
+    .bdp-input.disabled {
+        color: #AAA;
+        cursor: default;
+    }
+
+    .bdp-popover {
+        min-width: 110px;
+    }
+
+    .bdp-popover input {
+        display: inline;
+        margin-bottom: 3px;
+        width: 60px;
+    }
+
+    .bdp-block {
+        display: inline-block;
+        line-height: 1;
+        text-align: center;
+        padding: 5px 3px;
+    }
+
+    .bdp-label {
+        font-size: 90%;
+        margin-left: 4px;
+    }
+    .padding-bottom{
+        padding-bottom: 16px;
+    }
+</style>
 
 <script>
     import { mapGetters } from 'vuex'
@@ -113,8 +240,8 @@
                     that.isLoading = false
                 })
             },
-            cancelSavePost: function () {
-                $('#post-edit-option-dialog').MaterialDialog('hide')
+            cancelSaveEvent: function () {
+                $('#event-edit-option-dialog').MaterialDialog('hide')
             },
             editSavePost: function () {
                 this.replaceImgEmoji()
@@ -140,7 +267,7 @@
                         materialSnackBar({messageText: response.data.data, autoClose: true })
                         create_post_button.attr('disabled', false)
                         create_post_button.html(create_post_button.text())
-                        $('#post-edit-option-dialog').MaterialDialog('hide')
+                        $('#event-edit-option-dialog').MaterialDialog('hide')
                         setTimeout(function() {emojify.run()
                             $('#post-option-dialog').MaterialDialog('hide')
                         }, 100)
@@ -159,16 +286,38 @@
         },
         mounted () {
             let that = this
-            this.placeholder = $('#post-placeholder').val()
-            let dialog = $('#post-edit-option-dialog').MaterialDialog({show:false});
+            this.placeholder = 'Event Description'
+            let dialog = $('#event-edit-option-dialog').MaterialDialog({show:false});
             this.backContent = this.backContentPrev
             setTimeout(function(){
                 emojify.run()
+                $('.selectize').selectize()
+
+                $(".datepick2--event").datetimepicker({
+                    format: "mm/dd/yyyy H P",
+                    autoclose: true,
+                    minView: 1,
+                    startView: "month",
+                    startDate: today,
+                    endDate: new Date(today.getFullYear(), today.getMonth()+3, today.getDate()),
+                    showMeridian: true
+                });
+
+                $('#duration-event').durationPicker({
+                    lang: 'en',
+                    formatter: function (s) {
+                        return s;
+                    },
+                    showSeconds: false
+                });
+
             }, 300)
         },
         components: {
             'medium-editor': editor,
             'post-image-viewer': postImageViewer,
+            'post-sound-cloud': postSoundCloud,
+            'post-youtube': postYouTube,
             'post-event': postEvent
         },
         computed: {

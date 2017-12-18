@@ -131,7 +131,7 @@
                       enctype="multipart/form-data">
                     {{ csrf_field() }}
 
-				<fieldset class="form-group required">
+				    <fieldset class="form-group required">
 					<label class="event_images_upload--label" for="event_images_upload" style="background-image: url({{url('images/no-image.png')}})">
 						<input id="event_images_upload" required type="file" multiple="multiple"
 							   accept="image/jpeg,image/png,image/gif"

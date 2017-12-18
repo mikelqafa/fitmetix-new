@@ -2138,7 +2138,7 @@ $(document).on('change','#event_images_upload',function(e){
           $('.event_images_upload--label').addClass('image-added')
           image.onload = function(){
             if(this.width < 600 || this.height < 150) {
-              alert("Please select a larger image");
+
               imgPath = '';
               validFiles = [];
               image_holder.empty();

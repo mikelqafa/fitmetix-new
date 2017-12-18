@@ -30,68 +30,6 @@
     </div>
 </template>
 
-<style>
-    .upload-action.is-dragging {
-        background: green;
-    }
-    .atwho-li img {
-        height: 100%;
-        width: auto;
-        border-radius: 50%;
-    }
-    .ft-cp {
-        display: flex;
-        flex-direction: row;
-    }
-    .ft-cp__user {
-        height: 40px;
-        width: 40px;
-        background-size: cover;
-        background-position: center;
-        flex-shrink: 0;
-        margin-left: 12px;
-        margin-top: 12px;
-    }
-    .ft-cp__presentation {
-        flex-grow: 1;
-        min-height: 110px;
-        padding: 20px 30px 12px 12px;
-    }
-    .write-post, .write-post__text {
-        position: relative;
-        height: inherit;
-        line-height: 20px;
-        word-break: break-all;
-    }
-    .write-post__text{
-        min-height: 70px;
-    }
-    .smiley-post {
-        cursor: pointer;
-    }
-    #create-post-vue img {
-        vertical-align: initial;
-    }
-    .write-post__text {
-        z-index: 1;
-    }
-    .write-post__text[contenteditable="true"] {
-        -webkit-user-modify: read-write-plaintext-only;
-    }
-    .write-post__placeholder {
-        position: absolute;
-        top:0;
-        left:0;
-        color: #757575;
-        opacity: .54;
-    }
-    .replace-with {
-        height: 0;
-        width: 0;
-        visibility: hidden;
-    }
-</style>
-
 <script>
     import appImageUploader from './child/appImageUploader'
     import editor from 'vue2-medium-editor'
@@ -164,6 +102,10 @@
                 //$('.post-images-upload').trigger('click');
                 $('#upload-action-create').trigger('click');
             });
+            $(document).on('click','#videoUploadFile',function(e){
+                e.preventDefault();
+                $('#video-upload-action-create').trigger('click');
+            });
         },
         computed: {
             hasNotContent () {
@@ -233,13 +175,29 @@
                 let $imageInputs = this.$refs.vue_img.files
                 if($imageInputs.length == 0 && youtubeText == '' && location =='' && youtube_title == '' && youtube_video_id == ''
                         && soundcloud_id == '' && user_tags == '' && soundcloud_title == '' &&  description == '' ) {
-                    materialSnackBar({messageText: 'Your post cannot be empty!', autoClose: true })
+                    alertApp('Your post cannot be empty!')
                     return false;
                 }
                 let imageUploaded = true
-                // TODO check image all uploaded
+                for(let i=0; i<$imageInputs.length; i++) {
+                    if($imageInputs[i].status == 'added') {
+                        imageUploaded = false
+                        break
+                    }
+                }
                 if(!imageUploaded) {
-                    materialSnackBar({messageText: 'Please wait while images are being uploading', autoClose: true })
+                    alertApp('Please wait while images are being uploading')
+                    return;
+                }
+                let invalid = false
+                for(let i=0; i<$imageInputs.length; i++) {
+                    if($imageInputs[i].status == 'error') {
+                        invalid = true
+                        break
+                    }
+                }
+                if(invalid) {
+                    alertApp('Unable to post. Remove invalid images or try again!')
                     return;
                 }
                 let that = this
@@ -250,30 +208,11 @@
                 let fileUploaded = true
                 let reason = ''
                 for(let j=0; j<$imageInputs.length;j++) {
-                    console.log($imageInputs[j]['status'])
-                    if($imageInputs[j]['status'] === 'success') {
-                        response = $imageInputs[j].xhrResponse.response
-                        response = JSON.parse(response)
-                        if(response.status == 200) {
-                            post_images_upload.push(response[0])
-                        } else {
-                            fileUploaded = false
-                            reason = response.status
-                        }
-                    } else {
-                        fileUploaded = false
-                        reason = $imageInputs[j]['status']
+                    response = $imageInputs[j].xhrResponse.response
+                    response = JSON.parse(response)
+                    if (response.status == 200) {
+                        post_images_upload.push(response[0])
                     }
-                    if(!fileUploaded)
-                        break
-                }
-                if(!fileUploaded) {
-                    if(!isNaN(reason)) {
-                        materialSnackBar({messageText: 'Error occurred! Please try again.', autoClose: true })
-                    } else {
-                        materialSnackBar({messageText: 'Please wait while images are uploading...', autoClose: true })
-                    }
-                    return
                 }
                 let create_post_button = create_post_form.find('.btn-submit')
                 create_post_button.attr('disabled', true).append(' <i class="fa fa-spinner fa-pulse "></i>');
@@ -394,6 +333,7 @@
                 create_post_button.attr('disabled', false)
                 this.$refs.vue_img.reset()
                 this.isPosting = false
+                this.backContent = ''
             },
             processEditOperation: function (operation) {
                 this.backContent = operation.api.origElements.innerHTML

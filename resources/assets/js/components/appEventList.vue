@@ -360,7 +360,10 @@
                     url: url
                 }).then( function (response) {
                     if (response.status ==  200) {
-                        that.eventList = response.data.data
+                        that.eventList = []
+                        for(let i = 0; i< response.data.data.length; i++) {
+                            that.eventList.unshift(response.data.data[i])
+                        }
                         if(!that.eventList.length) {
                             that.noEventListFound = true
                         } else {

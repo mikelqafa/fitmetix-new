@@ -2,7 +2,8 @@
     <div>
         <app-confirm :unid="unid" :body="body"></app-confirm>
         <report-post-option v-if="!authUser && (postItem !== '')" :post-item="postItem"></report-post-option>
-        <edit-post-option :index="optionMenuPostItem.postIndex" v-if="(postItem !== '') && initEdit"  :post-item="postItem"></edit-post-option>
+        <edit-post-option :index="optionMenuPostItem.postIndex" v-if="(postItem !== '') && initEdit && !isTypeEvent"  :post-item="postItem"></edit-post-option>
+        <edit-event-option :index="optionMenuPostItem.postIndex" v-if="(postItem !== '') && initEdit && isTypeEvent"  :post-item="postItem"></edit-event-option>
         <div class="md-dialog md-dialog--maintain-width md-dialog--post-option md-dialog--full-screen" id="post-option-dialog">
             <div class="md-dialog__wrapper">
                 <div class="md-dialog__shadow"></div>
@@ -10,7 +11,10 @@
                     <div class="md-dialog__body">
                         <div class="ft-dialog-option" v-bind:class="{'is-loading': isLoading}">
                             <template v-if="authUser">
-                                <a href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="editPost">
+                                <a v-if="isTypeEvent" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="editEvent">
+                                    Edit Event
+                                </a>
+                                <a v-else="" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="editPost">
                                     Edit Post
                                 </a>
                                 <a href="javascript:;" class="btn ft-dialog-option__item" @click="confirmDeletePost">
@@ -21,7 +25,10 @@
                                 </a>
                             </template>
                             <template v-else="">
-                                <a href="javascript:;" class="btn ft-dialog-option__item" @click="initReportPost">
+                                <a v-if="isTypeEvent" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="initReportPost">
+                                    Report Event
+                                </a>
+                                <a v-else="" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="initReportPost">
                                     Report Post
                                 </a>
                                 <a href="javascript:;" data-value="cancel" class="btn ft-dialog-option__item" @click="shareTo('facebook')">
@@ -45,52 +52,9 @@
         </div>
     </div>
 </template>
-<style>
-    @media (max-width: 640px) {
-        .md-dialog--maintain-width .md-dialog__surface {
-            width: 90%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-    }
-
-    .md-dialog--post-option.md-dialog--open {
-        z-index: 26;
-    }
-    .md-dialog--post-option .md-dialog__body {
-        padding: 0;
-        margin-top: 0;
-    }
-    .md-dialog--post-option .md-dialog__wrapper {
-        justify-content: center;
-    }
-    .ft-dialog-option__item:active {
-        box-shadow: none !important;
-    }
-    .ft-dialog-option__item {
-        max-width: 510px;
-    }
-    .absolute-loader {
-        position: absolute;
-        top:0;
-        left: 0;
-        width: 100%;
-        min-height: 100%;
-        display: flex;
-        justify-content: center;
-        background-color: rgba(0,0,0,.2);
-        align-items: center;
-    }
-    .ft-dialog-option.is-loading {
-        cursor: wait;
-        pointer-events: none;
-    }
-    .absolute-loader .ft-loading {
-        background-color: transparent;
-    }
-</style>
 <script>
     import editPostOption from './child/editPost'
+    import editEventOption from './child/editEvent'
     import reportPostOption from './child/sendReport'
     import { mapGetters } from 'vuex'
     import appConfirm from './child/appConfirm'
@@ -173,6 +137,12 @@
                     $('#post-edit-option-dialog').MaterialDialog('show');
                 },300)
             },
+            editEvent: function () {
+                this.initEdit = true
+                setTimeout(function() {
+                    $('#event-edit-option-dialog').MaterialDialog('show');
+                },300)
+            },
             shareTo: function (network) {
                 let that = this
                 switch (network) {
@@ -198,6 +168,7 @@
         },
         components: {
             'edit-post-option': editPostOption,
+            'edit-event-option': editEventOption,
             'report-post-option': reportPostOption,
             'app-confirm': appConfirm
         },
@@ -218,6 +189,9 @@
             },
             authUser: function () {
                 return this.postItem !== undefined ? this.postItem.user_id == user_id : false
+            },
+            isTypeEvent: function () {
+                return this.postItem !== undefined ? this.postItem.type == 'event' : false
             }
         }
     }
