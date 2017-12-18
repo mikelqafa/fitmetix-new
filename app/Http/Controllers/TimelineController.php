@@ -43,6 +43,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use LaravelPusher;
 use App\Follower;
+use App\EventUser;
 
 class TimelineController extends AppBaseController
 {
@@ -2091,30 +2092,68 @@ class TimelineController extends AppBaseController
 
 		}
 
-		public function whoCanRegisterEvent(Request $request) {
+		public function getRegisterButton(Request $request) {
 			$event_id = $request->event_id;
 			$user_id  = $request->user_id;
 			$event_model = new Event();
+			//$reg_status = 0 means show reguster button;1 means already registered;2 means do not show register button
+			$reg_status = 0;
+			$event_user_model = new EventUser();
 			$followers_model = new Follower();
 			$event = $event_model->where('id','=',$event_id)->get()->toArray();
 			if(!empty($event)) {
-					if($event[0]['type'] == 'public') {
-						return response()->json(['status' => '200', 'register' => TRUE, 'error' => FALSE,'err_msg'=>'']);
+				$event_user = $event_user_model->where('user_id', '=', $user_id)
+					->where('event_id', '=', $event_id)
+					->get()
+					->toArray();
+				if (!empty($event_user)) {
+					return response()->json([
+						'status' => '200',
+						'register' => FALSE,
+						'error' => TRUE,
+						'err_msg' => 'Already Registered',
+						'reg_status' => 1
+					]);
+				}
+				else {
+					if ($event[0]['type'] == 'public') {
+						return response()->json([
+							'status' => '200',
+							'register' => TRUE,
+							'error' => FALSE,
+							'err_msg' => '',
+							'reg_status' => 0
+						]);
 					}
 					else {
-						$followers = $followers_model->where('leader_id','=',$event[0]['user_id'])
-																					->where('follower_id','=',$user_id)
-																					->where('status','=','approved')->get()->toArray();
-						if(!empty($followers)) {
-							return response()->json(['status' => '200', 'register' => TRUE, 'error' => FALSE,'err_msg'=>'']);
+						$followers = $followers_model->where('leader_id', '=', $event[0]['user_id'])
+							->where('follower_id', '=', $user_id)
+							->where('status', '=', 'approved')
+							->get()
+							->toArray();
+						if (!empty($followers)) {
+							return response()->json([
+								'status' => '200',
+								'register' => TRUE,
+								'error' => FALSE,
+								'err_msg' => '',
+								'reg_status' => 0
+							]);
 						}
 						else {
-							return response()->json(['status' => '200', 'register' => FALSE, 'error' => TRUE,'err_msg'=>'User is not a follower']);
+							return response()->json([
+								'status' => '200',
+								'register' => FALSE,
+								'error' => TRUE,
+								'err_msg' => 'User is not a follower',
+								'reg_status' => 2
+							]);
 						}
 					}
+				}
 			}
 			else {
-				return response()->json(['status' => '200', 'register' => FALSE, 'error' => TRUE,'err_msg'=>'Event Not Found']);
+				return response()->json(['status' => '200', 'register' => FALSE, 'error' => TRUE,'err_msg'=>'Event Not Found','reg_status' => 2]);
 			}
 		}
 
