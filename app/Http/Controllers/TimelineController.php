@@ -2221,6 +2221,35 @@ class TimelineController extends AppBaseController
 			}
 
 	}
+
+	public function updateEvent(Request $request) {
+		$privacy = $request->privacy;
+		$gender  = $request->gender;
+		$location = $request->location;
+		$participant = $request->participant;
+		$event_id   = $request->event_id;
+		$title 			= $request->title;
+		$start_date = $request->start_date;
+		$duration   = $request->duration;
+		$date = date_create($start_date);
+		date_add($date,date_interval_create_from_date_string($duration.'hours'));
+		$end_date = $date->format('Y-m-d H:i:s');
+		$description = $request->description;
+		$event_model = new Event();
+		$timeine_model = new Timeline();
+		$event = $event_model->where('id','=',$event_id)->get()->toArray();
+		DB::table('events')->where('id','=',$event_id)
+											->update([	'type' => $privacy,
+																	'user_limit' => $participant,
+																	'gender' => $gender,
+																	'location' => $location,
+																	'start_date' => $start_date,
+																	'end_date'   => $end_date
+											]);
+		DB::table('timelines')->where('id','=',$event[0]['timeline_id'])->update(['name' => $title,'about' => $description]);
+		DB::table('posts')->where('timeline_id','=',$event[0]['timeline_id'])->update(['description' => $description]);
+		return response()->json(['status' => '200','error' => FALSE,'err_msg'=>'','success'=>TRUE]);
+	}
 		
     public function eventsListFilteredLocation(Request $request)
     {
