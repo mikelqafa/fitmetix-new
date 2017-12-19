@@ -3514,11 +3514,11 @@ class TimelineController extends AppBaseController
         $timeline = Timeline::where('username', $request->username)->first();
         $location = '%'.$request->location.'%';
         $id = Auth::user()->id;
-        $posts = Post::where([['active', 1],['location','like',$location]])->whereIn('user_id', function ($query) use ($id) {
+        $posts = Post::where([['active', 1],['location','like',$location],['type','<>','event']])->whereIn('user_id', function ($query) use ($id) {
                 $query->select('leader_id')
                     ->from('followers')
                     ->where('follower_id', $id);
-            })->orWhere([['user_id', $id],['location','like',$location]])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
+            })->orWhere([['user_id', $id],['location','like',$location],['type','<>','event']])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
 
         // $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
 
@@ -3566,11 +3566,11 @@ class TimelineController extends AppBaseController
         $timeline = Timeline::where('username', $request->username)->first();
         $hashtag = '%'.$request->hashtag.'%';
         $id = Auth::user()->id;
-        $allposts = Post::where([['active', 1],['description','like',$hashtag]])->whereIn('user_id', function ($query) use ($id) {
+        $allposts = Post::where([['active', 1],['description','like',$hashtag],['type','<>','event']])->whereIn('user_id', function ($query) use ($id) {
                 $query->select('leader_id')
                     ->from('followers')
                     ->where('follower_id', $id);
-            })->orWhere([['user_id', $id],['description','like',$hashtag]])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
+            })->orWhere([['user_id', $id],['description','like',$hashtag],['type','<>','event']])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
 
         // $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
         $posts = [];
@@ -3621,7 +3621,7 @@ class TimelineController extends AppBaseController
     public function postByUsernameAPI(Request $request) {
         $timeline = Timeline::where('username', $request->username)->first();
         $user = User::where('timeline_id', $timeline['id'])->first();
-        $allposts = Post::where([['active', 1],['user_id',$user->id]])->get();
+        $allposts = Post::where([['active', 1],['user_id',$user->id],['type','<>','event']])->get();
         $posts = [];
         foreach ($allposts as $key => $value) {
             if($value->images()->count() > 0) {
