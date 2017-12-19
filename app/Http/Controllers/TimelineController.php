@@ -3514,14 +3514,19 @@ class TimelineController extends AppBaseController
         $timeline = Timeline::where('username', $request->username)->first();
         $location = '%'.$request->location.'%';
         $id = Auth::user()->id;
-        $posts = Post::where([['active', 1],['location','like',$location]])->whereIn('user_id', function ($query) use ($id) {
+        $allposts = Post::where([['active', 1],['location','like',$location]])->whereIn('user_id', function ($query) use ($id) {
                 $query->select('leader_id')
                     ->from('followers')
                     ->where('follower_id', $id);
             })->orWhere([['user_id', $id],['location','like',$location]])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
 
         // $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
-
+        $posts = [];
+        foreach ($allposts as $key => $value) {
+          if($value->type != 'event') {
+            $posts[$key] = $value;
+          }
+        }
         foreach ($posts as $post) {
             if($post->images()->count() > 0) {
                 $post['images'] = $post->images()->get();
@@ -3540,6 +3545,7 @@ class TimelineController extends AppBaseController
             }
 
             if($post->type == 'event'){
+
                 $post['event'] = Event::where('timeline_id',$post->timeline_id)->latest()->get();
                 foreach ($post['event'] as $user_event) {
                     $user_event['event_details'] = $user_event->timeline->username;
@@ -3575,7 +3581,7 @@ class TimelineController extends AppBaseController
         // $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
         $posts = [];
         foreach ($allposts as $key => $value) {
-            if($value->images()->count() > 0) {
+            if($value->images()->count() > 0 AND $value->type != 'event') {
                 $posts[$key] = $value;
             }
         }
@@ -3624,7 +3630,7 @@ class TimelineController extends AppBaseController
         $allposts = Post::where([['active', 1],['user_id',$user->id]])->get();
         $posts = [];
         foreach ($allposts as $key => $value) {
-            if($value->images()->count() > 0) {
+            if($value->images()->count() > 0 AND $value->type != 'event') {
                 $posts[$key] = $value;
             }
         }
