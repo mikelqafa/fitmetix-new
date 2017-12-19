@@ -2032,7 +2032,7 @@ class TimelineController extends AppBaseController
         ->render();
     }
 
-    public function getEventApi(Request $request) {
+		public function getEventApi(Request $request) {
     	$location = $request->location;
     	$date     = $request->date;
     	$tag      = $request->tag;
@@ -2092,20 +2092,26 @@ class TimelineController extends AppBaseController
 
 		}
 
-	public function getRegisterButton(Request $request) {
+		public function getRegisterButton(Request $request) {
+      $date = gmdate('Y-m-d H:i:s');
 			$event_id = $request->event_id;
-			$user_id  = $request->user_id;
+			$user_id  = Auth::user()->id;
 			$event_model = new Event();
 			//$reg_status = 0 means show reguster button;1 means already registered;2 means do not show register button
 			$reg_status = 0;
 			$event_user_model = new EventUser();
 			$followers_model = new Follower();
+			$user_model = new User();
 			$event = $event_model->where('id','=',$event_id)->get()->toArray();
+			$user = $user_model->where('id',$user_id)->get()->toArray();
 			if(!empty($event)) {
 				$event_user = $event_user_model->where('user_id', '=', $user_id)
 					->where('event_id', '=', $event_id)
 					->get()
 					->toArray();
+        $event_users = $event_user_model
+          ->where('event_id', '=', $event_id)
+          ->count();
 				if (!empty($event_user)) {
 					return response()->json([
 						'status' => '200',
@@ -2115,6 +2121,33 @@ class TimelineController extends AppBaseController
 						'reg_status' => 1
 					]);
 				}
+				if ($event[0]['gender'] != 'all' AND $event[0]['gender'] != $user[0]['gender']){
+          return response()->json([
+            'status' => '200',
+            'register' => FALSE,
+            'error' => TRUE,
+            'err_msg' => 'Gender Mismatch',
+            'reg_status' => 2
+          ]);
+        }
+        if (isset($event[0]['user_limit']) AND $event[0]['user_limit'] == $event_users){
+          return response()->json([
+            'status' => '200',
+            'register' => FALSE,
+            'error' => TRUE,
+            'err_msg' => 'Registration Full',
+            'reg_status' => 2
+          ]);
+        }
+        if ($event[0]['start_date'] < $date){
+          return response()->json([
+            'status' => '200',
+            'register' => FALSE,
+            'error' => TRUE,
+            'err_msg' => 'Registration Deadline Over',
+            'reg_status' => 2
+          ]);
+        }
 				else {
 					if ($event[0]['type'] == 'public') {
 						return response()->json([
