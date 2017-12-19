@@ -2095,7 +2095,7 @@ class TimelineController extends AppBaseController
 		public function getRegisterButton(Request $request) {
       $date = gmdate('Y-m-d H:i:s');
 			$event_id = $request->event_id;
-			$user_id  = Auth::user()->id;
+			$user_id  = $request->uid;
 			$event_model = new Event();
 			//$reg_status = 0 means show reguster button;1 means already registered;2 means do not show register button
 			$reg_status = 0;
@@ -3948,4 +3948,25 @@ class TimelineController extends AppBaseController
             ->render();*/
     }
 
+    public function getRegisteredUserForEvent(Request $request){
+      $eventId = $request->event_id;
+      $userId = $request->user_id;
+      $registeredUsers = DB::table('event_user')->where('event_id',$eventId)->get()->toArray();
+      if (!empty($registeredUsers)){
+        foreach ($registeredUsers as $key => $value){
+          $following = DB::table('followers')->where('leader_id',$value->user_id)->where('follower_id',$userId)->first();
+          if (!empty($following)){
+            unset($following);
+            $registeredUsers[$key]->following = true;
+          }
+          else{
+            $registeredUsers[$key]->following = false;
+          }
+        }
+        return json_encode($registeredUsers);
+      }
+      else{
+        return json_encode('');
+      }
+    }
 }
