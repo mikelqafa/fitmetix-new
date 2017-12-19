@@ -3975,4 +3975,17 @@ class TimelineController extends AppBaseController
         return json_encode('');
       }
     }
+
+    public function unregisterEvent(Request $request){
+      $eventId = $request->event_id;
+      $userId = $request->user_id;
+      $unregister = DB::table('event_user')->where('event_id',$eventId)->where('user_id',$userId)->delete();
+      if ($unregister){
+        $msg = 'Successfully unregistered from Event';
+      }
+      else{
+        $msg = 'No registration found for this Event';
+      }
+      return $msg;
+    }
 }
