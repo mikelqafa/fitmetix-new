@@ -6,6 +6,7 @@ export const store = new Vuex.Store({
     pageTitle: 'FreeKaaDeal | Best Online Deals, Offers and Coupons',
     postItemList: [],
     theaterPostItem: {},
+    sharePostItem: {},
     optionMenuPostItem: {},
     postWhoLikes: {},
     pusher: null
@@ -13,6 +14,7 @@ export const store = new Vuex.Store({
   getters: {
     postItemList: state => state.postItemList,
     theaterPostItem: state => state.theaterPostItem,
+    sharePostItem: state => state.sharePostItem,
     optionMenuPostItem: state => state.optionMenuPostItem,
     postWhoLikes: state => state.postWhoLikes,
     pusher: state => state.pusher
@@ -47,6 +49,9 @@ export const store = new Vuex.Store({
     SET_THEATER_ITEM (state, postObj) {
       Vue.set(state.theaterPostItem, 'postIndex', postObj.postIndex)
       Vue.set(state.theaterPostItem, 'imageIndex', postObj.imageIndex)
+    },
+    SET_POST_SHARE_ITEM (state, postObj) {
+      Vue.set(state.sharePostItem, 'postIndex', postObj.postIndex)
     },
     SET_POST_META (state, data) {
       // state.slider = slider

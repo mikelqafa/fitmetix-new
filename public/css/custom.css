@@ -2051,3 +2051,17 @@ aside .md-drawer-scroll__wrapper{
 .ft-btn-primary{
     text-transform: capitalize;
 }
+.md-list--autocomplete .md-list__item--active{
+    background-color: #007E83;
+    color: rgba(255,255,255,1);
+}
+.md-list--autocomplete .md-list__item--active .ft-user-name,
+.md-list--autocomplete .md-list__item--active a {
+    color: inherit;
+}
+.md-list--autocomplete {
+    display: none;
+}
+.md-list--autocomplete.md-list--open {
+    display: block;
+}

@@ -1,25 +1,25 @@
 <template>
-    <div>
+    <div class="">
         <app-confirm :unid="unid" :body="body"></app-confirm>
-        <div class="md-dialog md-dialog--center md-dialog--maintain-width md-dialog--md" id="post-share-dialog">
+        <div class="md-dialog md-dialog--center md-dialog--maintain-width md-dialog--md" id="post-share-init-dialog">
             <div class="md-dialog__wrapper">
                 <div class="md-dialog__shadow"></div>
                 <div class="md-dialog__surface" style="position: relative">
-                    <header class="md-dialog__header">
-                        Help us keep Fitmetix an environment that promotes healthy living.
-                    </header>
-                    <div class="md-dialog__body" v-if="hasItem">
-                        <div class="form-group">
-                            <mention-at :members="members" v-on:at="fetchUser" name-key="name">
-                                <template slot="item" scope="s">
-                                    <img :src="s.item.avatar">
-                                    <span v-text="s.item.name"></span>
-                                </template>
+                    <template v-if="hasItem">
+                        <header class="md-dialog__header">
+                        </header>
+                        <div class="md-dialog__body">
+                            <div class="form-group">
                                 <label for="share-user-select">Select user to share:</label>
-                                <input placeholder="Send to" class="form-control" id="share-user-select"/>
-                            </mention-at>
+                                <input placeholder="Send to" class="hidden form-control" id="share-user-select"/>
+                                <app-autocomplete v-on:selected="addSuggestion" :suggestions="cities" :selection.sync="value"></app-autocomplete>
+                            </div>
                         </div>
-                    </div>
+                        <footer class="md-dialog__footer">
+                            <button class="md-dialog__action md-button md-button--compact" data-action="dismissive">CANCEL</button>
+                            <button class="md-dialog__action md-button ft-btn-primary btn md-button--compact" @click="confirmReport">Share</button>
+                        </footer>
+                    </template>
                     <div v-if="isLoading" class="absolute-loader">
                         <div class="ft-loading">
                             <span class="ft-loading__dot"></span>
@@ -27,10 +27,6 @@
                             <span class="ft-loading__dot"></span>
                         </div>
                     </div>
-                    <footer class="md-dialog__footer">
-                        <button class="md-dialog__action md-button md-button--compact" data-action="dismissive">CANCEL</button>
-                        <button class="md-dialog__action md-button ft-btn-primary btn md-button--compact" @click="confirmReport">Share</button>
-                    </footer>
                 </div>
             </div>
         </div>
@@ -46,10 +42,9 @@
 <script>
     import { mapGetters } from 'vuex'
     import appConfirm from './appConfirm'
-    import At from 'vue-at'
+    import appAutocomplete from './appAutocomplete'
     export default {
         props: {
-            postItem: '',
             index: 0
         },
         data: function () {
@@ -64,19 +59,17 @@
                 reportComment: '',
                 unid: 'app-confirm-share-post',
                 imageFile: [],
-                options: { disableReturn: false },
                 selectizeUsers: [],
-                members: []
-            }
-        },
-        computed: {
-            hasItem: function () {
-                return true
+                members: [],
+                cities : [
+                    'Bangalore','Chennai','Cochin','Delhi','Kolkata','Mumbai'
+                ],
+                value: ''
             }
         },
         components: {
-            'mention-at':At,
-            'app-confirm': appConfirm
+            'app-confirm': appConfirm,
+            'app-autocomplete': appAutocomplete
         },
         methods: {
             fetchUser: function (data) {
@@ -141,10 +134,33 @@
                     that.isLoading = false
                 })
             },
+            addSuggestion: function (e) {
+                this.members.push('hola')
+            }
         },
-        mounted() {
-            // $('#post-share-dialog').MaterialDialog({show:true})
+        mounted () {
             let that = this
+            let dialog = $('#post-share-init-dialog').MaterialDialog({show:false});
+            dialog.on('ca.dialog.shown', function () {
+                window.setTimeout(function(){
+                    emojify.run()
+                    hashtagify()
+                }, 300)
+            });
+            dialog.on('ca.dialog.hidden', function () {
+                that.$store.commit('SET_POST_SHARE_ITEM', {postIndex: undefined})
+            });
+        },
+        computed: {
+            ...mapGetters({
+                sharePostItem: 'sharePostItem'
+            }),
+            postItem: function () {
+                return this.sharePostItem.postIndex !== undefined ? this.$store.state.postItemList[this.sharePostItem.postIndex] : {}
+            },
+            hasItem: function () {
+                return this.postItem.id !== undefined
+            }
         }
     }
 </script>

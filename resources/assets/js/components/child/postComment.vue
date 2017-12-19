@@ -36,7 +36,7 @@
                     </a>
                 </div>
                 <div class="ft-comment__item">
-                    <a href="javascript:;" class="ft-expression">
+                    <a href="javascript:;" class="ft-expression" @click="initSharePost">
                         <i class="icon icon-share"></i>
                     </a>
                 </div>
@@ -398,6 +398,12 @@
             },
             loadMore: function () {
                 this.fetchComment()
+            },
+            initSharePost: function (){
+                this.$store.commit('SET_POST_SHARE_ITEM', {postIndex: this.postIndex})
+                setTimeout(function () {
+                    $('#post-share-init-dialog').MaterialDialog('show')
+                }, 300)
             }
         },
         mounted () {
