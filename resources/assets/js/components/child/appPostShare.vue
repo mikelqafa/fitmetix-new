@@ -1,6 +1,5 @@
 <template>
     <div class="">
-        <app-confirm :unid="unid" :body="body"></app-confirm>
         <div class="md-dialog md-dialog--center md-dialog--maintain-width md-dialog--md" id="post-share-init-dialog">
             <div class="md-dialog__wrapper">
                 <div class="md-dialog__shadow"></div>
@@ -12,7 +11,7 @@
                             <div class="form-group">
                                 <label for="share-user-select">Select user to share:</label>
                                 <input placeholder="Send to" class="hidden form-control" id="share-user-select"/>
-                                <app-autocomplete v-on:selected="addSuggestion" :suggestions="cities" :selection.sync="value"></app-autocomplete>
+                                <app-autocomplete ref="shareUser"></app-autocomplete>
                             </div>
                         </div>
                         <footer class="md-dialog__footer">
@@ -49,7 +48,6 @@
         },
         data: function () {
             return {
-                body: 'Do you really want to report this post?',
                 isLoading: false,
                 userImage: '',
                 placeholder: '',
@@ -98,23 +96,21 @@
                 })
             },
             confirmReport: function () {
-                let confirmDialog = $('#'+ this.unid)
-                confirmDialog.MaterialDialog('show')
-                let that = this
-                confirmDialog.on('ca.dialog.affirmative.action', function(){
-                    that.sharePost()
-                });
+                let userList = this.$refs.shareUser.selections
+                if(userList !== undefined && userList.length) {
+                    this.sharePost (userList)
+                } else {
+                    alertApp('Please add user to share!')
+                }
             },
             sharePost: function () {
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
                 this.isLoading = true
-                let confirmDialog = $('#'+ this.unid)
-                confirmDialog.off('ca.dialog.affirmative.action');
                 axios({
                     method: 'post',
                     responseType: 'json',
-                    url: base_url + 'ajax/report-post',
+                    url: base_url + 'ajax/share-post',
                     data: {
                         _token: _token,
                         post_id: that.postItem.id,

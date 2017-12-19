@@ -2032,7 +2032,7 @@ class TimelineController extends AppBaseController
         ->render();
     }
 
-		public function getEventApi(Request $request) {
+    public function getEventApi(Request $request) {
     	$location = $request->location;
     	$date     = $request->date;
     	$tag      = $request->tag;
@@ -2092,7 +2092,7 @@ class TimelineController extends AppBaseController
 
 		}
 
-		public function getRegisterButton(Request $request) {
+	public function getRegisterButton(Request $request) {
 			$event_id = $request->event_id;
 			$user_id  = $request->user_id;
 			$event_model = new Event();

@@ -1450,7 +1450,7 @@ a{
     font-size: 42px;
 }
 .container--standard {
-    max-width: 1024px !important;
+    max-width: 1070px !important;
 }
 
 .ft-image-post{
@@ -1564,6 +1564,13 @@ a{
 }
 .write-post .atwho-cur{
     background-color: #1E7C82;
+}
+.ft-btn-primary--outline{
+    border: 1px solid #1E7C82;
+    background-color: #fff;
+    min-width: 160px;
+    transition: all 0.2s ease;
+    color: #1E7C82;
 }
 .write-post .atwho-li img {
     margin-right: 4px;
@@ -2059,9 +2066,97 @@ aside .md-drawer-scroll__wrapper{
 .md-list--autocomplete .md-list__item--active a {
     color: inherit;
 }
-.md-list--autocomplete {
-    display: none;
+.timeline-user-info-wrapper{
+    position: absolute;
+    width: 100%;
+    bottom: -30px;
+    left: 16px;
+    display: flex;
+    align-items: flex-start;
 }
-.md-list--autocomplete.md-list--open {
-    display: block;
+.user-timeline-name {
+    display: flex;
+    flex-direction: column;
+    padding: 0 8px;
+    margin-top: 20px;
+}
+.user-timeline-name .username__link {
+    font-weight: 400;
+    font-size: 24px;
+    color: #FFF;
+    text-decoration: none;
+}
+.user-timeline-name .name {
+    font-weight: 300;
+    font-size: 18px;
+    color: rgba(255,255,255,.7);
+    margin-top: 4px;
+}
+@media (max-width: 560px) {
+    .user-timeline-name {
+        bottom: 16px;
+        left: 162px;
+    }
+}
+@media (max-width: 350px) {
+    .user-timeline-name {
+        bottom: 9px;
+        left: 130px;
+    }
+    .user-timeline-name a {
+        font-size: 22px;
+    }
+}
+.timeline-posts--user .timeline-posts__item, .timeline-posts--user .panel-create{
+    max-width: none;
+}
+.md-col {
+    padding-right: 16px;
+    padding-left: 16px;
+}
+.layout-p-r-1{
+    padding-right:16px;
+}
+.layout-m-t-1{
+    margin-top: 16px;
+}
+.layout-m-b-2{
+    margin-bottom: 24px;
+}
+.layout-m-t-2{
+    margin-top: 24px;
+}
+.layout-p-l-0{
+    padding-left: 0;
+}
+.timeline-option {
+    padding-top:8px;
+}
+.timeline-option__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.timeline-option__item .ft-btn{
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+}
+.timeline-option__item .ft-btn .icon{
+    font-size: 24px;
+}
+.timeline-user-desc{
+    padding: 16px;
+    background-color: #fff;
+    margin: 24px 0;
+}
+.layout-timeline__post{
+    max-width: 660px;
+    margin-left: auto;
+    margin-right: auto;
+}
+@media screen and (max-width: 1200px) {
+    .layout-timeline__left{
+        display: none;
+    }
 }

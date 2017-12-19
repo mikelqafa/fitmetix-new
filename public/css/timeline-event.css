@@ -1,0 +1,118 @@
+.calendar {
+    text-align: center;
+}
+.calendar header {
+    position: relative;
+}
+.calendar h2 {
+    text-transform: uppercase;
+}
+.calendar .current-day {
+    background: #30435b;
+    color: #FFF !important;
+}
+.calendar .event {
+    cursor: pointer;
+    position: relative;
+}
+.calendar .event:after {
+    background: #30435b;
+    border-radius: 50%;
+    bottom: 1px;
+    display: block;
+    content: '';
+    height: 8px;
+    left: 50%;
+    margin: -4px 0 0 -4px;
+    position: absolute;
+    width: 8px;
+}
+.event.current-day:after {
+    background: #f9f9f9;
+}
+.btn-prev,
+.btn-next {
+    border: 2px solid #cbd1d2;
+    border-radius: 50%;
+    color: #cbd1d2;
+    height: 32px;
+    font-size: 22px;
+    line-height: 28px;
+    margin: -16px;
+    position: absolute;
+    top: 50%;
+    width: 32px;
+}
+.btn-prev:hover,
+.btn-next:hover {
+    background: #cbd1d2;
+    color: #f9f9f9;
+}
+.btn-prev {
+    left: 30px;
+}
+.btn-next {
+    right: 35px;
+}
+.list {
+    margin-top: 20px;
+}
+.close {
+    color: #A4AAAB;
+    margin-top: -15px;
+    margin-right: 10px;
+    float: right;
+}
+.day-event {
+    background-color: #F2F2F2 ;
+    width: 100%;
+    padding-bottom: 0px;
+    margin-bottom: 50px;
+    display:none;
+}
+.day-event p{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+.day-event span{
+    font-size: 12px;
+}
+.day-event button {
+    position: relative;
+    vertical-align: top;
+    width: 100%;
+    height: 50px;
+    padding: 0;
+    font-size: 18px;
+    color: white;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    background: #30435b;
+    border: 0;
+    border-bottom: 2px solid #30435b;
+    cursor: pointer;
+    -webkit-box-shadow: inset 0 -2px #30435b;
+    box-shadow: inset 0 -2px #30435b;
+}
+@media (max-width: 768px) {
+    .nav-justified > li {
+        display: table-cell;
+        width: 1%;
+    }
+    .nav-justified > li > a  {
+        border-bottom: 1px solid #ddd !important;
+        border-radius: 4px 4px 0 0 !important;
+        margin-bottom: 0 !important;
+    }
+}
+@media (max-width: 660px) {
+    .timeline-cover-section .timeline-cover {
+        max-height: 140px !important;
+    }
+}
+@media (max-width: 660px) {
+    .timeline-cover-section .timeline-cover {
+        min-height: 105px !important;
+    }
+}
