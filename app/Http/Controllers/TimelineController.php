@@ -3441,7 +3441,13 @@ class TimelineController extends AppBaseController
             }
 
             if($post->type == 'event'){
-                $post['event'] = Event::where('timeline_id',$post->timeline_id)->latest()->get();
+                $event = Event::where('timeline_id',$post->timeline_id)->latest()->get();
+                $post['event'] = $event;
+                $event = $event->toArray();
+                $creatorId = $event[0]['user_id'];
+                $creator = DB::table('users')->where('id',$creatorId)->first();
+                $creatorTimeline = DB::table('timelines')->where('id',$creator->timeline_id)->first();
+                $post['creator_timeline'] = $creatorTimeline;
                 foreach ($post['event'] as $user_event) {
                     $user_event['event_details'] = $user_event->timeline->username;
                     if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
