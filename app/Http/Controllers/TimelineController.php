@@ -4271,4 +4271,14 @@ class TimelineController extends AppBaseController
     }
   }
 
+  public function sharePostByNotification(Request $request){
+      $postId = $request->post_id;
+      $users = $request->users;
+      foreach ($users as $key => $value){
+        $timeline = DB::table('timelines')->where('username',$value)->first();
+        $user = DB::table('users')->where('timeline_id',$timeline->id)->first();
+        Notification::create(['user_id' => $user->id, 'post_id' => $postId, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' wants you to view this post', 'type' => 'share_post', 'link' => '/post/'.$postId]);
+      }
+  }
+
 }
