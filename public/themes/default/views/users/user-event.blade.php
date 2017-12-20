@@ -13,38 +13,135 @@
                         <li class="is-active"><a href="{{ url($timeline->username.'/event') }}" class="">Events</a></li>
                     </ul>
                 </div>
-                <div class="timeline timeline-posts--user wrap-ft-card--small">
+                <div class="timeline timeline-posts--user wrap-ft-card--big">
                     <div id="app-timeline">
                         <input type="hidden" id="newPostId">
-                        @if(isset($hashtag))
-                            <input type="hidden" id="postByUsername" value="{{$username}}">
+                        @if(isset($timeline->username))
+                            <input type="hidden" id="eventByUsername" value="{{$timeline->username}}">
                         @endif
                         <app-post-option></app-post-option>
                         <app-comment-option></app-comment-option>
-                        <app-post-hashtag>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="lg-loading-skeleton ft-image-post">
-                                            <div class="ft-image-post__item lg-loadable">
+                        <app-event-hlu>
+                            <div class="post-filters pages-groups">
+                                <div class="pane">
+                                    <div class="pan">
+                                        <div class="ft-grid ft-grid--12-xs">
+                                            <div class="ft-grid__item lg-loading-skeleton">
+                                                <div class="ft_card">
+                                                    <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                                    </div>
+                                                    <div class="ft-card__primary">
+                                                        <div class="ft-card__title lg-loadable">
+                                                            <h5 class="ft-event-card__title">&nbsp;</h5>
+                                                        </div>
+                                                        <div class="ft-card__list-wrapper">
+                                                            <div class="ft-card__list">
+                                                                <div class="icon lg-loadable"></div>
+                                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                                    &nbsp;
+                                                                </div>
+                                                            </div>
+                                                            <div class="ft-card__list">
+                                                                <div class="icon icon-participant lg-loadable"></div>
+                                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                                    &nbsp;
+                                                                </div>
+                                                            </div>
+                                                            <div class="ft-card__list">
+                                                                <div class="icon lg-loadable"></div>
+                                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                                    &nbsp;
+                                                                </div>
+                                                            </div>
+                                                            <div class="ft-card__list">
+                                                                <div class="icon lg-loadable"></div>
+                                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                                    &nbsp;
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="lg-loading-skeleton ft-image-post">
-                                            <div class="ft-image-post__item lg-loadable">
+                                            <div class="ft-grid__item lg-loading-skeleton">
+                                                <div class="ft_card">
+                                                    <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                                    </div>
+                                                    <div class="ft-card__primary">
+                                                        <div class="ft-card__title lg-loadable">
+                                                            <h5 class="ft-event-card__title">&nbsp;</h5>
+                                                        </div>
+                                                        <div class="ft-card__list-wrapper">
+                                                            <div class="ft-card__list">
+                                                                <div class="icon lg-loadable"></div>
+                                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                                    &nbsp;
+                                                                </div>
+                                                            </div>
+                                                            <div class="ft-card__list">
+                                                                <div class="icon icon-participant lg-loadable"></div>
+                                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                                    &nbsp;
+                                                                </div>
+                                                            </div>
+                                                            <div class="ft-card__list">
+                                                                <div class="icon lg-loadable"></div>
+                                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                                    &nbsp;
+                                                                </div>
+                                                            </div>
+                                                            <div class="ft-card__list">
+                                                                <div class="icon lg-loadable"></div>
+                                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                                    &nbsp;
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="lg-loading-skeleton ft-image-post">
-                                            <div class="ft-image-post__item lg-loadable">
+                                            <div class="ft-grid__item lg-loading-skeleton">
+                                                <div class="ft_card">
+                                                    <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                                    </div>
+                                                    <div class="ft-card__primary">
+                                                        <div class="ft-card__title lg-loadable">
+                                                            <h5 class="ft-event-card__title">&nbsp;</h5>
+                                                        </div>
+                                                        <div class="ft-card__list-wrapper">
+                                                            <div class="ft-card__list">
+                                                                <div class="icon lg-loadable"></div>
+                                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                                    &nbsp;
+                                                                </div>
+                                                            </div>
+                                                            <div class="ft-card__list">
+                                                                <div class="icon icon-participant lg-loadable"></div>
+                                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                                    &nbsp;
+                                                                </div>
+                                                            </div>
+                                                            <div class="ft-card__list">
+                                                                <div class="icon lg-loadable"></div>
+                                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                                    &nbsp;
+                                                                </div>
+                                                            </div>
+                                                            <div class="ft-card__list">
+                                                                <div class="icon lg-loadable"></div>
+                                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                                    &nbsp;
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </app-post-hashtag>
+                        </app-event-hlu>
                         <div id="scroll-bt"></div>
                     </div>
                 </div>

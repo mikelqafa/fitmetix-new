@@ -89,40 +89,54 @@
             getDefaultData: function () {
                 let that = this
                 let username = current_username
-                let url = base_url + 'get-posts'
+                let url = ''
                 let location = ''
                 let hashtag = ''
-                username =  current_username
-                if($('#postByLocation').length) {
-                    location =   $('#postByLocation').val()
-                    url = base_url + 'get-posts-by-location'
+                let data = {}
+                data.username =  current_username
+                data.offset =  0
+                data.paginate =  10
+
+                let l = $('#galleryByLocation')
+                if(l !== undefined && l.length) {
+                    location = l.val()
+                    url = base_url + 'get-gallery-by-location'
+                    data.url = url
+                    data.location = location
                 }
-                if($('#postByUsername').length) {
-                    username =   $('#postByUsername').val()
-                    url = base_url + 'get-posts-by-username'
+
+                let u = $('#galleryByUsername')
+                if(u !== undefined && u.length) {
+                    username =   u.val()
+                    url = base_url + 'get-gallery-by-username'
+                    data.url = url
+                    data.username = username
                 }
-                if($('#postByHashTag').length) {
-                    hashtag =   $('#postByHashTag').val()
-                    url = base_url + 'get-posts-by-hashtag'
+
+                let h = $('#galleryByHashTag')
+                if(h !== undefined && h.length) {
+                    hashtag = h.val()
+                    url = base_url + 'get-gallery-by-hashtag'
+                    data.url = url
+                    data.hashtag = hashtag
                 }
-                console.log(location, hashtag, url)
+
                 this.onlyImagePost = true
+
                 let paginate = 4
+
                 let _token = $("meta[name=_token]").attr('content')
+
+                data._token = _token
+                console.log(data)
                 axios({
                     method: 'post',
                     responseType: 'json',
                     url: url,
-                    data: {
-                        username: username,
-                        paginate: paginate,
-                        location: location,
-                        hashtag: hashtag,
-                        _token: _token,
-                        offset: that.offset
-                    }
+                    data :data
                 }).then( function (response) {
                     if (response.status ==  200) {
+                        console.log(response)
                         let posts = response.data[0].posts;
                         let i = 0
                         $.each(posts, function(key, val) {
@@ -155,7 +169,8 @@
             },
             scrollFetchInit: function () {
                 let that = this
-                $(window).scroll(function() {
+                // TODO disable scroll fectch
+                /*$(window).scroll(function() {
                     if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
                         if(!that.inProgress && that.hasMorePost ){
                             that.isFetchingBottom = true
@@ -163,7 +178,7 @@
                             that.inProgress = true
                         }
                     }
-                });
+                });*/
             },
             fetchNewOnePost: function (postId) {
                 this.fetchNew(postId)
@@ -206,17 +221,7 @@
         mounted () {
             let that = this
             vmThat = this
-            if($('#post-id').length) {
-                this.singlePost = true
-            }
-            setTimeout(function () {
-                if(!that.singlePost) {
-                    that.getDefaultData()
-                    that.scrollFetchInit()
-                } else {
-                    that.fetchNewOnePost($('#post-id').val())
-                }
-            }, 1000)
+            that.getDefaultData()
         },
         components: {
             'post-image-viewer': postImageViewer,
@@ -228,7 +233,7 @@
                 itemList: 'postItemList'
             }),
             isLoading () {
-                return this.itemList.length === 0
+                return this.itemList.length == 0
             }
         }
     }

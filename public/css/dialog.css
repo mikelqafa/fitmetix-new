@@ -195,6 +195,10 @@
         margin-top: 0;
         display: flex;
     }
+    .md-dialog--full-screen--force .md-dialog__surface {
+
+        height: 100vh;
+    }
 
     .md-dialog--full-screen .md-dialog__header-action-dismissive {
         margin-right: 24px;
@@ -217,7 +221,15 @@
     .md-dialog--full-screen .md-dialog__body {
         -webkit-box-flex: 1;
         -ms-flex-positive: 1;
-        flex-grow: 1
+        flex-grow: 1;
+        padding: 0 16px 16px;
+    }
+    .md-dialog--full-screen .md-dialog__body .panel-body {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .md-dialog--full-screen .md-dialog__body .post-image--wrapper {
+        margin: 0 !important;
     }
 
 }

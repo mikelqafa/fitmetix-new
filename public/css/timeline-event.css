@@ -108,7 +108,15 @@
 }
 @media (max-width: 660px) {
     .timeline-cover-section .timeline-cover {
-        max-height: 140px !important;
+        max-height: 200px !important;
+    }
+    .timeline-user-avtar{
+        width: 120px;
+        height: 120px;
+        top: 0;
+    }
+    .timeline-cover-section{
+        margin-bottom: 32px !important;
     }
 }
 @media (max-width: 660px) {

@@ -16,12 +16,13 @@
                     <div class="timeline timeline-posts--user wrap-ft-card--small">
                             <div id="app-timeline">
                                 <input type="hidden" id="newPostId">
-                                @if(isset($hashtag))
-                                    <input type="hidden" id="postByUsername" value="{{$username}}">
+                                @if(isset($timeline->username))
+                                    <input type="hidden" id="postByUsername" value="{{$timeline->username}}">
+                                    <input type="hidden" id="galleryByUsername" value="{{$timeline->username}}">
                                 @endif
                                 <app-post-option></app-post-option>
                                 <app-comment-option></app-comment-option>
-                                <app-post-hashtag>
+                                <app-gallery-hlu>
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-md-4">
@@ -44,7 +45,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </app-post-hashtag>
+                                </app-gallery-hlu>
                                 <div id="scroll-bt"></div>
                             </div>
                     </div>

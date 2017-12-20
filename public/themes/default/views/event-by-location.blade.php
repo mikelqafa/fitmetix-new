@@ -15,7 +15,7 @@
                     <div class="jumbotron jumbotron--transparent jumbotron--ft  text-center">
                         <h1>{{$location}}</h1>
                     </div>
-                    <ul class="nav nav-justified">
+                    <ul class="nav nav-justified layout-m-t-2">
                         <li><a href="{{url('gallery/location/'.$location)}}" class="">Gallery</a></li>
                         <li class="is-active"><a href="{{url('/event/location/'.$location)}}" class="">Events</a></li>
                     </ul>
@@ -27,11 +27,11 @@
                 @endif
             </div>
         </div>
+        <input type="hidden" id="eventByLocation" value="{{$location}}">
         <div id="app-timeline">
-            <input type="hidden" id="location" value="{{$location}}">
             <app-post-option></app-post-option>
             <app-comment-option></app-comment-option>
-            <app-event-list>
+            <app-event-hlu>
                 <div class="post-filters pages-groups">
                     <div class="pane">
                         <div class="pan">
@@ -151,7 +151,7 @@
                         </div>
                     </div>
                 </div>
-            </app-event-list>
+            </app-event-hlu>
         </div>
     </div>
 </div>

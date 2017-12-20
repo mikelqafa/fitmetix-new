@@ -48,12 +48,12 @@
 			<div class="post-filters pages-groups">
 				<div class="pane">
 					<div class="pan">
-						<div class="ft-grid">
+						<div class="ft-grid ft-grid--12-xs">
 							<div class="ft-grid__item lg-loading-skeleton">
 								<div class="ft_card">
 									<div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
 									</div>
-									<div class="ft-card__primary hidden-sm hidden-xs">
+									<div class="ft-card__primary">
 										<div class="ft-card__title lg-loadable">
 											<h5 class="ft-event-card__title">&nbsp;</h5>
 										</div>
@@ -90,7 +90,7 @@
 								<div class="ft_card">
 									<div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
 									</div>
-									<div class="ft-card__primary hidden-sm hidden-xs">
+									<div class="ft-card__primary">
 										<div class="ft-card__title lg-loadable">
 											<h5 class="ft-event-card__title">&nbsp;</h5>
 										</div>
@@ -127,7 +127,7 @@
 								<div class="ft_card">
 									<div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
 									</div>
-									<div class="ft-card__primary hidden-sm hidden-xs">
+									<div class="ft-card__primary">
 										<div class="ft-card__title lg-loadable">
 											<h5 class="ft-event-card__title">&nbsp;</h5>
 										</div>

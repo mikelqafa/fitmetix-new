@@ -17,7 +17,7 @@
                     <div class="jumbotron jumbotron--transparent jumbotron--ft  text-center">
                         <h1>{{$location}}</h1>
                     </div>
-                    <ul class="nav nav-justified">
+                    <ul class="nav nav-justified layout-m-t-2">
                         <li class="is-active"><a href="{{url('event/location/'.$location)}}" class="">Gallery</a></li>
                         <li><a href="{{url('event/location/'.$location)}}" class="">Events</a></li>
                     </ul>
@@ -40,12 +40,12 @@
                 <div id="app-timeline">
                     <input type="hidden" id="newPostId">
                     @if(isset($location))
-                        <input type="hidden" id="postByLocation" value="{{$location}}">
+                        <input type="hidden" id="gallerytByLocation" value="{{$location}}">
                     @endif
                     <app-post-option></app-post-option>
                     <app-comment-option></app-comment-option>
 
-                    <app-post-hashtag>
+                    <app-gallery-hlu>
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-4">
@@ -68,7 +68,7 @@
                                 </div>
                             </div>
                         </div>
-                    </app-post-hashtag>
+                    </app-gallery-hlu>
                     <div id="scroll-bt"></div>
                 </div>
             </div>
