@@ -3568,7 +3568,7 @@ class TimelineController extends AppBaseController
         return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
     }
 
-    public function getGalleryHashtag(Request $request) {
+    public function getGalleryByHashtag(Request $request) {
         $timeline = Timeline::where('username', $request->username)->first();
         $hashtag = '%'.$request->hashtag.'%';
         $id = Auth::user()->id;

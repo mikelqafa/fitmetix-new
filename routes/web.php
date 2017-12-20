@@ -390,7 +390,7 @@ Route::post('get-user-posts','TimelineController@userPostAPI');
 
 Route::post('get-gallery-by-location','TimelineController@getGalleryByLocation');
 
-Route::post('get-gallery-by-hashtag','TimelineController@getGalleryHashtag');
+Route::post('get-gallery-by-hashtag','TimelineController@getGalleryByHashtag');
 
 Route::post('get-gallery-by-username','TimelineController@getGalleryByUsername');
 
