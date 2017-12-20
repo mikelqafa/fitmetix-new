@@ -4272,6 +4272,7 @@ class TimelineController extends AppBaseController
   }
 
   public function sharePostByNotification(Request $request){
+      //todo: translation not implemented for the description.
       $postId = $request->post_id;
       $users = $request->users;
       foreach ($users as $key => $value){
