@@ -3989,6 +3989,7 @@ class TimelineController extends AppBaseController
           $unregister = DB::table('event_unregister_request')
               ->insert([
                   'reg_user_id' => $userId,
+                  'event_id' => $eventId,
                   'event_reg_id' => $registration->id,
                   'event_owner_id' => $event->user_id,
                   'created_at' => Carbon::now()
@@ -4239,4 +4240,29 @@ class TimelineController extends AppBaseController
 
     return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
   }
+
+  public function getPaidEventUnregisterRequests(Request $request) {
+    $eventOwnerId = $request->event_owner_id;
+    $eventId = $request->event_id;
+    if (empty($eventId)) {
+      $requests = DB::table('event_unregister_request')
+        ->where('event_owner_id', $eventOwnerId)
+        ->get()
+        ->toArray();
+    }
+    else {
+      $requests = DB::table('event_unregister_request')
+        ->where('event_owner_id', $eventOwnerId)
+        ->where('event_id', $eventId)
+        ->get()
+        ->toArray();
+    }
+    if (!empty($requests)) {
+      return json_encode($requests);
+    }
+    else {
+      return json_encode('');
+    }
+  }
+
 }
