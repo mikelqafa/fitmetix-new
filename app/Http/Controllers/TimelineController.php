@@ -3976,42 +3976,41 @@ class TimelineController extends AppBaseController
       }
     }
 
-  public function unregisterEvent(Request $request) {
-    $eventId = $request->event_id;
-    $userId = $request->user_id;
-    $event = DB::table('events')->where('id', $eventId)->first();
-    if ($event->price > 0) {
-      $registration = DB::table('event_user')
-        ->where('event_id', $eventId)
-        ->where('user_id', $userId)
-        ->first();
-      $unregister = DB::table('event_unregister_request')
-        ->insert([
-          'reg_user_id' => $userId,
-          'event_reg_id' => $registration->id,
-          'event_owner_id' => $event->user_id,
-          'created_at' => Carbon::now()
-        ]);
-      if ($unregister) {
-        $msg = 'Successfully submitted unregistration request';
+  public function unregisterEvent(Request $request)
+  {
+      $eventId = $request->event_id;
+      $userId = $request->user_id;
+      $event = DB::table('events')->where('id', $eventId)->first();
+      if ($event->price > 0) {
+          $registration = DB::table('event_user')
+              ->where('event_id', $eventId)
+              ->where('user_id', $userId)
+              ->first();
+          $unregister = DB::table('event_unregister_request')
+              ->insert([
+                  'reg_user_id' => $userId,
+                  'event_reg_id' => $registration->id,
+                  'event_owner_id' => $event->user_id,
+                  'created_at' => Carbon::now()
+              ]);
+          if ($unregister) {
+              $msg = 'Successfully submitted unregistration request';
+          } else {
+              $msg = 'Unable to submit unregistration request';
+          }
+      } else {
+          $unregister = DB::table('event_user')
+              ->where('event_id', $eventId)
+              ->where('user_id', $userId)
+              ->delete();
+          if ($unregister) {
+              $msg = 'Successfully unregistered from Event';
+          } else {
+              $msg = 'No registration found for this Event';
+          }
+          return $msg;
       }
-      else {
-        $msg = 'Unable to submit unregistration request';
-      }
-    }
-    else {
-      $unregister = DB::table('event_user')
-        ->where('event_id', $eventId)
-        ->where('user_id', $userId)
-        ->delete();
-      if ($unregister) {
-        $msg = 'Successfully unregistered from Event';
-      }
-      else{
-        $msg = 'No registration found for this Event';
-      }
-      return $msg;
-    }
+  }
 
     public function timelineUserGallery($username)
     {
