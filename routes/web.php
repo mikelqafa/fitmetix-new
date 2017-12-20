@@ -420,6 +420,8 @@ Route::post('filter-events-by-title','TimelineController@eventsListFilteredTitle
 Route::post('ajax/comment-like', 'TimelineController@likeComment');
 Route::post('/ajax/get-registered-users-for-event','TimelineController@getRegisteredUserForEvent');
 Route::post('/ajax/unregister-event','TimelineController@unregisterEvent');
+Route::post('/ajax/get-event-post-by-location','TimelineController@getEventPostByLocation');
+Route::post('/ajax/get-event-post-by-hashtag','TimelineController@getEventPostByHashtag');
 Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {
     Route::post('upload-post-images', 'TimelineController@uploadPostImages');
     Route::post('create-post', 'TimelineController@createPost');
