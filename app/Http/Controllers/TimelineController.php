@@ -3510,7 +3510,7 @@ class TimelineController extends AppBaseController
         return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
     }
 
-    public function postByLocationAPI(Request $request) {
+    public function getGalleryByLocation(Request $request) {
         $timeline = Timeline::where('username', $request->username)->first();
         $location = '%'.$request->location.'%';
         $id = Auth::user()->id;
@@ -3568,7 +3568,7 @@ class TimelineController extends AppBaseController
         return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
     }
 
-    public function postByDescriptionAPI(Request $request) {
+    public function getGalleryHashtag(Request $request) {
         $timeline = Timeline::where('username', $request->username)->first();
         $hashtag = '%'.$request->hashtag.'%';
         $id = Auth::user()->id;
@@ -3624,7 +3624,7 @@ class TimelineController extends AppBaseController
 
         return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
     }
-    public function postByUsernameAPI(Request $request) {
+    public function getGalleryByUsername(Request $request) {
         $timeline = Timeline::where('username', $request->username)->first();
         $user = User::where('timeline_id', $timeline['id'])->first();
         $allposts = Post::where([['active', 1],['user_id',$user->id]])->get();

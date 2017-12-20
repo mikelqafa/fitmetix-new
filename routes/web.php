@@ -388,11 +388,11 @@ Route::post('get-posts','TimelineController@postAPI');
 Route::post('get-user-posts','TimelineController@userPostAPI');
 
 
-Route::post('get-posts-by-location','TimelineController@postByLocationAPI');
+Route::post('get-gallery-by-location','TimelineController@getGalleryByLocation');
 
-Route::post('get-posts-by-hashtag','TimelineController@postByDescriptionAPI');
+Route::post('get-gallery-by-hashtag','TimelineController@getGalleryHashtag');
 
-Route::post('get-posts-by-username','TimelineController@postByUsernameAPI');
+Route::post('get-gallery-by-username','TimelineController@getGalleryByUsername');
 
 Route::post('get-single-post','TimelineController@singlePostAPI');
 
