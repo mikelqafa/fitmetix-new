@@ -4007,10 +4007,122 @@ class TimelineController extends AppBaseController
       if ($unregister) {
         $msg = 'Successfully unregistered from Event';
       }
-      else {
+      else{
         $msg = 'No registration found for this Event';
       }
+      return $msg;
     }
-    return $msg;
-  }
+
+    public function timelineUserGallery($username)
+    {
+        $admin_role_id = Role::where('name', '=', 'admin')->first();
+        $posts = [];
+        $timeline = Timeline::where('username', $username)->first();
+        $user_post = '';
+
+        if ($timeline == null) {
+            return redirect('/');
+        }
+
+        $timeline_posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('comments')->paginate(Setting::get('items_page'));
+
+        foreach ($timeline_posts as $timeline_post) {
+            //This is for filtering reported(flag) posts, displaying non flag posts
+            if ($timeline_post->check_reports($timeline_post->id) == false) {
+                array_push($posts, $timeline_post);
+            }
+        }
+
+        if ($timeline->type == 'user') {
+            $user = User::where('timeline_id', $timeline['id'])->first();
+            $joined_groups_count = $user->groups()->where('role_id', '!=', $admin_role_id->id)->where('status', '=', 'approved')->get()->count();
+            $following_count = $user->following()->where('status', '=', 'approved')->get()->count();
+            $followers_count = $user->followers()->where('status', '=', 'approved')->get()->count();
+            $followRequests = $user->followers()->where('status', '=', 'pending')->get();
+            $user_events = $user->events()->whereDate('end_date', '>=', date('Y-m-d', strtotime(Carbon::now())))->get();
+            $guest_events = $user->getEvents();
+
+            $follow_user_status = DB::table('followers')->where('follower_id', '=', Auth::user()->id)
+                ->where('leader_id', '=', $user->id)->first();
+
+            if ($follow_user_status) {
+                $follow_user_status = $follow_user_status->status;
+            }
+
+            $confirm_follow_setting = $user->getUserSettings(Auth::user()->id);
+            $follow_confirm = $confirm_follow_setting->confirm_follow;
+
+            //get user settings
+            $live_user_settings = $user->getUserPrivacySettings(Auth::user()->id, $user->id);
+            $privacy_settings = explode('-', $live_user_settings);
+            $timeline_post = $privacy_settings[0];
+            $user_post = $privacy_settings[1];
+        } elseif ($timeline->type == 'page') {
+            $page = Page::where('timeline_id', '=', $timeline->id)->first();
+            $page_members = $page->members();
+            $user_post = 'page';
+        }
+
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+
+        $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+
+        return $theme->scope('users/gallery', compact('user','timeline', 'timeline_type', 'follow_user_status', 'followRequests', 'following_count', 'followers_count', 'timeline_post', 'user_post', 'follow_confirm', 'joined_groups_count','group_members', 'page_members', 'event', 'user_events', 'guest_events', 'username'))->render();
+    }
+
+    public function timelineUserEvent($username) {
+        $admin_role_id = Role::where('name', '=', 'admin')->first();
+        $posts = [];
+        $timeline = Timeline::where('username', $username)->first();
+        $user_post = '';
+
+        if ($timeline == null) {
+            return redirect('/');
+        }
+
+        $timeline_posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('comments')->paginate(Setting::get('items_page'));
+
+        foreach ($timeline_posts as $timeline_post) {
+            //This is for filtering reported(flag) posts, displaying non flag posts
+            if ($timeline_post->check_reports($timeline_post->id) == false) {
+                array_push($posts, $timeline_post);
+            }
+        }
+
+        if ($timeline->type == 'user') {
+            $user = User::where('timeline_id', $timeline['id'])->first();
+            $joined_groups_count = $user->groups()->where('role_id', '!=', $admin_role_id->id)->where('status', '=', 'approved')->get()->count();
+            $following_count = $user->following()->where('status', '=', 'approved')->get()->count();
+            $followers_count = $user->followers()->where('status', '=', 'approved')->get()->count();
+            $followRequests = $user->followers()->where('status', '=', 'pending')->get();
+            $user_events = $user->events()->whereDate('end_date', '>=', date('Y-m-d', strtotime(Carbon::now())))->get();
+            $guest_events = $user->getEvents();
+
+            $follow_user_status = DB::table('followers')->where('follower_id', '=', Auth::user()->id)
+                ->where('leader_id', '=', $user->id)->first();
+
+            if ($follow_user_status) {
+                $follow_user_status = $follow_user_status->status;
+            }
+
+            $confirm_follow_setting = $user->getUserSettings(Auth::user()->id);
+            $follow_confirm = $confirm_follow_setting->confirm_follow;
+
+            //get user settings
+            $live_user_settings = $user->getUserPrivacySettings(Auth::user()->id, $user->id);
+            $privacy_settings = explode('-', $live_user_settings);
+            $timeline_post = $privacy_settings[0];
+            $user_post = $privacy_settings[1];
+        } elseif ($timeline->type == 'page') {
+            $page = Page::where('timeline_id', '=', $timeline->id)->first();
+            $page_members = $page->members();
+            $user_post = 'page';
+        }
+
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+
+        $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+
+        return $theme->scope('users/user-event', compact('user','timeline', 'timeline_type', 'follow_user_status', 'followRequests', 'following_count', 'followers_count', 'timeline_post', 'user_post', 'follow_confirm', 'joined_groups_count','group_members', 'page_members', 'event', 'user_events', 'guest_events', 'username'))->render();
+    }
 }

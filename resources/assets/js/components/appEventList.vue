@@ -1,6 +1,7 @@
 <template>
     <div style="position: relative">
-        <div class="event-filter-wrapper">
+
+        <div v-if="showFilter" class="event-filter-wrapper">
             <div class="hidden-sm hidden-xs ft-filter">
                 <fieldset class="form-group">
                     <input v-on:keyup.enter="submit(0)" onKeyPress="return initMapDesk(event)" v-model.trim="filterData[0]" class="pac-input form-control" id="filter-location-input" autocomplete="off" placeholder="By Location" name="location" type="text" style="position: relative; overflow: hidden;">
@@ -306,7 +307,10 @@
                 showProgress: true,
                 noEventFound: false,
                 noEventListFound:false,
-                isFilterEventListLoading: false
+                isFilterEventListLoading: false,
+                showFilter: true,
+                location: false,
+                hashtag: false
             }
         },
         methods: {
@@ -463,6 +467,16 @@
                 allowInputToggle: true
             });
             $('#drawer-1').MaterialDrawer({show: false, permanent: true})
+
+            if($('#location').length) {
+                this.showFilter = false
+                this.location = true
+            }
+            if($('#hashtag').length) {
+                this.showFilter = false
+                this.hashtag = true
+            }
+
             this.getDefaultData()
             initMap()
             initMapDesk()

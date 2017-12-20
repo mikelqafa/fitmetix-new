@@ -47,9 +47,18 @@
                 <div class="zippy__wrapper">
                     <template v-if="commentInteract">
                         <div class="comment-textfield">
-                            <form action="#">
+                            <a data-theme="m" href="//localhost:3008/fitmetix/public/Uppal" title="@" class="md-layout-flex--noshrink  md-layout-flex--nogrow md-list__item-icon user-avatar" style="background-image: url('');"></a>
+                            <form action="#" class="ft-comment__item--grow">
                                 <textarea v-on:keydown.13="postComment" class="ft-post__comment-form form-control"  autocomplete="off" data-post-id="" data-comment-id="" name="post_comment" placeholder="Write a comment" rows="1"></textarea>
                             </form>
+                            <div class="ft-chat__write-button-wrapper">
+                                <button type="submit" class="btn ft-chat__write-button">
+                                    <svg class="svg-icon" fill="#ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                                        <path d="M0 0h24v24H0z" fill="none"/>
+                                    </svg>
+                                </button>
+                            </div>
                             <div class="loading-wrapper"></div>
                         </div>
                         <div class="comment-list-action md-list md-list--dense" v-if="commentItemList.length">
@@ -57,10 +66,17 @@
                                 <a :style="{ backgroundImage: 'url(' + item.user.avatar + ')'}" data-theme="m" href="//localhost:3008/fitmetix/public/Uppal" :title="'@'+item.user.username" class="md-list__item-icon user-avatar"></a>
                                 <div class="md-list__item-content">
                                     <div class="md-list__item-primary">
-                                        <a :href="base_url+item.user.username" :title="'@'+ item.user.username " data-original-title="@Uppal" class="user-name user ft-user-name">
-                                            {{item.user.name}}
-                                        </a>
-                                        <div class="md-list__item-text-body" v-html="item.description"></div>
+                                        <div class="md-layout md-layout--column">
+                                            <div class="md-list__item-text-body" v-html="item.description">
+                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut blanditiis consequatur distinctio dolorem ducimus perspiciatis quaerat quod recusandae suscipit totam.
+                                            </div>
+                                            <div class="md-layout md-layout--row">
+                                                <a href="javascript:;" class="ft-expression ft-expression--comment-like  ft-expression--meta" style="">
+                                                    <span class="icon icon-liked count"></span>
+                                                    <span class="ft-expression--meta-text">0</span>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="md-list__item-secondary md-layout md-layout--row">
                                         <a href="javascript:;" class="md-list__item-secondary-action ft-expression" :data-comment-id="item.id" v-on:click="likeUnlikeComment($event, index)"  v-bind:class="{ 'ft-expression--liked': item.isLiked }">
@@ -92,8 +108,6 @@
         </template>
     </div>
 </template>
-<style>
-</style>
 <script>
     import { mapGetters } from 'vuex'
     import Vue from 'vue'
@@ -173,7 +187,7 @@
                     let that = this
                     setTimeout(function () {
                         that.fetchComment()
-                    }, 400)
+                    }, 300)
                 } else {
                     this.updateZippy()
                 }

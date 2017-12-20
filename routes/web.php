@@ -254,6 +254,8 @@ Route::group(['prefix' => '/{username}', 'middleware' => 'auth'], function ($use
     Route::get('/add-eventmembers', 'UserController@getEventGuests');
 
     Route::get('/albums', 'TimelineController@allAlbums');
+    Route::get('/gallery', 'TimelineController@timelineUserGallery');
+    Route::get('/event', 'TimelineController@timelineUserEvent');
     Route::get('/photos', 'TimelineController@allPhotos');
     Route::get('/videos', 'TimelineController@allVideos');
     Route::get('/album/show/{id}', 'TimelineController@viewAlbum');

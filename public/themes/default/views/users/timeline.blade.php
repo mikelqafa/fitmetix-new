@@ -6,8 +6,8 @@
             <div class="md-layout md-algin md-layout--wrap md-align--start-start layout-timeline">
                 <div class="md-col layout-timeline__post layout-m-t-1">
                     <div class="timeline-cover-section">
-                        <div class="timeline-cover">
-                            <img src=" @if($timeline->cover_id) {{ url('user/cover/'.$timeline->cover->source) }} @else {{ url('user/cover/default-cover-user.png') }} @endif" alt="{{ $timeline->name }}" title="{{ $timeline->name }}">
+                        <div class="timeline-cover" style="background-image: url('@if($timeline->cover_id) {{ url('user/cover/'.$timeline->cover->source) }} @else {{ url('user/cover/default-cover-user.png') }} @endif')">
+                            <img class="v-hidden" src=" @if($timeline->cover_id) {{ url('user/cover/'.$timeline->cover->source) }} @else {{ url('user/cover/default-cover-user.png') }} @endif" alt="{{ $timeline->name }}" title="{{ $timeline->name }}">
                             @if($timeline->id == Auth::user()->timeline_id)
                                 <a href="javascript:;" class="btn btn-camera-cover change-cover"><i class="fa fa-camera" aria-hidden="true"></i><span class="change-cover-text">{{ trans('common.change_cover') }}</span></a>
                             @endif
@@ -50,8 +50,8 @@
                     <div class="ft-header-hashtag">
                         <ul class="nav nav-justified" >
                             <li class="active is-active"><a href="{{ url($timeline->username) }}">Posts</a></li>
-                            <li><a href="{{ url($timeline->username.'/albums') }}" class="">Gallery</a></li>
-                            <li><a href="{{ url($timeline->username.'/events') }}" class="">Events</a></li>
+                            <li><a href="{{ url($timeline->username.'/gallery') }}" class="">Gallery</a></li>
+                            <li><a href="{{ url($timeline->username.'/event') }}" class="">Events</a></li>
                         </ul>
                     </div>
                     <div class="timeline timeline-posts--user">

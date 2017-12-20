@@ -61,7 +61,7 @@
                         </div>
                     </app-post-hashtag>
                     <div id="scroll-bt"></div>
-                </div>
+            </div>
         </div>
     </div>
 </div>

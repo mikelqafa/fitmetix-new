@@ -16,7 +16,7 @@
                         </div>
                         <footer class="md-dialog__footer">
                             <button class="md-dialog__action md-button md-button--compact" data-action="dismissive">CANCEL</button>
-                            <button class="md-dialog__action md-button ft-btn-primary btn md-button--compact" @click="confirmReport">Share</button>
+                            <button class="md-dialog__action md-button ft-btn-primary btn md-button--compact" @click="confirmReport">Send</button>
                         </footer>
                     </template>
                     <div v-if="isLoading" class="absolute-loader">

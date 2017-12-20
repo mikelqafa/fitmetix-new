@@ -45,7 +45,7 @@
                 </div>
             </template>
         </template>
-        <template>
+        <template v-else="">
             <div class="text-center">
                 No Gallery Found
             </div>

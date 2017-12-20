@@ -12375,10 +12375,6 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(54)
-}
 var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(56)
@@ -12387,7 +12383,7 @@ var __vue_template__ = __webpack_require__(57)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = injectStyle
+var __vue_styles__ = null
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -28677,46 +28673,8 @@ if (false) {
 }
 
 /***/ }),
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(55);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("59c5d7a8", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-16f8aa25\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./postComment.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-16f8aa25\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./postComment.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 55 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
+/* 54 */,
+/* 55 */,
 /* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -28727,6 +28685,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -28902,7 +28874,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 var that = this;
                 setTimeout(function () {
                     that.fetchComment();
-                }, 400);
+                }, 300);
             } else {
                 this.updateZippy();
             }
@@ -29337,31 +29309,93 @@ var render = function() {
                     _vm.commentInteract
                       ? [
                           _c("div", { staticClass: "comment-textfield" }, [
-                            _c("form", { attrs: { action: "#" } }, [
-                              _c("textarea", {
-                                staticClass:
-                                  "ft-post__comment-form form-control",
-                                attrs: {
-                                  autocomplete: "off",
-                                  "data-post-id": "",
-                                  "data-comment-id": "",
-                                  name: "post_comment",
-                                  placeholder: "Write a comment",
-                                  rows: "1"
-                                },
-                                on: {
-                                  keydown: function($event) {
-                                    if (
-                                      !("button" in $event) &&
-                                      $event.keyCode !== 13
-                                    ) {
-                                      return null
+                            _c("a", {
+                              staticClass:
+                                "md-layout-flex--noshrink  md-layout-flex--nogrow md-list__item-icon user-avatar",
+                              staticStyle: { "background-image": "url('')" },
+                              attrs: {
+                                "data-theme": "m",
+                                href: "//localhost:3008/fitmetix/public/Uppal",
+                                title: "@"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "form",
+                              {
+                                staticClass: "ft-comment__item--grow",
+                                attrs: { action: "#" }
+                              },
+                              [
+                                _c("textarea", {
+                                  staticClass:
+                                    "ft-post__comment-form form-control",
+                                  attrs: {
+                                    autocomplete: "off",
+                                    "data-post-id": "",
+                                    "data-comment-id": "",
+                                    name: "post_comment",
+                                    placeholder: "Write a comment",
+                                    rows: "1"
+                                  },
+                                  on: {
+                                    keydown: function($event) {
+                                      if (
+                                        !("button" in $event) &&
+                                        $event.keyCode !== 13
+                                      ) {
+                                        return null
+                                      }
+                                      _vm.postComment($event)
                                     }
-                                    _vm.postComment($event)
                                   }
-                                }
-                              })
-                            ]),
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "ft-chat__write-button-wrapper" },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn ft-chat__write-button",
+                                    attrs: { type: "submit" }
+                                  },
+                                  [
+                                    _c(
+                                      "svg",
+                                      {
+                                        staticClass: "svg-icon",
+                                        attrs: {
+                                          fill: "#ffffff",
+                                          height: "24",
+                                          viewBox: "0 0 24 24",
+                                          width: "24",
+                                          xmlns: "http://www.w3.org/2000/svg"
+                                        }
+                                      },
+                                      [
+                                        _c("path", {
+                                          attrs: {
+                                            d:
+                                              "M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("path", {
+                                          attrs: {
+                                            d: "M0 0h24v24H0z",
+                                            fill: "none"
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            ),
                             _vm._v(" "),
                             _c("div", { staticClass: "loading-wrapper" })
                           ]),
@@ -29415,39 +29449,33 @@ var render = function() {
                                               },
                                               [
                                                 _c(
-                                                  "a",
+                                                  "div",
                                                   {
                                                     staticClass:
-                                                      "user-name user ft-user-name",
-                                                    attrs: {
-                                                      href:
-                                                        _vm.base_url +
-                                                        item.user.username,
-                                                      title:
-                                                        "@" +
-                                                        item.user.username,
-                                                      "data-original-title":
-                                                        "@Uppal"
-                                                    }
+                                                      "md-layout md-layout--column"
                                                   },
                                                   [
-                                                    _vm._v(
-                                                      "\n                                        " +
-                                                        _vm._s(item.user.name) +
-                                                        "\n                                    "
-                                                    )
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "md-list__item-text-body",
+                                                        domProps: {
+                                                          innerHTML: _vm._s(
+                                                            item.description
+                                                          )
+                                                        }
+                                                      },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut blanditiis consequatur distinctio dolorem ducimus perspiciatis quaerat quod recusandae suscipit totam.\n                                        "
+                                                        )
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _vm._m(0, true)
                                                   ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c("div", {
-                                                  staticClass:
-                                                    "md-list__item-text-body",
-                                                  domProps: {
-                                                    innerHTML: _vm._s(
-                                                      item.description
-                                                    )
-                                                  }
-                                                })
+                                                )
                                               ]
                                             ),
                                             _vm._v(" "),
@@ -29544,7 +29572,7 @@ var render = function() {
                               )
                             : _vm._e()
                         ]
-                      : [_vm._m(0)]
+                      : [_vm._m(1)]
                   ],
                   2
                 )
@@ -29557,6 +29585,26 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "md-layout md-layout--row" }, [
+      _c(
+        "a",
+        {
+          staticClass:
+            "ft-expression ft-expression--comment-like  ft-expression--meta",
+          attrs: { href: "javascript:;" }
+        },
+        [
+          _c("span", { staticClass: "icon icon-liked count" }),
+          _vm._v(" "),
+          _c("span", { staticClass: "ft-expression--meta-text" }, [_vm._v("0")])
+        ]
+      )
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -31102,6 +31150,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -31229,7 +31282,7 @@ var render = function() {
           }
         ],
         staticClass: "form-control",
-        attrs: { type: "text" },
+        attrs: { placeholder: "Send to", type: "text" },
         domProps: { value: _vm.autoCompleteValue },
         on: {
           focus: _vm.onFocus,
@@ -31337,29 +31390,35 @@ var render = function() {
       "div",
       { staticClass: "avatar-list md-layout md-layout--wrap" },
       _vm._l(_vm.selections, function(item, index) {
-        return _c(
-          "div",
-          {
-            staticClass: "avatar-list__item",
-            style: { backgroundImage: "url(" + item.avatar + ")" },
-            attrs: { title: item.name }
-          },
-          [
-            _c(
-              "a",
-              {
-                staticClass: "close-btn",
-                attrs: { href: "javascript:;", title: "remove" },
-                on: {
-                  click: function($event) {
-                    _vm.removeFromSelections(index)
+        return _c("div", { key: item.name, staticClass: "margin-1" }, [
+          _c(
+            "div",
+            {
+              staticClass: "avatar-list__item",
+              style: { backgroundImage: "url(" + item.avatar + ")" },
+              attrs: { title: item.name }
+            },
+            [
+              _c(
+                "a",
+                {
+                  staticClass: "close-btn",
+                  attrs: { href: "javascript:;", title: "remove" },
+                  on: {
+                    click: function($event) {
+                      _vm.removeFromSelections(index)
+                    }
                   }
-                }
-              },
-              [_c("i", { staticClass: "icon icon-close" })]
-            )
-          ]
-        )
+                },
+                [_c("i", { staticClass: "icon icon-close" })]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "text-center" }, [
+            _vm._v("\n                " + _vm._s(item.name) + "\n            ")
+          ])
+        ])
       })
     )
   ])
@@ -31446,7 +31505,7 @@ var render = function() {
                             "md-dialog__action md-button ft-btn-primary btn md-button--compact",
                           on: { click: _vm.confirmReport }
                         },
-                        [_vm._v("Share")]
+                        [_vm._v("Send")]
                       )
                     ])
                   ]
@@ -32349,13 +32408,11 @@ var render = function() {
                     : _vm._e()
                 ]
           ]
-        : _vm._e(),
-      _vm._v(" "),
-      [
-        _c("div", { staticClass: "text-center" }, [
-          _vm._v("\n            No Gallery Found\n        ")
-        ])
-      ]
+        : [
+            _c("div", { staticClass: "text-center" }, [
+              _vm._v("\n            No Gallery Found\n        ")
+            ])
+          ]
     ],
     2
   )
@@ -38715,6 +38772,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -38735,7 +38793,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             showProgress: true,
             noEventFound: false,
             noEventListFound: false,
-            isFilterEventListLoading: false
+            isFilterEventListLoading: false,
+            showFilter: true,
+            location: false,
+            hashtag: false
         };
     },
     methods: {
@@ -38892,6 +38953,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             allowInputToggle: true
         });
         $('#drawer-1').MaterialDrawer({ show: false, permanent: true });
+
+        if ($('#location').length) {
+            this.showFilter = false;
+            this.location = true;
+        }
+        if ($('#hashtag').length) {
+            this.showFilter = false;
+            this.hashtag = true;
+        }
+
         this.getDefaultData();
         initMap();
         initMapDesk();
@@ -38929,180 +39000,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticStyle: { position: "relative" } }, [
-    _c("div", { staticClass: "event-filter-wrapper" }, [
-      _c("div", { staticClass: "hidden-sm hidden-xs ft-filter" }, [
-        _c("fieldset", { staticClass: "form-group" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model.trim",
-                value: _vm.filterData[0],
-                expression: "filterData[0]",
-                modifiers: { trim: true }
-              }
-            ],
-            staticClass: "pac-input form-control",
-            staticStyle: { position: "relative", overflow: "hidden" },
-            attrs: {
-              onKeyPress: "return initMapDesk(event)",
-              id: "filter-location-input",
-              autocomplete: "off",
-              placeholder: "By Location",
-              name: "location",
-              type: "text"
-            },
-            domProps: { value: _vm.filterData[0] },
-            on: {
-              keyup: function($event) {
-                if (
-                  !("button" in $event) &&
-                  _vm._k($event.keyCode, "enter", 13, $event.key)
-                ) {
-                  return null
-                }
-                _vm.submit(0)
-              },
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.filterData, 0, $event.target.value.trim())
-              },
-              blur: function($event) {
-                _vm.$forceUpdate()
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("fieldset", { staticClass: "form-group" }, [
-          _c("input", {
-            staticClass: "form-control filter-date",
-            staticStyle: { position: "relative", overflow: "hidden" },
-            attrs: {
-              name: "date",
-              id: "filter-date",
-              autocomplete: "off",
-              placeholder: "By Date",
-              type: "text"
-            },
-            on: {
-              keyup: function($event) {
-                if (
-                  !("button" in $event) &&
-                  _vm._k($event.keyCode, "enter", 13, $event.key)
-                ) {
-                  return null
-                }
-                _vm.submit(1, $event)
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("fieldset", { staticClass: "form-group" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model.trim",
-                value: _vm.filterData[2],
-                expression: "filterData[2]",
-                modifiers: { trim: true }
-              }
-            ],
-            staticClass: "form-control",
-            staticStyle: { position: "relative", overflow: "hidden" },
-            attrs: {
-              id: "filter-tag",
-              name: "tags",
-              autocomplete: "off",
-              placeholder: "By Tag",
-              type: "text"
-            },
-            domProps: { value: _vm.filterData[2] },
-            on: {
-              keyup: function($event) {
-                if (
-                  !("button" in $event) &&
-                  _vm._k($event.keyCode, "enter", 13, $event.key)
-                ) {
-                  return null
-                }
-                _vm.submit(2)
-              },
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.filterData, 2, $event.target.value.trim())
-              },
-              blur: function($event) {
-                _vm.$forceUpdate()
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("fieldset", { staticClass: "form-group" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model.trim",
-                value: _vm.filterData[3],
-                expression: "filterData[3]",
-                modifiers: { trim: true }
-              }
-            ],
-            staticClass: "form-control",
-            staticStyle: { position: "relative", overflow: "hidden" },
-            attrs: {
-              id: "filter-title",
-              name: "title",
-              autocomplete: "off",
-              placeholder: "By Title",
-              type: "text"
-            },
-            domProps: { value: _vm.filterData[3] },
-            on: {
-              keyup: function($event) {
-                if (
-                  !("button" in $event) &&
-                  _vm._k($event.keyCode, "enter", 13, $event.key)
-                ) {
-                  return null
-                }
-                _vm.submit(3)
-              },
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.filterData, 3, $event.target.value.trim())
-              },
-              blur: function($event) {
-                _vm.$forceUpdate()
-              }
-            }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "hidden-lg hidden-md tab-content tab-content--event-filter"
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "tab-pane fade in active", attrs: { id: "home" } },
-            [
+    _vm.showFilter
+      ? _c("div", { staticClass: "event-filter-wrapper" }, [
+          _c("div", { staticClass: "hidden-sm hidden-xs ft-filter" }, [
+            _c("fieldset", { staticClass: "form-group" }, [
               _c("input", {
                 directives: [
                   {
@@ -39113,10 +39014,11 @@ var render = function() {
                     modifiers: { trim: true }
                   }
                 ],
-                staticClass: "form-control",
+                staticClass: "pac-input form-control",
                 staticStyle: { position: "relative", overflow: "hidden" },
                 attrs: {
-                  id: "filter-location-input-mob",
+                  onKeyPress: "return initMapDesk(event)",
+                  id: "filter-location-input",
                   autocomplete: "off",
                   placeholder: "By Location",
                   name: "location",
@@ -39144,161 +39046,356 @@ var render = function() {
                   }
                 }
               })
+            ]),
+            _vm._v(" "),
+            _c("fieldset", { staticClass: "form-group" }, [
+              _c("input", {
+                staticClass: "form-control filter-date",
+                staticStyle: { position: "relative", overflow: "hidden" },
+                attrs: {
+                  name: "date",
+                  id: "filter-date",
+                  autocomplete: "off",
+                  placeholder: "By Date",
+                  type: "text"
+                },
+                on: {
+                  keyup: function($event) {
+                    if (
+                      !("button" in $event) &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key)
+                    ) {
+                      return null
+                    }
+                    _vm.submit(1, $event)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("fieldset", { staticClass: "form-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model.trim",
+                    value: _vm.filterData[2],
+                    expression: "filterData[2]",
+                    modifiers: { trim: true }
+                  }
+                ],
+                staticClass: "form-control",
+                staticStyle: { position: "relative", overflow: "hidden" },
+                attrs: {
+                  id: "filter-tag",
+                  name: "tags",
+                  autocomplete: "off",
+                  placeholder: "By Tag",
+                  type: "text"
+                },
+                domProps: { value: _vm.filterData[2] },
+                on: {
+                  keyup: function($event) {
+                    if (
+                      !("button" in $event) &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key)
+                    ) {
+                      return null
+                    }
+                    _vm.submit(2)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.filterData, 2, $event.target.value.trim())
+                  },
+                  blur: function($event) {
+                    _vm.$forceUpdate()
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("fieldset", { staticClass: "form-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model.trim",
+                    value: _vm.filterData[3],
+                    expression: "filterData[3]",
+                    modifiers: { trim: true }
+                  }
+                ],
+                staticClass: "form-control",
+                staticStyle: { position: "relative", overflow: "hidden" },
+                attrs: {
+                  id: "filter-title",
+                  name: "title",
+                  autocomplete: "off",
+                  placeholder: "By Title",
+                  type: "text"
+                },
+                domProps: { value: _vm.filterData[3] },
+                on: {
+                  keyup: function($event) {
+                    if (
+                      !("button" in $event) &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key)
+                    ) {
+                      return null
+                    }
+                    _vm.submit(3)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.filterData, 3, $event.target.value.trim())
+                  },
+                  blur: function($event) {
+                    _vm.$forceUpdate()
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "hidden-lg hidden-md tab-content tab-content--event-filter"
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade in active",
+                  attrs: { id: "home" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.trim",
+                        value: _vm.filterData[0],
+                        expression: "filterData[0]",
+                        modifiers: { trim: true }
+                      }
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: { position: "relative", overflow: "hidden" },
+                    attrs: {
+                      id: "filter-location-input-mob",
+                      autocomplete: "off",
+                      placeholder: "By Location",
+                      name: "location",
+                      type: "text"
+                    },
+                    domProps: { value: _vm.filterData[0] },
+                    on: {
+                      keyup: function($event) {
+                        if (
+                          !("button" in $event) &&
+                          _vm._k($event.keyCode, "enter", 13, $event.key)
+                        ) {
+                          return null
+                        }
+                        _vm.submit(0)
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.filterData, 0, $event.target.value.trim())
+                      },
+                      blur: function($event) {
+                        _vm.$forceUpdate()
+                      }
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "tab-pane fade", attrs: { id: "menu1" } },
+                [
+                  _c("input", {
+                    staticClass: "form-control filter-date",
+                    staticStyle: { position: "relative", overflow: "hidden" },
+                    attrs: {
+                      name: "date",
+                      id: "filter-date-mob",
+                      autocomplete: "off",
+                      placeholder: "By Date",
+                      type: "text"
+                    },
+                    on: {
+                      keyup: function($event) {
+                        if (
+                          !("button" in $event) &&
+                          _vm._k($event.keyCode, "enter", 13, $event.key)
+                        ) {
+                          return null
+                        }
+                        _vm.submit(1)
+                      }
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "tab-pane fade", attrs: { id: "menu2" } },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.trim",
+                        value: _vm.filterData[2],
+                        expression: "filterData[2]",
+                        modifiers: { trim: true }
+                      }
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: { position: "relative", overflow: "hidden" },
+                    attrs: {
+                      id: "filter-tag-mob",
+                      name: "tags",
+                      autocomplete: "off",
+                      placeholder: "By Tag",
+                      type: "text"
+                    },
+                    domProps: { value: _vm.filterData[2] },
+                    on: {
+                      keyup: function($event) {
+                        if (
+                          !("button" in $event) &&
+                          _vm._k($event.keyCode, "enter", 13, $event.key)
+                        ) {
+                          return null
+                        }
+                        _vm.submit(2)
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.filterData, 2, $event.target.value.trim())
+                      },
+                      blur: function($event) {
+                        _vm.$forceUpdate()
+                      }
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "tab-pane fade", attrs: { id: "menu3" } },
+                [
+                  _c(
+                    "fieldset",
+                    {
+                      staticClass: "form-group required ",
+                      staticStyle: { "margin-right": "0" }
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model.trim",
+                            value: _vm.filterData[3],
+                            expression: "filterData[3]",
+                            modifiers: { trim: true }
+                          }
+                        ],
+                        staticClass: "form-control",
+                        staticStyle: {
+                          position: "relative",
+                          overflow: "hidden"
+                        },
+                        attrs: {
+                          id: "filter-title-mob",
+                          name: "title",
+                          autocomplete: "off",
+                          placeholder: "By Title",
+                          type: "text"
+                        },
+                        domProps: { value: _vm.filterData[3] },
+                        on: {
+                          keyup: function($event) {
+                            if (
+                              !("button" in $event) &&
+                              _vm._k($event.keyCode, "enter", 13, $event.key)
+                            ) {
+                              return null
+                            }
+                            _vm.submit(3)
+                          },
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.filterData,
+                              3,
+                              $event.target.value.trim()
+                            )
+                          },
+                          blur: function($event) {
+                            _vm.$forceUpdate()
+                          }
+                        }
+                      })
+                    ]
+                  )
+                ]
+              )
             ]
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "tab-pane fade", attrs: { id: "menu1" } }, [
-            _c("input", {
-              staticClass: "form-control filter-date",
-              staticStyle: { position: "relative", overflow: "hidden" },
-              attrs: {
-                name: "date",
-                id: "filter-date-mob",
-                autocomplete: "off",
-                placeholder: "By Date",
-                type: "text"
-              },
-              on: {
-                keyup: function($event) {
-                  if (
-                    !("button" in $event) &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key)
-                  ) {
-                    return null
-                  }
-                  _vm.submit(1)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "tab-pane fade", attrs: { id: "menu2" } }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model.trim",
-                  value: _vm.filterData[2],
-                  expression: "filterData[2]",
-                  modifiers: { trim: true }
-                }
-              ],
-              staticClass: "form-control",
-              staticStyle: { position: "relative", overflow: "hidden" },
-              attrs: {
-                id: "filter-tag-mob",
-                name: "tags",
-                autocomplete: "off",
-                placeholder: "By Tag",
-                type: "text"
-              },
-              domProps: { value: _vm.filterData[2] },
-              on: {
-                keyup: function($event) {
-                  if (
-                    !("button" in $event) &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key)
-                  ) {
-                    return null
-                  }
-                  _vm.submit(2)
-                },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.filterData, 2, $event.target.value.trim())
-                },
-                blur: function($event) {
-                  _vm.$forceUpdate()
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "tab-pane fade", attrs: { id: "menu3" } }, [
+          _c("div", { staticClass: "md-layout md-layout--row" }, [
             _c(
-              "fieldset",
+              "div",
               {
-                staticClass: "form-group required ",
-                staticStyle: { "margin-right": "0" }
+                staticClass: "md-layout md-layout--row md-layout--wrap hidden"
               },
               [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.trim",
-                      value: _vm.filterData[3],
-                      expression: "filterData[3]",
-                      modifiers: { trim: true }
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: { position: "relative", overflow: "hidden" },
-                  attrs: {
-                    id: "filter-title-mob",
-                    name: "title",
-                    autocomplete: "off",
-                    placeholder: "By Title",
-                    type: "text"
-                  },
-                  domProps: { value: _vm.filterData[3] },
-                  on: {
-                    keyup: function($event) {
-                      if (
-                        !("button" in $event) &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key)
-                      ) {
-                        return null
-                      }
-                      _vm.submit(3)
-                    },
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.filterData, 3, $event.target.value.trim())
-                    },
-                    blur: function($event) {
-                      _vm.$forceUpdate()
-                    }
-                  }
+                _vm._l(_vm.filter, function(item) {
+                  return [
+                    item.content !== ""
+                      ? _c("div", { staticClass: "md-chips is-removable" }, [
+                          _c("div", { staticClass: "md-chip" }, [
+                            _c("div", { staticClass: "md-chip__content" }, [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(item.content)
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _vm._m(1, true)
+                          ])
+                        ])
+                      : _vm._e()
+                  ]
                 })
-              ]
+              ],
+              2
             )
           ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "md-layout md-layout--row" }, [
-        _c(
-          "div",
-          { staticClass: "md-layout md-layout--row md-layout--wrap hidden" },
-          [
-            _vm._l(_vm.filter, function(item) {
-              return [
-                item.content !== ""
-                  ? _c("div", { staticClass: "md-chips is-removable" }, [
-                      _c("div", { staticClass: "md-chip" }, [
-                        _c("div", { staticClass: "md-chip__content" }, [
-                          _vm._v(
-                            "\n                                " +
-                              _vm._s(item.content)
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _vm._m(1, true)
-                      ])
-                    ])
-                  : _vm._e()
-              ]
-            })
-          ],
-          2
-        )
-      ])
-    ]),
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _c("div", { staticClass: "post-filters pages-groups" }, [
       _c("div", { staticClass: "pane" }, [
