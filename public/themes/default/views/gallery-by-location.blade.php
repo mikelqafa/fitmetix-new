@@ -40,7 +40,7 @@
                 <div id="app-timeline">
                     <input type="hidden" id="newPostId">
                     @if(isset($location))
-                        <input type="hidden" id="gallerytByLocation" value="{{$location}}">
+                        <input type="hidden" id="galleryByLocation" value="{{$location}}">
                     @endif
                     <app-post-option></app-post-option>
                     <app-comment-option></app-comment-option>

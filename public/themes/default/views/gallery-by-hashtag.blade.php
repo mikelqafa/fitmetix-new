@@ -37,23 +37,37 @@
                     <app-comment-option></app-comment-option>
 
                     <app-gallery-hlu>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="lg-loading-skeleton ft-image-post">
-                                        <div class="ft-image-post__item lg-loadable">
+                        <div class="post-filters">
+                            <div class="ft-grid">
+                                <div class="ft-grid__item">
+                                    <div class="post-image--wrapper lg-loading-skeleton">
+                                        <div class="ft-card ft-card--only-image">
+                                            <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="lg-loading-skeleton ft-image-post">
-                                        <div class="ft-image-post__item lg-loadable">
+                                <div class="ft-grid__item">
+                                    <div class="post-image--wrapper lg-loading-skeleton">
+                                        <div class="ft-card ft-card--only-image">
+                                            <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="lg-loading-skeleton ft-image-post">
-                                        <div class="ft-image-post__item lg-loadable">
+                                <div class="ft-grid__item">
+                                    <div class="post-image--wrapper lg-loading-skeleton">
+                                        <div class="ft-card ft-card--only-image">
+                                            <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ft-grid__item">
+                                    <div class="post-image--wrapper lg-loading-skeleton">
+                                        <div class="ft-card ft-card--only-image">
+                                            <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

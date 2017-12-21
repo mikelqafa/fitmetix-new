@@ -2,9 +2,9 @@
     <div v-if="!noImage" class="post-image--wrapper">
         <template v-if="isMultiple">
             <swiper :options="swiperOption" class="deal-card-slider slider--gallery">
-                <swiper-slide :key="imageIndex" v-for="(image, imageIndex) in postImg">
-                    <a href="javascript:;" :key="imageIndex" @click="showTheater(imageIndex)"
-                       class="item__background" :style="{ backgroundImage: 'url(' + sourceImagePath(image.source) + ')' }">
+                <swiper-slide v-for="(image, imageIndex) in postImg" :key="imageIndex">
+                    <a href="javascript:;" class="item__background" :key="imageIndex" @click="showTheater(imageIndex)"
+                       :style="{ 'background-image': 'url(' + sourceImagePath(image.source) + ')' }">
                         <img :data-src="sourceImagePath(image.source)" :src="sourceImagePath(image.source)" class="v-hidden swiper-lazy img-responsive">
                     </a>
                 </swiper-slide>
@@ -15,7 +15,7 @@
         </template>
         <template v-else="">
             <div class="ft-card ft-card--only-image" v-for="(image, imageIndex) in postImg">
-                <div class="ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" :style="{ backgroundImage: 'url(' + sourceImagePath(image.source) + ')' }">
+                <div @click="showTheater(0)" class="ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" :style="{ backgroundImage: 'url(' + sourceImagePath(image.source) + ')' }">
                     <img :data-src="sourceImagePath(image.source)" :src="sourceImagePath(image.source)" class="ft-card__img">
                 </div>
             </div>
@@ -27,7 +27,7 @@
     import { swiper, swiperSlide } from 'vue-awesome-swiper'
     export default {
         props: {
-            postImg: {},
+            postImg: '',
             postIndex: 0,
             postEvent: {},
             disableShowcase: false
@@ -36,6 +36,7 @@
             return {
                 images: [],
                 index: null,
+                ready: false,
                 swiperOption: {
                     slidesPerView: 1,
                     autoplay: false,
@@ -59,13 +60,15 @@
                 $('#post-image-theater-dialog').MaterialDialog('show')
             }
         },
-        mounted () { },
+        mounted () {
+            console.log(this.postImg.length)
+        },
         computed: {
             isMultiple: function () {
                 return this.postImg !== undefined && this.postImg.length > 1
             },
             noImage: function () {
-                return this.postImg.length === 0
+                return this.postImg !== undefined ? this.postImg.length === 0 : true
             },
             isTypeEvent: function () {
                 return this.postEvent !== undefined && this.postEvent !== ''

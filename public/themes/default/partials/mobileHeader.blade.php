@@ -18,7 +18,7 @@
             <a class="ft-header-nav__item" href="{!! url('messages') !!}" data-toggle="collapse" href="#bs-example-navbar-collapse-4" aria-expanded="false" aria-controls="collapseExample">
                 <div class="icon icon-search"></div>
             </a>
-            <form action="{{ url('/logout') }}" method="post">
+            <form action="{{ url('/logout') }}" method="post" class="ft-header-nav__item">
                 <a class="dropdown-toggle ft-header-nav__item--user-img" data-toggle="dropdown" @click.prevent="showNotifications" role="button" href="javascript:;" aria-haspopup="true"
                    aria-expanded="false">
                     <div class="user-avatar" style="background-image: url('{{url(Auth::user()->avatar)}}')"></div>

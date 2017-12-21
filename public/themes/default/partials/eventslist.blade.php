@@ -45,121 +45,159 @@
 		<app-post-option></app-post-option>
 		<app-comment-option></app-comment-option>
 		<app-event-list>
-			<div class="post-filters pages-groups">
+			<div class="post-filters pages-groups post-filters--auto-width">
 				<div class="pane">
 					<div class="pan">
 						<div class="ft-grid ft-grid--12-xs">
-							<div class="ft-grid__item lg-loading-skeleton">
-								<div class="ft_card">
-									<div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
-									</div>
-									<div class="ft-card__primary">
-										<div class="ft-card__title lg-loadable">
-											<h5 class="ft-event-card__title">&nbsp;</h5>
+							<div class="ft-grid">
+								<div class="ft-grid__item lg-loading-skeleton">
+									<div class="ft_card">
+										<div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
 										</div>
-										<div class="ft-card__list-wrapper">
-											<div class="ft-card__list">
-												<div class="icon lg-loadable"></div>
-												<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-													&nbsp;
-												</div>
+										<div class="ft-card__primary hidden-sm hidden-xs">
+											<div class="ft-card__title lg-loadable">
+												<h5 class="ft-event-card__title">&nbsp;</h5>
 											</div>
-											<div class="ft-card__list">
-												<div class="icon icon-participant lg-loadable"></div>
-												<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-													&nbsp;
+											<div class="ft-card__list-wrapper">
+												<div class="ft-card__list">
+													<div class="icon lg-loadable"></div>
+													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+														&nbsp;
+													</div>
 												</div>
-											</div>
-											<div class="ft-card__list">
-												<div class="icon lg-loadable"></div>
-												<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-													&nbsp;
+												<div class="ft-card__list">
+													<div class="icon icon-participant lg-loadable"></div>
+													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+														&nbsp;
+													</div>
 												</div>
-											</div>
-											<div class="ft-card__list">
-												<div class="icon lg-loadable"></div>
-												<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-													&nbsp;
+												<div class="ft-card__list">
+													<div class="icon lg-loadable"></div>
+													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+														&nbsp;
+													</div>
 												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="ft-grid__item lg-loading-skeleton">
-								<div class="ft_card">
-									<div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
-									</div>
-									<div class="ft-card__primary">
-										<div class="ft-card__title lg-loadable">
-											<h5 class="ft-event-card__title">&nbsp;</h5>
-										</div>
-										<div class="ft-card__list-wrapper">
-											<div class="ft-card__list">
-												<div class="icon lg-loadable"></div>
-												<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-													&nbsp;
-												</div>
-											</div>
-											<div class="ft-card__list">
-												<div class="icon icon-participant lg-loadable"></div>
-												<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-													&nbsp;
-												</div>
-											</div>
-											<div class="ft-card__list">
-												<div class="icon lg-loadable"></div>
-												<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-													&nbsp;
-												</div>
-											</div>
-											<div class="ft-card__list">
-												<div class="icon lg-loadable"></div>
-												<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-													&nbsp;
+												<div class="ft-card__list">
+													<div class="icon lg-loadable"></div>
+													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+														&nbsp;
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="ft-grid__item lg-loading-skeleton">
-								<div class="ft_card">
-									<div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
-									</div>
-									<div class="ft-card__primary">
-										<div class="ft-card__title lg-loadable">
-											<h5 class="ft-event-card__title">&nbsp;</h5>
+								<div class="ft-grid__item lg-loading-skeleton">
+									<div class="ft_card">
+										<div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
 										</div>
-										<div class="ft-card__list-wrapper">
-											<div class="ft-card__list">
-												<div class="icon lg-loadable"></div>
-												<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-													&nbsp;
-												</div>
+										<div class="ft-card__primary hidden-sm hidden-xs">
+											<div class="ft-card__title lg-loadable">
+												<h5 class="ft-event-card__title">&nbsp;</h5>
 											</div>
-											<div class="ft-card__list">
-												<div class="icon icon-participant lg-loadable"></div>
-												<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-													&nbsp;
+											<div class="ft-card__list-wrapper">
+												<div class="ft-card__list">
+													<div class="icon lg-loadable"></div>
+													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+														&nbsp;
+													</div>
 												</div>
-											</div>
-											<div class="ft-card__list">
-												<div class="icon lg-loadable"></div>
-												<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-													&nbsp;
+												<div class="ft-card__list">
+													<div class="icon icon-participant lg-loadable"></div>
+													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+														&nbsp;
+													</div>
 												</div>
-											</div>
-											<div class="ft-card__list">
-												<div class="icon lg-loadable"></div>
-												<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-													&nbsp;
+												<div class="ft-card__list">
+													<div class="icon lg-loadable"></div>
+													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+														&nbsp;
+													</div>
+												</div>
+												<div class="ft-card__list">
+													<div class="icon lg-loadable"></div>
+													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+														&nbsp;
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
+								<div class="ft-grid__item lg-loading-skeleton">
+									<div class="ft_card">
+										<div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+										</div>
+										<div class="ft-card__primary hidden-sm hidden-xs">
+											<div class="ft-card__title lg-loadable">
+												<h5 class="ft-event-card__title">&nbsp;</h5>
+											</div>
+											<div class="ft-card__list-wrapper">
+												<div class="ft-card__list">
+													<div class="icon lg-loadable"></div>
+													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+														&nbsp;
+													</div>
+												</div>
+												<div class="ft-card__list">
+													<div class="icon icon-participant lg-loadable"></div>
+													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+														&nbsp;
+													</div>
+												</div>
+												<div class="ft-card__list">
+													<div class="icon lg-loadable"></div>
+													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+														&nbsp;
+													</div>
+												</div>
+												<div class="ft-card__list">
+													<div class="icon lg-loadable"></div>
+													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+														&nbsp;
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="ft-grid__item lg-loading-skeleton">
+									<div class="ft_card">
+										<div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+										</div>
+										<div class="ft-card__primary hidden-sm hidden-xs">
+											<div class="ft-card__title lg-loadable">
+												<h5 class="ft-event-card__title">&nbsp;</h5>
+											</div>
+											<div class="ft-card__list-wrapper">
+												<div class="ft-card__list">
+													<div class="icon lg-loadable"></div>
+													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+														&nbsp;
+													</div>
+												</div>
+												<div class="ft-card__list">
+													<div class="icon icon-participant lg-loadable"></div>
+													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+														&nbsp;
+													</div>
+												</div>
+												<div class="ft-card__list">
+													<div class="icon lg-loadable"></div>
+													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+														&nbsp;
+													</div>
+												</div>
+												<div class="ft-card__list">
+													<div class="icon lg-loadable"></div>
+													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+														&nbsp;
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 						</div>
 					</div>
 				</div>

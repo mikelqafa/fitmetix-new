@@ -4,23 +4,37 @@
         <post-wholikes-view></post-wholikes-view>
         <template v-if="!noPostFound || alreadyHavePost">
             <template v-if="isLoading">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-4 col-xs-6">
-                            <div class="lg-loading-skeleton ft-image-post">
-                                <div class="ft-image-post__item lg-loadable">
+                <div class="post-filters post-filters--auto-width">
+                    <div class="ft-grid">
+                        <div class="ft-grid__item">
+                            <div class="post-image--wrapper lg-loading-skeleton">
+                                <div class="ft-card ft-card--only-image">
+                                    <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-4 col-xs-6">
-                            <div class="lg-loading-skeleton ft-image-post">
-                                <div class="ft-image-post__item lg-loadable">
+                        <div class="ft-grid__item">
+                            <div class="post-image--wrapper lg-loading-skeleton">
+                                <div class="ft-card ft-card--only-image">
+                                    <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="lg-loading-skeleton ft-image-post">
-                                <div class="ft-image-post__item lg-loadable">
+                        <div class="ft-grid__item">
+                            <div class="post-image--wrapper lg-loading-skeleton">
+                                <div class="ft-card ft-card--only-image">
+                                    <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ft-grid__item">
+                            <div class="post-image--wrapper lg-loading-skeleton">
+                                <div class="ft-card ft-card--only-image">
+                                    <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -28,7 +42,7 @@
                 </div>
             </template>
             <template v-else="">
-                <div class="post-filters">
+                <div class="post-filters post-filters--auto-width">
                     <div class="ft-grid">
                         <div v-for="(postItem, index) in itemList" :key="postItem.id" class="ft-grid__item" :id="'ft-post'+postItem.id">
                             <post-image-viewer :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
@@ -128,7 +142,6 @@
                 let _token = $("meta[name=_token]").attr('content')
 
                 data._token = _token
-                console.log(data)
                 axios({
                     method: 'post',
                     responseType: 'json',
@@ -136,12 +149,13 @@
                     data :data
                 }).then( function (response) {
                     if (response.status ==  200) {
-                        console.log(response)
                         let posts = response.data[0].posts;
                         let i = 0
                         $.each(posts, function(key, val) {
-                            that.$store.commit('ADD_POST_ITEM_LIST', val)
-                            i++
+                            if(val.images !== undefined && val.images.length) {
+                                that.$store.commit('ADD_POST_ITEM_LIST', val)
+                                i++
+                            }
                         });
                         if(!i) {
                             if(!that.interact) {

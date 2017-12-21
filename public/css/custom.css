@@ -174,16 +174,6 @@
     transition-timing-function: cubic-bezier(.4,0,.2,1);
     transition-property: all;
 }
-.md-drawer--permanent {
-    width: auto;
-    padding-right: 0px;
-    padding-left: 0;
-    padding-top: 64px;
-    z-index: -1;
-}
-.md-drawer--permanent.md-drawer--visible {
-    z-index: 1;
-}
 .slider--gallery{
     height: 204px;
 }
@@ -201,7 +191,7 @@
         -webkit-transform: translateX(0px);
         transform: translateX(0px);
     }
-    .md-drawer--permanent {
+    /*.md-drawer--permanent {
         -webkit-transform: translateX(0px);
         transform: translateX(0px);
         max-width:100%;
@@ -217,11 +207,10 @@
         -webkit-transform:translateX(360px);
         transform:translateX(360px)
     }
-
     body.has-permanent-drawer.is-drawer-open {
         padding-right: 360px;
         padding-left: 0 !important;
-    }
+    }*/
 }
 @media (min-width: 600px) and (max-width: 959px) {
     .ft-grid__item{
@@ -234,11 +223,16 @@
         flex-basis: 33.3333%;
     }
     .post-filters .ft-card{
-        height: 150px !important;
+        height: auto !important;
+    }
+    .post-image--wrapper {
+        min-height: 0 !important;
     }
 }
 .post-filters .ft-card__img-wrapper img {
     visibility: hidden;
+    width: 0;
+    height: 0;
 }
 @media screen and (max-width: 959px) {
     .ft-grid{
@@ -268,16 +262,8 @@
     aside .post-filters .ft-card__img-wrapper{
         height: 200px;
     }
-    .md-drawer--permanent{
-        padding-top: 56px;
-    }
     .no-margin-sm {
         margin-top: 0 !important;
-    }
-    .md-drawer--permanent .md-drawer__surface {
-        max-width: 320px;
-        -webkit-transform: translateX(-330px);
-        transform: translateX(-330px);
     }
     .center-sm{
         text-align: center;
@@ -292,15 +278,33 @@
     min-height: 200px;
 }
 @media (max-width: 599px) {
+    .layout-timeline__post.layout-m-t-1{
+        margin-top: 0;
+    }
     .post-image--wrapper{
         min-height: 120px;
     }
     .ft-grid__item{
         width: 50%;
+        flex-basis: 50%;
+        overflow: hidden;
+    }
+    ..ft-card {
+        min-width: 0;
+    }
+    .layout-timeline__post.md-col{
+        padding-right: 4px;
+        padding-left: 4px;
+        width: 100%;
+        overflow-x: hidden;
     }
     .ft-grid{
-        margin-left:-13px;
-        margin-right:-13px;
+        margin-left:0;
+        margin-right:0;
+        width: 100%;
+    }
+    .ft-grid__item .swiper-slide{
+        max-width: 100%;
     }
     .ft-grid__item {
         padding: 2px;
@@ -559,7 +563,7 @@ a {
 .fm-nav__item {
     line-height: 60px;
     padding: 0 16px;
-    color: #333;
+    color: #757575;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1490,6 +1494,7 @@ a{
 }
 .ft-card--only-image{
     min-height: 0;
+    margin-bottom: 0;
 }
 .map-view-under{
     position: absolute;
@@ -1558,6 +1563,7 @@ a{
     align-items: center !important;
 }
 .ft-card {
+    width: 100%;
     max-width: 360px;
     margin-left:auto;
     margin-right:auto;
@@ -1826,6 +1832,7 @@ a{
 }
 .ft-event-card__title{
     text-align: center;
+    margin-top: 0;
 }
 .absolute-loader{
     position: absolute;
@@ -2183,6 +2190,9 @@ aside .md-drawer-scroll__wrapper{
     .wrap-ft-card--small .ft-card{
         min-width: 100px;
     }
+    .post-image--wrapper {
+        min-height: auto;
+    }
     .wrap-ft-card--small .ft-grid, .wrap-ft-card--big .ft-grid{
         padding-top: 8px;
         margin: 0 -8px;
@@ -2230,4 +2240,25 @@ aside .md-drawer-scroll__wrapper{
         height: auto;
     }
 
+}
+.app-timeline{
+    max-width: 100%;
+}
+@media screen and (max-width: 959px){
+    .post-filters:not(.post-filters--auto-width) {
+        max-width: calc(100vw - 32px);
+    }
+}
+.ft-card--shadow {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+.md-drawer__surface{
+    z-index: 12;
+}
+.row-on-mobile{
+    margin-left: -11px;
+    margin-right: -11px;
+}
+.md-drawer--permanent .ft-card__title {
+    margin-top: 16px;
 }

@@ -1,16 +1,15 @@
 <template>
-    <div style="position: relative">
-
-        <div class="post-filters pages-groups">
+    <div class="row-on-mobile">
+        <div class="post-filters pages-groups post-filters--auto-width">
             <div class="pane">
                 <div class="pan">
                     <template v-if="!noEventListFound && isEventListLoading">
-                        <div class="ft-grid ft-grid--12-xs">
+                        <div class="ft-grid">
                             <div class="ft-grid__item lg-loading-skeleton">
                                 <div class="ft_card">
                                     <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
                                     </div>
-                                    <div class="ft-card__primary">
+                                    <div class="ft-card__primary hidden-sm hidden-xs">
                                         <div class="ft-card__title lg-loadable">
                                             <h5 class="ft-event-card__title">&nbsp;</h5>
                                         </div>
@@ -47,7 +46,7 @@
                                 <div class="ft_card">
                                     <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
                                     </div>
-                                    <div class="ft-card__primary">
+                                    <div class="ft-card__primary hidden-sm hidden-xs">
                                         <div class="ft-card__title lg-loadable">
                                             <h5 class="ft-event-card__title">&nbsp;</h5>
                                         </div>
@@ -84,7 +83,44 @@
                                 <div class="ft_card">
                                     <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
                                     </div>
-                                    <div class="ft-card__primary">
+                                    <div class="ft-card__primary hidden-sm hidden-xs">
+                                        <div class="ft-card__title lg-loadable">
+                                            <h5 class="ft-event-card__title">&nbsp;</h5>
+                                        </div>
+                                        <div class="ft-card__list-wrapper">
+                                            <div class="ft-card__list">
+                                                <div class="icon lg-loadable"></div>
+                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                            <div class="ft-card__list">
+                                                <div class="icon icon-participant lg-loadable"></div>
+                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                            <div class="ft-card__list">
+                                                <div class="icon lg-loadable"></div>
+                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                            <div class="ft-card__list">
+                                                <div class="icon lg-loadable"></div>
+                                                <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                                    &nbsp;
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ft-grid__item lg-loading-skeleton">
+                                <div class="ft_card">
+                                    <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                    </div>
+                                    <div class="ft-card__primary hidden-sm hidden-xs">
                                         <div class="ft-card__title lg-loadable">
                                             <h5 class="ft-event-card__title">&nbsp;</h5>
                                         </div>
@@ -120,11 +156,13 @@
                         </div>
                     </template>
                     <template v-else-if="!noEventListFound">
-                        <div class="ft-grid ft-grid--12-xs">
+                        <div class="ft-grid">
                             <div v-for="(item, index) in eventList" :key="item.id" class="ft-grid__item">
-                                <div class="ft_card">
-                                    <div class="ft-card__primary">
+                                <div class="ft_card ft-card--shadow">
+                                    <div class="ft-card ft-card--only-image">
                                         <post-back-viewer v-on:open="showEventPost(item.event_id)" :post-img="item.media"></post-back-viewer>
+                                    </div>
+                                    <div class="ft-card__primary hidden-xs">
                                         <div class="ft-card__title lg-loadable">
                                             <h5 class="ft-event-card__title">{{item.name}}</h5>
                                         </div>
@@ -169,8 +207,7 @@
                 </div>
             </div>
         </div>
-
-        <aside class="md-drawer md-drawer--default" id="drawer-1">
+        <aside class="md-drawer" id="drawer-1">
             <div class="md-drawer__shadow"></div>
             <div class="md-drawer__surface">
                 <div class="md-drawer-scroll" style="position: relative">
@@ -201,53 +238,6 @@
                 </div>
             </div>
         </aside>
-
-        <div class="md-dialog md-dialog--full-screen md-dialog--full-screen--force" :id="eventUnid">
-            <div class="md-dialog__wrapper">
-                <div class="md-dialog__shadow"></div>
-                <div class="md-dialog__surface">
-                    <header class="md-dialog__header hidden">
-                        <button class="md-button md-button--icon md-dialog__header-action-dismissive" data-action="dismissive">
-                            <i class="icon icon-close">close</i>
-                        </button>
-                        <div class="md-dialog__header-title">
-                            Event
-                        </div>
-                    </header>
-                    <div class="md-dialog__body" style="margin-top: 0">
-                        <div v-for="(postItem, index) in postItemList" :key="postItem.id" class="md-drawer-scroll__wrapper" :id="'ft-event-post'+postItem.id">
-                            <div class="panel panel--eventlist panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
-                                <post-header event-list="true" v-on:close="closeEventPost" :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
-                                <div class="panel-body">
-                                    <post-image-viewer :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
-                                    <post-event event-list="true" :post-item="postItem" :post-index="index" :post-img="postItem.images"></post-event>
-                                    <post-description :post-html="postItem.description"></post-description>
-                                </div>
-                                <div class="md-layout-spacer"></div>
-                                <post-comment :post-index="index" :post-id="postItem.id" :post-item="postItem"></post-comment>
-                            </div>
-                        </div>
-                        <div v-if="isEventLoading && !noEventFound" class="absolute-loader">
-                            <div class="ft-loading">
-                                <span class="ft-loading__dot"></span>
-                                <span class="ft-loading__dot"></span>
-                                <span class="ft-loading__dot"></span>
-                            </div>
-                        </div>
-                        <div v-if="noEventFound" class="absolute-loader">
-                            <div class="ft-loading text-center">
-                                Event not found or deleted!
-                            </div>
-                        </div>
-                    </div>
-                    <footer class="hidden md-dialog__footer">
-                        <button class="md-dialog__action md-button md-button--compact" data-action="dismissive">CANCEL</button>
-                        <button class="md-dialog__action md-button md-button--compact" data-action="affirmative">CONTINUE</button>
-                    </footer>
-                </div>
-            </div>
-        </div>
-
     </div>
 </template>
 <script>
@@ -309,7 +299,7 @@
                 }
                 let e = $('#eventByHashTag')
                 if(e !== undefined && e.length) {
-                    url += '?'+ 'hashtag' + '=' + e.val()
+                    url += '?'+ 'tag' + '=' + e.val()
                 }
                 let u = $('#eventByUsername')
                 if(u !== undefined && u.length) {
@@ -368,13 +358,7 @@
             },
             showEventPost: function (e) {
                 this.postItem = {}
-                if($('body').width() < 599) {
-                    $('#drawer-1').MaterialDrawer('hide')
-                    $('#'+this.eventUnid).MaterialDialog('show')
-                } else {
-                    $('#drawer-1').MaterialDrawer('show')
-                    $('#'+this.eventUnid).MaterialDialog('hide')
-                }
+                $('#drawer-1').MaterialDrawer('show')
                 this.fetchNew(e)
             },
             closeEventPost: function (e) {
@@ -444,13 +428,7 @@
                 this.enableOverlay = true
             }
             this.getDefaultData()
-            if(this.enableOverlay) {
-                $('#drawer-1').MaterialDrawer({show: false})
-                $('#'+this.eventUnid).MaterialDialog({show: false})
-            } else {
-                $('#drawer-1').MaterialDrawer({show: false, permanent: true})
-                $('#'+this.eventUnid).MaterialDialog({show: false})
-            }
+            $('#drawer-1').MaterialDrawer({show: false, permanent: true})
         },
         components: {
             'post-description': postDescription,

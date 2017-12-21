@@ -3630,6 +3630,7 @@ class TimelineController extends AppBaseController
 
         return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
     }
+
     public function getGalleryByUsername(Request $request) {
         $timeline = Timeline::where('username', $request->username)->first();
         $user = User::where('timeline_id', $timeline['id'])->first();

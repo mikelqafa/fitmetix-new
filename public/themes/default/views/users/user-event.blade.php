@@ -1,5 +1,47 @@
 <link href="{{ asset('css/theme1.css') }}" rel="stylesheet">
 <link href="{{ asset('css/timeline-event.css') }}" rel="stylesheet">
+<style>
+    @media  screen and (min-width: 960px) {
+        .md-drawer--permanent {
+            width: auto;
+            padding-right: 0px;
+            padding-left: 0;
+            padding-top: 60px;
+            z-index: -1;
+        }
+        .md-drawer--permanent.md-drawer--visible {
+            z-index: 1 !important;
+        }
+        .md-drawer {
+            left: auto;
+            right:0;
+            width: 360px;
+            -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+        }
+        .md-drawer--permanent {
+            -webkit-transform: translateX(0px);
+            transform: translateX(0px);
+            max-width:100%;
+            width: 360px;
+        }
+        .md-drawer--permanent .md-drawer__surface {
+            -webkit-transform:translateX(360px);
+            transform:translateX(360px);
+            width:360px;
+            max-width: none;
+        }
+        .md-drawer--animating .md-drawer__surface {
+            -webkit-transform:translateX(360px);
+            transform:translateX(360px)
+        }
+
+        body.has-permanent-drawer.is-drawer-open {
+            padding-right: 360px;
+            padding-left: 0 !important;
+        }
+    }
+</style>
 <!-- main-section -->
 <div class="container container--standard section-container @if($timeline->hide_cover) no-cover @endif">
     <div class="row">
