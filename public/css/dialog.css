@@ -26,7 +26,8 @@
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-    line-height: 24px
+    line-height: 24px;
+    visibility: hidden;
 }
 
 .md-dialog__shadow {
@@ -129,7 +130,8 @@
 
 .md-dialog--open {
     pointer-events: auto;
-    z-index: 24
+    z-index: 24;
+    visibility: visible;
 }
 
 .md-dialog--open .md-dialog__shadow {
@@ -147,7 +149,8 @@
 
 .md-dialog--animating {
     pointer-events: none;
-    z-index: 24
+    z-index: 24;
+    visibility: visible;
 }
 
 .md-dialog--animating .md-dialog__shadow {

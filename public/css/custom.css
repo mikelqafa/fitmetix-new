@@ -289,7 +289,7 @@
         flex-basis: 50%;
         overflow: hidden;
     }
-    ..ft-card {
+    .ft-card {
         min-width: 0;
     }
     .layout-timeline__post.md-col{

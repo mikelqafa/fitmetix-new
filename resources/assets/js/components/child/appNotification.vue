@@ -106,6 +106,9 @@
                     case 'like_post':
                         url =  base_url + 'post/'+item.post_id
                     break
+                    case 'share_post':
+                        url =  base_url + 'post/'+item.post_id
+                    break
                     case 'unlike_post':
                         url =  base_url + 'post/'+item.post_id
                     break
