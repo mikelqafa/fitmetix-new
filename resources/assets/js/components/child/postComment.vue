@@ -417,7 +417,7 @@
                 this.$store.commit('SET_POST_SHARE_ITEM', {postIndex: this.postIndex})
                 setTimeout(function () {
                     $('#post-share-init-dialog').MaterialDialog('show')
-                }, 300)
+                }, 100)
             }
         },
         mounted () {

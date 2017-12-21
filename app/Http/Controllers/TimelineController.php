@@ -4280,6 +4280,7 @@ class TimelineController extends AppBaseController
         $user = DB::table('users')->where('timeline_id',$timeline->id)->first();
         Notification::create(['user_id' => $user->id, 'post_id' => $postId, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' wants you to view this post', 'type' => 'share_post', 'link' => '/post/'.$postId]);
       }
+      return response()->json(['status' => '200'], ['data'=> 'Post shared.']);
   }
 
 }

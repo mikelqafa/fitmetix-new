@@ -15,7 +15,7 @@
                 </a>
             </div>
         </div>
-        <div class="avatar-list md-layout md-layout--wrap">
+        <div class="avatar-list md-layout md-layout--wrap" v-show="selections.length">
             <div v-for="(item, index) in selections" class="margin-1" :key="item.name">
                 <div class="avatar-list__item" :style="{ backgroundImage: 'url('+ item.avatar +')' }" :title="item.name">
                     <a href="javascript:;" class="close-btn" title="remove" @click="removeFromSelections(index)">
@@ -160,6 +160,9 @@
                 }).catch(function(error) {
                     console.log(error)
                 })
+            },
+            reset: function () {
+                this.selections = []
             }
         }
     }

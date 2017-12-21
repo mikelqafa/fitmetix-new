@@ -29098,7 +29098,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.$store.commit('SET_POST_SHARE_ITEM', { postIndex: this.postIndex });
             setTimeout(function () {
                 $('#post-share-init-dialog').MaterialDialog('show');
-            }, 300);
+            }, 100);
         }
     },
     mounted: function mounted() {
@@ -30591,7 +30591,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
 
 
 
@@ -30650,35 +30649,47 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         confirmReport: function confirmReport() {
             var userList = this.$refs.shareUser.selections;
             if (userList !== undefined && userList.length) {
-                this.sharePost(userList);
+                this.sendPost();
             } else {
                 alertApp('Please add user to share!');
             }
         },
-        sharePost: function sharePost() {
+        sendPost: function sendPost() {
             var that = this;
             var _token = $("meta[name=_token]").attr('content');
             this.isLoading = true;
+            var users = [];
+            var data = this.$refs.shareuser.selections;
+            var post_id = this.postItem.id;
+            for (var i = 0; i < data.length; i++) {
+                users.push(data[i].name);
+            }
             axios({
                 method: 'post',
                 responseType: 'json',
-                url: base_url + 'ajax/share-post',
+                url: base_url + 'ajax/share-post-by-notification',
                 data: {
                     _token: _token,
-                    post_id: that.postItem.id,
-                    description: that.reportComment
+                    post_id: post_id,
+                    users: users
                 }
             }).then(function (response) {
+                console.log(response);
+                return;
                 if (response.status == 200) {
                     materialSnackBar({ messageText: response.data.message, autoClose: true });
-                    $('#post-share-dialog').MaterialDialog('hide');
-                    $('#post-share-dialog').MaterialDialog('hide');
-                    $('#post-image-theater-dialog').MaterialDialog('hide');
+                    $('#post-share-init-dialog').MaterialDialog('hide');
+                    //$('#post-share-dialog').MaterialDialog('hide')
+                    that.$refs.shareuser.reset();
+                    //$('#post-image-theater-dialog').MaterialDialog('hide')
                 }
                 that.isLoading = false;
-                that.reportComment = '';
+                // that.reportComment = ''
             }).catch(function (error) {
                 materialSnackBar({ messageText: error, autoClose: true });
+                $('#post-share-init-dialog').MaterialDialog('hide');
+                //$('#post-share-dialog').MaterialDialog('hide')
+                that.$refs.shareuser.reset();
                 that.isLoading = false;
             });
         },
@@ -31260,6 +31271,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (error) {
                 console.log(error);
             });
+        },
+        reset: function reset() {
+            this.selections = [];
         }
     }
 });
@@ -31390,7 +31404,17 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "avatar-list md-layout md-layout--wrap" },
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.selections.length,
+            expression: "selections.length"
+          }
+        ],
+        staticClass: "avatar-list md-layout md-layout--wrap"
+      },
       _vm._l(_vm.selections, function(item, index) {
         return _c("div", { key: item.name, staticClass: "margin-1" }, [
           _c(
@@ -31483,7 +31507,7 @@ var render = function() {
                             }
                           }),
                           _vm._v(" "),
-                          _c("app-autocomplete", { ref: "shareUser" })
+                          _c("app-autocomplete", { ref: "shareuser" })
                         ],
                         1
                       )
@@ -31494,18 +31518,8 @@ var render = function() {
                         "button",
                         {
                           staticClass:
-                            "md-dialog__action md-button md-button--compact",
-                          attrs: { "data-action": "dismissive" }
-                        },
-                        [_vm._v("CANCEL")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass:
                             "md-dialog__action md-button ft-btn-primary btn md-button--compact",
-                          on: { click: _vm.confirmReport }
+                          on: { click: _vm.sendPost }
                         },
                         [_vm._v("Send")]
                       )

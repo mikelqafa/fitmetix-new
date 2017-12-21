@@ -11,12 +11,11 @@
                             <div class="form-group">
                                 <label for="share-user-select">Select user to share:</label>
                                 <input placeholder="Send to" class="hidden form-control" id="share-user-select"/>
-                                <app-autocomplete ref="shareUser"></app-autocomplete>
+                                <app-autocomplete ref="shareuser"></app-autocomplete>
                             </div>
                         </div>
                         <footer class="md-dialog__footer">
-                            <button class="md-dialog__action md-button md-button--compact" data-action="dismissive">CANCEL</button>
-                            <button class="md-dialog__action md-button ft-btn-primary btn md-button--compact" @click="confirmReport">Send</button>
+                            <button class="md-dialog__action md-button ft-btn-primary btn md-button--compact" @click="sendPost">Send</button>
                         </footer>
                     </template>
                     <div v-if="isLoading" class="absolute-loader">
@@ -98,35 +97,47 @@
             confirmReport: function () {
                 let userList = this.$refs.shareUser.selections
                 if(userList !== undefined && userList.length) {
-                    this.sharePost (userList)
+                    this.sendPost()
                 } else {
                     alertApp('Please add user to share!')
                 }
             },
-            sharePost: function () {
+            sendPost: function () {
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
                 this.isLoading = true
+                let users = []
+                let data = this.$refs.shareuser.selections
+                let post_id = this.postItem.id
+                for(let i=0; i < data.length; i++ ) {
+                    users.push(data[i].name)
+                }
                 axios({
                     method: 'post',
                     responseType: 'json',
-                    url: base_url + 'ajax/share-post',
+                    url: base_url + 'ajax/share-post-by-notification',
                     data: {
                         _token: _token,
-                        post_id: that.postItem.id,
-                        description: that.reportComment
+                        post_id: post_id,
+                        users: users
                     }
                 }).then( function (response) {
+                    console.log(response)
+                    return
                     if (response.status ==  200) {
                         materialSnackBar({messageText: response.data.message, autoClose: true })
-                        $('#post-share-dialog').MaterialDialog('hide')
-                        $('#post-share-dialog').MaterialDialog('hide')
-                        $('#post-image-theater-dialog').MaterialDialog('hide')
+                        $('#post-share-init-dialog').MaterialDialog('hide')
+                        //$('#post-share-dialog').MaterialDialog('hide')
+                        that.$refs.shareuser.reset()
+                        //$('#post-image-theater-dialog').MaterialDialog('hide')
                     }
                     that.isLoading = false
-                    that.reportComment = ''
+                    // that.reportComment = ''
                 }).catch(function(error) {
                     materialSnackBar({messageText: error, autoClose: true })
+                    $('#post-share-init-dialog').MaterialDialog('hide')
+                    //$('#post-share-dialog').MaterialDialog('hide')
+                    that.$refs.shareuser.reset()
                     that.isLoading = false
                 })
             },
