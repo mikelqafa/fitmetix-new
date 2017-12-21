@@ -424,6 +424,7 @@ Route::post('/ajax/get-event-post-by-location','TimelineController@getEventPostB
 Route::post('/ajax/get-event-post-by-hashtag','TimelineController@getEventPostByHashtag');
 Route::post('/ajax/get-paid-event-unregister-requests','TimelineController@getPaidEventUnregisterRequests');
 Route::post('/ajax/share-post-by-notification','TimelineController@sharePostByNotification');
+Route::post('/ajax/accept-decline-unregister-request','TimelineController@acceptDeclineUnregisterRequest');
 Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {
     Route::post('upload-post-images', 'TimelineController@uploadPostImages');
     Route::post('create-post', 'TimelineController@createPost');

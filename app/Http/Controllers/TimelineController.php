@@ -4283,4 +4283,25 @@ class TimelineController extends AppBaseController
       return response()->json(['status' => '200'], ['data'=> 'Post shared.']);
   }
 
+  public function acceptDeclineUnregisterRequest(Request $request) {
+    $unregisterRequestId = $request->id;
+    $operation = $request->operation;
+    if ($operation == 'accept'){
+      $unregisterRequest = DB::table('event_unregister_request')->where('id',$unregisterRequestId)->first();
+      $registrationId = $unregisterRequest->event_reg_id;
+      $removeRequest = DB::table('event_unregister_request')->where('id',$unregisterRequestId)->delete();
+      $removeRegister = DB::table('event_user')->where('id',$registrationId)->delete();
+      if ($removeRequest AND $removeRegister){
+        return response()->json(['status' => '200'], ['data'=> 'Unregistered User']);
+      }
+    }
+    elseif ($operation == 'decline'){
+      $removeRequest = DB::table('event_unregister_request')->where('id',$unregisterRequestId)->delete();
+      return response()->json(['status' => '200'], ['data'=> 'Unregistered Request Declined']);
+    }
+    else{
+      return response()->json(['status' => '200'], ['data'=> 'Invalid Operation']);
+    }
+  }
+
 }
