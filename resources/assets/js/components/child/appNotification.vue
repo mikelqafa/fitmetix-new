@@ -113,10 +113,10 @@
                         url =  base_url + 'post/'+item.post_id
                     break
                     case 'follow':
-                        url =  base_url + item.notified_from
+                        url =  base_url + item.notified_from.username
                     break
                     case 'unfollow':
-                        url =  base_url + item.notified_from
+                        url =  base_url + item.notified_from.username
                     break
                     case 'unlike_post':
                         url =  base_url + 'post/'+item.post_id
