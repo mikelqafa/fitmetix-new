@@ -4304,4 +4304,17 @@ class TimelineController extends AppBaseController
     }
   }
 
+  public function unregisterUserEventByCreator(Request $request){
+      $eventId = $request->event_id;
+      $userId = $request->user_id;
+      $unregister = DB::table('event_user')->where('event_id',$eventId)->where('user_id',$userId)->delete();
+      $removeRequest = DB::table('event_unregister_request')->where('event_id',$eventId)->where('reg_user_id',$userId)->delete();
+      if ($unregister){
+        return response()->json(['status' => '200'], ['data'=> 'Unregister Successfull']);
+      }
+      else{
+        return response()->json(['status' => '200'], ['data'=> 'Failed to Unregister']);
+      }
+  }
+
 }
