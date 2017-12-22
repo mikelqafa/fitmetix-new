@@ -11,11 +11,12 @@
 					<div class="timeline-posts">
 						@if($mode == 'posts')
 							<input type="hidden" id="post-id" value="{{$post->id}}">
+							<input type="hidden" id="post-id" value="{{$post->id}}">
 							<div id="app-timeline">
 								<input type="hidden" id="newPostId">
 								<app-post-option></app-post-option>
 								<app-comment-option></app-comment-option>
-								<app-post>
+								<app-post-single>
 									<div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
 										<div class="panel-heading no-bg post-avatar md-layout md-layout--row">
 											<div class="user-avatar lg-loadable"></div>
@@ -30,7 +31,7 @@
 											<div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
 										</div>
 									</div>
-								</app-post>
+								</app-post-single>
 								<div id="scroll-bt"></div>
 							</div>
 						@elseif($mode == 'notifications')

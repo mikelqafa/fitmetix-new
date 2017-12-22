@@ -1974,6 +1974,7 @@ class TimelineController extends AppBaseController
 
     public function singlePost($post_id)
     {
+        // TODO amit maity
         $mode = 'posts';
         $post = Post::where('id', '=', $post_id)->first();
         $timeline = Auth::user()->timeline;

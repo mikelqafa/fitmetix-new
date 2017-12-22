@@ -34,6 +34,9 @@ export const store = new Vuex.Store({
         state.postItemList.push(postItem)
       }
     },
+    ADD_SINGLE_POST_ITEM (state, postItem) {
+        state.postItemList.push(postItem.data)
+    },
     REMOVE_POST_ITEM_LIST (state, index) {
       state.postItemList.splice(index, 1)
     },

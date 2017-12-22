@@ -203,14 +203,14 @@
                         post_id: postId
                     }
                 }).then( function (response) {
-                    let that = this
                     custTomData.isLoadingCurrent = false
                     if (response.status ==  200) {
                         let post = response.data[0].post;
                         vmThat.$store.commit('ADD_POST_ITEM_LIST',{data:post[0], postFrom: 'timeline'})
                         setTimeout(function () {
-                            hashtagify()
-                            mentionify()
+                            emojify.run();
+                            hashtagify();
+                            mentionify();
                         }, 1000)
                     }
                 }).catch(function(error) {
@@ -221,17 +221,8 @@
         mounted () {
             let that = this
             vmThat = this
-            if($('#post-id').length) {
-                this.singlePost = true
-            }
-            setTimeout(function () {
-                if(!that.singlePost) {
-                    that.getDefaultData()
-                    that.scrollFetchInit()
-                } else {
-                    that.fetchNewOnePost($('#post-id').val())
-                }
-            }, 1000)
+            that.getDefaultData()
+            that.scrollFetchInit()
         },
         components: {
             'post-description': postDescription,
@@ -250,8 +241,8 @@
                     itemList: 'postItemList'
                 }),
             isLoading () {
-            return this.itemList.length === 0
-        }
+                return !(this.itemList.length !== 0 && this.itemList[0] !== undefined)
+            }
         }
     }
 </script>

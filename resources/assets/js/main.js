@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Post from './components/Post'
+import PostSingle from './components/PostSingle'
 import GalleryPostByHLU from './components/GalleryPostByHLU'
 import EventPostByHLU from './components/EventPostByHLU'
 import createPost from './components/createPost'
@@ -35,6 +36,7 @@ window.timeLine = new Vue({
   store,
   components: {
     'app-post': Post,
+    'app-post-single': PostSingle,
     'app-gallery-hlu': GalleryPostByHLU,
     'app-event-hlu': EventPostByHLU,
     'app-post-option': postDialogOption,
