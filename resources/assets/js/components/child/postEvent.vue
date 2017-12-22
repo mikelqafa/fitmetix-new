@@ -2,7 +2,7 @@
     <div v-if="hasItem">
         <div class="ft-card__primary">
             <div class="ft-card__title text-center">
-                    <h4 class="ft-event-card__title">{{ postItem.timeline.name }}</h4>
+                    <h4 class="ft-event-card__title">{{ event.timeline.name }}</h4>
             </div>
             <div class="ft-card__list-wrapper">
                 <div class="ft-card__list">

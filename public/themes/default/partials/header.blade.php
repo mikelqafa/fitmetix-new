@@ -93,7 +93,17 @@
                                     </a>
                                 </li>
                             @endif
-
+                            <li class="">
+                                <div class="ft-menu__item ft-menu__item--icon">
+                                    <i class="" aria-hidden="true">
+                                        <img class="img-responsive" src="{{asset('images/drop.png')}}" style="max-width: 18px">
+                                    </i> <div class="md-layout md-layout--row">
+                                        <div class="color-picker" data-color="#f9fafc" title="Change Theme"></div>
+                                        <div class="color-picker" data-color="#ffffff" title="Change Theme"></div>
+                                        <div class="color-picker" data-color="#fbf1f4" title="Change Theme"></div>
+                                    </div>
+                                </div>
+                            </li>
                         <li>
                             <form action="{{ url('/logout') }}" method="post">
                                 {{ csrf_field() }}

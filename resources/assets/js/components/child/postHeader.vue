@@ -82,13 +82,12 @@
                 return '@' + this.timeLineData.username
             },
             userAvatar () {
-                if(this.timeLineData.avatar_url === undefined) {
-                    return base_url + 'images/' + this.defaultImage
-                }
-                return this.timeLineData.avatar_url.length ? asset_url + 'uploads/users/avatars/' + this.timeLineData.avatar_url[0].source :base_url + 'images/' + this.defaultImage
+                return this.isTypeEvent ?
+                        this.postData.creator_timeline.avatar_url.length ? asset_url + 'uploads/users/avatars/' + this.postData.creator_timeline.avatar_url[0].source : base_url + 'images/' + this.defaultImage:
+                        this.postData.timeline.avatar_url.length ? asset_url + 'uploads/users/avatars/' + this.postData.timeline.avatar_url[0].source : base_url + 'images/' + this.defaultImage
             },
             headerTitle () {
-                return this.eventList ? this.timeLineData.name : this.timeLineData.name
+                return this.isTypeEvent ? this.postData.creator_timeline.name : this.postData.timeline.name
             },
             isTypeEvent: function () {
                 return this.postData.type !== undefined && this.postData.type === 'event'

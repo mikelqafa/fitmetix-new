@@ -46,6 +46,9 @@ export const store = new Vuex.Store({
     EDIT_POST_ITEM (state, obj) {
       Vue.set(state.postItemList[obj.index], 'description', obj.description)
     },
+    REPLACE_POST_ITEM(state, obj) {
+      Vue.set(state.postItemList, obj.index, obj.data)
+    },
     SET_POST_FOR_THEATER (state, postItems) {
       state.postItemList = postItems
     },

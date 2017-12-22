@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Post from './components/Post'
+import Profile from './components/Profile'
 import PostSingle from './components/PostSingle'
 import GalleryPostByHLU from './components/GalleryPostByHLU'
 import EventPostByHLU from './components/EventPostByHLU'
@@ -57,6 +58,13 @@ window.createPost = new Vue({
   el: '#app-create-post',
   components: {
     'app-create-post': createPost
+  }
+})
+
+window.profile = new Vue({
+  el: '#app-profile',
+  components: {
+    'app-profile':Profile
   }
 })
 

@@ -51,7 +51,7 @@
                         </div>
                     </div>
                 </template>
-                <div v-for="(postItem, index) in itemList" :key="postItem.id" class="panel panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
+                <div v-for="(postItem, index) in itemList" :key="postItem.id" class="panel panel-default ft-theme--color timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
                     <post-header :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
                     <div class="panel-body">
                         <post-description :post-html="postItem.description"></post-description>

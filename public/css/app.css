@@ -18277,6 +18277,7 @@ html {
     height: 120px;
     padding: 7px;
     position: relative;
+    border-radius: 50%;
 }
 @media (max-width: 560px) {
     .timeline-user-avtar {

@@ -17,7 +17,7 @@
                             <image-theater-surface :post-event="postItem.event" :post-index="theaterPostItem.postIndex" :post-img="postItem.images"></image-theater-surface>
                         </template>
                     </div>
-                    <div class="stage-photo-sidebar">
+                    <div class="stage-photo-sidebar ft-theme--color">
                         <header class="panel-post hidden-xs">
                             <template v-if="holaMola">
                                 <post-header style="flex-grow: 1" :post-data="postItem" :post-index="theaterPostItem.postIndex" :date="postItem.created_at"></post-header>

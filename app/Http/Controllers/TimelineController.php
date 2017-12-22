@@ -2033,7 +2033,7 @@ class TimelineController extends AppBaseController
         ->render();
     }
 
-		public function getEventApi(Request $request) {
+    public function getEventApi(Request $request) {
     	$location = $request->location;
     	$date     = $request->date;
     	$tag      = $request->tag;
@@ -2093,7 +2093,7 @@ class TimelineController extends AppBaseController
 
 		}
 
-		public function getRegisterButton(Request $request) {
+    public function getRegisterButton(Request $request) {
       $date = gmdate('Y-m-d H:i:s');
 			$event_id = $request->event_id;
 			$user_id  = $request->uid;
@@ -2263,11 +2263,9 @@ class TimelineController extends AppBaseController
 		$participant = $request->participant;
 		$event_id   = $request->event_id;
 		$title 			= $request->title;
-		$start_date = $request->start_date;
-		$duration   = $request->duration;
-		$date = date_create($start_date);
-		date_add($date,date_interval_create_from_date_string($duration.'hours'));
-		$end_date = $date->format('Y-m-d H:i:s');
+        $start_date = date('Y-m-d H:i', strtotime($request->start_date));
+        $end_date = Carbon::parse($start_date);
+        $end_date = $end_date->addSeconds($request->duration);
 		$description = $request->description;
 		$event_model = new Event();
 		$timeine_model = new Timeline();
@@ -2551,7 +2549,7 @@ class TimelineController extends AppBaseController
         // $end_date  = date('Y-m-d H:i', strtotime($request->end_date));
 
         $end_date = Carbon::parse($start_date);
-        $end_date = $end_date->addHours($request->duration);
+        $end_date = $end_date->addSeconds($request->duration);
         if ($start_date >= date('Y-m-d', strtotime(Carbon::now())) && $end_date >= $start_date) {
             $user_timeline = Timeline::where('username', $username)->first();
             $i = 0;
@@ -3480,7 +3478,7 @@ class TimelineController extends AppBaseController
                 $event = $event->toArray();
                 $creatorId = $event[0]['user_id'];
                 $creator = DB::table('users')->where('id',$creatorId)->first();
-                $creatorTimeline = DB::table('timelines')->where('id',$creator->timeline_id)->first();
+                $creatorTimeline = Timeline::where('id',$creator->timeline_id)->first();
                 $post['creator_timeline'] = $creatorTimeline;
                 foreach ($post['event'] as $user_event) {
                     $user_event['event_details'] = $user_event->timeline->username;
@@ -3736,14 +3734,54 @@ class TimelineController extends AppBaseController
     }
 
     public function singlePostAPI(Request $request) {
-        $timeline = Timeline::where('username', $request->username)->first();
 
-        $post = $timeline->posts()->where([['active', 1],['id',$request->post_id]])->with('timeline')->get();
-        foreach ($post as $p) {
-            if($p->images()->count() > 0) {
-                $p['images'] = $p->images()->get();
+        $post = Post::find($request->post_id);
+        $timeline = Timeline::find($post->timeline_id);
+
+        if($post->images()->count() > 0) {
+            $post['images'] = $post->images()->get();
+        }
+        if($post->comments()->count() > 0) {
+            $post['comments'] = $post->comments()->where('user_id',$post->user_id)->get();
+        }
+
+        $post['likes_count'] = $post->users_liked()->count();
+        $post['user_liked'] = false;
+
+        if($post['likes_count'] > 0) {
+            if($post->users_liked()->where('user_id',Auth::user()->id)->count()) {
+                $post['user_liked'] = true;
             }
         }
+
+        if($post->type == 'event'){
+            $event = Event::where('timeline_id',$post->timeline_id)->latest()->get();
+            $post['event'] = $event;
+            $event = $event->toArray();
+            $creatorId = $event[0]['user_id'];
+            $creator = DB::table('users')->where('id',$creatorId)->first();
+            $creatorTimeline = Timeline::where('id',$creator->timeline_id)->first();
+            $post['creator_timeline'] = $creatorTimeline;
+            foreach ($post['event'] as $user_event) {
+                $user_event['event_details'] = $user_event->timeline->username;
+                if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
+                    $user_event['event_tags'] = $matches[0];
+                }
+                if($user_event->users->contains(Auth::user()->id)){
+                    $user_event['registered'] = true;
+                }
+                if($user_event->start_date < Carbon::now()){
+                    $user_event['expired'] = true;
+                }
+                $event_host = User::find($creatorId);
+                if ($event_host) {
+                    $user_event['host_name'] = $event_host->timeline->name;
+                }
+            }
+        }
+
+        $post_image_path = storage_path().'/uploads/users/gallery/';
+        $event_image_path = storage_path().'/uploads/events/covers/';
 
         $image_path = storage_path().'/uploads/users/gallery/';
 
@@ -4017,7 +4055,7 @@ class TimelineController extends AppBaseController
       }
     }
 
-  public function unregisterEvent(Request $request)
+    public function unregisterEvent(Request $request)
   {
       $eventId = $request->event_id;
       $userId = $request->user_id;
@@ -4167,7 +4205,7 @@ class TimelineController extends AppBaseController
         return $theme->scope('users/user-event', compact('user','timeline', 'timeline_type', 'follow_user_status', 'followRequests', 'following_count', 'followers_count', 'timeline_post', 'user_post', 'follow_confirm', 'joined_groups_count','group_members', 'page_members', 'event', 'user_events', 'guest_events', 'username'))->render();
     }
 
-  public function getEventPostByLocation(Request $request) {
+    public function getEventPostByLocation(Request $request) {
     $timeline = Timeline::where('username', $request->username)->first();
     $location = '%'.$request->location.'%';
     $id = Auth::user()->id;
@@ -4225,7 +4263,7 @@ class TimelineController extends AppBaseController
     return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
   }
 
-  public function getEventPostByHashtag(Request $request) {
+    public function getEventPostByHashtag(Request $request) {
     $timeline = Timeline::where('username', $request->username)->first();
     $hashtag = '%'.$request->hashtag.'%';
     $id = Auth::user()->id;
@@ -4282,7 +4320,7 @@ class TimelineController extends AppBaseController
     return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
   }
 
-  public function getPaidEventUnregisterRequests(Request $request) {
+    public function getPaidEventUnregisterRequests(Request $request) {
     $eventOwnerId = $request->event_owner_id;
     $eventId = $request->event_id;
     if (empty($eventId)) {
@@ -4306,7 +4344,7 @@ class TimelineController extends AppBaseController
     }
   }
 
-  public function sharePostByNotification(Request $request){
+    public function sharePostByNotification(Request $request){
       //todo: translation not implemented for the description.
       $postId = $request->post_id;
       $users = $request->users;
@@ -4315,10 +4353,10 @@ class TimelineController extends AppBaseController
         $user = DB::table('users')->where('timeline_id',$timeline->id)->first();
         Notification::create(['user_id' => $user->id, 'post_id' => $postId, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' wants you to view this post', 'type' => 'share_post', 'link' => '/post/'.$postId]);
       }
-      return response()->json(['status' => '200'], ['data'=> 'Post shared.']);
+      return response()->json(['status' => '200','data' => 'Post Shared']);
   }
 
-  public function acceptDeclineUnregisterRequest(Request $request) {
+    public function acceptDeclineUnregisterRequest(Request $request) {
     $unregisterRequestId = $request->id;
     $operation = $request->operation;
     if ($operation == 'accept'){
@@ -4339,7 +4377,7 @@ class TimelineController extends AppBaseController
     }
   }
 
-  public function unregisterUserEventByCreator(Request $request){
+    public function unregisterUserEventByCreator(Request $request){
       $eventId = $request->event_id;
       $userId = $request->user_id;
       $unregister = DB::table('event_user')->where('event_id',$eventId)->where('user_id',$userId)->delete();

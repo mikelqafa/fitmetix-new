@@ -2164,6 +2164,7 @@ $(".settings_switch").change(function(){
 
 });
 
+
 //deleting group
 $(document).on('click','.delete-group',function(e){
       e.preventDefault();

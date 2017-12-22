@@ -2175,3 +2175,26 @@ function alertApp (text) {
   $('#app-alert .app-alert__text').html(text)
   $('#app-alert').MaterialDialog('show')
 }
+
+$(function() {
+  $('.color-picker').click(function() {
+    var c = $(this).attr('data-color')
+    $('body').attr('data-theme',c)
+    let _token = $("meta[name=_token]").attr('content')
+    /*axios({
+     method: 'post',
+     responseType: 'json',
+     url: base_url + 'get-single-post',
+     data: {
+     _token: _token,
+     color: c
+     }
+     }).then( function (response) {
+     if (response.status ==  200) {
+     materialSnackBar({messageText: 'Theme color has been changed', autoClose: true })
+     }
+     }).catch(function(error) {
+     console.log(error)
+     })*/
+  })
+})
