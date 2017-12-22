@@ -2284,6 +2284,39 @@ class TimelineController extends AppBaseController
 		DB::table('posts')->where('timeline_id','=',$event[0]['timeline_id'])->update(['description' => $description]);
 		return response()->json(['status' => '200','error' => FALSE,'err_msg'=>'','success'=>TRUE]);
 	}
+
+	public function setUserBackground(Request $request) {
+		$user_id = $request->user_id;
+		$color_code = $request->color_code;
+		$user_model = new User();
+		$user_model->where('id','=',$user_id)->update(['color_code' => $color_code]);
+		Session::put('color_code',$color_code);
+		return response()->json(['status' => '200','error' => FALSE,'err_msg'=>'','success'=>TRUE]);
+	}
+
+	public function getUserBackground(Request $request) {
+		$user_id = $request->user_id;
+		$user_model = new User();
+		$user = $user_model->where('id','=',$user_id)->get()->toArray();
+		if(!empty($user)) {
+			$color_code = $user[0]['color_code'];
+			Session::put('color_code', $color_code);
+			return response()->json([
+				'status' => '200',
+				'error' => FALSE,
+				'err_msg' => '',
+				'success' => TRUE
+			]);
+		}
+		else {
+			return response()->json([
+				'status' => '200',
+				'error' => TRUE,
+				'err_msg' => 'User Not Found',
+				'success' => FALSE
+			]);
+		}
+	}
 		
     public function eventsListFilteredLocation(Request $request)
     {
