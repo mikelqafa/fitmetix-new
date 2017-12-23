@@ -197,7 +197,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['auth', 'role:admin']], fun
 });
 Route::get('/ajax/get-events','TimelineController@getEventApi');
 Route::get('/ajax/get-register-button','TimelineController@getRegisterButton');
-Route::get('/ajax/get-event-post-by-eventid','TimelineController@getEventPostByEventId');
+Route::post('/ajax/get-event-post-by-eventid','TimelineController@getPostByEventId');
 Route::get('/ajax/update-event','TimelineController@updateEvent');
 Route::post('/ajax/set-user-background-color','TimelineController@setUserBackground');
 Route::post('/ajax/get-user-background-color','TimelineController@getUserBackground');

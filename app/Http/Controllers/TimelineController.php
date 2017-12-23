@@ -2192,6 +2192,13 @@ class TimelineController extends AppBaseController
 			}
 		}
 
+    public function getPostByEventId(Request $request) {
+        $event = Event::find($request->event_id);
+        $post = Post::where('timeline_id',$event->timeline_id)->first();
+        $request->request->add(['post_id'=>$post->id]);
+        return $this->singlePostAPI(request());
+    }
+
 	public function getEventPostByEventId(Request $request) {
 			$event_id = $request->event_id;
 			if($event_id != '') {
@@ -3732,10 +3739,8 @@ class TimelineController extends AppBaseController
     }
 
     public function singlePostAPI(Request $request) {
-
         $post = Post::find($request->post_id);
         $timeline = Timeline::find($post->timeline_id);
-
         if($post->images()->count() > 0) {
             $post['images'] = $post->images()->get();
         }

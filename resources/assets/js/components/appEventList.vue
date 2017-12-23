@@ -293,7 +293,8 @@
                             <post-header event-list="true" v-on:close="closeEventPost" :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
                             <div class="panel-body">
                                 <post-image-viewer :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
-                                <post-event event-list="true" :post-item="postItem" :post-index="index"></post-event>
+                                <post-event :post-item="postItem" :post-index="index" :post-img="postItem.images"
+                                            event-list="true"></post-event>
                                 <post-description :post-html="postItem.description"></post-description>
                             </div>
                             <div class="md-layout-spacer"></div>
@@ -309,6 +310,10 @@
                         </div>
                     </div>
                     <div v-if="noEventFound" class="absolute-loader">
+                        <header class="md-layout md-layout--row">
+                            <div class="md-layout-spacer"></div>
+                            <a href="javascript:;" @click="closeEventPost" class="ft-btn--icon ft-btn-icon"><i class="icon icon-close"></i></a>
+                        </header>
                         <div class="ft-loading text-center">
                             Event not found or deleted!
                         </div>
@@ -444,38 +449,19 @@
                 this.$store.commit('RESET_POST_ITEM_LIST')
                 that.noEventFound = false
                 axios({
-                    method: 'get',
+                    method: 'post',
                     responseType: 'json',
-                    url: base_url + 'ajax/get-event-post-by-eventid?event_id='+postId,
+                    url: base_url + 'ajax/get-event-post-by-eventid',
                     data: {
-                        _token: _token
+                        _token: _token,
+                        event_id: postId
                     }
                 }).then( function (response) {
                     that.showProgress = false
+                    console.log(response)
                     if (response.status ==  200) {
-                        let data = response.data
-                        if(data.error) {
-                            that.noEventFound = true
-                            return
-                        }
-                        console.log(data)
-                        let obj = { }
-                        obj.active = 1
-                        obj.created_at = data.post.created_at
-                        obj.description = data.post.description
-                        obj.event = [data.event]
-                        obj.id = data.post.id
-                        obj.images = data.event_media
-                        obj.likes_count = 0
-                        obj.location = ''
-                        obj.shared_post_id = data.post.shared_post_id
-                        obj.timeline = data.event_timeline
-                        obj.timeline_id = data.post.timeline_id
-                        obj.type = "event"
-                        obj.updated_at = ""
-                        obj.user_id = data.post.user_id
-                        obj.user_liked = false
-                        obj.event_media = data.event_media
+                        let obj = response.data[0].post
+                        obj.timeline = response.data[0].timeline
                         that.$store.commit('ADD_POST_ITEM_LIST',{data:obj, postFrom: 'timeline'})
                         setTimeout(function () {
                             hashtagify()
@@ -486,27 +472,32 @@
                     console.log(error)
                     that.showProgress = false
                 })
-            },
+            }
         },
         mounted() {
+
             $( ".filter-date" ).datepicker({
                 format: 'mm/dd/yyyy',
                 ignoreReadonly: true,
                 allowInputToggle: true
             });
+
             $('#drawer-1').MaterialDrawer({show: false, permanent: true})
 
             if($('#location').length) {
                 this.showFilter = false
                 this.location = true
             }
+
             if($('#hashtag').length) {
                 this.showFilter = false
                 this.hashtag = true
             }
 
             this.getDefaultData()
+
             initMap()
+
             initMapDesk()
         },
         components: {

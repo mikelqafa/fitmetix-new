@@ -27233,7 +27233,8 @@ var vmThat = void 0;
                 custTomData.isLoadingCurrent = false;
                 if (response.status == 200) {
                     var post = response.data[0].post;
-                    vmThat.$store.commit('ADD_POST_ITEM_LIST', { data: post[0], postFrom: 'timeline' });
+                    post.timeline = response.data[0].timeline;
+                    vmThat.$store.commit('ADD_POST_ITEM_LIST', { data: post, postFrom: 'timeline' });
                     setTimeout(function () {
                         emojify.run();
                         hashtagify();
@@ -40996,6 +40997,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -41116,38 +41122,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.$store.commit('RESET_POST_ITEM_LIST');
             that.noEventFound = false;
             axios({
-                method: 'get',
+                method: 'post',
                 responseType: 'json',
-                url: base_url + 'ajax/get-event-post-by-eventid?event_id=' + postId,
+                url: base_url + 'ajax/get-event-post-by-eventid',
                 data: {
-                    _token: _token
+                    _token: _token,
+                    event_id: postId
                 }
             }).then(function (response) {
                 that.showProgress = false;
+                console.log(response);
                 if (response.status == 200) {
-                    var data = response.data;
-                    if (data.error) {
-                        that.noEventFound = true;
-                        return;
-                    }
-                    console.log(data);
-                    var obj = {};
-                    obj.active = 1;
-                    obj.created_at = data.post.created_at;
-                    obj.description = data.post.description;
-                    obj.event = [data.event];
-                    obj.id = data.post.id;
-                    obj.images = data.event_media;
-                    obj.likes_count = 0;
-                    obj.location = '';
-                    obj.shared_post_id = data.post.shared_post_id;
-                    obj.timeline = data.event_timeline;
-                    obj.timeline_id = data.post.timeline_id;
-                    obj.type = "event";
-                    obj.updated_at = "";
-                    obj.user_id = data.post.user_id;
-                    obj.user_liked = false;
-                    obj.event_media = data.event_media;
+                    var obj = response.data[0].post;
+                    obj.timeline = response.data[0].timeline;
                     that.$store.commit('ADD_POST_ITEM_LIST', { data: obj, postFrom: 'timeline' });
                     setTimeout(function () {
                         hashtagify();
@@ -41161,24 +41148,29 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
     },
     mounted: function mounted() {
+
         $(".filter-date").datepicker({
             format: 'mm/dd/yyyy',
             ignoreReadonly: true,
             allowInputToggle: true
         });
+
         $('#drawer-1').MaterialDrawer({ show: false, permanent: true });
 
         if ($('#location').length) {
             this.showFilter = false;
             this.location = true;
         }
+
         if ($('#hashtag').length) {
             this.showFilter = false;
             this.hashtag = true;
         }
 
         this.getDefaultData();
+
         initMap();
+
         initMapDesk();
     },
 
@@ -41883,9 +41875,10 @@ var render = function() {
                             _vm._v(" "),
                             _c("post-event", {
                               attrs: {
-                                "event-list": "true",
                                 "post-item": postItem,
-                                "post-index": index
+                                "post-index": index,
+                                "post-img": postItem.images,
+                                "event-list": "true"
                               }
                             }),
                             _vm._v(" "),
@@ -41918,6 +41911,20 @@ var render = function() {
               _vm._v(" "),
               _vm.noEventFound
                 ? _c("div", { staticClass: "absolute-loader" }, [
+                    _c("header", { staticClass: "md-layout md-layout--row" }, [
+                      _c("div", { staticClass: "md-layout-spacer" }),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "ft-btn--icon ft-btn-icon",
+                          attrs: { href: "javascript:;" },
+                          on: { click: _vm.closeEventPost }
+                        },
+                        [_c("i", { staticClass: "icon icon-close" })]
+                      )
+                    ]),
+                    _vm._v(" "),
                     _c("div", { staticClass: "ft-loading text-center" }, [
                       _vm._v(
                         "\n                        Event not found or deleted!\n                    "
