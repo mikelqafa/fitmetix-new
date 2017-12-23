@@ -74,7 +74,7 @@
         }
     </style>
 </head>
-<body data-theme="#fbf1f4" id="fitmetix-app" @if(Setting::get('enable_rtl') == 'on') class="direction-rtl" @endif>
+<body data-theme="{{ Session::get('color_code') }}" id="fitmetix-app" @if(Setting::get('enable_rtl') == 'on') class="direction-rtl" @endif>
 
 <div id="app-alert" class="md-dialog md-dialog--center md-dialog--confirm" aria-hidden="false">
     <div class="md-dialog__wrapper">

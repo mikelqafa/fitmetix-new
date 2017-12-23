@@ -44,6 +44,7 @@ use Illuminate\Support\Facades\Schema;
 use LaravelPusher;
 use App\Follower;
 use App\EventUser;
+use Session;
 
 class TimelineController extends AppBaseController
 {
@@ -2284,11 +2285,8 @@ class TimelineController extends AppBaseController
 	}
 
 	public function setUserBackground(Request $request) {
-		$user_id = $request->user_id;
-		$color_code = $request->color_code;
-		$user_model = new User();
-		$user_model->where('id','=',$user_id)->update(['color_code' => $color_code]);
-		Session::put('color_code',$color_code);
+        User::find(Auth::user()->id)->update(['color_code' => $request->color_code]);
+		Session::put('color_code',$request->color_code);
 		return response()->json(['status' => '200','error' => FALSE,'err_msg'=>'','success'=>TRUE]);
 	}
 

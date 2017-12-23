@@ -12,6 +12,8 @@ use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Session;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -92,6 +94,8 @@ class LoginController extends Controller
         }
 
         if ($canLogin && Auth::attempt(['email' => $nameoremail, 'password' => $request->password], $remember)) {
+            $color_code = User::find($user->id)->color_code;
+            Session::put('color_code',$color_code);
             return response()->json(['status' => '200', 'message' => trans('auth.login_success')]);
         } else {
             return response()->json(['status' => '201', 'message' => trans('auth.login_failed')]);

@@ -199,8 +199,8 @@ Route::get('/ajax/get-events','TimelineController@getEventApi');
 Route::get('/ajax/get-register-button','TimelineController@getRegisterButton');
 Route::get('/ajax/get-event-post-by-eventid','TimelineController@getEventPostByEventId');
 Route::get('/ajax/update-event','TimelineController@updateEvent');
-Route::get('/ajax/set-user-background-color','TimelineController@setUserBackground');
-Route::get('/ajax/get-user-background-color','TimelineController@getUserBackground');
+Route::post('/ajax/set-user-background-color','TimelineController@setUserBackground');
+Route::post('/ajax/get-user-background-color','TimelineController@getUserBackground');
 /*
 |--------------------------------------------------------------------------
 | Messages routes
