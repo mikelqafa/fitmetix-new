@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf_token" content="{!! csrf_token() !!}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <meta name="viewport"
-          content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"/>
 
 
     <!-- Add to home screen for Android and modern mobile browsers -->
@@ -151,7 +150,10 @@
             FB.init({
                 appId      : '217416572121069',
                 xfbml      : true,
-                version    : 'v2.10'
+                autoLogAppEvents: true,
+                version    : 'v2.10',
+                cookie:true,
+                status:true
             });
             FB.AppEvents.logPageView();
         };

@@ -31,10 +31,22 @@
                 </div>
             </div>
         </div>
-        <div class="text-center layout-m-b-1" v-if="eventList">
-            <a class="btn btn-submit ft-btn-primary" :href="userLink">
-                Register
-            </a>
+        <div class="text-center layout-m-b-1">
+            <div class="pos-rel flex-inline">
+                <button type="button" class="btn btn-submit ft-btn-primary" @click="registerEvent">
+                    <template v-if="isRegistered">
+                        Unregister
+                    </template>
+                    <template v-else="">
+                        Register
+                    </template>
+                </button>
+                <div class="ft-loading ft-loading--abs" v-if="isLoading">
+                    <span class="ft-loading__dot"></span>
+                    <span class="ft-loading__dot"></span>
+                    <span class="ft-loading__dot"></span>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -42,10 +54,13 @@
     export default {
         props: {
             postItem: {},
-            eventList:false
+            eventList:false,
+            postIndex: ''
         },
         data: function () {
-            return {}
+            return {
+                isLoading: false
+            }
         },
         methods: {
             getCoverImage: function(i) {
@@ -76,6 +91,67 @@
             },
             formatUrl: function(u) {
                 return base_url+ 'locate-on-map/' + u
+            },
+            unRegister: function () {
+                let _token = $("meta[name=_token]").attr('content')
+                let that = this
+                this.isLoading = true
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: SP_source() + 'ajax/unregister-event',
+                    data: {
+                        event_id: that.event.id,
+                        user_id: user_id,
+                        _token: _token
+                    }
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        materialSnackBar({messageText: response.data.data, autoClose: true })
+                        that.$store.commit('SET_EVENT_STATUS', {postIndex: that.postIndex, name: 'registered', status: false})
+                        /*if (response.data.liked == true) {
+                         Vue.set(that.commentItemList[index], 'isLiked', true)
+                         } else {
+                         Vue.set(that.commentItemList[index], 'isLiked', false)
+                         }*/
+                    }
+                    that.isLoading = false
+                }).catch(function (error) {
+                    that.isLoading = false
+                    console.log(error)
+                })
+            },
+            registerEvent: function () {
+                if(this.isRegistered) {
+                    this.unRegister()
+                    return
+                }
+                if(this.event.price > 0) {
+                    // joiningPaidEvent
+                }
+                let _token = $("meta[name=_token]").attr('content')
+                let that = this
+                this.isLoading = true
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: SP_source() + 'ajax/join-event',
+                    data: {
+                        timeline_id: that.event.timeline_id,
+                        _token: _token
+                    }
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        materialSnackBar({messageText: response.data.message, autoClose: true })
+                        let obj = {postIndex: that.postIndex, name: 'registered', status: response.data.joined}
+                        that.$store.commit('SET_EVENT_STATUS', obj)
+                    }
+                    that.isLoading = false
+                }).catch(function (error) {
+                    that.isLoading = false
+                    console.log(error)
+                })
+                //Vue.set(that.commentItemList[index], 'isLiked', !that.commentItemList[index].isLiked)
             }
         },
         computed: {
@@ -88,11 +164,12 @@
             eventPrice () {
                 return this.hasItem ? (this.event.price !== 0 &&  this.event.price !== null) ? this.event.price : 'Free' : ''
             },
-            userLink () {
-                return base_url + this.postItem.timeline.username
+            isRegistered () {
+                return this.hasItem ? this.event.registered : false
             }
         },
         mounted() {
+            console.log(this.event)
         }
     }
 </script>

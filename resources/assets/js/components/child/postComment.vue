@@ -403,7 +403,6 @@
                         } else {
                             Vue.set(that.commentItemList[index], 'isLiked', false)
                         }
-                        that.$store.dispatch('sendNotification', {meow: 'meow'})
                     }
                 }).catch(function (error) {
                     console.log(error)

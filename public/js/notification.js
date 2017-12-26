@@ -27979,14 +27979,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
         postItem: {},
-        eventList: false
+        eventList: false,
+        postIndex: ''
     },
     data: function data() {
-        return {};
+        return {
+            isLoading: false
+        };
     },
     methods: {
         getCoverImage: function getCoverImage(i) {
@@ -28017,6 +28032,67 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         formatUrl: function formatUrl(u) {
             return base_url + 'locate-on-map/' + u;
+        },
+        unRegister: function unRegister() {
+            var _token = $("meta[name=_token]").attr('content');
+            var that = this;
+            this.isLoading = true;
+            axios({
+                method: 'post',
+                responseType: 'json',
+                url: SP_source() + 'ajax/unregister-event',
+                data: {
+                    event_id: that.event.id,
+                    user_id: user_id,
+                    _token: _token
+                }
+            }).then(function (response) {
+                if (response.status == 200) {
+                    materialSnackBar({ messageText: response.data.data, autoClose: true });
+                    that.$store.commit('SET_EVENT_STATUS', { postIndex: that.postIndex, name: 'registered', status: false });
+                    /*if (response.data.liked == true) {
+                     Vue.set(that.commentItemList[index], 'isLiked', true)
+                     } else {
+                     Vue.set(that.commentItemList[index], 'isLiked', false)
+                     }*/
+                }
+                that.isLoading = false;
+            }).catch(function (error) {
+                that.isLoading = false;
+                console.log(error);
+            });
+        },
+        registerEvent: function registerEvent() {
+            if (this.isRegistered) {
+                this.unRegister();
+                return;
+            }
+            if (this.event.price > 0) {
+                // joiningPaidEvent
+            }
+            var _token = $("meta[name=_token]").attr('content');
+            var that = this;
+            this.isLoading = true;
+            axios({
+                method: 'post',
+                responseType: 'json',
+                url: SP_source() + 'ajax/join-event',
+                data: {
+                    timeline_id: that.event.timeline_id,
+                    _token: _token
+                }
+            }).then(function (response) {
+                if (response.status == 200) {
+                    materialSnackBar({ messageText: response.data.message, autoClose: true });
+                    var obj = { postIndex: that.postIndex, name: 'registered', status: response.data.joined };
+                    that.$store.commit('SET_EVENT_STATUS', obj);
+                }
+                that.isLoading = false;
+            }).catch(function (error) {
+                that.isLoading = false;
+                console.log(error);
+            });
+            //Vue.set(that.commentItemList[index], 'isLiked', !that.commentItemList[index].isLiked)
         }
     },
     computed: {
@@ -28029,11 +28105,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         eventPrice: function eventPrice() {
             return this.hasItem ? this.event.price !== 0 && this.event.price !== null ? this.event.price : 'Free' : '';
         },
-        userLink: function userLink() {
-            return base_url + this.postItem.timeline.username;
+        isRegistered: function isRegistered() {
+            return this.hasItem ? this.event.registered : false;
         }
     },
-    mounted: function mounted() {}
+    mounted: function mounted() {
+        console.log(this.event);
+    }
 });
 
 /***/ }),
@@ -28111,18 +28189,38 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm.eventList
-          ? _c("div", { staticClass: "text-center layout-m-b-1" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-submit ft-btn-primary",
-                  attrs: { href: _vm.userLink }
-                },
-                [_vm._v("\n            Register\n        ")]
-              )
-            ])
-          : _vm._e()
+        _c("div", { staticClass: "text-center layout-m-b-1" }, [
+          _c("div", { staticClass: "pos-rel flex-inline" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-submit ft-btn-primary",
+                attrs: { type: "button" },
+                on: { click: _vm.registerEvent }
+              },
+              [
+                _vm.isRegistered
+                  ? [
+                      _vm._v(
+                        "\n                    Unregister\n                "
+                      )
+                    ]
+                  : [_vm._v("\n                    Register\n                ")]
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _vm.isLoading
+              ? _c("div", { staticClass: "ft-loading ft-loading--abs" }, [
+                  _c("span", { staticClass: "ft-loading__dot" }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "ft-loading__dot" }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "ft-loading__dot" })
+                ])
+              : _vm._e()
+          ])
+        ])
       ])
     : _vm._e()
 }
@@ -29139,7 +29237,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     } else {
                         __WEBPACK_IMPORTED_MODULE_1_vue___default.a.set(that.commentItemList[index], 'isLiked', false);
                     }
-                    that.$store.dispatch('sendNotification', { meow: 'meow' });
                 }
             }).catch(function (error) {
                 console.log(error);
@@ -32256,9 +32353,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }).then(function (response) {
                 if (response.status == 200) {
                     var post = response.data[0].post;
-                    console.log(post);
-                    return;
-                    that.$store.commit('ADD_SINGLE_POST_ITEM', { data: post[0] });
+                    that.$store.commit('ADD_SINGLE_POST_ITEM', { data: post });
                     setTimeout(function () {
                         emojify.run();
                         hashtagify();
@@ -42377,7 +42472,7 @@ if (false) {
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
   state: {
-    pageTitle: 'FreeKaaDeal | Best Online Deals, Offers and Coupons',
+    pageTitle: '',
     postItemList: [],
     theaterPostItem: {},
     sharePostItem: {},
@@ -42503,6 +42598,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     },
     SET_POST_COMMENT_INTERACT: function SET_POST_COMMENT_INTERACT(state, data) {
       __WEBPACK_IMPORTED_MODULE_0_vue___default.a.set(state.postItemList[data.postIndex], 'commentInteract', data.commentInteract);
+    },
+    SET_EVENT_STATUS: function SET_EVENT_STATUS(state, data) {
+      __WEBPACK_IMPORTED_MODULE_0_vue___default.a.set(state.postItemList[data.postIndex].event[0], data.name, data.status);
     }
   },
   actions: {

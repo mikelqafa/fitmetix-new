@@ -33,7 +33,7 @@
             </form>
             <div class="md-layout-spacer"></div>
             <div class="nav no-float md-layout fm-nav navbar-nav hidden-sm hidden-xs" id="navbar-right">
-                <a href="{{ url(Auth::user()->username.'/create-event') }}" class="has-hover-effect fm-nav__item">
+                <a href="{{ url(Auth::user()->username.'/create-event') }}" class="has-hover-effect fm-nav__item {{ Request::path() == '/' ? 'is-active' : '' }}">
                     <span>
                         <i class="fa fa-plus"></i> Inspire
                     </span>
@@ -97,12 +97,21 @@
                                 <div class="ft-menu__item ft-menu__item--icon">
                                     <i class="" aria-hidden="true">
                                         <img class="img-responsive" src="{{asset('images/drop.png')}}" style="max-width: 18px">
-                                    </i> <div class="md-layout md-layout--row">
+                                    </i>
+                                    <div class="md-layout md-layout--row">
                                         <div class="color-picker" data-color="#f9fafc" title="Change Theme"></div>
                                         <div class="color-picker" data-color="#ffffff" title="Change Theme"></div>
                                         <div class="color-picker" data-color="#fbf1f4" title="Change Theme"></div>
                                     </div>
                                 </div>
+                            </li>
+                            <li class="{{ Request::segment(3) == 'general' ? 'active' : '' }}">
+                                <a class="ft-menu__item ft-menu__item--icon" href="javascript:;" onclick="FacebookInviteFriends()">
+                                    <i class="" aria-hidden="true">
+                                        <img class="img-responsive" src="{{asset('images/invitation.png')}}" style="max-width: 18px">
+                                    </i>
+                                    Invite friends
+                                </a>
                             </li>
                         <li>
                             <form action="{{ url('/logout') }}" method="post">

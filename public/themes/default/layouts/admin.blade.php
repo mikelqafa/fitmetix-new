@@ -97,7 +97,9 @@
                 FB.init({
                     appId      : '217416572121069',
                     xfbml      : true,
-                    version    : 'v2.10'
+                    version    : 'v2.10',
+                    cookie:true,
+                    status:true
                 });
                 FB.AppEvents.logPageView();
             };

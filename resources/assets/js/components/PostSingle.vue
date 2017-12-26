@@ -83,9 +83,7 @@
                 }).then( function (response) {
                     if (response.status ==  200) {
                         let post = response.data[0].post;
-                        console.log(post)
-                        return
-                        that.$store.commit('ADD_SINGLE_POST_ITEM',{data: post[0]} )
+                        that.$store.commit('ADD_SINGLE_POST_ITEM',{data: post} )
                         setTimeout(function () {
                             emojify.run();
                             hashtagify();

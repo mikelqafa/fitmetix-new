@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
-    pageTitle: 'FreeKaaDeal | Best Online Deals, Offers and Coupons',
+    pageTitle: '',
     postItemList: [],
     theaterPostItem: {},
     sharePostItem: {},
@@ -117,6 +117,9 @@ export const store = new Vuex.Store({
     },
     SET_POST_COMMENT_INTERACT (state, data) {
       Vue.set(state.postItemList[data.postIndex],'commentInteract', data.commentInteract)
+    },
+    SET_EVENT_STATUS (state, data) {
+      Vue.set(state.postItemList[data.postIndex].event[0], data.name, data.status)
     }
   },
   actions: {

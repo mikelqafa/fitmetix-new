@@ -1067,7 +1067,7 @@ class TimelineController extends AppBaseController
                 }
             }
 
-            return response()->json(['status' => '200', 'joined' => false, 'message' => 'successfully unjoined']);
+            return response()->json(['status' => '200', 'joined' => false, 'data' => 'successfully unjoined']);
         }
     }
 
@@ -4091,7 +4091,7 @@ class TimelineController extends AppBaseController
           } else {
               $msg = 'No registration found for this Event';
           }
-          return $msg;
+          return response()->json(['status' => '200', 'data' => $msg]);
       }
   }
 
