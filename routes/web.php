@@ -207,7 +207,7 @@ Route::post('/ajax/get-user-background-color','TimelineController@getUserBackgro
 |--------------------------------------------------------------------------
 */
 
-    Route::get('messages/{username?}', 'MessageController@index');
+Route::get('messages/{username?}', 'MessageController@index');
 
 
 

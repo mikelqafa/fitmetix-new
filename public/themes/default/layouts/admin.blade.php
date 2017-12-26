@@ -15,43 +15,49 @@
 
         <link href="{{ Theme::asset()->url('css/flag-icon.css') }}" rel="stylesheet">
 
-        <link href="{{ asset('fitmetixfont/font.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
         <link href="{{ Theme::asset()->url('css/custom.css') }}" rel="stylesheet">
         {{--{!! Theme::asset()->styles() !!}--}}
+
+
+        <link href="{{ asset('fitmetixfont/font.css') }}" rel="stylesheet">
         <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/swiper.css') }}" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/drawer.css') }}">
+        <link href="{{ asset('css/dialog.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/snackbar.css') }}" rel="stylesheet">
+        <link href="{{asset('vendor/datepicker.css')}}" rel="stylesheet">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <link href="{{ asset('css/prakash.css') }}" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/zippy.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/menu.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+
         <script type="text/javascript">
         function SP_source() {
           return "{{ url('/') }}/";
         }
-
         var base_url = "{{ url('/') }}/";
+        var asset_url = "{{env('STORAGE_URL')}}";
         var theme_url = "{!! Theme::asset()->url('') !!}";
         var current_username = "{{ Auth::user()->username }}";
+        var user_id = "{{ Auth::user()->id }}";
 
         </script>
-        {!! Theme::asset()->scripts() !!}
+        <script src="{{ asset('js/bundle.js') }}" type="text/javascript"></script>
+        {{--{!! Theme::asset()->scripts() !!}--}}
         @if(Setting::get('google_analytics') != NULL)
             {!! Setting::get('google_analytics') !!}
         @endif
     </head>
     <body @if(Setting::get('enable_rtl') == 'on') class="direction-rtl" @endif>
-        {!! Theme::partial('header') !!}
+    {!! Theme::partial('header') !!}
+    {!! Theme::partial('mobileHeader') !!}
 
         <div class="page-wrapper">
             <div class="container">
@@ -76,9 +82,36 @@
                 PUSHER_KEY: "{{ config('broadcasting.connections.pusher.key') }}"
             };
        </script>
+    <script src="{{ asset('js/dialog.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/bootstrap-datetimepicker.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/drawer.js') }}"></script>
+    <script src="{{ asset('vendor/datepicker.js') }}" type="text/javascript"></script>
+    @if (in_array(!Route::currentRouteName(), ['contact', 'login', 'register']))
+        <script src="{{ asset('js/notification.js') }}" type="text/javascript"></script>
+        <script src="{{asset('vendor/bootstrap-duration-picker.js')}}" type="text/javascript"></script>
+        <script type="text/javascript" src="{{asset('js/caleandar.min.js')}}"></script>
+        <script type="text/javascript" src="{{asset('js/event.js')}}"></script>
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId      : '217416572121069',
+                    xfbml      : true,
+                    version    : 'v2.10'
+                });
+                FB.AppEvents.logPageView();
+            };
+            (function(d, s, id){
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {return;}
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+    @endif
+    @yield('js')
 
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script type="text/javascript">
             $('#scout_form').on('submit', function (ev) {
               alert("working")
