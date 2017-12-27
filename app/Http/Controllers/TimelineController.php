@@ -645,8 +645,12 @@ class TimelineController extends AppBaseController
 
         if ($comment) {
             if (Auth::user()->id != $post->user_id) {
-                //Notify the user for comment on his/her post
-                Notification::create(['user_id' => $post->user_id, 'post_id' => $request->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.commented_on_your_post'), 'type' => 'comment_post']);
+                //Check if the user has blocked the post.
+                $blocked = $this->checkIfPostBlocked($request->post_id,$post->user_id);
+                if ($blocked == FALSE){
+                  //Notify the user for comment on his/her post
+                  Notification::create(['user_id' => $post->user_id, 'post_id' => $request->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.commented_on_your_post'), 'type' => 'comment_post']);
+                }
             }
 
             $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('ajax');
@@ -749,25 +753,28 @@ class TimelineController extends AppBaseController
     {
         $comment = Comment::findOrFail($request->comment_id);
         $comment_user = $comment->user;
-
+        $post_id = $comment->post_id;
+        //Check if the user has blocked the post.
+        $block = $this->checkIfPostBlocked($post_id,Auth::user()->id);
         if (!$comment->comments_liked->contains(Auth::user()->id)) {
             $comment->comments_liked()->attach(Auth::user()->id);
             $comment_likes = $comment->comments_liked()->get();
             $like_count = $comment_likes->count();
-
-            //sending email notification
-            $user = User::find(Auth::user()->id);
-            $user_settings = $user->getUserSettings($comment_user->id);
-            if ($user_settings && $user_settings->email_like_comment == 'yes') {
+            if ($block == FALSE){
+              //sending email notification
+              $user = User::find(Auth::user()->id);
+              $user_settings = $user->getUserSettings($comment_user->id);
+              if ($user_settings && $user_settings->email_like_comment == 'yes') {
                 Mail::send('emails.commentlikemail', ['user' => $user, 'comment_user' => $comment_user], function ($m) use ($user, $comment_user) {
-                    $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
-                    $m->to($comment_user->email, $comment_user->name)->subject($user->name.' '.'likes your comment');
+                  $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
+                  $m->to($comment_user->email, $comment_user->name)->subject($user->name.' '.'likes your comment');
                 });
-            }
+              }
 
-            //Notify the user for comment like
-            if ($comment->user->id != Auth::user()->id) {
+              //Notify the user for comment like
+              if ($comment->user->id != Auth::user()->id) {
                 Notification::create(['user_id' => $comment->user_id, 'post_id' => $comment->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.liked_your_comment'), 'type' => 'like_comment']);
+              }
             }
 
             return response()->json(['status' => '200', 'liked' => true, 'message' => 'successfully liked', 'likecount' => $like_count]);
@@ -775,10 +782,11 @@ class TimelineController extends AppBaseController
             $comment->comments_liked()->detach([Auth::user()->id]);
             $comment_likes = $comment->comments_liked()->get();
             $like_count = $comment_likes->count();
-
-            //Notify the user for comment unlike
-            if ($comment->user->id != Auth::user()->id) {
+            if ($block == FALSE){
+              //Notify the user for comment unlike
+              if ($comment->user->id != Auth::user()->id) {
                 Notification::create(['user_id' => $comment->user_id, 'post_id' => $comment->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.unliked_your_comment'), 'type' => 'unlike_comment']);
+              }
             }
 
             return response()->json(['status' => '200', 'unliked' => false, 'message' => 'successfully unliked', 'likecount' => $like_count]);
@@ -1876,8 +1884,13 @@ class TimelineController extends AppBaseController
             $comment->delete();
         }
         if (Auth::user()->id != $comment->user_id) {
+          //Check if the user has blocked the post.
+          $block = $this->checkIfPostBlocked($comment->post_id,$comment->user->id);
+          if ($block == FALSE){
             //Notify the user for comment delete
             Notification::create(['user_id' => $comment->user->id, 'post_id' => $comment->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.deleted_your_comment'), 'type' => 'delete_comment']);
+          }
+
         }
         return response()->json(['status' => '200', 'deleted' => true, 'message' => 'Comment successfully deleted']);
     }
@@ -4405,7 +4418,11 @@ class TimelineController extends AppBaseController
       foreach ($users as $key => $value){
         $timeline = DB::table('timelines')->where('username',$value)->first();
         $user = DB::table('users')->where('timeline_id',$timeline->id)->first();
-        Notification::create(['user_id' => $user->id, 'post_id' => $postId, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' wants you to view this post', 'type' => 'share_post', 'link' => '/post/'.$postId]);
+        //Check if the user has blocked the post.
+        $block = $this->checkIfPostBlocked($postId,$user->id);
+        if ($block == FALSE){
+          Notification::create(['user_id' => $user->id, 'post_id' => $postId, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' wants you to view this post', 'type' => 'share_post', 'link' => '/post/'.$postId]);
+        }
       }
       return response()->json(['status' => '200','data' => 'Post Shared']);
   }
@@ -4442,6 +4459,17 @@ class TimelineController extends AppBaseController
       else{
         return response()->json(['status' => '200'], ['data'=> 'Failed to Unregister']);
       }
+  }
+
+  public function checkIfPostBlocked($post_id,$user_id){
+    $block_notification_model = new BlockNotification();
+    $block_notification = $block_notification_model->where('user_id','=',$user_id)->where('post_event_id','=',$post_id)->get()->toArray();
+    if(!empty($block_notification)) {
+      return TRUE;
+    }
+    else{
+      return FALSE;
+    }
   }
 
 }
