@@ -200,7 +200,8 @@ Route::get('/ajax/get-register-button','TimelineController@getRegisterButton');
 Route::post('/ajax/get-event-post-by-eventid','TimelineController@getPostByEventId');
 Route::get('/ajax/update-event','TimelineController@updateEvent');
 Route::post('/ajax/set-user-background-color','TimelineController@setUserBackground');
-Route::post('/ajax/get-user-background-color','TimelineController@getUserBackground');
+Route::get('/ajax/get-notification-status','TimelineController@getNotificationStatus');
+Route::get('/ajax/on-off-notification','TimelineController@onOffNotification');
 /*
 |--------------------------------------------------------------------------
 | Messages routes

@@ -45,6 +45,7 @@ use LaravelPusher;
 use App\Follower;
 use App\EventUser;
 use Session;
+use App\BlockNotification;
 
 class TimelineController extends AppBaseController
 {
@@ -2317,6 +2318,56 @@ class TimelineController extends AppBaseController
 				'error' => TRUE,
 				'err_msg' => 'User Not Found',
 				'success' => FALSE
+			]);
+		}
+	}
+
+	public function getNotificationStatus(Request $request) {
+    	$event_post_id = $request->event_post_id;
+    	$user_id       = $request->user_id;
+    	$block_notification_model = new BlockNotification();
+    	$block_notification = $block_notification_model->where('user_id','=',$user_id)->where('event_post_id','=',$event_post_id)->get()->toArray();
+    	if(!empty($block_notification)) {
+				return response()->json([
+					'status' => '200',
+					'block_status' => 1,
+					'msg' => 'Blocked'
+				]);
+			}
+			else {
+				return response()->json([
+					'status' => '200',
+					'block_status' => 0,
+					'msg' => 'Allowed'
+				]);
+			}
+	}
+
+	public function onOffNotification(Request $request) {
+		$event_post_id = $request->event_post_id;
+		$user_id       = $request->user_id;
+		$type          = $request->type;
+		$block_notification_model = new BlockNotification();
+		$block_notification = $block_notification_model->where('user_id','=',$user_id)->where('event_post_id','=',$event_post_id)->get()->toArray();
+		if(!empty($block_notification)) {
+			$block_notification_object = $block_notification_model->find($block_notification[0]['id']);
+			$block_notification_object->delete();
+			return response()->json([
+				'status' => '200',
+				'block_status' => 0,
+				'msg' => 'Allowed'
+			]);
+		}
+		else {
+			$block_notification_model->create([
+				'user_id' => $user_id,
+				'event_post_id' => $event_post_id,
+				'type' => $type
+			]);
+			return response()->json([
+				'status' => '200',
+				'block_status' => 1,
+				'msg' => 'Blocked'
 			]);
 		}
 	}
