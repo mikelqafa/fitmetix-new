@@ -1,19 +1,28 @@
 <template>
-    <div class="ft-dialog" id="comment-option-dialog">
-        <div class="ft-dialog__inner-layer" @click="closeDialog"></div>
-        <a class="ft-dialog__btn" href="javascript:;" @click="closeDialog"><i class="icon icon-close"></i> </a>
-        <div class="ft-dialog__wrapper">
-            <div class="ft-dialog__surface">
-                <div class="ft-dialog-option">
-                    <a href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="emitAction">
-                        Go to post
-                    </a>
-                    <a href="javascript:;" data-value="embed" class="btn ft-dialog-option__item" @click="emitAction">
-                        Embed
-                    </a>
-                    <a href="javascript:;" data-value="cancel" class="btn ft-dialog-option__item" @click="emitAction">
-                        Cancel
-                    </a>
+    <div>
+        <!--<app-confirm :unid="unid" :body="body"></app-confirm>
+        <report-post-option v-if="!authUser && (postItem !== '')" :post-item="postItem"></report-post-option>-->
+        <div class="md-dialog md-dialog--maintain-width md-dialog--post-option md-dialog--full-screen" id="comment-option-dialog">
+            <div class="md-dialog__wrapper">
+                <div class="md-dialog__shadow"></div>
+                <div class="md-dialog__surface" style="position: relative">
+                    <div class="md-dialog__body">
+                        <div class="ft-dialog-option" v-bind:class="{'is-loading': isLoading}">
+                            <a v-if="authUser" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="initReportComment">
+                                Report Comment
+                            </a>
+                            <a v-else="" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="deleteComment">
+                                Delete Comment
+                            </a>
+                        </div>
+                    </div>
+                    <div v-if="isLoading" class="absolute-loader">
+                        <div class="ft-loading">
+                            <span class="ft-loading__dot"></span>
+                            <span class="ft-loading__dot"></span>
+                            <span class="ft-loading__dot"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -21,19 +30,78 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
+    import appConfirm from './child/appConfirm'
+
     export default {
         data: function () {
-            return {}
-        },
-        computed: {},
-        methods: {
-            closeDialog: function () {
-               $(this.$el).removeClass('ft-dialog--open')
-            },
-            emitAction: function(e) {
-                console.log(e.target.getAttribute('data-value'))
+            return {
+                unid: 'app-confirm-delete-comment',
+                body: 'Do you really want to delete this comment?',
+                isLoading: false,
+                initEdit: false
             }
         },
-        mounted () {}
+        components: {
+            'app-confirm': appConfirm
+        },
+        mounted () {
+            let that = this
+            let dialog = $('#comment-option-dialog').MaterialDialog({show:false});
+            dialog.on('ca.dialog.hidden', function () {
+                this.initEdit = false
+            });
+        },
+        methods: {
+            initReportComment: function () {
+
+            },
+            confirmDeleteComment: function () {
+                this.body = 'Do you really want to delete this comment?'
+                let confirmDialog = $('#'+ this.unid)
+                confirmDialog.MaterialDialog('show')
+                let that = this
+                confirmDialog.on('ca.dialog.affirmative.action', function(){
+                    that.deleteComment()
+                });
+            },
+            deleteComment: function() {
+                let that = this
+                let _token = $("meta[name=_token]").attr('content')
+                this.isLoading = true
+                $('#post-image-theater-dialog').MaterialDialog('hide')
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url + 'ajax/post-delete',
+                    data: {
+                        _token: _token,
+                        post_id: that.postItem.id
+                    }
+                }).then( function (response) {
+                    if (response.status ==  200) {
+                        that.$store.commit('REMOVE_POST_ITEM_LIST', that.optionMenuPostItem.postIndex)
+                        $('#post-option-dialog').MaterialDialog('hide')
+                        materialSnackBar({messageText: response.data.message, autoClose: true })
+                    }
+                    that.isLoading = false
+                }).catch(function(error) {
+                    $('#post-option-dialog').MaterialDialog('hide')
+                    materialSnackBar({messageText: error, autoClose: true })
+                    that.isLoading = false
+                })
+            }
+        },
+        computed: {
+            ...mapGetters({
+                optionMenuPostItem: 'commentOption'
+            }),
+            postItem: function () {
+                return this.optionMenuPostItem.id !== undefined ? this.optionMenuPostItem : undefined
+            },
+            authUser: function () {
+                return this.postItem !== undefined ? this.postItem.user_id == user_id : false
+            }
+        }
     }
 </script>

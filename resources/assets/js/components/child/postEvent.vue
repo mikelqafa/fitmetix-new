@@ -12,9 +12,17 @@
                     </div>
                 </div>
                 <div class="ft-card__list">
-                    <div class="icon icon-participant"></div>
+                    <div class="icon icon-gender"></div>
                     <div class="card-desc">
                         {{ formatGender(event.gender) }}
+                    </div>
+                </div>
+                <div class="ft-card__list">
+                    <div class="icon icon-participant"></div>
+                    <div class="card-desc">
+                        <a href="javascript:;" class="" @click="viewParticipant">
+                            {{participant}}
+                        </a>
                     </div>
                 </div>
                 <div class="ft-card__list">
@@ -59,7 +67,8 @@
         },
         data: function () {
             return {
-                isLoading: false
+                isLoading: false,
+                participantList: []
             }
         },
         methods: {
@@ -152,6 +161,10 @@
                     console.log(error)
                 })
                 //Vue.set(that.commentItemList[index], 'isLiked', !that.commentItemList[index].isLiked)
+            },
+            viewParticipant: function () {
+                this.$store.commit('SET_EVENT_WHO', {eventId: this.postItem.event[0].id})
+                $('#post-who-participate-dialog').MaterialDialog('show')
             }
         },
         computed: {
@@ -166,10 +179,37 @@
             },
             isRegistered () {
                 return this.hasItem ? this.event.registered : false
+            },
+            participant () {
+                if(!this.participantList.length) {
+                    return 'No Participant joined yet'
+                } else {
+                    return 'View Participant'
+                }
             }
         },
         mounted() {
-            console.log(this.event)
+            if(this.hasItem) {
+                let that = this
+                let _token = $("meta[name=_token]").attr('content')
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url + 'ajax/get-participants',
+                    data: {
+                        event_id: that.postItem.event[0].id,
+                        _token: _token
+                    }
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        for(let i = 0;i<response.data.length; i++) {
+                            that.participantList.push(response.data[i])
+                        }
+                    }
+                }).catch(function (error) {
+                    console.log(error)
+                })
+            }
         }
     }
 </script>

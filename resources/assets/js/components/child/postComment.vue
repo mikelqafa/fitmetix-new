@@ -47,11 +47,17 @@
                 <div class="zippy__wrapper">
                     <template v-if="commentInteract">
                         <div class="comment-textfield">
-                            <a data-theme="m" href="//localhost:3008/fitmetix/public/Uppal" title="@" class="md-layout-flex--noshrink  md-layout-flex--nogrow md-list__item-icon user-avatar" style="background-image: url('');"></a>
-                            <form action="#" class="ft-comment__item--grow">
+                            <a href="userLink" class="md-list__item-icon user-avatar">
+                            </a>
+                            <form action="#" class="ft-comment__item--grow pos-rel">
                                 <textarea v-on:keydown.13="postComment" class="ft-post__comment-form form-control"  autocomplete="off" data-post-id="" data-comment-id="" name="post_comment" placeholder="Write a comment" rows="1"></textarea>
+                                <div class="ft-loading ft-loading--abs" v-if="isCommenting">
+                                    <span class="ft-loading__dot"></span>
+                                    <span class="ft-loading__dot"></span>
+                                    <span class="ft-loading__dot"></span>
+                                </div>
                             </form>
-                            <div class="ft-chat__write-button-wrapper">
+                            <div class="ft-chat__write-button-wrapper" v-if="">
                                 <button type="submit" class="btn ft-chat__write-button">
                                     <svg class="svg-icon" fill="#ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
@@ -63,7 +69,7 @@
                         </div>
                         <div class="comment-list-action md-list md-list--dense" v-if="commentItemList.length">
                             <div class="md-list__item has-divider" v-for="(item, index) in commentItemList" :data-comment-id="item.id">
-                                <a :style="{ backgroundImage: 'url(' + item.user.avatar + ')'}" data-theme="m" href="//localhost:3008/fitmetix/public/Uppal" :title="'@'+item.user.username" class="md-list__item-icon user-avatar"></a>
+                                <a :style="{ backgroundImage: 'url(' + item.user.avatar + ')'}" :href="userLink(item.user)" :title="'@'+item.user.username" class="md-list__item-icon user-avatar"></a>
                                 <div class="md-list__item-content">
                                     <div class="md-list__item-primary">
                                         <div class="md-layout md-layout--column">
@@ -83,7 +89,7 @@
                                             <i class="icon icon-like visible-default"></i>
                                             <i class="icon icon-liked hidden-default"></i>
                                         </a>
-                                        <a class="md-list__item-secondary-action" href="javascript:;" v-on:click="openCommentDialog">
+                                        <a class="md-list__item-secondary-action" href="javascript:;" v-on:click="openCommentDialog(item)">
                                             <i class="icon icon-options"></i>
                                         </a>
                                     </div>
@@ -122,10 +128,18 @@
         data: function () {
             return {
                 base_url: base_url,
-                showUserComment: 0
+                showUserComment: 0,
+                isCommenting: false
             }
         },
         methods: {
+            userLink (item) {
+                return base_url + item.username
+            },
+            userAvatar (item) {
+                console.log(item)
+                return item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage
+            },
             closeDilaogFocusComment: function () {
                 this.$emit('focuscomment')
             },
@@ -160,7 +174,7 @@
                 axios({
                     method: 'post',
                     responseType: 'json',
-                    url: base_url + '/ajax/like-post',
+                    url: base_url + 'ajax/like-post',
                     data: {
                         post_id: that.postId,
                         _token: _token
@@ -220,7 +234,6 @@
                         _token: _token
                     }
                 }).then(function (response) {
-                    console.log(response)
                     if(response.status == 200) {
                         let likesBy = response.data[0].post_likes_by;
                         let itemArr = []
@@ -262,14 +275,9 @@
                 if(value == '') {
                     return
                 }
-                loadingWrapper.html(
-                        '<div class="ft-loading">'+
-                        '<span class="ft-loading__dot"></span>'+
-                        '<span class="ft-loading__dot"></span>'+
-                        '<span class="ft-loading__dot"></span>'+
-                        '</div>')
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
+                this.isCommenting = true
                 this.$store.commit('SET_POST_COMMENT_INTERACT',  {postIndex: that.postIndex, commentInteract: true})
                 axios({
                     method: 'post',
@@ -284,9 +292,8 @@
                     console.log(response)
                     if (response.status == 200) {
                         input.value = ''
+                        that.isCommenting = false
                         that.$store.commit('SET_POST_META_COUNT',  {postIndex: that.postIndex, postCommentsCount: that.postCommentsCount+1})
-                        $(e.target).parent().addClass('is-loading')
-                        loadingWrapper.html('')
                         //that.userCommented
                         that.$store.commit('ADD_POST_COMMENT_ONLY',
                                 {
@@ -333,7 +340,6 @@
                 }).then(function (response) {
                     that.$store.commit('SET_POST_COMMENT_INTERACT',  {postIndex: that.postIndex, commentInteract: true})
                     if (response.status == 200) {
-                        console.log(response.data[0])
                         let comments = response.data[0].comments
                         let hasMore = response.data[0].hasMore
                         let offset = 0
@@ -360,6 +366,7 @@
                             commentItemList.unshift(comments[i])
                         }
                         offset += comments.length
+                        offset = offset + that.offset
                         if(that.postItemList[that.postIndex].postComments !== undefined) {
                             // data already in the store, add new data
                             that.$store.commit('ADD_POST_COMMENT',  {hasMore: hasMore, offset: offset, postIndex: that.postIndex, postComments: commentItemList})
@@ -379,8 +386,9 @@
                 var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
                 return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
             },
-            openCommentDialog: function () {
-                $('#comment-option-dialog').addClass('ft-dialog--open')
+            openCommentDialog: function (item) {
+                this.$store.commit('SET_OPTIONS_COMMENT', {comment: item})
+                $('#comment-option-dialog').MaterialDialog('show')
             },
             likeUnlikeComment: function (e, index) {
                 let _token = $("meta[name=_token]").attr('content')
@@ -437,9 +445,6 @@
             ...mapGetters({
                     postItemList: 'postItemList'
                 }),
-            userAvatar () {
-                return 'hello'
-            },
             expandID () {
                 return Math.floor((Math.random() * 10) + 1)+'comment-expand-' + this.postId
             },
@@ -459,6 +464,9 @@
                 return this.postItemList[this.postIndex].postMetaInfo !== undefined ? this.postItemList[this.postIndex].postMetaInfo.userCommented : 0
             },
             commentHasMore: function () {
+                return this.postItemList[this.postIndex].commentHasMore !== undefined ? this.postItemList[this.postIndex].commentHasMore : 0
+            },
+            offset: function () {
                 return this.postItemList[this.postIndex].commentHasMore !== undefined ? this.postItemList[this.postIndex].commentHasMore : 0
             },
             commentItemList: function () {

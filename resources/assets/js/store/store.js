@@ -8,7 +8,9 @@ export const store = new Vuex.Store({
     theaterPostItem: {},
     sharePostItem: {},
     optionMenuPostItem: {},
+    eventWho: {},
     postWhoLikes: {},
+    commentOption: {},
     pusher: null
   },
   getters: {
@@ -17,7 +19,9 @@ export const store = new Vuex.Store({
     sharePostItem: state => state.sharePostItem,
     optionMenuPostItem: state => state.optionMenuPostItem,
     postWhoLikes: state => state.postWhoLikes,
-    pusher: state => state.pusher
+    pusher: state => state.pusher,
+    eventWho: state => state.eventWho,
+    commentOption: state => state.commentOption
   },
   mutations: {
     /* eslint-disable no-param-reassign */
@@ -120,15 +124,15 @@ export const store = new Vuex.Store({
     },
     SET_EVENT_STATUS (state, data) {
       Vue.set(state.postItemList[data.postIndex].event[0], data.name, data.status)
+    },
+    SET_EVENT_WHO (state, data) {
+      Vue.set(state.eventWho, 'eventId', data.eventId)
+    },
+    SET_OPTIONS_COMMENT (state, data) {
+      state.commentOption = data.comment
     }
   },
   actions: {
-    showTheater: (context) => {
-      alert()
-    },
-    sendNotification: (context, data) => {
-      console.log(context, data)
-    },
     likePostByPusher: (context, data) => {
       console.log(data)
       if(data.type !== undefined && (data.type === 'like_post' || data.type === 'unlike_post')) {

@@ -17,9 +17,14 @@
                                 <a v-else="" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="editPost">
                                     Edit Post
                                 </a>
-                                <a href="javascript:;" class="btn ft-dialog-option__item" @click="confirmDeletePost">
+
+                                <a v-if="isTypeEvent" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="confirmDeleteEvent">
+                                    Delete Event
+                                </a>
+                                <a v-else="" href="javascript:;" class="btn ft-dialog-option__item" @click="confirmDeletePost">
                                     Delete Post
                                 </a>
+
                                 <a href="javascript:;" data-value="cancel" class="btn ft-dialog-option__item" @click="shareTo('facebook')">
                                     Share
                                 </a>
@@ -75,6 +80,16 @@
                 $('#post-report-dialog').MaterialDialog('show')
             },
             confirmDeletePost: function () {
+                this.body = 'Do you really want to delete this post?'
+                let confirmDialog = $('#'+ this.unid)
+                confirmDialog.MaterialDialog('show')
+                let that = this
+                confirmDialog.on('ca.dialog.affirmative.action', function(){
+                    that.deletePost()
+                });
+            },
+            confirmDeleteEvent: function () {
+                this.body = 'Are you sure you want to delete this event entirely?'
                 let confirmDialog = $('#'+ this.unid)
                 confirmDialog.MaterialDialog('show')
                 let that = this

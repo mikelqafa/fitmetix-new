@@ -27021,7 +27021,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__child_postWhoLikesView___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__child_postWhoLikesView__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__child_appPostShare__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__child_appPostShare___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__child_appPostShare__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_vuex__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__child_eventParticipateList__ = __webpack_require__(152);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__child_eventParticipateList___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__child_eventParticipateList__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_vuex__ = __webpack_require__(1);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -27110,6 +27112,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+
 
 
 
@@ -27263,9 +27267,10 @@ var vmThat = void 0;
         'post-comment': __WEBPACK_IMPORTED_MODULE_6__child_postComment___default.a,
         'post-theater-view': __WEBPACK_IMPORTED_MODULE_7__child_postTheaterView___default.a,
         'post-wholikes-view': __WEBPACK_IMPORTED_MODULE_8__child_postWhoLikesView___default.a,
-        'app-post-share': __WEBPACK_IMPORTED_MODULE_9__child_appPostShare___default.a
+        'app-post-share': __WEBPACK_IMPORTED_MODULE_9__child_appPostShare___default.a,
+        'event-participate-list': __WEBPACK_IMPORTED_MODULE_10__child_eventParticipateList___default.a
     },
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_10_vuex__["b" /* mapGetters */])({
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_11_vuex__["b" /* mapGetters */])({
         itemList: 'postItemList'
     }), {
         isLoading: function isLoading() {
@@ -27991,6 +27996,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -28000,7 +28013,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
-            isLoading: false
+            isLoading: false,
+            participantList: []
         };
     },
     methods: {
@@ -28093,6 +28107,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
             //Vue.set(that.commentItemList[index], 'isLiked', !that.commentItemList[index].isLiked)
+        },
+        viewParticipant: function viewParticipant() {
+            this.$store.commit('SET_EVENT_WHO', { eventId: this.postItem.event[0].id });
+            $('#post-who-participate-dialog').MaterialDialog('show');
         }
     },
     computed: {
@@ -28107,10 +28125,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         isRegistered: function isRegistered() {
             return this.hasItem ? this.event.registered : false;
+        },
+        participant: function participant() {
+            if (!this.participantList.length) {
+                return 'No Participant joined yet';
+            } else {
+                return 'View Participant';
+            }
         }
     },
     mounted: function mounted() {
-        console.log(this.event);
+        if (this.hasItem) {
+            var that = this;
+            var _token = $("meta[name=_token]").attr('content');
+            axios({
+                method: 'post',
+                responseType: 'json',
+                url: base_url + 'ajax/get-participants',
+                data: {
+                    event_id: that.postItem.event[0].id,
+                    _token: _token
+                }
+            }).then(function (response) {
+                if (response.status == 200) {
+                    for (var i = 0; i < response.data.length; i++) {
+                        that.participantList.push(response.data[i]);
+                    }
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
     }
 });
 
@@ -28150,13 +28195,34 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "ft-card__list" }, [
-              _c("div", { staticClass: "icon icon-participant" }),
+              _c("div", { staticClass: "icon icon-gender" }),
               _vm._v(" "),
               _c("div", { staticClass: "card-desc" }, [
                 _vm._v(
                   "\n                    " +
                     _vm._s(_vm.formatGender(_vm.event.gender)) +
                     "\n                "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "ft-card__list" }, [
+              _c("div", { staticClass: "icon icon-participant" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-desc" }, [
+                _c(
+                  "a",
+                  {
+                    attrs: { href: "javascript:;" },
+                    on: { click: _vm.viewParticipant }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(_vm.participant) +
+                        "\n                    "
+                    )
+                  ]
                 )
               ])
             ]),
@@ -28950,6 +29016,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -28964,10 +29036,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     data: function data() {
         return {
             base_url: base_url,
-            showUserComment: 0
+            showUserComment: 0,
+            isCommenting: false
         };
     },
     methods: {
+        userLink: function userLink(item) {
+            return base_url + item.username;
+        },
+        userAvatar: function userAvatar(item) {
+            console.log(item);
+            return item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage;
+        },
+
         closeDilaogFocusComment: function closeDilaogFocusComment() {
             this.$emit('focuscomment');
         },
@@ -29002,7 +29083,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             axios({
                 method: 'post',
                 responseType: 'json',
-                url: base_url + '/ajax/like-post',
+                url: base_url + 'ajax/like-post',
                 data: {
                     post_id: that.postId,
                     _token: _token
@@ -29062,7 +29143,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     _token: _token
                 }
             }).then(function (response) {
-                console.log(response);
                 if (response.status == 200) {
                     var likesBy = response.data[0].post_likes_by;
                     var itemArr = [];
@@ -29104,9 +29184,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             if (value == '') {
                 return;
             }
-            loadingWrapper.html('<div class="ft-loading">' + '<span class="ft-loading__dot"></span>' + '<span class="ft-loading__dot"></span>' + '<span class="ft-loading__dot"></span>' + '</div>');
             var that = this;
             var _token = $("meta[name=_token]").attr('content');
+            this.isCommenting = true;
             this.$store.commit('SET_POST_COMMENT_INTERACT', { postIndex: that.postIndex, commentInteract: true });
             axios({
                 method: 'post',
@@ -29121,9 +29201,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 console.log(response);
                 if (response.status == 200) {
                     input.value = '';
+                    that.isCommenting = false;
                     that.$store.commit('SET_POST_META_COUNT', { postIndex: that.postIndex, postCommentsCount: that.postCommentsCount + 1 });
-                    $(e.target).parent().addClass('is-loading');
-                    loadingWrapper.html('');
                     //that.userCommented
                     that.$store.commit('ADD_POST_COMMENT_ONLY', {
                         postIndex: that.postIndex,
@@ -29167,7 +29246,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }).then(function (response) {
                 that.$store.commit('SET_POST_COMMENT_INTERACT', { postIndex: that.postIndex, commentInteract: true });
                 if (response.status == 200) {
-                    console.log(response.data[0]);
                     var comments = response.data[0].comments;
                     var hasMore = response.data[0].hasMore;
                     var offset = 0;
@@ -29194,6 +29272,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         commentItemList.unshift(comments[i]);
                     }
                     offset += comments.length;
+                    offset = offset + that.offset;
                     if (that.postItemList[that.postIndex].postComments !== undefined) {
                         // data already in the store, add new data
                         that.$store.commit('ADD_POST_COMMENT', { hasMore: hasMore, offset: offset, postIndex: that.postIndex, postComments: commentItemList });
@@ -29213,8 +29292,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var breakTag = is_xhtml || typeof is_xhtml === 'undefined' ? '<br />' : '<br>';
             return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
         },
-        openCommentDialog: function openCommentDialog() {
-            $('#comment-option-dialog').addClass('ft-dialog--open');
+        openCommentDialog: function openCommentDialog(item) {
+            this.$store.commit('SET_OPTIONS_COMMENT', { comment: item });
+            $('#comment-option-dialog').MaterialDialog('show');
         },
         likeUnlikeComment: function likeUnlikeComment(e, index) {
             var _token = $("meta[name=_token]").attr('content');
@@ -29270,9 +29350,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
         postItemList: 'postItemList'
     }), {
-        userAvatar: function userAvatar() {
-            return 'hello';
-        },
         expandID: function expandID() {
             return Math.floor(Math.random() * 10 + 1) + 'comment-expand-' + this.postId;
         },
@@ -29293,6 +29370,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return this.postItemList[this.postIndex].postMetaInfo !== undefined ? this.postItemList[this.postIndex].postMetaInfo.userCommented : 0;
         },
         commentHasMore: function commentHasMore() {
+            return this.postItemList[this.postIndex].commentHasMore !== undefined ? this.postItemList[this.postIndex].commentHasMore : 0;
+        },
+        offset: function offset() {
             return this.postItemList[this.postIndex].commentHasMore !== undefined ? this.postItemList[this.postIndex].commentHasMore : 0;
         },
         commentItemList: function commentItemList() {
@@ -29464,20 +29544,14 @@ var render = function() {
                       ? [
                           _c("div", { staticClass: "comment-textfield" }, [
                             _c("a", {
-                              staticClass:
-                                "md-layout-flex--noshrink  md-layout-flex--nogrow md-list__item-icon user-avatar",
-                              staticStyle: { "background-image": "url('')" },
-                              attrs: {
-                                "data-theme": "m",
-                                href: "//localhost:3008/fitmetix/public/Uppal",
-                                title: "@"
-                              }
+                              staticClass: "md-list__item-icon user-avatar",
+                              attrs: { href: "userLink" }
                             }),
                             _vm._v(" "),
                             _c(
                               "form",
                               {
-                                staticClass: "ft-comment__item--grow",
+                                staticClass: "ft-comment__item--grow pos-rel",
                                 attrs: { action: "#" }
                               },
                               [
@@ -29503,7 +29577,30 @@ var render = function() {
                                       _vm.postComment($event)
                                     }
                                   }
-                                })
+                                }),
+                                _vm._v(" "),
+                                _vm.isCommenting
+                                  ? _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "ft-loading ft-loading--abs"
+                                      },
+                                      [
+                                        _c("span", {
+                                          staticClass: "ft-loading__dot"
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span", {
+                                          staticClass: "ft-loading__dot"
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span", {
+                                          staticClass: "ft-loading__dot"
+                                        })
+                                      ]
+                                    )
+                                  : _vm._e()
                               ]
                             ),
                             _vm._v(" "),
@@ -29582,9 +29679,7 @@ var render = function() {
                                               "url(" + item.user.avatar + ")"
                                           },
                                           attrs: {
-                                            "data-theme": "m",
-                                            href:
-                                              "//localhost:3008/fitmetix/public/Uppal",
+                                            href: _vm.userLink(item.user),
                                             title: "@" + item.user.username
                                           }
                                         }),
@@ -29684,8 +29779,11 @@ var render = function() {
                                                       href: "javascript:;"
                                                     },
                                                     on: {
-                                                      click:
-                                                        _vm.openCommentDialog
+                                                      click: function($event) {
+                                                        _vm.openCommentDialog(
+                                                          item
+                                                        )
+                                                      }
                                                     }
                                                   },
                                                   [
@@ -31343,9 +31441,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.fetchUser(this.autoCompleteValue);
         },
         suggestionClick: function suggestionClick(index) {
-            var selectedData = this.matches[index];
-            this.selections.push(selectedData);
-            this.open = false;
+            this.selections.push(this.suggestions[index]);
+            this.suggestions = [];
+            this.autoCompleteValue = '';
         },
 
         fetchUser: function fetchUser(data) {
@@ -31471,20 +31569,14 @@ var render = function() {
                     style: {
                       backgroundImage: "url(" + suggestion.avatar + ")"
                     },
-                    attrs: { title: "@prakash" }
+                    attrs: { title: "@" + suggestion.name }
                   }),
                   _vm._v(" "),
                   _c("div", { staticClass: "md-list__item-content" }, [
                     _c("div", { staticClass: "md-list__item-primary" }, [
                       _c(
                         "div",
-                        {
-                          staticClass: "user-name user ft-user-name",
-                          attrs: {
-                            href: "http://localhost/fitmetix/public/mikele",
-                            title: "@prakash"
-                          }
-                        },
+                        { staticClass: "user-name user ft-user-name" },
                         [
                           _vm._v(
                             "\n                            " +
@@ -31677,6 +31769,8 @@ var render = function() {
       _c("post-theater-view"),
       _vm._v(" "),
       _c("post-wholikes-view"),
+      _vm._v(" "),
+      _c("event-participate-list"),
       _vm._v(" "),
       !_vm.noPostFound || _vm.alreadyHavePost
         ? [
@@ -38206,6 +38300,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -38229,6 +38328,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             $('#post-report-dialog').MaterialDialog('show');
         },
         confirmDeletePost: function confirmDeletePost() {
+            this.body = 'Do you really want to delete this post?';
+            var confirmDialog = $('#' + this.unid);
+            confirmDialog.MaterialDialog('show');
+            var that = this;
+            confirmDialog.on('ca.dialog.affirmative.action', function () {
+                that.deletePost();
+            });
+        },
+        confirmDeleteEvent: function confirmDeleteEvent() {
+            this.body = 'Are you sure you want to delete this event entirely?';
             var confirmDialog = $('#' + this.unid);
             confirmDialog.MaterialDialog('show');
             var that = this;
@@ -40214,19 +40323,36 @@ var render = function() {
                                   ]
                                 ),
                             _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                staticClass: "btn ft-dialog-option__item",
-                                attrs: { href: "javascript:;" },
-                                on: { click: _vm.confirmDeletePost }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                Delete Post\n                            "
+                            _vm.isTypeEvent
+                              ? _c(
+                                  "a",
+                                  {
+                                    staticClass: "btn ft-dialog-option__item",
+                                    attrs: {
+                                      href: "javascript:;",
+                                      "data-value": "post"
+                                    },
+                                    on: { click: _vm.confirmDeleteEvent }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                Delete Event\n                            "
+                                    )
+                                  ]
                                 )
-                              ]
-                            ),
+                              : _c(
+                                  "a",
+                                  {
+                                    staticClass: "btn ft-dialog-option__item",
+                                    attrs: { href: "javascript:;" },
+                                    on: { click: _vm.confirmDeletePost }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                Delete Post\n                            "
+                                    )
+                                  ]
+                                ),
                             _vm._v(" "),
                             _c(
                               "a",
@@ -40413,6 +40539,20 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__child_appConfirm__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__child_appConfirm___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__child_appConfirm__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -40436,20 +40576,77 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {};
+        return {
+            unid: 'app-confirm-delete-comment',
+            body: 'Do you really want to delete this comment?',
+            isLoading: false,
+            initEdit: false
+        };
     },
-    computed: {},
+    components: {
+        'app-confirm': __WEBPACK_IMPORTED_MODULE_1__child_appConfirm___default.a
+    },
+    mounted: function mounted() {
+        var that = this;
+        var dialog = $('#comment-option-dialog').MaterialDialog({ show: false });
+        dialog.on('ca.dialog.hidden', function () {
+            this.initEdit = false;
+        });
+    },
+
     methods: {
-        closeDialog: function closeDialog() {
-            $(this.$el).removeClass('ft-dialog--open');
+        initReportComment: function initReportComment() {},
+        confirmDeleteComment: function confirmDeleteComment() {
+            this.body = 'Do you really want to delete this comment?';
+            var confirmDialog = $('#' + this.unid);
+            confirmDialog.MaterialDialog('show');
+            var that = this;
+            confirmDialog.on('ca.dialog.affirmative.action', function () {
+                that.deleteComment();
+            });
         },
-        emitAction: function emitAction(e) {
-            console.log(e.target.getAttribute('data-value'));
+        deleteComment: function deleteComment() {
+            var that = this;
+            var _token = $("meta[name=_token]").attr('content');
+            this.isLoading = true;
+            $('#post-image-theater-dialog').MaterialDialog('hide');
+            axios({
+                method: 'post',
+                responseType: 'json',
+                url: base_url + 'ajax/post-delete',
+                data: {
+                    _token: _token,
+                    post_id: that.postItem.id
+                }
+            }).then(function (response) {
+                if (response.status == 200) {
+                    that.$store.commit('REMOVE_POST_ITEM_LIST', that.optionMenuPostItem.postIndex);
+                    $('#post-option-dialog').MaterialDialog('hide');
+                    materialSnackBar({ messageText: response.data.message, autoClose: true });
+                }
+                that.isLoading = false;
+            }).catch(function (error) {
+                $('#post-option-dialog').MaterialDialog('hide');
+                materialSnackBar({ messageText: error, autoClose: true });
+                that.isLoading = false;
+            });
         }
     },
-    mounted: function mounted() {}
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+        optionMenuPostItem: 'commentOption'
+    }), {
+        postItem: function postItem() {
+            return this.optionMenuPostItem.id !== undefined ? this.optionMenuPostItem : undefined;
+        },
+        authUser: function authUser() {
+            return this.postItem !== undefined ? this.postItem.user_id == user_id : false;
+        }
+    })
 });
 
 /***/ }),
@@ -40460,64 +40657,94 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "ft-dialog", attrs: { id: "comment-option-dialog" } },
-    [
-      _c("div", {
-        staticClass: "ft-dialog__inner-layer",
-        on: { click: _vm.closeDialog }
-      }),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "ft-dialog__btn",
-          attrs: { href: "javascript:;" },
-          on: { click: _vm.closeDialog }
-        },
-        [_c("i", { staticClass: "icon icon-close" })]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "ft-dialog__wrapper" }, [
-        _c("div", { staticClass: "ft-dialog__surface" }, [
-          _c("div", { staticClass: "ft-dialog-option" }, [
-            _c(
-              "a",
-              {
-                staticClass: "btn ft-dialog-option__item",
-                attrs: { href: "javascript:;", "data-value": "post" },
-                on: { click: _vm.emitAction }
-              },
-              [_vm._v("\n                    Go to post\n                ")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "btn ft-dialog-option__item",
-                attrs: { href: "javascript:;", "data-value": "embed" },
-                on: { click: _vm.emitAction }
-              },
-              [_vm._v("\n                    Embed\n                ")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "btn ft-dialog-option__item",
-                attrs: { href: "javascript:;", "data-value": "cancel" },
-                on: { click: _vm.emitAction }
-              },
-              [_vm._v("\n                    Cancel\n                ")]
-            )
-          ])
+  return _c("div", [
+    _c(
+      "div",
+      {
+        staticClass:
+          "md-dialog md-dialog--maintain-width md-dialog--post-option md-dialog--full-screen",
+        attrs: { id: "comment-option-dialog" }
+      },
+      [
+        _c("div", { staticClass: "md-dialog__wrapper" }, [
+          _c("div", { staticClass: "md-dialog__shadow" }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "md-dialog__surface",
+              staticStyle: { position: "relative" }
+            },
+            [
+              _c("div", { staticClass: "md-dialog__body" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "ft-dialog-option",
+                    class: { "is-loading": _vm.isLoading }
+                  },
+                  [
+                    _vm.authUser
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "btn ft-dialog-option__item",
+                            attrs: {
+                              href: "javascript:;",
+                              "data-value": "post"
+                            },
+                            on: { click: _vm.initReportComment }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            Report Comment\n                        "
+                            )
+                          ]
+                        )
+                      : _c(
+                          "a",
+                          {
+                            staticClass: "btn ft-dialog-option__item",
+                            attrs: {
+                              href: "javascript:;",
+                              "data-value": "post"
+                            },
+                            on: { click: _vm.deleteComment }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            Delete Comment\n                        "
+                            )
+                          ]
+                        )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _vm.isLoading
+                ? _c("div", { staticClass: "absolute-loader" }, [_vm._m(0)])
+                : _vm._e()
+            ]
+          )
         ])
-      ])
-    ]
-  )
+      ]
+    )
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ft-loading" }, [
+      _c("span", { staticClass: "ft-loading__dot" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "ft-loading__dot" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "ft-loading__dot" })
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -42477,7 +42704,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     theaterPostItem: {},
     sharePostItem: {},
     optionMenuPostItem: {},
+    eventWho: {},
     postWhoLikes: {},
+    commentOption: {},
     pusher: null
   },
   getters: {
@@ -42498,6 +42727,12 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     },
     pusher: function pusher(state) {
       return state.pusher;
+    },
+    eventWho: function eventWho(state) {
+      return state.eventWho;
+    },
+    commentOption: function commentOption(state) {
+      return state.commentOption;
     }
   },
   mutations: {
@@ -42601,15 +42836,15 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     },
     SET_EVENT_STATUS: function SET_EVENT_STATUS(state, data) {
       __WEBPACK_IMPORTED_MODULE_0_vue___default.a.set(state.postItemList[data.postIndex].event[0], data.name, data.status);
+    },
+    SET_EVENT_WHO: function SET_EVENT_WHO(state, data) {
+      __WEBPACK_IMPORTED_MODULE_0_vue___default.a.set(state.eventWho, 'eventId', data.eventId);
+    },
+    SET_OPTIONS_COMMENT: function SET_OPTIONS_COMMENT(state, data) {
+      state.commentOption = data.comment;
     }
   },
   actions: {
-    showTheater: function showTheater(context) {
-      alert();
-    },
-    sendNotification: function sendNotification(context, data) {
-      console.log(context, data);
-    },
     likePostByPusher: function likePostByPusher(context, data) {
       console.log(data);
       if (data.type !== undefined && (data.type === 'like_post' || data.type === 'unlike_post')) {
@@ -48471,6 +48706,316 @@ module.exports = function (css) {
 /***/ (function(module, exports) {
 
 module.exports = ["just now",["%s s","%s s"],["%s m","%s m"],["%s h","%s h"],["%s d","%s d"],["%s w","%s w"],["%s month ago","%s months ago"],["%s year ago","%s years ago"]]
+
+/***/ }),
+/* 152 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(153)
+/* template */
+var __vue_template__ = __webpack_require__(154)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/child/eventParticipateList.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6cf9db8c", Component.options)
+  } else {
+    hotAPI.reload("data-v-6cf9db8c", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 153 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(1);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            participantList: [],
+            defaultImage: 'default.png'
+        };
+    },
+    methods: {
+        userLink: function userLink(item) {
+            return base_url + item.username;
+        },
+        userAvatar: function userAvatar(item) {
+            return item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage;
+        },
+
+        getList: function getList() {
+            var that = this;
+            var _token = $("meta[name=_token]").attr('content');
+            axios({
+                method: 'post',
+                responseType: 'json',
+                url: base_url + 'ajax/get-participants',
+                data: {
+                    event_id: that.eventWho.eventId,
+                    _token: _token
+                }
+            }).then(function (response) {
+                if (response.status == 200) {
+                    for (var i = 0; i < response.data.length; i++) {
+                        that.participantList.push(response.data[i]);
+                    }
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    },
+    mounted: function mounted() {
+        var that = this;
+        var dialog = $('#post-who-participate-dialog').MaterialDialog({ show: false });
+        dialog.on('ca.dialog.hidden', function () {
+            that.participantList = [];
+        });
+        dialog.on('ca.dialog.show', function () {
+            that.getList();
+        });
+    },
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+        eventWho: 'eventWho'
+    }), {
+        loading: function loading() {
+            return !this.participantList.length;
+        }
+    })
+});
+
+/***/ }),
+/* 154 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "md-dialog md-dialog--who-likes",
+      attrs: { id: "post-who-participate-dialog" }
+    },
+    [
+      _c("div", { staticClass: "md-dialog__wrapper" }, [
+        _c("div", { staticClass: "md-dialog__shadow" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "md-dialog__surface" }, [
+          _c("div", [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "md-dialog__body md-dialog__body--scrollable" },
+              [
+                _vm.loading
+                  ? [_vm._m(1)]
+                  : [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "md-list md-list--likes md-list--dense"
+                        },
+                        _vm._l(_vm.participantList, function(item) {
+                          return _c(
+                            "div",
+                            { staticClass: "md-list__item has-divider" },
+                            [
+                              _c("a", {
+                                staticClass: "md-list__item-icon user-avatar",
+                                style: {
+                                  backgroundImage:
+                                    "url(" + _vm.userAvatar(item) + ")"
+                                },
+                                attrs: {
+                                  href: _vm.userLink(item),
+                                  title: "@" + item.username
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "md-list__item-content" },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "md-list__item-primary" },
+                                    [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass:
+                                            "user-name user ft-user-name",
+                                          attrs: {
+                                            href:
+                                              "http://localhost/fitmetix/public/mikele",
+                                            title: "@" + item.username
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                            " +
+                                              _vm._s(item.name) +
+                                              "\n                                        "
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        })
+                      )
+                    ]
+              ],
+              2
+            )
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("header", { staticClass: "md-dialog__header panel-post" }, [
+      _c("div", { staticClass: "md-layout-spacer" }),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass:
+            "md-button md-button--icon md-dialog__header-action-dismissive",
+          staticStyle: { "margin-right": "15px" },
+          attrs: { href: "javascript:;", "data-action": "dismissive" }
+        },
+        [_c("i", { staticClass: "icon icon-close" })]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "loading-wrapper" }, [
+      _c(
+        "div",
+        {
+          staticClass: "ft-loading",
+          staticStyle: { "background-color": "transparent" }
+        },
+        [
+          _c("span", { staticClass: "ft-loading__dot" }),
+          _vm._v(" "),
+          _c("span", { staticClass: "ft-loading__dot" }),
+          _vm._v(" "),
+          _c("span", { staticClass: "ft-loading__dot" })
+        ]
+      )
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6cf9db8c", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

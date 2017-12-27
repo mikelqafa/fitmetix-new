@@ -2332,3 +2332,6 @@ aside .md-drawer-scroll__wrapper{
 [data-theme="#fbf1f4"] .ft-theme--color {
     background-color: #fbf1f4 !important;
 }
+.dropdown-menu.md-list--dense .md-list__item {
+    cursor: pointer;
+}
