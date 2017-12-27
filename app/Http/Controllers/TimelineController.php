@@ -2326,7 +2326,7 @@ class TimelineController extends AppBaseController
     	$event_post_id = $request->event_post_id;
     	$user_id       = $request->user_id;
     	$block_notification_model = new BlockNotification();
-    	$block_notification = $block_notification_model->where('user_id','=',$user_id)->where('event_post_id','=',$event_post_id)->get()->toArray();
+    	$block_notification = $block_notification_model->where('user_id','=',$user_id)->where('post_event_id','=',$event_post_id)->get()->toArray();
     	if(!empty($block_notification)) {
 				return response()->json([
 					'status' => '200',
@@ -2348,7 +2348,7 @@ class TimelineController extends AppBaseController
 		$user_id       = $request->user_id;
 		$type          = $request->type;
 		$block_notification_model = new BlockNotification();
-		$block_notification = $block_notification_model->where('user_id','=',$user_id)->where('event_post_id','=',$event_post_id)->get()->toArray();
+		$block_notification = $block_notification_model->where('user_id','=',$user_id)->where('post_event_id','=',$event_post_id)->get()->toArray();
 		if(!empty($block_notification)) {
 			$block_notification_object = $block_notification_model->find($block_notification[0]['id']);
 			$block_notification_object->delete();
@@ -2361,7 +2361,7 @@ class TimelineController extends AppBaseController
 		else {
 			$block_notification_model->create([
 				'user_id' => $user_id,
-				'event_post_id' => $event_post_id,
+				'post_event_id' => $event_post_id,
 				'type' => $type
 			]);
 			return response()->json([
