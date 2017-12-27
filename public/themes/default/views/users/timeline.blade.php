@@ -1,7 +1,7 @@
 <link href="{{ asset('css/theme1.css') }}" rel="stylesheet">
 <link href="{{ asset('css/timeline-event.css') }}" rel="stylesheet">
 <!-- main-section -->
-	<div class="container container--standard section-container @if($timeline->hide_cover) no-cover @endif">
+    <div class="container container--standard section-container @if($timeline->hide_cover) no-cover @endif">
         <div class="row">
             <div class="md-layout md-algin md-layout--wrap md-align--start-start layout-timeline">
                 <div class="md-col layout-timeline__post layout-m-t-1">
@@ -33,11 +33,23 @@
                     </div>
                     <div class="layout-m-t-2 timeline-option layout-m-b-2 md-layout md-layout--row md-align md-align--space-between-center">
                         <div class="timeline-option__item">
-                            <a href="#" class="ft-btn ft-btn--icon">
-                                <i class="icon icon-chat"></i>
-                            </a>
+                            @if(Auth::user()->id == $timeline->user->id)
+                                <a href="{{ url(Auth::user()->username.'/create-event') }}" class="ft-btn ft-btn--icon">
+                                    <i class="icon icon-add">Inspire</i>
+                                </a>
+                            @else
+                                <a href="javascript:;" class="ft-btn ft-btn--icon">
+                                    <i class="icon icon-chat"></i>
+                                </a>
+                            @endif
                         </div>
-                        <button class="btn ft-btn-primary ft-btn-primary--outline">Follow</button>
+                        @if(Auth::user()->id == $timeline->user->id)
+                            <button class="btn ft-btn-primary ft-btn-primary--outline">Edit Profile</button>
+                        @elseif(Auth::user()->following->contains($timeline->user->id))
+                            <button class="btn ft-btn-primary ft-btn-primary--outline">Following</button>
+                        @else 
+                            <button class="btn ft-btn-primary ft-btn-primary--outline">Follow</button>
+                        @endif
                         <div class="timeline-option__item">
                             <a href="#" class="ft-btn ft-btn--icon">
                                 <i class="icon icon-options"></i>
@@ -46,6 +58,25 @@
                     </div>
                     <div class="timeline-user-desc">
                         {{$timeline->about}}
+                    </div>
+                    <div class="options" style="text-align: center;">
+                        @if($timeline->user->settings()->timeline_post_privacy == 'everyone')
+                            events : {{ count($user_events) }}
+                            posts : {{ count($posts) }}
+                            follows : {{ $following_count }}
+                            followers  {{ $followers_count }}
+                        @endif
+                        @if(Auth::user()->id == $timeline->user->id)
+                            saved : {{ count($timeline->user->postsSaved()) }}
+                            <a class="btn btn-default" href="{{ url($timeline->username.'/settings/general') }}">Settings</a>
+                        @elseif(Auth::user()->following->contains($timeline->user->id))
+                            <button class="btn btn-default">Block</button>
+                            <button class="btn btn-default">Report</button>
+                            <button class="btn btn-default">Unfollow</button>
+                        @else
+                            <button class="btn btn-default">Block</button>
+                            <button class="btn btn-default">Report</button>
+                        @endif
                     </div>
                     <div class="ft-header-hashtag">
                         <ul class="nav nav-justified" >
@@ -146,4 +177,4 @@
                 </div>
             </div>
         </div>
-	</div>
+    </div>
