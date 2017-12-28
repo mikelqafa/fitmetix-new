@@ -4106,6 +4106,9 @@ class TimelineController extends AppBaseController
       $registeredUsers = DB::table('event_user')->where('event_id',$eventId)->get()->toArray();
       if (!empty($registeredUsers)){
         foreach ($registeredUsers as $key => $value){
+          $user = DB::table('users')->where('id',$value->user_id)->first();
+          $timeline = DB::table('timelines')->where('id',$user->timeline_id)->first();
+          $registeredUsers[$key]->timeline = $timeline;
           $following = DB::table('followers')->where('leader_id',$value->user_id)->where('follower_id',$userId)->first();
           if (!empty($following)){
             unset($following);
