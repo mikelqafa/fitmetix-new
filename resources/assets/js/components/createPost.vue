@@ -174,7 +174,7 @@
                 let description = this.nl2br($('.replace-with').html())
                 let $imageInputs = this.$refs.vue_img.files
                 if($imageInputs.length == 0 && youtubeText == '' && location =='' && youtube_title == '' && youtube_video_id == ''
-                        && soundcloud_id == '' && user_tags == '' && soundcloud_title == '' &&  description == '' ) {
+                        && soundcloud_id == '' && user_tags == '' && soundcloud_title == '' && $.trim($('.replace-with').html()) == '' ) {
                     alertApp('Your post cannot be empty!')
                     return false;
                 }

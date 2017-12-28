@@ -3075,3 +3075,10 @@ aside .md-drawer-scroll__wrapper{
     padding: 5px 8px;
   }
 }
+[data-following="false"] .true {
+    display: none;
+}
+
+[data-following="true"] .false {
+    display: none;
+}

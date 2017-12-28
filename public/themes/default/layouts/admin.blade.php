@@ -59,7 +59,7 @@
     {!! Theme::partial('header') !!}
     {!! Theme::partial('mobileHeader') !!}
 
-        <div class="page-wrapper">
+        <div class="page-wrapper page-wrapper--admin">
             <div class="container">
                 <div class="row">
 

@@ -578,6 +578,23 @@ $(function () {
     });
   });
 
+  $('body').on('click', '[data-toggle="follow"]', function (e){
+    e.preventDefault();
+    var el = $(this)
+    el.attr('disabled', true)
+    $.post(SP_source() + 'ajax/follow-post', {timeline_id: el.data('timeline-id')}, function(data) {
+      el.attr('disabled', false)
+      if (data.status == 200) {
+        if (data.followed == true) {
+          el.attr('data-following', true)
+        } else {
+          el.attr('data-following', false)
+        }
+        materialSnackBar({messageText: data.message, autoClose: true })
+        location.reload();
+      }
+    })
+  });
   //Accept user request through join request tab in close group
   $('.accept-user').on('click',function(e){
     e.preventDefault();
@@ -2205,4 +2222,6 @@ $(function() {
       console.log(error)
     })
   })
+  hashtagify();
+  mentionify();
 })

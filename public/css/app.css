@@ -9925,6 +9925,9 @@ placeholder .darksharing-modal .modal-body .sharing-details .control-group .sele
     font-weight: 600;
     text-transform: capitalize;
 }
+.page-wrapper--admin .list-group-navigation .list-group-item .list-text {
+  margin-left:54px;
+}
 .list-group-navigation .list-group-item .list-text .text-muted {
     font-weight: 400;
 }

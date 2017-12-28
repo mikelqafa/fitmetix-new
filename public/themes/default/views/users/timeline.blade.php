@@ -47,22 +47,34 @@
                         @if(Auth::user()->id == $timeline->user->id)
                             <a href="{{ url('/'.Auth::user()->username.'/edit-profile') }}" class="btn ft-btn-primary ft-btn-primary--outline">Edit Profile</a>
                         @elseif(Auth::user()->following->contains($timeline->user->id))
-                            <button class="btn ft-btn-primary ft-btn-primary--outline">Following</button>
-                        @else 
-                            <button class="btn ft-btn-primary ft-btn-primary--outline">Follow</button>
+                            <button class="btn ft-btn-primary ft-btn-primary--outline" data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="true">
+                                <span class="false">Follow</span>
+                                <span class="true">Following</span>
+                            </button>
+                        @else
+                            <button class="btn ft-btn-primary ft-btn-primary--outline" data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="false">
+                                <span class="false">Follow</span>
+                                <span class="true">Following</span>
+                            </button>
                         @endif
                         <div class="timeline-option__item">
-                            <a href="#" class="ft-btn ft-btn--icon">
-                                <i class="icon icon-options"></i>
-                            </a>
+                            @if(Auth::user()->id == $timeline->user->id)
+                                <a href="javascript:;" class="ft-btn ft-btn--icon" onclick="$('.show-more').slideToggle()">
+                                    <i class="icon icon-options"></i>
+                                </a>
+                            @else
+                                <a href="#" class="ft-btn ft-btn--icon" onclick="$('#profile-option-dialog').MaterialDialog('show')">
+                                    <i class="icon icon-options"></i>
+                                </a>
+                            @endif
                         </div>
                     </div>
-                    <div class="timeline-user-desc">
+                    <div class="timeline-user-desc text-wrapper_desc">
                         {{$timeline->about}}
                     </div>
                     <div class="options" style="text-align: center;">
                         @if($timeline->user->settings()->timeline_post_privacy == 'everyone')
-                            <div class="ft-user-info md-layout md-layout--row md-align md-align--space-around">
+                            <div class="ft-user-info md-layout md-layout--row md-align md-align--space-around show-more" style="display: none">
                                 <div class="ft-user-info__item">
                                     <div class="ft-icon">
                                         Events
@@ -108,14 +120,19 @@
                             </div>
                         @endif
                         @if(Auth::user()->id == $timeline->user->id)
-                            <a class="btn btn-default" href="{{ url($timeline->username.'/settings') }}">Settings</a>
+                            <a class="btn btn-default hidden visible-xs" href="{{ url($timeline->username.'/settings') }}">Settings</a>
                         @elseif(Auth::user()->following->contains($timeline->user->id))
-                            <button class="btn btn-default">Block</button>
-                            <button class="btn btn-default">Report</button>
-                            <button class="btn btn-default">Unfollow</button>
+                            <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Block</button>
+                            <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Report</button>
+                            <button class="btn btn-default follow-user"
+                                    data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="true">
+                                Unfollow
+                            </button>
+
+
                         @else
-                            <button class="btn btn-default">Block</button>
-                            <button class="btn btn-default">Report</button>
+                            <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Block</button>
+                            <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Report</button>
                         @endif
                     </div>
                     <div class="ft-header-hashtag">
@@ -149,6 +166,11 @@
                             <input type="hidden" id="timeline_username" value="{{$username}}" />
                             <div id="app-timeline">
                                 <input type="hidden" id="newPostId">
+                                @if(Auth::user()->id != $timeline->user->id)
+                                    <input type="hidden" id="username" value="{{$timeline->username}}">
+                                    <input type="hidden" id="timeline_id" value="{{$timeline->id}}">
+                                    <app-profile-option></app-profile-option>
+                                @endif
                                 <app-post-option></app-post-option>
                                 <app-comment-option></app-comment-option>
                                 <app-post>

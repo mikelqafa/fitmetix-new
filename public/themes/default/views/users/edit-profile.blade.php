@@ -119,7 +119,7 @@
 									</div>
 								</div>
 
-								<div class="row">
+								{{--<div class="row hidden">
 									<div class="col-md-6">
 
 										<fieldset class="form-group">
@@ -133,7 +133,7 @@
 											{{ Form::text('interests', Auth::user()->interests, ['class' => 'add_selectize', 'placeholder' => trans('common.add_your_interests')]) }}
 										</fieldset>
 									</div>
-								</div>
+								</div>--}}
 								@if(Setting::get('custom_option1') != NULL || Setting::get('custom_option2') != NULL)
 									<div class="row">
 										@if(Setting::get('custom_option1') != NULL)

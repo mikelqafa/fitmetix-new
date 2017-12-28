@@ -2,7 +2,6 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import Post from './components/Post'
-import Profile from './components/Profile'
 import PostSingle from './components/PostSingle'
 import GalleryPostByHLU from './components/GalleryPostByHLU'
 import EventPostByHLU from './components/EventPostByHLU'
@@ -15,6 +14,7 @@ import VueTimeago from 'vue-timeago'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 // import AppEventCalendar from './components/appEventCalendar'
 import AppEventList from './components/appEventList'
+import ProfileOptionDialog from './components/ProfileOptionDialog'
 import {store} from './store/store'
 import VueClip from 'vue-clip'
 require('swiper/dist/css/swiper.css')
@@ -42,7 +42,8 @@ window.timeLine = new Vue({
     'app-event-hlu': EventPostByHLU,
     'app-post-option': postDialogOption,
     'app-comment-option': commentDialogOption,
-    'app-event-list': AppEventList
+    'app-event-list': AppEventList,
+    'app-profile-option': ProfileOptionDialog
   }
 })
 
@@ -60,17 +61,3 @@ window.createPost = new Vue({
     'app-create-post': createPost
   }
 })
-
-window.profile = new Vue({
-  el: '#app-profile',
-  components: {
-    'app-profile':Profile
-  }
-})
-
-/*window.eventCalendar = new Vue({
-  el: '#app-create-event',
-  components: {
-    'app-event-calender': AppEventCalendar
-  }
-})*/
