@@ -65,19 +65,22 @@
             getList: function () {
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
+                this.participantList = []
                 axios({
                     method: 'post',
                     responseType: 'json',
-                    url: base_url + 'ajax/get-participants',
+                    url: base_url + 'ajax/get-registered-users-for-event',
                     data: {
                         event_id: that.eventWho.eventId,
+                        user_id: user_id,
                         _token: _token
                     }
                 }).then(function (response) {
                     if (response.status == 200) {
-                        for(let i = 0;i<response.data.length; i++) {
+                        console.log(response)
+                        /*for(let i = 0;i<response.data.length; i++) {
                             that.participantList.push(response.data[i])
-                        }
+                        }*/
                     }
                 }).catch(function (error) {
                     console.log(error)

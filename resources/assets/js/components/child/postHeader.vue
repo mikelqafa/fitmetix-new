@@ -76,10 +76,10 @@
                 return this.postData.type !== null? (this.postData.location !== '' ? base_url + 'gallery/location/' + this.postData.location : '') : this.postData.location !== '' ? base_url + 'gallery/location/' + this.postData.location : ''
             },
             userLink () {
-                return base_url + this.timeLineData.username
+                return this.isTypeEvent ? base_url + this.postData.creator_timeline.username: base_url + this.postData.timeline.username
             },
             userAtTitle() {
-                return '@' + this.timeLineData.username
+                return this.isTypeEvent ? '@' + this.postData.creator_timeline.username: '@' + this.postData.timeline.username
             },
             userAvatar () {
                 return this.isTypeEvent ?

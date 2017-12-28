@@ -16,7 +16,7 @@
         <title>{{ Theme::get('title') }}</title>
         <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
         <link href="{{ asset('fitmetixfont/font.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/login.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
         <link href="{{ asset('css/snackbar.css') }}" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Finger+Paint" rel="stylesheet">
         <style>

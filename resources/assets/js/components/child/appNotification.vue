@@ -103,6 +103,9 @@
                     case 'report_post':
                           url =  base_url + 'post/'+item.post_id
                     break
+                    case 'comment_post':
+                          url =  base_url + 'post/'+item.post_id
+                    break
                     case 'like_post':
                         url =  base_url + 'post/'+item.post_id
                     break

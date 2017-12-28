@@ -6,7 +6,7 @@
 			{!! Theme::partial('create-event',compact('username','group_id','timeline_name')) !!}
 		</div>
 
-		<div class="col-md-12 col-lg-5">
+		<div class="hidden-xs col-md-12 col-lg-5">
 			<div id="caleandar">
 			</div>
 		</div>

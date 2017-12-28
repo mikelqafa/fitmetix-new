@@ -34,8 +34,9 @@
                     <div class="layout-m-t-2 timeline-option layout-m-b-2 md-layout md-layout--row md-align md-align--space-between-center">
                         <div class="timeline-option__item">
                             @if(Auth::user()->id == $timeline->user->id)
-                                <a href="{{ url(Auth::user()->username.'/create-event') }}" class="ft-btn ft-btn--icon">
-                                    <i class="icon icon-add">Inspire</i>
+                                <a href="{{ url(Auth::user()->username.'/create-event') }}" class="md-layout md-layout--column text-center">
+                                    <i class="icon icon-add"></i>
+                                    <span>Inspire</span>
                                 </a>
                             @else
                                 <a href="javascript:;" class="ft-btn ft-btn--icon">
@@ -44,7 +45,7 @@
                             @endif
                         </div>
                         @if(Auth::user()->id == $timeline->user->id)
-                            <button class="btn ft-btn-primary ft-btn-primary--outline">Edit Profile</button>
+                            <a href="{{ url('/'.Auth::user()->username.'/edit-profile') }}" class="btn ft-btn-primary ft-btn-primary--outline">Edit Profile</a>
                         @elseif(Auth::user()->following->contains($timeline->user->id))
                             <button class="btn ft-btn-primary ft-btn-primary--outline">Following</button>
                         @else 
@@ -61,14 +62,53 @@
                     </div>
                     <div class="options" style="text-align: center;">
                         @if($timeline->user->settings()->timeline_post_privacy == 'everyone')
-                            events : {{ count($user_events) }}
-                            posts : {{ count($posts) }}
-                            follows : {{ $following_count }}
-                            followers  {{ $followers_count }}
+                            <div class="ft-user-info md-layout md-layout--row md-align md-align--space-around">
+                                <div class="ft-user-info__item">
+                                    <div class="ft-icon">
+                                        Events
+                                    </div>
+                                    <div class="info">
+                                        {{ count($user_events) }}
+                                    </div>
+                                </div>
+                                <div class="ft-user-info__item">
+                                    <div class="ft-icon">
+                                        Posts
+                                    </div>
+                                    <div class="info">
+                                        {{ count($posts) }}
+                                    </div>
+                                </div>
+                                <div class="ft-user-info__item">
+                                    <div class="ft-icon">
+                                        Follows
+                                    </div>
+                                    <div class="info">
+                                        {{ $following_count }}
+                                    </div>
+                                </div>
+                                <div class="ft-user-info__item">
+                                    <div class="ft-icon">
+                                        Followers
+                                    </div>
+                                    <div class="info">
+                                        {{ $followers_count }}
+                                    </div>
+                                </div>
+                                @if(Auth::user()->id == $timeline->user->id)
+                                    <div class="ft-user-info__item">
+                                        <div class="ft-icon">
+                                            Saved
+                                        </div>
+                                        <div class="info">
+                                            {{ count($timeline->user->postsSaved()) }}
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
                         @endif
                         @if(Auth::user()->id == $timeline->user->id)
-                            saved : {{ count($timeline->user->postsSaved()) }}
-                            <a class="btn btn-default" href="{{ url($timeline->username.'/settings/general') }}">Settings</a>
+                            <a class="btn btn-default" href="{{ url($timeline->username.'/settings') }}">Settings</a>
                         @elseif(Auth::user()->following->contains($timeline->user->id))
                             <button class="btn btn-default">Block</button>
                             <button class="btn btn-default">Report</button>
@@ -105,32 +145,6 @@
                                 {!! Theme::partial('create-post',compact('timeline','user_post')) !!}
                             @endif
                         @endif
-                        {{--<div class="timeline-posts">
-                            @if($user_post == "user" || $user_post == "page" || $user_post == "group")
-                                @if(count($posts) > 0)
-                                    @foreach($posts as $post)
-                                        {!! Theme::partial('post',compact('post','timeline','next_page_url','user')) !!}
-                                    @endforeach
-                                @else
-                                    <div class="no-posts alert alert-warning">{{ trans('messages.no_posts') }}</div>
-                                @endif
-                            @endif
-
-                            @if($user_post == "event")
-                                @if($event->type == 'private' && Auth::user()->get_eventuser($event->id) || $event->type == 'public')
-                                    @if(count($posts) > 0)
-                                        @foreach($posts as $post)
-                                            {!! Theme::partial('post',compact('post','timeline','next_page_url','user')) !!}
-                                        @endforeach
-                                    @else
-                                        <div class="no-posts alert alert-warning">{{ trans('messages.no_posts') }}</div>
-                                    @endif
-                                @else
-                                    <div class="no-posts alert alert-warning">{{ trans('messages.private_posts') }}</div>
-                                @endif
-                            @endif
-                        </div>--}}
-
                         <div class="timeline-posts timeline-posts--user">
                             <input type="hidden" id="timeline_username" value="{{$username}}" />
                             <div id="app-timeline">

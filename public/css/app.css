@@ -9921,7 +9921,6 @@ placeholder .darksharing-modal .modal-body .sharing-details .control-group .sele
     float: left;
 }
 .list-group-navigation .list-group-item .list-text {
-    margin-left: 60px;
     color: #354052;
     font-weight: 600;
     text-transform: capitalize;
@@ -16361,7 +16360,7 @@ html {
     margin-bottom: 20px;
 }
 .list-group.socialite-group .list-group-item {
-    padding: 6px 15px !important;
+    padding: 10px 15px !important;
 }
 .list-group.socialite-group .list-group-item .badge {
     margin-top: 9px;

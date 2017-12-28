@@ -276,6 +276,7 @@ Route::group(['prefix' => '/{username}', 'middleware' => 'auth'], function ($use
 
 Route::group(['prefix' => '/{username}', 'middleware' => ['auth', 'editown']], function ($username) {
 
+    Route::get('settings','UserController@showProfileSettings');
     Route::get('edit-profile','UserController@editProfile');
 
     Route::get('/messages', 'UserController@messages');

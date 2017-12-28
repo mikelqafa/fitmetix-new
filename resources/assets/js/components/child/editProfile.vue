@@ -1,5 +1,5 @@
 <template>
-    <div class="md-dialog md-dialog--maintain-width md-dialog--edit-post md-dialog--full-screen" id="event-edit-option-dialog">
+    <div class="md-dialog md-dialog--maintain-width md-dialog--edit-post md-dialog--full-screen" id="profile-edit-option-dialog">
         <div class="md-dialog__wrapper">
             <div class="md-dialog__shadow"></div>
             <div class="md-dialog__surface" style="position: relative">
@@ -102,47 +102,8 @@
         </div>
     </div>
 </template>
-
-<style>
-    .replace-with-edit-event {
-        height: 0;
-        width: 0;
-        visibility: hidden;
-    }
-    .ft-cp--edit .ft-cp__presentation{
-        padding: 0;
-        min-height: 70px;
-    }
-    .post-edit-heading{
-        min-height:40px;
-        line-height: 20px;
-
-    }
-    .md-dialog--edit-post.md-dialog--open {
-        z-index: 27;
-    }
-    .md-dialog--edit-post .md-dialog__body {
-        margin-top: 0;
-        max-width: 590px;
-        width: 100%;
-        padding-left: 0;
-        padding-right: 0;
-        padding-bottom: 0;
-    }
-    .md-dialog--edit-post .md-dialog__wrapper {
-        justify-content: center;
-    }
-</style>
-
 <script>
     import { mapGetters } from 'vuex'
-    import editor from 'vue2-medium-editor'
-    import postDescription from './postDescription'
-    import postImageViewer from './postImageViewer'
-    import postEvent from './postEvent'
-    import postYouTube from './postYouTube'
-    import postSoundCloud from './postSoundCloud'
-    import postHeader from './postHeader'
 
     export default {
         props: {
@@ -152,13 +113,6 @@
         data: function () {
             return {
                 isLoading: false,
-                userImage: '',
-                placeholder: '',
-                content: '',
-                backContent: '',
-                viewContent: '',
-                imageFile: [],
-                options: { disableReturn: false },
                 event: {
                     startDate: '' ,
                     duration:'',
@@ -173,120 +127,12 @@
             }
         },
         methods: {
-            replaceImgEmoji: function () {
-                $('.replace-with-edit-event').html('')
-                $('.replace-with-edit-event').html($('#edit-post-vue').html())
-                $.each($('.replace-with-edit-event img'), function(){
-                    $(this).replaceWith('<div> '+$(this).attr('title')+' </div>');
-                });
-            },
             validate: function () {
                 if(this.event.duration > 172800) {
                     alertApp('Event duration must be less than 48 hours')
                     return false
                 }
                 return true
-            },
-            nl2br: function(html) {
-                let is_xhtml = false
-                var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
-                return (html + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
-            },
-            cancelSaveEvent: function () {
-                $('#event-edit-option-dialog').MaterialDialog('hide')
-            },
-            editSavePost: function () {
-                if(!this.validate()) {
-                    return
-                }
-                this.replaceImgEmoji()
-                this.isLoading = true
-                let description = this.nl2br($('.replace-with-edit-event').html())
-                this.event.startDate = $('#edit-event-start-date').val()
-                this.event.privacy = $('#edit-event-privacy').val()
-                this.event.gender = $('#edit-event-gender').val()
-                let that = this
-                let _token = $("meta[name=_token]").attr('content')
-                axios({
-                    method: 'post',
-                    responseType: 'json',
-                    url: base_url + 'ajax/update-event',
-                    data: {
-                        _token: _token,
-                        post_id: that.postItem.id,
-                        description: description,
-                        gender: that.event.gender,
-                        location: that.event.location,
-                        participant: that.event.participant,
-                        privacy: that.event.privacy,
-                        event_id: that.event.id,
-                        title: that.event.title,
-                        start_date: that.event.startDate,
-                        duration: that.event.duration
-                    }
-                }).then( function (response) {
-                    if (response.status ==  200) {
-                        that.getAndSetPostById()
-                    }
-                }).catch(function(error) {
-                    materialSnackBar({messageText: error, autoClose: true })
-                    that.isLoading = false
-                })
-            },
-            getAndSetPostById: function () {
-                let that = this
-                let username = current_username
-                let _token = $("meta[name=_token]").attr('content')
-                axios({
-                    method: 'post',
-                    responseType: 'json',
-                    url: base_url + 'get-single-post',
-                    data: {
-                        username: current_username,
-                        _token: _token,
-                        post_id: that.postItem.id
-                    }
-                }).then( function (response) {
-                    console.log(response)
-                    if (response.status ==  200) {
-                        let post = response.data[0].post;
-                        that.isLoading = false
-                        $('#event-edit-option-dialog').MaterialDialog('hide')
-                        $('#post-option-dialog').MaterialDialog('hide')
-                        that.$store.commit('REPLACE_POST_ITEM',{data: post, index: that.index} )
-                        setTimeout(function () {
-                            emojify.run();
-                            hashtagify();
-                            mentionify();
-                        }, 300)
-                        materialSnackBar({messageText: 'Event updated successfully', autoClose: true })
-                    }
-                }).catch(function(error) {
-                    console.log(error)
-                })
-            },
-            processEditOperationPost: function (operation) {
-                this.backContent = operation.api.origElements.innerHTML
-            },
-            getDuration: function (s,e) {
-                let t1 = new Date(s + 'Z')
-                let t2 = new Date(e + 'Z')
-                console.log((t1.getTime() - t2.getTime()) / 1000)
-                return Math.abs( (t1.getTime() - t2.getTime()) / 1000);
-            },
-            initEventForm: function () {
-                this.event.startDate = this.postItem.event[0].start_date
-                this.event.duration = this.getDuration(this.postItem.event[0].start_date, this.postItem.event[0].end_date)
-                this.event.gender = this.postItem.event[0].gender
-                this.event.participant = this.postItem.event[0].user_limit
-                this.event.location = this.postItem.event[0].location
-                this.event.title = this.postItem.timeline.name
-                this.event.price = this.postItem.event[0].price
-                this.event.privacy = this.postItem.event[0].type
-                this.event.id = this.postItem.event[0].id
-                $('#edit-event-start-date').val(this.event.startDate)
-                $("#edit-event-privacy option[value=" + this.event.privacy +"]").attr("selected","selected")
-                $("#edit-event-gender option[value=" + this.event.gender +"]").attr("selected","selected")
             },
             initEventPlugin: function () {
                 setTimeout(function(){
@@ -314,7 +160,7 @@
         mounted () {
             let that = this
             this.placeholder = 'Event Description'
-            let dialog = $('#event-edit-option-dialog').MaterialDialog({show:false});
+            let dialog = $('#profile-edit-option-dialog').MaterialDialog({show:false});
             this.backContent = this.backContentPrev
             if(this.hasItem) {
                 this.initEventForm()
@@ -322,35 +168,11 @@
             this.initEventPlugin()
         },
         components: {
-            'medium-editor': editor,
-            'post-image-viewer': postImageViewer,
-            'post-sound-cloud': postSoundCloud,
-            'post-youtube': postYouTube,
-            'post-event': postEvent
+
         },
         computed: {
-            hasNotContent () {
-                return this.backContent === ''
-            },
-            viewContentHtml: function() {
-                let is_xhtml = false
-                var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
-                return (this.viewContent + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
-            },
-            backContentPrev: function () {
-                return this.postItem.description !== undefined ? this.postItem.description : ''
-            },
             hasItem: function () {
                 return this.postItem.description !== undefined
-            }
-        },
-        watch: {
-            // whenever backContentPrev changes, this function will run
-            backContentPrev: function (val) {
-                this.backContent = val
-                setTimeout(function(){
-                    emojify.run()
-                }, 300)
             }
         }
     }

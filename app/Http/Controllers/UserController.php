@@ -1288,6 +1288,13 @@ class UserController extends AppBaseController
         return $theme->scope('users/edit-profile', compact('username'))->render();
     }
 
+    public function showProfileSettings($username) {
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+        $theme->setTitle(trans('common.edit_profile').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+
+        return $theme->scope('users/profile-settings', compact('username'))->render();
+    }
+
   public function blockUser($username) {
     $blockedTimeline = DB::table('timelines')
       ->where('username', $username)
