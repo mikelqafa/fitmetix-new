@@ -29158,6 +29158,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 console.log(error);
             });
         },
+        postCommentByEnter: function postCommentByEnter(el) {
+            var target = $(el).find('.ft-post__comment-form')[0];
+            this.initPostComment(target, target.value);
+        },
         postComment: function postComment(e) {
             if (e.shiftKey) {
                 if (e.which == 13) {
@@ -29169,11 +29173,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 }
             }
             e.preventDefault();
-            var input = e.target;
-            var value = e.target.value;
-            console.log(input, value);
-            $(e.target).parent().addClass('is-loading');
-            var loadingWrapper = $(e.target).parent().find('.loading-wrapper');
+            this.initPostComment(e.target, e.target.value);
+        },
+        initPostComment: function initPostComment(target, value) {
+            var input = target;
+            $(target).parent().addClass('is-loading');
+            var loadingWrapper = $(target).parent().find('.loading-wrapper');
             if (value == '') {
                 return;
             }
@@ -29611,7 +29616,12 @@ var render = function() {
                                   "button",
                                   {
                                     staticClass: "btn ft-chat__write-button",
-                                    attrs: { type: "submit" }
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.postCommentByEnter(_vm.$el)
+                                      }
+                                    }
                                   },
                                   [
                                     _c(

@@ -255,16 +255,6 @@ svg {
   padding-top:16px;
 }
 
-.ft-mobile-logo {
-    display: none;
-    z-index: 3;
-    position: absolute;
-    top: 30px;
-    width: 100%;
-    padding: 0 15px;
-    height: 80px;
-}
-
 .ft-carousel__cover {
     min-height: calc(100vh - 64px);
     width: 100vw;
@@ -536,7 +526,9 @@ svg {
         width: 280px;
     }
 }
-
+.btn{
+    outline: none !important;
+}
 @media screen and (max-width: 599px) {
     .ft-login .text-center--mobile {
         text-align: center;
@@ -3114,4 +3106,13 @@ aside .md-drawer-scroll__wrapper{
 }
 .widget-events, .right-side-section {
     margin-top: 24px;
+}
+.ft-mobile-logo {
+    display: none;
+    z-index: 3;
+    position: absolute;
+    top: 30px;
+    width: 100%;
+    padding: 0 15px;
+    height: 80px;
 }

@@ -58,7 +58,7 @@
                                 </div>
                             </form>
                             <div class="ft-chat__write-button-wrapper" v-if="">
-                                <button type="submit" class="btn ft-chat__write-button">
+                                <button type="button" @click="postCommentByEnter($el)" class="btn ft-chat__write-button">
                                     <svg class="svg-icon" fill="#ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
                                         <path d="M0 0h24v24H0z" fill="none"/>
@@ -258,6 +258,10 @@
                     console.log(error)
                 })
             },
+            postCommentByEnter: function (el) {
+                let target = $(el).find('.ft-post__comment-form')[0]
+                this.initPostComment(target, target.value)
+            },
             postComment: function (e) {
                 if (e.shiftKey) {
                     if(e.which == 13) {
@@ -269,11 +273,12 @@
                     }
                 }
                 e.preventDefault()
-                let input = e.target
-                let value = e.target.value
-                console.log(input, value)
-                $(e.target).parent().addClass('is-loading')
-                let loadingWrapper = $(e.target).parent().find('.loading-wrapper')
+                this.initPostComment(e.target, e.target.value)
+            },
+            initPostComment: function(target, value) {
+                let input = target
+                $(target).parent().addClass('is-loading')
+                let loadingWrapper = $(target).parent().find('.loading-wrapper')
                 if(value == '') {
                     return
                 }
@@ -319,7 +324,6 @@
                 }).catch(function (error) {
                     console.log(error)
                 })
-
             },
             fetchComment: function () {
                 let _token = $("meta[name=_token]").attr('content')

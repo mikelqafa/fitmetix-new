@@ -585,7 +585,7 @@ $(function () {
     var el = $(this)
     el.attr('disabled', true)
     el.attr('data-processing', true)
-    $.post(SP_source() + 'ajax/follow-post', {timeline_id: el.data('timeline-id')}, function(data) {
+    $.post(SP_source() + 'ajax/follow-user-confirm', {timeline_id: el.data('timeline-id')}, function(data) {
       el.attr('disabled', false)
       el.attr('data-processing', false)
       if (data.status == 200) {
