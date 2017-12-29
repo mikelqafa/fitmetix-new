@@ -214,7 +214,16 @@ class TimelineController extends AppBaseController
             $timeline_post_privacy = '';
             $timeline_post = '';
 
+
             $user = User::where('timeline_id', $timeline['id'])->first();
+            
+            $blocked = DB::table('user_blocked')->where([['blocked_uid',$user->id],['blocker_uid',Auth::user()->id]])->first();
+            $block_text = 'Block';
+
+            if($blocked){
+                $block_text = 'Unblock';
+            }
+
             $own_pages = $user->own_pages();
             $own_groups = $user->own_groups();
             $liked_pages = $user->pageLikes()->get();
@@ -263,7 +272,7 @@ class TimelineController extends AppBaseController
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
         $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
-        return $theme->scope('users/timeline', compact('user', 'timeline', 'posts', 'liked_pages', 'timeline_type', 'page', 'group', 'next_page_url', 'joined_groups', 'follow_user_status', 'followRequests', 'following_count', 'followers_count', 'timeline_post', 'user_post', 'follow_confirm', 'joined_groups_count', 'own_pages', 'own_groups', 'group_members', 'page_members', 'event', 'user_events', 'guest_events', 'username', 'group_events', 'ongoing_events', 'upcoming_events'))->render();
+        return $theme->scope('users/timeline', compact('user', 'timeline', 'posts', 'liked_pages', 'timeline_type', 'page', 'group', 'next_page_url', 'joined_groups', 'follow_user_status', 'followRequests', 'following_count', 'followers_count', 'timeline_post', 'user_post', 'follow_confirm', 'joined_groups_count', 'own_pages', 'own_groups', 'group_members', 'page_members', 'event', 'user_events', 'block_text' ,'guest_events', 'username', 'group_events', 'ongoing_events', 'upcoming_events'))->render();
     }
 
     public function getMorePosts(Request $request)

@@ -33,12 +33,12 @@
             </form>
             <div class="md-layout-spacer"></div>
             <div class="nav no-float md-layout fm-nav navbar-nav hidden-sm hidden-xs" id="navbar-right">
-                <a href="{{ url(Auth::user()->username.'/create-event') }}" class="has-hover-effect fm-nav__item {{ Request::path() == '/' ? 'is-active' : '' }}">
+                <a href="{{ url(Auth::user()->username.'/create-event') }}" class="has-hover-effect fm-nav__item {{ Request::path() == Auth::user()->username.'/create-event' ? 'is-active' : '' }}">
                     <span>
                         <i class="fa fa-plus"></i> Inspire
                     </span>
                 </a>
-                <a href="{{ url(Auth::user()->username.'/events') }}" class="has-hover-effect fm-nav__item">
+                <a href="{{ url(Auth::user()->username.'/events') }}" class="has-hover-effect fm-nav__item {{ (Request::is(Auth::user()->username.'/events') ? 'is-active' : '') }}">
                     Events
                 </a>
                 <div id="app-notification">

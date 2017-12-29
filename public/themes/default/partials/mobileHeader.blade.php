@@ -1,13 +1,13 @@
 <div class="ft-header hidden-md hidden-lg">
     <div class="ft-header-nav">
         @if(Auth::user())
-            <a class="ft-header-nav__item {{ Request::is('/') ? 'is-active' : '' }}" href="{{ url('/') }}">
+            <a class="ft-header-nav__item {{ Request::is(Auth::user()->username.'/create-event') ? 'is-active' : '' }}" href="{{ url('/') }}">
                 <div class="icon" data-icon="n"></div>
             </a>
-            <a href="{{ url(Auth::user()->username.'/events') }}" class="has-hover-effect fm-nav__item">
+            <a href="{{ url(Auth::user()->username.'/events') }}" class="has-hover-effect fm-nav__item {{ (Request::is(Auth::user()->username.'/events') ? 'is-active' : '') }}">
                 <div class="icon icon-eventpage" style="font-size: 50px; line-height: 45px"></div>
             </a>
-            <a id="ft-mobile-nt" class="ft-header-nav__item pos-rel {{ Request::is('messages') ? 'is-active' : '' }}" href="{!! url('allnotifications') !!}">
+            <a id="ft-mobile-nt" class="ft-header-nav__item pos-rel {{ Request::is('allnotifications') ? 'is-active' : '' }}" href="{!! url('allnotifications') !!}">
                 <div class="icon icon icon-like"></div>
                 <span class="unread-notification is-shown-un"></span>
             </a>

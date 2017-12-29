@@ -30,6 +30,12 @@
 										{{ Form::select('confirm_follow', array('yes' => trans('common.yes'), 'no' => trans('common.no')), $settings['privacy']->confirm_follow, array('class' => 'form-control follow')) }}
 									</fieldset>
 								</li>
+								<li href="#" class="list-group-item">
+									<fieldset class="form-group">
+										{{ Form::label('post_privacy', trans('common.label_post_privacy')) }}
+										{{ Form::select('post_privacy', array('everyone' => trans('common.everyone'), 'only_follow' => trans('common.people_i_follow')), $settings['privacy']->post_privacy, array('class' => 'form-control')) }}
+									</fieldset>
+								</li>
 								{{--<li href="#" class="list-group-item">
 									<fieldset class="form-group">
 										{{ Form::label('confirm_follow', trans('common.label_confirm_request')) }}
@@ -97,7 +103,7 @@
 										<td><a target="_blank" href="{{ URL::to('ajax/unblock-user/'.$value->id) }}" >Unblock</a></td>
 									</tr>
 									@endforeach
-								@endif
+							@endif
 						</table>
 					</div>
 				</div>

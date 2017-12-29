@@ -567,7 +567,7 @@ class UserController extends AppBaseController
                             'confirm_follow'        => $input['confirm_follow'],
                             'comment_privacy'       => 'everyone',
                             'follow_privacy'        => 'everyone',
-                            'post_privacy'          => 'nobody',
+                            'post_privacy'          => $request->post_privacy,
                             'timeline_post_privacy' => 'only_follow',
                             'message_privacy'       => 'everyone', ];
 
@@ -627,7 +627,7 @@ class UserController extends AppBaseController
         $user_details['birthday'] = date('Y-m-d', strtotime($request->birthday));
         $user->update($user_details);
 
-        Flash::success(trans('messages.general_settings_updated_success'));
+        Flash::success('Updated successfully');
 
         return redirect()->back();
     }

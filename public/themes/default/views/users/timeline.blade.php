@@ -73,7 +73,7 @@
                         {{$timeline->about}}
                     </div>
                     <div class="options" style="text-align: center;">
-                        @if($timeline->user->settings()->timeline_post_privacy == 'everyone')
+                        @if($timeline->user->settings()->post_privacy == 'everyone')
                             <div class="ft-user-info md-layout md-layout--row md-align md-align--space-around show-more" style="display: none">
                                 <div class="ft-user-info__item">
                                     <div class="ft-icon">
@@ -122,7 +122,7 @@
                         @if(Auth::user()->id == $timeline->user->id)
                             <a class="btn btn-default hidden visible-xs" href="{{ url($timeline->username.'/settings') }}">Settings</a>
                         @elseif(Auth::user()->following->contains($timeline->user->id))
-                            <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Block</button>
+                            <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">{{ $block_text }}</button>
                             <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Report</button>
                             <button class="btn btn-default follow-user"
                                     data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="true">
@@ -131,7 +131,7 @@
 
 
                         @else
-                            <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Block</button>
+                            <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">{{ $block_text }}</button>
                             <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Report</button>
                         @endif
                     </div>

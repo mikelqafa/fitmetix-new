@@ -65,123 +65,8 @@
 											@endif
 										</fieldset>
 									</div>
-									<div class="col-md-6">
-										<fieldset class="form-group required">
-											{{ Form::label('gender', trans('common.gender')) }}
-											{{ Form::select('gender', array('male' => trans('common.male'), 'female' => trans('common.female'), 'other' => trans('common.none')), Auth::user()->gender, array('class' => 'form-control')) }}
-										</fieldset>
-									</div>
 								</div>
 
-								<div class="row">
-									<div class="col-md-6">
-										<fieldset class="form-group">
-											{{ Form::label('country', trans('common.country')) }}
-											{{ Form::text('country', Auth::user()->country, array('class' => 'form-control', 'placeholder' => trans('common.country'))) }}
-										</fieldset>
-									</div>
-									<div class="col-md-6">
-										<fieldset class="form-group">
-											{{ Form::label('city', trans('common.current_city')) }}
-											{{ Form::text('city', Auth::user()->city, ['class' => 'form-control', 'placeholder' => trans('common.current_city')]) }}
-										</fieldset>
-									</div>
-								</div>
-
-								<h3>
-									{{ trans('common.personal') }}
-								</h3>
-								<hr>
-
-								<div class="row">
-									<div class="col-md-6">
-										<fieldset class="form-group">
-											{{ Form::label('birthday', trans('common.birthday')) }}
-
-
-											<div class="input-group date datepicker">
-
-												<span class="input-group-addon addon-left calendar-addon">
-													<span class="fa fa-calendar"></span>
-												</span>
-												{{ Form::text('birthday', Auth::user()->birthday, ['class' => 'form-control', 'id' => 'datepicker1']) }}
-												<span class="input-group-addon addon-right angle-addon">
-													<span class="fa fa-angle-down"></span>
-												</span>
-											</div>
-										</fieldset>
-									</div>
-									<div class="col-md-6">
-										<fieldset class="form-group">
-											{{ Form::label('designation', trans('common.designation')) }}
-											{{ Form::text('designation', Auth::user()->designation, ['class' => 'form-control', 'placeholder' => trans('common.your_qualification')]) }}
-										</fieldset>
-									</div>
-								</div>
-
-								{{--<div class="row hidden">
-									<div class="col-md-6">
-
-										<fieldset class="form-group">
-											{{ Form::label('hobbies', trans('common.hobbies')) }}
-											{{ Form::text('hobbies', Auth::user()->hobbies, ['class' => 'add_selectize', 'placeholder' => trans('common.mention_your_hobbies')]) }}
-										</fieldset>
-									</div>
-									<div class="col-md-6">
-										<fieldset class="form-group">
-											{{ Form::label('interests', trans('common.interests')) }}
-											{{ Form::text('interests', Auth::user()->interests, ['class' => 'add_selectize', 'placeholder' => trans('common.add_your_interests')]) }}
-										</fieldset>
-									</div>
-								</div>--}}
-								@if(Setting::get('custom_option1') != NULL || Setting::get('custom_option2') != NULL)
-									<div class="row">
-										@if(Setting::get('custom_option1') != NULL)
-											<div class="col-md-6">
-												<fieldset class="form-group">
-													{{ Form::label('custom_option1', Setting::get('custom_option1')) }}
-													{{ Form::text('custom_option1', Auth::user()->custom_option1, ['class' => 'form-control']) }}
-												</fieldset>
-											</div>
-										@endif
-
-										@if(Setting::get('custom_option2') != NULL)
-											<div class="col-md-6">
-												<fieldset class="form-group">
-													{{ Form::label('custom_option2', Setting::get('custom_option2')) }}
-													{{ Form::text('custom_option2', Auth::user()->custom_option2, ['class' => 'form-control']) }}
-												</fieldset>
-											</div>
-										@endif
-									</div>
-								@endif
-
-								@if(Setting::get('custom_option3') != NULL || Setting::get('custom_option4') != NULL)
-									<div class="row">
-										@if(Setting::get('custom_option3') != NULL)
-											<div class="col-md-6">
-												<fieldset class="form-group">
-													{{ Form::label('custom_option3', Setting::get('custom_option3')) }}
-													{{ Form::text('custom_option3', Auth::user()->custom_option3, ['class' => 'form-control']) }}
-												</fieldset>
-											</div>
-										@endif
-
-										@if(Setting::get('custom_option4') != NULL)
-											<div class="col-md-6">
-												<fieldset class="form-group">
-													{{ Form::label('custom_option4', Setting::get('custom_option4')) }}
-													{{ Form::text('custom_option4', Auth::user()->custom_option4, ['class' => 'form-control']) }}
-												</fieldset>
-											</div>
-										@endif
-									</div>
-								@endif
-
-								<h3>
-									{{ trans('common.be_social') }}
-								</h3>
-								<hr>
 								<div class="row">
 									<div class="col-md-6">
 										<fieldset class="form-group">
@@ -189,29 +74,6 @@
 											<div class="input-group facebook-input-group">
 												<div class="input-group-addon fb-btn"><i class="fa fa-facebook"></i></div>
 												{{ Form::text('facebook_link', Auth::user()->facebook_link, array('class' => 'form-control account-form', 'placeholder' => trans('admin.facebook_link'))) }}
-											</div>
-
-										</fieldset>
-									</div>
-									<div class="col-md-6">
-										<fieldset class="form-group">
-											{{ Form::label('youtube_link', trans('admin.youtube_link')) }}
-											<div class="input-group facebook-input-group youtube-input-group">
-												<div class="input-group-addon youtube-btn"><i class="fa fa-youtube"></i></div>
-												{{ Form::text('youtube_link', Auth::user()->youtube_link, array('class' => 'form-control', 'placeholder' => trans('admin.youtube_link'))) }}
-											</div>
-
-										</fieldset>
-									</div>
-								</div>
-
-								<div class="row">
-									<div class="col-md-6">
-										<fieldset class="form-group">
-											{{ Form::label('twitter_link', trans('admin.twitter_link')) }}
-											<div class="input-group facebook-input-group twitter-input-group">
-												<div class="input-group-addon twitter-btn"><i class="fa fa-twitter"></i></div>
-												{{ Form::text('twitter_link', Auth::user()->twitter_link, array('class' => 'form-control', 'placeholder' => trans('admin.twitter_link'))) }}
 											</div>
 
 										</fieldset>
@@ -226,29 +88,7 @@
 
 										</fieldset>
 									</div>
-								</div>
 
-								<div class="row">
-									<div class="col-md-6">
-										<fieldset class="form-group">
-											{{ Form::label('dribbble_link', trans('admin.dribbble_link')) }}
-											<div class="input-group facebook-input-group dribbble-input-group">
-												<div class="input-group-addon dribbble-btn"><i class="fa fa-dribbble"></i></div>
-												{{ Form::text('dribbble_link', Auth::user()->dribbble_link, array('class' => 'form-control', 'placeholder' => trans('admin.dribbble_link'))) }}
-											</div>
-
-										</fieldset>
-									</div>
-									<div class="col-md-6">
-										<fieldset class="form-group">
-											{{ Form::label('linkedin_link', trans('admin.linkedin_link')) }}
-											<div class="input-group facebook-input-group linkedin-input-group">
-												<div class="input-group-addon linkedin-btn"><i class="fa fa-linkedin"></i></div>
-												{{ Form::text('linkedin_link', Auth::user()->linkedin_link, array('class' => 'form-control', 'placeholder' => trans('admin.linkedin_link'))) }}
-											</div>
-
-										</fieldset>
-									</div>
 								</div>
 
 								<div class="pull-right">
