@@ -43,7 +43,7 @@
                 </a>
                 <div id="app-notification">
                     <app-notification>
-                        <a href="javascript:;" data-toggle="dropdown" @click.prevent="showNotifications" class="has-hover-effect fm-nav__item dropdown message hidden-sm hidden-xs">
+                        <a href="javascript:;" style="height: 60px" class="has-hover-effect fm-nav__item dropdown message hidden-sm hidden-xs">
                             <div class="icon icon-like"></div>
                         </a>
                     </app-notification>
