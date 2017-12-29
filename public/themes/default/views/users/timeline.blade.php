@@ -154,7 +154,11 @@
                         @if(Auth::user()->id == $timeline->user->id)
                             <a class="btn btn-default hidden visible-xs" href="{{ url($timeline->username.'/settings') }}">Settings</a>
                         @elseif(Auth::user()->following->contains($timeline->user->id))
-                            <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">{{ $block_text }}</button>
+                                @if($block_text == 'Unblock')
+                                    <button class="btn btn-default" onclick="unblock()">{{ $block_text }}</button>
+                                @else
+                                    <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">{{ $block_text }}</button>
+                                @endif
                             <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Report</button>
                             <button class="pos-rel btn btn-default" data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="true">
                                 Unfollow
@@ -166,10 +170,12 @@
                                     </span>
                                 </span>
                             </button>
-
-
                         @else
-                            <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">{{ $block_text }}</button>
+                            @if($block_text == 'Unblock')
+                                <button class="btn btn-default" onclick="unblock()">{{ $block_text }}</button>
+                            @else
+                                <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">{{ $block_text }}</button>
+                            @endif
                             <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Report</button>
                         @endif
                     </div>

@@ -208,7 +208,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_vuWi_hzMDDeenNYwaNAj0PHzzS2GAx8&libraries=places&callback=init"
 		async defer></script>
 <script>
-	var mapReeady = false;
+	var mapReady = false;
 	var initMap = false
 	function init() {
 		mapReady = initMap = true
