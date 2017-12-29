@@ -8,7 +8,7 @@
             <template v-if="notifications.length">
                 <div class="ft-chat__header">Notifications</div>
                 <div class="md-menu">
-                    <a :href="notificationUrl(item)" v-for="item in notifications" data-user-id="26" class="md-menu__item ft-chat__item">
+                    <a :href="notificationUrl(item)" v-for="item in notifications" :data-nid="item.id" :key="item.id" class="md-menu__item ft-chat__item">
                         <div class="md-list__item  has-divider">
                             <div class="md-list__item-content">
                                 <a :href="userLink(item.notified_from.username)" class="md-list__item-icon">
@@ -63,7 +63,6 @@
         data: function () {
             return {
                 ntSeeAllLink: '',
-                notifications: [],
                 autoUpdate: 60,
                 unreadNotifications: 0,
                 notificationsLoaded: false,
@@ -86,17 +85,8 @@
             // Get if there are any unread notifications or conversations
             this.getNotificationsCounter()
             this.fetchOldNotification()
-            this.init()
         },
         methods: {
-            init: function () {
-                let that = this
-                $('#ft-mobile-nt').click( function (e) {
-                    e.preventDefault()
-                    that.markNotificationsRead()
-                    that.redirect = true
-                });
-            },
             notificationUrl: function (item) {
                 let url = ''
                 switch(item.type) {
@@ -155,28 +145,7 @@
                 this.NotificationChannel = this.pusher.subscribe(current_username + '-notification-created');
                 this.NotificationChannel.bind('App\\Events\\NotificationPublished', function(data) {
                     data.notification.notified_from = data.notified_from
-                    if(that.notifications != null) {
-                        switch (data.notification.type) {
-                            case 'like_post':
-                                that.notifications.unshift(data.notification);
-                                that.$store.dispatch('likePostByPusher', data.notification)
-                                if(!data.notification.seen) {
-                                    that.unreadNotifications = that.unreadNotifications + 1;
-                                }
-                            break;
-                            case 'unlike_post':
-                                that.$store.dispatch('likePostByPusher', data.notification)
-                            break;
-                            default:
-                                that.notifications.unshift(data.notification);
-                                if(!data.notification.seen) {
-                                    that.unreadNotifications = that.unreadNotifications + 1;
-                                    materialSnackBar({messageText: data.notification.description, autoClose: true, timeout: 5000 })
-                                    $.playSound(theme_url + '/sounds/notification');
-                                }
-                        }
-
-                    }
+                    that.$store.commit('ADD_NEW_NOTIFICATION', data.notifications)
                 });
             },
             autoScroll : function(element) {
@@ -212,7 +181,7 @@
                         that.config.per_page = notifications.per_page
                         that.config.prev_page_url = notifications.prev_page_url
                         $.each(notifications.data, function (i, latestNotification) {
-                            that.notifications.push(latestNotification);
+                            that.$store.commit('ADD_NOTIFICATION', latestNotification)
                         });
                     }
                 });
@@ -235,12 +204,10 @@
                     this.notificationsLoading = true;
                     this.$http.post(this.notifications.next_page_url).then(function (response) {
                         var latestNotifications = JSON.parse(response.body).notifications;
-
                         this.notifications.last_page = latestNotifications.last_page;
                         this.notifications.next_page_url = latestNotifications.next_page_url;
                         this.notifications.per_page = latestNotifications.per_page;
                         this.notifications.prev_page_url = latestNotifications.prev_page_url;
-
                         var vm = this;
                         $.each(latestNotifications.data, function (i, latestNotification) {
                             vm.notifications.data.push(latestNotification);
@@ -253,20 +220,7 @@
                 }
             },
             markNotificationsRead: function () {
-                let that = this
-                if(!this.notifications.length) {
-                    return
-                }
-                axios.post(base_url + 'ajax/mark-all-notifications').then(function (response) {
-                    that.unreadNotifications = 0;
-                    $.map(that.notifications, function (notification, key) {
-                        that.notifications[key].seen = true;
-                    });
-                    if(that.redirect) {
-                        that.redirect = false
-                        window.location.href = base_url + 'allnotifications'
-                    }
-                });
+               this.$store.dispatch('markNotificationsRead',{})
             }
         },
         watch: {
@@ -288,7 +242,8 @@
                 return this.unreadNotifications > 0
             },
             ...mapGetters({
-                pusher: 'pusher'
+                pusher: 'pusher',
+                notifications: 'notification'
             })
         }
     }

@@ -9,6 +9,7 @@ import createPost from './components/createPost'
 import ProfilePictureDialog from './components/ProfilePictureDialog'
 //import editPost from './components/child/editPost'
 import AppNotification from './components/AppNotification'
+import AppNotificationAll from './components/AppNotificationAll'
 import postDialogOption from './components/DialogOption'
 import commentDialogOption from './components/CommentDialogOption'
 import VueTimeago from 'vue-timeago'
@@ -54,6 +55,13 @@ window.appNotification = new Vue({
   store,
   components: {
     'app-notification': AppNotification
+  }
+})
+window.appNotificationAll = new Vue({
+  el: '#app-notification-all',
+  store,
+  components: {
+    'app-notification-all': AppNotificationAll
   }
 })
 

@@ -1,4 +1,10 @@
-<div class="panel panel-default">
+
+<div id="app-notification-all">
+    <app-notification-all>
+
+    </app-notification-all>
+</div>
+<div class="panel hidden panel-default">
   <div class="panel-heading no-bg panel-settings">  
     <h3 class="panel-title">
       {{ trans('common.allnotifications') }} 

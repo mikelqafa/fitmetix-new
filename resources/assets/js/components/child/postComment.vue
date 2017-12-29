@@ -59,7 +59,7 @@
                             </form>
                             <div class="ft-chat__write-button-wrapper" v-if="">
                                 <button type="button" @click="postCommentByEnter($el)" class="btn ft-chat__write-button">
-                                    <svg class="svg-icon" fill="#ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                    <svg class="svg-icon" fill="#333333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
                                         <path d="M0 0h24v24H0z" fill="none"/>
                                     </svg>

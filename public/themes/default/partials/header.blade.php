@@ -116,7 +116,6 @@
                         <li>
                             <form action="{{ url('/logout') }}" method="post">
                                 {{ csrf_field() }}
-
                                 <button type="submit" class="ft-menu__item ft-menu__item--icon btn btn-logout">
                                     <i class="fa fa-unlock" aria-hidden="true"></i>{{ trans('common.logout') }}
                                 </button>

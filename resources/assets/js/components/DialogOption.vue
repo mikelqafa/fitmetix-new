@@ -162,7 +162,7 @@
                 let that = this
                 switch (network) {
                     case 'facebook':
-                        window.FB.ui({
+                        FB.ui({
                             method: 'feed',
                             name: 'shared the post',
                             link: 'http://www.fitmetix.com'+'post/'+that.postItem.id,

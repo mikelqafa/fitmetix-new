@@ -11,17 +11,21 @@ export const store = new Vuex.Store({
     eventWho: {},
     postWhoLikes: {},
     commentOption: {},
-    pusher: null
+    pusher: null,
+    notification: [],
+    unreadNotifications: 0
   },
   getters: {
     postItemList: state => state.postItemList,
+    notification: state => state.notification,
+    unreadNotifications: state => state.unreadNotifications,
     theaterPostItem: state => state.theaterPostItem,
     sharePostItem: state => state.sharePostItem,
     optionMenuPostItem: state => state.optionMenuPostItem,
     postWhoLikes: state => state.postWhoLikes,
     pusher: state => state.pusher,
     eventWho: state => state.eventWho,
-    commentOption: state => state.commentOption
+    commentOption: state => state.commentOption,
   },
   mutations: {
     /* eslint-disable no-param-reassign */
@@ -40,6 +44,17 @@ export const store = new Vuex.Store({
     },
     ADD_SINGLE_POST_ITEM (state, postItem) {
         state.postItemList.push(postItem.data)
+    },
+    ADD_NEW_NOTIFICATION (state, data) {
+      if(!data.notification.seen) {
+        state.unreadNotifications = state.unreadNotifications + 1;
+        materialSnackBar({messageText: data.notification.description, autoClose: true, timeout: 5000 })
+        $.playSound(theme_url + '/sounds/notification');
+      }
+      state.notification.unshift(data)
+    },
+    ADD_NOTIFICATION (state, data) {
+        state.notification.push(data)
     },
     REMOVE_POST_ITEM_LIST (state, index) {
       state.postItemList.splice(index, 1)
@@ -133,6 +148,19 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    markNotificationsRead: (context, data) =>{
+      if(!context.state.notification.length) {
+        return
+      }
+      axios.post(base_url + 'ajax/mark-all-notifications').then(function (response) {
+        if(response.status == 200) {
+          context.state.unreadNotifications = 0;
+          $.map(context.state.notification, function (notification, key) {
+            context.state.notification[key].seen = true;
+          });
+        }
+      });
+    },
     likePostByPusher: (context, data) => {
       console.log(data)
       if(data.type !== undefined && (data.type === 'like_post' || data.type === 'unlike_post')) {
