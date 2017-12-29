@@ -4,7 +4,7 @@
         <div v-if="showFilter" class="event-filter-wrapper">
             <div class="hidden-sm hidden-xs ft-filter">
                 <fieldset class="form-group">
-                    <input v-on:keyup.enter="submit(0)" onKeyPress="return initMapDesk(event)" v-model.trim="filterData[0]" class="pac-input form-control" id="filter-location-input" autocomplete="off" placeholder="By Location" name="location" type="text" style="position: relative; overflow: hidden;">
+                    <input v-on:keyup.enter="submit(0)" onKeyPress="return initMapDesk(event)" class="pac-input form-control" id="filter-location-input" autocomplete="off" placeholder="By Location" name="location" type="text" style="position: relative; overflow: hidden;">
                 </fieldset>
                 <fieldset class="form-group">
                     <input v-on:keyup.enter="submit(1, $event)" class="form-control filter-date" name="date" id="filter-date" autocomplete="off" placeholder="By Date" type="text" style="position: relative; overflow: hidden;">
@@ -332,6 +332,7 @@
     import postHeader from './child/postHeader'
     import postComment from './child/postComment'
     import { mapGetters } from 'vuex'
+    var appEvent;
     export default {
         data: function () {
             return {
@@ -472,10 +473,25 @@
                     console.log(error)
                     that.showProgress = false
                 })
+            },
+            acMapEventDesk: function (e) {
+                let deskMapVal = $('#'+e).val()
+                appEvent.filterData[0] = deskMapVal
+                appEvent.submit(0)
+            },
+            acMapEventMobo: function (e) {
+                let moboMapVal = $('#'+e).val()
+                appEvent.filterData[0] = moboMapVal
+                appEvent.submit(0)
             }
         },
         mounted() {
-
+            appEvent = this
+            if(mapReady) {
+                if(!initMap) {
+                    init()
+                }
+            }
             $( ".filter-date" ).datepicker({
                 format: 'mm/dd/yyyy',
                 ignoreReadonly: true,
@@ -493,12 +509,7 @@
                 this.showFilter = false
                 this.hashtag = true
             }
-
             this.getDefaultData()
-
-            initMap()
-
-            initMapDesk()
         },
         components: {
             'post-description': postDescription,

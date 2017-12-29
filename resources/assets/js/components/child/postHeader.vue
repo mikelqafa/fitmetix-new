@@ -90,7 +90,7 @@
                 return this.isTypeEvent ? this.postData.creator_timeline.name : this.postData.timeline.name
             },
             isTypeEvent: function () {
-                return this.postData.type !== undefined && this.postData.type === 'event'
+                return this.postData.type !== undefined && this.postData.type !== null && this.postData.type === 'event'
             }
         },
         methods: {

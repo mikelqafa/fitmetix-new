@@ -81,7 +81,9 @@
                     if (response.status ==  200) {
                         $('#profile-option-dialog').MaterialDialog('hide')
                         materialSnackBar({messageText: 'User blocked!', autoClose: true })
-                        window.location.href = base_url;
+                        setTimeout(function(){
+                            window.location.href = base_url
+                        }, 300)
                     }
                     that.isLoading = false
                 }).catch(function(error) {
@@ -94,6 +96,9 @@
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
                 this.isLoading = true
+                let confirmDialog = $('#'+ this.unid)
+                confirmDialog.off('ca.dialog.affirmative.action');
+                $('#profile-option-dialog').MaterialDialog('hide')
                 let url = base_url + 'ajax/page-report'
                 let timeline_id = $('#timeline_id').val()
                 axios({
@@ -106,9 +111,11 @@
                     }
                 }).then( function (response) {
                     if (response.status ==  200) {
-                        $('#profile-option-dialog').MaterialDialog('hide')
                         materialSnackBar({messageText: response.data.message, autoClose: true })
                     }
+                    setTimeout(function(){
+                        window.location.href = base_url
+                    }, 300)
                     that.isLoading = false
                 }).catch(function(error) {
                     $('#profile-option-dialog').MaterialDialog('hide')

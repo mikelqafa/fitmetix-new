@@ -60,7 +60,7 @@
 
                     </span>
                 </a>
-
+                <input type="hidden" id="auth-user-avatar" value="{{url(Auth::user()->avatar)}}">
                 <div class="dropdown message vert-has">
                     <a href="{{ url(Auth::user()->username) }}" class="has-hover-effect fm-nav__item fm-nav__item--no-padding dropdown-toggle"
                        data-toggle="dropdown" role="button" aria-haspopup="true"

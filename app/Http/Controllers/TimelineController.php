@@ -433,6 +433,7 @@ class TimelineController extends AppBaseController
                 } else {
                     $avatar->crop($width, $width);
                 }
+                $avatar->resize(600, 600);
 
                 $avatar->save(storage_path().'/uploads/'.$timeline_type.'s/avatars/'.$photoName, 60);
 
@@ -3823,7 +3824,7 @@ class TimelineController extends AppBaseController
 
         $post['likes_count'] = $post->users_liked()->count();
         $post['user_liked'] = false;
-
+        $post['timeline'] = $timeline;
         if($post['likes_count'] > 0) {
             if($post->users_liked()->where('user_id',Auth::user()->id)->count()) {
                 $post['user_liked'] = true;

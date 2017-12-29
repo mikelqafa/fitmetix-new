@@ -6,27 +6,45 @@
             <div class="md-layout md-algin md-layout--wrap md-align--start-start layout-timeline">
                 <div class="md-col layout-timeline__post layout-m-t-1">
                     <div class="timeline-cover-section">
-                        <div class="timeline-cover" style="background-image: url('@if($timeline->cover_id) {{ url('user/cover/'.$timeline->cover->source) }} @else {{ url('user/cover/default-cover-user.png') }} @endif')">
+                        <div id="timeline-cover" class="timeline-cover" style="background-image: url('@if($timeline->cover_id) {{ url('user/cover/'.$timeline->cover->source) }} @else {{ url('user/cover/default-cover-user.png') }} @endif')">
                             <img class="v-hidden" src=" @if($timeline->cover_id) {{ url('user/cover/'.$timeline->cover->source) }} @else {{ url('user/cover/default-cover-user.png') }} @endif" alt="{{ $timeline->name }}" title="{{ $timeline->name }}">
                             @if($timeline->id == Auth::user()->timeline_id)
-                                <a href="javascript:;" class="btn btn-camera-cover change-cover"><i class="fa fa-camera" aria-hidden="true"></i><span class="change-cover-text">{{ trans('common.change_cover') }}</span></a>
+                                <a href="javascript:;" class="btn btn-camera-cover change-cover" onclick="$('#picture-option-dialog').MaterialDialog('show')">
+                                    <i class="fa fa-camera" aria-hidden="true"></i>
+                                    <span class="change-cover-text">{{ trans('common.change_cover') }}</span>
+                                </a>
                             @endif
-                            <div class="user-cover-progress hidden">
+                            <div class="absolute-loader hidden">
+                                <div class="ft-loading">
+                                    <span class="ft-loading__dot"></span>
+                                    <span class="ft-loading__dot"></span>
+                                    <span class="ft-loading__dot"></span>
+                                </div>
                             </div>
                         </div>
                         <div class="timeline-user-info-wrapper">
-                            <div class="timeline-user-avtar">
-                                <img src="{{ $timeline->user->avatar }}" alt="{{ $timeline->name }}" class="img-circle" title="{{ $timeline->name }}">
+                            <div class="timeline-user-avtar" id="timeline-user-avtar" style="background-image: url({{ $timeline->user->avatar }})">
                                 @if($timeline->id == Auth::user()->timeline_id)
                                     <div class="chang-user-avatar">
-                                        <a href="#" class="btn btn-camera change-avatar"><i class="fa fa-camera" aria-hidden="true"></i><span class="avatar-text">{{ trans('common.update_profile') }}<span>{{ trans('common.picture') }}</span></span></a>
+                                        <a href="javascript:;" class="btn btn-camera change-avatar" onclick="$('#picture-profile-option-dialog').MaterialDialog('show')">
+                                            <i class="fa fa-camera" aria-hidden="true"></i>
+                                            <span class="avatar-text">
+                                                {{ trans('common.update_profile') }}
+                                            </span>
+                                        </a>
                                     </div>
+                                    <input type="hidden" id="timeline_id_user" value="{{Auth::user()->timeline_id}}">
                                 @endif
-                                <div class="user-avatar-progress hidden">
-                                </div>
+                                    <div class="absolute-loader hidden" style="background-color: transparent">
+                                        <div class="ft-loading">
+                                            <span class="ft-loading__dot"></span>
+                                            <span class="ft-loading__dot"></span>
+                                            <span class="ft-loading__dot"></span>
+                                        </div>
+                                    </div>
                             </div>
                             <div class="user-timeline-name">
-                                <a href="{{ url($timeline->username) }}" class="username__link">{{$timeline->username }}</a>
+                                <a href="{{ url($timeline->username) }}" class="username__link">{{'@'.$timeline->username }}</a>
                                 <div class="name">{{$timeline->name }}</div>
                             </div>
                         </div>
@@ -47,12 +65,26 @@
                         @if(Auth::user()->id == $timeline->user->id)
                             <a href="{{ url('/'.Auth::user()->username.'/edit-profile') }}" class="btn ft-btn-primary ft-btn-primary--outline">Edit Profile</a>
                         @elseif(Auth::user()->following->contains($timeline->user->id))
-                            <button class="btn ft-btn-primary ft-btn-primary--outline" data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="true">
+                            <button class="btn ft-btn-primary pos-rel ft-btn-primary--outline" data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="true">
+                                <span class="absolute-loader hidden">
+                                    <span class="ft-loading">
+                                        <span class="ft-loading__dot"></span>
+                                        <span class="ft-loading__dot"></span>
+                                        <span class="ft-loading__dot"></span>
+                                    </span>
+                                </span>
                                 <span class="false">Follow</span>
                                 <span class="true">Following</span>
                             </button>
                         @else
-                            <button class="btn ft-btn-primary ft-btn-primary--outline" data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="false">
+                            <button class="btn ft-btn-primary pos-rel ft-btn-primary--outline" data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="false">
+                                <span class="absolute-loader hidden">
+                                    <span class="ft-loading">
+                                        <span class="ft-loading__dot"></span>
+                                        <span class="ft-loading__dot"></span>
+                                        <span class="ft-loading__dot"></span>
+                                    </span>
+                                </span>
                                 <span class="false">Follow</span>
                                 <span class="true">Following</span>
                             </button>
@@ -69,7 +101,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="timeline-user-desc text-wrapper_desc">
+                    <div class="timeline-user-desc text-wrapper text-wrapper_desc">
                         {{$timeline->about}}
                     </div>
                     <div class="options" style="text-align: center;">
@@ -124,9 +156,15 @@
                         @elseif(Auth::user()->following->contains($timeline->user->id))
                             <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">{{ $block_text }}</button>
                             <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Report</button>
-                            <button class="btn btn-default follow-user"
-                                    data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="true">
+                            <button class="pos-rel btn btn-default" data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="true">
                                 Unfollow
+                                <span class="absolute-loader hidden">
+                                    <span class="ft-loading">
+                                        <span class="ft-loading__dot"></span>
+                                        <span class="ft-loading__dot"></span>
+                                        <span class="ft-loading__dot"></span>
+                                    </span>
+                                </span>
                             </button>
 
 
@@ -171,6 +209,9 @@
                                     <input type="hidden" id="username" value="{{$timeline->username}}">
                                     <input type="hidden" id="timeline_id" value="{{$timeline->id}}">
                                     <app-profile-option></app-profile-option>
+                                @endif
+                                @if(Auth::user()->id == $timeline->user->id)
+                                    <app-picture-option></app-picture-option>
                                 @endif
                                 <app-post-option></app-post-option>
                                 <app-comment-option></app-comment-option>

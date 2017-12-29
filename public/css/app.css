@@ -6138,11 +6138,12 @@ a {
 label,
 .conrol-label {
     font-family: 'Source Sans Pro', sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.3px;
+    /* font-size: 12px; */
+    /* letter-spacing: 0.3px; */
+    px; */
     color: #7F8FA4;
     font-weight: 600;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     margin-bottom: 6px;
     line-height: 15px;
 }
@@ -9945,7 +9946,7 @@ placeholder .darksharing-modal .modal-body .sharing-details .control-group .sele
 .user-follow.socialite .media-left img {
     width: 40px;
     height: 40px;
-    border-radius: 4px;
+    border-radius: 50%;
 }
 .user-follow.socialite .media-body .media-heading {
     max-width: 130px;
@@ -18209,6 +18210,8 @@ html {
     width: 100%;
     overflow: hidden;
     position: relative;
+    background-size:cover;
+    background-position: center;
 }
 @media (max-width: 660px) {
     .timeline-cover-section .timeline-cover {
@@ -18280,6 +18283,10 @@ html {
     padding: 7px;
     position: relative;
     border-radius: 50%;
+    background:  #fff;
+    background-position:  center;
+    background-size:  cover;
+    overflow:;
 }
 @media (max-width: 560px) {
     .timeline-user-avtar {
@@ -18301,6 +18308,8 @@ html {
 }
 .timeline-user-avtar:hover .chang-user-avatar {
     display: block;
+    height:  100%;
+    width: 100%;
 }
 .event-avatar {
     width: 50px;
@@ -18332,13 +18341,14 @@ html {
 }
 .chang-user-avatar .btn-camera {
     background-color: rgba(0, 0, 0, 0.67);
-    width: 100%;
+    width: auto;
     height: 36px;
     border-radius: 0px;
     position: absolute;
     left: 0px;
-    bottom: 0px;
+    top: 18px;
     color: #fff;
+    line-height:  18px;
 }
 @media (max-width: 560px) {
     .chang-user-avatar .btn-camera {
@@ -18349,7 +18359,7 @@ html {
 .chang-user-avatar .btn-camera .fa {
     font-size: 16px;
     margin-top: 3px;
-    margin-right: 17px;
+    margin-right: 4px;
     vertical-align: middle;
 }
 @media (max-width: 560px) {
@@ -18368,10 +18378,11 @@ html {
     font-weight: 400;
     font-size: 12px;
     color: #FFFFFF;
-    width: 78px;
+    width: auto;
     line-height: 10px;
-    margin-top: -3px;
+    margin-top: 5px;
     vertical-align: top;
+    display:  inline-block;
 }
 @media (max-width: 560px) {
     .chang-user-avatar .btn-camera .avatar-text {

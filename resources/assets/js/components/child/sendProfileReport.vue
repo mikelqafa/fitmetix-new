@@ -82,6 +82,8 @@
                 this.isLoading = true
                 let confirmDialog = $('#'+ this.unid)
                 confirmDialog.off('ca.dialog.affirmative.action');
+                $('#profile-report-dialog').MaterialDialog('hide')
+                console.log('hola mola')
                 axios({
                     method: 'post',
                     responseType: 'json',
@@ -94,9 +96,6 @@
                 }).then( function (response) {
                     if (response.status ==  200) {
                         materialSnackBar({messageText: response.data.message, autoClose: true })
-                        $('#post-report-dialog').MaterialDialog('hide')
-                        $('#post-option-dialog').MaterialDialog('hide')
-                        $('#post-image-theater-dialog').MaterialDialog('hide')
                     }
                     that.isLoading = false
                     that.reportComment = ''

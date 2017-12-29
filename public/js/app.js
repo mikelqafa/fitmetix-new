@@ -563,6 +563,8 @@ $(function () {
   // Follow/UnFollow the timeline user  by  logged user
   $('body').on('click','.follow-user',function(e){
     e.preventDefault();
+    alert()
+    return
     follow_btn = $(this).closest('.follow-links');
     $.post(SP_source() + 'ajax/follow-post', {timeline_id: $(this).data('timeline-id')}, function(data) {
       if (data.status == 200) {
@@ -582,8 +584,10 @@ $(function () {
     e.preventDefault();
     var el = $(this)
     el.attr('disabled', true)
+    el.attr('data-processing', true)
     $.post(SP_source() + 'ajax/follow-post', {timeline_id: el.data('timeline-id')}, function(data) {
       el.attr('disabled', false)
+      el.attr('data-processing', false)
       if (data.status == 200) {
         if (data.followed == true) {
           el.attr('data-following', true)

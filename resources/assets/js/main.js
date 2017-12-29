@@ -6,6 +6,7 @@ import PostSingle from './components/PostSingle'
 import GalleryPostByHLU from './components/GalleryPostByHLU'
 import EventPostByHLU from './components/EventPostByHLU'
 import createPost from './components/createPost'
+import ProfilePictureDialog from './components/ProfilePictureDialog'
 //import editPost from './components/child/editPost'
 import AppNotification from './components/AppNotification'
 import postDialogOption from './components/DialogOption'
@@ -43,7 +44,8 @@ window.timeLine = new Vue({
     'app-post-option': postDialogOption,
     'app-comment-option': commentDialogOption,
     'app-event-list': AppEventList,
-    'app-profile-option': ProfileOptionDialog
+    'app-profile-option': ProfileOptionDialog,
+    'app-picture-option': ProfilePictureDialog
   }
 })
 

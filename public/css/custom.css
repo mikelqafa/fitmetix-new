@@ -250,6 +250,10 @@ svg {
 .layout-p-r-0 {
     padding-right: 7.5px;
 }
+.timeline-posts {
+  min-height:300px;
+  padding-top:16px;
+}
 
 .ft-mobile-logo {
     display: none;
@@ -1855,6 +1859,10 @@ a{
     padding-top:5px;
     padding-bottom:5px;
 }
+.comment-list-action.md-list--dense .md-list__item {
+  padding-top:2px;
+  padding-bottom:2px;
+}
 .md-list__item-content {
     flex: 1 1 100%;
     display: flex;
@@ -1864,6 +1872,9 @@ a{
     line-height: 20px;
     justify-content: flex-start;
     padding-right: 16px;
+}
+.comment-list-action .md-list__item-content {
+  line-height:16px;
 }
 .md-list__item-text-body{
     line-height: 18px;
@@ -2783,6 +2794,7 @@ aside .md-drawer-scroll__wrapper{
     left: 16px;
     display: flex;
     align-items: flex-start;
+    z-index: 2;
 }
 .user-timeline-name {
     display: flex;
@@ -2902,6 +2914,8 @@ aside .md-drawer-scroll__wrapper{
     margin-right: 8px;
 }.ft-expression--comment-like {
     color: #777;
+    line-height:20px !important;
+    height:20px;
 }
  .btn {
      outline: none;
@@ -3081,4 +3095,23 @@ aside .md-drawer-scroll__wrapper{
 
 [data-following="true"] .false {
     display: none;
+}
+.btn .ft-loading {
+    height: 32px;
+}
+[data-processing="true"] > .absolute-loader {
+    display: flex !important;
+}
+.timeline-cover-section::after {
+    content: '';
+    position: absolute;
+    bottom:0;
+    left:0;
+    width: 100%;
+    height: 100px;
+    z-index: 0;
+    background: linear-gradient(to top, rgba(0,0,0,.4), rgba(0,0,0,0) 100%);
+}
+.widget-events, .right-side-section {
+    margin-top: 24px;
 }

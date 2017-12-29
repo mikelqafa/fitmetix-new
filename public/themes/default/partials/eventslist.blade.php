@@ -205,63 +205,30 @@
 		</app-event-list>
 	</div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_vuWi_hzMDDeenNYwaNAj0PHzzS2GAx8&libraries=places"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_vuWi_hzMDDeenNYwaNAj0PHzzS2GAx8&libraries=places&callback=init"
 		async defer></script>
 <script>
-	function initMap(event) {
-		var key;
-		var map = new google.maps.Map(document.getElementById('filter-location-input-mob'), {});
-
-		var input = /** @type {!HTMLInputElement} */(
-				document.getElementById('filter-location-input-mob'));
-
-		if (window.event) {
-			key = window.event.keyCode;
-
-		}
-		else {
-			if (event)
-				key = event.which;
-		}
-
-		if (key == 13) {
-			//do nothing
-			return false;
-			//otherwise
-		} else {
-			var autocomplete = new google.maps.places.Autocomplete(input);
-			autocomplete.bindTo('bounds', map);
-
-			//continue as normal (allow the key press for keys other than "enter")
-			return true;
+	var mapReeady = false;
+	var initMap = false
+	function init() {
+		mapReady = initMap = true
+		if(document.getElementById('filter-location-input') !== undefined) {
+			initMapDesk()
+			initMapMob()
 		}
 	}
-	function initMapDesk(event) {
-		var key;
-		var map = new google.maps.Map(document.getElementById('filter-location-input'), {});
-
-		var input = /** @type {!HTMLInputElement} */(
-				document.getElementById('filter-location-input'));
-
-		if (window.event) {
-			key = window.event.keyCode;
-
-		}
-		else {
-			if (event)
-				key = event.which;
-		}
-
-		if (key == 13) {
-			//do nothing
-			return false;
-			//otherwise
-		} else {
-			var autocomplete = new google.maps.places.Autocomplete(input);
-			autocomplete.bindTo('bounds', map);
-
-			//continue as normal (allow the key press for keys other than "enter")
-			return true;
-		}
+	function initMapDesk() {
+		var input = document.getElementById('filter-location-input');
+		var autocomplete = new google.maps.places.Autocomplete(input);
+		autocomplete.addListener('place_changed', function(e) {
+			window.timeLine.$options.components["app-event-list"].methods.acMapEventDesk('filter-location-input')
+		})
+	}
+	function initMapMob() {
+		var input = document.getElementById('filter-location-input-mob');
+		var autocomplete = new google.maps.places.Autocomplete(input);
+		autocomplete.addListener('place_changed', function(e) {
+			window.timeLine.$options.components["app-event-list"].methods.acMapEventMobo('filter-location-input-mob')
+		})
 	}
 </script>

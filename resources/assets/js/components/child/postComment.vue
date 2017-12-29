@@ -47,7 +47,7 @@
                 <div class="zippy__wrapper">
                     <template v-if="commentInteract">
                         <div class="comment-textfield">
-                            <a href="userLink" class="md-list__item-icon user-avatar">
+                            <a :href="userLinkAuth" class="md-list__item-icon user-avatar" :style="'background-image: url('+ authUserImage +')'">
                             </a>
                             <form action="#" class="ft-comment__item--grow pos-rel">
                                 <textarea v-on:keydown.13="postComment" class="ft-post__comment-form form-control"  autocomplete="off" data-post-id="" data-comment-id="" name="post_comment" placeholder="Write a comment" rows="1"></textarea>
@@ -129,7 +129,9 @@
             return {
                 base_url: base_url,
                 showUserComment: 0,
-                isCommenting: false
+                isCommenting: false,
+                authUserImage: '',
+                userLinkAuth: ''
             }
         },
         methods: {
@@ -433,6 +435,8 @@
                 that.getDefaultData()
             }, 1000)
             $('#' + this.expandID).Zippy();
+            this.authUserImage = $('#auth-user-avatar').val()
+            this.userLinkAuth = base_url + current_username
             if(this.showSidebar) {
                 if($(window).width() > 599)  {
                     if(this.postCommentsCount)
