@@ -3,10 +3,10 @@
 		<div class="container">
 			<div class="row">
 				<div class="visible-lg col-lg-2">
-
+					{!! Theme::partial('home-leftbar',compact('trending_tags')) !!}
 				</div>
               
-                <div class="col-md-7 col-lg-6 full-width">
+                <div class="col-md-7 col-lg-6">
 			   		@if (Session::has('message'))
 				        <div class="alert alert-{{ Session::get('status') }}" role="alert">
 				            {!! Session::get('message') !!}

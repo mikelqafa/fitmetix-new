@@ -453,6 +453,7 @@ Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {
     Route::post('join-reject', 'TimelineController@rejectJoinRequest');
     Route::post('follow-accept', 'UserController@acceptFollowRequest');
     Route::post('follow-reject', 'UserController@rejectFollowRequest');
+    Route::post('notification-reacted', 'UserController@changeNotificationType');
     Route::get('get-more-posts', 'TimelineController@getMorePosts');
     Route::get('get-more-feed', 'TimelineController@showFeed');
     Route::get('get-global-feed', 'TimelineController@showGlobalFeed');

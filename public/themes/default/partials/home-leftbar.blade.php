@@ -29,7 +29,7 @@
 		<ul class="list-unstyled">
 			@if($trending_tags != "")
 				@foreach($trending_tags as $trending_tag)
-				<li><span class="hash-icon"><i class="fa fa-hashtag"></i></span> <a href="{{ url('?hashtag='.$trending_tag->tag) }}">{{ $trending_tag->tag }}</a></li>
+				<li><span class="hash-icon"><i class="fa fa-hashtag"></i></span> <a class="trending_tags" href="javascript:;">{{ $trending_tag->tag }}</a></li>
 				@endforeach
 			@else
 				<span class="text-warning">{{ trans('messages.no_tags') }}</span>
