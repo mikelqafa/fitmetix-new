@@ -1099,6 +1099,13 @@ class UserController extends AppBaseController
         return response()->json(['status' => '200', 'rejected' => true, 'message' => 'follow request successfully accepted']);
     }
 
+    public function changeNotificationType(Request $request) {
+        $notification = Notification::find($request->notification_id);
+        $notification->type = $request->type;
+        $notification->save();
+        return response()->json(['status' => '200', 'message' => 'Notification type changed']);   
+    }
+
     public function getNotifications()
     {
         $notifications = Notification::where('user_id', Auth::user()->id)->with('notified_from')->latest()->paginate(Setting::get('items_page', 10));
@@ -1327,7 +1334,7 @@ class UserController extends AppBaseController
   }
 
   public function unblockUser($id) {
-    $unblock = DB::table('user_blocked')->where('id', $id)->delete();
+    $unblock = DB::table('user_blocked')->where([['blocked_uid', $id],['blocker_uid',Auth::user()->id]])->delete();
     $result = $unblock ? 'Successfully unblocked user' : 'Failed to unblock user';
     return $result;
   }
