@@ -3523,6 +3523,11 @@ class TimelineController extends AppBaseController
         $event->save();
     }
 
+    public function suggestedUsersAPI() {
+        $suggested_users = suggestedUsers();
+        return response()->json(['status' => '200', ['suggested_users'=>$suggested_users]]);
+    }
+
     public function postAPI(Request $request)
     {
         $timeline = Timeline::where('username', $request->username)->first();
