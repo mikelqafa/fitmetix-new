@@ -81,6 +81,12 @@
                             <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Report</button>
                         @endif
                     </div>
+                    
+                    <div>
+                        <a href="{{ Auth::user()->instagram_link }}" target="_blank"><i class=""></i></a>
+                        <a href="{{ Auth::user()->facebook_link }}" target="_blank"><i class=""></i></a>
+                    </div>
+
                     <div class="ft-header-hashtag">
                         <ul class="nav nav-justified" >
                             <li class="active is-active"><a href="{{ url($timeline->username) }}">Posts</a></li>
