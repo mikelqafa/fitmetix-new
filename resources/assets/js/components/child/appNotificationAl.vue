@@ -43,7 +43,6 @@
         data: function () {
             return {
                 autoUpdate: 60,
-                unreadNotifications: 0,
                 notificationsLoaded: false,
                 notificationsLoading: false
             }
@@ -107,7 +106,8 @@
         },
         computed: {
             ...mapGetters({
-                 notifications: 'notification'
+                 notifications: 'notification',
+                 unreadNotifications: 'unreadNotifications'
             }),
             hasItem() {
                 return this.notifications.length !== 0

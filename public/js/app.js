@@ -586,6 +586,7 @@ $(function () {
     el.attr('disabled', true)
     el.attr('data-processing', true)
     $.post(SP_source() + 'ajax/follow-user-confirm', {timeline_id: el.data('timeline-id')}, function(data) {
+      console.log(data)
       el.attr('disabled', false)
       el.attr('data-processing', false)
       if (data.status == 200) {
@@ -595,7 +596,15 @@ $(function () {
           el.attr('data-following', false)
         }
         materialSnackBar({messageText: data.message, autoClose: true })
-        location.reload();
+        var r = el.attr('data-noreload')
+        if(r !== undefined && r) {
+          if(data.followrequest) {
+            el.attr('data-following', true)
+            el.find('.true').text('Requested')
+          }
+        } else {
+          location.reload();
+        }
       }
     })
   });

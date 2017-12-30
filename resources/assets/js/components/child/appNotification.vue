@@ -75,7 +75,6 @@
             return {
                 ntSeeAllLink: '',
                 autoUpdate: 60,
-                unreadNotifications: 0,
                 notificationsLoaded: false,
                 notificationsLoading: false,
                 allNotificationLink: base_url + 'allnotifications',
@@ -110,7 +109,7 @@
                     }
                 }).then( function (response) {
                     if (response.status ==  200) {
-                        materialSnackbar({autoClose: true, message: 'Follow request accepted'})
+                        materialSnackBar({autoClose: true, message: response.data.message})
                         axios({
                             method: 'post',
                             responseType: 'json',
@@ -118,9 +117,10 @@
                             data :{
                                 _token: _token,
                                 type: 'follow_requested_accept',
-                                id: item.id
+                                notification_id: item.id
                             }
                         }).then( function (response) {
+                            console.log(response)
                             if (response.status ==  200) {
                                 that.$store.commit('CHANGE_NOTIFICATION_TYPE', {index: index, changed: 'follow_requested_accept'})
                             }
@@ -149,7 +149,7 @@
                             data :{
                                 _token: _token,
                                 type: 'follow_requested_deny',
-                                id: item.id
+                                notification_id: item.id
                             }
                         }).then( function (response) {
                             if (response.status ==  200) {
@@ -222,14 +222,14 @@
             since: function (date) {
                 return date != '' ? new Date(date + 'Z').getTime() : new Date().getTime()
             },
-            subscribeToPrivateMessageChannel: function(receiverUsername) {
+            subscribeToPrivateMessageChannel: function() {
                 let that = this
                 // pusher configuration
                 this.NotificationChannel = this.pusher.subscribe(current_username + '-notification-created');
                 this.NotificationChannel.bind('App\\Events\\NotificationPublished', function(data) {
-                    data.notification.notified_from = data.notified_from
-                    that.$store.commit('ADD_NEW_NOTIFICATION', data.notifications)
-                });
+                    data.notification.notified_from = data.notified_from;
+                    that.$store.commit('ADD_NEW_NOTIFICATION', data.notification)
+                })
             },
             autoScroll : function(element) {
                 // $(element).animate({scrollTop: $(element)[0].scrollHeight + 600 }, 2000);
@@ -326,7 +326,8 @@
             },
             ...mapGetters({
                 pusher: 'pusher',
-                notifications: 'notification'
+                notifications: 'notification',
+                unreadNotifications : 'unreadNotifications'
             })
         }
     }

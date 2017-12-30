@@ -2277,7 +2277,7 @@ a{
 .ft-btn-primary--outline{
     border: 1px solid #1E7C82;
     background-color: #fff;
-    min-width: 160px;
+    /* min-width: 160px; */
     transition: all 0.2s ease;
     color: #1E7C82;
 }

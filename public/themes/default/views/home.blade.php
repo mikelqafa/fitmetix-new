@@ -2,11 +2,11 @@
 	<!-- <div class="main-content"> -->
 		<div class="container">
 			<div class="row">
-				<div class="visible-lg col-lg-2">
+				<div class="visible-lg col-lg-2 hide-on-other">
 					{!! Theme::partial('home-leftbar',compact('trending_tags')) !!}
 				</div>
               
-                <div class="col-md-7 col-lg-6">
+                <div class="col-md-7 col-lg-6 full-wdith">
 			   		@if (Session::has('message'))
 				        <div class="alert alert-{{ Session::get('status') }}" role="alert">
 				            {!! Session::get('message') !!}
@@ -70,8 +70,15 @@
 					@else
 						{!! Theme::partial('eventslist',compact('user_events','username','event_tags')) !!}
 					@endif
-				</div><!-- /col-md-6 -->
+				</div>
 
+				@if(Request::is('/'))
+					<div class="hide-on-other col-lg-4">
+						<div class="widget-events widget-left-panel" id="single-event-view">
+							<single-event-view></single-event-view>
+						</div>
+					</div>
+				@endif
 			</div>
 		</div>
 	<!-- </div> -->

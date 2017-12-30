@@ -38,6 +38,12 @@ export const store = new Vuex.Store({
     CHANGE_NOTIFICATION_TYPE (state, obj) {
       Vue.set(state.notification[obj.index], 'type', obj.changed)
     },
+    CHANGE_NOTIFICATION_SEEN (state, obj) {
+      Vue.set(state.notification[obj.index], 'seen', obj.changed)
+    },
+    SET_URN (state, n) {
+      state.unreadNotifications = n
+    },
     ADD_POST_ITEM_LIST (state, postItem) {
       if(postItem.postFrom !== undefined) {
         state.postItemList.unshift(postItem.data)
@@ -49,12 +55,14 @@ export const store = new Vuex.Store({
         state.postItemList.push(postItem.data)
     },
     ADD_NEW_NOTIFICATION (state, data) {
-      if(!data.notification.seen) {
-        state.unreadNotifications = state.unreadNotifications + 1;
-        materialSnackBar({messageText: data.notification.description, autoClose: true, timeout: 5000 })
+      if(!data.seen) {
+        store.commit('SET_URN', state.unreadNotifications + 1)
+        materialSnackBar({messageText: data.description, autoClose: true, timeout: 5000 })
         $.playSound(theme_url + '/sounds/notification');
       }
-      state.notification.unshift(data)
+      if(data.notified_from.username != current_username) {
+        state.notification.unshift(data)
+      }
     },
     ADD_NOTIFICATION (state, data) {
         state.notification.push(data)
@@ -157,9 +165,9 @@ export const store = new Vuex.Store({
       }
       axios.post(base_url + 'ajax/mark-all-notifications').then(function (response) {
         if(response.status == 200) {
-          context.state.unreadNotifications = 0;
+          context.commit('SET_URN', 0)
           $.map(context.state.notification, function (notification, key) {
-            context.state.notification[key].seen = true;
+            context.commit('CHANGE_NOTIFICATION_SEEN', {index: key, changed: true});
           });
         }
       });

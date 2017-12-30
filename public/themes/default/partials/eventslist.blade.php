@@ -1,5 +1,11 @@
 <style>
 	@media  screen and (min-width: 960px) {
+		.main-content > .container > .row > .col-md-7.col-lg-6{
+			width: 100%;
+		}
+		.main-content .hide-on-other{
+			display: none !important;
+		}
 		.md-drawer--permanent {
 			width: auto;
 			padding-right: 0px;
@@ -199,6 +205,7 @@
 									</div>
 								</div>
 						</div>
+					</div>
 					</div>
 				</div>
 			</div>

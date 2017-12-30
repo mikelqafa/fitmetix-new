@@ -115,7 +115,7 @@
                             @endif
                         @endif
                         <div class="timeline-posts timeline-posts--user">
-                        @if(($timeline->user->settings()->post_privacy == 'everyone') || (Auth::user()->following->contains($timeline->user->id)))
+                        @if(($timeline->user->settings()->post_privacy == 'everyone') || Auth::user()->id == $timeline->user->id || (Auth::user()->following->contains($timeline->user->id)))
                             <input type="hidden" id="timeline_username" value="{{$username}}" />
                             <div id="app-timeline">
                                 <input type="hidden" id="newPostId">

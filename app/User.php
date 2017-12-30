@@ -278,7 +278,8 @@ class User extends Authenticatable
     public function updateFollowStatus($user_id)
     {
         $chk_user = DB::table('followers')->where('follower_id', $user_id)->where('leader_id', Auth::user()->id)->first();
-        if ($chk_user->status == 'pending') {
+        $result = false;
+        if ($chk_user['status'] == 'pending') {
             $result = DB::table('followers')->where('follower_id', $user_id)->where('leader_id', Auth::user()->id)->update(['status' => 'approved']);
         }
 
@@ -290,7 +291,8 @@ class User extends Authenticatable
     public function decilneRequest($user_id)
     {
         $chk_user = DB::table('followers')->where('follower_id', $user_id)->where('leader_id', Auth::user()->id)->first();
-        if ($chk_user->status == 'pending') {
+        $result = false;
+        if ($chk_user['status'] == 'pending') {
             $result = DB::table('followers')->where('follower_id', $user_id)->where('leader_id', Auth::user()->id)->delete();
         }
 

@@ -7,7 +7,7 @@ import GalleryPostByHLU from './components/GalleryPostByHLU'
 import EventPostByHLU from './components/EventPostByHLU'
 import createPost from './components/createPost'
 import ProfilePictureDialog from './components/ProfilePictureDialog'
-//import editPost from './components/child/editPost'
+import singleEventView from './components/child/singleEventView'
 import AppNotification from './components/AppNotification'
 import AppNotificationAll from './components/AppNotificationAll'
 import postDialogOption from './components/DialogOption'
@@ -55,6 +55,14 @@ window.appNotification = new Vue({
   store,
   components: {
     'app-notification': AppNotification
+  }
+})
+
+window.singleEvent = new Vue({
+  el: '#single-event-view',
+  store,
+  components: {
+    'single-event-view': singleEventView
   }
 })
 window.appNotificationAll = new Vue({

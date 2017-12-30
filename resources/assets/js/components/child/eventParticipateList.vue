@@ -5,12 +5,19 @@
             <div class="md-dialog__surface">
                 <div>
                     <header class="md-dialog__header panel-post">
+                        <div class="layout-m-l-1 md-layout md-align md-align--start-center">
+                            <i class="icon icon-participant" style="margin-top: 4px"></i>
+                            <span class="layout-m-l-1">Participants</span>
+                        </div>
                         <div class="md-layout-spacer"></div>
                         <a href="javascript:;" style="margin-right: 15px"
                            class="md-button md-button--icon md-dialog__header-action-dismissive" data-action="dismissive">
                             <i class="icon icon-close"></i>
                         </a>
                     </header>
+                    <div style="position:relative; padding: 4px 16px 8px 16px;">
+                        <input placeholder="Search user" v-model="filterSearch" class="form-control" type="text"/>
+                    </div>
                     <div class="md-dialog__body md-dialog__body--scrollable">
                         <template v-if="loading">
                             <div class="loading-wrapper">
@@ -23,17 +30,48 @@
                         </template>
                         <template v-else="">
                             <div class="md-list md-list--likes md-list--dense">
-                                <div class="md-list__item has-divider" v-for="item in participantList">
-                                    <a :href="userLink(item)" class="md-list__item-icon user-avatar"  :title="'@' + item.username" v-bind:style="{ backgroundImage: 'url(' + userAvatar(item) +')'}">
+                                <div class="md-list__item has-divider" v-for="item in filterUserSearch">
+                                    <a :href="userLink(item)" class="md-list__item-icon user-avatar"  :title="'@' + item.timeline.username" v-bind:style="{ backgroundImage: 'url(' + userAvatar(item) +')'}">
                                     </a>
                                     <div class="md-list__item-content">
-                                        <div class="md-list__item-primary">
+                                        <div class="md-list__item-primary md-algin md-align--start-center md-layout">
                                             <a href="http://localhost/fitmetix/public/mikele"
-                                               :title="'@' + item.username"
+                                               :title="'@' + item.timeline.username"
                                                class="user-name user ft-user-name">
-                                                {{item.name}}
+                                                {{item.timeline.name}}
                                             </a>
                                         </div>
+                                        <div class="md-layout-spacer">
+                                        </div>
+                                        <template v-if="sameUser(item)">
+                                            <button class="btn btn-sm pos-rel" disabled>
+                                                <span class="true">Registered</span>
+                                            </button>
+                                        </template>
+                                        <template v-else="">
+                                            <button v-if="item.following"  class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true" :data-timeline-id="item.timeline.id" data-toggle="follow" data-following="true">
+                                            <span class="absolute-loader hidden">
+                                                <span class="ft-loading">
+                                                    <span class="ft-loading__dot"></span>
+                                                    <span class="ft-loading__dot"></span>
+                                                    <span class="ft-loading__dot"></span>
+                                                </span>
+                                            </span>
+                                                <span class="false">Follow</span>
+                                                <span class="true">Following</span>
+                                            </button>
+                                            <button v-else="" class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true"  :data-timeline-id="item.timeline.id" data-toggle="follow" data-following="false">
+                                            <span class="absolute-loader hidden">
+                                                <span class="ft-loading">
+                                                    <span class="ft-loading__dot"></span>
+                                                    <span class="ft-loading__dot"></span>
+                                                    <span class="ft-loading__dot"></span>
+                                                </span>
+                                            </span>
+                                                <span class="false">Follow</span>
+                                                <span class="true">Following</span>
+                                            </button>
+                                        </template>
                                     </div>
                                 </div>
                             </div>
@@ -51,16 +89,21 @@
         data: function () {
             return {
                 participantList: [],
-                defaultImage: 'default.png'
+                filterParticipantList: [],
+                defaultImage: 'default.png',
+                filterSearch: ''
             }
         },
         methods: {
             userLink (item) {
                 return base_url + item.username
             },
+            sameUser: function (item) {
+                return item.timeline.username == current_username
+            },
             userAvatar (item) {
-                return item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage
-
+                return ''
+                //return item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage
             },
             getList: function () {
                 let that = this
@@ -77,10 +120,10 @@
                     }
                 }).then(function (response) {
                     if (response.status == 200) {
-                        console.log(response)
-                        /*for(let i = 0;i<response.data.length; i++) {
+                        console.log(response.data)
+                        for(let i = 0;i<response.data.length; i++) {
                             that.participantList.push(response.data[i])
-                        }*/
+                        }
                     }
                 }).catch(function (error) {
                     console.log(error)
@@ -98,6 +141,12 @@
             });
         },
         computed: {
+            filterUserSearch: function () {
+                var re = new RegExp('^' + this.filterSearch);
+                this.participantList.filter(function(item) {
+                    return  re.test(item.timeline.username);
+                });
+            },
                 ...mapGetters({
                     eventWho: 'eventWho'
                 }),
