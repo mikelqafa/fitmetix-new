@@ -14,54 +14,61 @@
                         </ul>
                     </div>
                     <div class="timeline timeline-posts--user wrap-ft-card--small">
-                        <div id="app-timeline">
-                            <input type="hidden" id="newPostId">
-                            @if(isset($timeline->username))
-                                <input type="hidden" id="postByUsername" value="{{$timeline->username}}">
-                                <input type="hidden" id="galleryByUsername" value="{{$timeline->username}}">
-                            @endif
-                            <app-post-option></app-post-option>
-                            <app-comment-option></app-comment-option>
-                            <app-gallery-hlu>
-                                <div class="post-filters post-filters--auto-width">
-                                    <div class="ft-grid">
-                                        <div class="ft-grid__item">
-                                            <div class="post-image--wrapper lg-loading-skeleton">
-                                                <div class="ft-card ft-card--only-image">
-                                                    <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                        @if(($timeline->user->settings()->post_privacy == 'everyone') || (Auth::user()->following->contains($timeline->user->id)))
+                            <div id="app-timeline">
+                                <input type="hidden" id="newPostId">
+                                @if(isset($timeline->username))
+                                    <input type="hidden" id="postByUsername" value="{{$timeline->username}}">
+                                    <input type="hidden" id="galleryByUsername" value="{{$timeline->username}}">
+                                @endif
+                                <app-post-option></app-post-option>
+                                <app-comment-option></app-comment-option>
+                                <app-gallery-hlu>
+                                    <div class="post-filters post-filters--auto-width">
+                                        <div class="ft-grid">
+                                            <div class="ft-grid__item">
+                                                <div class="post-image--wrapper lg-loading-skeleton">
+                                                    <div class="ft-card ft-card--only-image">
+                                                        <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="ft-grid__item">
-                                            <div class="post-image--wrapper lg-loading-skeleton">
-                                                <div class="ft-card ft-card--only-image">
-                                                    <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                            <div class="ft-grid__item">
+                                                <div class="post-image--wrapper lg-loading-skeleton">
+                                                    <div class="ft-card ft-card--only-image">
+                                                        <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="ft-grid__item">
-                                            <div class="post-image--wrapper lg-loading-skeleton">
-                                                <div class="ft-card ft-card--only-image">
-                                                    <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                            <div class="ft-grid__item">
+                                                <div class="post-image--wrapper lg-loading-skeleton">
+                                                    <div class="ft-card ft-card--only-image">
+                                                        <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="ft-grid__item">
-                                            <div class="post-image--wrapper lg-loading-skeleton">
-                                                <div class="ft-card ft-card--only-image">
-                                                    <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                            <div class="ft-grid__item">
+                                                <div class="post-image--wrapper lg-loading-skeleton">
+                                                    <div class="ft-card ft-card--only-image">
+                                                        <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </app-gallery-hlu>
-                            <div id="scroll-bt"></div>
-                        </div>
+                                </app-gallery-hlu>
+                                <div id="scroll-bt"></div>
+                            </div>
+                        @else
+                            <div class="text-center">
+                                <h2>This Account is Private</h2>
+                                <p>Follow to see their photos and videos.</p>
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="md-col layout-timeline__left">

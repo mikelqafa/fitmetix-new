@@ -8,7 +8,7 @@
             <template v-if="notifications.length">
                 <div class="ft-chat__header">Notifications</div>
                 <div class="md-menu">
-                    <a :href="notificationUrl(item)" v-for="item in notifications" :data-nid="item.id" :key="item.id" class="md-menu__item ft-chat__item">
+                    <a :href="notificationUrl(item)" v-for="(item, index) in notifications" :data-nid="item.id" :key="item.id" class="md-menu__item ft-chat__item">
                         <div class="md-list__item  has-divider">
                             <div class="md-list__item-content">
                                 <a :href="userLink(item.notified_from.username)" class="md-list__item-icon">
@@ -21,15 +21,26 @@
                                     </div>
                                 </div>
                                 <div class="md-list__image" v-if="notificationImageUrl(item) !== ''" v-bind:style="{ backgroundImage: 'url(' + notificationImageUrl(item) + ')' }"></div>
-                                <div class="md-list__item-secondary">
+                                <div class="md-list__item-secondary text-right">
                                     <div class="md-list__item-secondary-info">
                                         <timeago :since="since(item.created_at)"
                                                  :auto-update="autoUpdate"
                                                  class="timeago"></timeago>
                                     </div>
-                                    <a class="md-list__item-secondary-action" href="#">
-                                        <i class="hidden material-icons">star</i>
-                                    </a>
+                                    <div class="md-layout-spacer"></div>
+                                    <div class="md-layout ft-nt-group md-layout--row" v-if="item.type == 'follow_requested'">
+                                        <a class="md-list__item-secondary-action color-deny" @click="denyRequest(item, index)" href="#" title="Deny">
+                                            <i class="icon icon-close"></i>
+                                        </a>
+                                        <a class="md-list__item-secondary-action color-accept" @click="acceptRequest(item, index)" href="#" title="Accept">
+                                            <i class="icon icon-accept"></i>
+                                        </a>
+                                    </div>
+                                    <div class="md-layout ft-nt-group md-layout--row" v-if="item.type == 'follow_requested_accept'">
+                                        <button class="md-list__item-secondary-action btn btn-xs ft-btn-primary ft-btn-primary--outline color-accept">
+                                            Accepted
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -87,6 +98,69 @@
             this.fetchOldNotification()
         },
         methods: {
+            acceptRequest: function (item) {
+                let _token = $("meta[name=_token]").attr('content')
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url+'ajax/follow-accept',
+                    data :{
+                        _token: _token,
+                        user_id: user_id
+                    }
+                }).then( function (response) {
+                    if (response.status ==  200) {
+                        materialSnackbar({autoClose: true, message: 'Follow request accepted'})
+                        axios({
+                            method: 'post',
+                            responseType: 'json',
+                            url: base_url+'ajax/notification-reacted',
+                            data :{
+                                _token: _token,
+                                type: 'follow_requested_accept',
+                                id: item.id
+                            }
+                        }).then( function (response) {
+                            if (response.status ==  200) {
+                                that.$store.commit('CHANGE_NOTIFICATION_TYPE', {index: index, changed: 'follow_requested_accept'})
+                            }
+                        })
+                    }
+                }).catch(function(error) {
+                    console.log(error)
+                })
+            },
+            denyRequest: function (item) {
+                let _token = $("meta[name=_token]").attr('content')
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url+'ajax/follow-reject',
+                    data :{
+                        _token: _token,
+                        user_id: user_id
+                    }
+                }).then( function (response) {
+                    if (response.status ==  200) {
+                        axios({
+                            method: 'post',
+                            responseType: 'json',
+                            url: base_url+'ajax/notification-reacted',
+                            data :{
+                                _token: _token,
+                                type: 'follow_requested_deny',
+                                id: item.id
+                            }
+                        }).then( function (response) {
+                            if (response.status ==  200) {
+                                that.$store.commit('CHANGE_NOTIFICATION_TYPE', {index: index, changed: 'follow_requested_deny'})
+                            }
+                        })
+                    }
+                }).catch(function(error) {
+                    console.log(error)
+                })
+            },
             notificationUrl: function (item) {
                 let url = ''
                 switch(item.type) {
@@ -113,6 +187,15 @@
                     break
                     case 'unlike_post':
                         url =  base_url + 'post/'+item.post_id
+                    break
+                    case 'follow_requested':
+                        url =  base_url + item.notified_from.username
+                    break
+                    case 'follow_requested_accept':
+                        url =  base_url + item.notified_from.username
+                    break
+                    case 'follow_requested_deny':
+                        url =  base_url + item.notified_from.username
                     break
                 }
                 return url

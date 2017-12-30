@@ -3337,3 +3337,17 @@ aside .md-drawer-scroll__wrapper{
 .margin-left-8 {
     margin-left: 8px;
 }
+.ft-nt-group .md-list__item-secondary-action {
+  height: 28px;
+  width: 28px;
+}
+.ft-nt-group .md-list__item-secondary-action .icon{
+  font-size:20px;
+  line-height:;
+}
+.color-accept {
+  color: #589D5B;
+}
+.color-deny {
+  color: #EA536A;
+}

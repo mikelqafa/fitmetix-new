@@ -35,6 +35,9 @@ export const store = new Vuex.Store({
     SET_OPTIONS_MENU_ITEM (state, postObj) {
       Vue.set(state.optionMenuPostItem, 'postIndex', postObj.postIndex)
     },
+    CHANGE_NOTIFICATION_TYPE (state, obj) {
+      Vue.set(state.notification[obj.index], 'type', obj.changed)
+    },
     ADD_POST_ITEM_LIST (state, postItem) {
       if(postItem.postFrom !== undefined) {
         state.postItemList.unshift(postItem.data)

@@ -1,6 +1,14 @@
 <template>
     <div style="position: relative">
 
+        <app-post-share></app-post-share>
+
+        <post-theater-view></post-theater-view>
+
+        <post-wholikes-view></post-wholikes-view>
+
+        <event-participate-list></event-participate-list>
+
         <div v-if="showFilter" class="event-filter-wrapper">
             <div class="hidden-sm hidden-xs ft-filter">
                 <fieldset class="form-group">
@@ -331,6 +339,10 @@
     import postEvent from './child/postEvent'
     import postHeader from './child/postHeader'
     import postComment from './child/postComment'
+    import appPostShare from './child/appPostShare'
+    import eventParticipateList from './child/eventParticipateList'
+    import postTheaterView from './child/postTheaterView'
+    import postWhoLikesView from './child/postWhoLikesView'
     import { mapGetters } from 'vuex'
     var appEvent;
     export default {
@@ -517,7 +529,11 @@
             'post-header': postHeader,
             'post-event': postEvent,
             'post-comment': postComment,
-            'post-back-viewer': postBackViwer
+            'post-back-viewer': postBackViwer,
+            'post-theater-view': postTheaterView,
+            'post-wholikes-view': postWhoLikesView,
+            'app-post-share': appPostShare,
+            'event-participate-list': eventParticipateList
         },
         computed: {
             isLoading () {

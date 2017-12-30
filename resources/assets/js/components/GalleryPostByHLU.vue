@@ -151,8 +151,12 @@
                     if (response.status ==  200) {
                         let posts = response.data[0].posts;
                         let i = 0
+                        console.log(response)
                         $.each(posts, function(key, val) {
                             if(val.images !== undefined && val.images.length) {
+                                let obj = {}
+                                obj = val
+                                obj['timeline'] = response.data[0].timeline;
                                 that.$store.commit('ADD_POST_ITEM_LIST', val)
                                 i++
                             }
