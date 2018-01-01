@@ -12,6 +12,7 @@ import AppNotification from './components/AppNotification'
 import AppNotificationAll from './components/AppNotificationAll'
 import postDialogOption from './components/DialogOption'
 import commentDialogOption from './components/CommentDialogOption'
+import suggestionUser from './components/suggestionUser'
 import VueTimeago from 'vue-timeago'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 // import AppEventCalendar from './components/appEventCalendar'
@@ -62,7 +63,8 @@ window.singleEvent = new Vue({
   el: '#single-event-view',
   store,
   components: {
-    'single-event-view': singleEventView
+    'single-event-view': singleEventView,
+    'suggestion-user': suggestionUser
   }
 })
 window.appNotificationAll = new Vue({

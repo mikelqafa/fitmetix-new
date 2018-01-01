@@ -26571,19 +26571,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_DialogOption___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_DialogOption__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_CommentDialogOption__ = __webpack_require__(143);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_CommentDialogOption___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_CommentDialogOption__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_vue_timeago__ = __webpack_require__(146);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_vue_timeago___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_vue_timeago__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_vue_awesome_swiper__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_vue_awesome_swiper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_vue_awesome_swiper__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_appEventList__ = __webpack_require__(147);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_appEventList___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_appEventList__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_ProfileOptionDialog__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_ProfileOptionDialog___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_ProfileOptionDialog__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__store_store__ = __webpack_require__(153);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17_vue_clip__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17_vue_clip___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17_vue_clip__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_suggestionUser__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_suggestionUser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_suggestionUser__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_vue_timeago__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_vue_timeago___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_vue_timeago__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_vue_awesome_swiper__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_vue_awesome_swiper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_vue_awesome_swiper__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_appEventList__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_appEventList___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_appEventList__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_ProfileOptionDialog__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_ProfileOptionDialog___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__components_ProfileOptionDialog__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__store_store__ = __webpack_require__(153);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_vue_clip__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_vue_clip___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18_vue_clip__);
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+
 
 
 
@@ -26605,9 +26608,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 __webpack_require__(155);
 
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_13_vue_awesome_swiper___default.a);
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_17_vue_clip___default.a);
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_12_vue_timeago___default.a, {
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_14_vue_awesome_swiper___default.a);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_18_vue_clip___default.a);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_13_vue_timeago___default.a, {
   name: 'timeago', // component name, `timeago` by default
   locale: 'en-US',
   locales: {
@@ -26620,7 +26623,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.config.productionTip = true;
 
 window.timeLine = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: '#app-timeline',
-  store: __WEBPACK_IMPORTED_MODULE_16__store_store__["a" /* store */],
+  store: __WEBPACK_IMPORTED_MODULE_17__store_store__["a" /* store */],
   components: {
     'app-post': __WEBPACK_IMPORTED_MODULE_1__components_Post___default.a,
     'app-post-single': __WEBPACK_IMPORTED_MODULE_2__components_PostSingle___default.a,
@@ -26628,15 +26631,15 @@ window.timeLine = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     'app-event-hlu': __WEBPACK_IMPORTED_MODULE_4__components_EventPostByHLU___default.a,
     'app-post-option': __WEBPACK_IMPORTED_MODULE_10__components_DialogOption___default.a,
     'app-comment-option': __WEBPACK_IMPORTED_MODULE_11__components_CommentDialogOption___default.a,
-    'app-event-list': __WEBPACK_IMPORTED_MODULE_14__components_appEventList___default.a,
-    'app-profile-option': __WEBPACK_IMPORTED_MODULE_15__components_ProfileOptionDialog___default.a,
+    'app-event-list': __WEBPACK_IMPORTED_MODULE_15__components_appEventList___default.a,
+    'app-profile-option': __WEBPACK_IMPORTED_MODULE_16__components_ProfileOptionDialog___default.a,
     'app-picture-option': __WEBPACK_IMPORTED_MODULE_6__components_ProfilePictureDialog___default.a
   }
 });
 
 window.appNotification = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: '#app-notification',
-  store: __WEBPACK_IMPORTED_MODULE_16__store_store__["a" /* store */],
+  store: __WEBPACK_IMPORTED_MODULE_17__store_store__["a" /* store */],
   components: {
     'app-notification': __WEBPACK_IMPORTED_MODULE_8__components_AppNotification___default.a
   }
@@ -26644,14 +26647,15 @@ window.appNotification = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
 window.singleEvent = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: '#single-event-view',
-  store: __WEBPACK_IMPORTED_MODULE_16__store_store__["a" /* store */],
+  store: __WEBPACK_IMPORTED_MODULE_17__store_store__["a" /* store */],
   components: {
-    'single-event-view': __WEBPACK_IMPORTED_MODULE_7__components_child_singleEventView___default.a
+    'single-event-view': __WEBPACK_IMPORTED_MODULE_7__components_child_singleEventView___default.a,
+    'suggestion-user': __WEBPACK_IMPORTED_MODULE_12__components_suggestionUser___default.a
   }
 });
 window.appNotificationAll = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: '#app-notification-all',
-  store: __WEBPACK_IMPORTED_MODULE_16__store_store__["a" /* store */],
+  store: __WEBPACK_IMPORTED_MODULE_17__store_store__["a" /* store */],
   components: {
     'app-notification-all': __WEBPACK_IMPORTED_MODULE_9__components_AppNotificationAll___default.a
   }
@@ -28370,7 +28374,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (!this.participantList.length) {
                 return 'No Participant joined yet';
             } else {
-                return 'View Participant';
+                return this.participantList.length + ' (View Participants)';
             }
         }
     },
@@ -30718,6 +30722,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -30737,11 +30750,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
 
         sameUser: function sameUser(item) {
-            return item.timeline.username == current_username;
+            return item.username == current_username;
         },
         userAvatar: function userAvatar(item) {
-            return '';
-            //return item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage
+            return item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage;
         },
 
         getList: function getList() {
@@ -30764,7 +30776,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 if (response.status == 200) {
                     var likes = response.data[0].post_likes_by;
                     for (var i = 0; i < likes.length; i++) {
-                        that.participantList.push(response.data[i]);
+                        that.participantList.push(likes[i]);
                     }
                     if (!likes.length) {
                         that.hasItem = false;
@@ -30773,6 +30785,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }).catch(function (error) {
                 console.log(error);
             });
+        },
+        filterList: function filterList(item) {
+            var o = item.username.search(this.filterSearch);
+            return o != -1;
         }
     },
     mounted: function mounted() {
@@ -30791,10 +30807,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             if (this.filterSearch == '') {
                 return this.participantList;
             }
-            var re = new RegExp('^' + this.filterSearch);
-            this.participantList.filter(function (item) {
-                return re.test(item.timeline.username);
-            });
+            return this.participantList.filter(this.filterList);
         }
     }, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
         postWhoLikes: 'postWhoLikes'
@@ -30819,7 +30832,8 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "md-dialog md-dialog--md md-dialog--who-likes",
+      staticClass:
+        "md-dialog md-dialog--md md-dialog--user-list md-dialog--who-likes",
       attrs: { id: "post-who-likes-dialog" }
     },
     [
@@ -30865,7 +30879,10 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "md-dialog__body md-dialog__body--scrollable" },
+              {
+                staticClass: "md-dialog__body md-dialog__body--scrollable",
+                staticStyle: { "padding-left": "0", "padding-right": "0" }
+              },
               [
                 _vm.loading
                   ? [
@@ -30894,7 +30911,7 @@ var render = function() {
                                 },
                                 attrs: {
                                   href: _vm.userLink(item),
-                                  title: "@" + item.timeline.username
+                                  title: "@" + item.username
                                 }
                               }),
                               _vm._v(" "),
@@ -30915,15 +30932,14 @@ var render = function() {
                                           staticClass:
                                             "user-name user ft-user-name",
                                           attrs: {
-                                            href:
-                                              "http://localhost/fitmetix/public/mikele",
-                                            title: "@" + item.timeline.username
+                                            href: _vm.userLink(item),
+                                            title: "@" + item.username
                                           }
                                         },
                                         [
                                           _vm._v(
                                             "\n                                            " +
-                                              _vm._s(item.timeline.name) +
+                                              _vm._s(item.name) +
                                               "\n                                        "
                                           )
                                         ]
@@ -30936,9 +30952,9 @@ var render = function() {
                                   }),
                                   _vm._v(" "),
                                   _vm.sameUser(item)
-                                    ? [_vm._m(2, true)]
+                                    ? void 0
                                     : [
-                                        item.following
+                                        item.follow_status == "pending"
                                           ? _c(
                                               "button",
                                               {
@@ -30946,14 +30962,12 @@ var render = function() {
                                                   "btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline",
                                                 attrs: {
                                                   "data-noreload": "true",
-                                                  "data-timeline-id":
-                                                    item.timeline.id,
-                                                  "data-toggle": "follow",
+                                                  "data-timeline-id": item.id,
                                                   "data-following": "true"
                                                 }
                                               },
                                               [
-                                                _vm._m(3, true),
+                                                _vm._m(2, true),
                                                 _vm._v(" "),
                                                 _c(
                                                   "span",
@@ -30964,39 +30978,67 @@ var render = function() {
                                                 _c(
                                                   "span",
                                                   { staticClass: "true" },
-                                                  [_vm._v("Following")]
+                                                  [_vm._v("Request sent")]
                                                 )
                                               ]
                                             )
-                                          : _c(
-                                              "button",
-                                              {
-                                                staticClass:
-                                                  "btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline",
-                                                attrs: {
-                                                  "data-noreload": "true",
-                                                  "data-timeline-id":
-                                                    item.timeline.id,
-                                                  "data-toggle": "follow",
-                                                  "data-following": "false"
-                                                }
-                                              },
-                                              [
-                                                _vm._m(4, true),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "span",
-                                                  { staticClass: "false" },
-                                                  [_vm._v("Follow")]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "span",
-                                                  { staticClass: "true" },
-                                                  [_vm._v("Following")]
-                                                )
-                                              ]
-                                            )
+                                          : item.follow_status == "following"
+                                            ? _c(
+                                                "button",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline",
+                                                  attrs: {
+                                                    "data-noreload": "true",
+                                                    "data-timeline-id": item.id,
+                                                    "data-toggle": "follow",
+                                                    "data-following": "true"
+                                                  }
+                                                },
+                                                [
+                                                  _vm._m(3, true),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    { staticClass: "false" },
+                                                    [_vm._v("Follow")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    { staticClass: "true" },
+                                                    [_vm._v("Following")]
+                                                  )
+                                                ]
+                                              )
+                                            : _c(
+                                                "button",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline",
+                                                  attrs: {
+                                                    "data-noreload": "true",
+                                                    "data-timeline-id": item.id,
+                                                    "data-toggle": "follow",
+                                                    "data-following": "false"
+                                                  }
+                                                },
+                                                [
+                                                  _vm._m(4, true),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    { staticClass: "false" },
+                                                    [_vm._v("Follow")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "span",
+                                                    { staticClass: "true" },
+                                                    [_vm._v("Following")]
+                                                  )
+                                                ]
+                                              )
                                       ]
                                 ],
                                 2
@@ -31075,11 +31117,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-sm pos-rel", attrs: { disabled: "" } },
-      [_c("span", { staticClass: "true" }, [_vm._v("Registered")])]
-    )
+    return _c("span", { staticClass: "absolute-loader hidden" }, [
+      _c("span", { staticClass: "ft-loading" }, [
+        _c("span", { staticClass: "ft-loading__dot" }),
+        _vm._v(" "),
+        _c("span", { staticClass: "ft-loading__dot" }),
+        _vm._v(" "),
+        _c("span", { staticClass: "ft-loading__dot" })
+      ])
+    ])
   },
   function() {
     var _vm = this
@@ -32351,7 +32397,8 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "md-dialog md-dialog--md md-dialog--who-likes",
+      staticClass:
+        "md-dialog md-dialog--user-list md-dialog--md md-dialog--who-likes",
       attrs: { id: "post-who-participate-dialog" }
     },
     [
@@ -50933,6 +50980,169 @@ module.exports = function (css) {
 /***/ (function(module, exports) {
 
 module.exports = ["just now",["%s s","%s s"],["%s m","%s m"],["%s h","%s h"],["%s d","%s d"],["%s w","%s w"],["%s month ago","%s months ago"],["%s year ago","%s years ago"]]
+
+/***/ }),
+/* 160 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(162)
+/* template */
+var __vue_template__ = __webpack_require__(161)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/suggestionUser.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c451fb74", Component.options)
+  } else {
+    hotAPI.reload("data-v-c451fb74", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 161 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "ft-suggestion-wrapper" }, [
+    _c(
+      "h4",
+      {
+        staticClass: "text-center layout-p-t-1",
+        staticStyle: { "font-size": "18px" }
+      },
+      [_vm._v("Make each other great")]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "ft-suggestion md-layout md-layout--row md-layout--wrap" },
+      _vm._l(_vm.itemList, function(item) {
+        return _c(
+          "div",
+          {
+            key: item.id,
+            staticClass: "ft-suggestion__item md-layout md-layout--column"
+          },
+          [
+            _c("a", {
+              staticClass: "ft-cp__user",
+              style: { backgroundImage: "url(" + item.avatar + ")" },
+              attrs: { title: "@" + item.username, href: _vm.userLink(item) }
+            }),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "text-center",
+                attrs: { href: _vm.userLink(item) }
+              },
+              [_vm._v(_vm._s(item.username))]
+            )
+          ]
+        )
+      })
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-c451fb74", module.exports)
+  }
+}
+
+/***/ }),
+/* 162 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            itemList: []
+        };
+    },
+    methods: {
+        getList: function getList() {
+            var that = this;
+            var _token = $("meta[name=_token]").attr('content');
+            this.itemList = [];
+            axios({
+                method: 'get',
+                responseType: 'json',
+                url: base_url + 'ajax/get-suggested-users',
+                data: {
+                    _token: _token
+                }
+            }).then(function (response) {
+                if (response.status == 200) {
+                    console.log(response.data);
+                    var d = response.data[0].suggested_users;
+                    for (var i = 0; i < d.length; i++) {
+                        that.itemList.push(d[i]);
+                    }
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        userLink: function userLink(item) {
+            return base_url + item.username;
+        }
+    },
+    mounted: function mounted() {
+        this.getList();
+    }
+});
 
 /***/ })
 /******/ ]);

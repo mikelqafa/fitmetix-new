@@ -191,7 +191,7 @@
                 if(!this.participantList.length) {
                     return 'No Participant joined yet'
                 } else {
-                    return 'View Participant'
+                    return this.participantList.length +' (View Participants)'
                 }
             }
         },

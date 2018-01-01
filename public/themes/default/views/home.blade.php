@@ -76,6 +76,7 @@
 					<div class="hide-on-other col-lg-4">
 						<div class="widget-events widget-left-panel" id="single-event-view">
 							<single-event-view></single-event-view>
+							<suggestion-user></suggestion-user>
 						</div>
 					</div>
 				@endif

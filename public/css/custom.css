@@ -3353,3 +3353,27 @@ aside .md-drawer-scroll__wrapper{
 .event-slider .timeline-posts__item {
     margin-top: 0;
 }
+.md-dialog--user-list .md-dialog__surface{
+    max-width: 420px;
+}
+.ft-suggestion-wrapper{
+    border-radius: 2px;
+    background-color: #fff;
+}
+.ft-suggestion{
+  max-height:200px;
+  padding: 8px;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+.ft-suggestion__item  {
+  margin: 8px;
+    align-items: center;
+    justify-content: center;
+}
+.layout-p-t-1{
+    padding-top: 16px;
+}
+.ft-suggestion__item .ft-cp__user {
+    margin: 0 0 8px 0;
+}
