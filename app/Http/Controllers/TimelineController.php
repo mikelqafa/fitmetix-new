@@ -1188,13 +1188,19 @@ class TimelineController extends AppBaseController
         $user = User::where('timeline_id', '=', $request->timeline_id)->first();
 
         if (!$user->followers->contains(Auth::user()->id)) { 
-            
-            $user->followers()->attach(Auth::user()->id, ['status' => 'pending']);
+            if($user->settings()->confirm_follow == "no"){
+                $user->followers()->attach(Auth::user()->id, ['status' => 'pending']);
+                $follow_status = 'pending';
+            }
+            else {
+                $user->followers()->attach(Auth::user()->id, ['status' => 'approved']);
+                $follow_status = 'approved';
+            }
 
             //Notify the user for page like
             Notification::create(['user_id' => $user->id, 'timeline_id' => Auth::user()->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.request_follow'), 'type' => 'follow_requested']);
 
-            return response()->json(['status' => '200', 'followrequest' => true, 'message' => 'successfully sent user follow request']);
+            return response()->json(['status' => '200', 'followrequest' => true, 'message' => 'successfully sent user follow request','follow_status'=>$follow_status]);
         } else {
             if ($request->follow_status == 'approved') {
                 $user->followers()->detach([Auth::user()->id]);

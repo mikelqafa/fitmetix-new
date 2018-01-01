@@ -288,6 +288,16 @@ class User extends Authenticatable
         return $result;
     }
 
+    public function checkFollowStatus($user_id){
+        $chk_user = DB::table('followers')->where('leader_id', $user_id)->where('follower_id', Auth::user()->id)->first();
+        $result = false;
+        if ($chk_user->status == 'pending') {
+            $result = true;
+        }
+
+        return $result;   
+    }
+
     public function decilneRequest($user_id)
     {
         $chk_user = DB::table('followers')->where('follower_id', $user_id)->where('leader_id', Auth::user()->id)->first();

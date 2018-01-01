@@ -59,7 +59,7 @@
         <a href="{{ url('/'.Auth::user()->username.'/edit-profile') }}" class="btn ft-btn-primary ft-btn-primary--outline">Edit Profile</a>
     @elseif(Auth::user()->following->contains($timeline->user->id))
 
-        @if(Auth::user()->following->status == 'pending')
+        @if(Auth::user()->checkFollowStatus($timeline->user->id))
             <button class="btn ft-btn-primary pos-rel ft-btn-primary--outline" data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="true" data-approved="false">
                                     <span class="absolute-loader hidden">
                                         <span class="ft-loading">
