@@ -142,6 +142,9 @@
         },
         computed: {
             filterUserSearch: function () {
+                if(this.filterSearch == '') {
+                    return  this.participantList
+                }
                 var re = new RegExp('^' + this.filterSearch);
                 this.participantList.filter(function(item) {
                     return  re.test(item.timeline.username);

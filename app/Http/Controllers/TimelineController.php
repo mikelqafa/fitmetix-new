@@ -3872,7 +3872,7 @@ class TimelineController extends AppBaseController
         $posts = Post::where('id',$request->post_id)->get();
 
         $hasMore = false;
-
+        $post_likes_by = '';
         foreach ($posts as $post) {
             $post_likes_by = $post->users_liked()->limit($request->paginate)->offset($request->offset)->get();
         }

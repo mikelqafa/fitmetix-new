@@ -3343,11 +3343,13 @@ aside .md-drawer-scroll__wrapper{
 }
 .ft-nt-group .md-list__item-secondary-action .icon{
   font-size:20px;
-  line-height:;
 }
 .color-accept {
   color: #589D5B;
 }
 .color-deny {
   color: #EA536A;
+}
+.event-slider .timeline-posts__item {
+    margin-top: 0;
 }

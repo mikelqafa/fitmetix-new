@@ -41,7 +41,7 @@
         </div>
         <div class="text-center layout-m-b-1">
             <div class="pos-rel flex-inline">
-                <button type="button" class="btn btn-submit ft-btn-primary" @click="registerEvent">
+                <button v-if="!enableUrl" type="button" class="btn btn-submit ft-btn-primary" @click="registerEvent">
                     <template v-if="isRegistered">
                         Unregister
                     </template>
@@ -49,6 +49,9 @@
                         Register
                     </template>
                 </button>
+                <a :href="eventLink" v-else="" type="button" class="btn btn-submit ft-btn-primary">
+                    Details
+                </a>
                 <div class="ft-loading ft-loading--abs" v-if="isLoading">
                     <span class="ft-loading__dot"></span>
                     <span class="ft-loading__dot"></span>
@@ -63,7 +66,8 @@
         props: {
             postItem: {},
             eventList:false,
-            postIndex: ''
+            postIndex: '',
+            enableUrl: false
         },
         data: function () {
             return {
@@ -173,6 +177,9 @@
             },
             event() {
                 return this.hasItem ? this.postItem.event[0] : {}
+            },
+            eventLink() {
+                return this.hasItem ? base_url + 'post/' + this.postItem.id : ''
             },
             eventPrice () {
                 return this.hasItem ? (this.event.price !== 0 &&  this.event.price !== null) ? this.event.price : 'Free' : ''

@@ -1,39 +1,82 @@
 <template>
-    <div class="md-dialog md-dialog--who-likes" id="post-who-likes-dialog">
+    <div class="md-dialog md-dialog--sm md-dialog--who-likes" id="post-who-likes-dialog">
         <div class="md-dialog__wrapper">
             <div class="md-dialog__shadow"></div>
             <div class="md-dialog__surface">
                 <div>
                     <header class="md-dialog__header panel-post">
+                        <div class="layout-m-l-1 md-layout md-align md-align--start-center">
+                            <i class="icon icon-participant" style="margin-top: 4px"></i>
+                            <span class="layout-m-l-1">Participants</span>
+                        </div>
                         <div class="md-layout-spacer"></div>
                         <a href="javascript:;" style="margin-right: 15px"
                            class="md-button md-button--icon md-dialog__header-action-dismissive" data-action="dismissive">
                             <i class="icon icon-close"></i>
                         </a>
                     </header>
+                    <div style="position:relative; padding: 4px 16px 8px 16px;">
+                        <input placeholder="Search user" v-model="filterSearch" class="form-control" type="text"/>
+                    </div>
                     <div class="md-dialog__body md-dialog__body--scrollable">
                         <template v-if="loading">
-                            <div class="loading-wrapper">
-                                <div class="ft-loading" style="background-color: transparent">
-                                    <span class="ft-loading__dot"></span>
-                                    <span class="ft-loading__dot"></span>
-                                    <span class="ft-loading__dot"></span>
+                            <div v-if="hasItem">
+                                <div class="loading-wrapper">
+                                    <div class="ft-loading" style="background-color: transparent">
+                                        <span class="ft-loading__dot"></span>
+                                        <span class="ft-loading__dot"></span>
+                                        <span class="ft-loading__dot"></span>
+                                    </div>
                                 </div>
+                            </div>
+                            <div v-else="" class="text-center">
+                                <h3>No likes yet</h3>
                             </div>
                         </template>
                         <template v-else="">
                             <div class="md-list md-list--likes md-list--dense">
-                                <div class="md-list__item has-divider" v-for="item in whoLikesItem">
-                                    <a data-theme="m"  href="//localhost:3008/fitmetix/public/Uppal" :title="'@' + item.username"
-                                       class="md-list__item-icon user-avatar" style="background-image: url(&quot;http://localhost/fitmetix/public/user/avatar/2017-10-22-14-07-04athletebookprofilepage.png&quot;);"></a>
+                                <div class="md-list__item has-divider" v-for="item in filterUserSearch">
+                                    <a :href="userLink(item)" class="md-list__item-icon user-avatar"  :title="'@' + item.timeline.username" v-bind:style="{ backgroundImage: 'url(' + userAvatar(item) +')'}">
+                                    </a>
                                     <div class="md-list__item-content">
-                                        <div class="md-list__item-primary">
+                                        <div class="md-list__item-primary md-algin md-align--start-center md-layout">
                                             <a href="http://localhost/fitmetix/public/mikele"
-                                               :title="'@' + item.username"
+                                               :title="'@' + item.timeline.username"
                                                class="user-name user ft-user-name">
-                                                {{item.name}}
+                                                {{item.timeline.name}}
                                             </a>
                                         </div>
+                                        <div class="md-layout-spacer">
+                                        </div>
+                                        <template v-if="sameUser(item)">
+                                            <button class="btn btn-sm pos-rel" disabled>
+                                                <span class="true">Registered</span>
+                                            </button>
+                                        </template>
+                                        <template v-else="">
+                                            <button v-if="item.following"  class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true" :data-timeline-id="item.timeline.id" data-toggle="follow" data-following="true">
+                                            <span class="absolute-loader hidden">
+                                                <span class="ft-loading">
+                                                    <span class="ft-loading__dot"></span>
+                                                    <span class="ft-loading__dot"></span>
+                                                    <span class="ft-loading__dot"></span>
+                                                </span>
+                                            </span>
+                                                <span class="false">Follow</span>
+                                                <span class="true">Following</span>
+                                            </button>
+                                            <button v-else="" class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true"  :data-timeline-id="item.timeline.id" data-toggle="follow" data-following="false">
+                                            <span class="absolute-loader hidden">
+                                                <span class="ft-loading">
+                                                    <span class="ft-loading__dot"></span>
+                                                    <span class="ft-loading__dot"></span>
+                                                    <span class="ft-loading__dot"></span>
+                                                </span>
+                                            </span>
+                                                <span class="false">Follow</span>
+                                                <span class="true">Following</span>
+                                            </button>
+                                        </template>
                                     </div>
                                 </div>
                             </div>
@@ -44,68 +87,90 @@
         </div>
     </div>
 </template>
-<style>
-    .md-dialog--who-likes .md-dialog__body {
-        min-height: 216px;
-        padding-right: 0;
-        padding-left: 0;
-        padding-top: 0;
-        margin-top: 0;
-    }
-    .md-dialog--who-likes.md-dialog--open {
-        z-index: 28;
-    }
-    .md-list--likes {
-        background-color: transparent !important;
-    }
-    .md-dialog--who-likes .md-dialog__surface {
-        max-width: 440px;
-        min-width: 310px;
-    }
-
-    .md-dialog--who-likes .loading-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 192px;
-        margin-top: -24px;
-    }
-
-    .md-dialog--who-likes .md-dialog__header {
-        padding-top: 8px;
-        padding-bottom: 8px;
-    }
-</style>
 <script>
     import { mapGetters } from 'vuex'
 
     export default {
         data: function () {
-            return {}
+            return {
+                participantList: [],
+                filterParticipantList: [],
+                defaultImage: 'default.png',
+                filterSearch: '',
+                hasItem: true
+            }
         },
-        methods: {},
+        methods: {
+            userLink (item) {
+                return base_url + item.username
+            },
+            sameUser: function (item) {
+                return item.timeline.username == current_username
+            },
+            userAvatar (item) {
+                return ''
+                //return item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage
+            },
+            getList: function () {
+                let that = this
+                let _token = $("meta[name=_token]").attr('content')
+                this.participantList = []
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url + 'ajax/get-likes-details',
+                    data: {
+                        post_id: that.whoLikesItem.id,
+                        user_id: user_id,
+                        paginate: 10,
+                        offset: 0,
+                        _token: _token
+                    }
+                }).then(function (response) {
+                    console.log(response)
+                    if (response.status == 200) {
+                        let likes = response.data[0].post_likes_by
+                        for(let i = 0;i<likes.length; i++) {
+                            that.participantList.push(response.data[i])
+                        }
+                        if(!likes.length) {
+                            that.hasItem = false
+                        }
+                    }
+                }).catch(function (error) {
+                    console.log(error)
+                })
+            }
+        },
         mounted () {
             let that = this
             let dialog = $('#post-who-likes-dialog').MaterialDialog({show: false});
             dialog.on('ca.dialog.hidden', function () {
-                that.$store.commit('SET_WHO_LIKES_ITEM', {postIndex: undefined})
+                that.participantList = []
+            });
+            dialog.on('ca.dialog.show', function () {
+                that.getList()
             });
         },
         computed: {
-                ...mapGetters({
-                    postWhoLikes: 'postWhoLikes'
-                }),
-            whoLikesItem: function () {
-                return this.postWhoLikes.postIndex !== undefined ?
-
-                        (this.$store.state.postItemList[this.postWhoLikes.postIndex].whoLikes !== undefined ? this.$store.state.postItemList[this.postWhoLikes.postIndex].whoLikes.itemList : [] )
-
-                        : []
-
+            filterUserSearch: function () {
+                if(this.filterSearch == '') {
+                    return  this.participantList
+                }
+                var re = new RegExp('^' + this.filterSearch);
+                this.participantList.filter(function(item) {
+                    return  re.test(item.timeline.username);
+                });
             },
+            ...mapGetters({
+                postWhoLikes: 'postWhoLikes'
+            }),
             loading: function () {
-                return !this.whoLikesItem.length
-            }
+                return !this.participantList.length
+            },
+            whoLikesItem: function () {
+                return this.postWhoLikes.postIndex !== undefined ? this.$store.state.postItemList[this.postWhoLikes.postIndex] : {}
+            },
         }
     }
 </script>

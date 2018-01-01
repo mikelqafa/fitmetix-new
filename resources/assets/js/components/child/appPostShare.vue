@@ -122,21 +122,15 @@
                         users: users
                     }
                 }).then( function (response) {
-                    console.log(response)
-                    return
                     if (response.status ==  200) {
-                        materialSnackBar({messageText: response.data.message, autoClose: true })
+                        materialSnackBar({messageText: response.data.data, autoClose: true })
                         $('#post-share-init-dialog').MaterialDialog('hide')
-                        //$('#post-share-dialog').MaterialDialog('hide')
                         that.$refs.shareuser.reset()
-                        //$('#post-image-theater-dialog').MaterialDialog('hide')
                     }
                     that.isLoading = false
-                    // that.reportComment = ''
                 }).catch(function(error) {
                     materialSnackBar({messageText: error, autoClose: true })
                     $('#post-share-init-dialog').MaterialDialog('hide')
-                    //$('#post-share-dialog').MaterialDialog('hide')
                     that.$refs.shareuser.reset()
                     that.isLoading = false
                 })

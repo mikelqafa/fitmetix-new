@@ -1,15 +1,21 @@
 <template>
     <div v-if="!isLoading">
-        <div class="panel panel--eventlist panel-default timeline-posts__item panel-post" v-for="(postItem, index) in eventList" :id="'ft-post'+postItem.id">
-            <post-header event-list="true" :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
-            <div class="panel-body">
-                <post-back-viewer :post-img="postItem.media"></post-back-viewer>
-                <post-event :post-item="postItem" :post-index="index" :post-img="postItem.images"
-                            event-list="true"></post-event>
-                <post-description :post-html="postItem.description"></post-description>
-            </div>
-            <div class="md-layout-spacer"></div>
-        </div>
+        <swiper :options="swiperOptionE" class="event-slider">
+            <swiper-slide :key="postItem.id" v-for="(postItem, index) in eventList">
+                <div class="panel panel--eventlist panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
+                    <post-header event-list="false" :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
+                    <div class="panel-body">
+                        <post-back-viewer :post-img="postItem.images"></post-back-viewer>
+                        <post-event :post-item="postItem" :post-index="index" :post-img="postItem.images"
+                                    event-list="true" enable-url="true"></post-event>
+                        <post-description :post-html="postItem.description"></post-description>
+                    </div>
+                    <div class="md-layout-spacer"></div>
+                </div>
+            </swiper-slide>
+            <div class="swiper-button-prev" slot="button-prev"></div>
+            <div class="swiper-button-next" slot="button-next"></div>
+        </swiper>
     </div>
     <div v-else="" class="ft-grid__item lg-loading-skeleton" style="width: 100%;padding-top: 0">
         <div class="ft_card">
@@ -63,7 +69,20 @@
                 filterData: [],
                 eventList: [],
                 noEventFound: false,
-                noEventListFound:false
+                noEventListFound:false,
+                swiperOptionE: {
+                    slidesPerView: 1,
+                    autoplay: 10000,
+                    /*autoplay: false,*/
+                    paginationClickable: true,
+                    spaceBetween: 0,
+                    loop: false,
+                    autoHeight: true,
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev'
+                    }
+                }
             }
         },
         methods: {
@@ -90,20 +109,22 @@
             getDefaultData: function () {
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
-                let url = base_url + 'ajax/get-events'
+                let url = base_url + 'ajax/get-events-on-homepage'
                 this.noEventListFound = false
                 axios({
-                    method: 'get',
+                    method: 'post',
                     responseType: 'json',
-                    url: url
+                    url: url,
+                    data: {
+                        username: current_username,
+                        paginate: 10
+                    }
                 }).then(function (response) {
-                    console.log(response)
                     if (response.status == 200) {
                         that.eventList = []
-                        for (let i = 0; i < response.data.data.length; i++) {
-                            if(response.data.data[i].media !== undefined && !that.eventList.length) {
-                                that.eventList.unshift(response.data.data[i])
-                            }
+                        let events = response.data[0].posts
+                        for (let i = 0; i < events.length; i++) {
+                            that.eventList.push(events[i])
                         }
                         if (!that.eventList.length) {
                             that.noEventListFound = true

@@ -213,50 +213,7 @@
             },
             showLikesCount: function () {
                 this.$store.commit('SET_WHO_LIKES_ITEM', {postIndex: this.postIndex})
-                let offset = 0
-                if(this.$store.state.postItemList[this.postIndex].whoLikes !== undefined ) {
-                    offset = this.$store.state.postItemList[this.postIndex].whoLikes.offset
-                    offset = this.$store.state.postItemList[this.postIndex].whoLikes.offset
-                    if(!this.$store.state.postItemList[this.postIndex].whoLikes.hasMore) {
-                        $('#post-who-likes-dialog').MaterialDialog('show')
-                        return
-                    }
-                }
                 $('#post-who-likes-dialog').MaterialDialog('show')
-                let that = this
-                let _token = $("meta[name=_token]").attr('content')
-                axios({
-                    method: 'post',
-                    responseType: 'json',
-                    url: base_url + '/ajax/get-likes-details',
-                    data: {
-                        post_id: that.postId,
-                        paginate: 4,
-                        offset: offset,
-                        _token: _token
-                    }
-                }).then(function (response) {
-                    if(response.status == 200) {
-                        let likesBy = response.data[0].post_likes_by;
-                        let itemArr = []
-                        for(let i = 0; i < likesBy.length;  i++) {
-                            itemArr.unshift({
-                                name: likesBy[i].name,
-                                username: likesBy[i].username,
-                                avatar: likesBy[i].avatar
-                            })
-                            offset++
-                        }
-                        that.$store.commit('SET_POST_WHO_LIKES', {
-                            postIndex: that.postIndex,
-                            hasMore: response.data[0].has_more_likes,
-                            itemList: itemArr,
-                            offset: offset
-                        })
-                    }
-                }).catch(function (error) {
-                    console.log(error)
-                })
             },
             postCommentByEnter: function (el) {
                 let target = $(el).find('.ft-post__comment-form')[0]
