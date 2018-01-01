@@ -1,5 +1,5 @@
 <template>
-    <div class="md-dialog md-dialog--who-likes" id="post-who-participate-dialog">
+    <div class="md-dialog md-dialog--md md-dialog--who-likes" id="post-who-participate-dialog">
         <div class="md-dialog__wrapper">
             <div class="md-dialog__shadow"></div>
             <div class="md-dialog__surface">
@@ -18,7 +18,7 @@
                     <div style="position:relative; padding: 4px 16px 8px 16px;">
                         <input placeholder="Search user" v-model="filterSearch" class="form-control" type="text"/>
                     </div>
-                    <div class="md-dialog__body md-dialog__body--scrollable">
+                    <div class="md-dialog__body md-dialog__body--scrollable" style="padding-left: 0; padding-right: 0">
                         <template v-if="loading">
                             <div class="loading-wrapper">
                                 <div class="ft-loading" style="background-color: transparent">
@@ -30,12 +30,12 @@
                         </template>
                         <template v-else="">
                             <div class="md-list md-list--likes md-list--dense">
-                                <div class="md-list__item has-divider" v-for="item in filterUserSearch">
+                                <div class="md-list__item" v-for="item in filterUserSearch">
                                     <a :href="userLink(item)" class="md-list__item-icon user-avatar"  :title="'@' + item.timeline.username" v-bind:style="{ backgroundImage: 'url(' + userAvatar(item) +')'}">
                                     </a>
                                     <div class="md-list__item-content">
                                         <div class="md-list__item-primary md-algin md-align--start-center md-layout">
-                                            <a href="http://localhost/fitmetix/public/mikele"
+                                            <a :href="userLink(item)"
                                                :title="'@' + item.timeline.username"
                                                class="user-name user ft-user-name">
                                                 {{item.timeline.name}}
@@ -96,14 +96,13 @@
         },
         methods: {
             userLink (item) {
-                return base_url + item.username
+                return base_url + item.timeline.username
             },
             sameUser: function (item) {
                 return item.timeline.username == current_username
             },
             userAvatar (item) {
-                return ''
-                //return item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage
+                return item.timeline.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.timeline.avatar_url[0].source : base_url + 'images/' + this.defaultImage
             },
             getList: function () {
                 let that = this
@@ -128,6 +127,10 @@
                 }).catch(function (error) {
                     console.log(error)
                 })
+            },
+            filterList: function(item) {
+                let o = item.timeline.username.search(this.filterSearch)
+                return o != -1
             }
         },
         mounted () {
@@ -145,14 +148,11 @@
                 if(this.filterSearch == '') {
                     return  this.participantList
                 }
-                var re = new RegExp('^' + this.filterSearch);
-                this.participantList.filter(function(item) {
-                    return  re.test(item.timeline.username);
-                });
+                return this.participantList.filter(this.filterList);
             },
-                ...mapGetters({
-                    eventWho: 'eventWho'
-                }),
+            ...mapGetters({
+                eventWho: 'eventWho'
+            }),
             loading: function () {
                 return !this.participantList.length
             }

@@ -1,5 +1,5 @@
 <template>
-    <div class="md-dialog md-dialog--sm md-dialog--who-likes" id="post-who-likes-dialog">
+    <div class="md-dialog md-dialog--md md-dialog--who-likes" id="post-who-likes-dialog">
         <div class="md-dialog__wrapper">
             <div class="md-dialog__shadow"></div>
             <div class="md-dialog__surface">
