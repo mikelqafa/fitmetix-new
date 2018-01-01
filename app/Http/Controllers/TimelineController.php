@@ -1187,7 +1187,8 @@ class TimelineController extends AppBaseController
     {
         $user = User::where('timeline_id', '=', $request->timeline_id)->first();
 
-        if (!$user->followers->contains(Auth::user()->id)) {
+        if (!$user->followers->contains(Auth::user()->id)) { 
+            
             $user->followers()->attach(Auth::user()->id, ['status' => 'pending']);
 
             //Notify the user for page like
@@ -4191,7 +4192,8 @@ class TimelineController extends AppBaseController
       if (!empty($registeredUsers)){
         foreach ($registeredUsers as $key => $value){
           $user = DB::table('users')->where('id',$value->user_id)->first();
-          $timeline = DB::table('timelines')->where('id',$user->timeline_id)->first();
+          // $timeline = DB::table('timelines')->where('id',$user->timeline_id)->first();
+          $timeline = Timeline::find($user->timeline_id);
           $registeredUsers[$key]->timeline = $timeline;
           $following = DB::table('followers')->where('leader_id',$value->user_id)->where('follower_id',$userId)->first();
           if (!empty($following)){

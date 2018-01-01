@@ -58,17 +58,33 @@
     @if(Auth::user()->id == $timeline->user->id)
         <a href="{{ url('/'.Auth::user()->username.'/edit-profile') }}" class="btn ft-btn-primary ft-btn-primary--outline">Edit Profile</a>
     @elseif(Auth::user()->following->contains($timeline->user->id))
-        <button class="btn ft-btn-primary pos-rel ft-btn-primary--outline" data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="true">
-                                <span class="absolute-loader hidden">
-                                    <span class="ft-loading">
-                                        <span class="ft-loading__dot"></span>
-                                        <span class="ft-loading__dot"></span>
-                                        <span class="ft-loading__dot"></span>
+
+        @if(Auth::user()->following->status == 'pending')
+            <button class="btn ft-btn-primary pos-rel ft-btn-primary--outline" data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="true" data-approved="false">
+                                    <span class="absolute-loader hidden">
+                                        <span class="ft-loading">
+                                            <span class="ft-loading__dot"></span>
+                                            <span class="ft-loading__dot"></span>
+                                            <span class="ft-loading__dot"></span>
+                                        </span>
                                     </span>
-                                </span>
-            <span class="false">Follow</span>
-            <span class="true">Following</span>
-        </button>
+                <span class="false">Follow</span>
+                <span class="true">Request Sent</span>
+            </button>
+
+        @else
+            <button class="btn ft-btn-primary pos-rel ft-btn-primary--outline" data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="true">
+                                    <span class="absolute-loader hidden">
+                                        <span class="ft-loading">
+                                            <span class="ft-loading__dot"></span>
+                                            <span class="ft-loading__dot"></span>
+                                            <span class="ft-loading__dot"></span>
+                                        </span>
+                                    </span>
+                <span class="false">Follow</span>
+                <span class="true">Following</span>
+            </button>
+        @endif
     @else
         <button class="btn ft-btn-primary pos-rel ft-btn-primary--outline" data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="false">
                                 <span class="absolute-loader hidden">

@@ -10,8 +10,8 @@
 	<div class="footer__wrapper">
 		<div class="socialite-terms text-center">
 			@if(Auth::check())
-				<a href="{{ url(Auth::user()->username.'/create-page') }}">{{ trans('common.create_page') }}</a> -
-                <a href="{{ url(Auth::user()->username.'/create-group') }}">{{ trans('common.create_group') }}</a>
+				{{-- <a href="{{ url(Auth::user()->username.'/create-page') }}">{{ trans('common.create_page') }}</a> -
+                <a href="{{ url(Auth::user()->username.'/create-group') }}">{{ trans('common.create_group') }}</a> --}}
 			@else
 				<a href="{{ url('login') }}">{{ trans('auth.login') }}</a>
 				<a href="{{ url('register') }}">{{ trans('auth.register') }}</a>
