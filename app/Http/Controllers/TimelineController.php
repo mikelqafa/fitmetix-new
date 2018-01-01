@@ -3883,6 +3883,18 @@ class TimelineController extends AppBaseController
             $post_likes_by = $post->users_liked()->limit($request->paginate)->offset($request->offset)->get();
         }
 
+        foreach ($post_likes_by as $user) {
+            if(Auth::user()->following->contains($user->id)){
+                $user->follow_status = 'following';
+                if(Auth::user()->checkFollowStatus($user->id)) {
+                    $user->follow_status = 'pending';
+                }
+            }
+            else {
+                $user->follow_status = 'not following';
+            }
+        }
+
         $total_likes = DB::table('post_likes')->where('post_id',$request->post_id)->count();
 
         if($total_likes > $request->paginate) {
