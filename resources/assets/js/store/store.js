@@ -136,7 +136,9 @@ export const store = new Vuex.Store({
     ADD_POST_COMMENT (state, data) {
       Vue.set(state.postItemList[data.postIndex], 'commentHasMore', data.hasMore)
       Vue.set(state.postItemList[data.postIndex], 'commentOffset', data.offset)
-      state.postItemList[data.postIndex].postComments.unshift(data.postComments)
+      for(let i=0; i <data.postComments.length; i++) {
+        state.postItemList[data.postIndex].postComments.unshift(data.postComments[i])
+      }
     },
     ADD_POST_COMMENT_ONLY (state, data) {
       if(state.postItemList[data.postIndex].postComments !== undefined && state.postItemList[data.postIndex].postComments.length !== 0  ) {

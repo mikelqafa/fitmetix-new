@@ -96,8 +96,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="ft-menu" v-if="commentHasMore">
-                                <button type="submit" class="text-center ft-menu__item btn" v-on:click="loadMore">
+                            <div class="ft-menu text-center" v-if="commentHasMore">
+                                <button type="button" class="text-center btn btn-link btn-sm" v-on:click="loadMore">
                                     Load More
                                 </button>
                             </div>
@@ -291,16 +291,18 @@
                     that.$store.commit('SET_POST_COMMENT_INTERACT',  {postIndex: that.postIndex, commentInteract: true})
                     return
                 }
+                let data = {
+                    post_id: that.postId,
+                    paginate: paginate,
+                    offset: this.offset,
+                    _token: _token
+                }
+                console.log(data)
                 axios({
                     method: 'post',
                     responseType: 'json',
                     url: base_url + 'get-comments',
-                    data: {
-                        post_id: that.postId,
-                        paginate: paginate,
-                        offset: that.offset,
-                        _token: _token
-                    }
+                    data: data
                 }).then(function (response) {
                     that.$store.commit('SET_POST_COMMENT_INTERACT',  {postIndex: that.postIndex, commentInteract: true})
                     if (response.status == 200) {
@@ -309,15 +311,14 @@
                         let offset = 0
                         let commentItemList = []
                         if(that.postItemList[that.postIndex].postComments !== undefined) {
-                            if(that.postItemList[that.postIndex].commentHasMore) {
-                                offset = that.postItemList[that.postIndex].offset
+                            if(that.commentHasMore) {
+                                offset = that.offset
                             } else {
                                 return
                             }
                         }
                         for(let i = 0; i < comments.length;  i++) {
                             comments[i]['isLiked'] = false
-
                             if(comments[i].commentLikes !== undefined) {
                                 for(let j = 0; j < comments[i].commentLikes.length; j++) {
                                     if(comments[i].commentLikes[j].user_id == user_id) {
@@ -329,8 +330,7 @@
                             }
                             commentItemList.unshift(comments[i])
                         }
-                        offset += comments.length
-                        offset = offset + that.offset
+                        offset = comments.length + that.offset
                         if(that.postItemList[that.postIndex].postComments !== undefined) {
                             // data already in the store, add new data
                             that.$store.commit('ADD_POST_COMMENT',  {hasMore: hasMore, offset: offset, postIndex: that.postIndex, postComments: commentItemList})
@@ -362,7 +362,7 @@
                 axios({
                     method: 'post',
                     responseType: 'json',
-                    url: SP_source() + 'ajax/comment-like',
+                    url: base_url + 'ajax/comment-like',
                     data: {
                         comment_id: commentId,
                         _token: _token
@@ -433,7 +433,7 @@
                 return this.postItemList[this.postIndex].commentHasMore !== undefined ? this.postItemList[this.postIndex].commentHasMore : 0
             },
             offset: function () {
-                return this.postItemList[this.postIndex].commentHasMore !== undefined ? this.postItemList[this.postIndex].commentHasMore : 0
+                return this.postItemList[this.postIndex].commentOffset !== undefined ? this.postItemList[this.postIndex].commentOffset : 0
             },
             commentItemList: function () {
                 return this.postItemList[this.postIndex].postComments !== undefined ? this.postItemList[this.postIndex].postComments : []

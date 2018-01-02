@@ -29464,16 +29464,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 that.$store.commit('SET_POST_COMMENT_INTERACT', { postIndex: that.postIndex, commentInteract: true });
                 return;
             }
+            var data = {
+                post_id: that.postId,
+                paginate: paginate,
+                offset: this.offset,
+                _token: _token
+            };
+            console.log(data);
             axios({
                 method: 'post',
                 responseType: 'json',
                 url: base_url + 'get-comments',
-                data: {
-                    post_id: that.postId,
-                    paginate: paginate,
-                    offset: that.offset,
-                    _token: _token
-                }
+                data: data
             }).then(function (response) {
                 that.$store.commit('SET_POST_COMMENT_INTERACT', { postIndex: that.postIndex, commentInteract: true });
                 if (response.status == 200) {
@@ -29482,15 +29484,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     var offset = 0;
                     var commentItemList = [];
                     if (that.postItemList[that.postIndex].postComments !== undefined) {
-                        if (that.postItemList[that.postIndex].commentHasMore) {
-                            offset = that.postItemList[that.postIndex].offset;
+                        if (that.commentHasMore) {
+                            offset = that.offset;
                         } else {
                             return;
                         }
                     }
                     for (var i = 0; i < comments.length; i++) {
                         comments[i]['isLiked'] = false;
-
                         if (comments[i].commentLikes !== undefined) {
                             for (var j = 0; j < comments[i].commentLikes.length; j++) {
                                 if (comments[i].commentLikes[j].user_id == user_id) {
@@ -29502,8 +29503,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         }
                         commentItemList.unshift(comments[i]);
                     }
-                    offset += comments.length;
-                    offset = offset + that.offset;
+                    offset = comments.length + that.offset;
                     if (that.postItemList[that.postIndex].postComments !== undefined) {
                         // data already in the store, add new data
                         that.$store.commit('ADD_POST_COMMENT', { hasMore: hasMore, offset: offset, postIndex: that.postIndex, postComments: commentItemList });
@@ -29535,7 +29535,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             axios({
                 method: 'post',
                 responseType: 'json',
-                url: SP_source() + 'ajax/comment-like',
+                url: base_url + 'ajax/comment-like',
                 data: {
                     comment_id: commentId,
                     _token: _token
@@ -29606,7 +29606,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return this.postItemList[this.postIndex].commentHasMore !== undefined ? this.postItemList[this.postIndex].commentHasMore : 0;
         },
         offset: function offset() {
-            return this.postItemList[this.postIndex].commentHasMore !== undefined ? this.postItemList[this.postIndex].commentHasMore : 0;
+            return this.postItemList[this.postIndex].commentOffset !== undefined ? this.postItemList[this.postIndex].commentOffset : 0;
         },
         commentItemList: function commentItemList() {
             return this.postItemList[this.postIndex].postComments !== undefined ? this.postItemList[this.postIndex].postComments : [];
@@ -30046,22 +30046,26 @@ var render = function() {
                                   }),
                                   _vm._v(" "),
                                   _vm.commentHasMore
-                                    ? _c("div", { staticClass: "ft-menu" }, [
-                                        _c(
-                                          "button",
-                                          {
-                                            staticClass:
-                                              "text-center ft-menu__item btn",
-                                            attrs: { type: "submit" },
-                                            on: { click: _vm.loadMore }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                Load More\n                            "
-                                            )
-                                          ]
-                                        )
-                                      ])
+                                    ? _c(
+                                        "div",
+                                        { staticClass: "ft-menu text-center" },
+                                        [
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "text-center btn btn-link btn-sm",
+                                              attrs: { type: "button" },
+                                              on: { click: _vm.loadMore }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                Load More\n                            "
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
                                     : _vm._e()
                                 ],
                                 2
@@ -45246,7 +45250,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     ADD_POST_COMMENT: function ADD_POST_COMMENT(state, data) {
       __WEBPACK_IMPORTED_MODULE_0_vue___default.a.set(state.postItemList[data.postIndex], 'commentHasMore', data.hasMore);
       __WEBPACK_IMPORTED_MODULE_0_vue___default.a.set(state.postItemList[data.postIndex], 'commentOffset', data.offset);
-      state.postItemList[data.postIndex].postComments.unshift(data.postComments);
+      for (var i = 0; i < data.postComments.length; i++) {
+        state.postItemList[data.postIndex].postComments.unshift(data.postComments[i]);
+      }
     },
     ADD_POST_COMMENT_ONLY: function ADD_POST_COMMENT_ONLY(state, data) {
       if (state.postItemList[data.postIndex].postComments !== undefined && state.postItemList[data.postIndex].postComments.length !== 0) {
