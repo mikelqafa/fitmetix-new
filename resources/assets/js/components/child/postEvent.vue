@@ -41,14 +41,21 @@
         </div>
         <div class="text-center layout-m-b-1">
             <div class="pos-rel flex-inline">
-                <button v-if="!enableUrl" type="button" class="btn btn-submit ft-btn-primary" @click="registerEvent">
-                    <template v-if="isRegistered">
-                        Unregister
-                    </template>
-                    <template v-else="">
+                <template v-if="!disableEventForThis">
+                    <button v-if="!enableUrl" type="button" class="btn btn-submit ft-btn-primary" @click="registerEvent">
+                        <template v-if="isRegistered">
+                            Unregister
+                        </template>
+                        <template v-else="">
+                            Register
+                        </template>
+                    </button>
+                </template>
+                <template v-else="">
+                    <button v-if="!enableUrl" type="button" disabled class="btn btn-submit">
                         Register
-                    </template>
-                </button>
+                    </button>
+                </template>
                 <a :href="eventLink" v-else="" type="button" class="btn btn-submit ft-btn-primary">
                     Details
                 </a>
@@ -186,6 +193,10 @@
             },
             isRegistered () {
                 return this.hasItem ? this.event.registered : false
+            },
+            disableEventForThis () {
+                console.log(user_gender)
+                return this.hasItem ? this.event.gender != user_gender &&  this.event.gender != '' : false
             },
             participant () {
                 if(!this.participantList.length) {

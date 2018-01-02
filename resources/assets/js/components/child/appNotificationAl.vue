@@ -22,9 +22,20 @@
                                              :auto-update="autoUpdate"
                                              class="timeago"></timeago>
                                 </div>
-                                <a class="md-list__item-secondary-action" href="#">
-                                    <i class="hidden material-icons">star</i>
-                                </a>
+                                <div class="md-layout-spacer"></div>
+                                <div class="md-layout ft-nt-group md-layout--row" v-if="item.type == 'follow_requested'">
+                                    <a class="md-list__item-secondary-action color-deny" @click="denyRequest(item, index)" href="#" title="Deny">
+                                        <i class="icon icon-close"></i>
+                                    </a>
+                                    <a class="md-list__item-secondary-action color-accept" @click="acceptRequest(item, index)" href="#" title="Accept">
+                                        <i class="icon icon-accept"></i>
+                                    </a>
+                                </div>
+                                <div class="md-layout ft-nt-group md-layout--row"  v-if="item.type == 'follow_requested_accept'">
+                                    <a class="md-list__item-secondary-action color-accept" href="javascript:;" title="Accept">
+                                        <i class="icon icon-accept"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

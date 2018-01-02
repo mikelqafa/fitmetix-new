@@ -36,10 +36,10 @@
                                             <i class="icon icon-accept"></i>
                                         </a>
                                     </div>
-                                    <div class="md-layout ft-nt-group md-layout--row" v-if="item.type == 'follow_requested_accept'">
-                                        <button class="md-list__item-secondary-action btn btn-xs ft-btn-primary ft-btn-primary--outline color-accept">
-                                            Accepted
-                                        </button>
+                                    <div class="md-layout ft-nt-group md-layout--row"  v-if="item.type == 'follow_requested_accept'">
+                                        <a class="md-list__item-secondary-action color-accept" href="javascript:;" title="Accept">
+                                            <i class="icon icon-accept"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

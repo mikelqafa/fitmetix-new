@@ -61,6 +61,7 @@
         var theme_url = "{!! Theme::asset()->url('') !!}";
         var current_username = "{{ Auth::user()->username }}";
         var user_id = "{{ Auth::user()->id }}";
+        var user_gender = "{{ Auth::user()->gender }}";
     </script>
     <script src="{{ asset('js/bundle.js') }}" type="text/javascript"></script>
     @if(Setting::get('google_analytics') != NULL)

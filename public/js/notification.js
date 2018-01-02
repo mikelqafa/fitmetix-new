@@ -28244,6 +28244,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
@@ -28369,6 +28376,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         isRegistered: function isRegistered() {
             return this.hasItem ? this.event.registered : false;
+        },
+        disableEventForThis: function disableEventForThis() {
+            console.log(user_gender);
+            return this.hasItem ? this.event.gender != user_gender && this.event.gender != '' : false;
         },
         participant: function participant() {
             if (!this.participantList.length) {
@@ -28500,49 +28511,66 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "text-center layout-m-b-1" }, [
-          _c("div", { staticClass: "pos-rel flex-inline" }, [
-            !_vm.enableUrl
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-submit ft-btn-primary",
-                    attrs: { type: "button" },
-                    on: { click: _vm.registerEvent }
-                  },
-                  [
-                    _vm.isRegistered
-                      ? [
-                          _vm._v(
-                            "\n                    Unregister\n                "
-                          )
-                        ]
-                      : [
-                          _vm._v(
-                            "\n                    Register\n                "
-                          )
-                        ]
+          _c(
+            "div",
+            { staticClass: "pos-rel flex-inline" },
+            [
+              !_vm.disableEventForThis
+                ? [
+                    !_vm.enableUrl
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-submit ft-btn-primary",
+                            attrs: { type: "button" },
+                            on: { click: _vm.registerEvent }
+                          },
+                          [
+                            _vm.isRegistered
+                              ? [
+                                  _vm._v(
+                                    "\n                        Unregister\n                    "
+                                  )
+                                ]
+                              : [
+                                  _vm._v(
+                                    "\n                        Register\n                    "
+                                  )
+                                ]
+                          ],
+                          2
+                        )
+                      : _vm._e()
+                  ]
+                : [
+                    !_vm.enableUrl
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-submit",
+                            attrs: { type: "button", disabled: "" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                    Register\n                "
+                            )
+                          ]
+                        )
+                      : _vm._e()
                   ],
-                  2
-                )
-              : _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-submit ft-btn-primary",
-                    attrs: { href: _vm.eventLink, type: "button" }
-                  },
-                  [_vm._v("\n                Details\n            ")]
-                ),
-            _vm._v(" "),
-            _vm.isLoading
-              ? _c("div", { staticClass: "ft-loading ft-loading--abs" }, [
-                  _c("span", { staticClass: "ft-loading__dot" }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "ft-loading__dot" }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "ft-loading__dot" })
-                ])
-              : _vm._e()
-          ])
+              _vm._v(" "),
+              _vm.isLoading
+                ? _c("div", { staticClass: "ft-loading ft-loading--abs" }, [
+                    _c("span", { staticClass: "ft-loading__dot" }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "ft-loading__dot" }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "ft-loading__dot" })
+                  ])
+                : _vm._e()
+            ],
+            2
+          )
         ])
       ])
     : _vm._e()
@@ -38761,20 +38789,7 @@ var render = function() {
                                             staticClass:
                                               "md-layout ft-nt-group md-layout--row"
                                           },
-                                          [
-                                            _c(
-                                              "button",
-                                              {
-                                                staticClass:
-                                                  "md-list__item-secondary-action btn btn-xs ft-btn-primary ft-btn-primary--outline color-accept"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                                        Accepted\n                                    "
-                                                )
-                                              ]
-                                            )
-                                          ]
+                                          [_vm._m(0, true)]
                                         )
                                       : _vm._e()
                                   ]
@@ -38796,7 +38811,7 @@ var render = function() {
                         "data-user-id": "26"
                       }
                     },
-                    [_vm._m(0)]
+                    [_vm._m(1)]
                   )
                 ],
                 2
@@ -38813,6 +38828,19 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "md-list__item-secondary-action color-accept",
+        attrs: { href: "javascript:;", title: "Accept" }
+      },
+      [_c("i", { staticClass: "icon icon-accept" })]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
