@@ -3606,11 +3606,11 @@ class TimelineController extends AppBaseController
             $posts = Post::where('user_id', $id)->where([['active', 1],['type','event']])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
         }
         else {
-            $posts = Post::whereIn('user_id', function ($query) use ($id) {
+            $posts = Post::where([['active', 1],['type','event']])->whereIn('user_id', function ($query) use ($id) {
                 $query->select('leader_id')
                     ->from('followers')
                     ->where('follower_id', $id);
-            })->orWhere('user_id', $id)->where([['active', 1],['type','event']])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
+            })->orWhere([['active', 1],['type','event']])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
         }
 
         // $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
