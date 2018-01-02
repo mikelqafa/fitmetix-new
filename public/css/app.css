@@ -20591,7 +20591,6 @@ div.icon {
     min-height: 180px;
   }
   .swiper-slide .item__background {
-    max-height: 200px;
     min-height: 180px;
   }
   .panel-post .panel-body .post-image--wrapper{
@@ -20670,7 +20669,6 @@ div.icon {
     background-size: cover;
   }
   .swiper-slide .item__background {
-    max-height: 200px;
     min-height: 180px;
   }
   .panel-post .panel-body .post-image--wrapper{

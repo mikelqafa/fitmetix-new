@@ -2607,6 +2607,9 @@ aside .md-drawer-scroll__wrapper{
     background: #f5f5f5;
     border: 1px dashed black;
 }
+.text-wrapper{
+    word-break: normal;
+}
 .upload-action-add{
     background-image: url(https://www.facebook.com/rsrc.php/v3/yr/r/EWLe5fNY_Iz.png);
     background-position: 50%;
