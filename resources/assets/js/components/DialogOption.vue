@@ -40,7 +40,7 @@
                                     Share
                                 </a>
                                 <a href="javascript:;" class="btn ft-dialog-option__item" @click="savePost">
-                                    Save
+                                    Save/Unsave
                                 </a>
                             </template>
                         </div>

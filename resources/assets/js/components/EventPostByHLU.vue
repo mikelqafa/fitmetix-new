@@ -372,7 +372,7 @@
                 this.$store.commit('RESET_POST_ITEM_LIST')
                 that.noEventFound = false
                 axios({
-                    method: 'get',
+                    method: 'post',
                     responseType: 'json',
                     url: base_url + 'ajax/get-event-post-by-eventid?event_id='+postId,
                     data: {
@@ -381,29 +381,14 @@
                 }).then( function (response) {
                     that.showProgress = false
                     if (response.status ==  200) {
-                        let data = response.data
+                        let data = response.data[0]
                         if(data.error) {
                             that.noEventFound = true
                             return
                         }
                         console.log(data)
                         let obj = { }
-                        obj.active = 1
-                        obj.created_at = data.post.created_at
-                        obj.description = data.post.description
-                        obj.event = [data.event]
-                        obj.id = data.post.id
-                        obj.images = data.event_media
-                        obj.likes_count = 0
-                        obj.location = ''
-                        obj.shared_post_id = data.post.shared_post_id
-                        obj.timeline = data.event_timeline
-                        obj.timeline_id = data.post.timeline_id
-                        obj.type = "event"
-                        obj.updated_at = ""
-                        obj.user_id = data.post.user_id
-                        obj.user_liked = false
-                        obj.event_media = data.event_media
+                        obj = data.post
                         that.$store.commit('ADD_POST_ITEM_LIST',{data:obj, postFrom: 'timeline'})
                         setTimeout(function () {
                             hashtagify()

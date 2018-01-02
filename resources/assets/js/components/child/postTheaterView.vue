@@ -24,7 +24,7 @@
                                 <post-description :post-html="postItem.description"></post-description>
                             </template>
                         </header>
-                        <post-event :post-item="postItem" :post-index="theaterPostItem.postIndex"></post-event>
+                        <post-event v-if="holaMola" :post-item="postItem" :post-index="theaterPostItem.postIndex"></post-event>
                         <div class="hidden-xs" v-if="holaMola">
                             <post-comment v-on:focuscomment="focuscomment" :post-index="theaterPostItem.postIndex" show-sidebar="true" :post-item="postItem" :post-id="postItem.id"></post-comment>
                         </div>

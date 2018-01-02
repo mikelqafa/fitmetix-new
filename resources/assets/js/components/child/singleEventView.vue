@@ -3,7 +3,7 @@
         <swiper :options="swiperOptionE" class="event-slider">
             <swiper-slide :key="postItem.id" v-for="(postItem, index) in eventList">
                 <div class="panel panel--eventlist panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
-                    <post-header event-list="false" :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
+                    <post-header event-list="false" disable-close="true" :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
                     <div class="panel-body">
                         <post-back-viewer :post-img="postItem.images"></post-back-viewer>
                         <post-event :post-item="postItem" :post-index="index" :post-img="postItem.images"
@@ -13,8 +13,8 @@
                     <div class="md-layout-spacer"></div>
                 </div>
             </swiper-slide>
-            <div class="swiper-button-prev" slot="button-prev"></div>
-            <div class="swiper-button-next" slot="button-next"></div>
+            <div class="swiper-button-prev hidden" slot="button-prev"></div>
+            <div class="swiper-button-next hidden" slot="button-next"></div>
         </swiper>
     </div>
     <div v-else="" class="ft-grid__item lg-loading-skeleton" style="width: 100%;padding-top: 0">
@@ -156,6 +156,6 @@
             isLoading () {
                 return this.eventList.length === 0
             }
-        }
+        },
     }
 </script>

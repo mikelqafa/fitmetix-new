@@ -28783,7 +28783,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         postData: {},
         date: '',
         postIndex: 0,
-        eventList: false
+        eventList: false,
+        disableClose: false
     },
     data: function data() {
         return {
@@ -29044,6 +29045,14 @@ var render = function() {
           ? _c(
               "a",
               {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: !_vm.disableClose,
+                    expression: "!disableClose"
+                  }
+                ],
                 staticClass: "ft-btn--icon",
                 attrs: { href: "javascript:;" },
                 on: { click: _vm.emitClose }
@@ -29163,6 +29172,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
 //
 //
 //
@@ -29636,7 +29646,9 @@ var render = function() {
                 [
                   _c("i", { staticClass: "icon icon-like visible-default" }),
                   _vm._v(" "),
-                  _c("i", { staticClass: "icon icon-liked hidden-default" })
+                  _c("i", { staticClass: "icon icon-liked hidden-default" }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "favorite__surface" })
                 ]
               ),
               _vm._v(" "),
@@ -30543,12 +30555,14 @@ var render = function() {
                   2
                 ),
                 _vm._v(" "),
-                _c("post-event", {
-                  attrs: {
-                    "post-item": _vm.postItem,
-                    "post-index": _vm.theaterPostItem.postIndex
-                  }
-                }),
+                _vm.holaMola
+                  ? _c("post-event", {
+                      attrs: {
+                        "post-item": _vm.postItem,
+                        "post-index": _vm.theaterPostItem.postIndex
+                      }
+                    })
+                  : _vm._e(),
                 _vm._v(" "),
                 _vm.holaMola
                   ? _c(
@@ -34505,7 +34519,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.$store.commit('RESET_POST_ITEM_LIST');
             that.noEventFound = false;
             axios({
-                method: 'get',
+                method: 'post',
                 responseType: 'json',
                 url: base_url + 'ajax/get-event-post-by-eventid?event_id=' + postId,
                 data: {
@@ -34514,29 +34528,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }).then(function (response) {
                 that.showProgress = false;
                 if (response.status == 200) {
-                    var data = response.data;
+                    var data = response.data[0];
                     if (data.error) {
                         that.noEventFound = true;
                         return;
                     }
                     console.log(data);
                     var obj = {};
-                    obj.active = 1;
-                    obj.created_at = data.post.created_at;
-                    obj.description = data.post.description;
-                    obj.event = [data.event];
-                    obj.id = data.post.id;
-                    obj.images = data.event_media;
-                    obj.likes_count = 0;
-                    obj.location = '';
-                    obj.shared_post_id = data.post.shared_post_id;
-                    obj.timeline = data.event_timeline;
-                    obj.timeline_id = data.post.timeline_id;
-                    obj.type = "event";
-                    obj.updated_at = "";
-                    obj.user_id = data.post.user_id;
-                    obj.user_liked = false;
-                    obj.event_media = data.event_media;
+                    obj = data.post;
                     that.$store.commit('ADD_POST_ITEM_LIST', { data: obj, postFrom: 'timeline' });
                     setTimeout(function () {
                         hashtagify();
@@ -37861,6 +37860,7 @@ var render = function() {
                       _c("post-header", {
                         attrs: {
                           "event-list": "false",
+                          "disable-close": "true",
                           "post-data": postItem,
                           "post-index": index,
                           date: postItem.created_at
@@ -37900,13 +37900,13 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", {
-                staticClass: "swiper-button-prev",
+                staticClass: "swiper-button-prev hidden",
                 attrs: { slot: "button-prev" },
                 slot: "button-prev"
               }),
               _vm._v(" "),
               _c("div", {
-                staticClass: "swiper-button-next",
+                staticClass: "swiper-button-next hidden",
                 attrs: { slot: "button-next" },
                 slot: "button-next"
               })
@@ -42352,7 +42352,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                                Save\n                            "
+                                  "\n                                Save/Unsave\n                            "
                                 )
                               ]
                             )

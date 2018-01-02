@@ -7,6 +7,7 @@
                        @click="toggleLikePost">
                         <i class="icon icon-like visible-default"></i>
                         <i class="icon icon-liked hidden-default"></i>
+                        <span class="favorite__surface"></span>
                     </a>
                     <template v-if="!showTheater">
                         <a href="javascript:;" class="ft-expression ft-expression--comment" v-bind:class="{ 'ft-expression--liked': userCommented }"

@@ -1911,6 +1911,7 @@ a{
     justify-content: center;
     align-items: center;
     color: #333;
+    position: relative;
 }
 
 .ft-expression .hidden-default {
@@ -3379,4 +3380,44 @@ aside .md-drawer-scroll__wrapper{
 }
 .ft-suggestion__item .ft-cp__user {
     margin: 0 0 8px 0;
+}
+.stage-photo-sidebar .text-wrapper{
+    margin-top: 8px;
+}
+.stage-photo-sidebar .ft-card__primary{
+    padding-top: 8px;
+}
+.favorite__surface {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    left: 50%;
+    top: 38%;
+    transform: translate(-50%,-50%);
+    background: url(https://cssanimation.rocks/images/posts/steps/heart.png) no-repeat;
+    background-position: 0 0;
+    background-size: auto 100%;
+    cursor: pointer;
+    z-index: 1;
+}
+.ft-expression--likes i {
+    z-index: 2;
+}
+.ft-expression--likes .favorite__surface {
+    opacity: 0;
+}
+.ft-expression--likes.ft-expression--liked .favorite__surface {
+    opacity: 1;
+    background-position: -1400px 0;
+    transition: background 1s steps(28)
+}
+
+@keyframes fave-heart {
+    0% {
+        background-position: 0 0
+    }
+
+    to {
+        background-position: -1400px 0
+    }
 }

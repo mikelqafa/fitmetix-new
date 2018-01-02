@@ -2,7 +2,7 @@
     <div class="panel-heading no-bg">
         <div class="post-author">
             <div class="post-options md-layout">
-                <a class="ft-btn--icon" href="javascript:;" @click="emitClose" v-if="eventList">
+                <a class="ft-btn--icon" href="javascript:;" v-show="!disableClose" @click="emitClose" v-if="eventList">
                     <i class="icon icon-close"></i>
                 </a>
                 <a href="javascript:;" class="ft-btn--icon"  v-on:click="openPostDialog">
@@ -59,7 +59,8 @@
             postData: {},
             date: '',
             postIndex: 0,
-            eventList:false
+            eventList:false,
+            disableClose: false
         },
         data: function () {
             return {
