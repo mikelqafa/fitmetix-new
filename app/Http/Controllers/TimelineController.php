@@ -4206,7 +4206,7 @@ class TimelineController extends AppBaseController
     public function getRegisteredUserForEvent(Request $request){
       $eventId = $request->event_id;
       $userId = $request->user_id;
-      $registeredUsers = DB::table('event_user')->where('event_id',$eventId)->get()->toArray();
+      $registeredUsers = DB::table('event_user')->where('event_id',$eventId)->limit($request->paginate)->offset($request->offset)->get()->toArray();
       if (!empty($registeredUsers)){
         foreach ($registeredUsers as $key => $value){
           $user = DB::table('users')->where('id',$value->user_id)->first();
