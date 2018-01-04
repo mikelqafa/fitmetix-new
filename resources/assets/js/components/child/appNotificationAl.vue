@@ -108,7 +108,14 @@
                 return base_url + username
             },
             since: function (date) {
-                return date != '' ? new Date(date + 'Z').getTime() : new Date().getTime()
+                let str = date
+                if(this.data != '') {
+                    str = this.date
+                    let res = str.split(' ')
+                    str = res[0]+'T'+res[1]
+                    str.replace(/\s/, 'T')
+                }
+                return this.date != '' ? new Date(str+'Z').getTime() : new Date().getTime()
             }
         },
         computed: {

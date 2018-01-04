@@ -28860,7 +28860,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     computed: {
         since: function since() {
-            return this.date != '' ? new Date(this.date + 'Z').getTime() : new Date().getTime();
+            var str = '';
+            if (this.data != '') {
+                str = this.date;
+                var res = str.split(' ');
+                str = res[0] + 'T' + res[1];
+                str.replace(/\s/, 'T');
+            }
+            return this.date != '' ? new Date(str + 'Z').getTime() : new Date().getTime();
         },
         locationLink: function locationLink() {
             return this.postData.type !== null ? this.postData.location !== '' ? base_url + 'gallery/location/' + this.postData.location : '' : this.postData.location !== '' ? base_url + 'gallery/location/' + this.postData.location : '';
@@ -43374,43 +43381,73 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            ftSearch: ''
+            ftSearch: '',
+            userList: [],
+            tagList: [],
+            eventList: [],
+            isLoading: false,
+            noEventFound: false,
+            noUserFound: false,
+            noTagFound: false
         };
     },
     methods: {
         searchApp: function searchApp(e) {
-            console.log(e.target.value);
+            if (e.target.value != '') {
+                this.ftSearch = e.target.value;
+                this.getList();
+            }
         },
+        userLink: function userLink(item) {
+            return base_url + item.username;
+        },
+        userAvatar: function userAvatar(item) {
+            return item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage;
+        },
+        tagLink: function tagLink(item) {
+            return base_url + 'gallery/hashtag/' + item.tag;
+        },
+
         getList: function getList() {
             var that = this;
             var _token = $("meta[name=_token]").attr('content');
-            this.searchList = [];
+            this.userList = [];
+            this.tagList = [];
+            this.eventList = [];
+            this.isLoading = true;
             axios({
                 method: 'post',
                 responseType: 'json',
-                url: base_url + 'ajax/get-registered-users-for-event',
+                url: base_url + 'ajax/search',
                 data: {
-                    event_id: that.eventWho.eventId,
-                    user_id: user_id,
+                    keyword: that.ftSearch,
                     _token: _token
                 }
             }).then(function (response) {
+                that.isLoading = false;
                 if (response.status == 200) {
-                    console.log(response.data);
-                    for (var i = 0; i < response.data.length; i++) {
-                        that.searchList.push(response.data[i]);
+                    var noEventFound = true;
+                    for (var i = 0; i < response.data[0].events.length; i++) {
+                        that.eventList.push(response.data[0].events[i]);
+                        noEventFound = false;
                     }
+                    that.noEventFound = noEventFound;
+                    var noTagFound = true;
+                    for (var _i = 0; _i < response.data[0].tags.length; _i++) {
+                        that.tagList.push(response.data[0].tags[_i]);
+                        noTagFound = false;
+                    }
+                    that.noTagFound = noTagFound;
+                    var noUserFound = true;
+                    for (var _i2 = 0; _i2 < response.data[0].users.length; _i2++) {
+                        that.userList.push(response.data[0].users[_i2]);
+                        noUserFound = false;
+                    }
+                    that.noUserFound = noUserFound;
                 }
             }).catch(function (error) {
                 console.log(error);
@@ -43478,155 +43515,238 @@ var render = function() {
           _vm._v(" "),
           _vm._m(0),
           _vm._v(" "),
-          _c("div", { staticClass: "tab-content tab-content--event-filter" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "tab-pane fade", attrs: { id: "search-event" } },
-              [
-                _c("div", { staticClass: "panel panel--search" }, [
-                  _c("div", { staticClass: "panel-heading" }, [
-                    _vm._v(
-                      "\n                        Events\n                    "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "panel-body" }, [
-                    _c(
-                      "div",
-                      { staticClass: "search-result-wrapper md-list" },
-                      [
-                        _c(
-                          "transition-group",
-                          { attrs: { name: "flip-list", tag: "div" } },
-                          [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "md-list__item  has-divider",
-                                attrs: { href: "" }
-                              },
-                              [
-                                _c(
-                                  "div",
-                                  { staticClass: "md-list__item-content" },
-                                  [
-                                    _c(
-                                      "a",
-                                      {
-                                        staticClass: "md-list__item-icon",
-                                        attrs: {
-                                          href:
-                                            "//localhost:3000/fitmetix/public/doremon"
-                                        }
-                                      },
-                                      [
-                                        _c("img", {
-                                          staticClass: "md-list__item-avatar",
-                                          attrs: {
-                                            src:
-                                              "http://localhost/fitmetix/public/user/avatar/2017-12-29-10-26-15doraemon-doremon-hd-arena-163807.png",
-                                            alt: "Mikel"
-                                          }
-                                        })
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "md-list__item-primary" },
-                                      [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              href:
-                                                "//localhost:3000/fitmetix/public/doremon"
-                                            }
-                                          },
-                                          [_vm._v("Doremon")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "md-list__item-text-body"
-                                          },
-                                          [
-                                            _vm._v(
-                                              "Doremon attending your event"
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass: "md-list__item-secondary"
-                                      },
-                                      [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "md-list__item-secondary-info"
-                                          },
-                                          [
-                                            _c(
-                                              "time",
-                                              {
-                                                staticClass: "timeago",
-                                                attrs: {
-                                                  datetime:
-                                                    "Sat Dec 30 2017 16:55:32 GMT+0530 (IST)",
-                                                  title: "30/12/2017, 16:55:32"
-                                                }
-                                              },
-                                              [_vm._v("5 d")]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass:
-                                              "md-list__item-secondary-action",
-                                            attrs: { href: "#" }
-                                          },
-                                          [
-                                            _c(
-                                              "i",
-                                              {
-                                                staticClass:
-                                                  "hidden material-icons"
-                                              },
-                                              [_vm._v("star")]
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ]
+          _c(
+            "div",
+            { staticClass: "tab-content tab-content--event-filter pos-rel" },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "tab-pane fade in active",
+                  attrs: { id: "search-user" }
+                },
+                [
+                  _c("div", { staticClass: "panel panel--search" }, [
+                    _c("div", { staticClass: "panel-heading" }, [
+                      _vm._v(
+                        "\n                        Users\n                    "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "panel-body" }, [
+                      _c(
+                        "div",
+                        { staticClass: "search-result-wrapper md-list" },
+                        _vm._l(_vm.userList, function(item, index) {
+                          return _c(
+                            "a",
+                            {
+                              key: index + "user-" + item.id,
+                              staticClass: "md-list__item has-divider",
+                              attrs: { href: _vm.userLink(item) }
+                            },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "md-list__item-content" },
+                                [
+                                  _c("span", {
+                                    staticClass:
+                                      "md-list__item-icon user-avatar",
+                                    style: {
+                                      backgroundImage:
+                                        "url(" + _vm.userAvatar(item) + ")"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "md-list__item-primary" },
+                                    [
+                                      _c("span", [
+                                        _vm._v(_vm._s(item.username))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "md-list__item-text-body"
+                                        },
+                                        [_vm._v(_vm._s(item.name))]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        })
+                      ),
+                      _vm._v(" "),
+                      _vm.noUserFound
+                        ? _c("div", { staticClass: "text-center" }, [
+                            _vm._v(
+                              "\n                            No user found!\n                        "
                             )
-                          ]
-                        )
-                      ],
-                      1
-                    )
+                          ])
+                        : _vm._e()
+                    ])
                   ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _vm._m(2)
-          ]),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "tab-pane fade", attrs: { id: "search-event" } },
+                [
+                  _c("div", { staticClass: "panel panel--search" }, [
+                    _c("div", { staticClass: "panel-heading" }, [
+                      _vm._v(
+                        "\n                        Events\n                    "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "panel-body" }, [
+                      _c(
+                        "div",
+                        { staticClass: "search-result-wrapper md-list" },
+                        [
+                          _c(
+                            "transition-group",
+                            { attrs: { name: "flip-list", tag: "div" } },
+                            _vm._l(_vm.eventList, function(item, index) {
+                              return _c(
+                                "a",
+                                {
+                                  key: index + "event-" + item.id,
+                                  staticClass: "md-list__item has-divider",
+                                  attrs: { href: _vm.userLink(item) }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    { staticClass: "md-list__item-content" },
+                                    [
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "md-list__item-icon user-avatar"
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "icon icon-eventpage"
+                                          })
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "md-list__item-primary"
+                                        },
+                                        [
+                                          _c("span", [
+                                            _vm._v(_vm._s(item.name))
+                                          ]),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "md-list__item-text-body"
+                                            },
+                                            [_vm._v(_vm._s(item.about))]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            })
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _vm.noEventFound
+                        ? _c("div", { staticClass: "text-center" }, [
+                            _vm._v(
+                              "\n                            No event found!\n                        "
+                            )
+                          ])
+                        : _vm._e()
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "tab-pane fade", attrs: { id: "search-tag" } },
+                [
+                  _c("div", { staticClass: "panel panel--search" }, [
+                    _c("div", { staticClass: "panel-heading" }, [
+                      _vm._v(
+                        "\n                        Tags\n                    "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "panel-body" }, [
+                      _c(
+                        "div",
+                        { staticClass: "search-result-wrapper md-list" },
+                        _vm._l(_vm.tagList, function(item) {
+                          return _c(
+                            "a",
+                            {
+                              key: "tag-" + item.tag,
+                              staticClass: "md-list__item has-divider",
+                              attrs: { href: _vm.tagLink(item) }
+                            },
+                            [
+                              _c(
+                                "span",
+                                { staticClass: "md-list__item-content" },
+                                [
+                                  _vm._m(1, true),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "md-list__item-primary" },
+                                    [
+                                      _vm._v(
+                                        "\n                                            " +
+                                          _vm._s(item.tag) +
+                                          "\n                                        "
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        })
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm.noTagFound
+                      ? _c("div", { staticClass: "text-center" }, [
+                          _vm._v(
+                            "\n                        No tag found!\n                    "
+                          )
+                        ])
+                      : _vm._e()
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _vm.isLoading
+                ? _c("div", { staticClass: "absolute-loader" }, [_vm._m(2)])
+                : _vm._e()
+            ]
+          ),
           _vm._v(" "),
           _vm._m(3)
         ]
@@ -43675,203 +43795,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "tab-pane fade in active", attrs: { id: "search-user" } },
-      [
-        _c("div", { staticClass: "panel panel--search" }, [
-          _c("div", { staticClass: "panel-heading" }, [
-            _vm._v("\n                        Users\n                    ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "panel-body" }, [
-            _c("div", { staticClass: "search-result-wrapper md-list" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "md-list__item  has-divider",
-                  attrs: { href: "" }
-                },
-                [
-                  _c("div", { staticClass: "md-list__item-content" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "md-list__item-icon",
-                        attrs: {
-                          href: "//localhost:3000/fitmetix/public/doremon"
-                        }
-                      },
-                      [
-                        _c("img", {
-                          staticClass: "md-list__item-avatar",
-                          attrs: {
-                            src:
-                              "http://localhost/fitmetix/public/user/avatar/2017-12-29-10-26-15doraemon-doremon-hd-arena-163807.png",
-                            alt: "Mikel"
-                          }
-                        })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "md-list__item-primary" }, [
-                      _c(
-                        "a",
-                        {
-                          attrs: {
-                            href: "//localhost:3000/fitmetix/public/doremon"
-                          }
-                        },
-                        [_vm._v("Doremon")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "md-list__item-text-body" }, [
-                        _vm._v("Doremon attending your event")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "md-list__item-secondary" }, [
-                      _c(
-                        "div",
-                        { staticClass: "md-list__item-secondary-info" },
-                        [
-                          _c(
-                            "time",
-                            {
-                              staticClass: "timeago",
-                              attrs: {
-                                datetime:
-                                  "Sat Dec 30 2017 16:55:32 GMT+0530 (IST)",
-                                title: "30/12/2017, 16:55:32"
-                              }
-                            },
-                            [_vm._v("5 d")]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "md-list__item-secondary-action",
-                          attrs: { href: "#" }
-                        },
-                        [
-                          _c("i", { staticClass: "hidden material-icons" }, [
-                            _vm._v("star")
-                          ])
-                        ]
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ])
-          ])
-        ])
-      ]
-    )
+    return _c("span", { staticClass: "md-list__item-icon" }, [
+      _c("i", { staticClass: "icon icon-tag" })
+    ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "tab-pane fade", attrs: { id: "search-tag" } },
-      [
-        _c("div", { staticClass: "panel panel--search" }, [
-          _c("div", { staticClass: "panel-heading" }, [
-            _vm._v("\n                        Tags\n                    ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "panel-body" }, [
-            _c("div", { staticClass: "search-result-wrapper md-list" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "md-list__item  has-divider",
-                  attrs: { href: "" }
-                },
-                [
-                  _c("div", { staticClass: "md-list__item-content" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "md-list__item-icon",
-                        attrs: {
-                          href: "//localhost:3000/fitmetix/public/doremon"
-                        }
-                      },
-                      [
-                        _c("img", {
-                          staticClass: "md-list__item-avatar",
-                          attrs: {
-                            src:
-                              "http://localhost/fitmetix/public/user/avatar/2017-12-29-10-26-15doraemon-doremon-hd-arena-163807.png",
-                            alt: "Mikel"
-                          }
-                        })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "md-list__item-primary" }, [
-                      _c(
-                        "a",
-                        {
-                          attrs: {
-                            href: "//localhost:3000/fitmetix/public/doremon"
-                          }
-                        },
-                        [_vm._v("Doremon")]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "md-list__item-text-body" }, [
-                        _vm._v("Doremon attending your event")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "md-list__item-secondary" }, [
-                      _c(
-                        "div",
-                        { staticClass: "md-list__item-secondary-info" },
-                        [
-                          _c(
-                            "time",
-                            {
-                              staticClass: "timeago",
-                              attrs: {
-                                datetime:
-                                  "Sat Dec 30 2017 16:55:32 GMT+0530 (IST)",
-                                title: "30/12/2017, 16:55:32"
-                              }
-                            },
-                            [_vm._v("5 d")]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "md-list__item-secondary-action",
-                          attrs: { href: "#" }
-                        },
-                        [
-                          _c("i", { staticClass: "hidden material-icons" }, [
-                            _vm._v("star")
-                          ])
-                        ]
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ])
-          ])
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "ft-loading ft-loading--abs" }, [
+      _c("span", { staticClass: "ft-loading__dot" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "ft-loading__dot" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "ft-loading__dot" })
+    ])
   },
   function() {
     var _vm = this
@@ -43880,7 +43818,7 @@ var staticRenderFns = [
     return _c(
       "div",
       {
-        staticClass: "search-start text-center",
+        staticClass: "search-start text-center hidden",
         staticStyle: { "min-height": "60vh" }
       },
       [_c("h3", [_vm._v("Search Fitmetix")])]

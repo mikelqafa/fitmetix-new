@@ -4587,47 +4587,49 @@ class TimelineController extends AppBaseController
   }
 
   public function searchAPI(Request $request) {
-      $users = Timeline::where('username',$request->query)->get();
-      $tags = Hashtag::where('tag',$request->query)->get();
+      $title = $request->keyword;
+      // $title = 'mikele';
+      $users = Timeline::where('username',$title)->get()->toArray();
+      $tags = Hashtag::where('tag',$title)->get()->toArray();
 
       $events = DB::table('events')
                 ->join('timelines', 'timelines.id', '=', 'events.timeline_id')
                 ->where(function ($query) use ($title){
-                        if($request->query != '') {
-                            $query->where('timelines.name','like',$request->query.'%');
+                        if($title != '') {
+                            $query->where('timelines.name','like',$title.'%');
                         }
                 })
                 ->select('events.*', 'timelines.*','events.id as event_id')
                 ->get();
-            $a = 0;
-            $events = $events->all();
-            $post_model = new Post();
-            $post_media_model = new PostMedia();
-            $media_model = new Media();
-            $post = array();
-            $post_media = array();
-            foreach ($events as $key => $event) {
-                $event_timeline;
-                $event_media = array();
-                $post = $post_model->where('timeline_id','=',$event->id)->get()->toArray();
-                if(!empty($post)) {
-                    $post_media = $post_media_model->where('post_id', '=', $post[0]['id'])
-                        ->get()
-                        ->toArray();
-                    foreach ($post_media as $post_media_key => $item) {
-                        $media = $media_model->where('id', '=', $item['media_id'])
+                $a = 0;
+                $events = $events->all();
+                $post_model = new Post();
+                $post_media_model = new PostMedia();
+                $media_model = new Media();
+                $post = array();
+                $post_media = array();
+                foreach ($events as $key => $event) {
+                    $event_timeline;
+                    $event_media = array();
+                    $post = $post_model->where('timeline_id','=',$event->id)->get()->toArray();
+                    if(!empty($post)) {
+                        $post_media = $post_media_model->where('post_id', '=', $post[0]['id'])
                             ->get()
                             ->toArray();
-                        if (isset($media[0])) {
-                            $event_media [] = $media[0];
+                        foreach ($post_media as $post_media_key => $item) {
+                            $media = $media_model->where('id', '=', $item['media_id'])
+                                ->get()
+                                ->toArray();
+                            if (isset($media[0])) {
+                                $event_media [] = $media[0];
+                            }
                         }
+                        $a = $events[$key];
+                        $events[$key]->media = array();
+                        $events[$key]->media = $event_media;
                     }
-                    $a = $events[$key];
-                    $events[$key]->media = array();
-                    $events[$key]->media = $event_media;
                 }
-            }
-      return response()->json(['status'=>'200'],[compact('users','tags','events')]);      
+                return response()->json([compact('users','tags','events')]);
   }
 
 }

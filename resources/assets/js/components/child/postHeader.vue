@@ -71,7 +71,14 @@
         },
         computed: {
             since () {
-                return this.date != '' ? new Date(this.date + 'Z').getTime() : new Date().getTime()
+                let str = ''
+                if(this.data != '') {
+                    str = this.date
+                    let res = str.split(' ')
+                    str = res[0]+'T'+res[1]
+                    str.replace(/\s/, 'T')
+                }
+                return this.date != '' ? new Date(str+'Z').getTime() : new Date().getTime()
             },
             locationLink () {
                 return this.postData.type !== null? (this.postData.location !== '' ? base_url + 'gallery/location/' + this.postData.location : '') : this.postData.location !== '' ? base_url + 'gallery/location/' + this.postData.location : ''
