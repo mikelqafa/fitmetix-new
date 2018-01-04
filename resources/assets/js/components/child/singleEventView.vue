@@ -17,7 +17,7 @@
             <div class="swiper-button-next hidden" slot="button-next"></div>
         </swiper>
     </div>
-    <div v-else="" class="ft-grid__item lg-loading-skeleton" style="width: 100%;padding-top: 0">
+    <div v-else-if="!noEventListFound" class="ft-grid__item lg-loading-skeleton" style="width: 100%;padding-top: 0">
         <div class="ft_card">
             <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
             </div>
@@ -53,6 +53,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="text-center" v-else="">
+        <h3>No Event Found</h3>
     </div>
 </template>
 

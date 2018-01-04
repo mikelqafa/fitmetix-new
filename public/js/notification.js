@@ -37802,6 +37802,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -37994,14 +37997,18 @@ var render = function() {
         ],
         1
       )
-    : _c(
-        "div",
-        {
-          staticClass: "ft-grid__item lg-loading-skeleton",
-          staticStyle: { width: "100%", "padding-top": "0" }
-        },
-        [_vm._m(0)]
-      )
+    : !_vm.noEventListFound
+      ? _c(
+          "div",
+          {
+            staticClass: "ft-grid__item lg-loading-skeleton",
+            staticStyle: { width: "100%", "padding-top": "0" }
+          },
+          [_vm._m(0)]
+        )
+      : _c("div", { staticClass: "text-center" }, [
+          _c("h3", [_vm._v("No Event Found")])
+        ])
 }
 var staticRenderFns = [
   function() {
