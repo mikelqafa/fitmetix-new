@@ -1,10 +1,16 @@
 <template>
-    <div class="ft-dock-wrapper hidden">
+    <div class="ft-dock-wrapper">
         <div class="ft-chat-group">
             <div class="ft-chat-wrapper">
                 <div class="ft-chat-box">
                     <div class="ft-chat-box__inner-wrapper">
                         <header class="ft-chat-box__header">
+                            <a href="javascript:;" class="chat-user margin-left-8" @click="openChat">
+                                <svg fill="#ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                                </svg>
+                            </a>
                             <a href="javascript:;" class="chat-user margin-left-8">Prakash</a>
                             <div class="md-layout-spacer"></div>
                             <a href="javascript:;" class="chat-options">
@@ -59,11 +65,65 @@
                                 </a>
                             </div>
                         </div>
+                        <div class="ft-chat--list-wrapper is-list-open">
+                            <header class="ft-chat-box__header">
+                                <a href="javascript:;" class="chat-user margin-left-8">Chat Story</a>
+                                <div class="md-layout-spacer"></div>
+                                <a href="javascript:;" class="chat-options margin-right-8">
+                                    <i class="icon icon-close"></i>
+                                </a>
+                            </header>
+                            <div class="ft-chat-box__body pos-rel">
+                                <div class="scroll-wrapper">
+                                    <div class="md-list md-list--dense">
+                                        <div v-for="it in item" class="md-list__item" @click="openChat">
+                                            <div class="md-list__item-content">
+                                                <a href="//localhost:3000/fitmetix/public/doremon" class="md-list__item-icon user-avatar" style="background-image: url('http://localhost/fitmetix/public/user/avatar/2017-12-29-10-26-15doraemon-doremon-hd-arena-163807.png')">
+                                                </a>
+                                                <div class="md-list__item-primary">
+                                                    <span>Doremon</span>
+                                                    <div class="md-list__item-text-body">Doremon your event...</div>
+                                                </div>
+                                                <div class="md-list__item-secondary text-right">
+                                                    <div class="md-list__item-secondary-info">
+                                                        <time datetime="Sat Dec 30 2017 16:55:32 GMT+0530 (IST)" title="30/12/2017, 16:55:32" class="timeago">4 d</time>
+                                                    </div>
+                                                    <div class="md-layout-spacer"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
+<script>
+  export default {
+    data: function () {
+      return {
+          item: [1,2,3,4,5,6,7,8,9]
+      }
+    },
+      methods: {
+        openChat: function () {
+            $('.ft-chat--list-wrapper').toggleClass('is-list-open')
+        }
+    },
+    computed: {
+      vComputed () {
+        return ''
+      }
+    },
+    mounted () {
+    }
+  }
+</script>
+
 <style>
+
 </style>

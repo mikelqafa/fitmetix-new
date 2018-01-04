@@ -16,6 +16,7 @@ Route::get('new/pass', function () {
 });
 
 Route::get('/contact', 'PageController@contact');
+Route::get('search', ['uses'=>'TimelineController@getSearch','middleware' => ['auth']]);
 Route::post('/contact', 'PageController@saveContact');
 Route::get('/share-post/{id}', 'PageController@sharePost');
 Route::get('/gallery/hashtag/{hashtag}', 'TimelineController@getHashtag');
@@ -219,6 +220,7 @@ Route::get('messages/{username?}', 'MessageController@index');
 | User routes
 |--------------------------------------------------------------------------
 */
+
 
 Route::group(['prefix' => '/{username}', 'middleware' => 'auth'], function ($username) {
     Route::get('/', 'TimelineController@showTimeline');

@@ -13,6 +13,7 @@ import AppNotificationAll from './components/AppNotificationAll'
 import postDialogOption from './components/DialogOption'
 import commentDialogOption from './components/CommentDialogOption'
 import suggestionUser from './components/suggestionUser'
+import searchAppVue from './components/searchApp'
 import VueTimeago from 'vue-timeago'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 // import AppEventCalendar from './components/appEventCalendar'
@@ -67,6 +68,15 @@ window.singleEvent = new Vue({
     'suggestion-user': suggestionUser
   }
 })
+
+window.searchApp = new Vue({
+  el: '#app-search',
+  store,
+  components: {
+    'app-search': searchAppVue
+  }
+})
+
 window.appNotificationAll = new Vue({
   el: '#app-notification-all',
   store,

@@ -50,15 +50,18 @@
                             Register
                         </template>
                     </button>
+                    <a :href="eventLink" v-else="" type="button" class="btn btn-submit ft-btn-primary">
+                        Details
+                    </a>
                 </template>
                 <template v-else="">
                     <button v-if="!enableUrl" type="button" disabled class="btn btn-submit">
                         Register
                     </button>
+                    <a :href="eventLink" v-else="" type="button" class="btn btn-submit ft-btn-primary">
+                        Details
+                    </a>
                 </template>
-                <a :href="eventLink" v-else="" type="button" class="btn btn-submit ft-btn-primary">
-                    Details
-                </a>
                 <div class="ft-loading ft-loading--abs" v-if="isLoading">
                     <span class="ft-loading__dot"></span>
                     <span class="ft-loading__dot"></span>

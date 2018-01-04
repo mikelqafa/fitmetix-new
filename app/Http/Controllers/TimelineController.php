@@ -3958,6 +3958,13 @@ class TimelineController extends AppBaseController
         return response()->json(['status' => '200', ['post'=>$post, 'timeline'=>$timeline, 'imagePath'=>$image_path]]);
     }
 
+    public function getSearch()
+    {
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+        return $theme->scope('search', compact('username'))
+            ->render();
+    }
+
     public function commentsCountAPI(Request $request) {
         $total_comments = Comment::where('post_id',$request->post_id)->count();
         $total_likes = DB::table('post_likes')->where('post_id',$request->post_id)->count();

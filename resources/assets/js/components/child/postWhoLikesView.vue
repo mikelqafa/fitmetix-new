@@ -7,7 +7,7 @@
                     <header class="md-dialog__header panel-post">
                         <div class="layout-m-l-1 md-layout md-align md-align--start-center">
                             <i class="icon icon-participant" style="margin-top: 4px"></i>
-                            <span class="layout-m-l-1">Participants</span>
+                            <span class="layout-m-l-1">Who Likes to this post</span>
                         </div>
                         <div class="md-layout-spacer"></div>
                         <a href="javascript:;" style="margin-right: 15px"
