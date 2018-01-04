@@ -423,6 +423,8 @@ Route::post('filter-events-by-tags','TimelineController@eventsListFilteredTags')
 Route::post('filter-events-by-date','TimelineController@eventsListFilteredDate');
 Route::post('filter-events-by-title','TimelineController@eventsListFilteredTitle');
 
+Route::post('ajax/search', 'TimelineController@searchAPI');
+
 Route::post('ajax/comment-like', 'TimelineController@likeComment');
 Route::post('/ajax/get-registered-users-for-event','TimelineController@getRegisteredUserForEvent');
 Route::post('/ajax/unregister-event','TimelineController@unregisterEvent');
