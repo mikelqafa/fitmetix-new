@@ -15,7 +15,7 @@
                 <i class="icon icon-chat"></i>
                 <span class="unread-notification" v-bind:class="{ 'is-visible': isShowUCM }"></span>
             </a>
-            <a class="ft-header-nav__item" href="{!! url('search') !!}" data-toggle="collapse" href="#bs-example-navbar-collapse-4" aria-expanded="false" aria-controls="collapseExample">
+            <a class="ft-header-nav__item" href="{!! url('search') !!}">
                 <div class="icon icon-search"></div>
             </a>
             <form action="{{ url('/logout') }}" method="post" class="ft-header-nav__item">
