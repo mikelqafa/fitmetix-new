@@ -4589,8 +4589,8 @@ class TimelineController extends AppBaseController
   public function searchAPI(Request $request) {
       $title = $request->keyword;
       // $title = 'mikele';
-      $users = Timeline::where('username',$title)->get()->toArray();
-      $tags = Hashtag::where('tag',$title)->get()->toArray();
+      $users = Timeline::where('username','LIKE',$title.'%')->get()->toArray();
+      $tags = Hashtag::where('tag','LIKE',$title.'%')->get()->toArray();
 
       $events = DB::table('events')
                 ->join('timelines', 'timelines.id', '=', 'events.timeline_id')
