@@ -3499,3 +3499,21 @@ aside .md-drawer-scroll__wrapper{
         padding-left: 0;
     }
 }
+.icon-eventpage--wrapper{
+    height: 31px;
+    width: 100%;
+    display: flex !important;
+    align-items:  center;
+    justify-content:  center;
+    border-bottom-color: transparent !important;
+}
+.icon-eventpage--wrapper .icon {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    font-size: 40px;
+    width: 100%;
+}
+.make-active.active {
+    background-color: #eee;
+}

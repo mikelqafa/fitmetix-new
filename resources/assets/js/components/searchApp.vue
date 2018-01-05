@@ -11,10 +11,10 @@
                       <i class="icon icon-participant hidden-inactive"></i>
                   </a>
               </li>
-              <li>
-                  <a data-toggle="tab" href="#search-event">
-                      <i class="icon icon-eventpage hidden-active" style="line-height: 16px; height: 24px"></i>
-                      <i class="icon icon-eventpage hidden-inactive" style="line-height: 16px; height: 24px"></i>
+              <li style="border-bottom: 1px solid #ddd" class="make-active">
+                  <a data-toggle="tab" href="#search-event" class="icon-eventpage--wrapper" style="border-bottom-color:transparent !important;">
+                      <i class="icon icon-eventpage hidden-active"></i>
+                      <i class="icon icon-eventpage hidden-inactive"></i>
                   </a>
               </li>
               <li>
@@ -31,7 +31,7 @@
                           Users
                       </div>
                       <div class="panel-body">
-                          <div class="search-result-wrapper md-list">
+                          <div class="search-result-wrapper md-list" v-show="userList.length">
                               <a :href="userLink(item)" class="md-list__item has-divider" v-for="(item, index) in userList" :key="index+'user-'+item.id">
                                   <div class="md-list__item-content">
                                           <span class="md-list__item-icon user-avatar" v-bind:style="{ backgroundImage: 'url(' + userAvatar(item) +')'}">
@@ -54,21 +54,19 @@
                       <div class="panel-heading">
                           Events
                       </div>
-                      <div class="panel-body">
+                      <div class="panel-body" v-show="eventList.length">
                           <div class="search-result-wrapper md-list">
-                              <transition-group name="flip-list" tag="div">
-                                  <a :href="userLink(item)" class="md-list__item has-divider" v-for="(item, index) in eventList" :key="index+'event-'+item.id">
-                                      <div class="md-list__item-content">
+                              <a :href="userLink(item)" class="md-list__item has-divider" v-for="(item, index) in eventList" :key="index+'event-'+item.id">
+                                  <div class="md-list__item-content">
                                           <span class="md-list__item-icon user-avatar">
                                               <i class="icon icon-eventpage"></i>
                                           </span>
-                                          <div class="md-list__item-primary">
-                                              <span>{{item.name}}</span>
-                                              <div class="md-list__item-text-body">{{item.about}}</div>
-                                          </div>
+                                      <div class="md-list__item-primary">
+                                          <span>{{item.name}}</span>
+                                          <div class="md-list__item-text-body">{{item.about}}</div>
                                       </div>
-                                  </a>
-                              </transition-group>
+                                  </div>
+                              </a>
                           </div>
                           <div v-if="noEventFound" class="text-center">
                               No event found!
@@ -82,7 +80,7 @@
                           Tags
                       </div>
                       <div class="panel-body">
-                          <div class="search-result-wrapper md-list">
+                          <div class="search-result-wrapper md-list" v-show="tagList.length">
                               <a :href="tagLink(item)" class="md-list__item has-divider" v-for="item in tagList" :key="'tag-'+item.tag">
                                       <span class="md-list__item-content">
                                           <span class="md-list__item-icon">

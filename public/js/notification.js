@@ -43386,8 +43386,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -43543,7 +43541,17 @@ var render = function() {
                     _c("div", { staticClass: "panel-body" }, [
                       _c(
                         "div",
-                        { staticClass: "search-result-wrapper md-list" },
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.userList.length,
+                              expression: "userList.length"
+                            }
+                          ],
+                          staticClass: "search-result-wrapper md-list"
+                        },
                         _vm._l(_vm.userList, function(item, index) {
                           return _c(
                             "a",
@@ -43613,78 +43621,70 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "panel-body" }, [
-                      _c(
-                        "div",
-                        { staticClass: "search-result-wrapper md-list" },
-                        [
-                          _c(
-                            "transition-group",
-                            { attrs: { name: "flip-list", tag: "div" } },
-                            _vm._l(_vm.eventList, function(item, index) {
-                              return _c(
-                                "a",
-                                {
-                                  key: index + "event-" + item.id,
-                                  staticClass: "md-list__item has-divider",
-                                  attrs: { href: _vm.userLink(item) }
-                                },
-                                [
-                                  _c(
-                                    "div",
-                                    { staticClass: "md-list__item-content" },
-                                    [
-                                      _c(
-                                        "span",
-                                        {
-                                          staticClass:
-                                            "md-list__item-icon user-avatar"
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "icon icon-eventpage"
-                                          })
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "md-list__item-primary"
-                                        },
-                                        [
-                                          _c("span", [
-                                            _vm._v(_vm._s(item.name))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c(
-                                            "div",
-                                            {
-                                              staticClass:
-                                                "md-list__item-text-body"
-                                            },
-                                            [_vm._v(_vm._s(item.about))]
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            })
-                          )
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.eventList.length,
+                            expression: "eventList.length"
+                          }
                         ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _vm.noEventFound
-                        ? _c("div", { staticClass: "text-center" }, [
-                            _vm._v(
-                              "\n                            No event found!\n                        "
+                        staticClass: "panel-body"
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "search-result-wrapper md-list" },
+                          _vm._l(_vm.eventList, function(item, index) {
+                            return _c(
+                              "a",
+                              {
+                                key: index + "event-" + item.id,
+                                staticClass: "md-list__item has-divider",
+                                attrs: { href: _vm.userLink(item) }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  { staticClass: "md-list__item-content" },
+                                  [
+                                    _vm._m(1, true),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "md-list__item-primary" },
+                                      [
+                                        _c("span", [_vm._v(_vm._s(item.name))]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "md-list__item-text-body"
+                                          },
+                                          [_vm._v(_vm._s(item.about))]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
                             )
-                          ])
-                        : _vm._e()
-                    ])
+                          })
+                        ),
+                        _vm._v(" "),
+                        _vm.noEventFound
+                          ? _c("div", { staticClass: "text-center" }, [
+                              _vm._v(
+                                "\n                            No event found!\n                        "
+                              )
+                            ])
+                          : _vm._e()
+                      ]
+                    )
                   ])
                 ]
               ),
@@ -43703,7 +43703,17 @@ var render = function() {
                     _c("div", { staticClass: "panel-body" }, [
                       _c(
                         "div",
-                        { staticClass: "search-result-wrapper md-list" },
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.tagList.length,
+                              expression: "tagList.length"
+                            }
+                          ],
+                          staticClass: "search-result-wrapper md-list"
+                        },
                         _vm._l(_vm.tagList, function(item) {
                           return _c(
                             "a",
@@ -43717,7 +43727,7 @@ var render = function() {
                                 "span",
                                 { staticClass: "md-list__item-content" },
                                 [
-                                  _vm._m(1, true),
+                                  _vm._m(2, true),
                                   _vm._v(" "),
                                   _c(
                                     "span",
@@ -43750,12 +43760,12 @@ var render = function() {
               ),
               _vm._v(" "),
               _vm.isLoading
-                ? _c("div", { staticClass: "absolute-loader" }, [_vm._m(2)])
+                ? _c("div", { staticClass: "absolute-loader" }, [_vm._m(3)])
                 : _vm._e()
             ]
           ),
           _vm._v(" "),
-          _vm._m(3)
+          _vm._m(4)
         ]
       )
     ]
@@ -43775,19 +43785,28 @@ var staticRenderFns = [
         ])
       ]),
       _vm._v(" "),
-      _c("li", [
-        _c("a", { attrs: { "data-toggle": "tab", href: "#search-event" } }, [
-          _c("i", {
-            staticClass: "icon icon-eventpage hidden-active",
-            staticStyle: { "line-height": "16px", height: "24px" }
-          }),
-          _vm._v(" "),
-          _c("i", {
-            staticClass: "icon icon-eventpage hidden-inactive",
-            staticStyle: { "line-height": "16px", height: "24px" }
-          })
-        ])
-      ]),
+      _c(
+        "li",
+        {
+          staticClass: "make-active",
+          staticStyle: { "border-bottom": "1px solid #ddd" }
+        },
+        [
+          _c(
+            "a",
+            {
+              staticClass: "icon-eventpage--wrapper",
+              staticStyle: { "border-bottom-color": "transparent !important" },
+              attrs: { "data-toggle": "tab", href: "#search-event" }
+            },
+            [
+              _c("i", { staticClass: "icon icon-eventpage hidden-active" }),
+              _vm._v(" "),
+              _c("i", { staticClass: "icon icon-eventpage hidden-inactive" })
+            ]
+          )
+        ]
+      ),
       _vm._v(" "),
       _c("li", [
         _c("a", { attrs: { "data-toggle": "tab", href: "#search-tag" } }, [
@@ -43796,6 +43815,14 @@ var staticRenderFns = [
           _c("i", { staticClass: "icon icon-tag-o hidden-inactive" })
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "md-list__item-icon user-avatar" }, [
+      _c("i", { staticClass: "icon icon-eventpage" })
     ])
   },
   function() {
