@@ -2712,6 +2712,19 @@ class TimelineController extends AppBaseController
                 $event->save();
             }
 
+            // Check for any hashtags and save them
+            preg_match_all('/(^|\s)(#\w+)/', $request->description, $hashtags);
+            foreach ($hashtags[2] as $value) {
+                $timeline = Timeline::where('username', str_replace('@', '', $value))->first();
+                $hashtag = Hashtag::where('tag', str_replace('#', '', $value))->first();
+                if ($hashtag) {
+                    $hashtag->count = $hashtag->count + 1;
+                    $hashtag->save();
+                } else {
+                    Hashtag::create(['tag' => str_replace('#', '', $value), 'count' => 1]);
+                }
+            }
+
             $event->users()->attach(Auth::user()->id);
             Flash::success(trans('messages.create_event_success'));
             $page = Auth::user()->username.'/events';
@@ -3976,7 +3989,7 @@ class TimelineController extends AppBaseController
     public function commentsAPI(Request $request) {
         $total_comments = Comment::where('post_id',$request->post_id)->count();
 
-        $comments = Comment::where('post_id',$request->post_id)->limit(3)->with('user')->offset($request->offset)->get();
+        $comments = Comment::where('post_id',$request->post_id)->latest()->limit(3)->with('user')->offset($request->offset)->get();
 
         $limit = 3 + $request->offset;
         $hasMore = false;
