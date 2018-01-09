@@ -91,7 +91,8 @@
                 participantList: [],
                 filterParticipantList: [],
                 defaultImage: 'default.png',
-                filterSearch: ''
+                filterSearch: '',
+                offset: 0
             }
         },
         methods: {
@@ -115,14 +116,16 @@
                     data: {
                         event_id: that.eventWho.eventId,
                         user_id: user_id,
-                        _token: _token
+                        _token: _token,
+                        paginate: 5,
+                        offset: this.offset
                     }
                 }).then(function (response) {
                     if (response.status == 200) {
-                        console.log(response.data)
                         for(let i = 0;i<response.data.length; i++) {
                             that.participantList.push(response.data[i])
                         }
+                        that.offset += response.data.length
                     }
                 }).catch(function (error) {
                     console.log(error)

@@ -30,7 +30,6 @@
                     }
                 }).then(function (response) {
                     if (response.status == 200) {
-                        console.log(response.data)
                         let d = response.data[0].suggested_users
                         for(let i = 0;i<d.length; i++) {
                             that.itemList.push(d[i])

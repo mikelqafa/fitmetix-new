@@ -13,13 +13,11 @@ var vue = new Vue({
     created : function() {
         this.subscribeToPrivateMessageChannel(current_username);
         this.getConversations();
-
         $('.coversations-thread').bind('scroll',this.chk_scroll);
         $('.coversations-list').bind('scroll',this.chk_scroll);
     },
     methods : {
-        notify: function(message,type,layout)
-        {
+        notify: function(message,type,layout) {
             var n = noty({
                text: message,
                layout: 'bottomLeft',
@@ -35,8 +33,6 @@ var vue = new Vue({
            });
         },
         timeago : function(){
-
-
             jQuery.timeago.settings.strings.suffixAgo = "";
             jQuery.timeago.settings.strings.suffixFromNow = "from now";
             jQuery.timeago.settings.strings.inPast = "any moment now";
@@ -54,9 +50,7 @@ var vue = new Vue({
             jQuery("time.microtime").timeago();
 
         },
-        subscribeToPrivateMessageChannel: function(receiverUsername)
-        {
-
+        subscribeToPrivateMessageChannel: function(receiverUsername) {
             var vm = this;
             // pusher configuration
             this.pusher = new Pusher(pusherConfig.PUSHER_KEY, {
@@ -107,20 +101,16 @@ var vue = new Vue({
                 
             });
         },
-        getConversations : function()
-        {
+        getConversations : function() {
             this.$http.post(base_url + 'ajax/get-messages').then( function(response) {
                 this.conversations = JSON.parse(response.body).data;
                 this.showConversation(this.conversations.data[0]);
             });
         },
-        showConversation : function(conversation)
-        {
+        showConversation : function(conversation) {
             this.newConversation = false;
-            if(conversation)
-            {
-                if(conversation.id != this.currentConversation.id)
-                {
+            if(conversation) {
+                if(conversation.id != this.currentConversation.id) {
                     conversation.unread = false;
                     this.$http.post(base_url + 'ajax/get-conversation/' + conversation.id).then( function(response) {
                         this.currentConversation = JSON.parse(response.body).data;
@@ -135,8 +125,7 @@ var vue = new Vue({
             }
             
         },
-        postMessage : function(conversation)
-        {
+        postMessage : function(conversation) {
             
             messageBody = this.messageBody;
             this.messageBody = '';
@@ -155,8 +144,7 @@ var vue = new Vue({
             });   
             
         },
-        postNewConversation : function()
-        {
+        postNewConversation : function() {
             if(this.recipients.length)
             {
                 this.$http.post(base_url + 'ajax/create-message',{message: this.messageBody, recipients : this.recipients}).then( function(response) {
@@ -194,12 +182,10 @@ var vue = new Vue({
                 });        
             }
         },
-        autoScroll : function(element)
-        {
+        autoScroll : function(element) {
             $(element).animate({scrollTop: $(element)[0].scrollHeight + 600 }, 2000);
         },
-        chk_scroll : function(e)
-        {
+        chk_scroll : function(e) {
             var elem = $(e.currentTarget);
 
             if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) 
@@ -214,8 +200,7 @@ var vue = new Vue({
                 }
             }
         },
-        getMoreConversationMessages : function()
-        {
+        getMoreConversationMessages : function() {
             if(this.currentConversation.conversationMessages.data.length < this.currentConversation.conversationMessages.total)
             {
                 this.$http.post(this.currentConversation.conversationMessages.next_page_url).then( function(response) {
@@ -238,8 +223,7 @@ var vue = new Vue({
                 });                      
             }
         },
-        getMoreConversations : function()
-        {
+        getMoreConversations : function() {
             if(this.conversations.data.length < this.conversations.total)
             {
                 this.$http.post(this.conversations.next_page_url).then( function(response) {
@@ -263,8 +247,7 @@ var vue = new Vue({
                 });                      
             }
         },
-        showNewConversation : function()
-        {
+        showNewConversation : function() {
             this.newConversation = true;
             this.currentConversation = {
                 user : []
@@ -276,8 +259,7 @@ var vue = new Vue({
             },10);
 
         },
-        toggleUsersSelectize : function()
-        {
+        toggleUsersSelectize : function() {
             vm = this;
             var selectizeUsers = $('#messageReceipient').selectize({
                 valueField: 'id',

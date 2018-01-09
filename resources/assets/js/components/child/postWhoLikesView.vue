@@ -179,7 +179,7 @@
             },
             whoLikesItem: function () {
                 return this.postWhoLikes.postIndex !== undefined ? this.$store.state.postItemList[this.postWhoLikes.postIndex] : {}
-            },
+            }
         }
     }
 </script>

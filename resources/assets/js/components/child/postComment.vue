@@ -297,7 +297,6 @@
                     offset: this.offset,
                     _token: _token
                 }
-                console.log(data)
                 axios({
                     method: 'post',
                     responseType: 'json',

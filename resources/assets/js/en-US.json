@@ -1,0 +1,10 @@
+[
+  "just now",
+  ["%s s", "%s s"],
+  ["%s m", "%s m"],
+  ["%s h", "%s h"],
+  ["%s d", "%s d"],
+  ["%s w", "%s w"],
+  ["%s mon", "%s mon"],
+  ["%s year", "%s year"]
+]

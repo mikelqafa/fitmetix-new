@@ -3139,21 +3139,19 @@ aside .md-drawer-scroll__wrapper{
     flex-wrap: wrap;
     line-height: 1.28;
     padding: 0 0 1px 0;
+    align-items: flex-end;
 }
 .chat-item__bubble{
-    min-height: 24px;
     position: relative;
     background-color: #fafafa;
     border: 0;
     color: #4b4f56;
+    max-width: 100%;
+    overflow: hidden;
     min-height: 22px;
     min-width: 14px;
-    overflow: hidden;
-    position: relative;
-    white-space: pre-wrap;
-    border-bottom-right-radius: 12px;
-    border-top-right-radius: 12px;
-
+    border-radius: 12px;
+    margin-left: 8px;
 }
 .chat-item {
     margin: 10px 9px 10px 9px;
@@ -3162,11 +3160,26 @@ aside .md-drawer-scroll__wrapper{
     align-items: flex-end;
     display: flex;
     flex-direction: row;
+    height:  auto;
 }
+.chat-item[data-user="0"] {
+    justify-content: start;
+    align-items: flex-end;
+    flex-direction:  row-reverse;
+}
+
+.chat-item[data-user="0"] .chat-item__bubble{
+    margin-left: 0;
+    margin-right: 8px;
+    background-color: #1E7C82;
+    color: #FFF;
+}
+
 .chat-item__content{
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
+    padding:  5px 8px 6px;
 }
 .chat-item__user{
     position: relative;
@@ -3249,6 +3262,12 @@ aside .md-drawer-scroll__wrapper{
     overflow-x: hidden;
     overflow-y: auto;
 }
+.ft-chat__write-box p, .chat-item__content-text p,  .md-list__item-text-body p {
+    margin-bottom: 0;
+    font-size: inherit;
+    color: inherit;
+    line-height: inherit;
+}
 .ft-chat-box__inner-wrapper {
     height: 320px;
     display: flex;
@@ -3259,9 +3278,10 @@ aside .md-drawer-scroll__wrapper{
 .inner-chat-wrapper {
     background: #fff;
     overflow: hidden;
-    height: 100%;
+    min-height: 100%;
     width: 100%;
     flex-grow: 1;
+    overflow-y:  auto;
 }
 .ft-chat-box__footer{
     background-color: #fff;
@@ -3516,4 +3536,23 @@ aside .md-drawer-scroll__wrapper{
 }
 .make-active.active {
     background-color: #eee;
+}
+.coversations-list .md-list__item-text-body {
+    width: 148px;
+    word-wrap: normal;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.timeago--tiny {
+    font-size: 10px;
+    opacity: .32;
+    margin-left: 8px;
+    line-height: 17px;
+}
+[data-user="0"] .timeago--tiny {
+    opacity: .7;
+}
+[data-user="0"] .timeago--tiny svg {
+    fill: #ffffff;
 }

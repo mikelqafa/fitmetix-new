@@ -29,7 +29,8 @@ Vue.use(VueTimeago, {
   name: 'timeago', // component name, `timeago` by default
   locale: 'en-US',
   locales: {
-    'en-US': require('vue-timeago/locales/en-US.json')
+    /*'en-US': require('vue-timeago/locales/en-US.json')*/
+    'en-US': require('./en-US.json')
   }
 })
 Vue.config.productionTip = true

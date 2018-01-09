@@ -2283,3 +2283,9 @@ $(document).on('click','.delete-group',function(e){
 
     });
 
+$("#appchatbox[contenteditable]").keypress(function (evt) {
+  var keycode = evt.charCode || evt.keyCode;
+  if (keycode  == 13) { //Enter key's keycode
+    return false;
+  }
+});
