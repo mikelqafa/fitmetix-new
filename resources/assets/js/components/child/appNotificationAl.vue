@@ -108,6 +108,7 @@
                 return base_url + username
             },
             since: function (date) {
+                console.log(date)
                 let str = date
                 if(date != '') {
                     str = date

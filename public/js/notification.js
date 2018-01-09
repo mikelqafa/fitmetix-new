@@ -38468,6 +38468,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         since: function since(date) {
             var str = date;
+            console.log(date);
             if (date != '') {
                 str = date;
                 var res = str.split(' ');
@@ -40721,7 +40722,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return base_url + username;
         },
         since: function since(date) {
-            return date != '' ? new Date(date + 'Z').getTime() : new Date().getTime();
+            var str = date;
+            console.log(date);
+            if (date != '') {
+                str = date;
+                var res = str.split(' ');
+                str = res[0] + 'T' + res[1];
+                str.replace(/\s/, 'T');
+            }
+            return date != '' ? new Date(str + 'Z').getTime() : new Date().getTime();
         }
     },
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({

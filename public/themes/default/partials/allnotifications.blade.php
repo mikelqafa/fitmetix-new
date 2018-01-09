@@ -1,7 +1,6 @@
 
 <div id="app-notification-all">
     <app-notification-all>
-
     </app-notification-all>
 </div>
 <div class="panel hidden panel-default">

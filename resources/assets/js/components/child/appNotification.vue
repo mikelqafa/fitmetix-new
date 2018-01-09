@@ -209,6 +209,7 @@
             },
             since: function (date) {
                 let str = date
+                console.log(date)
                 if(date != '') {
                     str = date
                     let res = str.split(' ')
