@@ -28250,7 +28250,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         formatDate: function formatDate(date) {
             var str = '';
-            if (data != '') {
+            if (date != '') {
                 str = date;
                 var res = str.split(' ');
                 str = res[0] + 'T' + res[1];

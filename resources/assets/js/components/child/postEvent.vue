@@ -100,7 +100,7 @@
             },
             formatDate: function(date) {
                 let str = ''
-                if(data != '') {
+                if(date != '') {
                     str = date
                     let res = str.split(' ')
                     str = res[0]+'T'+res[1]
