@@ -98,8 +98,15 @@
             formatGender: function(g) {
                 return g == '' ? 'Everyone' : g == 'male'? 'Male Only' : 'Female Only'
             },
-            formatDate: function(d) {
-                let obj = new Date(d)
+            formatDate: function(date) {
+                let str = ''
+                if(data != '') {
+                    str = date
+                    let res = str.split(' ')
+                    str = res[0]+'T'+res[1]
+                    str.replace(/\s/, 'T')
+                }
+                let obj = new Date(str+'Z')
                 let options = {
                     year: 'numeric',
                     month: 'short',

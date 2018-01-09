@@ -28248,8 +28248,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         formatGender: function formatGender(g) {
             return g == '' ? 'Everyone' : g == 'male' ? 'Male Only' : 'Female Only';
         },
-        formatDate: function formatDate(d) {
-            var obj = new Date(d);
+        formatDate: function formatDate(date) {
+            var str = '';
+            if (data != '') {
+                str = date;
+                var res = str.split(' ');
+                str = res[0] + 'T' + res[1];
+                str.replace(/\s/, 'T');
+            }
+            var obj = new Date(str + 'Z');
             var options = {
                 year: 'numeric',
                 month: 'short',
