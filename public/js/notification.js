@@ -33093,7 +33093,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__child_postWhoLikesView___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__child_postWhoLikesView__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__child_appPostShare__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__child_appPostShare___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__child_appPostShare__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_vuex__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__child_eventParticipateList__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__child_eventParticipateList___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__child_eventParticipateList__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_vuex__ = __webpack_require__(1);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -33140,6 +33142,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+
 
 
 
@@ -33213,9 +33217,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         'post-comment': __WEBPACK_IMPORTED_MODULE_6__child_postComment___default.a,
         'post-theater-view': __WEBPACK_IMPORTED_MODULE_7__child_postTheaterView___default.a,
         'post-wholikes-view': __WEBPACK_IMPORTED_MODULE_8__child_postWhoLikesView___default.a,
+        'event-participate-list': __WEBPACK_IMPORTED_MODULE_10__child_eventParticipateList___default.a,
         'app-post-share': __WEBPACK_IMPORTED_MODULE_9__child_appPostShare___default.a
     },
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_10_vuex__["b" /* mapGetters */])({
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_11_vuex__["b" /* mapGetters */])({
         itemList: 'postItemList'
     }), {
         isLoading: function isLoading() {
@@ -33240,6 +33245,8 @@ var render = function() {
       _c("post-theater-view"),
       _vm._v(" "),
       _c("post-wholikes-view"),
+      _vm._v(" "),
+      _c("event-participate-list"),
       _vm._v(" "),
       !_vm.noPostFound
         ? [
@@ -38468,7 +38475,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         since: function since(date) {
             var str = date;
-            console.log(date);
             if (date != '') {
                 str = date;
                 var res = str.split(' ');
@@ -40723,7 +40729,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         since: function since(date) {
             var str = date;
-            console.log(date);
             if (date != '') {
                 str = date;
                 var res = str.split(' ');

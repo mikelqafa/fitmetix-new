@@ -3,6 +3,7 @@
         <app-post-share></app-post-share>
         <post-theater-view></post-theater-view>
         <post-wholikes-view></post-wholikes-view>
+        <event-participate-list></event-participate-list>
         <template v-if="!noPostFound">
             <template v-if="isLoading">
                 <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
@@ -53,6 +54,7 @@
     import postTheaterView from './child/postTheaterView'
     import postWhoLikesView from './child/postWhoLikesView'
     import appPostShare from './child/appPostShare'
+    import eventParticipateList from './child/eventParticipateList'
     import { mapGetters } from 'vuex'
 
     export default {
@@ -113,6 +115,7 @@
             'post-comment': postComment,
             'post-theater-view': postTheaterView,
             'post-wholikes-view': postWhoLikesView,
+            'event-participate-list': eventParticipateList,
             'app-post-share': appPostShare
         },
         computed: {
