@@ -27412,18 +27412,23 @@ var vmThat = void 0;
             var username = current_username;
             var paginate = 4;
             var _token = $("meta[name=_token]").attr('content');
+            var url = base_url + 'get-posts';
+            var profile_timeline = false;
             if ($('#timeline_username').length) {
                 username = $('#timeline_username').val();
+                //url = base_url + 'get-user-posts'
+                profile_timeline = true;
             }
             axios({
                 method: 'post',
                 responseType: 'json',
-                url: base_url + 'get-posts',
+                url: url,
                 data: {
                     username: username,
                     paginate: paginate,
                     _token: _token,
-                    offset: that.offset
+                    offset: that.offset,
+                    profile_timeline: profile_timeline
                 }
             }).then(function (response) {
                 if (response.status == 200) {
@@ -39764,10 +39769,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 user: []
             },
             messageBody: '',
-            placeholder: 'Type a message...'
+            placeholder: 'Type a message...',
+            userObj: {}
         };
     },
     methods: {
+        closeChat: function closeChat() {
+            $('.ft-dock-wrapper').addClass('hidden');
+        },
+        toggleChatMinimize: function toggleChatMinimize() {
+            $('.ft-chat-box').toggleClass('ft-chat-box--open');
+        },
         processEditOperation: function processEditOperation(operation) {
             this.backContent = operation.api.origElements.innerHTML;
         },
@@ -39783,15 +39795,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
 
         initPostMessage: function initPostMessage() {
-            if (this.backContent !== '') {
+            if (this.strip(this.backContent).trim() !== '') {
                 this.postMessage(this.currentConversation);
             }
+        },
+        strip: function strip(html) {
+            var tmp = document.createElement("DIV");
+            tmp.classList = 'hidden';
+            tmp.innerHTML = html;
+            var val = tmp.textContent || tmp.innerText || "";
+            tmp.remove();
+            return val;
         },
         whichUser: function whichUser(u) {
             return u === current_username ? 0 : 1;
         },
         showThread: function showThread() {
             $('.ft-chat--list-wrapper').addClass('is-list-open');
+            this.getConversations();
         },
         openChat: function openChat(c) {
             this.showConversation(c, true);
@@ -39821,7 +39842,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         'X-CSRF-Token': pusherConfig.token
                     },
                     params: {
-                        username: current_username
+                        username: receiverUsername
                     }
                 }
             });
@@ -39829,7 +39850,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.MessageChannel.bind('App\\Events\\MessagePublished', function (data) {
                 data.message.user = data.sender;
                 if (that.currentConversation.id == data.message.thread_id) {
-                    that.currentConversation.conversationMessages.push(data.message);
+                    that.currentConversation.conversationMessages.data.push(data.message);
                     setTimeout(function () {
                         that.autoScroll('.coversations-thread');
                     }, 100);
@@ -39873,7 +39894,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _token: _token
                 }
             }).then(function (response) {
-                console.log(response);
                 if (response.status == 200) {
                     that.conversations = response.data.data;
                     //this.conversations = JSON.parse(response.body).data;
@@ -39899,7 +39919,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             _token: _token
                         }
                     }).then(function (response) {
-                        console.log(response);
                         if (response.status == 200) {
                             that.currentConversation = response.data.data;
                             that.currentConversation.user = conversation.user;
@@ -39919,7 +39938,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             $('#create-chat-vue').html('');
             var that = this;
             var _token = $("meta[name=_token]").attr('content');
-            this.isSendingMsg = true;
+            var preData = {
+                body: messageBody,
+                user: this.userObj,
+                user_id: user_id
+            };
+            that.currentConversation.conversationMessages.data.push(preData);
+            var index = this.currentConversation.conversationMessages.data.length - 1;
+            setTimeout(function () {
+                that.autoScroll('.coversations-thread');
+            }, 100);
+            /*this.isSendingMsg = true*/
             axios({
                 method: 'post',
                 responseType: 'json',
@@ -39931,10 +39960,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).then(function (response) {
                 that.isSendingMsg = false;
                 if (response.status == 200) {
-                    that.currentConversation.conversationMessages.data.push(response.data.data);
-                    setTimeout(function () {
-                        that.autoScroll('.coversations-thread');
-                    }, 100);
+                    that.currentConversation.conversationMessages.data[index] = response.data.data;
                 }
             }).catch(function (error) {
                 that.isSendingMsg = false;
@@ -39993,7 +40019,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (this.currentConversation.conversationMessages.data.length < this.currentConversation.conversationMessages.total) {
                 this.$http.post(this.currentConversation.conversationMessages.next_page_url).then(function (response) {
                     var latestConversations = JSON.parse(response.body).data;
-
                     this.currentConversation.conversationMessages.last_page = latestConversations.conversationMessages.last_page;
                     this.currentConversation.conversationMessages.next_page_url = latestConversations.conversationMessages.next_page_url;
                     this.currentConversation.conversationMessages.per_page = latestConversations.conversationMessages.per_page;
@@ -40035,6 +40060,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             setTimeout(function () {
                 that.toggleUsersSelectize();
             }, 10);
+        },
+        setUserObj: function setUserObj() {
+            var _token = $("meta[name=_token]").attr('content');
+            var that = this;
+            axios({
+                method: 'post',
+                responseType: 'json',
+                url: base_url + 'get-self-timeline',
+                data: {
+                    _token: _token
+                }
+            }).then(function (response) {
+                if (response.status == 200) {
+                    console.log(response.data);
+                    that.userObj = response.data[0].user_timeline;
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
     },
     computed: {
@@ -40060,6 +40104,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             return true;
         });
+        this.setUserObj();
     },
 
     components: {
@@ -40080,57 +40125,75 @@ var render = function() {
       _c("div", { staticClass: "ft-chat-wrapper" }, [
         _c("div", { staticClass: "ft-chat-box" }, [
           _c("div", { staticClass: "ft-chat-box__inner-wrapper" }, [
-            _c("header", { staticClass: "ft-chat-box__header" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "chat-user margin-left-8",
-                  attrs: { href: "javascript:;" },
-                  on: { click: _vm.showThread }
-                },
-                [
-                  _c(
-                    "svg",
-                    {
-                      attrs: {
-                        fill: "#ffffff",
-                        height: "24",
-                        viewBox: "0 0 24 24",
-                        width: "24",
-                        xmlns: "http://www.w3.org/2000/svg"
-                      }
-                    },
-                    [
-                      _c("path", {
-                        attrs: { d: "M0 0h24v24H0z", fill: "none" }
-                      }),
-                      _vm._v(" "),
-                      _c("path", {
+            _c(
+              "header",
+              {
+                staticClass: "ft-chat-box__header",
+                staticStyle: { cursor: "pointer" }
+              },
+              [
+                _c(
+                  "a",
+                  {
+                    staticClass: "chat-user margin-left-8",
+                    attrs: { href: "javascript:;" },
+                    on: { click: _vm.showThread }
+                  },
+                  [
+                    _c(
+                      "svg",
+                      {
                         attrs: {
-                          d:
-                            "M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                          fill: "#ffffff",
+                          height: "24",
+                          viewBox: "0 0 24 24",
+                          width: "24",
+                          xmlns: "http://www.w3.org/2000/svg"
                         }
-                      })
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "chat-user margin-left-8",
-                  attrs: { href: "javascript:;" }
-                },
-                [_vm._v(_vm._s(_vm.currentConversation.user.name))]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "md-layout-spacer" }),
-              _vm._v(" "),
-              _vm._m(0),
-              _vm._v(" "),
-              _vm._m(1)
-            ]),
+                      },
+                      [
+                        _c("path", {
+                          attrs: { d: "M0 0h24v24H0z", fill: "none" }
+                        }),
+                        _vm._v(" "),
+                        _c("path", {
+                          attrs: {
+                            d:
+                              "M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                          }
+                        })
+                      ]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "chat-user margin-left-8",
+                    attrs: { href: "javascript:;" }
+                  },
+                  [_vm._v(_vm._s(_vm.currentConversation.user.name))]
+                ),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "md-layout-spacer",
+                  on: { click: _vm.toggleChatMinimize }
+                }),
+                _vm._v(" "),
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "chat-options margin-right-8",
+                    attrs: { href: "javascript:;" },
+                    on: { click: _vm.closeChat }
+                  },
+                  [_c("i", { staticClass: "icon icon-close" })]
+                )
+              ]
+            ),
             _vm._v(" "),
             _c("div", { staticClass: "ft-chat-box__body" }, [
               _c(
@@ -40317,11 +40380,40 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _vm._m(2)
+              _vm._m(1)
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "ft-chat--list-wrapper is-list-open" }, [
-              _vm._m(3),
+              _c(
+                "header",
+                {
+                  staticClass: "ft-chat-box__header",
+                  staticStyle: { cursor: "pointer" }
+                },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "chat-user margin-left-8",
+                      attrs: { href: "javascript:;" },
+                      on: { click: _vm.toggleChatMinimize }
+                    },
+                    [_vm._v("Chat Story")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "md-layout-spacer" }),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "chat-options margin-right-8",
+                      attrs: { href: "javascript:;" },
+                      on: { click: _vm.closeChat }
+                    },
+                    [_c("i", { staticClass: "icon icon-close" })]
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "ft-chat-box__body pos-rel" }, [
                 _c(
@@ -40454,19 +40546,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "chat-options margin-right-8",
-        attrs: { href: "javascript:;" }
-      },
-      [_c("i", { staticClass: "icon icon-close" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "ft-chat__quick-action" }, [
       _c(
         "a",
@@ -40487,32 +40566,6 @@ var staticRenderFns = [
           attrs: { href: "javascript:;" }
         },
         [_c("i", { staticClass: "fa fa-smile-o" })]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("header", { staticClass: "ft-chat-box__header" }, [
-      _c(
-        "a",
-        {
-          staticClass: "chat-user margin-left-8",
-          attrs: { href: "javascript:;" }
-        },
-        [_vm._v("Chat Story")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "md-layout-spacer" }),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "chat-options margin-right-8",
-          attrs: { href: "javascript:;" }
-        },
-        [_c("i", { staticClass: "icon icon-close" })]
       )
     ])
   }

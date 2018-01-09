@@ -4,7 +4,7 @@
             <div class="ft-chat-wrapper">
                 <div class="ft-chat-box">
                     <div class="ft-chat-box__inner-wrapper">
-                        <header class="ft-chat-box__header">
+                        <header class="ft-chat-box__header" style="cursor: pointer">
                             <a href="javascript:;" class="chat-user margin-left-8" @click="showThread">
                                 <svg fill="#ffffff" height="24" viewBox="0 0 24 24" width="24"
                                      xmlns="http://www.w3.org/2000/svg">
@@ -13,11 +13,11 @@
                                 </svg>
                             </a>
                             <a href="javascript:;" class="chat-user margin-left-8">{{currentConversation.user.name}}</a>
-                            <div class="md-layout-spacer"></div>
+                            <div class="md-layout-spacer" @click="toggleChatMinimize"></div>
                             <a href="javascript:;" class="chat-options">
                                 <i class="icon icon-options"></i>
                             </a>
-                            <a href="javascript:;" class="chat-options margin-right-8">
+                            <a href="javascript:;" class="chat-options margin-right-8" @click="closeChat">
                                 <i class="icon icon-close"></i>
                             </a>
                         </header>
@@ -88,10 +88,10 @@
                             </div>
                         </div>
                         <div class="ft-chat--list-wrapper is-list-open">
-                            <header class="ft-chat-box__header">
-                                <a href="javascript:;" class="chat-user margin-left-8">Chat Story</a>
+                            <header class="ft-chat-box__header"  style="cursor: pointer">
+                                <a href="javascript:;" class="chat-user margin-left-8" @click="toggleChatMinimize">Chat Story</a>
                                 <div class="md-layout-spacer"></div>
-                                <a href="javascript:;" class="chat-options margin-right-8">
+                                <a href="javascript:;" class="chat-options margin-right-8" @click="closeChat">
                                     <i class="icon icon-close"></i>
                                 </a>
                             </header>
@@ -149,10 +149,17 @@
                     user: []
                 },
                 messageBody: '',
-                placeholder: 'Type a message...'
+                placeholder: 'Type a message...',
+                userObj: {}
             }
         },
         methods: {
+            closeChat: function () {
+              $('.ft-dock-wrapper').addClass('hidden')
+            },
+            toggleChatMinimize: function () {
+                $('.ft-chat-box').toggleClass('ft-chat-box--open')
+            },
             processEditOperation: function (operation) {
                 this.backContent = operation.api.origElements.innerHTML
             },
@@ -167,15 +174,24 @@
                 return d != '' ? new Date(str + 'Z').getTime() : new Date().getTime()
             },
             initPostMessage: function () {
-                if(this.backContent!=='') {
+                if(this.strip(this.backContent).trim()!=='') {
                     this.postMessage(this.currentConversation)
                 }
+            },
+            strip : function(html) {
+                var tmp = document.createElement("DIV");
+                tmp.classList = 'hidden';
+                tmp.innerHTML = html;
+                let val =  tmp.textContent || tmp.innerText || "";
+                tmp.remove()
+                return val
             },
             whichUser: function (u) {
                 return u === current_username ? 0 : 1
             },
             showThread: function () {
                 $('.ft-chat--list-wrapper').addClass('is-list-open')
+                this.getConversations()
             },
             openChat: function (c) {
                 this.showConversation(c, true)
@@ -205,7 +221,7 @@
                             'X-CSRF-Token': pusherConfig.token
                         },
                         params: {
-                            username: current_username
+                            username: receiverUsername
                         }
                     }
                 });
@@ -213,7 +229,7 @@
                 this.MessageChannel.bind('App\\Events\\MessagePublished', function (data) {
                     data.message.user = data.sender;
                     if (that.currentConversation.id == data.message.thread_id) {
-                        that.currentConversation.conversationMessages.push(data.message);
+                        that.currentConversation.conversationMessages.data.push(data.message);
                         setTimeout(function () {
                             that.autoScroll('.coversations-thread');
                         }, 100)
@@ -258,7 +274,6 @@
                         _token: _token
                     }
                 }).then(function (response) {
-                    console.log(response)
                     if (response.status == 200) {
                         that.conversations = response.data.data
                         //this.conversations = JSON.parse(response.body).data;
@@ -284,7 +299,6 @@
                                 _token: _token
                             }
                         }).then(function (response) {
-                            console.log(response)
                             if (response.status == 200) {
                                 that.currentConversation = response.data.data;
                                 that.currentConversation.user = conversation.user;
@@ -304,7 +318,17 @@
                 $('#create-chat-vue').html('')
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
-                this.isSendingMsg = true
+                let preData = {
+                    body: messageBody,
+                    user: this.userObj,
+                    user_id: user_id
+                }
+                that.currentConversation.conversationMessages.data.push(preData);
+                let index = this.currentConversation.conversationMessages.data.length - 1
+                setTimeout(function () {
+                    that.autoScroll('.coversations-thread');
+                }, 100)
+                /*this.isSendingMsg = true*/
                 axios({
                     method: 'post',
                     responseType: 'json',
@@ -316,10 +340,7 @@
                 }).then(function (response) {
                     that.isSendingMsg = false
                     if (response.status == 200) {
-                        that.currentConversation.conversationMessages.data.push(response.data.data);
-                        setTimeout(function () {
-                            that.autoScroll('.coversations-thread');
-                        }, 100)
+                        that.currentConversation.conversationMessages.data[index] = response.data.data;
                     }
                 }).catch(function (error) {
                     that.isSendingMsg = false
@@ -379,8 +400,6 @@
                 if (this.currentConversation.conversationMessages.data.length < this.currentConversation.conversationMessages.total) {
                     this.$http.post(this.currentConversation.conversationMessages.next_page_url).then(function (response) {
                         var latestConversations = JSON.parse(response.body).data;
-
-
                         this.currentConversation.conversationMessages.last_page = latestConversations.conversationMessages.last_page;
                         this.currentConversation.conversationMessages.next_page_url = latestConversations.conversationMessages.next_page_url;
                         this.currentConversation.conversationMessages.per_page = latestConversations.conversationMessages.per_page;
@@ -422,7 +441,25 @@
                 setTimeout(function () {
                     that.toggleUsersSelectize();
                 }, 10);
-
+            },
+            setUserObj: function () {
+                let _token = $("meta[name=_token]").attr('content')
+                let that = this
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url + 'get-self-timeline',
+                    data: {
+                        _token: _token
+                    }
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        console.log(response.data);
+                        that.userObj = response.data[0].user_timeline
+                    }
+                }).catch(function (error) {
+                    console.log(error)
+                })
             }
         },
         computed: {
@@ -448,6 +485,7 @@
                 }
                 return true
             });
+            this.setUserObj()
         },
         components: {
             'medium-editor': editor

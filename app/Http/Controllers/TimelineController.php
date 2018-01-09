@@ -4646,8 +4646,8 @@ class TimelineController extends AppBaseController
   }
 
   public function getSelfTimeline() {
-      $user_timeline = User::where('id',Auth::user()->id)->with('timeline')->get();
-      return response()>json([compact('user_timeline')]);
+      $user_timeline = User::where('id',Auth::user()->id)->with('timeline')->first();
+      return response()->json([compact('user_timeline')]);
   }
 
 }

@@ -131,18 +131,23 @@
                 let username = current_username
                 let paginate = 4
                 let _token = $("meta[name=_token]").attr('content')
+                let url = base_url + 'get-posts'
+                let profile_timeline = false
                 if($('#timeline_username').length) {
                     username =  $('#timeline_username').val()
+                    //url = base_url + 'get-user-posts'
+                    profile_timeline = true
                 }
                 axios({
                     method: 'post',
                     responseType: 'json',
-                    url: base_url + 'get-posts',
+                    url: url,
                     data: {
                         username: username,
                         paginate: paginate,
                         _token: _token,
-                        offset: that.offset
+                        offset: that.offset,
+                        profile_timeline: profile_timeline
                     }
                 }).then( function (response) {
                     if (response.status ==  200) {

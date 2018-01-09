@@ -3314,6 +3314,7 @@ aside .md-drawer-scroll__wrapper{
     flex-grow: 1;
     display: flex;
     flex-direction:column;
+    background:  #fff;
 }
 .ft-dock-wrapper{
     bottom: 0;
@@ -3333,13 +3334,18 @@ aside .md-drawer-scroll__wrapper{
 }
 .ft-chat-box {
     position: absolute;
-    bottom: 0;
+    top: 0;
+    bottom: auto;
     width: 100%;
     height: auto;
     left: auto;
     box-shadow: 0 1px 4px rgba(0, 0, 0, .3);
     right: 0;
     overflow-x:  hidden;
+}
+.ft-chat-box--open {
+    top: auto;
+    bottom: 0;
 }
 .ft-chat-wrapper{
     position: relative;
@@ -3360,6 +3366,7 @@ aside .md-drawer-scroll__wrapper{
 }
 .ft-chat-box a {
     color: inherit;
+    z-index:  2;
 }
 .ft-chat-box .chat-options .icon {
     font-size: 14px;
@@ -3368,6 +3375,7 @@ aside .md-drawer-scroll__wrapper{
     width: 28px;
     height: 28px;
     line-height: 28px;
+    z-index:  2;
 }
 .margin-right-8 {
     margin-right: 8px;
@@ -3465,7 +3473,6 @@ aside .md-drawer-scroll__wrapper{
     padding: 4px 8px;
 }
 .ft-chat--list-wrapper .md-list__item{
-    background-color: #fff;
     transition: background-color 0.3s ease;
 }
 .ft-chat--list-wrapper .md-list__item:hover{
@@ -3555,4 +3562,7 @@ aside .md-drawer-scroll__wrapper{
 }
 [data-user="0"] .timeago--tiny svg {
     fill: #ffffff;
+}
+.medium-editor-toolbar, .medium-editor-toolbar.medium-editor-stalker-toolbar {
+    display: none !important;
 }
