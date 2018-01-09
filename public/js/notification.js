@@ -38468,13 +38468,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         since: function since(date) {
             var str = date;
-            if (this.data != '') {
-                str = this.date;
+            if (date != '') {
+                str = date;
                 var res = str.split(' ');
                 str = res[0] + 'T' + res[1];
                 str.replace(/\s/, 'T');
             }
-            return this.date != '' ? new Date(str + 'Z').getTime() : new Date().getTime();
+            return date != '' ? new Date(str + 'Z').getTime() : new Date().getTime();
         },
         subscribeToPrivateMessageChannel: function subscribeToPrivateMessageChannel() {
             var that = this;

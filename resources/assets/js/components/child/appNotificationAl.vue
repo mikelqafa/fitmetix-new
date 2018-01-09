@@ -109,13 +109,13 @@
             },
             since: function (date) {
                 let str = date
-                if(this.data != '') {
-                    str = this.date
+                if(date != '') {
+                    str = date
                     let res = str.split(' ')
                     str = res[0]+'T'+res[1]
                     str.replace(/\s/, 'T')
                 }
-                return this.date != '' ? new Date(str+'Z').getTime() : new Date().getTime()
+                return date != '' ? new Date(str+'Z').getTime() : new Date().getTime()
             }
         },
         computed: {
