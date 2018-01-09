@@ -3434,7 +3434,7 @@ aside .md-drawer-scroll__wrapper{
     width: 50px;
     position: absolute;
     left: 50%;
-    top: 38%;
+    top: 45%;
     transform: translate(-50%,-50%);
     background: url(https://cssanimation.rocks/images/posts/steps/heart.png) no-repeat;
     background-position: 0 0;
@@ -3565,4 +3565,17 @@ aside .md-drawer-scroll__wrapper{
 }
 .medium-editor-toolbar, .medium-editor-toolbar.medium-editor-stalker-toolbar {
     display: none !important;
+}
+.viewAll {
+    margin-left: 4px;
+    color: #1E7C82;
+}
+.md-button--link {
+    margin-bottom: 4px;
+}
+.text-wrapper_desc {
+    margin-bottom: 8px;
+}
+.text-wrapper {
+    word-break: break-word;
 }

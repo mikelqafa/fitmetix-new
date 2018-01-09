@@ -7,21 +7,6 @@
         <a href="javascript:;" v-show="isMoreViewable" v-on:click="viewMore" class="viewAll md-button--link">view more</a>
     </div>
 </template>
-<style>
-    .viewAll {
-        margin-left: 4px;
-        color: #1E7C82;
-    }
-    .md-button--link {
-        margin-bottom: 4px;
-    }
-    .text-wrapper_desc {
-        margin-bottom: 8px;
-    }
-    .text-wrapper {
-        word-break: break-all;
-    }
-</style>
 <script>
     export default {
         props: {

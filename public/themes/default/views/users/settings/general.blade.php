@@ -319,8 +319,8 @@
 									{{ csrf_field() }}
 
 									<select name="language" class="form-control">
-										<option value="en">EN</option>
-										<option value="es">ES</option>
+										<option value="en" title="English">EN</option>
+										<option value="de" title="German">DE</option>
 									</select>
 									<br/>
 									<div class="pull-right">
