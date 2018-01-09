@@ -77,7 +77,7 @@
                                             <div class="md-list__item-text-body" v-html="item.description">
                                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut blanditiis consequatur distinctio dolorem ducimus perspiciatis quaerat quod recusandae suscipit totam.
                                             </div>
-                                            <div class="md-layout md-layout--row">
+                                            <div class="md-layout md-layout--row hidden">
                                                 <a href="javascript:;" class="ft-expression ft-expression--comment-like  ft-expression--meta" style="">
                                                     <span class="icon icon-liked count"></span>
                                                     <span class="ft-expression--meta-text">0</span>
