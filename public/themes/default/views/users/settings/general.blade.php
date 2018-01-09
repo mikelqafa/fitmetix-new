@@ -331,10 +331,15 @@
 							</div><!-- /Fitmetix-form -->
 						</div>
 					</div>
-
-
 					<!-- End of second panel -->
-
+				</div>
+				<div class="logout" style="text-align: center;">
+					<form action="{{ url('/logout') }}" method="post">
+	                    <button type="submit" class="btn ft-btn-primary btn-primary">
+	                        {{ trans('common.logout') }}
+	                    </button>
+	                    {{ csrf_field() }}
+	                </form>
 				</div>
 			</div><!-- /row -->
 		</div>

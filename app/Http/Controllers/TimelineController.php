@@ -4649,5 +4649,14 @@ class TimelineController extends AppBaseController
       $user_timeline = User::where('id',Auth::user()->id)->with('timeline')->first();
       return response()->json([compact('user_timeline')]);
   }
+public function saveMessageAttachment(Request $request) {
+        $attached_file = $request->file('attachment');
+        $strippedName = str_replace(' ', '', $attached_file->getClientOriginalName());
+        $attached_file_name = 'chat'.time().$strippedName;
+        $s3 = Storage::disk('uploads');
+        $s3->put('users/attachments/'.$attached_file_name, file_get_contents($attached_file));
+        $file_link = Storage::disk('uploads')->url('users/attachments/'.$attached_file_name);
+        return response()->json(['file_link'=>$file_link]);
+    }
 
 }

@@ -188,10 +188,19 @@ class MessageController extends Controller
             }
         }
 
-        $message = new Message([
+        if($request->attachment) {
+            $message = new Message([
+                'user_id'   => Auth::user()->id,
+                'body'      => $input['message'],
+                'attachment' => $request->attachment,
+            ]);
+        }
+        else {
+            $message = new Message([
                 'user_id'   => Auth::user()->id,
                 'body'      => $input['message'],
             ]);
+        }
 
         $thread->messages()->save($message);
 
