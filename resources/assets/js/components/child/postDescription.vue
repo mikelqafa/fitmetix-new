@@ -23,6 +23,8 @@
             viewMore: function () {
                 this.postHtmlViewAble = this.postHtml
                 window.emojify.run()
+                window.hashtagify()
+                window.mentionify()
             }
         },
         computed: {
