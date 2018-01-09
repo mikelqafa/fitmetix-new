@@ -4659,4 +4659,10 @@ public function saveMessageAttachment(Request $request) {
         return response()->json(['file_link'=>$file_link]);
     }
 
+    public function getSettingMobile()
+    {
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+        return $theme->scope('search', compact('username'))
+            ->render();
+  }
 }

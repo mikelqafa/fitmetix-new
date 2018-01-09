@@ -1,5 +1,5 @@
 <div class="ft-header hidden-md hidden-lg">
-    <div class="ft-header-nav">
+    <form class="ft-header-nav">
         @if(Auth::user())
             <a class="ft-header-nav__item {{ Request::is(Auth::user()->username.'/create-event') ? 'is-active' : '' }}" href="{{ url('/') }}">
                 <div class="icon" data-icon="n"></div>
@@ -48,7 +48,7 @@
                         </li>
                     </ul>
                 </a>
-            </div>
+            </form>
         @else
             <div class="ft-header-nav__item"></div>
             <div class="ft-header-nav__item"></div>
