@@ -397,6 +397,7 @@ Route::group(['prefix' => '/{username}/event-settings', 'middleware' => ['auth',
 Route::post('get-posts','TimelineController@postAPI');
 Route::post('get-user-posts','TimelineController@userPostAPI');
 
+Route::post('get-self-timeline','TimelineController@getSelfTimeline');
 
 Route::post('get-gallery-by-location','TimelineController@getGalleryByLocation');
 
