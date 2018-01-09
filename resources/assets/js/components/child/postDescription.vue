@@ -22,9 +22,11 @@
 
             viewMore: function () {
                 this.postHtmlViewAble = this.postHtml
-                window.emojify.run()
-                window.hashtagify()
-                window.mentionify()
+                window.setTimeout(function(){
+                    window.emojify.run()
+                    window.mentionify()
+                    window.hashtagify()
+                }, 300)
             }
         },
         computed: {
