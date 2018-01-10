@@ -1,6 +1,6 @@
 <!-- <div class="main-content">-->
 <div class="container">
-
+<h1>Meow</h1>
 	<div class="row">
 		<div class="col-md-2 visible-lg hidden">
 			{!! Theme::partial('home-leftbar',compact('trending_tags')) !!}

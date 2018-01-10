@@ -1816,7 +1816,7 @@ a{
     background-size: cover;
 }
 .md-list {
-    background-color: #FAFBFC;
+    /* background-color: #FAFBFC; */
     padding: 4px 0;
     width: 100%;
     display: block;
@@ -3285,7 +3285,7 @@ aside .md-drawer-scroll__wrapper{
 }
 .ft-chat-box__footer{
     background-color: #fff;
-    padding-bottom: 28px;
+    padding-bottom: 40px;
     padding-top: 2px;
     position: relative;
     display: flex;
@@ -3343,9 +3343,50 @@ aside .md-drawer-scroll__wrapper{
     right: 0;
     overflow-x:  hidden;
 }
+.ft-chat-box--desktop .ft-chat-box__inner-wrapper, .ft-box--desktop{
+    height: calc(100vh - 94px);
+    width: 100%;
+}
+.ft-chat-desktop__header{
+    background-color: #FAFBFC;
+    color: #333;
+    display: flex;
+    flex-direction: row;
+    height: 48px;
+    align-items: center;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .20);
+    z-index: 2;
+    border-radius: 3px 3px 0 0;
+    flex-shrink: 0;
+    padding: 0 16px;
+}
+.ft-chat-desktop__header .form-control{
+    background-color: transparent;
+    border: none !important;
+}
+.ft-box--desktop .md-list__item:hover,.ft-box--desktop .md-list__item.is-active {
+    background-color: #fafafa;
+}
+.ft-chat-desktop__header .btn-default {
+    background-color: transparent;
+    border: none;
+}
 .ft-chat-box--open {
     top: auto;
     bottom: 0;
+}
+.ft-chat-box--desktop {
+    box-shadow: 0 0 0 1px rgba(0,0,0,.12);
+}
+.ft-box--desktop {
+    box-shadow: 0 0 0 1px rgba(0,0,0,.12);
+    background-color: #fff;
+}
+.ft-box--desktop .coversations-list .md-list__item-text-body{
+    width: 100%;
+}
+.ft-box--desktop .coversations-list .md-list__item-primary{
+    flex-grow: 1;
 }
 .ft-chat-wrapper{
     position: relative;

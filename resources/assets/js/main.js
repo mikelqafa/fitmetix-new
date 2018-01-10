@@ -8,6 +8,7 @@ import EventPostByHLU from './components/EventPostByHLU'
 import createPost from './components/createPost'
 import ProfilePictureDialog from './components/ProfilePictureDialog'
 import singleEventView from './components/child/singleEventView'
+import AppSingleChat from './components/child/singleChat'
 import AppNotification from './components/AppNotification'
 import AppNotificationAll from './components/AppNotificationAll'
 import postDialogOption from './components/DialogOption'
@@ -83,6 +84,13 @@ window.appNotificationAll = new Vue({
   store,
   components: {
     'app-notification-all': AppNotificationAll
+  }
+})
+window.singleChatApp = new Vue({
+  el: '#app-single-chat',
+  store,
+  components: {
+    'app-single-chat': AppSingleChat
   }
 })
 

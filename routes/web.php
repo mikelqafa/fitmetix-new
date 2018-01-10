@@ -19,6 +19,7 @@ Route::get('/contact', 'PageController@contact');
 Route::get('search', ['uses'=>'TimelineController@getSearch','middleware' => ['auth']]);
 Route::get('setting-mobile', ['uses'=>'TimelineController@getSettingMobile','middleware' => ['auth']]);
 Route::post('/contact', 'PageController@saveContact');
+Route::get('/conversation', ['uses'=>'UserController@getConversation', 'middleware' => ['auth']]);
 Route::get('/share-post/{id}', 'PageController@sharePost');
 Route::get('/gallery/hashtag/{hashtag}', 'TimelineController@getHashtag');
 Route::get('/event/hashtag/{hashtag}', 'TimelineController@getEventByHashtag');
@@ -284,7 +285,6 @@ Route::group(['prefix' => '/{username}', 'middleware' => ['auth', 'editown']], f
     Route::get('settings','UserController@showProfileSettings');
     Route::get('edit-profile','UserController@editProfile');
 
-    Route::get('/messages', 'UserController@messages');
     Route::get('/follow-requests', 'UserController@followRequests');
 
     Route::get('/pages-groups', 'TimelineController@pagesGroups');

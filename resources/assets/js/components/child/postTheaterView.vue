@@ -87,7 +87,6 @@
                 }
                 that.$store.commit('SET_THEATER_ITEM', {postIndex: undefined, imageIndex: undefined})
             });
-            console.log(this.theaterPostItem)
         },
         computed: {
             ...mapGetters({

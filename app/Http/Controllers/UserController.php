@@ -1339,4 +1339,10 @@ class UserController extends AppBaseController
     $result = $unblock ? 'Successfully unblocked user' : 'Failed to unblock user';
     return $result;
   }
+
+  public function getConversation() {
+      $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
+      return $theme->scope('chat', compact('username'))
+          ->render();
+  }
 }

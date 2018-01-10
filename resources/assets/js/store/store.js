@@ -13,9 +13,19 @@ export const store = new Vuex.Store({
     commentOption: {},
     pusher: null,
     notification: [],
-    unreadNotifications: 0
+    unreadNotifications: 0,
+    chatPusher: null,
+    MessageChannel: '',
+    currentConversation: {
+      conversationMessages: {},
+      user: []
+    },
+    conversations: [],
+    selfUserObj: ''
   },
   getters: {
+    currentConversation: state => state.currentConversation,
+    conversations: state => state.conversations,
     postItemList: state => state.postItemList,
     notification: state => state.notification,
     unreadNotifications: state => state.unreadNotifications,
@@ -158,6 +168,26 @@ export const store = new Vuex.Store({
     },
     SET_OPTIONS_COMMENT (state, data) {
       state.commentOption = data.comment
+    },
+    ADD_CONVERSATION_MESSAGE(state, data) {
+      state.currentConversation.conversationMessages.data.push(data.message);
+    },
+    SET_CONVERSATION(state, data) {
+      state.conversations = data.message
+    },
+    SET_CONVERSATION_(state, data) {
+      if( state.currentConversation.conversationMessages.data !== undefined ) {
+        state.currentConversation.conversationMessages.data.push(data.message);
+      } else {
+        Vue.set(state.currentConversation.conversationMessages, 'data', data.message)
+        // state.currentConversation.conversationMessages.data.push(data.message);
+      }
+    },
+    SET_CURRENT_CONVERSATION(state, data) {
+      state.currentConversation = data;
+    },
+    SET_CURRENT_CONVERSATION_OBJ(state, data) {
+      Vue.set(state.currentConversation, data.obj, data.data)
     }
   },
   actions: {
@@ -207,6 +237,230 @@ export const store = new Vuex.Store({
           }
         }
       }
+    },
+    subscribeToPrivateMessageChannel: (context, receiverUsername) => {
+      context.state.chatPusher = new Pusher(pusherConfig.PUSHER_KEY, {
+        encrypted: true,
+        auth: {
+          headers: {
+            'X-CSRF-Token': pusherConfig.token
+          },
+          params: {
+            username: receiverUsername
+          }
+        }
+      });
+      context.state.MessageChannel = context.state.chatPusher.subscribe(receiverUsername + '-message-created');
+      context.state.MessageChannel.bind('App\\Events\\MessagePublished', function (data) {
+        data.message.user = data.sender;
+        if (context.state.currentConversation.id == data.message.thread_id) {
+          context.state.currentConversation.conversationMessages.data.push(data.message);
+          //TODO mutation will work?
+        }
+        else {
+          let indexes = $.map(context.state.conversations.data, function (thread, key) {
+            if (thread.id == data.message.thread_id) {
+              return key;
+            }
+          });
+          if (indexes != '') {
+            //context.state.conversations.data[indexes[0]].unread = true;
+            //context.state.conversations.data[indexes[0]].lastMessage = data.message;
+          }  else {
+            let _token = $("meta[name=_token]").attr('content')
+            axios({
+              method: 'post',
+              responseType: 'json',
+              url: base_url + 'ajax/get-message/' + data.message.thread_id,
+              data: {
+                _token: _token
+              }
+            }).then(function (response) {
+              if (response.status == 200) {
+                //context.state.conversations.data.unshift(response.data.data);
+              }
+            }).catch(function (error) {
+              console.log(error)
+            })
+          }
+        }
+      });
+    },
+    getConversations: (context) => {
+      let _token = $("meta[name=_token]").attr('content')
+      axios({
+        method: 'post',
+        responseType: 'json',
+        url: base_url + 'ajax/get-messages',
+        data: {
+          _token: _token
+        }
+      }).then(function (response) {
+        if (response.status == 200) {
+          console.log(response.data.data)
+          context.commit('SET_CONVERSATION', {message: response.data.data})
+          context.dispatch('showConversation', {conversation: context.state.conversations.data[0], byTap:false})
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    postMessage: (context, data) => {
+      let messageBody = data.nonHtmlContent;
+      let _token = $("meta[name=_token]").attr('content')
+      let preData = {
+        body: messageBody,
+        user: context.state.selfUserObj,
+        user_id: user_id
+      }
+      context.commit('ADD_CONVERSATION_MESSAGE', {message:preData})
+      let index = context.state.currentConversation.conversationMessages.data.length - 1
+      /*setTimeout(function () {
+        that.autoScroll('.coversations-thread');
+      }, 100)*/
+      /*this.isSendingMsg = true*/
+      axios({
+        method: 'post',
+        responseType: 'json',
+        url: base_url + 'ajax/post-message/' + context.state.currentConversation.id,
+        data: {
+          _token: _token,
+          message: messageBody
+        }
+      }).then(function (response) {
+        if (response.status == 200) {
+          context.state.currentConversation.conversationMessages.data[index] = response.data.data;
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    postNewConversation: (context, data) => {
+      if (this.recipients.length) {
+        this.$http.post(base_url + 'ajax/create-message', {
+          message: this.messageBody,
+          recipients: this.recipients
+        }).then(function (response) {
+          if (response.status) {
+            vm = this;
+
+            newThread = JSON.parse(response.body).data;
+            indexes = $.map(vm.conversations.data, function (thread, key) {
+              if (thread.id == newThread.id) {
+                return key;
+              }
+            });
+
+            if (indexes != '') {
+              vm.conversations.data[indexes[0]].unread = true;
+              vm.conversations.data[indexes[0]].lastMessage = newThread.lastMessage;
+            }
+            else {
+              vm.conversations.data.unshift(response.data.data);
+            }
+
+            $('#messageReceipient').focus();
+            this.recipients = [];
+            this.newConversation = false;
+            this.messageBody = "";
+            this.showConversation(vm.conversations.data[0]);
+            setTimeout(function () {
+              vm.autoScroll('.coversations-thread');
+            }, 100)
+          }
+        });
+      }
+    },
+    showConversation: (context, data) => {
+      data.byTap ? $('.ft-chat--list-wrapper').removeClass('is-list-open') : ''
+      if (data.conversation && data.conversation !== undefined) {
+        if (data.conversation.id != context.state.currentConversation.id) {
+          data.conversation.unread = false;
+          let _token = $("meta[name=_token]").attr('content')
+          axios({
+            method: 'post',
+            responseType: 'json',
+            url: base_url + 'ajax/get-conversation/' + data.conversation.id,
+            data: {
+              _token: _token
+            }
+          }).then(function (response) {
+            if (response.status == 200) {
+              //that.currentConversation = response.data.data;
+              context.commit('SET_CURRENT_CONVERSATION', response.data.data)
+              context.commit('SET_CURRENT_CONVERSATION_OBJ', {obj: 'user', data: data.conversation.user})
+              /*setTimeout(function () {
+                that.autoScroll('.coversations-thread');
+              }, 100)*/
+            }
+          }).catch(function (error) {
+            console.log(error)
+          })
+        }
+      }
+    },
+    getMoreConversationMessages: function () {
+      if (this.currentConversation.conversationMessages.data.length < this.currentConversation.conversationMessages.total) {
+        this.$http.post(this.currentConversation.conversationMessages.next_page_url).then(function (response) {
+          var latestConversations = JSON.parse(response.body).data;
+          this.currentConversation.conversationMessages.last_page = latestConversations.conversationMessages.last_page;
+          this.currentConversation.conversationMessages.next_page_url = latestConversations.conversationMessages.next_page_url;
+          this.currentConversation.conversationMessages.per_page = latestConversations.conversationMessages.per_page;
+          this.currentConversation.conversationMessages.prev_page_url = latestConversations.conversationMessages.prev_page_url;
+
+          var vm = this;
+          $.each(latestConversations.conversationMessages.data, function (i, latestConversation) {
+            vm.currentConversation.conversationMessages.data.unshift(latestConversation);
+          });
+
+          setTimeout(function () {
+            vm.timeago();
+          }, 10);
+        });
+      }
+    },
+    getMoreConversations: function () {
+      if (this.conversations.data.length < this.conversations.total) {
+        this.$http.post(this.conversations.next_page_url).then(function (response) {
+          var latestConversations = JSON.parse(response.body).data;
+          this.conversations.last_page = latestConversations.last_page;
+          this.conversations.next_page_url = latestConversations.next_page_url;
+          this.conversations.per_page = latestConversations.per_page;
+          this.conversations.prev_page_url = latestConversations.prev_page_url;
+          let that = this
+          $.each(latestConversations.data, function (i, latestConversation) {
+            that.conversations.data.unshift(latestConversation);
+          });
+        });
+      }
+    },
+    showNewConversation: function () {
+      this.newConversation = true;
+      this.currentConversation = {
+        user: []
+      };
+      $('#messageReceipient').focus();
+      let that = this;
+      setTimeout(function () {
+        that.toggleUsersSelectize();
+      }, 10);
+    },
+    setUserObj: (context) => {
+      let _token = $("meta[name=_token]").attr('content')
+      axios({
+        method: 'post',
+        responseType: 'json',
+        url: base_url + 'get-self-timeline',
+        data: {
+          _token: _token
+        }
+      }).then(function (response) {
+        if (response.status == 200) {
+          context.state.selfUserObj = response.data[0].user_timeline
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
     }
   }
 })
