@@ -3563,7 +3563,7 @@ class TimelineController extends AppBaseController
             $posts = Post::whereIn('user_id', function ($query) use ($id) {
                 $query->select('leader_id')
                     ->from('followers')
-                    ->where('follower_id', $id);
+                    ->where([['follower_id', $id],['status','approved']]);
             })->orWhere('user_id', $id)->where('active', 1)->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
         }
 
