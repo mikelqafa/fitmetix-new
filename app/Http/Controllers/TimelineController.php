@@ -2121,6 +2121,10 @@ class TimelineController extends AppBaseController
 					$events[$key]->media = array();
 					$events[$key]->media = $event_media;
 				}
+                $event->expired = false;
+                if($event->start_date < Carbon::now()){
+                    $event->expired = true;
+                }
 			}
 			return response()->json(['status' => '200', 'deleted' => true, 'data' => $events]);
 
@@ -4664,5 +4668,15 @@ public function saveMessageAttachment(Request $request) {
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
         return $theme->scope('search', compact('username'))
             ->render();
+  }
+
+  public function checkBlockStatus(Request $request) {
+       $blocked = DB::table('user_blocked')->where([['blocker_uid',$request->user_id],['blocked_uid',Auth::user()->id]])->first();
+       $block_status = false; 
+       if($blocked){
+           $block_status = true;
+       }
+       return response()->json(['blocked'=>$block_status]);
+
   }
 }
