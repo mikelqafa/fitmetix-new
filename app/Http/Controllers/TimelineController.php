@@ -4005,7 +4005,7 @@ class TimelineController extends AppBaseController
                 }
                 $user_event->protected = false;
                 $checkUser = User::find($user_event->user_id);
-                if((($checkUser->followers->where('status','approved')->contains(Auth::user()->id))) && ($user_event->type == 'private') && ($user_event->user_id != Auth::user()->id)) {
+                if((!($checkUser->followers->contains(Auth::user()->id))) && ($user_event->type == 'private') && ($user_event->user_id != Auth::user()->id)) {
                     $user_event->protected = true;
                 }
             }
