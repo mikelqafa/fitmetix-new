@@ -546,9 +546,7 @@ class UserController extends AppBaseController
                             'email_post_share'    => $input['email_post_share'],
                             'email_comment_post'  => $input['email_comment_post'],
                             'email_like_comment'  => $input['email_like_comment'],
-                            'email_reply_comment' => $input['email_reply_comment'],
-                            'email_join_group'    => $input['email_join_group'],
-                            'email_like_page'     => $input['email_like_page'], ];
+                          ];
 
         $privacy = DB::table('user_settings')->where('user_id', $user->id)
                    ->update($user_settings);

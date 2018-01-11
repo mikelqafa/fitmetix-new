@@ -73,7 +73,7 @@
                 <a href="{{ url('/'.Auth::user()->username.'/settings/privacy') }}">Privacy Settings</a>
             </li>
             <li class="list-group-item">
-                <a href="javascript:;">Email Notifications</a>
+                <a href="{{ url('/'.Auth::user()->username.'/settings/general') }}">Email Notifications</a>
             </li>
             <li class="list-group-item">
                 <a href="javascript:;">Deactivate Account</a>
