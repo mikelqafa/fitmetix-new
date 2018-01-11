@@ -89,7 +89,7 @@
                                             <i class="icon icon-like visible-default"></i>
                                             <i class="icon icon-liked hidden-default"></i>
                                         </a>
-                                        <a class="md-list__item-secondary-action" href="javascript:;" v-on:click="openCommentDialog(item)">
+                                        <a class="md-list__item-secondary-action" href="javascript:;" v-on:click="openCommentDialog(item, index)">
                                             <i class="icon icon-options"></i>
                                         </a>
                                     </div>
@@ -348,8 +348,8 @@
                 var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
                 return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
             },
-            openCommentDialog: function (item) {
-                this.$store.commit('SET_OPTIONS_COMMENT', {comment: item})
+            openCommentDialog: function (item, index) {
+                this.$store.commit('SET_OPTIONS_COMMENT', {comment: item, index: index, postIndex: this.postIndex})
                 $('#comment-option-dialog').MaterialDialog('show')
             },
             likeUnlikeComment: function (e, index) {

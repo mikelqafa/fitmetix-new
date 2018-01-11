@@ -29571,8 +29571,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var breakTag = is_xhtml || typeof is_xhtml === 'undefined' ? '<br />' : '<br>';
             return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
         },
-        openCommentDialog: function openCommentDialog(item) {
-            this.$store.commit('SET_OPTIONS_COMMENT', { comment: item });
+        openCommentDialog: function openCommentDialog(item, index) {
+            this.$store.commit('SET_OPTIONS_COMMENT', { comment: item, index: index, postIndex: this.postIndex });
             $('#comment-option-dialog').MaterialDialog('show');
         },
         likeUnlikeComment: function likeUnlikeComment(e, index) {
@@ -30065,7 +30065,8 @@ var render = function() {
                                                     on: {
                                                       click: function($event) {
                                                         _vm.openCommentDialog(
-                                                          item
+                                                          item,
+                                                          index
                                                         )
                                                       }
                                                     }
@@ -34596,6 +34597,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
             var u = $('#eventByUsername');
             if (u !== undefined && u.length) {
+                alert();
                 url += '?' + 'username' + '=' + u.val();
             }
             return url;
@@ -43816,6 +43818,32 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -43826,7 +43854,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             unid: 'app-confirm-delete-comment',
             body: 'Do you really want to delete this comment?',
             isLoading: false,
-            initEdit: false
+            initEdit: false,
+            userImage: '',
+            placeholder: '',
+            content: '',
+            backContent: '',
+            viewContent: '',
+            reportComment: '',
+            imageFile: [],
+            options: { disableReturn: false },
+            commentIndex: 0
         };
     },
     components: {
@@ -43838,9 +43875,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         dialog.on('ca.dialog.hidden', function () {
             this.initEdit = false;
         });
+        console.log(this.authUser);
     },
 
     methods: {
+        confirmReport: function confirmReport() {
+            var confirmDialog = $('#' + this.unid);
+            confirmDialog.MaterialDialog('show');
+            var that = this;
+            confirmDialog.on('ca.dialog.affirmative.action', function () {
+                that.reportPost();
+            });
+        },
         initReportComment: function initReportComment() {},
         confirmDeleteComment: function confirmDeleteComment() {
             this.body = 'Do you really want to delete this comment?';
@@ -43855,18 +43901,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var that = this;
             var _token = $("meta[name=_token]").attr('content');
             this.isLoading = true;
-            $('#post-image-theater-dialog').MaterialDialog('hide');
+            $('#comment-report-dialog').MaterialDialog('hide');
+            var comment_id = that.optionMenuPostItem.comment.id;
             axios({
                 method: 'post',
                 responseType: 'json',
-                url: base_url + 'ajax/post-delete',
+                url: base_url + 'ajax/comment-delete',
                 data: {
                     _token: _token,
-                    post_id: that.postItem.id
+                    comment_id: comment_id
                 }
             }).then(function (response) {
                 if (response.status == 200) {
-                    that.$store.commit('REMOVE_POST_ITEM_LIST', that.optionMenuPostItem.postIndex);
+                    that.$store.commit('REMOVE_POST_COMMENT', { postIndex: that.optionMenuPostItem.postIndex, commentIndex: that.optionMenuPostItem.index });
                     $('#post-option-dialog').MaterialDialog('hide');
                     materialSnackBar({ messageText: response.data.message, autoClose: true });
                 }
@@ -43882,10 +43929,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         optionMenuPostItem: 'commentOption'
     }), {
         postItem: function postItem() {
-            return this.optionMenuPostItem.id !== undefined ? this.optionMenuPostItem : undefined;
+            return this.optionMenuPostItem.comment !== undefined ? this.optionMenuPostItem.comment : undefined;
         },
         authUser: function authUser() {
-            return this.postItem !== undefined ? this.postItem.user_id === user_id : false;
+            return this.postItem !== undefined ? this.postItem.user_id == user_id : false;
         }
     })
 });
@@ -43898,81 +43945,184 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      {
-        staticClass:
-          "md-dialog md-dialog--maintain-width md-dialog--post-option md-dialog--full-screen",
-        attrs: { id: "comment-option-dialog" }
-      },
-      [
-        _c("div", { staticClass: "md-dialog__wrapper" }, [
-          _c("div", { staticClass: "md-dialog__shadow" }),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "md-dialog__surface",
-              staticStyle: { position: "relative" }
-            },
-            [
-              _c("div", { staticClass: "md-dialog__body" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "ft-dialog-option",
-                    class: { "is-loading": _vm.isLoading }
-                  },
-                  [
-                    !_vm.authUser
-                      ? _c(
-                          "a",
-                          {
-                            staticClass: "btn ft-dialog-option__item",
-                            attrs: {
-                              href: "javascript:;",
-                              "data-value": "post"
+  return _c(
+    "div",
+    [
+      _c("app-confirm", { attrs: { unid: _vm.unid, body: _vm.body } }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "md-dialog md-dialog--center md-dialog--maintain-width md-dialog--md",
+          attrs: { id: "comment-report-dialog" }
+        },
+        [
+          _c("div", { staticClass: "md-dialog__wrapper" }, [
+            _c("div", { staticClass: "md-dialog__shadow" }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "md-dialog__surface",
+                staticStyle: { position: "relative" }
+              },
+              [
+                _c("header", { staticClass: "md-dialog__header" }, [
+                  _vm._v(
+                    "\n                    Help us keep Fitmetix an environment that promotes healthy living.\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "md-dialog__body" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "comment" } }, [
+                      _vm._v("Write your comment:")
+                    ]),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.reportComment,
+                          expression: "reportComment"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { rows: "5", id: "comment" },
+                      domProps: { value: _vm.reportComment },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.reportComment = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm.isLoading
+                  ? _c("div", { staticClass: "absolute-loader" }, [_vm._m(0)])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("footer", { staticClass: "md-dialog__footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "md-dialog__action md-button md-button--compact",
+                      attrs: { "data-action": "dismissive" }
+                    },
+                    [_vm._v("CANCEL")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "md-dialog__action md-button ft-btn-primary btn md-button--compact",
+                      on: { click: _vm.confirmReport }
+                    },
+                    [_vm._v("REPORT")]
+                  )
+                ])
+              ]
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "md-dialog md-dialog--maintain-width md-dialog--post-option md-dialog--full-screen",
+          attrs: { id: "comment-option-dialog" }
+        },
+        [
+          _c("div", { staticClass: "md-dialog__wrapper" }, [
+            _c("div", { staticClass: "md-dialog__shadow" }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "md-dialog__surface",
+                staticStyle: { position: "relative" }
+              },
+              [
+                _c("div", { staticClass: "md-dialog__body" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "ft-dialog-option",
+                      class: { "is-loading": _vm.isLoading }
+                    },
+                    [
+                      !_vm.authUser
+                        ? _c(
+                            "a",
+                            {
+                              staticClass: "btn ft-dialog-option__item",
+                              attrs: {
+                                href: "javascript:;",
+                                "data-value": "post"
+                              },
+                              on: { click: _vm.initReportComment }
                             },
-                            on: { click: _vm.initReportComment }
-                          },
-                          [
-                            _vm._v(
-                              "\n                            Report Comment\n                        "
-                            )
-                          ]
-                        )
-                      : _c(
-                          "a",
-                          {
-                            staticClass: "btn ft-dialog-option__item",
-                            attrs: {
-                              href: "javascript:;",
-                              "data-value": "post"
+                            [
+                              _vm._v(
+                                "\n                            Report Comment\n                        "
+                              )
+                            ]
+                          )
+                        : _c(
+                            "a",
+                            {
+                              staticClass: "btn ft-dialog-option__item",
+                              attrs: {
+                                href: "javascript:;",
+                                "data-value": "post"
+                              },
+                              on: { click: _vm.deleteComment }
                             },
-                            on: { click: _vm.deleteComment }
-                          },
-                          [
-                            _vm._v(
-                              "\n                            Delete Comment\n                        "
-                            )
-                          ]
-                        )
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _vm.isLoading
-                ? _c("div", { staticClass: "absolute-loader" }, [_vm._m(0)])
-                : _vm._e()
-            ]
-          )
-        ])
-      ]
-    )
-  ])
+                            [
+                              _vm._v(
+                                "\n                            Delete Comment\n                        "
+                              )
+                            ]
+                          )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm.isLoading
+                  ? _c("div", { staticClass: "absolute-loader" }, [_vm._m(1)])
+                  : _vm._e()
+              ]
+            )
+          ])
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ft-loading" }, [
+      _c("span", { staticClass: "ft-loading__dot" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "ft-loading__dot" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "ft-loading__dot" })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -47295,6 +47445,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         state.postItemList[data.postIndex].postComments.push(data.postComments[i]);
       }
     },
+    REMOVE_POST_COMMENT: function REMOVE_POST_COMMENT(state, data) {
+      state.postItemList[data.postIndex].postComments.splice(data.commentIndex, 1);
+    },
     ADD_POST_COMMENT_ONLY: function ADD_POST_COMMENT_ONLY(state, data) {
       if (state.postItemList[data.postIndex].postComments !== undefined && state.postItemList[data.postIndex].postComments.length !== 0) {
         state.postItemList[data.postIndex].postComments.unshift(data.postComments);
@@ -47312,7 +47465,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
       __WEBPACK_IMPORTED_MODULE_0_vue___default.a.set(state.eventWho, 'eventId', data.eventId);
     },
     SET_OPTIONS_COMMENT: function SET_OPTIONS_COMMENT(state, data) {
-      state.commentOption = data.comment;
+      state.commentOption = data;
     },
     ADD_CONVERSATION_MESSAGE: function ADD_CONVERSATION_MESSAGE(state, data) {
       state.currentConversation.conversationMessages.data.push(data.message);

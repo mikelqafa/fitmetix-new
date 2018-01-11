@@ -150,6 +150,9 @@ export const store = new Vuex.Store({
         state.postItemList[data.postIndex].postComments.push(data.postComments[i])
       }
     },
+    REMOVE_POST_COMMENT (state, data) {
+      state.postItemList[data.postIndex].postComments.splice(data.commentIndex, 1)
+    },
     ADD_POST_COMMENT_ONLY (state, data) {
       if(state.postItemList[data.postIndex].postComments !== undefined && state.postItemList[data.postIndex].postComments.length !== 0  ) {
         state.postItemList[data.postIndex].postComments.unshift(data.postComments)
@@ -167,7 +170,7 @@ export const store = new Vuex.Store({
       Vue.set(state.eventWho, 'eventId', data.eventId)
     },
     SET_OPTIONS_COMMENT (state, data) {
-      state.commentOption = data.comment
+      state.commentOption = data
     },
     ADD_CONVERSATION_MESSAGE(state, data) {
       state.currentConversation.conversationMessages.data.push(data.message);
