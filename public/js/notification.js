@@ -37988,6 +37988,7 @@ var render = function() {
   return !_vm.isLoading
     ? _c(
         "div",
+        { staticClass: "hidden-sm hidden-xs" },
         [
           _c(
             "swiper",
@@ -44105,46 +44106,52 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "ft-suggestion-wrapper" }, [
-    _c(
-      "h4",
-      {
-        staticClass: "text-center layout-p-t-1",
-        staticStyle: { "font-size": "18px" }
-      },
-      [_vm._v("Make each other great")]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "ft-suggestion md-layout md-layout--row md-layout--wrap" },
-      _vm._l(_vm.itemList, function(item) {
-        return _c(
-          "div",
-          {
-            key: item.id,
-            staticClass: "ft-suggestion__item md-layout md-layout--column"
-          },
-          [
-            _c("a", {
-              staticClass: "ft-cp__user",
-              style: { backgroundImage: "url(" + item.avatar + ")" },
-              attrs: { title: "@" + item.username, href: _vm.userLink(item) }
-            }),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "text-center",
-                attrs: { href: _vm.userLink(item) }
-              },
-              [_vm._v(_vm._s(item.username))]
-            )
-          ]
-        )
-      })
-    )
-  ])
+  return _c(
+    "div",
+    { staticClass: "ft-suggestion-wrapper hidden-sm hidden-xs" },
+    [
+      _c(
+        "h4",
+        {
+          staticClass: "text-center layout-p-t-1",
+          staticStyle: { "font-size": "18px" }
+        },
+        [_vm._v("Make each other great")]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "ft-suggestion md-layout md-layout--row md-layout--wrap"
+        },
+        _vm._l(_vm.itemList, function(item) {
+          return _c(
+            "div",
+            {
+              key: item.id,
+              staticClass: "ft-suggestion__item md-layout md-layout--column"
+            },
+            [
+              _c("a", {
+                staticClass: "ft-cp__user",
+                style: { backgroundImage: "url(" + item.avatar + ")" },
+                attrs: { title: "@" + item.username, href: _vm.userLink(item) }
+              }),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "text-center",
+                  attrs: { href: _vm.userLink(item) }
+                },
+                [_vm._v(_vm._s(item.username))]
+              )
+            ]
+          )
+        })
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

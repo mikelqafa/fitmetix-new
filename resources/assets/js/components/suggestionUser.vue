@@ -1,5 +1,5 @@
 <template>
-    <div class="ft-suggestion-wrapper">
+    <div class="ft-suggestion-wrapper hidden-sm hidden-xs">
         <h4 class="text-center layout-p-t-1" style="font-size: 18px">Make each other great</h4>
         <div class="ft-suggestion md-layout md-layout--row md-layout--wrap">
             <div class="ft-suggestion__item md-layout md-layout--column" v-for="item in itemList" :key="item.id">
