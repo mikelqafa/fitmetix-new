@@ -471,7 +471,7 @@ Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {
     Route::post('groupmember-remove', 'TimelineController@removeGroupMember');
     Route::post('group-join', 'TimelineController@timelineGroups');
     Route::post('report-post', 'TimelineController@reportPost');
-    Route::post('report-comment', 'TimelineController@reportPost');
+    Route::post('report-comment', 'TimelineController@reportComment');
     Route::post('follow-user-confirm', 'TimelineController@userFollowRequest');
     Route::post('post-message/{id}', 'MessageController@update');
     Route::post('create-message', 'MessageController@store');

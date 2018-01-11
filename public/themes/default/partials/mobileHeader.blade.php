@@ -19,34 +19,8 @@
                 <div class="icon icon-search"></div>
             </a>
             <form action="{{ url('/logout') }}" method="post" class="ft-header-nav__item">
-                <a class="dropdown-toggle ft-header-nav__item--user-img" data-toggle="dropdown" @click.prevent="showNotifications" role="button" href="javascript:;" aria-haspopup="true"
-                   aria-expanded="false">
+                <a class="ft-header-nav__item--user-img toggleSlide" href="javascript:;">
                     <div class="user-avatar" style="background-image: url('{{url(Auth::user()->avatar)}}')"></div>
-                    <ul style="left: auto; right: 0;" data-width="3" class="ft-menu dropdown-menu">
-                        <li class="{{ (Request::segment(1) == Auth::user()->username && Request::segment(2) == '') ? 'active' : '' }}">
-                            <a href="{{ url(Auth::user()->username.'/create-event') }}" class="ft-menu__item  ft-menu__item--icon">
-                                <i class="icon icon-add"></i> Inspire
-                            </a>
-                        </li>
-                        <li class="{{ (Request::segment(1) == Auth::user()->username && Request::segment(2) == '') ? 'active' : '' }}">
-                            <a href="{{ url(Auth::user()->username) }}" class="ft-menu__item  ft-menu__item--icon">
-                                <i class="icon icon-participant"></i> {{ trans('common.my_profile') }}
-                            </a>
-                        </li>
-                        <li class="{{ Request::segment(3) == 'general' ? 'active' : '' }}">
-                            <a href="{{ url('/'.Auth::user()->username.'/settings/general') }}" class="ft-menu__item ft-menu__item--icon">
-                                <i class="icon icon-settings-o"></i> {{ trans('common.settings') }}
-                            </a>
-                        </li>
-                        <li style="height: 40px">
-                            <form action="{{ url('/logout') }}" method="post" style="height: 40px">
-                                <button type="submit" class="ft-menu__item ft-menu__item--icon btn btn-logout" style="margin-top: -20px">
-                                    <i class="fa fa-unlock" aria-hidden="true"></i>{{ trans('common.logout') }}
-                                </button>
-                                {{ csrf_field() }}
-                            </form>
-                        </li>
-                    </ul>
                 </a>
             </form>
         @else
@@ -56,13 +30,11 @@
         @endif
     </div>
 </div>
-<br>
-<br>
-<br>
-<div style="position: fixed;width: 100vh;" class="hidden">
+
+<div class="hidden-lg hidden-md mobile-menu-slide">
     <div>
-        <ul class="list-group" style="font-weight: 600;">
-            <li class="list-group-item"><img src="{{ asset('images/left-arrow.png') }}" alt=""></li>
+        <ul class="list-group list-group--ft" style="font-weight: 600;">
+            <li class="list-group-item"><img src="{{ asset('images/left-arrow.png') }}" alt="" class="toggleSlide"></li>
             <li class="list-group-item">
                 <a href="{{ url(Auth::user()->username) }}"><img src="{{ url(Auth::user()->avatar) }}" class="user-avatar" style="border-radius: 0;"> &nbsp; My Profile</a>
             </li>

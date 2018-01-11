@@ -38,9 +38,9 @@ class Comment extends Model
     {
         return $this->belongsToMany('App\User', 'comment_reports', 'comment_id', 'reporter_id')->withPivot('status');
     }
-    public function manageCommentReport($comment_id, $user_id)
+    public function manageCommentReport($comment_id, $user_id, $description)
     {
-        $comment_report = DB::table('comment_reports')->insert(['comment_id' => $comment_id, 'reporter_id' => $user_id, 'status' => 'pending', 'created_at' => Carbon::now()]);
+        $comment_report = DB::table('comment_reports')->insert(['comment_id' => $comment_id, 'reporter_id' => $user_id,'description'=>$description ,'status' => 'pending', 'created_at' => Carbon::now()]);
 
         $result = $comment_report ? true : false;
 

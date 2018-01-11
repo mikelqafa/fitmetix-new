@@ -2255,3 +2255,9 @@ $(function() {
   hashtagify();
   mentionify();
 })
+
+$(function(){
+    $(".toggleSlide").click(function(){
+        $(".mobile-menu-slide").toggleClass('active');
+    })
+})

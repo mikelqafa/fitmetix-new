@@ -1994,7 +1994,7 @@ class TimelineController extends AppBaseController
     public function reportComment(Request $request)
     {
         $comment = Comment::where('id', '=', $request->comment_id)->first();
-        $reported = $comment->manageCommentReport($request->comment_id, Auth::user()->id);
+        $reported = $comment->manageCommentReport($request->comment_id, Auth::user()->id, $request->description);
 
         if ($reported) {
             //Notify the user for reporting his comment
@@ -2071,8 +2071,10 @@ class TimelineController extends AppBaseController
     	$tag      = $request->tag;
     	$title    = $request->title;
         $username  = $request->username;
-        $user_id = Timeline::where('username',$username)->first()->user->id;
-        $events = DB::table('events')
+        $user_id = '';
+        if($username){
+            $user_id = Timeline::where('username',$username)->first()->user->id;
+            $events = DB::table('events')
             ->join('timelines', 'timelines.id', '=', 'events.timeline_id')
             ->where(function ($query)  use ($location){
                     if($location != '') {
@@ -2095,12 +2097,42 @@ class TimelineController extends AppBaseController
                     }
             })
             ->whereIn('user_id', function ($query) use ($user_id) {
-                $query->select('user_id')
-                    ->from('event_user')
-                    ->where('user_id', $user_id);
+                if($user_id != '') {
+                    $query->select('user_id')
+                        ->from('event_user')
+                        ->where('user_id', $user_id);
+                }
             })
             ->select('events.*', 'timelines.*','events.id as event_id')
             ->get();
+        }
+        else {
+            $events = DB::table('events')
+            ->join('timelines', 'timelines.id', '=', 'events.timeline_id')
+            ->where(function ($query)  use ($location){
+                    if($location != '') {
+                            $query->where('events.location','like','%'.$location.'%');
+                    }
+            })
+            ->where(function($query) use ($date){
+                    if($date != '') {
+                        $query->where('events.start_date','<=',$date)->where('events.end_date','>=',$date);
+                    }
+            })
+            ->where(function($query) use ($tag){
+                    if($tag != '') {
+                        $query->where('timelines.about','like','%'.$tag.'%');
+                    }
+            })
+            ->where(function ($query) use ($title){
+                    if($title != '') {
+                        $query->where('timelines.name','like',$title.'%');
+                    }
+            })
+            ->select('events.*', 'timelines.*','events.id as event_id')
+            ->get();
+        }
+        
 			$a = 0;
 			$events = $events->all();
 			$post_model = new Post();
@@ -3970,6 +4002,11 @@ class TimelineController extends AppBaseController
                 $event_host = User::find($creatorId);
                 if ($event_host) {
                     $user_event['host_name'] = $event_host->timeline->name;
+                }
+                $user_event->protected = false;
+                $checkUser = User::find($user_event->user_id);
+                if((($checkUser->followers->where('status','approved')->contains(Auth::user()->id))) && ($user_event->type == 'private') && ($user_event->user_id != Auth::user()->id)) {
+                    $user_event->protected = true;
                 }
             }
         }
