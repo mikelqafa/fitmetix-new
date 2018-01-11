@@ -37,7 +37,7 @@
                             <a v-if="!authUser" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="initReportComment">
                                 Report Comment
                             </a>
-                            <a v-else="" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="deleteComment">
+                            <a v-else="" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="confirmDeleteComment">
                                 Delete Comment
                             </a>
                         </div>
@@ -113,8 +113,9 @@
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
                 this.isLoading = true
-                $('#comment-report-dialog').MaterialDialog('hide')
                 let comment_id = that.optionMenuPostItem.comment.id
+                let confirmDialog = $('#'+ this.unid)
+                confirmDialog.MaterialDialog('hide')
                 axios({
                     method: 'post',
                     responseType: 'json',
@@ -126,7 +127,7 @@
                 }).then( function (response) {
                     if (response.status ==  200) {
                         that.$store.commit('REMOVE_POST_COMMENT', {postIndex: that.optionMenuPostItem.postIndex, commentIndex:that.optionMenuPostItem.index})
-                        $('#post-option-dialog').MaterialDialog('hide')
+                        $('#comment-report-dialog').MaterialDialog('hide')
                         materialSnackBar({messageText: response.data.message, autoClose: true })
                     }
                     that.isLoading = false

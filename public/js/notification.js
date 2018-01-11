@@ -43901,8 +43901,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var that = this;
             var _token = $("meta[name=_token]").attr('content');
             this.isLoading = true;
-            $('#comment-report-dialog').MaterialDialog('hide');
             var comment_id = that.optionMenuPostItem.comment.id;
+            var confirmDialog = $('#' + this.unid);
+            confirmDialog.MaterialDialog('hide');
             axios({
                 method: 'post',
                 responseType: 'json',
@@ -43914,7 +43915,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }).then(function (response) {
                 if (response.status == 200) {
                     that.$store.commit('REMOVE_POST_COMMENT', { postIndex: that.optionMenuPostItem.postIndex, commentIndex: that.optionMenuPostItem.index });
-                    $('#post-option-dialog').MaterialDialog('hide');
+                    $('#comment-report-dialog').MaterialDialog('hide');
                     materialSnackBar({ messageText: response.data.message, autoClose: true });
                 }
                 that.isLoading = false;
@@ -44086,7 +44087,7 @@ var render = function() {
                                 href: "javascript:;",
                                 "data-value": "post"
                               },
-                              on: { click: _vm.deleteComment }
+                              on: { click: _vm.confirmDeleteComment }
                             },
                             [
                               _vm._v(
