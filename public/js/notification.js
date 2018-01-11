@@ -28363,8 +28363,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.hasItem ? this.event.registered : false;
         },
         disableEventForThis: function disableEventForThis() {
-            console.log(user_gender);
-            return this.hasItem ? this.event.gender != user_gender && this.event.gender != '' : false;
+            return this.hasItem ? this.event.gender !== 'all' && this.event.gender != user_gender : false;
         },
         participant: function participant() {
             if (!this.participantList.length) {

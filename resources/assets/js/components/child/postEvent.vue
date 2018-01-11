@@ -205,8 +205,8 @@
                 return this.hasItem ? this.event.registered : false
             },
             disableEventForThis () {
-                console.log(user_gender)
-                return this.hasItem ? this.event.gender != user_gender &&  this.event.gender != '' : false
+                return this.hasItem ?
+                this.event.gender !== 'all' && this.event.gender != user_gender : false
             },
             participant () {
                 if(!this.participantList.length) {
