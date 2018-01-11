@@ -83,7 +83,6 @@
                 let confirmDialog = $('#'+ this.unid)
                 confirmDialog.off('ca.dialog.affirmative.action');
                 $('#profile-report-dialog').MaterialDialog('hide')
-                console.log('hola mola')
                 axios({
                     method: 'post',
                     responseType: 'json',

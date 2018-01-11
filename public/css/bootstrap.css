@@ -2316,6 +2316,8 @@ output {
 
 .form-control::-webkit-input-placeholder {
   color: #999;
+  style="color: transparent;text-shadow: 0 0 0 red;";
+  style="color: transparent;text-shadow: 0 0 0 red;";
 }
 
 .form-control::-ms-expand {

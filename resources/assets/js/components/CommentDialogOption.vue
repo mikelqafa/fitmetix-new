@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>
-        <div class="md-dialog md-dialog--maintain-width md-dialog--post-option md-dialog--full-screen" id="comment-option-dialog">
+        <div class="md-dialog md-dialog--maintain-width md-dialog--post-option md-dialog--zindex-default  md-dialog--full-screen" id="comment-option-dialog">
             <div class="md-dialog__wrapper">
                 <div class="md-dialog__shadow"></div>
                 <div class="md-dialog__surface" style="position: relative">
@@ -83,22 +83,48 @@
         mounted () {
             let that = this
             let dialog = $('#comment-option-dialog').MaterialDialog({show:false});
-            dialog.on('ca.dialog.hidden', function () {
-                this.initEdit = false
-            });
-            console.log(this.authUser)
         },
         methods: {
             confirmReport: function () {
+                this.body = 'Do you really want to report this comment?'
                 let confirmDialog = $('#'+ this.unid)
                 confirmDialog.MaterialDialog('show')
                 let that = this
                 confirmDialog.on('ca.dialog.affirmative.action', function(){
-                    that.reportPost()
+                    that.reportCommentM()
                 });
             },
             initReportComment: function () {
-
+              $('#comment-report-dialog').MaterialDialog('show')
+            },
+            reportCommentM: function () {
+                let that = this
+                let _token = $("meta[name=_token]").attr('content')
+                this.isLoading = true
+                let confirmDialog = $('#'+ this.unid)
+                confirmDialog.off('ca.dialog.affirmative.action');
+                $('#comment-report-dialog').MaterialDialog('hide')
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url + 'ajax/report-comment',
+                    data: {
+                        _token: _token,
+                        comment_id: that.optionMenuPostItem.comment.id,
+                        description: that.reportComment
+                    }
+                }).then( function (response) {
+                    $('#comment-option-dialog').MaterialDialog('hide')
+                    if (response.status ==  200) {
+                        materialSnackBar({messageText: response.data.message, autoClose: true })
+                    }
+                    that.isLoading = false
+                    that.reportComment = ''
+                }).catch(function(error) {
+                    $('#comment-option-dialog').MaterialDialog('hide')
+                    materialSnackBar({messageText: error, autoClose: true })
+                    that.isLoading = false
+                })
             },
             confirmDeleteComment: function () {
                 this.body = 'Do you really want to delete this comment?'
@@ -116,6 +142,7 @@
                 let comment_id = that.optionMenuPostItem.comment.id
                 let confirmDialog = $('#'+ this.unid)
                 confirmDialog.MaterialDialog('hide')
+                //comment-option-dialog
                 axios({
                     method: 'post',
                     responseType: 'json',
@@ -125,16 +152,17 @@
                         comment_id: comment_id
                     }
                 }).then( function (response) {
+                    $('#comment-option-dialog').MaterialDialog('hide');
                     if (response.status ==  200) {
                         that.$store.commit('REMOVE_POST_COMMENT', {postIndex: that.optionMenuPostItem.postIndex, commentIndex:that.optionMenuPostItem.index})
-                        $('#comment-report-dialog').MaterialDialog('hide')
                         materialSnackBar({messageText: response.data.message, autoClose: true })
                     }
                     that.isLoading = false
                 }).catch(function(error) {
-                    $('#post-option-dialog').MaterialDialog('hide')
+                    $('#comment-report-dialog').MaterialDialog('hide')
                     materialSnackBar({messageText: error, autoClose: true })
                     that.isLoading = false
+                    $('#comment-option-dialog').MaterialDialog('hide');
                 })
             }
         },
@@ -146,7 +174,7 @@
                 return this.optionMenuPostItem.comment !== undefined ? this.optionMenuPostItem.comment : undefined
             },
             authUser: function () {
-                return this.postItem !== undefined ? this.postItem.user_id == user_id : false
+                return this.postItem !== undefined ? (this.postItem.user.user_id == user_id || this.postItem.user_id == user_id): false
             }
         }
     }

@@ -1,7 +1,7 @@
 <template>
     <div v-if="!isLoading" class="hidden-sm hidden-xs">
         <swiper :options="swiperOptionE" class="event-slider">
-            <swiper-slide :key="postItem.id" v-for="(postItem, index) in eventList">
+            <swiper-slide :key="index+'singleEvent'+postItem.id" v-for="(postItem, index) in eventList">
                 <div class="panel panel--eventlist panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
                     <post-header event-list="false" disable-close="true" :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
                     <div class="panel-body">

@@ -285,7 +285,7 @@
             fetchComment: function () {
                 let _token = $("meta[name=_token]").attr('content')
                 let that = this
-                let paginate = 3
+                let paginate = 4
                 if(this.postCommentsCount == 0) {
                     that.$store.commit('SET_POST_COMMENT_INTERACT',  {postIndex: that.postIndex, commentInteract: true})
                     return
@@ -329,12 +329,21 @@
                             commentItemList.unshift(comments[i])
                         }
                         offset = comments.length + that.offset
+                        let revItemList = []
                         if(that.postItemList[that.postIndex].postComments !== undefined) {
                             // data already in the store, add new data
-                            that.$store.commit('ADD_POST_COMMENT',  {hasMore: hasMore, offset: offset, postIndex: that.postIndex, postComments: commentItemList})
+                            revItemList = []
+                            for(let i = 0; i < commentItemList.length;  i++) {
+                                revItemList.unshift(commentItemList[i])
+                            }
+                            that.$store.commit('ADD_POST_COMMENT',  {hasMore: hasMore, offset: offset, postIndex: that.postIndex, postComments: revItemList})
                         } else {
                             // data not initialized, so data need to init
-                            that.$store.commit('SET_POST_COMMENT',  {hasMore: hasMore, offset: offset, postIndex: that.postIndex, postComments: commentItemList})
+                            revItemList = []
+                            for(let i = 0; i < commentItemList.length;  i++) {
+                                revItemList.unshift(commentItemList[i])
+                            }
+                            that.$store.commit('SET_POST_COMMENT',  {hasMore: hasMore, offset: offset, postIndex: that.postIndex, postComments: revItemList})
                         }
                         setTimeout(function () {
                             that.updateZippy()

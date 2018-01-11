@@ -29508,7 +29508,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         fetchComment: function fetchComment() {
             var _token = $("meta[name=_token]").attr('content');
             var that = this;
-            var paginate = 3;
+            var paginate = 4;
             if (this.postCommentsCount == 0) {
                 that.$store.commit('SET_POST_COMMENT_INTERACT', { postIndex: that.postIndex, commentInteract: true });
                 return;
@@ -29552,12 +29552,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         commentItemList.unshift(comments[i]);
                     }
                     offset = comments.length + that.offset;
+                    var revItemList = [];
                     if (that.postItemList[that.postIndex].postComments !== undefined) {
                         // data already in the store, add new data
-                        that.$store.commit('ADD_POST_COMMENT', { hasMore: hasMore, offset: offset, postIndex: that.postIndex, postComments: commentItemList });
+                        revItemList = [];
+                        for (var _i = 0; _i < commentItemList.length; _i++) {
+                            revItemList.unshift(commentItemList[_i]);
+                        }
+                        that.$store.commit('ADD_POST_COMMENT', { hasMore: hasMore, offset: offset, postIndex: that.postIndex, postComments: revItemList });
                     } else {
                         // data not initialized, so data need to init
-                        that.$store.commit('SET_POST_COMMENT', { hasMore: hasMore, offset: offset, postIndex: that.postIndex, postComments: commentItemList });
+                        revItemList = [];
+                        for (var _i2 = 0; _i2 < commentItemList.length; _i2++) {
+                            revItemList.unshift(commentItemList[_i2]);
+                        }
+                        that.$store.commit('SET_POST_COMMENT', { hasMore: hasMore, offset: offset, postIndex: that.postIndex, postComments: revItemList });
                     }
                     setTimeout(function () {
                         that.updateZippy();
@@ -38002,55 +38011,59 @@ var render = function() {
             },
             [
               _vm._l(_vm.eventList, function(postItem, index) {
-                return _c("swiper-slide", { key: postItem.id }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "panel panel--eventlist panel-default timeline-posts__item panel-post",
-                      attrs: { id: "ft-post" + postItem.id }
-                    },
-                    [
-                      _c("post-header", {
-                        attrs: {
-                          "event-list": "false",
-                          "disable-close": "true",
-                          "post-data": postItem,
-                          "post-index": index,
-                          date: postItem.created_at
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "panel-body" },
-                        [
-                          _c("post-back-viewer", {
-                            attrs: { "post-img": postItem.images }
-                          }),
-                          _vm._v(" "),
-                          _c("post-event", {
-                            attrs: {
-                              "post-item": postItem,
-                              "post-index": index,
-                              "post-img": postItem.images,
-                              "event-list": "true",
-                              "enable-url": "true"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("post-description", {
-                            attrs: { "post-html": postItem.description }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "md-layout-spacer" })
-                    ],
-                    1
-                  )
-                ])
+                return _c(
+                  "swiper-slide",
+                  { key: index + "singleEvent" + postItem.id },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "panel panel--eventlist panel-default timeline-posts__item panel-post",
+                        attrs: { id: "ft-post" + postItem.id }
+                      },
+                      [
+                        _c("post-header", {
+                          attrs: {
+                            "event-list": "false",
+                            "disable-close": "true",
+                            "post-data": postItem,
+                            "post-index": index,
+                            date: postItem.created_at
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "panel-body" },
+                          [
+                            _c("post-back-viewer", {
+                              attrs: { "post-img": postItem.images }
+                            }),
+                            _vm._v(" "),
+                            _c("post-event", {
+                              attrs: {
+                                "post-item": postItem,
+                                "post-index": index,
+                                "post-img": postItem.images,
+                                "event-list": "true",
+                                "enable-url": "true"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("post-description", {
+                              attrs: { "post-html": postItem.description }
+                            })
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "md-layout-spacer" })
+                      ],
+                      1
+                    )
+                  ]
+                )
               }),
               _vm._v(" "),
               _c("div", {
@@ -43874,22 +43887,50 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     mounted: function mounted() {
         var that = this;
         var dialog = $('#comment-option-dialog').MaterialDialog({ show: false });
-        dialog.on('ca.dialog.hidden', function () {
-            this.initEdit = false;
-        });
-        console.log(this.authUser);
     },
 
     methods: {
         confirmReport: function confirmReport() {
+            this.body = 'Do you really want to report this comment?';
             var confirmDialog = $('#' + this.unid);
             confirmDialog.MaterialDialog('show');
             var that = this;
             confirmDialog.on('ca.dialog.affirmative.action', function () {
-                that.reportPost();
+                that.reportCommentM();
             });
         },
-        initReportComment: function initReportComment() {},
+        initReportComment: function initReportComment() {
+            $('#comment-report-dialog').MaterialDialog('show');
+        },
+        reportCommentM: function reportCommentM() {
+            var that = this;
+            var _token = $("meta[name=_token]").attr('content');
+            this.isLoading = true;
+            var confirmDialog = $('#' + this.unid);
+            confirmDialog.off('ca.dialog.affirmative.action');
+            $('#comment-report-dialog').MaterialDialog('hide');
+            axios({
+                method: 'post',
+                responseType: 'json',
+                url: base_url + 'ajax/report-comment',
+                data: {
+                    _token: _token,
+                    comment_id: that.optionMenuPostItem.comment.id,
+                    description: that.reportComment
+                }
+            }).then(function (response) {
+                $('#comment-option-dialog').MaterialDialog('hide');
+                if (response.status == 200) {
+                    materialSnackBar({ messageText: response.data.message, autoClose: true });
+                }
+                that.isLoading = false;
+                that.reportComment = '';
+            }).catch(function (error) {
+                $('#comment-option-dialog').MaterialDialog('hide');
+                materialSnackBar({ messageText: error, autoClose: true });
+                that.isLoading = false;
+            });
+        },
         confirmDeleteComment: function confirmDeleteComment() {
             this.body = 'Do you really want to delete this comment?';
             var confirmDialog = $('#' + this.unid);
@@ -43906,6 +43947,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var comment_id = that.optionMenuPostItem.comment.id;
             var confirmDialog = $('#' + this.unid);
             confirmDialog.MaterialDialog('hide');
+            //comment-option-dialog
             axios({
                 method: 'post',
                 responseType: 'json',
@@ -43915,16 +43957,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     comment_id: comment_id
                 }
             }).then(function (response) {
+                $('#comment-option-dialog').MaterialDialog('hide');
                 if (response.status == 200) {
                     that.$store.commit('REMOVE_POST_COMMENT', { postIndex: that.optionMenuPostItem.postIndex, commentIndex: that.optionMenuPostItem.index });
-                    $('#comment-report-dialog').MaterialDialog('hide');
                     materialSnackBar({ messageText: response.data.message, autoClose: true });
                 }
                 that.isLoading = false;
             }).catch(function (error) {
-                $('#post-option-dialog').MaterialDialog('hide');
+                $('#comment-report-dialog').MaterialDialog('hide');
                 materialSnackBar({ messageText: error, autoClose: true });
                 that.isLoading = false;
+                $('#comment-option-dialog').MaterialDialog('hide');
             });
         }
     },
@@ -43935,7 +43978,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return this.optionMenuPostItem.comment !== undefined ? this.optionMenuPostItem.comment : undefined;
         },
         authUser: function authUser() {
-            return this.postItem !== undefined ? this.postItem.user_id == user_id : false;
+            return this.postItem !== undefined ? this.postItem.user.user_id == user_id || this.postItem.user_id == user_id : false;
         }
     })
 });
@@ -44042,7 +44085,7 @@ var render = function() {
         "div",
         {
           staticClass:
-            "md-dialog md-dialog--maintain-width md-dialog--post-option md-dialog--full-screen",
+            "md-dialog md-dialog--maintain-width md-dialog--post-option md-dialog--zindex-default  md-dialog--full-screen",
           attrs: { id: "comment-option-dialog" }
         },
         [
