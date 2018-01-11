@@ -524,7 +524,7 @@
             this.getDefaultData()
         },
         components: {
-            'post-description': postDescription,
+            'post-description': postDescription,disableEventForThis
             'post-image-viewer': postImageViewer,
             'post-header': postHeader,
             'post-event': postEvent,

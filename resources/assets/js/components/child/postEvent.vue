@@ -41,7 +41,7 @@
         </div>
         <div class="text-center layout-m-b-1">
             <div class="pos-rel flex-inline">
-                <template v-if="!disableEventForThis">
+                <template v-if="enableEventForThis">
                     <button v-if="!enableUrl" type="button" class="btn btn-submit ft-btn-primary" @click="registerEvent">
                         <template v-if="isRegistered">
                             Unregister
@@ -204,9 +204,17 @@
             isRegistered () {
                 return this.hasItem ? this.event.registered : false
             },
-            disableEventForThis () {
-                return this.hasItem ?
-                this.event.gender !== 'all' && this.event.gender != user_gender && !(this.participantList.length < this.event.user_limit) : false
+            enableEventForThis () {
+                if(this.hasItem) {
+                    if(this.event.gender === 'all' || this.event.gender === user_gender) {
+                        if (this.event.user_limit > this.participantList.length) {
+                            return true
+                        }
+                        return false
+                    }
+                    return false
+                }
+                return false
             },
             participant () {
                 if(!this.participantList.length) {
