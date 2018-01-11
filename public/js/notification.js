@@ -28364,7 +28364,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         enableEventForThis: function enableEventForThis() {
             if (this.hasItem) {
-                if (this.event.gender === 'all' || this.event.gender === user_gender) {
+                if ((this.event.gender === 'all' || this.event.gender === user_gender) && !this.event.protected) {
                     if (this.event.user_limit > this.participantList.length) {
                         return true;
                     }
