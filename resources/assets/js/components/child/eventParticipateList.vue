@@ -43,34 +43,56 @@
                                         </div>
                                         <div class="md-layout-spacer">
                                         </div>
-                                        <template v-if="sameUser(item)">
-                                            <button class="btn btn-sm pos-rel" disabled>
-                                                <span class="true">Registered</span>
-                                            </button>
+                                        <template v-if="!authUser">
+                                            <template v-if="sameUser(item)">
+                                                <button class="btn btn-sm pos-rel" disabled>
+                                                    <span class="true">Registered</span>
+                                                </button>
+                                            </template>
+                                            <template v-else="">
+                                                <button v-if="item.following"  class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true" :data-timeline-id="item.timeline.id" data-toggle="follow" data-following="true">
+                                            <span class="absolute-loader hidden">
+                                                <span class="ft-loading">
+                                                    <span class="ft-loading__dot"></span>
+                                                    <span class="ft-loading__dot"></span>
+                                                    <span class="ft-loading__dot"></span>
+                                                </span>
+                                            </span>
+                                                    <span class="false">Follow</span>
+                                                    <span class="true">Following</span>
+                                                </button>
+                                                <button v-else="" class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true"  :data-timeline-id="item.timeline.id" data-toggle="follow" data-following="false">
+                                            <span class="absolute-loader hidden">
+                                                <span class="ft-loading">
+                                                    <span class="ft-loading__dot"></span>
+                                                    <span class="ft-loading__dot"></span>
+                                                    <span class="ft-loading__dot"></span>
+                                                </span>
+                                            </span>
+                                                    <span class="false">Follow</span>
+                                                    <span class="true">Following</span>
+                                                </button>
+                                            </template>
                                         </template>
                                         <template v-else="">
-                                            <button v-if="item.following"  class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true" :data-timeline-id="item.timeline.id" data-toggle="follow" data-following="true">
-                                            <span class="absolute-loader hidden">
-                                                <span class="ft-loading">
-                                                    <span class="ft-loading__dot"></span>
-                                                    <span class="ft-loading__dot"></span>
-                                                    <span class="ft-loading__dot"></span>
-                                                </span>
-                                            </span>
-                                                <span class="false">Follow</span>
-                                                <span class="true">Following</span>
-                                            </button>
-                                            <button v-else="" class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true"  :data-timeline-id="item.timeline.id" data-toggle="follow" data-following="false">
-                                            <span class="absolute-loader hidden">
-                                                <span class="ft-loading">
-                                                    <span class="ft-loading__dot"></span>
-                                                    <span class="ft-loading__dot"></span>
-                                                    <span class="ft-loading__dot"></span>
-                                                </span>
-                                            </span>
-                                                <span class="false">Follow</span>
-                                                <span class="true">Following</span>
-                                            </button>
+                                            <template v-if="sameUser(item)">
+                                                <button class="btn btn-sm pos-rel" disabled>
+                                                    <span class="true">Registered</span>
+                                                </button>
+                                            </template>
+                                            <template v-else="">
+                                                <button class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true" :data-timeline-id="item.timeline.id" data-toggle="eventRegister" data-following="true">
+                                                    <span class="absolute-loader hidden">
+                                                        <span class="ft-loading">
+                                                            <span class="ft-loading__dot"></span>
+                                                            <span class="ft-loading__dot"></span>
+                                                            <span class="ft-loading__dot"></span>
+                                                        </span>
+                                                    </span>
+                                                    <span class="false">Register</span>
+                                                    <span class="true">Unregister</span>
+                                                </button>
+                                            </template>
                                         </template>
                                     </div>
                                 </div>
@@ -92,7 +114,8 @@
                 filterParticipantList: [],
                 defaultImage: 'default.png',
                 filterSearch: '',
-                offset: 0
+                offset: 0,
+                authUser: false
             }
         },
         methods: {
@@ -122,10 +145,11 @@
                     }
                 }).then(function (response) {
                     if (response.status == 200) {
-                        for(let i = 0;i<response.data.length; i++) {
-                            that.participantList.push(response.data[i])
+                        for(let i = 0;i<response.data.registeredUsers.length; i++) {
+                            that.participantList.push(response.data.registeredUsers[i])
                         }
                         that.offset += response.data.length
+                        that.authUser = response.data.currentUserOwner
                     }
                 }).catch(function (error) {
                     console.log(error)

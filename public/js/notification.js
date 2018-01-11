@@ -28254,7 +28254,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return '';
         },
         formatGender: function formatGender(g) {
-            return g == '' ? 'Everyone' : g == 'male' ? 'Male Only' : 'Female Only';
+            return g == 'all' ? 'Everyone' : g == 'male' ? 'Male Only' : 'Female Only';
         },
         formatDate: function formatDate(date) {
             var str = '';
@@ -32357,6 +32357,28 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -32367,7 +32389,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             filterParticipantList: [],
             defaultImage: 'default.png',
             filterSearch: '',
-            offset: 0
+            offset: 0,
+            authUser: false
         };
     },
     methods: {
@@ -32399,10 +32422,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 }
             }).then(function (response) {
                 if (response.status == 200) {
-                    for (var i = 0; i < response.data.length; i++) {
-                        that.participantList.push(response.data[i]);
+                    for (var i = 0; i < response.data.registeredUsers.length; i++) {
+                        that.participantList.push(response.data.registeredUsers[i]);
                     }
                     that.offset += response.data.length;
+                    that.authUser = response.data.currentUserOwner;
                 }
             }).catch(function (error) {
                 console.log(error);
@@ -32562,68 +32586,107 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("div", { staticClass: "md-layout-spacer" }),
                                 _vm._v(" "),
-                                _vm.sameUser(item)
-                                  ? [_vm._m(2, true)]
+                                !_vm.authUser
+                                  ? [
+                                      _vm.sameUser(item)
+                                        ? [_vm._m(2, true)]
+                                        : [
+                                            item.following
+                                              ? _c(
+                                                  "button",
+                                                  {
+                                                    staticClass:
+                                                      "btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline",
+                                                    attrs: {
+                                                      "data-noreload": "true",
+                                                      "data-timeline-id":
+                                                        item.timeline.id,
+                                                      "data-toggle": "follow",
+                                                      "data-following": "true"
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._m(3, true),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "false" },
+                                                      [_vm._v("Follow")]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "true" },
+                                                      [_vm._v("Following")]
+                                                    )
+                                                  ]
+                                                )
+                                              : _c(
+                                                  "button",
+                                                  {
+                                                    staticClass:
+                                                      "btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline",
+                                                    attrs: {
+                                                      "data-noreload": "true",
+                                                      "data-timeline-id":
+                                                        item.timeline.id,
+                                                      "data-toggle": "follow",
+                                                      "data-following": "false"
+                                                    }
+                                                  },
+                                                  [
+                                                    _vm._m(4, true),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "false" },
+                                                      [_vm._v("Follow")]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "span",
+                                                      { staticClass: "true" },
+                                                      [_vm._v("Following")]
+                                                    )
+                                                  ]
+                                                )
+                                          ]
+                                    ]
                                   : [
-                                      item.following
-                                        ? _c(
-                                            "button",
-                                            {
-                                              staticClass:
-                                                "btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline",
-                                              attrs: {
-                                                "data-noreload": "true",
-                                                "data-timeline-id":
-                                                  item.timeline.id,
-                                                "data-toggle": "follow",
-                                                "data-following": "true"
-                                              }
-                                            },
-                                            [
-                                              _vm._m(3, true),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                { staticClass: "false" },
-                                                [_vm._v("Follow")]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                { staticClass: "true" },
-                                                [_vm._v("Following")]
-                                              )
-                                            ]
-                                          )
-                                        : _c(
-                                            "button",
-                                            {
-                                              staticClass:
-                                                "btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline",
-                                              attrs: {
-                                                "data-noreload": "true",
-                                                "data-timeline-id":
-                                                  item.timeline.id,
-                                                "data-toggle": "follow",
-                                                "data-following": "false"
-                                              }
-                                            },
-                                            [
-                                              _vm._m(4, true),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                { staticClass: "false" },
-                                                [_vm._v("Follow")]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                { staticClass: "true" },
-                                                [_vm._v("Following")]
-                                              )
-                                            ]
-                                          )
+                                      _vm.sameUser(item)
+                                        ? [_vm._m(5, true)]
+                                        : [
+                                            _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline",
+                                                attrs: {
+                                                  "data-noreload": "true",
+                                                  "data-timeline-id":
+                                                    item.timeline.id,
+                                                  "data-toggle":
+                                                    "eventRegister",
+                                                  "data-following": "true"
+                                                }
+                                              },
+                                              [
+                                                _vm._m(6, true),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "false" },
+                                                  [_vm._v("Register")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "true" },
+                                                  [_vm._v("Unregister")]
+                                                )
+                                              ]
+                                            )
+                                          ]
                                     ]
                               ],
                               2
@@ -32720,6 +32783,30 @@ var staticRenderFns = [
         _c("span", { staticClass: "ft-loading__dot" })
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "absolute-loader hidden" }, [
+      _c("span", { staticClass: "ft-loading" }, [
+        _c("span", { staticClass: "ft-loading__dot" }),
+        _vm._v(" "),
+        _c("span", { staticClass: "ft-loading__dot" }),
+        _vm._v(" "),
+        _c("span", { staticClass: "ft-loading__dot" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "btn btn-sm pos-rel", attrs: { disabled: "" } },
+      [_c("span", { staticClass: "true" }, [_vm._v("Registered")])]
+    )
   },
   function() {
     var _vm = this
