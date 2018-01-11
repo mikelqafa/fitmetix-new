@@ -608,6 +608,23 @@ $(function () {
       }
     })
   });
+
+  $('body').on('click', '[data-toggle="eventRegister"]', function (e){
+    e.preventDefault();
+    var el = $(this)
+    el.attr('disabled', true)
+    el.attr('data-processing', true)
+    var btn = $(this);
+    var _token = $("meta[name=_token]").attr('content')
+    $.post(SP_source() + 'ajax/unregister-event', {_token: _token, user_id: el.data('user-id'), event_id:el.data('event-id') }, function(data) {
+      el.attr('data-processing', false)
+      if (data.status == 200) {
+        el.text('Unregistered')
+        materialSnackBar({messageText: data.data, autoClose: true })
+      }
+    })
+  });
+
   //Accept user request through join request tab in close group
   $('.accept-user').on('click',function(e){
     e.preventDefault();

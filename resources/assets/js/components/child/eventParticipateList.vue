@@ -81,7 +81,7 @@
                                                 </button>
                                             </template>
                                             <template v-else="">
-                                                <button class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true" :data-timeline-id="item.timeline.id" data-toggle="eventRegister" data-following="true">
+                                                <button class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true" :data-event-id="item.event_id" :data-user-id="item.user_id" data-toggle="eventRegister" data-following="true">
                                                     <span class="absolute-loader hidden">
                                                         <span class="ft-loading">
                                                             <span class="ft-loading__dot"></span>

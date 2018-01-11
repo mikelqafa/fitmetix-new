@@ -32671,8 +32671,9 @@ var render = function() {
                                                   "btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline",
                                                 attrs: {
                                                   "data-noreload": "true",
-                                                  "data-timeline-id":
-                                                    item.timeline.id,
+                                                  "data-event-id":
+                                                    item.event_id,
+                                                  "data-user-id": item.user_id,
                                                   "data-toggle":
                                                     "eventRegister",
                                                   "data-following": "true"
