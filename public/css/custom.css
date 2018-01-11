@@ -1208,7 +1208,7 @@ a {
     flex-shrink: 0;
 }
 .fm-nav__item.is-active {
-    color: #262626;
+    color: #000000;
 }
 .ft-menu .ft-menu__item {
     flex-direction: row;
@@ -3644,4 +3644,16 @@ aside .md-drawer-scroll__wrapper{
 }
 .md-dialog--upper.md-dialog--open {
     z-index: 26;
+}
+.ft-header-nav__item .hidden-active {
+    display: block;
+}
+.ft-header-nav__item .visible-active {
+    display: none;
+}
+.ft-header-nav__item.is-active .hidden-active {
+    display: none;
+}
+.ft-header-nav__item.is-active .visible-active {
+    display: block;
 }
