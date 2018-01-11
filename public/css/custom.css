@@ -3640,5 +3640,8 @@ aside .md-drawer-scroll__wrapper{
     padding: 16px 16px;
 }
 .md-dialog--zindex-default.md-dialog--open {
-    z-index: 23;
+    z-index: 25;
+}
+.md-dialog--upper.md-dialog--open {
+    z-index: 26;
 }

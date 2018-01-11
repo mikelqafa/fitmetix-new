@@ -1,7 +1,7 @@
 <template>
     <div>
         <app-confirm :unid="unid" :body="body"></app-confirm>
-        <div class="md-dialog md-dialog--center md-dialog--maintain-width md-dialog--md" id="comment-report-dialog">
+        <div class="md-dialog md-dialog--center md-dialog--upper md-dialog--maintain-width md-dialog--md" id="comment-report-dialog">
             <div class="md-dialog__wrapper">
                 <div class="md-dialog__shadow"></div>
                 <div class="md-dialog__surface" style="position: relative">

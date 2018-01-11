@@ -44000,7 +44000,7 @@ var render = function() {
         "div",
         {
           staticClass:
-            "md-dialog md-dialog--center md-dialog--maintain-width md-dialog--md",
+            "md-dialog md-dialog--center md-dialog--upper md-dialog--maintain-width md-dialog--md",
           attrs: { id: "comment-report-dialog" }
         },
         [
