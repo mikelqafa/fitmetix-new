@@ -29958,6 +29958,8 @@ var render = function() {
                                     return _c(
                                       "div",
                                       {
+                                        key:
+                                          _vm.postIndex + "comment" + item.id,
                                         staticClass:
                                           "md-list__item has-divider",
                                         attrs: { "data-comment-id": item.id }
@@ -32891,7 +32893,7 @@ var render = function() {
                     return _c(
                       "div",
                       {
-                        key: postItem.id,
+                        key: index + "post" + postItem.id,
                         staticClass:
                           "panel panel-default ft-theme--color timeline-posts__item panel-post",
                         attrs: { id: "ft-post" + postItem.id }
