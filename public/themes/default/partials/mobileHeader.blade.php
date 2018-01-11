@@ -56,16 +56,28 @@
         @endif
     </div>
 </div>
-
-<div style="position: fixed;width: 100vh;">
+<br>
+<br>
+<br>
+<div style="position: fixed;width: 100vh;" class="hidden">
     <div>
-        <ul class="list-group">
-            <li class="list-group-item"></li>
-            <li class="list-group-item">{{ Auth::user()->timeline->username }}</li>
-            <li class="list-group-item">s</li>
-            <li class="list-group-item">p</li>
-            <li class="list-group-item">s</li>
-            <li class="list-group-item">d</li>
+        <ul class="list-group" style="font-weight: 600;">
+            <li class="list-group-item"><img src="{{ asset('images/left-arrow.png') }}" alt=""></li>
+            <li class="list-group-item">
+                <a href="{{ url(Auth::user()->username) }}"><img src="{{ url(Auth::user()->avatar) }}" class="user-avatar" style="border-radius: 0;"> &nbsp; My Profile</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url('/'.Auth::user()->username.'/settings/general') }}">General Settings</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url('/'.Auth::user()->username.'/settings/privacy') }}">Privacy Settings</a>
+            </li>
+            <li class="list-group-item">
+                <a href="javascript:;">Email Notifications</a>
+            </li>
+            <li class="list-group-item">
+                <a href="javascript:;">Deactivate Account</a>
+            </li>
         </ul>
     </div>
 </div>
