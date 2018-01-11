@@ -2070,30 +2070,37 @@ class TimelineController extends AppBaseController
     	$date     = $request->date;
     	$tag      = $request->tag;
     	$title    = $request->title;
-			$events = DB::table('events')
-				->join('timelines', 'timelines.id', '=', 'events.timeline_id')
-				->where(function ($query)  use ($location){
-						if($location != '') {
-								$query->where('events.location','like','%'.$location.'%');
-						}
-				})
-				->where(function($query) use ($date){
-						if($date != '') {
-							$query->where('events.start_date','<=',$date)->where('events.end_date','>=',$date);
-						}
-				})
-				->where(function($query) use ($tag){
-						if($tag != '') {
-							$query->where('timelines.about','like','%'.$tag.'%');
-						}
-				})
-				->where(function ($query) use ($title){
-						if($title != '') {
-							$query->where('timelines.name','like',$title.'%');
-						}
-				})
-				->select('events.*', 'timelines.*','events.id as event_id')
-				->get();
+        $username  = $request->username;
+        $user_id = Timeline::where('username',$username)->first()->user->id;
+        $events = DB::table('events')
+            ->join('timelines', 'timelines.id', '=', 'events.timeline_id')
+            ->where(function ($query)  use ($location){
+                    if($location != '') {
+                            $query->where('events.location','like','%'.$location.'%');
+                    }
+            })
+            ->where(function($query) use ($date){
+                    if($date != '') {
+                        $query->where('events.start_date','<=',$date)->where('events.end_date','>=',$date);
+                    }
+            })
+            ->where(function($query) use ($tag){
+                    if($tag != '') {
+                        $query->where('timelines.about','like','%'.$tag.'%');
+                    }
+            })
+            ->where(function ($query) use ($title){
+                    if($title != '') {
+                        $query->where('timelines.name','like',$title.'%');
+                    }
+            })
+            ->whereIn('user_id', function ($query) use ($user_id) {
+                $query->select('user_id')
+                    ->from('event_user')
+                    ->where('user_id', $user_id);
+            })
+            ->select('events.*', 'timelines.*','events.id as event_id')
+            ->get();
 			$a = 0;
 			$events = $events->all();
 			$post_model = new Post();
@@ -4381,7 +4388,12 @@ class TimelineController extends AppBaseController
             $following_count = $user->following()->where('status', '=', 'approved')->get()->count();
             $followers_count = $user->followers()->where('status', '=', 'approved')->get()->count();
             $followRequests = $user->followers()->where('status', '=', 'pending')->get();
-            $user_events = $user->events()->whereDate('end_date', '>=', date('Y-m-d', strtotime(Carbon::now())))->get();
+            $all_events = Event::with('timeline')->latest()->get();
+            foreach ($all_events as $key => $value) {
+                if($value->users->contains(Auth::user()->id)){
+                    $user_events[$key] = $value;
+                }
+            }
             $guest_events = $user->getEvents();
 
             $follow_user_status = DB::table('followers')->where('follower_id', '=', Auth::user()->id)

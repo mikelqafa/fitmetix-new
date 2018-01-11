@@ -100,11 +100,11 @@
     @endif
     <div class="timeline-option__item">
         @if(Auth::user()->id == $timeline->user->id)
-            <a href="javascript:;" class="ft-btn ft-btn--icon" onclick="$('.show-more').slideToggle()">
+            <a href="javascript:;" class="ft-btn ft-btn--icon" onclick="$('.options').slideToggle()">
                 <i class="icon icon-options"></i>
             </a>
         @else
-            <a href="#" class="ft-btn ft-btn--icon" onclick="$('#profile-option-dialog').MaterialDialog('show')">
+            <a href="javascript:;" class="ft-btn ft-btn--icon" onclick="$('.options').slideToggle()">
                 <i class="icon icon-options"></i>
             </a>
         @endif

@@ -6,9 +6,9 @@
             <div class="md-layout md-algin md-layout--wrap md-align--start-start layout-timeline">
                 <div class="md-col layout-timeline__post layout-m-t-1">
                     {!! Theme::partial('timeline-header',compact('timeline','user_post')) !!}
-                    <div class="options" style="text-align: center;">
-                        @if($timeline->user->settings()->post_privacy == 'everyone')
-                            <div class="ft-user-info md-layout md-layout--row md-align md-align--space-around show-more" style="display: none">
+                    <div class="options" style="text-align: center;display: none;">
+                        @if($timeline->user->settings()->post_privacy == 'everyone' || (Auth::user()->id == $timeline->user->id))
+                            <div class="ft-user-info md-layout md-layout--row md-align md-align--space-around show-more">
                                 <div class="ft-user-info__item">
                                     <div class="ft-icon">
                                         Events
@@ -54,7 +54,7 @@
                             </div>
                         @endif
                         @if(Auth::user()->id == $timeline->user->id)
-                            <a class="btn btn-default hidden visible-xs" href="{{ url($timeline->username.'/settings') }}">Settings</a>
+                            <a class="btn btn-default" href="{{ url($timeline->username.'/settings') }}">Settings</a>
                         @elseif(Auth::user()->following->contains($timeline->user->id))
                                 @if($block_text == 'Unblock')
                                     <button class="btn btn-default" onclick="unblock()">{{ $block_text }}</button>
