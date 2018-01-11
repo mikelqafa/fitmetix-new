@@ -28363,7 +28363,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.hasItem ? this.event.registered : false;
         },
         disableEventForThis: function disableEventForThis() {
-            return this.hasItem ? this.event.gender !== 'all' && this.event.gender != user_gender : false;
+            return this.hasItem ? this.event.gender !== 'all' && this.event.gender != user_gender && !(this.participantList.length < this.event.user_limit) : false;
         },
         participant: function participant() {
             if (!this.participantList.length) {

@@ -206,7 +206,7 @@
             },
             disableEventForThis () {
                 return this.hasItem ?
-                this.event.gender !== 'all' && this.event.gender != user_gender : false
+                this.event.gender !== 'all' && this.event.gender != user_gender && !(this.participantList.length < this.event.user_limit) : false
             },
             participant () {
                 if(!this.participantList.length) {
