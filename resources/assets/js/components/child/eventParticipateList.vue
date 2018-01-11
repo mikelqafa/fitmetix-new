@@ -134,6 +134,9 @@
             filterList: function(item) {
                 let o = item.timeline.username.search(this.filterSearch)
                 return o != -1
+            },
+            unregisterFromEvent: function () {
+
             }
         },
         mounted () {
@@ -141,8 +144,10 @@
             let dialog = $('#post-who-participate-dialog').MaterialDialog({show: false});
             dialog.on('ca.dialog.hidden', function () {
                 that.participantList = []
+                that.offset = 0
             });
             dialog.on('ca.dialog.show', function () {
+                console.log(that.eventWho)
                 that.getList()
             });
         },

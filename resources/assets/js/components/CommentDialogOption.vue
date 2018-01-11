@@ -8,7 +8,7 @@
                 <div class="md-dialog__surface" style="position: relative">
                     <div class="md-dialog__body">
                         <div class="ft-dialog-option" v-bind:class="{'is-loading': isLoading}">
-                            <a v-if="authUser" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="initReportComment">
+                            <a v-if="!authUser" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="initReportComment">
                                 Report Comment
                             </a>
                             <a v-else="" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="deleteComment">
@@ -100,7 +100,7 @@
                 return this.optionMenuPostItem.id !== undefined ? this.optionMenuPostItem : undefined
             },
             authUser: function () {
-                return this.postItem !== undefined ? this.postItem.user_id == user_id : false
+                return this.postItem !== undefined ? this.postItem.user_id === user_id : false
             }
         }
     }

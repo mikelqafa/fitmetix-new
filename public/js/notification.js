@@ -29330,7 +29330,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
 
 
 
@@ -29989,23 +29988,15 @@ var render = function() {
                                                       "md-layout md-layout--column"
                                                   },
                                                   [
-                                                    _c(
-                                                      "div",
-                                                      {
-                                                        staticClass:
-                                                          "md-list__item-text-body",
-                                                        domProps: {
-                                                          innerHTML: _vm._s(
-                                                            item.description
-                                                          )
-                                                        }
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          "\n                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut blanditiis consequatur distinctio dolorem ducimus perspiciatis quaerat quod recusandae suscipit totam.\n                                        "
+                                                    _c("div", {
+                                                      staticClass:
+                                                        "md-list__item-text-body",
+                                                      domProps: {
+                                                        innerHTML: _vm._s(
+                                                          item.description
                                                         )
-                                                      ]
-                                                    ),
+                                                      }
+                                                    }),
                                                     _vm._v(" "),
                                                     _vm._m(0, true)
                                                   ]
@@ -32420,15 +32411,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         filterList: function filterList(item) {
             var o = item.timeline.username.search(this.filterSearch);
             return o != -1;
-        }
+        },
+        unregisterFromEvent: function unregisterFromEvent() {}
     },
     mounted: function mounted() {
         var that = this;
         var dialog = $('#post-who-participate-dialog').MaterialDialog({ show: false });
         dialog.on('ca.dialog.hidden', function () {
             that.participantList = [];
+            that.offset = 0;
         });
         dialog.on('ca.dialog.show', function () {
+            console.log(that.eventWho);
             that.getList();
         });
     },
@@ -38310,17 +38304,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         openChat: function openChat(c) {
             this.showConversation(c, true);
         },
-        autoScroll: function autoScroll(el) {
-            $(el).animate({ scrollTop: $(el)[0].scrollHeight + 600 }, 2000);
-        },
         chk_scroll: function chk_scroll(e) {
+            console.log(e);
             var elem = $(e.currentTarget);
             if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
                 if (elem.data('type') == "threads") {
-                    // TODO this.getMoreConversations();
+                    this.$store.dispatch('getMoreConversations');
                 } else {
-                        //TODO this.getMoreConversationMessages();
-                    }
+                    this.$store.dispatch('getMoreConversationMessages');
+                }
             }
         },
         showConversation: function showConversation(c) {
@@ -38329,8 +38321,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     mounted: function mounted() {
         var that = this;
-        //$('.coversations-thread').bind('scroll', that.chk_scroll);
-        //$('.coversations-list').bind('scroll', that.chk_scroll);
+        $('.coversations-thread--desktop').bind('scroll', that.chk_scroll);
+        $('.coversations-list--desktop').bind('scroll', that.chk_scroll);
         $("#create-chat-vue-single").keypress(function (e) {
             if (e.which == 13) {
                 that.initPostMessage();
@@ -38338,6 +38330,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
             return true;
         });
+        this.$store.dispatch('autoScroll', '.coversations-thread');
     },
 
     components: {
@@ -38375,7 +38368,8 @@ var render = function() {
           _c(
             "div",
             {
-              staticClass: "scroll-wrapper coversations-list",
+              staticClass:
+                "scroll-wrapper coversations-list coversations-list--desktop",
               attrs: { "data-type": "list" }
             },
             [
@@ -38512,7 +38506,8 @@ var render = function() {
             _c(
               "div",
               {
-                staticClass: "inner-chat-wrapper coversations-thread",
+                staticClass:
+                  "inner-chat-wrapper coversations-thread coversations-list--desktop",
                 attrs: { "data-type": "threads" }
               },
               [
@@ -40512,17 +40507,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         openChat: function openChat(c) {
             this.showConversation(c, true);
         },
-        autoScroll: function autoScroll(el) {
-            $(el).animate({ scrollTop: $(el)[0].scrollHeight + 600 }, 2000);
-        },
         chk_scroll: function chk_scroll(e) {
             var elem = $(e.currentTarget);
             if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
                 if (elem.data('type') == "threads") {
-                    // TODO this.getMoreConversations();
+                    this.$store.dispatch('getMoreConversations');
                 } else {
-                        //TODO this.getMoreConversationMessages();
-                    }
+                    this.$store.dispatch('getMoreConversationMessages');
+                }
             }
         },
         showConversation: function showConversation(c) {
@@ -40533,8 +40525,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         this.$store.dispatch('subscribeToPrivateMessageChannel', current_username);
         this.$store.dispatch('getConversations');
         var that = this;
-        $('.coversations-thread').bind('scroll', that.chk_scroll);
-        $('.coversations-list').bind('scroll', that.chk_scroll);
+        $('.coversations-thread--docker').bind('scroll', that.chk_scroll);
+        $('.coversations-list--docker').bind('scroll', that.chk_scroll);
         $("#create-chat-vue").keypress(function (e) {
             if (e.which == 13) {
                 that.initPostMessage();
@@ -40650,7 +40642,8 @@ var render = function() {
               _c(
                 "div",
                 {
-                  staticClass: "inner-chat-wrapper coversations-thread",
+                  staticClass:
+                    "inner-chat-wrapper coversations-thread coversations-thread--docker",
                   attrs: { "data-type": "threads" }
                 },
                 [
@@ -40870,7 +40863,8 @@ var render = function() {
                 _c(
                   "div",
                   {
-                    staticClass: "scroll-wrapper coversations-list",
+                    staticClass:
+                      "scroll-wrapper coversations-list coversations-list--docker",
                     attrs: { "data-type": "list" }
                   },
                   [
@@ -43794,7 +43788,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return this.optionMenuPostItem.id !== undefined ? this.optionMenuPostItem : undefined;
         },
         authUser: function authUser() {
-            return this.postItem !== undefined ? this.postItem.user_id == user_id : false;
+            return this.postItem !== undefined ? this.postItem.user_id === user_id : false;
         }
     })
 });
@@ -43834,7 +43828,7 @@ var render = function() {
                     class: { "is-loading": _vm.isLoading }
                   },
                   [
-                    _vm.authUser
+                    !_vm.authUser
                       ? _c(
                           "a",
                           {
@@ -47223,6 +47217,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     SET_CONVERSATION: function SET_CONVERSATION(state, data) {
       state.conversations = data.message;
     },
+    ADD_CONVERSATION: function ADD_CONVERSATION(state, data) {
+      state.conversations.data.unshift(data);
+    },
     SET_CONVERSATION_: function SET_CONVERSATION_(state, data) {
       if (state.currentConversation.conversationMessages.data !== undefined) {
         state.currentConversation.conversationMessages.data.push(data.message);
@@ -47344,13 +47341,16 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         }
       }).then(function (response) {
         if (response.status == 200) {
-          console.log(response.data.data);
           context.commit('SET_CONVERSATION', { message: response.data.data });
           context.dispatch('showConversation', { conversation: context.state.conversations.data[0], byTap: false });
         }
       }).catch(function (error) {
         console.log(error);
       });
+    },
+    autoScroll: function autoScroll(context, el) {
+      console.log(el);
+      $(el).animate({ scrollTop: $(el)[0].scrollHeight + 600 }, 2000);
     },
     postMessage: function postMessage(context, data) {
       var messageBody = data.nonHtmlContent;
@@ -47362,10 +47362,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
       };
       context.commit('ADD_CONVERSATION_MESSAGE', { message: preData });
       var index = context.state.currentConversation.conversationMessages.data.length - 1;
-      /*setTimeout(function () {
-        that.autoScroll('.coversations-thread');
-      }, 100)*/
-      /*this.isSendingMsg = true*/
+      setTimeout(function () {
+        context.dispatch('autoScroll', '.coversations-thread');
+      }, 100);
       axios({
         method: 'post',
         responseType: 'json',
@@ -47445,38 +47444,55 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         }
       }
     },
-    getMoreConversationMessages: function getMoreConversationMessages() {
-      if (this.currentConversation.conversationMessages.data.length < this.currentConversation.conversationMessages.total) {
-        this.$http.post(this.currentConversation.conversationMessages.next_page_url).then(function (response) {
-          var latestConversations = JSON.parse(response.body).data;
-          this.currentConversation.conversationMessages.last_page = latestConversations.conversationMessages.last_page;
-          this.currentConversation.conversationMessages.next_page_url = latestConversations.conversationMessages.next_page_url;
-          this.currentConversation.conversationMessages.per_page = latestConversations.conversationMessages.per_page;
-          this.currentConversation.conversationMessages.prev_page_url = latestConversations.conversationMessages.prev_page_url;
-
-          var vm = this;
-          $.each(latestConversations.conversationMessages.data, function (i, latestConversation) {
-            vm.currentConversation.conversationMessages.data.unshift(latestConversation);
-          });
-
-          setTimeout(function () {
-            vm.timeago();
-          }, 10);
+    getMoreConversationMessages: function getMoreConversationMessages(context) {
+      if (context.state.currentConversation.conversationMessages.data.length < context.state.currentConversation.conversationMessages.total) {
+        var _token = $("meta[name=_token]").attr('content');
+        axios({
+          method: 'post',
+          responseType: 'json',
+          url: context.state.currentConversation.conversationMessages.next_page_url,
+          data: {
+            _token: _token
+          }
+        }).then(function (response) {
+          if (response.status == 200) {
+            var latestConversations = response.data.data;
+            context.state.currentConversation.conversationMessages.last_page = latestConversations.conversationMessages.last_page;
+            context.state.currentConversation.conversationMessages.next_page_url = latestConversations.conversationMessages.next_page_url;
+            context.state.currentConversation.conversationMessages.per_page = latestConversations.conversationMessages.per_page;
+            context.state.currentConversation.conversationMessages.prev_page_url = latestConversations.conversationMessages.prev_page_url;
+            $.each(latestConversations.data, function (i, latestConversation) {
+              context.commit('ADD_CONVERSATION_MESSAGE', { message: latestConversation });
+            });
+          }
+        }).catch(function (error) {
+          console.log(error);
         });
       }
     },
-    getMoreConversations: function getMoreConversations() {
-      if (this.conversations.data.length < this.conversations.total) {
-        this.$http.post(this.conversations.next_page_url).then(function (response) {
-          var latestConversations = JSON.parse(response.body).data;
-          this.conversations.last_page = latestConversations.last_page;
-          this.conversations.next_page_url = latestConversations.next_page_url;
-          this.conversations.per_page = latestConversations.per_page;
-          this.conversations.prev_page_url = latestConversations.prev_page_url;
-          var that = this;
-          $.each(latestConversations.data, function (i, latestConversation) {
-            that.conversations.data.unshift(latestConversation);
-          });
+    getMoreConversations: function getMoreConversations(context) {
+      if (context.state.conversations.data.length < context.state.conversations.total) {
+        var _token = $("meta[name=_token]").attr('content');
+        axios({
+          method: 'post',
+          responseType: 'json',
+          url: context.state.conversations.next_page_url,
+          data: {
+            _token: _token
+          }
+        }).then(function (response) {
+          if (response.status == 200) {
+            var latestConversations = response.data.data;
+            context.state.conversations.last_page = latestConversations.last_page;
+            context.state.conversations.next_page_url = latestConversations.next_page_url;
+            context.state.conversations.per_page = latestConversations.per_page;
+            context.state.conversations.prev_page_url = latestConversations.prev_page_url;
+            $.each(latestConversations.data, function (i, latestConversation) {
+              context.commit('ADD_CONVERSATION', latestConversation);
+            });
+          }
+        }).catch(function (error) {
+          console.log(error);
         });
       }
     },

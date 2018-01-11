@@ -11,7 +11,7 @@
                     </div>
                 </header>
                 <div class="ft-chat-box__body pos-rel">
-                    <div class="scroll-wrapper coversations-list" data-type="list">
+                    <div class="scroll-wrapper coversations-list coversations-list--desktop" data-type="list">
                         <div class="md-list" style="background-color: #FFF">
                             <template v-if="conversations.data !== undefined">
                                 <div v-for="item in conversations.data" :key="item.id" class="md-list__item"
@@ -52,7 +52,7 @@
                         </a>
                     </header>
                     <div class="ft-chat-box__body">
-                        <div class="inner-chat-wrapper coversations-thread" data-type="threads">
+                        <div class="inner-chat-wrapper coversations-thread coversations-list--desktop" data-type="threads">
                             <div class="inner-chat">
                                 <template v-if="currentConversation.conversationMessages !== undefined">
                                     <div v-for="item in currentConversation.conversationMessages.data"
@@ -179,16 +179,14 @@
             openChat: function (c) {
                 this.showConversation(c, true)
             },
-            autoScroll: function (el) {
-                $(el).animate({scrollTop: $(el)[0].scrollHeight + 600}, 2000);
-            },
             chk_scroll: function (e) {
+                console.log(e)
                 let elem = $(e.currentTarget);
                 if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
                     if (elem.data('type') == "threads") {
-                        // TODO this.getMoreConversations();
+                        this.$store.dispatch('getMoreConversations')
                     } else {
-                        //TODO this.getMoreConversationMessages();
+                        this.$store.dispatch('getMoreConversationMessages')
                     }
                 }
             },
@@ -198,8 +196,8 @@
         },
         mounted () {
             let that = this
-            //$('.coversations-thread').bind('scroll', that.chk_scroll);
-            //$('.coversations-list').bind('scroll', that.chk_scroll);
+            $('.coversations-thread--desktop').bind('scroll', that.chk_scroll);
+            $('.coversations-list--desktop').bind('scroll', that.chk_scroll);
             $("#create-chat-vue-single").keypress(function(e) {
                 if(e.which ==13) {
                     that.initPostMessage()
@@ -207,6 +205,7 @@
                 }
                 return true
             });
+            this.$store.dispatch('autoScroll', ('.coversations-thread'));
         },
         components: {
             'medium-editor': editor

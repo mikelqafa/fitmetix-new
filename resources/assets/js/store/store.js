@@ -175,6 +175,9 @@ export const store = new Vuex.Store({
     SET_CONVERSATION(state, data) {
       state.conversations = data.message
     },
+    ADD_CONVERSATION(state, data) {
+      state.conversations.data.unshift(data)
+    },
     SET_CONVERSATION_(state, data) {
       if( state.currentConversation.conversationMessages.data !== undefined ) {
         state.currentConversation.conversationMessages.data.push(data.message);
@@ -297,13 +300,16 @@ export const store = new Vuex.Store({
         }
       }).then(function (response) {
         if (response.status == 200) {
-          console.log(response.data.data)
           context.commit('SET_CONVERSATION', {message: response.data.data})
           context.dispatch('showConversation', {conversation: context.state.conversations.data[0], byTap:false})
         }
       }).catch(function (error) {
         console.log(error)
       })
+    },
+    autoScroll: function (context, el) {
+      console.log(el)
+      $(el).animate({scrollTop: $(el)[0].scrollHeight + 600}, 2000);
     },
     postMessage: (context, data) => {
       let messageBody = data.nonHtmlContent;
@@ -315,10 +321,9 @@ export const store = new Vuex.Store({
       }
       context.commit('ADD_CONVERSATION_MESSAGE', {message:preData})
       let index = context.state.currentConversation.conversationMessages.data.length - 1
-      /*setTimeout(function () {
-        that.autoScroll('.coversations-thread');
-      }, 100)*/
-      /*this.isSendingMsg = true*/
+      setTimeout(function () {
+        context.dispatch('autoScroll', ('.coversations-thread'));
+      }, 100)
       axios({
         method: 'post',
         responseType: 'json',
@@ -399,39 +404,56 @@ export const store = new Vuex.Store({
         }
       }
     },
-    getMoreConversationMessages: function () {
-      if (this.currentConversation.conversationMessages.data.length < this.currentConversation.conversationMessages.total) {
-        this.$http.post(this.currentConversation.conversationMessages.next_page_url).then(function (response) {
-          var latestConversations = JSON.parse(response.body).data;
-          this.currentConversation.conversationMessages.last_page = latestConversations.conversationMessages.last_page;
-          this.currentConversation.conversationMessages.next_page_url = latestConversations.conversationMessages.next_page_url;
-          this.currentConversation.conversationMessages.per_page = latestConversations.conversationMessages.per_page;
-          this.currentConversation.conversationMessages.prev_page_url = latestConversations.conversationMessages.prev_page_url;
-
-          var vm = this;
-          $.each(latestConversations.conversationMessages.data, function (i, latestConversation) {
-            vm.currentConversation.conversationMessages.data.unshift(latestConversation);
-          });
-
-          setTimeout(function () {
-            vm.timeago();
-          }, 10);
-        });
+    getMoreConversationMessages: (context) => {
+      if (context.state.currentConversation.conversationMessages.data.length < context.state.currentConversation.conversationMessages.total) {
+        let _token = $("meta[name=_token]").attr('content')
+        axios({
+          method: 'post',
+          responseType: 'json',
+          url: context.state.currentConversation.conversationMessages.next_page_url,
+          data: {
+            _token: _token
+          }
+        }).then(function (response) {
+          if (response.status == 200) {
+            var latestConversations = response.data.data;
+            context.state.currentConversation.conversationMessages.last_page = latestConversations.conversationMessages.last_page;
+            context.state.currentConversation.conversationMessages.next_page_url = latestConversations.conversationMessages.next_page_url;
+            context.state.currentConversation.conversationMessages.per_page = latestConversations.conversationMessages.per_page;
+            context.state.currentConversation.conversationMessages.prev_page_url = latestConversations.conversationMessages.prev_page_url;
+            $.each(latestConversations.data, function (i, latestConversation) {
+              context.commit('ADD_CONVERSATION_MESSAGE', {message: latestConversation})
+            });
+          }
+        }).catch(function (error) {
+          console.log(error)
+        })
       }
     },
-    getMoreConversations: function () {
-      if (this.conversations.data.length < this.conversations.total) {
-        this.$http.post(this.conversations.next_page_url).then(function (response) {
-          var latestConversations = JSON.parse(response.body).data;
-          this.conversations.last_page = latestConversations.last_page;
-          this.conversations.next_page_url = latestConversations.next_page_url;
-          this.conversations.per_page = latestConversations.per_page;
-          this.conversations.prev_page_url = latestConversations.prev_page_url;
-          let that = this
-          $.each(latestConversations.data, function (i, latestConversation) {
-            that.conversations.data.unshift(latestConversation);
-          });
-        });
+    getMoreConversations:(context) => {
+      if (context.state.conversations.data.length < context.state.conversations.total) {
+        let _token = $("meta[name=_token]").attr('content')
+        axios({
+          method: 'post',
+          responseType: 'json',
+          url: context.state.conversations.next_page_url,
+          data: {
+            _token: _token
+          }
+        }).then(function (response) {
+          if (response.status == 200) {
+            var latestConversations = response.data.data;
+            context.state.conversations.last_page = latestConversations.last_page;
+            context.state.conversations.next_page_url = latestConversations.next_page_url;
+            context.state.conversations.per_page = latestConversations.per_page;
+            context.state.conversations.prev_page_url = latestConversations.prev_page_url;
+            $.each(latestConversations.data, function (i, latestConversation) {
+              context.commit('ADD_CONVERSATION', latestConversation)
+            });
+          }
+        }).catch(function (error) {
+          console.log(error)
+        })
       }
     },
     showNewConversation: function () {
