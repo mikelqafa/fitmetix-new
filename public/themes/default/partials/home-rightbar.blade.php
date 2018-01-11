@@ -1,4 +1,4 @@
-<div class="right-side-section">
+<div class="right-side-section hidden-sm hidden-xs">
 	
 	<div class="panel panel-default">
 		<div class="panel-heading no-bg">

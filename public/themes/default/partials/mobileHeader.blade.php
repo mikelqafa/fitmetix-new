@@ -57,3 +57,15 @@
     </div>
 </div>
 
+<div style="position: fixed;width: 100vh;">
+    <div>
+        <ul class="list-group">
+            <li class="list-group-item"></li>
+            <li class="list-group-item">{{ Auth::user()->timeline->username }}</li>
+            <li class="list-group-item">s</li>
+            <li class="list-group-item">p</li>
+            <li class="list-group-item">s</li>
+            <li class="list-group-item">d</li>
+        </ul>
+    </div>
+</div>
