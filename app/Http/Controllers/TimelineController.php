@@ -4230,9 +4230,14 @@ class TimelineController extends AppBaseController
     public function getRegisteredUserForEvent(Request $request){
       $eventId = $request->event_id;
       $userId = $request->user_id;
-      $registeredUsers = DB::table('event_user')->where('event_id',$eventId)->limit($request->paginate)->offset($request->offset)->get()->toArray();
+      $event_owner= Event::find($eventId)->user_id;
+      $registeredUsers = DB::table('event_user')->where('event_id',$eventId)->limit($request->paginate)->offset($request->offset)->get();
       if (!empty($registeredUsers)){
         foreach ($registeredUsers as $key => $value){
+          $registeredUsers[$key]->eventOwner = false;
+          if($value->user_id == $event_owner){
+            $registeredUsers[$key]->eventOwner = true;
+          }
           $user = DB::table('users')->where('id',$value->user_id)->first();
           // $timeline = DB::table('timelines')->where('id',$user->timeline_id)->first();
           $timeline = Timeline::find($user->timeline_id);
@@ -4246,7 +4251,11 @@ class TimelineController extends AppBaseController
             $registeredUsers[$key]->following = false;
           }
         }
-        return json_encode($registeredUsers);
+          $currentUserOwner = false; 
+          if(Auth::user()->id == $event_owner){
+              $currentUserOwner = true;
+          }
+        return response()->json(['registeredUsers'=>$registeredUsers,'currentUserOwner'=>$currentUserOwner]);
       }
       else{
         return json_encode('');
