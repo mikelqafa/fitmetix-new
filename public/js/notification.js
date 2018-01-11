@@ -45459,7 +45459,7 @@ var appEvent;
     },
     methods: {
         formatGender: function formatGender(g) {
-            return g == '' ? 'Everyone' : g == 'male' ? 'Male Only' : 'Female Only';
+            return g == 'all' ? 'Everyone' : g == 'male' ? 'Male Only' : 'Female Only';
         },
         formatDate: function formatDate(d) {
             var obj = new Date(d);
