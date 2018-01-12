@@ -1,6 +1,6 @@
 <template>
     <div class="row layout-m-t-1">
-        <div class="col-md-4">
+        <div class="col-md-4 col-sm-5 no-padding--mobile">
             <div class="ft-box--desktop">
                 <header class="ft-chat-desktop__header" style="box-shadow: none; border-bottom: 1px solid rgba(0,0,0,.12);background-color: #fafafa">
                     <div class="input-group no-margin">
@@ -14,37 +14,49 @@
                     <div class="scroll-wrapper coversations-list coversations-list--desktop" data-type="list">
                         <div class="md-list" style="background-color: #FFF">
                             <template v-if="conversations.data !== undefined">
-                                <div v-for="item in conversations.data" :key="item.id" class="md-list__item"
-                                     @click="openChat(item)" v-bind:class="{'is-active': item.id == currentConversation.id}">
-                                    <div class="md-list__item-content">
-                                        <a href="//localhost:3000/fitmetix/public/doremon"
-                                           class="md-list__item-icon user-avatar"
-                                           :style="{backgroundImage: 'url('+item.user.avatar+')'}">
-                                        </a>
-                                        <div class="md-list__item-primary">
-                                            <span>{{item.user.name}}</span>
-                                            <div class="md-list__item-text-body" v-html="item.lastMessage.body"></div>
-                                        </div>
-                                        <div class="md-list__item-secondary text-right">
-                                            <div class="md-list__item-secondary-info">
-                                                <timeago :since="since(item.lastMessage.created_at)"
-                                                         :auto-update="autoUpdate"
-                                                         class="timeago"></timeago>
+                                <transition-group name="flip-list" tag="div">
+                                    <div v-for="item in sortedConversations" :key="item.id" class="md-list__item"
+                                         @click="openChat(item)" v-bind:class="{'is-active': item.id == currentConversation.id}">
+                                        <div class="md-list__item-content">
+                                            <a href="//localhost:3000/fitmetix/public/doremon"
+                                               class="md-list__item-icon user-avatar"
+                                               :style="{backgroundImage: 'url('+item.user.avatar+')'}">
+                                            </a>
+                                            <div class="md-list__item-primary">
+                                            <span class="pos-rel">
+                                                <span>{{item.user.name}}</span>
+                                                <span class="unread-notification unread-notification--chat" v-bind:class="{ 'is-visible': item.unread }"></span>
+                                            </span>
+                                                <div class="md-list__item-text-body" v-html="item.lastMessage.body"></div>
                                             </div>
-                                            <div class="md-layout-spacer"></div>
+                                            <div class="md-list__item-secondary text-right">
+                                                <div class="md-list__item-secondary-info">
+                                                    <timeago :since="since(item.lastMessage.created_at)"
+                                                             :auto-update="autoUpdate"
+                                                             class="timeago"></timeago>
+                                                </div>
+                                                <div class="md-layout-spacer"></div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </transition-group>
                             </template>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8 col-sm-7 no-padding--mobile chat-user-list-wrapper">
             <div class="ft-chat-box ft-chat-box--desktop">
                 <div class="ft-chat-box__inner-wrapper">
                     <header class="ft-chat-desktop__header" style="cursor: pointer">
+                        <a href="javascript:;" class="hidden visible-xs chat-user margin-left-8" @click="goBack">
+                            <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                            </svg>
+                        </a>
                         <a href="javascript:;" class="chat-user margin-left-8">{{currentConversation.user.name}}</a>
                         <div class="md-layout-spacer"></div>
                         <a href="javascript:;" class="chat-options">
@@ -52,46 +64,28 @@
                         </a>
                     </header>
                     <div class="ft-chat-box__body">
-                        <div class="inner-chat-wrapper coversations-thread coversations-list--desktop" data-type="threads">
-                            <div class="inner-chat">
+                        <div class="inner-chat-wrapper coversations-thread coversations-list--desktop" data-type="threads" v-chat-scroll>
+                            <ul class="inner-chat">
                                 <template v-if="currentConversation.conversationMessages !== undefined">
-                                    <div v-for="item in currentConversation.conversationMessages.data"
-                                         class="chat-item" :data-user="whichUser(item.user.username)">
-                                        <div class="chat-item__user">
-                                            <a aria-label="Prem Bharti Wednesday 7:08pm" class="_4tdw"
-                                               data-hover="tooltip"
-                                               data-tooltip-content="Prem Bharti Wednesday 7:08pm"
-                                               data-tooltip-position="left"
-                                               href="">
-                                                <img :src="item.user.avatar"
-                                                     alt="" class="img">
-                                            </a>
-                                        </div>
-                                        <div class="chat-item__bubble">
-                                            <div class="chat-item__content">
-                                                <div class="chat-item__content-wrapper">
-                                                    <div class="chat-item__content-text" v-html="item.body">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <li v-for="(item, index) in currentConversation.conversationMessages.data" :key="'conv'+index">
+                                        <chat-thread :message="item" ></chat-thread>
+                                    </li>
                                 </template>
-                            </div>
+                            </ul>
                         </div>
                     </div>
-                    <div class="ft-chat-box__footer" style="box-shadow: none;padding-bottom: 40px">
+                    <div class="ft-chat-box__footer" style="box-shadow: none;padding-bottom: 24px">
                         <div class="ft-chat__write">
-                            <div class="write-post__placeholder" v-if="hasNotContent" style="top: 10px;left:  15px;font-size:  12px;">{{placeholder}}</div>
+                            <div class="write-post__placeholder" v-if="hasNotContent" style="top: 14px;left:26px;font-size:  12px;">{{placeholder}}</div>
                             <medium-editor
                                     id="create-chat-vue-single" :text='backContent' :options='options'
-                                    class="ft-chat__write-box"
+                                    class="ft-chat__write-box ft-chat__write-box--big"
                                     v-on:edit='processEditOperation'
                                     style="z-index:2;outline: none; user-select: text; white-space: pre-wrap; word-wrap: break-word;"
                                     custom-tag='div'>
                             </medium-editor>
-                            <div class="ft-chat__write-button-wrapper">
-                                <button type="submit" class="btn ft-chat__write-button">
+                            <div class="ft-chat__write-button-wrapper" style="right: 20px;top: 8px">
+                                <button type="submit" class="btn ft-chat__write-button" v-show="nonEmpty" @click="initPostMessage">
                                     <svg class="svg-icon" fill="#ffffff" height="24" viewBox="0 0 24 24" width="24"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
@@ -105,7 +99,7 @@
                                 <span class="ft-loading__dot"></span>
                             </div>
                         </div>
-                        <div class="ft-chat__quick-action" style="bottom: 8px;top: auto;">
+                        <div class="ft-chat__quick-action hidden" style="bottom: 8px;top: auto;">
                             <a href="javascript:;" class="btn btn--icon">
                                 <i class="icon icon-add"></i>
                             </a>
@@ -124,6 +118,7 @@
 </template>
 <script>
     import editor from 'vue2-medium-editor'
+    import chatText from './chatText'
     import { mapGetters } from 'vuex'
     export default {
         data: function () {
@@ -136,7 +131,8 @@
                 backContent: '',
                 options: { disableReturn: false },
                 messageBody: '',
-                placeholder: 'Type a message...'
+                placeholder: 'Type a message...',
+                nonEmpty: false
             }
         },
         methods: {
@@ -173,13 +169,17 @@
                 return u === current_username ? 0 : 1
             },
             showThread: function () {
-                $('.ft-chat--list-wrapper').addClass('is-list-open')
+                $('.chat-user-list-wrapper').addClass('is-open')
                 this.getConversations()
+            },
+            goBack: function () {
+                $('.chat-user-list-wrapper').removeClass('is-open')
             },
             openChat: function (c) {
                 this.showConversation(c, true)
+                $('.chat-user-list-wrapper').addClass('is-open')
             },
-            chk_scroll: function (e) {
+            /*chk_scroll: function (e) {
                 console.log(e)
                 let elem = $(e.currentTarget);
                 if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
@@ -189,15 +189,15 @@
                         this.$store.dispatch('getMoreConversationMessages')
                     }
                 }
-            },
+            },*/
             showConversation: function(c) {
                 this.$store.dispatch('showConversation', {byTap: false, conversation: c})
             }
         },
         mounted () {
             let that = this
-            $('.coversations-thread--desktop').bind('scroll', that.chk_scroll);
-            $('.coversations-list--desktop').bind('scroll', that.chk_scroll);
+            /*$('.coversations-thread--desktop').bind('scroll', that.chk_scroll);
+            $('.coversations-list--desktop').bind('scroll', that.chk_scroll);*/
             $("#create-chat-vue-single").keypress(function(e) {
                 if(e.which ==13) {
                     that.initPostMessage()
@@ -205,16 +205,27 @@
                 }
                 return true
             });
-            this.$store.dispatch('autoScroll', ('.coversations-thread'));
+            //this.$store.dispatch('autoScroll', ('.coversations-thread'));
         },
         components: {
-            'medium-editor': editor
+            'medium-editor': editor,
+            'chat-thread': chatText
+        },
+        watch: {
+            backContent: function (val) {
+                this.nonEmpty = $('#create-chat-vue-single').text().trim() !== ''
+            }
         },
         computed: {
-            ...mapGetters({
-                currentConversation: 'currentConversation',
-                conversations: 'conversations'
-            }),
+            sortedConversations () {
+                return this.conversations.data.sort(function(a,b){
+                    if (a.lastMessage.id > b.lastMessage.id)
+                        return -1;
+                    if (a.lastMessage.id < b.lastMessage.id)
+                        return 1;
+                    return 0;
+                });
+            },
             hasNotContent () {
                 return this.nonHtmlContent === ''
             },
@@ -223,6 +234,10 @@
                 var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
                 return (this.backContent + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
             },
+            ...mapGetters({
+                currentConversation: 'currentConversation',
+                conversations: 'conversations'
+            }),
         }
     }
 </script>

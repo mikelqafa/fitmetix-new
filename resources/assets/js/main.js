@@ -22,15 +22,16 @@ import AppEventList from './components/appEventList'
 import ProfileOptionDialog from './components/ProfileOptionDialog'
 import {store} from './store/store'
 import VueClip from 'vue-clip'
+import VueChatScroll from 'vue-chat-scroll'
 require('swiper/dist/css/swiper.css')
 
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueClip)
+Vue.use(VueChatScroll)
 Vue.use(VueTimeago, {
-  name: 'timeago', // component name, `timeago` by default
+  name: 'timeago',
   locale: 'en-US',
   locales: {
-    /*'en-US': require('vue-timeago/locales/en-US.json')*/
     'en-US': require('./en-US.json')
   }
 })

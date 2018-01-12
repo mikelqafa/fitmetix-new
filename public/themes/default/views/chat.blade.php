@@ -1,6 +1,8 @@
-<!-- <div class="main-content">-->
-<div class="container">
-    <div style="min-height: 80vh" id="app-single-chat">
-        <app-single-chat></app-single-chat>
-    </div>
+<style>
+    .footer-description{
+        display: none;
+    }
+</style>
+<div style="min-height: 80vh" id="app-single-chat" class="container">
+    <app-single-chat></app-single-chat>
 </div>

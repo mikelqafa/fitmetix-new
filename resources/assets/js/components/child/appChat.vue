@@ -2,7 +2,7 @@
     <div class="ft-dock-wrapper">
         <div class="ft-chat-group">
             <div class="ft-chat-wrapper">
-                <div class="ft-chat-box ft-chat-box--docker">
+                <div class="ft-chat-box ft-chat-box--abs ft-chat-box--docker">
                     <div class="ft-chat-box__inner-wrapper">
                         <header class="ft-chat-box__header" style="cursor: pointer">
                             <a href="javascript:;" class="chat-user margin-left-8" @click="showThread">
@@ -13,7 +13,7 @@
                                 </svg>
                             </a>
                             <a href="javascript:;" class="chat-user margin-left-8">{{currentConversation.user.name}}</a>
-                            <div class="md-layout-spacer" @click="toggleChatMinimize"></div>
+                            <div class="md-layout-spacer" style="height: 100%" @click="toggleChatMinimize"></div>
                             <a href="javascript:;" class="chat-options">
                                 <i class="icon icon-options"></i>
                             </a>
@@ -22,30 +22,12 @@
                             </a>
                         </header>
                         <div class="ft-chat-box__body">
-                            <div class="inner-chat-wrapper coversations-thread coversations-thread--docker" data-type="threads">
+                            <div class="inner-chat-wrapper coversations-thread coversations-thread--docker" data-type="threads" v-chat-scroll>
                                 <div class="inner-chat">
                                     <template v-if="currentConversation.conversationMessages !== undefined">
-                                        <div v-for="item in currentConversation.conversationMessages.data"
-                                             class="chat-item" :data-user="whichUser(item.user.username)">
-                                            <div class="chat-item__user">
-                                                <a aria-label="Prem Bharti Wednesday 7:08pm" class="_4tdw"
-                                                   data-hover="tooltip"
-                                                   data-tooltip-content="Prem Bharti Wednesday 7:08pm"
-                                                   data-tooltip-position="left"
-                                                   href="">
-                                                    <img :src="item.user.avatar"
-                                                         alt="" class="img">
-                                                </a>
-                                            </div>
-                                            <div class="chat-item__bubble">
-                                                <div class="chat-item__content">
-                                                    <div class="chat-item__content-wrapper">
-                                                        <div class="chat-item__content-text" v-html="item.body">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <li v-for="(item, index) in currentConversation.conversationMessages.data" :key="'chat'+index">
+                                            <chat-thread :message="item" ></chat-thread>
+                                        </li>
                                     </template>
                                 </div>
                             </div>
@@ -75,7 +57,7 @@
                                     <span class="ft-loading__dot"></span>
                                 </div>
                             </div>
-                            <div class="ft-chat__quick-action">
+                            <div class="ft-chat__quick-action hidden">
                                 <a href="javascript:;" class="btn btn--icon">
                                     <i class="icon icon-add"></i>
                                 </a>
@@ -90,7 +72,7 @@
                         <div class="ft-chat--list-wrapper is-list-open">
                             <header class="ft-chat-box__header"  style="cursor: pointer">
                                 <a href="javascript:;" class="chat-user margin-left-8" @click="toggleChatMinimize">Chat Story</a>
-                                <div class="md-layout-spacer"></div>
+                                <div class="md-layout-spacer" style="height: 100%" @click="toggleChatMinimize"></div>
                                 <a href="javascript:;" class="chat-options margin-right-8" @click="closeChat">
                                     <i class="icon icon-close"></i>
                                 </a>
@@ -134,6 +116,7 @@
 <script>
     import editor from 'vue2-medium-editor'
     import { mapGetters } from 'vuex'
+    import chatText from './chatText'
     export default {
         data: function () {
             return {
@@ -223,7 +206,8 @@
             this.$store.dispatch('setUserObj')
         },
         components: {
-            'medium-editor': editor
+            'medium-editor': editor,
+            'chat-thread': chatText
         },
         computed: {
             ...mapGetters({

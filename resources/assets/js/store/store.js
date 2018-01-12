@@ -21,10 +21,12 @@ export const store = new Vuex.Store({
       user: []
     },
     conversations: [],
+    recipients: [],
     selfUserObj: ''
   },
   getters: {
     currentConversation: state => state.currentConversation,
+    recipients: state => state.recipients,
     conversations: state => state.conversations,
     postItemList: state => state.postItemList,
     notification: state => state.notification,
@@ -66,7 +68,7 @@ export const store = new Vuex.Store({
     },
     ADD_NEW_NOTIFICATION (state, data) {
       if(!data.seen) {
-        store.commit('SET_URN', state.unreadNotifications + 1)
+        state.commit('SET_URN', state.unreadNotifications + 1)
         materialSnackBar({messageText: data.description, autoClose: true, timeout: 5000 })
         $.playSound(theme_url + '/sounds/notification');
       }
@@ -191,6 +193,9 @@ export const store = new Vuex.Store({
     },
     SET_CURRENT_CONVERSATION(state, data) {
       state.currentConversation = data;
+      let msgAry = data.conversationMessages.data
+      msgAry = msgAry.reverse()
+      state.currentConversation.conversationMessages.data = msgAry
     },
     SET_CURRENT_CONVERSATION_OBJ(state, data) {
       Vue.set(state.currentConversation, data.obj, data.data)
@@ -266,12 +271,13 @@ export const store = new Vuex.Store({
         else {
           let indexes = $.map(context.state.conversations.data, function (thread, key) {
             if (thread.id == data.message.thread_id) {
+              console.log(key)
               return key;
             }
           });
           if (indexes != '') {
-            //context.state.conversations.data[indexes[0]].unread = true;
-            //context.state.conversations.data[indexes[0]].lastMessage = data.message;
+            context.state.conversations.data[indexes[0]].unread = true;
+            context.state.conversations.data[indexes[0]].lastMessage = data.message;
           }  else {
             let _token = $("meta[name=_token]").attr('content')
             axios({
@@ -283,7 +289,7 @@ export const store = new Vuex.Store({
               }
             }).then(function (response) {
               if (response.status == 200) {
-                //context.state.conversations.data.unshift(response.data.data);
+                context.state.conversations.data.unshift(response.data.data);
               }
             }).catch(function (error) {
               console.log(error)
@@ -310,10 +316,6 @@ export const store = new Vuex.Store({
         console.log(error)
       })
     },
-    autoScroll: function (context, el) {
-      console.log(el)
-      $(el).animate({scrollTop: $(el)[0].scrollHeight + 600}, 2000);
-    },
     postMessage: (context, data) => {
       let messageBody = data.nonHtmlContent;
       let _token = $("meta[name=_token]").attr('content')
@@ -323,10 +325,12 @@ export const store = new Vuex.Store({
         user_id: user_id
       }
       context.commit('ADD_CONVERSATION_MESSAGE', {message:preData})
+      let indexes = $.map(context.state.conversations.data, function (thread, key) {
+        if (thread.id == context.state.currentConversation.id) {
+          return key;
+        }
+      });
       let index = context.state.currentConversation.conversationMessages.data.length - 1
-      setTimeout(function () {
-        context.dispatch('autoScroll', ('.coversations-thread'));
-      }, 100)
       axios({
         method: 'post',
         responseType: 'json',
@@ -337,6 +341,9 @@ export const store = new Vuex.Store({
         }
       }).then(function (response) {
         if (response.status == 200) {
+          if (indexes != '') {
+            context.state.conversations.data[indexes[0]].lastMessage = response.data.data;
+          }
           context.state.currentConversation.conversationMessages.data[index] = response.data.data;
         }
       }).catch(function (error) {
@@ -345,38 +352,39 @@ export const store = new Vuex.Store({
     },
     postNewConversation: (context, data) => {
       if (this.recipients.length) {
-        this.$http.post(base_url + 'ajax/create-message', {
-          message: this.messageBody,
-          recipients: this.recipients
+        axios({
+          method: 'post',
+          responseType: 'json',
+          url: base_url + 'ajax/create-message',
+          data: {
+            _token: _token,
+            message: messageBody,
+            recipients: data.recipients
+          }
         }).then(function (response) {
-          if (response.status) {
-            vm = this;
-
-            newThread = JSON.parse(response.body).data;
-            indexes = $.map(vm.conversations.data, function (thread, key) {
+          if (response.status == 200) {
+            let newThread = response.data.data
+            let indexes = $.map(context.state.conversations.data, function (thread, key) {
               if (thread.id == newThread.id) {
                 return key;
               }
             });
-
             if (indexes != '') {
-              vm.conversations.data[indexes[0]].unread = true;
-              vm.conversations.data[indexes[0]].lastMessage = newThread.lastMessage;
+              context.state.conversations.data[indexes[0]].unread = true;
+              context.state.conversations.data[indexes[0]].lastMessage = newThread.lastMessage;
             }
             else {
-              vm.conversations.data.unshift(response.data.data);
+              context.commit('ADD_CONVERSATION', response.data.data)
             }
-
             $('#messageReceipient').focus();
-            this.recipients = [];
-            this.newConversation = false;
-            this.messageBody = "";
-            this.showConversation(vm.conversations.data[0]);
-            setTimeout(function () {
-              vm.autoScroll('.coversations-thread');
-            }, 100)
+            // TODO this.recipients = [];
+            // this.newConversation = false;
+            // this.messageBody = "";
+            context.dispatch('showConversation', context.conversations.data[0])
           }
-        });
+        }).catch(function (error) {
+          console.log(error)
+        })
       }
     },
     showConversation: (context, data) => {
@@ -397,9 +405,6 @@ export const store = new Vuex.Store({
               //that.currentConversation = response.data.data;
               context.commit('SET_CURRENT_CONVERSATION', response.data.data)
               context.commit('SET_CURRENT_CONVERSATION_OBJ', {obj: 'user', data: data.conversation.user})
-              /*setTimeout(function () {
-                that.autoScroll('.coversations-thread');
-              }, 100)*/
             }
           }).catch(function (error) {
             console.log(error)

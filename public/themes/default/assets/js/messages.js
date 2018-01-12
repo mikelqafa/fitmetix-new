@@ -123,10 +123,8 @@ var vue = new Vue({
                     });    
                 }    
             }
-            
         },
         postMessage : function(conversation) {
-            
             messageBody = this.messageBody;
             this.messageBody = '';
             this.$http.post(base_url + 'ajax/post-message/' + conversation.id,{message: messageBody}).then( function(response) {

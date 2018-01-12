@@ -94,32 +94,13 @@ class MessageController extends Controller
 
             return redirect('messages');
         }
-
         // don't show the current user in list
         $userId = Auth::user()->id;
         $users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
-
         $thread->markAsRead($userId);
-
         $messages = [];
-        $thread->conversationMessages = $thread->messages()->orderBy('created_at', 'ASC')->latest()->with('user')->paginate(10);
-
-        // $thread->conversationMessages->sortBy('created_at', 'desc');
-
-        // dd($thread->conversationMessages->toArray());
-
-
-//         SELECT * FROM (
-//     SELECT * FROM messages WHERE thread_id=1 LIMIT 5
-// ) sub
-// ORDER BY created_at ASC
-
-
+        $thread->conversationMessages = $thread->messages()->latest()->with('user')->paginate(10);
         return response()->json(['status' => '200', 'data' => $thread]);
-
-        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
-
-        return $theme->scope('messenger.show', compact('thread', 'users'))->render();
     }
 
     /**
