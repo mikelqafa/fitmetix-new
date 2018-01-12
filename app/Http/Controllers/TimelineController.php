@@ -491,7 +491,7 @@ class TimelineController extends AppBaseController
             $postImage = $request->file('post_images_upload');
             $strippedName = str_replace(' ', '', $postImage->getClientOriginalName());
             $photoName = 'post'.time().$strippedName;
-            $avatar = Image::make($postImage->getRealPath());
+            $avatar = Image::make($postImage->getRealPath())->orientate();
             $avatar->save(storage_path().'/uploads/users/gallery/'.$photoName, 60);
             return response()->json(['status' => '200', $photoName]);
         }
