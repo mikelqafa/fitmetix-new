@@ -3312,9 +3312,9 @@ aside .md-drawer-scroll__wrapper{
     align-items: center;
 }
 .inner-chat {
-    /* position: relative; */
     list-style:  none;
-    /* height: auto; */
+    padding-right: 8px;
+    padding-left: 8px;
 }
 .ft-chat-box__body{
     position: relative;
