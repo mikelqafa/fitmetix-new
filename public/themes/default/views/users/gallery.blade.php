@@ -14,7 +14,7 @@
                         </ul>
                     </div>
                     <div class="timeline timeline-posts--user wrap-ft-card--small">
-                        @if(($timeline->user->settings()->post_privacy == 'everyone') || (Auth::user()->following->contains($timeline->user->id)))
+                        @if(($timeline->user->settings()->post_privacy == 'everyone') || (Auth::user()->following->contains($timeline->user->id)) || (Auth::user()->id == $timeline->user->id))
                             <div id="app-timeline">
                                 <input type="hidden" id="newPostId">
                                 @if(isset($timeline->username))
