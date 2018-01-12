@@ -20302,7 +20302,7 @@ div.icon {
   color: rgba(0, 0, 0, 0.34);
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
-  max-width:  17%;
+  max-width: 16.666%;
 }
 
 .ft-header-nav__item.is-active,

@@ -1,9 +1,9 @@
 <div class="ft-header hidden-md hidden-lg">
     <form class="ft-header-nav">
         @if(Auth::user())
-            <a class="ft-header-nav__item {{ Request::is('/') ? 'is-active' : '' }}" href="{{ url('/') }}">
-                <div class="navicon hidden-active" data-icon="f"></div>
-                <div class="navicon visible-active" data-icon="e"></div>
+            <a class="ft-header-nav__item fm-nav__item {{ Request::is('/') ? 'is-active' : '' }}" href="{{ url('/') }}">
+                <div class="navicon hidden-active" data-icon="f" style="font-size: 22px"></div>
+                <div class="navicon visible-active" data-icon="e" style="font-size: 22px"></div>
             </a>
             <a href="{{ url(Auth::user()->username.'/events') }}" class="has-hover-effect ft-header-nav__item fm-nav__item {{ (Request::is(Auth::user()->username.'/events') ? 'is-active' : '') }}">
                 <span>
@@ -12,20 +12,20 @@
                 </span>
             </a>
             <a id="ft-mobile-nt" class="ft-header-nav__item pos-rel {{ Request::is('allnotifications') ? 'is-active' : '' }}" href="{!! url('allnotifications') !!}">
-                <div class="navicon icon-like hidden-active" data-icon="d"></div>
-                <div class="navicon icon-like visible-active" data-icon="c"></div>
+                <div class="navicon icon-like hidden-active" data-icon="d" ></div>
+                <div class="navicon icon-like visible-active" data-icon="c" ></div>
                 <span class="unread-notification is-shown-un"></span>
             </a>
             <a class="ft-header-nav__item pos-rel {{ Request::is('conversation') ? 'is-active' : '' }}" href="{{url('conversation')}}">
-                <i class="navicon icon-chat hidden-active" data-icon="b"></i>
-                <i class="navicon icon-chat visible-active" data-icon="a"></i>
+                <div class="navicon icon-chat hidden-active" data-icon="b" ></div>
+                <div class="navicon icon-chat visible-active" data-icon="a" ></div>
                 <span class="unread-notification" v-bind:class="{ 'is-visible': isShowUCM }"></span>
             </a>
-            <a class="ft-header-nav__item" href="{!! url('search') !!}">
-                <div class="icon icon-search"></div>
+            <a class="ft-header-nav__item {{ Request::is('search') ? 'is-active' : '' }}" href="{!! url('search') !!}">
+                <div class="icon icon-font-match icon-search"></div>
             </a>
-            <form action="{{ url('/logout') }}" method="post" class="ft-header-nav__item">
-                <a class="ft-header-nav__item--user-img toggleSlide" href="javascript:;">
+            <form action="{{ url('/logout') }}" method="post" class=" ft-header-nav__item">
+                <a class="ft-header-nav__item--user-img toggleSlide ft-header-nav__item pos-rel" href="javascript:;">
                     <div class="user-avatar" style="background-image: url('{{url(Auth::user()->avatar)}}')"></div>
                 </a>
             </form>
@@ -59,3 +59,15 @@
         </ul>
     </div>
 </div>
+<style>
+    div.navicon{
+        line-height: 24px;
+    }
+    div[data-icon]:before{
+        font-size:inherit;
+    }
+    .ft-header div.navicon, .ft-header .icon-font-match{
+        font-size:20px;
+        margin-top: 2px;
+    }
+</style>
