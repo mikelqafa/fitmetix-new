@@ -2,20 +2,23 @@
     <form class="ft-header-nav">
         @if(Auth::user())
             <a class="ft-header-nav__item {{ Request::is('/') ? 'is-active' : '' }}" href="{{ url('/') }}">
-                <div class="icon" data-icon="n"></div>
+                <div class="navicon hidden-active" data-icon="f"></div>
+                <div class="navicon visible-active" data-icon="e"></div>
             </a>
             <a href="{{ url(Auth::user()->username.'/events') }}" class="has-hover-effect ft-header-nav__item fm-nav__item {{ (Request::is(Auth::user()->username.'/events') ? 'is-active' : '') }}">
-                <object data="{{asset('images/Run.svg')}}" class="svg-object hidden-active" type="image/svg+xml" style="height: 34px">
-                </object>
-                <object data="{{asset('images/RunBlack.svg')}}" class="svg-object visible-active" type="image/svg+xml" style="height: 34px">
-                </object>
+                <span>
+                    <img src="{{asset('images/Run.svg')}}" class="svg-object hidden-active" type="image/svg+xml" style="height: 30px"/>
+                    <img src="{{asset('images/RunBlack.svg')}}" class="svg-object visible-active" type="image/svg+xml" style="height: 30px"/>
+                </span>
             </a>
             <a id="ft-mobile-nt" class="ft-header-nav__item pos-rel {{ Request::is('allnotifications') ? 'is-active' : '' }}" href="{!! url('allnotifications') !!}">
-                <div class="icon icon icon-like"></div>
+                <div class="navicon icon-like hidden-active" data-icon="d"></div>
+                <div class="navicon icon-like visible-active" data-icon="c"></div>
                 <span class="unread-notification is-shown-un"></span>
             </a>
             <a class="ft-header-nav__item pos-rel {{ Request::is('conversation') ? 'is-active' : '' }}" href="{{url('conversation')}}">
-                <i class="icon icon-chat"></i>
+                <i class="navicon icon-chat hidden-active" data-icon="b"></i>
+                <i class="navicon icon-chat visible-active" data-icon="a"></i>
                 <span class="unread-notification" v-bind:class="{ 'is-visible': isShowUCM }"></span>
             </a>
             <a class="ft-header-nav__item" href="{!! url('search') !!}">

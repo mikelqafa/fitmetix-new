@@ -1263,6 +1263,10 @@ a {
     color: #000 !important;
 }
 
+.navicon.div {
+    line-height: 1;
+}
+
 @media ( max-width: 500px) {
     .post-image-holder.single-image {
         margin-left: -15px;
