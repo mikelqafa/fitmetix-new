@@ -57,27 +57,27 @@ export const store = new Vuex.Store({
       state.unreadNotifications = n
     },
     ADD_POST_ITEM_LIST (state, postItem) {
-      if(postItem.postFrom !== undefined) {
+      if (postItem.postFrom !== undefined) {
         state.postItemList.unshift(postItem.data)
       } else {
         state.postItemList.push(postItem)
       }
     },
     ADD_SINGLE_POST_ITEM (state, postItem) {
-        state.postItemList.push(postItem.data)
+      state.postItemList.push(postItem.data)
     },
     ADD_NEW_NOTIFICATION (state, data) {
-      if(!data.seen) {
+      if (!data.seen) {
         state.commit('SET_URN', state.unreadNotifications + 1)
-        materialSnackBar({messageText: data.description, autoClose: true, timeout: 5000 })
+        materialSnackBar({messageText: data.description, autoClose: true, timeout: 5000})
         $.playSound(theme_url + '/sounds/notification');
       }
-      if(data.notified_from.username != current_username) {
+      if (data.notified_from.username != current_username) {
         state.notification.unshift(data)
       }
     },
     ADD_NOTIFICATION (state, data) {
-        state.notification.push(data)
+      state.notification.push(data)
     },
     REMOVE_POST_ITEM_LIST (state, index) {
       state.postItemList.splice(index, 1)
@@ -127,7 +127,7 @@ export const store = new Vuex.Store({
       Vue.set(state.postWhoLikes, 'postIndex', data.postIndex)
     },
     SET_POST_WHO_LIKES (state, data) {
-      if(state.postItemList[data.postIndex].whoLikes !== undefined) {
+      if (state.postItemList[data.postIndex].whoLikes !== undefined) {
         Vue.set(state.postItemList[data.postIndex].whoLikes, 'hasMore', data.hasMore)
         Vue.set(state.postItemList[data.postIndex].whoLikes, 'offset', data.offset)
         state.postItemList[data.postIndex].whoLikes.itemList.push(data.itemList)
@@ -148,7 +148,7 @@ export const store = new Vuex.Store({
     ADD_POST_COMMENT (state, data) {
       Vue.set(state.postItemList[data.postIndex], 'commentHasMore', data.hasMore)
       Vue.set(state.postItemList[data.postIndex], 'commentOffset', data.offset)
-      for(let i=0; i <data.postComments.length; i++) {
+      for (let i = 0; i < data.postComments.length; i++) {
         state.postItemList[data.postIndex].postComments.push(data.postComments[i])
       }
     },
@@ -156,14 +156,14 @@ export const store = new Vuex.Store({
       state.postItemList[data.postIndex].postComments.splice(data.commentIndex, 1)
     },
     ADD_POST_COMMENT_ONLY (state, data) {
-      if(state.postItemList[data.postIndex].postComments !== undefined && state.postItemList[data.postIndex].postComments.length !== 0  ) {
+      if (state.postItemList[data.postIndex].postComments !== undefined && state.postItemList[data.postIndex].postComments.length !== 0) {
         state.postItemList[data.postIndex].postComments.unshift(data.postComments)
       } else {
         Vue.set(state.postItemList[data.postIndex], 'postComments', [data.postComments])
       }
     },
     SET_POST_COMMENT_INTERACT (state, data) {
-      Vue.set(state.postItemList[data.postIndex],'commentInteract', data.commentInteract)
+      Vue.set(state.postItemList[data.postIndex], 'commentInteract', data.commentInteract)
     },
     SET_EVENT_STATUS (state, data) {
       Vue.set(state.postItemList[data.postIndex].event[0], data.name, data.status)
@@ -184,7 +184,7 @@ export const store = new Vuex.Store({
       state.conversations.data.unshift(data)
     },
     SET_CONVERSATION_(state, data) {
-      if( state.currentConversation.conversationMessages.data !== undefined ) {
+      if (state.currentConversation.conversationMessages.data !== undefined) {
         state.currentConversation.conversationMessages.data.push(data.message);
       } else {
         Vue.set(state.currentConversation.conversationMessages, 'data', data.message)
@@ -202,12 +202,12 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-    markNotificationsRead: (context, data) =>{
-      if(!context.state.notification.length) {
+    markNotificationsRead: (context, data) => {
+      if (!context.state.notification.length) {
         return
       }
       axios.post(base_url + 'ajax/mark-all-notifications').then(function (response) {
-        if(response.status == 200) {
+        if (response.status == 200) {
           context.commit('SET_URN', 0)
           $.map(context.state.notification, function (notification, key) {
             context.commit('CHANGE_NOTIFICATION_SEEN', {index: key, changed: true});
@@ -217,33 +217,37 @@ export const store = new Vuex.Store({
     },
     likePostByPusher: (context, data) => {
       console.log(data)
-      if(data.type !== undefined && (data.type === 'like_post' || data.type === 'unlike_post')) {
+      if (data.type !== undefined && (data.type === 'like_post' || data.type === 'unlike_post')) {
         let index = -1
-        for(let i=0; i < context.state.postItemList.length; i++) {
-          if(data.post_id == context.state.postItemList[i].id ) {
+        for (let i = 0; i < context.state.postItemList.length; i++) {
+          if (data.post_id == context.state.postItemList[i].id) {
             index = i
             break
           }
         }
-        if(index>-1) {
+        if (index > -1) {
           let likeCount = context.state.postItemList[index].postMetaInfo.postLikesCount
           console.log(likeCount)
           likeCount = parseInt(likeCount)
           data.type === 'like_post' ? likeCount++ : likeCount--
           console.log('hola', likeCount)
-          context.commit('SET_POST_META_LIKES_COUNT', {postIndex: index, postLikesCount:likeCount})
-          if(data.type== 'like_post' && !data.seen) {
-            if(likeCount > 2) {
-              materialSnackBar({messageText: data.notified_from.name +' and '+ likeCount-1  +' others like your post', autoClose: true, timeout: 5000 })
+          context.commit('SET_POST_META_LIKES_COUNT', {postIndex: index, postLikesCount: likeCount})
+          if (data.type == 'like_post' && !data.seen) {
+            if (likeCount > 2) {
+              materialSnackBar({
+                messageText: data.notified_from.name + ' and ' + likeCount - 1 + ' others like your post',
+                autoClose: true,
+                timeout: 5000
+              })
               $.playSound(theme_url + '/sounds/notification');
             } else {
-              materialSnackBar({messageText: data.description, autoClose: true, timeout: 5000 })
+              materialSnackBar({messageText: data.description, autoClose: true, timeout: 5000})
               $.playSound(theme_url + '/sounds/notification');
             }
           }
         } else {
-          if(data.type== 'like_post' && !data.seen) {
-            materialSnackBar({messageText: data.description, autoClose: true, timeout: 5000 })
+          if (data.type == 'like_post' && !data.seen) {
+            materialSnackBar({messageText: data.description, autoClose: true, timeout: 5000})
             $.playSound(theme_url + '/sounds/notification');
           }
         }
@@ -278,7 +282,7 @@ export const store = new Vuex.Store({
           if (indexes != '') {
             context.state.conversations.data[indexes[0]].unread = true;
             context.state.conversations.data[indexes[0]].lastMessage = data.message;
-          }  else {
+          } else {
             let _token = $("meta[name=_token]").attr('content')
             axios({
               method: 'post',
@@ -310,7 +314,7 @@ export const store = new Vuex.Store({
       }).then(function (response) {
         if (response.status == 200) {
           context.commit('SET_CONVERSATION', {message: response.data.data})
-          context.dispatch('showConversation', {conversation: context.state.conversations.data[0], byTap:false})
+          context.dispatch('showConversation', {conversation: context.state.conversations.data[0], byTap: false})
         }
       }).catch(function (error) {
         console.log(error)
@@ -324,7 +328,7 @@ export const store = new Vuex.Store({
         user: context.state.selfUserObj,
         user_id: user_id
       }
-      context.commit('ADD_CONVERSATION_MESSAGE', {message:preData})
+      context.commit('ADD_CONVERSATION_MESSAGE', {message: preData})
       let indexes = $.map(context.state.conversations.data, function (thread, key) {
         if (thread.id == context.state.currentConversation.id) {
           return key;
@@ -350,16 +354,22 @@ export const store = new Vuex.Store({
         console.log(error)
       })
     },
+    sendDirectMessage: (context, data) => {
+      // if(showBoxIf)
+      context.state.recipients = []
+      context.state.recipients.push(data.recipients)
+      context.dispatch('postNewConversation', data.message)
+    },
     postNewConversation: (context, data) => {
-      if (this.recipients.length) {
+      if (context.state.recipients.length) {
         axios({
           method: 'post',
           responseType: 'json',
           url: base_url + 'ajax/create-message',
           data: {
             _token: _token,
-            message: messageBody,
-            recipients: data.recipients
+            message: data,
+            recipients: context.state.recipients.join(',')
           }
         }).then(function (response) {
           if (response.status == 200) {
@@ -376,11 +386,11 @@ export const store = new Vuex.Store({
             else {
               context.commit('ADD_CONVERSATION', response.data.data)
             }
-            $('#messageReceipient').focus();
+            // $('#messageReceipient').focus();
             // TODO this.recipients = [];
-            // this.newConversation = false;
-            // this.messageBody = "";
-            context.dispatch('showConversation', context.conversations.data[0])
+            context.state.recipients = []
+            $('.ft-chat-box.ft-chat-box--docker').addClass('ft-chat-box--open')
+            context.dispatch('showConversation', {conversation:context.state.conversations.data[0], byTap: true})
           }
         }).catch(function (error) {
           console.log(error)
@@ -390,7 +400,7 @@ export const store = new Vuex.Store({
     showConversation: (context, data) => {
       data.byTap ? $('.ft-chat--list-wrapper').removeClass('is-list-open') : ''
       if (data.conversation && data.conversation !== undefined) {
-        if (data.conversation.id != context.state.currentConversation.id) {
+        if (data.conversation.id != context.state.currentConversation.id || data.byTap) {
           data.conversation.unread = false;
           let _token = $("meta[name=_token]").attr('content')
           axios({
@@ -438,7 +448,7 @@ export const store = new Vuex.Store({
         })
       }
     },
-    getMoreConversations:(context) => {
+    getMoreConversations: (context) => {
       if (context.state.conversations.data.length < context.state.conversations.total) {
         let _token = $("meta[name=_token]").attr('content')
         axios({
@@ -493,4 +503,4 @@ export const store = new Vuex.Store({
       })
     }
   }
-})
+});

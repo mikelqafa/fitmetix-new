@@ -3243,7 +3243,7 @@ aside .md-drawer-scroll__wrapper{
     top:4px;
     left:auto;
     right: 7px;
-    z-index: 4;
+    z-index: 1;
 }
 .ft-chat__write-button-wrapper svg {
     height: 20px;

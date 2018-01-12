@@ -1,14 +1,15 @@
 <template>
     <div>
         <app-notification></app-notification>
-        <!--<app-message></app-message>-->
         <app-chat></app-chat>
+        <app-direct-msg></app-direct-msg>
     </div>
 </template>
 <script>
     import appNotification from './child/appNotification'
-    import appMessage from './child/appMessage'
+    //import appMessage from './child/appMessage'
     import appChat from './child/appChat'
+    import directMsg from './child/sendDirect'
     import { mapGetters } from 'vuex'
 
     export default {
@@ -38,8 +39,8 @@
         },
         components: {
             'app-notification': appNotification,
-            'app-message': appMessage,
-            'app-chat': appChat
+            'app-chat': appChat,
+            'app-direct-msg': directMsg
         }
     }
 </script>

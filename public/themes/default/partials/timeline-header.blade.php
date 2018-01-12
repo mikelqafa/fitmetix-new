@@ -50,7 +50,7 @@
                 <span>Inspire</span>
             </a>
         @else
-            <a href="javascript:;" class="ft-btn ft-btn--icon">
+            <a href="javascript:;" class="ft-btn ft-btn--icon" data-user-id="{{$timeline->user->id}}" data-toggle="initChat">
                 <i class="icon icon-chat"></i>
             </a>
         @endif

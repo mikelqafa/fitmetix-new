@@ -2257,6 +2257,11 @@ $(function() {
 })
 
 $(function(){
+    $('[data-toggle="initChat"]').click(function() {
+      var uid = $(this).data('user-id')
+      $('#send-direct-dialog .hidden-user-id').val(uid)
+      $('#send-direct-dialog').MaterialDialog('show')
+    })
     $(".toggleSlide").click(function(){
         $(".mobile-menu-slide").toggleClass('active');
     })
