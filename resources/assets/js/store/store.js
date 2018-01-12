@@ -22,9 +22,11 @@ export const store = new Vuex.Store({
     },
     conversations: [],
     recipients: [],
-    selfUserObj: ''
+    selfUserObj: '',
+    unreadMsg: false
   },
   getters: {
+    unreadMsg: state => state.unreadMsg,
     currentConversation: state => state.currentConversation,
     recipients: state => state.recipients,
     conversations: state => state.conversations,
@@ -271,6 +273,18 @@ export const store = new Vuex.Store({
         if (context.state.currentConversation.id == data.message.thread_id) {
           context.state.currentConversation.conversationMessages.data.push(data.message);
           //TODO mutation will work?
+          if(!$('.ft-chat-box--docker').hasClass('ft-chat-box--open')) {
+            let indexes = $.map(context.state.conversations.data, function (thread, key) {
+              if (thread.id == data.message.thread_id) {
+                return key;
+              }
+            });
+            context.state.conversations.data[indexes[0]].unread = true;
+            if(!context.state.unreadMsg) {
+              $.playSound(theme_url + '/sounds/notification');
+            }
+            context.state.unreadMsg = true
+          }
         }
         else {
           let indexes = $.map(context.state.conversations.data, function (thread, key) {
@@ -281,6 +295,10 @@ export const store = new Vuex.Store({
           });
           if (indexes != '') {
             context.state.conversations.data[indexes[0]].unread = true;
+            if(!context.state.unreadMsg) {
+              $.playSound(theme_url + '/sounds/notification');
+            }
+            context.state.unreadMsg = true
             context.state.conversations.data[indexes[0]].lastMessage = data.message;
           } else {
             let _token = $("meta[name=_token]").attr('content')
@@ -396,6 +414,9 @@ export const store = new Vuex.Store({
           console.log(error)
         })
       }
+    },
+    setUnread:(context, data) => {
+      context.state.ureadMsg = false
     },
     showConversation: (context, data) => {
       data.byTap ? $('.ft-chat--list-wrapper').removeClass('is-list-open') : ''

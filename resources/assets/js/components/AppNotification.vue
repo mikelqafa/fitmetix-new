@@ -1,13 +1,14 @@
 <template>
-    <div>
+    <div class="md-layout md-layout--row">
         <app-notification></app-notification>
+        <app-notification-msg></app-notification-msg>
         <app-chat></app-chat>
         <app-direct-msg></app-direct-msg>
     </div>
 </template>
 <script>
     import appNotification from './child/appNotification'
-    //import appMessage from './child/appMessage'
+    import appNotificationMsg from './child/appMessage'
     import appChat from './child/appChat'
     import directMsg from './child/sendDirect'
     import { mapGetters } from 'vuex'
@@ -40,6 +41,7 @@
         components: {
             'app-notification': appNotification,
             'app-chat': appChat,
+            'app-notification-msg': appNotificationMsg,
             'app-direct-msg': directMsg
         }
     }
