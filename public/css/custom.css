@@ -531,6 +531,10 @@ svg {
         text-align: center;
     }
 
+    .layout-m-b-1--sm {
+        margin-bottom: 16px;
+    }
+
     .ft-login .adjust-mobile-center .md-layout-spacer {
         display: none;
     }

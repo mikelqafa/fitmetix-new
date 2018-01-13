@@ -562,11 +562,19 @@ class UserController extends AppBaseController
         $user = $timeline->user;
         $input = $request->except('_token');
 
+        $confirm_follow = 'yes';
+        $post_privacy = 'everyone';
+
+        if($request->privacy_type == 'private'){
+          $confirm_follow = 'no';
+          $post_privacy = 'only_follow';
+        }
+
         $user_settings = [
-                            'confirm_follow'        => $input['confirm_follow'],
+                            'confirm_follow'        => $confirm_follow,
                             'comment_privacy'       => 'everyone',
                             'follow_privacy'        => 'everyone',
-                            'post_privacy'          => $request->post_privacy,
+                            'post_privacy'          => $post_privacy,
                             'timeline_post_privacy' => 'only_follow',
                             'message_privacy'       => 'everyone', ];
 

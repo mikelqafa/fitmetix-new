@@ -82,11 +82,16 @@
                         @endif
                     </div>
                     
-                    <div>
-                        <a href="{{ Auth::user()->instagram_link }}" target="_blank"><i class=""></i></a>
-                        <a href="{{ Auth::user()->facebook_link }}" target="_blank"><i class=""></i></a>
-                    </div>
-
+                    @if(($timeline->user->instagram_link != '') || ($timeline->user->facebook_link != ''))
+                        <div class="md-layout md-layout--row">
+                            @if($timeline->user->instagram_link != '')
+                                <a style="display: block;height: 32px; width: 32px" href="{{ $timeline->user->instagram_link }}" target="_blank" rel="noopener"><i class="icon icon-insta" style="font-size: 32px"></i></a>
+                            @endif
+                            @if($timeline->user->facebook_link != '')
+                                <a style="display: block;height: 32px; width: 32px" href="{{ $timeline->user->facebook_link }}" target="_blank" rel="noopener"><i class="icon icon-fcb" style="font-size: 32px"></i></a>
+                            @endif
+                        </div>
+                    @endif
                     <div class="ft-header-hashtag">
                         <ul class="nav nav-justified" >
                             <li class="active is-active"><a href="{{ url($timeline->username) }}">Posts</a></li>
