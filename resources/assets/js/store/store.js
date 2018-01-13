@@ -20,13 +20,23 @@ export const store = new Vuex.Store({
       conversationMessages: {},
       user: []
     },
-    conversations: [],
+    conversations: {},
     recipients: [],
-    selfUserObj: '',
-    unreadMsg: false
+    selfUserObj: ''
   },
   getters: {
-    unreadMsg: state => state.unreadMsg,
+    unreadMsg: (state) => {
+      let hasMsgNotification = false
+      if(state.conversations.data !== undefined) {
+        for(let i = 0;i< state.conversations.data.length;i++){
+          if(state.conversations.data[i].unread) {
+            hasMsgNotification = true
+            break
+          }
+        }
+      }
+      return hasMsgNotification
+    },
     currentConversation: state => state.currentConversation,
     recipients: state => state.recipients,
     conversations: state => state.conversations,
@@ -218,7 +228,6 @@ export const store = new Vuex.Store({
       });
     },
     likePostByPusher: (context, data) => {
-      console.log(data)
       if (data.type !== undefined && (data.type === 'like_post' || data.type === 'unlike_post')) {
         let index = -1
         for (let i = 0; i < context.state.postItemList.length; i++) {
@@ -273,32 +282,42 @@ export const store = new Vuex.Store({
         if (context.state.currentConversation.id == data.message.thread_id) {
           context.state.currentConversation.conversationMessages.data.push(data.message);
           //TODO mutation will work?
-          if(!$('.ft-chat-box--docker').hasClass('ft-chat-box--open')) {
-            let indexes = $.map(context.state.conversations.data, function (thread, key) {
-              if (thread.id == data.message.thread_id) {
-                return key;
-              }
-            });
-            context.state.conversations.data[indexes[0]].unread = true;
-            if(!context.state.unreadMsg) {
+          // check user at conversation page
+          if($('ft-chat-box--desktop').length) {
+            // conversation page open
+            if(!$('.chat-user-list-wrapper').hasClass('is-open')) {
+              let indexes = $.map(context.state.conversations.data, function (thread, key) {
+                if (thread.id == data.message.thread_id) {
+                  return key;
+                }
+              });
+              context.state.conversations.data[indexes[0]].unread = true;
+              context.state.conversations.data[indexes[0]].lastMessage = data.message;
               $.playSound(theme_url + '/sounds/notification');
             }
-            context.state.unreadMsg = true
+          } else {
+            // using chat box
+            if(!$('.ft-chat-box--docker').hasClass('ft-chat-box--open')) {
+              let indexes = $.map(context.state.conversations.data, function (thread, key) {
+                if (thread.id == data.message.thread_id) {
+                  return key;
+                }
+              });
+              context.state.conversations.data[indexes[0]].unread = true;
+              context.state.conversations.data[indexes[0]].lastMessage = data.message;
+              $.playSound(theme_url + '/sounds/notification');
+            }
           }
         }
         else {
           let indexes = $.map(context.state.conversations.data, function (thread, key) {
             if (thread.id == data.message.thread_id) {
-              console.log(key)
               return key;
             }
           });
           if (indexes != '') {
             context.state.conversations.data[indexes[0]].unread = true;
-            if(!context.state.unreadMsg) {
-              $.playSound(theme_url + '/sounds/notification');
-            }
-            context.state.unreadMsg = true
+            $.playSound(theme_url + '/sounds/notification');
             context.state.conversations.data[indexes[0]].lastMessage = data.message;
           } else {
             let _token = $("meta[name=_token]").attr('content')
@@ -421,8 +440,15 @@ export const store = new Vuex.Store({
     showConversation: (context, data) => {
       data.byTap ? $('.ft-chat--list-wrapper').removeClass('is-list-open') : ''
       if (data.conversation && data.conversation !== undefined) {
+        let indexes = $.map(context.state.conversations.data, function (thread, key) {
+          if (thread.id == data.conversation.id) {
+            return key;
+          }
+        });
+        if(indexes !== '') {
+          context.state.conversations.data[indexes[0]].unread = false;
+        }
         if (data.conversation.id != context.state.currentConversation.id || data.byTap) {
-          data.conversation.unread = false;
           let _token = $("meta[name=_token]").attr('content')
           axios({
             method: 'post',

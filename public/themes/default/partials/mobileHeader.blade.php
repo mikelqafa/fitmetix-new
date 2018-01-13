@@ -19,7 +19,7 @@
             <a class="ft-header-nav__item pos-rel {{ Request::is('conversation') ? 'is-active' : '' }}" href="{{url('conversation')}}">
                 <div class="navicon icon-chat hidden-active" data-icon="b" ></div>
                 <div class="navicon icon-chat visible-active" data-icon="a" ></div>
-                <span class="unread-notification" v-bind:class="{ 'is-visible': isShowUCM }"></span>
+                <span class="unread-notification is-shown-msg"></span>
             </a>
             <a class="ft-header-nav__item {{ Request::is('search') ? 'is-active' : '' }}" href="{!! url('search') !!}">
                 <div class="icon icon-font-match icon-search"></div>

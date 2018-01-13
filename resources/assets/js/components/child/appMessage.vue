@@ -94,6 +94,15 @@
                 this.$store.dispatch('setUnread',{})
             }
         },
+        watch: {
+            unreadMsg: function (val) {
+                if(val) {
+                    $('.unread-notification.is-shown-msg').addClass('is-visible')
+                } else {
+                    $('.unread-notification.is-shown-msg').removeClass('is-visible')
+                }
+            }
+        },
         computed: {
             ...mapGetters({
                unreadMsg: 'unreadMsg',

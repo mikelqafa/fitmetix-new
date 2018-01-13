@@ -20172,7 +20172,7 @@ a:focus {
 
 .unread-notification {
   position: absolute;
-  bottom: 14px;
+  bottom: 8px;
   display: block;
   width: 6px;
   height: 6px;
