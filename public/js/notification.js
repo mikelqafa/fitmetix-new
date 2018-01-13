@@ -41352,7 +41352,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
     mounted: function mounted() {
-        this.$store.dispatch('markNotificationsRead', {});
+        var that = this;
+        setTimeout(function () {
+            that.$store.dispatch('markNotificationsRead', {});
+        }, 1000);
     },
 
     methods: {
@@ -46327,9 +46330,7 @@ var render = function() {
             _c("div", { staticClass: "md-layout md-layout--row" }, [
               _c(
                 "div",
-                {
-                  staticClass: "md-layout md-layout--row md-layout--wrap hidden"
-                },
+                { staticClass: "md-layout md-layout--row md-layout--wrap" },
                 [
                   _vm._l(_vm.filter, function(item) {
                     return [
@@ -47657,9 +47658,6 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
   },
   actions: {
     markNotificationsRead: function markNotificationsRead(context, data) {
-      if (!context.state.notification.length) {
-        return;
-      }
       axios.post(base_url + 'ajax/mark-all-notifications').then(function (response) {
         if (response.status == 200) {
           context.commit('SET_URN', 0);
