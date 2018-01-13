@@ -49,7 +49,10 @@
             }
         },
         mounted () {
-            this.$store.dispatch('markNotificationsRead',{})
+            let that = this
+            setTimeout(function(){
+                that.$store.dispatch('markNotificationsRead',{})
+            }, 1000)
         },
         methods: {
             notificationUrl: function (item) {

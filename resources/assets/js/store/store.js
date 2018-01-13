@@ -218,9 +218,6 @@ export const store = new Vuex.Store({
   },
   actions: {
     markNotificationsRead: (context, data) => {
-      if (!context.state.notification.length) {
-        return
-      }
       axios.post(base_url + 'ajax/mark-all-notifications').then(function (response) {
         if (response.status == 200) {
           context.commit('SET_URN', 0)
