@@ -28910,7 +28910,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.isTypeEvent ? this.postData.creator_timeline.avatar_url.length ? asset_url + 'uploads/users/avatars/' + this.postData.creator_timeline.avatar_url[0].source : base_url + 'images/' + this.defaultImage : this.postData.timeline.avatar_url.length ? asset_url + 'uploads/users/avatars/' + this.postData.timeline.avatar_url[0].source : base_url + 'images/' + this.defaultImage;
         },
         headerTitle: function headerTitle() {
-            return this.isTypeEvent ? this.postData.creator_timeline.name : this.postData.timeline.name;
+            return this.isTypeEvent ? this.postData.creator_timeline.username : this.postData.timeline.username;
         },
 
         isTypeEvent: function isTypeEvent() {
@@ -37951,6 +37951,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             filterData: [],
             eventList: [],
             noEventFound: false,
+            isDesktop: false,
             noEventListFound: false,
             swiperOptionE: {
                 slidesPerView: 1,
@@ -37968,6 +37969,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     methods: {
+        checkDesktop: function checkDesktop() {
+            if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)) {
+                return false;
+            } else {
+                return true;
+            }
+        },
         formatGender: function formatGender(g) {
             return g == '' ? 'Everyone' : g == 'male' ? 'Male Only' : 'Female Only';
         },
@@ -38025,7 +38033,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     mounted: function mounted() {
-        this.getDefaultData();
+        this.isDesktop = false;
+        if (this.checkDesktop()) {
+            this.isDesktop = true;
+            this.getDefaultData();
+        }
     },
 
     components: {
@@ -38050,7 +38062,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return !_vm.isLoading
+  return !_vm.isLoading && _vm.isDesktop
     ? _c(
         "div",
         { staticClass: "hidden-sm hidden-xs" },
@@ -38472,25 +38484,29 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.showConversation(c, true);
             $('.chat-user-list-wrapper').addClass('is-open');
         },
-        /*chk_scroll: function (e) {
-            console.log(e)
-            let elem = $(e.currentTarget);
+        fetchLIstOnScroll: function fetchLIstOnScroll(e) {
+            console.log('scroll list');
+            var elem = $(e.currentTarget);
             if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
-                if (elem.data('type') == "threads") {
-                    this.$store.dispatch('getMoreConversations')
-                } else {
-                    this.$store.dispatch('getMoreConversationMessages')
-                }
+                console.log('fetching list');
+                this.$store.dispatch('getMoreConversations');
             }
-        },*/
+        },
+        fetchThreadOnScroll: function fetchThreadOnScroll(e) {
+            console.log('scroll thread');
+            var elem = $(e.currentTarget);
+            if (!elem.scrollTop()) {
+                this.$store.dispatch('getMoreConversationMessages');
+            }
+        },
         showConversation: function showConversation(c) {
             this.$store.dispatch('showConversation', { byTap: false, conversation: c });
         }
     },
     mounted: function mounted() {
         var that = this;
-        /*$('.coversations-thread--desktop').bind('scroll', that.chk_scroll);
-        $('.coversations-list--desktop').bind('scroll', that.chk_scroll);*/
+        $('.coversations-thread--desktop').bind('scroll', that.fetchThreadOnScroll);
+        $('.coversations-list--desktop').bind('scroll', that.fetchLIstOnScroll);
         $("#create-chat-vue-single").keypress(function (e) {
             if (e.which == 13) {
                 that.initPostMessage();
@@ -38498,7 +38514,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
             return true;
         });
-        //this.$store.dispatch('autoScroll', ('.coversations-thread'));
     },
 
     components: {
@@ -38854,10 +38869,15 @@ var render = function() {
                 "div",
                 {
                   directives: [
-                    { name: "chat-scroll", rawName: "v-chat-scroll" }
+                    {
+                      name: "chat-scroll",
+                      rawName: "v-chat-scroll",
+                      value: { always: false },
+                      expression: "{always: false}"
+                    }
                   ],
                   staticClass:
-                    "inner-chat-wrapper coversations-thread coversations-list--desktop",
+                    "inner-chat-wrapper coversations-thread coversations-thread--desktop",
                   attrs: { "data-type": "threads" }
                 },
                 [
@@ -40428,6 +40448,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
 
 
 
@@ -40492,14 +40515,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         openChat: function openChat(c) {
             this.showConversation(c, true);
         },
-        chk_scroll: function chk_scroll(e) {
+        fetchLIstOnScroll: function fetchLIstOnScroll(e) {
             var elem = $(e.currentTarget);
             if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
-                if (elem.data('type') == "threads") {
-                    this.$store.dispatch('getMoreConversations');
-                } else {
-                    this.$store.dispatch('getMoreConversationMessages');
-                }
+                console.log('fetching list');
+                this.$store.dispatch('getMoreConversations');
+            }
+        },
+        fetchThreadOnScroll: function fetchThreadOnScroll(e) {
+            var elem = $(e.currentTarget);
+            if (!elem.scrollTop()) {
+                this.$store.dispatch('getMoreConversationMessages');
             }
         },
         showConversation: function showConversation(c) {
@@ -40510,8 +40536,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         this.$store.dispatch('subscribeToPrivateMessageChannel', current_username);
         this.$store.dispatch('getConversations');
         var that = this;
-        $('.coversations-thread--docker').bind('scroll', that.chk_scroll);
-        $('.coversations-list--docker').bind('scroll', that.chk_scroll);
+        $('.ft-dock-wrapper .coversations-thread--docker').bind('scroll', that.fetchThreadOnScroll);
+        $('.ft-dock-wrapper .coversations-list--docker').bind('scroll', that.fetchLIstOnScroll);
         $("#create-chat-vue").keypress(function (e) {
             if (e.which == 13) {
                 that.initPostMessage();
@@ -40527,6 +40553,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         'chat-thread': __WEBPACK_IMPORTED_MODULE_2__chatText___default.a
     },
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapGetters */])({
+        unreadMsg: 'unreadMsg',
         currentConversation: 'currentConversation',
         conversations: 'conversations'
     }), {
@@ -40633,7 +40660,12 @@ var render = function() {
                   "div",
                   {
                     directives: [
-                      { name: "chat-scroll", rawName: "v-chat-scroll" }
+                      {
+                        name: "chat-scroll",
+                        rawName: "v-chat-scroll",
+                        value: { always: false },
+                        expression: "{always: false}"
+                      }
                     ],
                     staticClass:
                       "inner-chat-wrapper coversations-thread coversations-thread--docker",
@@ -40778,11 +40810,25 @@ var render = function() {
                     _c(
                       "a",
                       {
-                        staticClass: "chat-user margin-left-8",
+                        staticClass: "chat-user margin-left-8 pos-rel",
                         attrs: { href: "javascript:;" },
                         on: { click: _vm.toggleChatMinimize }
                       },
-                      [_vm._v("Chat Story")]
+                      [
+                        _vm._v(
+                          "\n                                Chat Story\n                                "
+                        ),
+                        _c("span", {
+                          staticClass: "unread-notification",
+                          class: { "is-visible": _vm.unreadMsg },
+                          staticStyle: {
+                            left: "auto",
+                            right: "-12px",
+                            top: "8px"
+                          },
+                          attrs: { title: "You have a new message" }
+                        })
+                      ]
                     ),
                     _vm._v(" "),
                     _c("div", {
@@ -44304,6 +44350,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     methods: {
+        checkDesktop: function checkDesktop() {
+            if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)) {
+                return false;
+            } else {
+                return true;
+            }
+        },
         getList: function getList() {
             var that = this;
             var _token = $("meta[name=_token]").attr('content');
@@ -44331,7 +44384,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     mounted: function mounted() {
-        this.getList();
+        this.isDesktop = false;
+        if (this.checkDesktop()) {
+            this.isDesktop = true;
+            this.getList();
+        }
     }
 });
 
@@ -47462,7 +47519,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     },
     ADD_NEW_NOTIFICATION: function ADD_NEW_NOTIFICATION(state, data) {
       if (!data.seen) {
-        state.commit('SET_URN', state.unreadNotifications + 1);
+        store.commit('SET_URN', state.unreadNotifications + 1);
         materialSnackBar({ messageText: data.description, autoClose: true, timeout: 5000 });
         $.playSound(theme_url + '/sounds/notification');
       }
@@ -47570,6 +47627,9 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     },
     ADD_CONVERSATION_MESSAGE: function ADD_CONVERSATION_MESSAGE(state, data) {
       state.currentConversation.conversationMessages.data.push(data.message);
+    },
+    UNSHIFT_CONVERSATION_MESSAGE: function UNSHIFT_CONVERSATION_MESSAGE(state, data) {
+      state.currentConversation.conversationMessages.data.unshift(data.message);
     },
     SET_CONVERSATION: function SET_CONVERSATION(state, data) {
       state.conversations = data.message;
@@ -47866,8 +47926,8 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
             context.state.currentConversation.conversationMessages.next_page_url = latestConversations.conversationMessages.next_page_url;
             context.state.currentConversation.conversationMessages.per_page = latestConversations.conversationMessages.per_page;
             context.state.currentConversation.conversationMessages.prev_page_url = latestConversations.conversationMessages.prev_page_url;
-            $.each(latestConversations.data, function (i, latestConversation) {
-              context.commit('ADD_CONVERSATION_MESSAGE', { message: latestConversation });
+            $.each(latestConversations.conversationMessages.data, function (i, latestConversation) {
+              context.commit('UNSHIFT_CONVERSATION_MESSAGE', { message: latestConversation });
             });
           }
         }).catch(function (error) {

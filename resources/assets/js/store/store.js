@@ -80,7 +80,7 @@ export const store = new Vuex.Store({
     },
     ADD_NEW_NOTIFICATION (state, data) {
       if (!data.seen) {
-        state.commit('SET_URN', state.unreadNotifications + 1)
+        store.commit('SET_URN', state.unreadNotifications + 1)
         materialSnackBar({messageText: data.description, autoClose: true, timeout: 5000})
         $.playSound(theme_url + '/sounds/notification');
       }
@@ -188,6 +188,9 @@ export const store = new Vuex.Store({
     },
     ADD_CONVERSATION_MESSAGE(state, data) {
       state.currentConversation.conversationMessages.data.push(data.message);
+    },
+    UNSHIFT_CONVERSATION_MESSAGE(state, data) {
+      state.currentConversation.conversationMessages.data.unshift(data.message);
     },
     SET_CONVERSATION(state, data) {
       state.conversations = data.message
@@ -486,8 +489,8 @@ export const store = new Vuex.Store({
             context.state.currentConversation.conversationMessages.next_page_url = latestConversations.conversationMessages.next_page_url;
             context.state.currentConversation.conversationMessages.per_page = latestConversations.conversationMessages.per_page;
             context.state.currentConversation.conversationMessages.prev_page_url = latestConversations.conversationMessages.prev_page_url;
-            $.each(latestConversations.data, function (i, latestConversation) {
-              context.commit('ADD_CONVERSATION_MESSAGE', {message: latestConversation})
+            $.each(latestConversations.conversationMessages.data, function (i, latestConversation) {
+              context.commit('UNSHIFT_CONVERSATION_MESSAGE', {message: latestConversation})
             });
           }
         }).catch(function (error) {
@@ -507,7 +510,7 @@ export const store = new Vuex.Store({
           }
         }).then(function (response) {
           if (response.status == 200) {
-            var latestConversations = response.data.data;
+            var latestConversations = response.data.data
             context.state.conversations.last_page = latestConversations.last_page;
             context.state.conversations.next_page_url = latestConversations.next_page_url;
             context.state.conversations.per_page = latestConversations.per_page;

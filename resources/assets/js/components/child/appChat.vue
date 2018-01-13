@@ -22,7 +22,7 @@
                             </a>
                         </header>
                         <div class="ft-chat-box__body">
-                            <div class="inner-chat-wrapper coversations-thread coversations-thread--docker" data-type="threads" v-chat-scroll>
+                            <div class="inner-chat-wrapper coversations-thread coversations-thread--docker" data-type="threads" v-chat-scroll="{always: false}">
                                 <div class="inner-chat">
                                     <template v-if="currentConversation.conversationMessages !== undefined">
                                         <li v-for="(item, index) in currentConversation.conversationMessages.data" :key="'chat'+index">
@@ -71,7 +71,10 @@
                         </div>
                         <div class="ft-chat--list-wrapper is-list-open">
                             <header class="ft-chat-box__header"  style="cursor: pointer">
-                                <a href="javascript:;" class="chat-user margin-left-8" @click="toggleChatMinimize">Chat Story</a>
+                                <a href="javascript:;" class="chat-user margin-left-8 pos-rel" @click="toggleChatMinimize">
+                                    Chat Story
+                                    <span class="unread-notification" v-bind:class="{ 'is-visible': unreadMsg }" style="left: auto; right: -12px;top: 8px" title="You have a new message"></span>
+                                </a>
                                 <div class="md-layout-spacer" style="height: 100%" @click="toggleChatMinimize"></div>
                                 <a href="javascript:;" class="chat-options margin-right-8" @click="closeChat">
                                     <i class="icon icon-close"></i>
@@ -176,14 +179,17 @@
             openChat: function (c) {
                 this.showConversation(c, true)
             },
-            chk_scroll: function (e) {
+            fetchLIstOnScroll: function (e) {
                 let elem = $(e.currentTarget);
                 if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
-                    if (elem.data('type') == "threads") {
-                        this.$store.dispatch('getMoreConversations')
-                    } else {
-                        this.$store.dispatch('getMoreConversationMessages')
-                    }
+                    console.log('fetching list')
+                    this.$store.dispatch('getMoreConversations')
+                }
+            },
+            fetchThreadOnScroll: function (e) {
+                let elem = $(e.currentTarget);
+                if (!elem.scrollTop()) {
+                    this.$store.dispatch('getMoreConversationMessages')
                 }
             },
             showConversation: function(c) {
@@ -194,8 +200,8 @@
             this.$store.dispatch('subscribeToPrivateMessageChannel', current_username)
             this.$store.dispatch('getConversations')
             let that = this
-            $('.coversations-thread--docker').bind('scroll', that.chk_scroll);
-            $('.coversations-list--docker').bind('scroll', that.chk_scroll);
+            $('.ft-dock-wrapper .coversations-thread--docker').bind('scroll', that.fetchThreadOnScroll);
+            $('.ft-dock-wrapper .coversations-list--docker').bind('scroll', that.fetchLIstOnScroll);
             $("#create-chat-vue").keypress(function(e) {
                 if(e.which ==13) {
                     that.initPostMessage()
@@ -211,6 +217,7 @@
         },
         computed: {
             ...mapGetters({
+                unreadMsg: 'unreadMsg',
                 currentConversation: 'currentConversation',
                 conversations: 'conversations'
             }),

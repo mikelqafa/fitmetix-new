@@ -17109,8 +17109,11 @@ html {
     z-index: 999;
 }
 .navbar-brand.socialite {
-    padding-top: 6px;
-    height: 50px;
+    padding-top: 0;
+    height: 100%;
+    padding-bottom: 0;
+    display:  flex;
+    align-items:  center;
 }
 .logo {
     width: 151px;
@@ -20123,7 +20126,6 @@ select.form-control {
 }
 .socialite-logo {
     height: 32px;
-    margin-top: 7px;
 }
 a:hover {
     text-decoration: none;

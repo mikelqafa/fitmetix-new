@@ -21,7 +21,7 @@
                 </a>
             </div>
             <div class="md-layout-spacer"></div>
-            <form class="no-float navbar-form navbar-left form-left" role="search">
+            <form class="no-float ft-search--navbar navbar-form navbar-left form-left" role="search">
                 <div class="input-group no-margin">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>

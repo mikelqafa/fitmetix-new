@@ -17,6 +17,21 @@
             }
         },
         methods: {
+            checkDesktop: function () {
+                if( navigator.userAgent.match(/Android/i)
+                        || navigator.userAgent.match(/webOS/i)
+                        || navigator.userAgent.match(/iPhone/i)
+                        || navigator.userAgent.match(/iPad/i)
+                        || navigator.userAgent.match(/iPod/i)
+                        || navigator.userAgent.match(/BlackBerry/i)
+                        || navigator.userAgent.match(/Windows Phone/i)
+                ){
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            },
             getList: function () {
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
@@ -44,7 +59,11 @@
             }
         },
         mounted () {
-            this.getList()
+            this.isDesktop = false
+            if(this.checkDesktop()) {
+                this.isDesktop = true
+                this.getList()
+            }
         }
     }
 </script>

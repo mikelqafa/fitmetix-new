@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!isLoading" class="hidden-sm hidden-xs">
+    <div v-if="!isLoading && isDesktop" class="hidden-sm hidden-xs">
         <swiper :options="swiperOptionE" class="event-slider">
             <swiper-slide :key="index+'singleEvent'+postItem.id" v-for="(postItem, index) in eventList">
                 <div class="panel panel--eventlist panel-default timeline-posts__item panel-post" :id="'ft-post'+postItem.id">
@@ -72,6 +72,7 @@
                 filterData: [],
                 eventList: [],
                 noEventFound: false,
+                isDesktop: false,
                 noEventListFound:false,
                 swiperOptionE: {
                     slidesPerView: 1,
@@ -89,6 +90,21 @@
             }
         },
         methods: {
+            checkDesktop: function () {
+                if( navigator.userAgent.match(/Android/i)
+                        || navigator.userAgent.match(/webOS/i)
+                        || navigator.userAgent.match(/iPhone/i)
+                        || navigator.userAgent.match(/iPad/i)
+                        || navigator.userAgent.match(/iPod/i)
+                        || navigator.userAgent.match(/BlackBerry/i)
+                        || navigator.userAgent.match(/Windows Phone/i)
+                ){
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            },
             formatGender: function(g) {
                 return g == '' ? 'Everyone' : g == 'male'? 'Male Only' : 'Female Only'
             },
@@ -146,7 +162,11 @@
             }
         },
         mounted() {
-                this.getDefaultData()
+                this.isDesktop = false
+                if(this.checkDesktop()) {
+                    this.isDesktop = true
+                    this.getDefaultData()
+                }
             },
         components: {
                 'post-description': postDescription,

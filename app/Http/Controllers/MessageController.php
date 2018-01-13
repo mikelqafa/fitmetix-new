@@ -99,7 +99,7 @@ class MessageController extends Controller
         $users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
         $thread->markAsRead($userId);
         $messages = [];
-        $thread->conversationMessages = $thread->messages()->latest()->with('user')->paginate(10);
+        $thread->conversationMessages = $thread->messages()->latest()->with('user')->paginate();
         return response()->json(['status' => '200', 'data' => $thread]);
     }
 

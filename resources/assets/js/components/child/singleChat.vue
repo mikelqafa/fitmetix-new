@@ -64,7 +64,7 @@
                         </a>
                     </header>
                     <div class="ft-chat-box__body">
-                        <div class="inner-chat-wrapper coversations-thread coversations-list--desktop" data-type="threads" v-chat-scroll>
+                        <div class="inner-chat-wrapper coversations-thread coversations-thread--desktop" v-chat-scroll="{always: false}" data-type="threads">
                             <ul class="inner-chat">
                                 <template v-if="currentConversation.conversationMessages !== undefined">
                                     <li v-for="(item, index) in currentConversation.conversationMessages.data" :key="'conv'+index">
@@ -179,25 +179,29 @@
                 this.showConversation(c, true)
                 $('.chat-user-list-wrapper').addClass('is-open')
             },
-            /*chk_scroll: function (e) {
-                console.log(e)
+            fetchLIstOnScroll: function (e) {
+                console.log('scroll list')
                 let elem = $(e.currentTarget);
                 if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
-                    if (elem.data('type') == "threads") {
-                        this.$store.dispatch('getMoreConversations')
-                    } else {
-                        this.$store.dispatch('getMoreConversationMessages')
-                    }
+                    console.log('fetching list')
+                    this.$store.dispatch('getMoreConversations')
                 }
-            },*/
+            },
+            fetchThreadOnScroll: function (e) {
+                console.log('scroll thread')
+                let elem = $(e.currentTarget);
+                if (!elem.scrollTop()) {
+                    this.$store.dispatch('getMoreConversationMessages')
+                }
+            },
             showConversation: function(c) {
                 this.$store.dispatch('showConversation', {byTap: false, conversation: c})
             }
         },
         mounted () {
             let that = this
-            /*$('.coversations-thread--desktop').bind('scroll', that.chk_scroll);
-            $('.coversations-list--desktop').bind('scroll', that.chk_scroll);*/
+            $('.coversations-thread--desktop').bind('scroll', that.fetchThreadOnScroll);
+            $('.coversations-list--desktop').bind('scroll', that.fetchLIstOnScroll);
             $("#create-chat-vue-single").keypress(function(e) {
                 if(e.which ==13) {
                     that.initPostMessage()
@@ -205,7 +209,6 @@
                 }
                 return true
             });
-            //this.$store.dispatch('autoScroll', ('.coversations-thread'));
         },
         components: {
             'medium-editor': editor,
