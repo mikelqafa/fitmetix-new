@@ -3,7 +3,7 @@
         <template v-if="isMultiple">
             <swiper :options="swiperOption" class="deal-card-slider slider--gallery">
                 <swiper-slide :key="imageIndex" v-for="(image, imageIndex) in images">
-                    <a href="javascript:;" :key="imageIndex" class="item__background" @click="emitOpen"
+                    <a href="javascript:;" :key="'single-event-bimg'+imageIndex" class="item__background" @click="emitOpen"
                        :style="{ backgroundImage: 'url(' + image + ')' }"></a>
                 </swiper-slide>
                 <div class="swiper-pagination" slot="pagination"></div>
@@ -14,7 +14,7 @@
         <template v-else="">
             <template v-if="!noImage">
                 <div class="ft-card--only-image" v-for="(image, imageIndex) in images">
-                    <div class="ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" v-bind:class="{'image-default': defaultImage}" @click="emitOpen" v-bind:style="{ backgroundImage: 'url(' + image +')'}">
+                    <div class="ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" v-bind:class="{'image-default': defaultImage}" @click="emitOpen" :style="{ backgroundImage: 'url(' + image +')'}">
                         <img class="ft-card__img" :src="image">
                     </div>
                 </div>

@@ -29053,7 +29053,7 @@ var render = function() {
                 _vm._l(_vm.images, function(image, imageIndex) {
                   return _c("swiper-slide", { key: imageIndex }, [
                     _c("a", {
-                      key: imageIndex,
+                      key: "single-event-bimg" + imageIndex,
                       staticClass: "item__background",
                       style: { backgroundImage: "url(" + image + ")" },
                       attrs: { href: "javascript:;" },
@@ -38084,7 +38084,7 @@ var render = function() {
                       {
                         staticClass:
                           "panel panel--eventlist panel-default timeline-posts__item panel-post",
-                        attrs: { id: "ft-post" + postItem.id }
+                        attrs: { id: "ft-event-desktop" + postItem.id }
                       },
                       [
                         _c("post-header", {
