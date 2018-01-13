@@ -2072,6 +2072,9 @@ class TimelineController extends AppBaseController
     	$title    = $request->title;
         $username  = $request->username;
         $user_id = '';
+        if($date){
+            $date = date('Y-m-d H:i',strtotime($date));
+        }
         if($username){
             $user_id = Timeline::where('username',$username)->first()->user->id;
             $events = DB::table('events')
@@ -2083,7 +2086,7 @@ class TimelineController extends AppBaseController
             })
             ->where(function($query) use ($date){
                     if($date != '') {
-                        $query->where('events.start_date','<=',$date)->where('events.end_date','>=',$date);
+                        $query->whereBetween($date,['events.start_date','events.end_date']);
                     }
             })
             ->where(function($query) use ($tag){

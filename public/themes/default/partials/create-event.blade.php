@@ -133,6 +133,7 @@
 
 				    <fieldset class="form-group required">
 					<label class="event_images_upload--label" for="event_images_upload" style="background-image: url({{url('images/no-image.png')}})">
+                        <p>{{ trans('common.upload_photos') }}</p>
 						<input id="event_images_upload" required type="file" multiple="multiple"
 							   accept="image/jpeg,image/png,image/gif"
 							   name="event_images_upload[]" class="event_images_upload form-control" required>

@@ -70,7 +70,7 @@
             </div>
 
             <div class="md-layout md-layout--row">
-                <div class="md-layout md-layout--row md-layout--wrap hidden">
+                <div class="md-layout md-layout--row md-layout--wrap">
                     <template v-for="item in filter">
                         <div class="md-chips is-removable" v-if="item.content !== ''">
                             <div class="md-chip">

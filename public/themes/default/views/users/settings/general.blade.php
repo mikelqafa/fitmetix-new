@@ -385,6 +385,23 @@
 						</div>
 					</div>
 
+					<div class="panel panel-default">
+						<div class="panel-heading no-bg panel-settings">
+							<h3 class="panel-title">
+								{{ trans('common.themes_text') }}
+							</h3>
+						</div>
+						<div class="panel-body nopadding">
+							<div class="socialite-form">
+								<div class="md-layout md-layout--row md-align md-align--center">
+                                        <div class="color-picker" data-color="#f9fafc" title="Change Theme"></div>
+                                        <div class="color-picker" data-color="#ffffff" title="Change Theme"></div>
+                                        <div class="color-picker" data-color="#fbf1f4" title="Change Theme"></div>
+                                </div>
+							</div>
+						</div>
+					</div>
+
 				</div>
 				<div class="logout" style="text-align: center;">
 					<form action="{{ url('/logout') }}" method="post">
