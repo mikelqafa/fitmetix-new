@@ -18340,7 +18340,7 @@ html {
 }
 .chang-user-avatar {
     position: relative;
-    display: none;
+    /* display: none; */
 }
 .chang-user-avatar .btn-camera {
     background-color: rgba(0, 0, 0, 0.67);
@@ -18357,6 +18357,7 @@ html {
     .chang-user-avatar .btn-camera {
         padding-left: 4px;
         font-size: 8px;
+        text-align:  center;
     }
 }
 .chang-user-avatar .btn-camera .fa {
@@ -18390,6 +18391,7 @@ html {
 @media (max-width: 560px) {
     .chang-user-avatar .btn-camera .avatar-text {
         font-size: 11px;
+        display:  none;
     }
 }
 @media (max-width: 350px) {

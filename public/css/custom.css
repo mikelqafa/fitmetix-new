@@ -3764,4 +3764,22 @@ aside .md-drawer-scroll__wrapper{
     .ft-chat-box--desktop .write-post__placeholder{
         top:18px !important;
     }
+    .chang-user-avatar{
+        display:  block;
+    }
+    .chang-user-avatar .btn-camera{
+        top: 80px;
+        width:  100%;
+    }
+    .timeline-user-avtar{
+        overflow: hidden;
+    }
+    .timeline-cover .btn-camera-cover {
+        display: flex !important;
+        align-items:  center;
+        justify-content:  center;
+    }
+    .timeline-cover .btn-camera-cover i {
+        margin-top: 0 !important;
+    }
 }

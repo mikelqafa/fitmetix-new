@@ -1,4 +1,4 @@
-<div class="ft-header hidden-md hidden-lg">
+<div class="ft-header hidden-md hidden-lg" style="border-bottom: 1px solid #333">
     <form class="ft-header-nav">
         @if(Auth::user())
             <a class="ft-header-nav__item fm-nav__item {{ Request::is('/') ? 'is-active' : '' }}" href="{{ url('/') }}">
