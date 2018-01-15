@@ -26,7 +26,7 @@
             </a>
             <form action="{{ url('/logout') }}" method="post" class=" ft-header-nav__item">
                 <a class="ft-header-nav__item--user-img toggleSlide ft-header-nav__item pos-rel" href="javascript:;">
-                    <div class="user-avatar" style="background-image: url('{{url(Auth::user()->avatar)}}')"></div>
+                    <div class="user-avatar" style="background-image: url('{{url('100_'.Auth::user()->avatar)}}')"></div>
                 </a>
             </form>
         @else

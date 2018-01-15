@@ -420,22 +420,32 @@ class TimelineController extends AppBaseController
 
                 $change_avatar = $request->file('change_avatar');
                 $strippedName = str_replace(' ', '', $change_avatar->getClientOriginalName());
-                $photoName = date('Y-m-d-H-i-s').$strippedName;
+                // $photoName = microtime().$strippedName;
+
+                $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id;
+
+                $photoName_thumbnail = '100_'.$photoName;
 
                 // Lets resize the image to the square with dimensions of either width or height , which ever is smaller.
                 list($width, $height) = getimagesize($change_avatar->getRealPath());
 
 
                 $avatar = Image::make($change_avatar->getRealPath());
+                $avatar_thumbnail = $avatar;
 
                 if ($width > $height) {
                     $avatar->crop($height, $height);
+                    $avatar_thumbnail->crop($height, $height);
                 } else {
                     $avatar->crop($width, $width);
+                    $avatar_thumbnail->crop($width, $width);
                 }
                 $avatar->resize(600, 600);
+                $avatar_thumbnail->resize(100, 100);
+
 
                 $avatar->save(storage_path().'/uploads/'.$timeline_type.'s/avatars/'.$photoName, 60);
+                $avatar_thumbnail->save(storage_path().'/uploads/'.$timeline_type.'s/avatars/'.$photoName_thumbnail, 60);
 
                 $media = Media::create([
                       'title'  => $photoName,
@@ -464,7 +474,8 @@ class TimelineController extends AppBaseController
 
             $change_avatar = $request->file('change_cover');
             $strippedName = str_replace(' ', '', $change_avatar->getClientOriginalName());
-            $photoName = date('Y-m-d-H-i-s').$strippedName;
+            // $photoName = date('Y-m-d-H-i-s').$strippedName;
+            $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id;
             $avatar = Image::make($change_avatar->getRealPath());
             $avatar->save(storage_path().'/uploads/'.$timeline_type.'s/covers/'.$photoName, 60);
 
@@ -490,9 +501,20 @@ class TimelineController extends AppBaseController
         if ($request->file('post_images_upload')) {
             $postImage = $request->file('post_images_upload');
             $strippedName = str_replace(' ', '', $postImage->getClientOriginalName());
-            $photoName = 'post'.time().$strippedName;
+            // $photoName = 'post'.time().$strippedName;
+            $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id;
+            $photoName_thumbnail = '100_'.$photoName;
             $avatar = Image::make($postImage->getRealPath())->orientate();
+            $avatar = $avatar->resize(1200,null,function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
             $avatar->save(storage_path().'/uploads/users/gallery/'.$photoName, 60);
+            
+            $avatar_thumbnail = $avatar;
+            $avatar_thumbnail->resize(100, 100);
+            $avatar_thumbnail->save(storage_path().'/uploads/users/gallery/'.$photoName_thumbnail, 60);
+            
             return response()->json(['status' => '200', $photoName]);
         }
 
@@ -2687,7 +2709,8 @@ class TimelineController extends AppBaseController
             if ($request->file('event_images_upload')) {
                 foreach ($request->file('event_images_upload') as $eventImage) {
                     $strippedName = str_replace(' ', '', $eventImage->getClientOriginalName());
-                    $photoName = date('Y-m-d-H-i-s').$strippedName;
+                    // $photoName = date('Y-m-d-H-i-s').$strippedName;
+                    $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id;
 
                     $avatar = Image::make($eventImage->getRealPath());
                     $avatar->save(storage_path().'/uploads/events/covers/'.$photoName, 60);
