@@ -2773,7 +2773,7 @@ class TimelineController extends AppBaseController
                 $timeline = Timeline::create([
                     'username'  => $user_timeline->gen_num(),
                     'name'      => $request->name,
-                    'about'     => $request->about,
+                    'about'     => nl2br($request->about),
                     'type'      => 'event',
                     ]);
 
@@ -2781,7 +2781,7 @@ class TimelineController extends AppBaseController
 
             $post = Post::create([
                 'type' => 'event',
-                'description' => $request->about,
+                'description' => nl2br($request->about),
                 'timeline_id' => $timeline->id,
                 'user_id'     => Auth::user()->id,
                 'active'      => '1',
