@@ -15,7 +15,7 @@
                                     {{item.description}}
                                 </div>
                             </div>
-                            <div class="md-list__image" v-if="notificationImageUrl(item) !== ''" v-bind:style="{ backgroundImage: 'url(' + notificationImageUrl(item) + ')' }"></div>
+                            <div class="md-list__image" v-if="notificationImageUrl(item) !== ''" v-bind:style="{ backgroundImage: 'url(100_' + notificationImageUrl(item) + ')' }"></div>
                             <div class="md-list__item-secondary">
                                 <div class="md-list__item-secondary-info">
                                     <timeago :since="since(item.created_at)"

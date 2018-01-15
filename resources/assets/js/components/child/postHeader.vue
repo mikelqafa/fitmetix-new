@@ -9,7 +9,7 @@
                     <i class="icon icon-options"></i>
                 </a>
             </div>
-            <a :href="userLink" class="user-avatar"  :title="userAtTitle" v-bind:style="{ backgroundImage: 'url(' + userAvatar +')'}">
+            <a :href="userLink" class="user-avatar"  :title="userAtTitle" v-bind:style="{ backgroundImage: 'url(100_' + userAvatar +')'}">
                 <img :src="userAvatar" class="hidden"  :alt="userAvatar.name" :title="timeLineData.name">
             </a>
             <div class="user-post-details">

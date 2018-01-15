@@ -48,7 +48,7 @@
                 <div class="zippy__wrapper">
                     <template v-if="commentInteract">
                         <div class="comment-textfield">
-                            <a :href="userLinkAuth" class="md-list__item-icon user-avatar" :style="'background-image: url('+ authUserImage +')'">
+                            <a :href="userLinkAuth" class="md-list__item-icon user-avatar" :style="'background-image: url(100_'+ authUserImage +')'">
                             </a>
                             <form action="#" class="ft-comment__item--grow pos-rel">
                                 <textarea v-on:keydown.13="postComment" class="ft-post__comment-form form-control"  autocomplete="off" data-post-id="" data-comment-id="" name="post_comment" placeholder="Write a comment" rows="1"></textarea>
@@ -70,7 +70,7 @@
                         </div>
                         <div class="comment-list-action md-list md-list--dense" v-if="commentItemList.length">
                             <div class="md-list__item" v-for="(item, index) in commentItemList" :key="Math.random()*10000+postIndex + 'comment' + item.id" :data-comment-id="item.id">
-                                <a :style="{ backgroundImage: 'url(' + item.user.avatar + ')'}" :href="userLink(item.user)" :title="'@'+item.user.username" class="md-list__item-icon user-avatar"></a>
+                                <a :style="{ backgroundImage: 'url(100_' + item.user.avatar + ')'}" :href="userLink(item.user)" :title="'@'+item.user.username" class="md-list__item-icon user-avatar"></a>
                                 <div class="md-list__item-content">
                                     <div class="md-list__item-primary">
                                         <div class="md-layout md-layout--column">

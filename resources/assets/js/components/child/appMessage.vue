@@ -14,7 +14,7 @@
                             <div class="md-list__item-content">
                                 <a href="#"
                                    class="md-list__item-icon user-avatar"
-                                   :style="{backgroundImage: 'url('+item.user.avatar+')'}">
+                                   :style="{backgroundImage: 'url(100_'+item.user.avatar+')'}">
                                 </a>
                                 <div class="md-list__item-primary">
                                     <span>{{item.user.name}}</span>

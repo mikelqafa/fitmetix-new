@@ -438,6 +438,7 @@ export const store = new Vuex.Store({
       context.state.ureadMsg = false
     },
     showConversation: (context, data) => {
+      $('.ft-dock-wrapper').removeClass('hidden')
       data.byTap ? $('.ft-chat--list-wrapper').removeClass('is-list-open') : ''
       if (data.conversation && data.conversation !== undefined) {
         let indexes = $.map(context.state.conversations.data, function (thread, key) {

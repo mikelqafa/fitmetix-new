@@ -14,7 +14,7 @@
 			z-index: -1;
 		}
 		.md-drawer--permanent.md-drawer--visible {
-			z-index: 1 !important;
+			z-index: 10 !important;
 		}
 		.md-drawer {
 			left: auto;

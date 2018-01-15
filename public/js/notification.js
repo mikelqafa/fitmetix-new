@@ -29176,7 +29176,7 @@ var render = function() {
         "a",
         {
           staticClass: "user-avatar",
-          style: { backgroundImage: "url(" + _vm.userAvatar + ")" },
+          style: { backgroundImage: "url(100_" + _vm.userAvatar + ")" },
           attrs: { href: _vm.userLink, title: _vm.userAtTitle }
         },
         [
@@ -29888,7 +29888,7 @@ var render = function() {
                             _c("a", {
                               staticClass: "md-list__item-icon user-avatar",
                               style:
-                                "background-image: url(" +
+                                "background-image: url(100_" +
                                 _vm.authUserImage +
                                 ")",
                               attrs: { href: _vm.userLinkAuth }
@@ -30031,7 +30031,9 @@ var render = function() {
                                             "md-list__item-icon user-avatar",
                                           style: {
                                             backgroundImage:
-                                              "url(" + item.user.avatar + ")"
+                                              "url(100_" +
+                                              item.user.avatar +
+                                              ")"
                                           },
                                           attrs: {
                                             href: _vm.userLink(item.user),
@@ -31028,7 +31030,7 @@ var render = function() {
                                 staticClass: "md-list__item-icon user-avatar",
                                 style: {
                                   backgroundImage:
-                                    "url(" + _vm.userAvatar(item) + ")"
+                                    "url(100_" + _vm.userAvatar(item) + ")"
                                 },
                                 attrs: {
                                   href: _vm.userLink(item),
@@ -32150,7 +32152,7 @@ var render = function() {
                   _c("div", {
                     staticClass: "md-list__item-icon user-avatar",
                     style: {
-                      backgroundImage: "url(" + suggestion.avatar + ")"
+                      backgroundImage: "url(100_" + suggestion.avatar + ")"
                     },
                     attrs: { title: "@" + suggestion.name }
                   }),
@@ -32196,7 +32198,7 @@ var render = function() {
             "div",
             {
               staticClass: "avatar-list__item",
-              style: { backgroundImage: "url(" + item.avatar + ")" },
+              style: { backgroundImage: "url(100_" + item.avatar + ")" },
               attrs: { title: item.name }
             },
             [
@@ -39778,7 +39780,7 @@ var render = function() {
                                       staticClass: "md-list__image",
                                       style: {
                                         backgroundImage:
-                                          "url(" +
+                                          "url(100_" +
                                           _vm.notificationImageUrl(item) +
                                           ")"
                                       }
@@ -40189,7 +40191,7 @@ var render = function() {
                                   staticClass: "md-list__item-icon user-avatar",
                                   style: {
                                     backgroundImage:
-                                      "url(" + item.user.avatar + ")"
+                                      "url(100_" + item.user.avatar + ")"
                                   },
                                   attrs: { href: "#" }
                                 }),
@@ -40885,7 +40887,9 @@ var render = function() {
                                             "md-list__item-icon user-avatar",
                                           style: {
                                             backgroundImage:
-                                              "url(" + item.user.avatar + ")"
+                                              "url(100_" +
+                                              item.user.avatar +
+                                              ")"
                                           },
                                           attrs: {
                                             href:
@@ -41515,7 +41519,9 @@ var render = function() {
                               staticClass: "md-list__image",
                               style: {
                                 backgroundImage:
-                                  "url(" + _vm.notificationImageUrl(item) + ")"
+                                  "url(100_" +
+                                  _vm.notificationImageUrl(item) +
+                                  ")"
                               }
                             })
                           : _vm._e(),
@@ -44431,7 +44437,7 @@ var render = function() {
             [
               _c("a", {
                 staticClass: "ft-cp__user",
-                style: { backgroundImage: "url(" + item.avatar + ")" },
+                style: { backgroundImage: "url(100_" + item.avatar + ")" },
                 attrs: { title: "@" + item.username, href: _vm.userLink(item) }
               }),
               _vm._v(" "),
@@ -44856,7 +44862,7 @@ var render = function() {
                                       "md-list__item-icon user-avatar",
                                     style: {
                                       backgroundImage:
-                                        "url(" + _vm.userAvatar(item) + ")"
+                                        "url(100_" + _vm.userAvatar(item) + ")"
                                     }
                                   }),
                                   _vm._v(" "),
@@ -47876,6 +47882,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
       context.state.ureadMsg = false;
     },
     showConversation: function showConversation(context, data) {
+      $('.ft-dock-wrapper').removeClass('hidden');
       data.byTap ? $('.ft-chat--list-wrapper').removeClass('is-list-open') : '';
       if (data.conversation && data.conversation !== undefined) {
         var indexes = $.map(context.state.conversations.data, function (thread, key) {
