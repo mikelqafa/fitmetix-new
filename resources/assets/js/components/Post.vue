@@ -63,7 +63,7 @@
                     </div>
                     <post-comment :post-index="index" :post-id="postItem.id" :post-item="postItem"></post-comment>
                 </div>
-                <div v-if="isFetchingBottom" class="ft-loading">
+                <div v-if="isFetchingBottom" class="ft-loading" style="margin: 50px 0">
                     <span class="ft-loading__dot"></span>
                     <span class="ft-loading__dot"></span>
                     <span class="ft-loading__dot"></span>

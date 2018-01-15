@@ -33067,13 +33067,20 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _vm.isFetchingBottom
-                    ? _c("div", { staticClass: "ft-loading" }, [
-                        _c("span", { staticClass: "ft-loading__dot" }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "ft-loading__dot" }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "ft-loading__dot" })
-                      ])
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "ft-loading",
+                          staticStyle: { margin: "50px 0" }
+                        },
+                        [
+                          _c("span", { staticClass: "ft-loading__dot" }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "ft-loading__dot" }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "ft-loading__dot" })
+                        ]
+                      )
                     : _vm._e(),
                   _vm._v(" "),
                   !_vm.hasMorePost && !_vm.singlePost
