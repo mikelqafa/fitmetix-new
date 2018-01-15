@@ -56,6 +56,7 @@
                                 Register
                             </template>
                         </button>
+                        <div class="md-layout-spacer"></div>
                     </template>
                     <template v-else="">
                         <div class="md-layout-spacer"></div>
