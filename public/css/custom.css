@@ -3821,6 +3821,10 @@ aside .md-drawer-scroll__wrapper{
         bottom: 20px;
         left:0;
     }
+    #app-single-chat .is-open .ft-chat__write{
+       z-index: 2;
+    }
+
 }
 @keyframes slideUpDelay {
     0% {
