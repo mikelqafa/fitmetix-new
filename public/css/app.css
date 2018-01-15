@@ -18352,6 +18352,7 @@ html {
     top: 18px;
     color: #fff;
     line-height:  18px;
+    /* opacity: 0; */
 }
 @media (max-width: 560px) {
     .chang-user-avatar .btn-camera {
@@ -18368,7 +18369,7 @@ html {
 }
 @media (max-width: 560px) {
     .chang-user-avatar .btn-camera .fa {
-        margin-right: 4px;
+        margin-right: 0;
     }
 }
 @media (max-width: 350px) {

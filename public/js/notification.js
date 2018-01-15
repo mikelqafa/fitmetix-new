@@ -29409,10 +29409,22 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         };
     },
     methods: {
+        getThumbImage: function (_getThumbImage) {
+            function getThumbImage(_x) {
+                return _getThumbImage.apply(this, arguments);
+            }
+
+            getThumbImage.toString = function () {
+                return _getThumbImage.toString();
+            };
+
+            return getThumbImage;
+        }(function (url) {
+            return getThumbImage(url);
+        }),
         userLink: function userLink(item) {
             return base_url + item.username;
         },
-
         closeDilaogFocusComment: function closeDilaogFocusComment() {
             this.$emit('focuscomment');
         },
@@ -30027,8 +30039,10 @@ var render = function() {
                                             "md-list__item-icon user-avatar",
                                           style: {
                                             backgroundImage:
-                                              "url(100_" +
-                                              item.user.avatar +
+                                              "url(" +
+                                              _vm.getThumbImage(
+                                                item.user.avatar
+                                              ) +
                                               ")"
                                           },
                                           attrs: {
@@ -40078,11 +40092,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     mounted: function mounted() {},
 
     methods: {
-        getThumbImage: function getThumbImage(url) {
-            var url_arr = url.split('/');
-            var last_string = url_arr[url_arr.length - 1];
-            return url.replace(last_string, '100_' + last_string);
-        },
+        getThumbImage: function (_getThumbImage) {
+            function getThumbImage(_x) {
+                return _getThumbImage.apply(this, arguments);
+            }
+
+            getThumbImage.toString = function () {
+                return _getThumbImage.toString();
+            };
+
+            return getThumbImage;
+        }(function (url) {
+            return getThumbImage(url);
+        }),
         openChat: function openChat(c) {
             $('.ft-chat--list-wrapper').addClass('is-list-open');
             $('.ft-chat-box.ft-chat-box--docker ').addClass('ft-chat-box--open');
@@ -44404,11 +44426,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
         },
-        getThumbImage: function getThumbImage(url) {
-            var url_arr = url.split('/');
-            var last_string = url_arr[url_arr.length - 1];
-            return url.replace(last_string, '100_' + last_string);
-        },
+        getThumbImage: function (_getThumbImage) {
+            function getThumbImage(_x) {
+                return _getThumbImage.apply(this, arguments);
+            }
+
+            getThumbImage.toString = function () {
+                return _getThumbImage.toString();
+            };
+
+            return getThumbImage;
+        }(function (url) {
+            return getThumbImage(url);
+        }),
         userLink: function userLink(item) {
             return base_url + item.username;
         }

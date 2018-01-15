@@ -70,7 +70,7 @@
                         </div>
                         <div class="comment-list-action md-list md-list--dense" v-if="commentItemList.length">
                             <div class="md-list__item" v-for="(item, index) in commentItemList" :key="Math.random()*10000+postIndex + 'comment' + item.id" :data-comment-id="item.id">
-                                <a :style="{ backgroundImage: 'url(100_' + item.user.avatar + ')'}" :href="userLink(item.user)" :title="'@'+item.user.username" class="md-list__item-icon user-avatar"></a>
+                                <a :style="{ backgroundImage: 'url(' + getThumbImage(item.user.avatar) + ')'}" :href="userLink(item.user)" :title="'@'+item.user.username" class="md-list__item-icon user-avatar"></a>
                                 <div class="md-list__item-content">
                                     <div class="md-list__item-primary">
                                         <div class="md-layout md-layout--column">
@@ -135,7 +135,10 @@
             }
         },
         methods: {
-            userLink (item) {
+            getThumbImage: function (url) {
+                return getThumbImage(url)
+            },
+            userLink: function (item) {
                 return base_url + item.username
             },
             closeDilaogFocusComment: function () {
