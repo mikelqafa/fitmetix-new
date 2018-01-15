@@ -303,7 +303,6 @@
                 }
                 let u = $('#eventByUsername')
                 if(u !== undefined && u.length) {
-                    alert()
                     url += '?'+ 'username' + '=' + u.val()
                 }
                 return url
