@@ -3871,3 +3871,6 @@ aside .md-drawer-scroll__wrapper{
     text-overflow: ellipsis;
     display: block;
 }
+.timeline-posts .panel-post .panel-body{
+    padding-bottom: 0;
+}
