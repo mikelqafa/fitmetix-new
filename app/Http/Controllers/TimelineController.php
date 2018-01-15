@@ -1103,9 +1103,6 @@ class TimelineController extends AppBaseController
                 return response()->json(['status' => '200', 'joined' => false, 'message' => 'Gender mismatch']);   
             }
             else {
-                if(($event->price != NULL) && ($event->price >= 1)) {
-                    return response()->json(['status' => '200', 'joined' => false, 'message' => 'Paid event']);
-                }
                 $event->users()->attach(Auth::user()->id);
 
                 foreach ($users as $user) {
@@ -4314,26 +4311,37 @@ class TimelineController extends AppBaseController
       $eventId = $request->event_id;
       $userId = $request->user_id;
       $event = DB::table('events')->where('id', $eventId)->first();
-      if ($event->price > 0) {
-          $registration = DB::table('event_user')
-              ->where('event_id', $eventId)
-              ->where('user_id', $userId)
-              ->first();
-          $unregister = DB::table('event_unregister_request')
-              ->insert([
-                  'reg_user_id' => $userId,
-                  'event_id' => $eventId,
-                  'event_reg_id' => $registration->id,
-                  'event_owner_id' => $event->user_id,
-                  'created_at' => Carbon::now()
-              ]);
-          if ($unregister) {
-              $msg = 'Successfully submitted unregistration request';
-          } else {
-              $msg = 'Unable to submit unregistration request';
-          }
-      } else {
-          $unregister = DB::table('event_user')
+      // if ($event->price > 0) {
+      //     $registration = DB::table('event_user')
+      //         ->where('event_id', $eventId)
+      //         ->where('user_id', $userId)
+      //         ->first();
+      //     $unregister = DB::table('event_unregister_request')
+      //         ->insert([
+      //             'reg_user_id' => $userId,
+      //             'event_id' => $eventId,
+      //             'event_reg_id' => $registration->id,
+      //             'event_owner_id' => $event->user_id,
+      //             'created_at' => Carbon::now()
+      //         ]);
+      //     if ($unregister) {
+      //         $msg = 'Successfully submitted unregistration request';
+      //     } else {
+      //         $msg = 'Unable to submit unregistration request';
+      //     }
+      // } else {
+      //     $unregister = DB::table('event_user')
+      //         ->where('event_id', $eventId)
+      //         ->where('user_id', $userId)
+      //         ->delete();
+      //     if ($unregister) {
+      //         $msg = 'Successfully unregistered from Event';
+      //     } else {
+      //         $msg = 'No registration found for this Event';
+      //     }
+      //     return response()->json(['status' => '200', 'data' => $msg]);
+      // }
+      $unregister = DB::table('event_user')
               ->where('event_id', $eventId)
               ->where('user_id', $userId)
               ->delete();
@@ -4343,7 +4351,6 @@ class TimelineController extends AppBaseController
               $msg = 'No registration found for this Event';
           }
           return response()->json(['status' => '200', 'data' => $msg]);
-      }
   }
 
     public function timelineUserGallery($username)
