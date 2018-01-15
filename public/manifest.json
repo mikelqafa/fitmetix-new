@@ -13,8 +13,8 @@
         }
     ],
     "theme_color": "#1e7c82",
-    "background_color": "#1e7c82",
-    "start_url": "http://www.fitmetix.com",
+    "background_color": "#FFFFFF",
+    "start_url": "/",
     "display": "standalone",
     "orientation": "portrait"
 }
