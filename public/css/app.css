@@ -20184,7 +20184,11 @@ a:focus {
   margin-left: -3px;
   border-radius: 50%;
 }
-
+@media (min-width:960px) {
+  .unread-notification{
+    bottom: 15px;
+  }
+}
 .material-svg {
   width: 20px;
   -webkit-user-select: none;

@@ -9,8 +9,8 @@
                     <i class="icon icon-options"></i>
                 </a>
             </div>
-            <a :href="userLink" class="user-avatar"  :title="userAtTitle" v-bind:style="{ backgroundImage: 'url(100_' + userAvatar +')'}">
-                <img :src="userAvatar" class="hidden"  :alt="userAvatar.name" :title="timeLineData.name">
+            <a :href="userLink" class="user-avatar"  :title="userAtTitle" v-bind:style="{ backgroundImage: 'url(' + userAvatar +')'}">
+                <img :src="userAvatar" class="hidden"  :alt="timeLineData.name" :title="timeLineData.name">
             </a>
             <div class="user-post-details">
                 <div class="no-margin">
@@ -90,9 +90,10 @@
                 return this.isTypeEvent ? '@' + this.postData.creator_timeline.username: '@' + this.postData.timeline.username
             },
             userAvatar () {
-                return this.isTypeEvent ?
+                return getThumbImage(this.isTypeEvent ?
                         this.postData.creator_timeline.avatar_url.length ? asset_url + 'uploads/users/avatars/' + this.postData.creator_timeline.avatar_url[0].source : base_url + 'images/' + this.defaultImage:
                         this.postData.timeline.avatar_url.length ? asset_url + 'uploads/users/avatars/' + this.postData.timeline.avatar_url[0].source : base_url + 'images/' + this.defaultImage
+                )
             },
             headerTitle () {
                 return this.isTypeEvent ? this.postData.creator_timeline.username : this.postData.timeline.username

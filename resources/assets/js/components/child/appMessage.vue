@@ -14,7 +14,7 @@
                             <div class="md-list__item-content">
                                 <a href="#"
                                    class="md-list__item-icon user-avatar"
-                                   :style="{backgroundImage: 'url(100_'+item.user.avatar+')'}">
+                                   :style="{backgroundImage: 'url('+getThumbImage(item.user.avatar)+')'}">
                                 </a>
                                 <div class="md-list__item-primary">
                                     <span>{{item.user.name}}</span>
@@ -58,6 +58,11 @@
 
         },
         methods: {
+            getThumbImage: function (url) {
+                let url_arr = url.split('/');
+                let last_string = url_arr[url_arr.length - 1]
+                return url.replace(last_string, '100_' + last_string)
+            },
             openChat: function (c) {
                 $('.ft-chat--list-wrapper').addClass('is-list-open')
                 $('.ft-chat-box.ft-chat-box--docker ').addClass('ft-chat-box--open')

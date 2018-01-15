@@ -20,7 +20,7 @@
                                         <div class="md-list__item-content">
                                             <a href="//localhost:3000/fitmetix/public/doremon"
                                                class="md-list__item-icon user-avatar"
-                                               :style="{backgroundImage: 'url('+item.user.avatar+')'}">
+                                               :style="{backgroundImage: 'url('+getThumbImage(item.user.avatar)+')'}">
                                             </a>
                                             <div class="md-list__item-primary">
                                             <span class="pos-rel">
@@ -138,6 +138,11 @@
         methods: {
             processEditOperation: function (operation) {
                 this.backContent = operation.api.origElements.innerHTML
+            },
+            getThumbImage: function (url) {
+                let url_arr = url.split('/');
+                let last_string = url_arr[url_arr.length - 1]
+                return url.replace(last_string, '100_' + last_string)
             },
             since (d) {
                 let str = ''

@@ -36,7 +36,7 @@
                         <template v-else="">
                             <div class="md-list md-list--likes md-list--dense">
                                 <div class="md-list__item has-divider" v-for="item in filterUserSearch">
-                                    <a :href="userLink(item)" class="md-list__item-icon user-avatar"  :title="'@' + item.username" v-bind:style="{ backgroundImage: 'url(100_' + userAvatar(item) +')'}">
+                                    <a :href="userLink(item)" class="md-list__item-icon user-avatar"  :title="'@' + item.username" v-bind:style="{ backgroundImage: 'url(' + userAvatar(item) +')'}">
                                     </a>
                                     <div class="md-list__item-content">
                                         <div class="md-list__item-primary md-algin md-align--start-center md-layout">
@@ -117,7 +117,7 @@
                 return item.username == current_username
             },
             userAvatar (item) {
-                return item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage
+                return getThumbImage(item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage)
             },
             getList: function () {
                 let that = this

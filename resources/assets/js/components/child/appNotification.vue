@@ -20,7 +20,7 @@
                                         {{item.description}}
                                     </div>
                                 </div>
-                                <div class="md-list__image" v-if="notificationImageUrl(item) !== ''" v-bind:style="{ backgroundImage: 'url(100_' + notificationImageUrl(item) + ')' }"></div>
+                                <div class="md-list__image" v-if="notificationImageUrl(item) !== ''" v-bind:style="{ backgroundImage: 'url(' + notificationImageUrl(item) + ')' }"></div>
                                 <div class="md-list__item-secondary text-right">
                                     <div class="md-list__item-secondary-info">
                                         <timeago :since="since(item.created_at)"
@@ -193,12 +193,12 @@
                 switch(item.type) {
                     case 'like_post':
                         if(item.link !== '' && item.link !== null ) {
-                            url =  asset_url + 'uploads/users/gallery/'+item.link
+                            url =  getThumbImage(asset_url + 'uploads/users/gallery/'+item.link)
                         }
                     break
                     case 'unlike_post':
                         if(item.link !== '' && item.link !== null ) {
-                            url =  asset_url + 'uploads/users/gallery/'+item.link
+                            url =  getThumbImage(asset_url + 'uploads/users/gallery/'+item.link)
                         }
                     break
                 }

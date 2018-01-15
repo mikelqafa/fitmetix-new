@@ -2266,3 +2266,9 @@ $(function(){
         $(".mobile-menu-slide").toggleClass('active');
     })
 })
+
+function getThumbImage (url) {
+  let url_arr = url.split('/');
+  let last_string = url_arr[url_arr.length - 1]
+  return url.replace(last_string, '100_' + last_string);
+}

@@ -48,7 +48,7 @@
                 <div class="zippy__wrapper">
                     <template v-if="commentInteract">
                         <div class="comment-textfield">
-                            <a :href="userLinkAuth" class="md-list__item-icon user-avatar" :style="'background-image: url(100_'+ authUserImage +')'">
+                            <a :href="userLinkAuth" class="md-list__item-icon user-avatar" :style="'background-image: url('+ authUserImage +')'">
                             </a>
                             <form action="#" class="ft-comment__item--grow pos-rel">
                                 <textarea v-on:keydown.13="postComment" class="ft-post__comment-form form-control"  autocomplete="off" data-post-id="" data-comment-id="" name="post_comment" placeholder="Write a comment" rows="1"></textarea>
@@ -137,10 +137,6 @@
         methods: {
             userLink (item) {
                 return base_url + item.username
-            },
-            userAvatar (item) {
-                console.log(item)
-                return item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage
             },
             closeDilaogFocusComment: function () {
                 this.$emit('focuscomment')
@@ -404,7 +400,7 @@
                 that.getDefaultData()
             }, 1000)
             $('#' + this.expandID).Zippy();
-            this.authUserImage = $('#auth-user-avatar').val()
+            this.authUserImage = getThumbImage($('#auth-user-avatar').val())
             this.userLinkAuth = base_url + current_username
             if(this.showSidebar) {
                 if($(window).width() > 599)  {

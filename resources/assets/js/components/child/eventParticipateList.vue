@@ -126,7 +126,7 @@
                 return item.timeline.username == current_username
             },
             userAvatar (item) {
-                return item.timeline.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.timeline.avatar_url[0].source : base_url + 'images/' + this.defaultImage
+                return getThumbImage(item.timeline.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.timeline.avatar_url[0].source : base_url + 'images/' + this.defaultImage)
             },
             getList: function () {
                 let that = this

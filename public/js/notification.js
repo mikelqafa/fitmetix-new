@@ -28907,7 +28907,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return this.isTypeEvent ? '@' + this.postData.creator_timeline.username : '@' + this.postData.timeline.username;
         },
         userAvatar: function userAvatar() {
-            return this.isTypeEvent ? this.postData.creator_timeline.avatar_url.length ? asset_url + 'uploads/users/avatars/' + this.postData.creator_timeline.avatar_url[0].source : base_url + 'images/' + this.defaultImage : this.postData.timeline.avatar_url.length ? asset_url + 'uploads/users/avatars/' + this.postData.timeline.avatar_url[0].source : base_url + 'images/' + this.defaultImage;
+            return getThumbImage(this.isTypeEvent ? this.postData.creator_timeline.avatar_url.length ? asset_url + 'uploads/users/avatars/' + this.postData.creator_timeline.avatar_url[0].source : base_url + 'images/' + this.defaultImage : this.postData.timeline.avatar_url.length ? asset_url + 'uploads/users/avatars/' + this.postData.timeline.avatar_url[0].source : base_url + 'images/' + this.defaultImage);
         },
         headerTitle: function headerTitle() {
             return this.isTypeEvent ? this.postData.creator_timeline.username : this.postData.timeline.username;
@@ -29176,7 +29176,7 @@ var render = function() {
         "a",
         {
           staticClass: "user-avatar",
-          style: { backgroundImage: "url(100_" + _vm.userAvatar + ")" },
+          style: { backgroundImage: "url(" + _vm.userAvatar + ")" },
           attrs: { href: _vm.userLink, title: _vm.userAtTitle }
         },
         [
@@ -29184,7 +29184,7 @@ var render = function() {
             staticClass: "hidden",
             attrs: {
               src: _vm.userAvatar,
-              alt: _vm.userAvatar.name,
+              alt: _vm.timeLineData.name,
               title: _vm.timeLineData.name
             }
           })
@@ -29411,10 +29411,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     methods: {
         userLink: function userLink(item) {
             return base_url + item.username;
-        },
-        userAvatar: function userAvatar(item) {
-            console.log(item);
-            return item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage;
         },
 
         closeDilaogFocusComment: function closeDilaogFocusComment() {
@@ -29677,7 +29673,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             that.getDefaultData();
         }, 1000);
         $('#' + this.expandID).Zippy();
-        this.authUserImage = $('#auth-user-avatar').val();
+        this.authUserImage = getThumbImage($('#auth-user-avatar').val());
         this.userLinkAuth = base_url + current_username;
         if (this.showSidebar) {
             if ($(window).width() > 599) {
@@ -29888,7 +29884,7 @@ var render = function() {
                             _c("a", {
                               staticClass: "md-list__item-icon user-avatar",
                               style:
-                                "background-image: url(100_" +
+                                "background-image: url(" +
                                 _vm.authUserImage +
                                 ")",
                               attrs: { href: _vm.userLinkAuth }
@@ -30876,7 +30872,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return item.username == current_username;
         },
         userAvatar: function userAvatar(item) {
-            return item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage;
+            return getThumbImage(item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage);
         },
 
         getList: function getList() {
@@ -31030,7 +31026,7 @@ var render = function() {
                                 staticClass: "md-list__item-icon user-avatar",
                                 style: {
                                   backgroundImage:
-                                    "url(100_" + _vm.userAvatar(item) + ")"
+                                    "url(" + _vm.userAvatar(item) + ")"
                                 },
                                 attrs: {
                                   href: _vm.userLink(item),
@@ -31986,6 +31982,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
+        getThumbImage: function getThumbImage(url) {
+            var url_arr = url.split('/');
+            var last_string = url_arr[url_arr.length - 1];
+            return url.replace(last_string, '100_' + last_string);
+        },
         onKeyEnter: function onKeyEnter() {
             // this.autoCompleteValue = this.matches[this.current];
             this.selections.push(this.suggestions[this.current]);
@@ -32152,7 +32153,8 @@ var render = function() {
                   _c("div", {
                     staticClass: "md-list__item-icon user-avatar",
                     style: {
-                      backgroundImage: "url(100_" + suggestion.avatar + ")"
+                      backgroundImage:
+                        "url(" + _vm.getThumbImage(suggestion.avatar) + ")"
                     },
                     attrs: { title: "@" + suggestion.name }
                   }),
@@ -32198,7 +32200,9 @@ var render = function() {
             "div",
             {
               staticClass: "avatar-list__item",
-              style: { backgroundImage: "url(100_" + item.avatar + ")" },
+              style: {
+                backgroundImage: "url(" + _vm.getThumbImage(item.avatar) + ")"
+              },
               attrs: { title: item.name }
             },
             [
@@ -32476,7 +32480,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             return item.timeline.username == current_username;
         },
         userAvatar: function userAvatar(item) {
-            return item.timeline.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.timeline.avatar_url[0].source : base_url + 'images/' + this.defaultImage;
+            return getThumbImage(item.timeline.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.timeline.avatar_url[0].source : base_url + 'images/' + this.defaultImage);
         },
 
         getList: function getList() {
@@ -38445,6 +38449,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         processEditOperation: function processEditOperation(operation) {
             this.backContent = operation.api.origElements.innerHTML;
         },
+        getThumbImage: function getThumbImage(url) {
+            var url_arr = url.split('/');
+            var last_string = url_arr[url_arr.length - 1];
+            return url.replace(last_string, '100_' + last_string);
+        },
         since: function since(d) {
             var str = '';
             if (d != '' && d != undefined) {
@@ -38715,7 +38724,9 @@ var render = function() {
                                         "md-list__item-icon user-avatar",
                                       style: {
                                         backgroundImage:
-                                          "url(" + item.user.avatar + ")"
+                                          "url(" +
+                                          _vm.getThumbImage(item.user.avatar) +
+                                          ")"
                                       },
                                       attrs: {
                                         href:
@@ -39523,12 +39534,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             switch (item.type) {
                 case 'like_post':
                     if (item.link !== '' && item.link !== null) {
-                        url = asset_url + 'uploads/users/gallery/' + item.link;
+                        url = getThumbImage(asset_url + 'uploads/users/gallery/' + item.link);
                     }
                     break;
                 case 'unlike_post':
                     if (item.link !== '' && item.link !== null) {
-                        url = asset_url + 'uploads/users/gallery/' + item.link;
+                        url = getThumbImage(asset_url + 'uploads/users/gallery/' + item.link);
                     }
                     break;
             }
@@ -39780,7 +39791,7 @@ var render = function() {
                                       staticClass: "md-list__image",
                                       style: {
                                         backgroundImage:
-                                          "url(100_" +
+                                          "url(" +
                                           _vm.notificationImageUrl(item) +
                                           ")"
                                       }
@@ -40067,6 +40078,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     mounted: function mounted() {},
 
     methods: {
+        getThumbImage: function getThumbImage(url) {
+            var url_arr = url.split('/');
+            var last_string = url_arr[url_arr.length - 1];
+            return url.replace(last_string, '100_' + last_string);
+        },
         openChat: function openChat(c) {
             $('.ft-chat--list-wrapper').addClass('is-list-open');
             $('.ft-chat-box.ft-chat-box--docker ').addClass('ft-chat-box--open');
@@ -40191,7 +40207,9 @@ var render = function() {
                                   staticClass: "md-list__item-icon user-avatar",
                                   style: {
                                     backgroundImage:
-                                      "url(100_" + item.user.avatar + ")"
+                                      "url(" +
+                                      _vm.getThumbImage(item.user.avatar) +
+                                      ")"
                                   },
                                   attrs: { href: "#" }
                                 }),
@@ -41398,12 +41416,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             switch (item.type) {
                 case 'like_post':
                     if (item.link !== '' && item.link !== null) {
-                        url = asset_url + 'uploads/users/gallery/' + item.link;
+                        url = getThumbImage(asset_url + 'uploads/users/gallery/' + item.link);
                     }
                     break;
                 case 'unlike_post':
                     if (item.link !== '' && item.link !== null) {
-                        url = asset_url + 'uploads/users/gallery/' + item.link;
+                        url = getThumbImage(asset_url + 'uploads/users/gallery/' + item.link);
                     }
                     break;
             }
@@ -41519,9 +41537,7 @@ var render = function() {
                               staticClass: "md-list__image",
                               style: {
                                 backgroundImage:
-                                  "url(100_" +
-                                  _vm.notificationImageUrl(item) +
-                                  ")"
+                                  "url(" + _vm.notificationImageUrl(item) + ")"
                               }
                             })
                           : _vm._e(),
@@ -44388,6 +44404,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(error);
             });
         },
+        getThumbImage: function getThumbImage(url) {
+            var url_arr = url.split('/');
+            var last_string = url_arr[url_arr.length - 1];
+            return url.replace(last_string, '100_' + last_string);
+        },
         userLink: function userLink(item) {
             return base_url + item.username;
         }
@@ -44437,7 +44458,9 @@ var render = function() {
             [
               _c("a", {
                 staticClass: "ft-cp__user",
-                style: { backgroundImage: "url(100_" + item.avatar + ")" },
+                style: {
+                  backgroundImage: "url(" + _vm.getThumbImage(item.avatar) + ")"
+                },
                 attrs: { title: "@" + item.username, href: _vm.userLink(item) }
               }),
               _vm._v(" "),
@@ -44703,7 +44726,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return base_url + item.username;
         },
         userAvatar: function userAvatar(item) {
-            return item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage;
+            return getThumbImage(item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage);
         },
         tagLink: function tagLink(item) {
             return base_url + 'gallery/hashtag/' + item.tag;
@@ -44862,7 +44885,7 @@ var render = function() {
                                       "md-list__item-icon user-avatar",
                                     style: {
                                       backgroundImage:
-                                        "url(100_" + _vm.userAvatar(item) + ")"
+                                        "url(" + _vm.userAvatar(item) + ")"
                                     }
                                   }),
                                   _vm._v(" "),

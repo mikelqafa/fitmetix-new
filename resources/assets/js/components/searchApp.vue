@@ -34,7 +34,7 @@
                           <div class="search-result-wrapper md-list" v-show="userList.length">
                               <a :href="userLink(item)" class="md-list__item has-divider" v-for="(item, index) in userList" :key="index+'user-'+item.id">
                                   <div class="md-list__item-content">
-                                          <span class="md-list__item-icon user-avatar" v-bind:style="{ backgroundImage: 'url(100_' + userAvatar(item) +')'}">
+                                          <span class="md-list__item-icon user-avatar" v-bind:style="{ backgroundImage: 'url(' + userAvatar(item) +')'}">
                                           </span>
                                       <div class="md-list__item-primary">
                                           <span>{{item.username}}</span>
@@ -138,7 +138,7 @@
             return base_url + item.username
         },
         userAvatar (item) {
-            return item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage
+            return getThumbImage(item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage)
         },
         tagLink(item) {
             return base_url + 'gallery/hashtag/' + item.tag
