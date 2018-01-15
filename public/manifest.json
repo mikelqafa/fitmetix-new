@@ -1,21 +1,20 @@
 {
-  "name": "Fitmetix | Fitness social network",
-  "short_name": "Fitmetix",
-  "icons": [
-    {
-      "src": "/setting/logo.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/setting/logo.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ],
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#FFFFFF",
-  "theme_color": "#1E7C82",
-  "orientation": "portrait-primary"
+    "name": "Fitmetix",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#1e7c82",
+    "background_color": "#1e7c82",
+    "start_url": "http://www.fitmetix.com",
+    "display": "standalone",
+    "orientation": "portrait"
 }
