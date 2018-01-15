@@ -541,6 +541,14 @@ class TimelineController extends AppBaseController
             $avatar_thumbnail = $avatar;
             $avatar_thumbnail->resize(100, 100);
             $avatar_thumbnail->save(storage_path().'/uploads/users/gallery/'.$photoName_thumbnail, 60);
+
+            $avatar_thumbnail_50 = $avatar;
+            $avatar_thumbnail_50 = $avatar_thumbnail_50->resize(50,null,function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            $photoName_thumbnail_50 = '50_'.$photoName;
+            $avatar_thumbnail_50->save(storage_path().'/uploads/users/gallery/'.$photoName_thumbnail_50, 60);
             
             return response()->json(['status' => '200', $photoName]);
         }
@@ -793,9 +801,9 @@ class TimelineController extends AppBaseController
             $notify_type = 'unlike_post';
             $status_message = 'successfully unliked';
 
-            if ($post->user->id != Auth::user()->id) {
-                Notification::create(['user_id' => $post->user->id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.$notify_message, 'type' => $notify_type]);
-            }
+            // if ($post->user->id != Auth::user()->id) {
+            //     Notification::create(['user_id' => $post->user->id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.$notify_message, 'type' => $notify_type]);
+            // }
 
             return response()->json(['status' => '200', 'liked' => false, 'message' => $status_message, 'likecount' => $like_count]);
         }
@@ -843,9 +851,9 @@ class TimelineController extends AppBaseController
             $like_count = $comment_likes->count();
             if ($block == FALSE){
               //Notify the user for comment unlike
-              if ($comment->user->id != Auth::user()->id) {
-                Notification::create(['user_id' => $comment->user_id, 'post_id' => $comment->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.unliked_your_comment'), 'type' => 'unlike_comment']);
-              }
+              // if ($comment->user->id != Auth::user()->id) {
+              //   Notification::create(['user_id' => $comment->user_id, 'post_id' => $comment->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.unliked_your_comment'), 'type' => 'unlike_comment']);
+              // }
             }
 
             return response()->json(['status' => '200', 'unliked' => false, 'message' => 'successfully unliked', 'likecount' => $like_count]);
@@ -1087,7 +1095,7 @@ class TimelineController extends AppBaseController
             $follow->followers()->detach([Auth::user()->id]);
 
             //Notify the user for follow
-            Notification::create(['user_id' => $follow->id, 'timeline_id' => $request->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.is_unfollowing_you'), 'type' => 'unfollow']);
+            // Notification::create(['user_id' => $follow->id, 'timeline_id' => $request->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.is_unfollowing_you'), 'type' => 'unfollow']);
 
             return response()->json(['status' => '200', 'followed' => false, 'message' => 'successfully unFollowed']);
         }
@@ -1951,7 +1959,7 @@ class TimelineController extends AppBaseController
           $block = $this->checkIfPostBlocked($comment->post_id,$comment->user->id);
           if ($block == FALSE){
             //Notify the user for comment delete
-            Notification::create(['user_id' => $comment->user->id, 'post_id' => $comment->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.deleted_your_comment'), 'type' => 'delete_comment']);
+            // Notification::create(['user_id' => $comment->user->id, 'post_id' => $comment->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.deleted_your_comment'), 'type' => 'delete_comment']);
           }
 
         }
@@ -2028,7 +2036,7 @@ class TimelineController extends AppBaseController
 
         if ($reported) {
             //Notify the user for reporting his post
-            Notification::create(['user_id' => $post->user_id, 'post_id' => $request->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.reported_your_post'), 'type' => 'report_post']);
+            // Notification::create(['user_id' => $post->user_id, 'post_id' => $request->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.reported_your_post'), 'type' => 'report_post']);
 
             return response()->json(['status' => '200', 'reported' => true, 'message' => 'Post successfully reported']);
         }
@@ -2044,7 +2052,7 @@ class TimelineController extends AppBaseController
 
         if ($reported) {
             //Notify the user for reporting his comment
-            Notification::create(['user_id' => $comment->user_id, 'comment_id' => $request->comment_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.reported'), 'type' => 'report_comment']);
+            // Notification::create(['user_id' => $comment->user_id, 'comment_id' => $request->comment_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.reported'), 'type' => 'report_comment']);
 
             return response()->json(['status' => '200', 'reported' => true, 'message' => 'Comment successfully reported']);
         }
