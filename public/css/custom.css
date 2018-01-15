@@ -3812,6 +3812,15 @@ aside .md-drawer-scroll__wrapper{
     .timeline-cover .btn-camera-cover i {
         margin-top: 0 !important;
     }
+    #app-single-chat .ft-chat-box__footer{
+        height: 52px;
+        box-sizing: content-box;
+    }
+    #app-single-chat .ft-chat__write{
+        position: fixed;
+        bottom: 20px;
+        left:0;
+    }
 }
 @keyframes slideUpDelay {
     0% {
