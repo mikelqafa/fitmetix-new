@@ -37986,6 +37986,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -38110,103 +38112,104 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return !_vm.isLoading && _vm.isDesktop
-    ? _c(
-        "div",
-        { staticClass: "hidden-sm hidden-xs" },
-        [
-          _c(
-            "swiper",
-            {
-              staticClass: "event-slider",
-              attrs: { options: _vm.swiperOptionE }
-            },
-            [
-              _vm._l(_vm.eventList, function(postItem, index) {
-                return _c(
-                  "swiper-slide",
-                  { key: index + "singleEvent" + postItem.id },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "panel panel--eventlist panel-default timeline-posts__item panel-post",
-                        attrs: { id: "ft-event-desktop" + postItem.id }
-                      },
-                      [
-                        _c("post-header", {
-                          attrs: {
-                            "event-list": "false",
-                            "disable-close": "true",
-                            "post-data": postItem,
-                            "post-index": index,
-                            date: postItem.created_at
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "panel-body" },
-                          [
-                            _c("post-back-viewer", {
-                              attrs: { "post-img": postItem.images }
-                            }),
-                            _vm._v(" "),
-                            _c("post-event", {
-                              attrs: {
-                                "post-item": postItem,
-                                "post-index": index,
-                                "post-img": postItem.images,
-                                "event-list": "true",
-                                "enable-url": "true"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("post-description", {
-                              attrs: { "post-html": postItem.description }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "md-layout-spacer" })
-                      ],
-                      1
-                    )
-                  ]
-                )
-              }),
-              _vm._v(" "),
-              _c("div", {
-                staticClass: "swiper-button-prev hidden",
-                attrs: { slot: "button-prev" },
-                slot: "button-prev"
-              }),
-              _vm._v(" "),
-              _c("div", {
-                staticClass: "swiper-button-next hidden",
-                attrs: { slot: "button-next" },
-                slot: "button-next"
-              })
-            ],
-            2
-          )
-        ],
-        1
-      )
-    : !_vm.noEventListFound
+  return _c("div", { staticClass: "hidden-sm hidden-xs" }, [
+    !_vm.isLoading && _vm.isDesktop
       ? _c(
           "div",
-          {
-            staticClass: "ft-grid__item lg-loading-skeleton",
-            staticStyle: { width: "100%", "padding-top": "0" }
-          },
-          [_vm._m(0)]
+          [
+            _c(
+              "swiper",
+              {
+                staticClass: "event-slider",
+                attrs: { options: _vm.swiperOptionE }
+              },
+              [
+                _vm._l(_vm.eventList, function(postItem, index) {
+                  return _c(
+                    "swiper-slide",
+                    { key: index + "singleEvent" + postItem.id },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "panel panel--eventlist panel-default timeline-posts__item panel-post",
+                          attrs: { id: "ft-event-desktop" + postItem.id }
+                        },
+                        [
+                          _c("post-header", {
+                            attrs: {
+                              "event-list": "false",
+                              "disable-close": "true",
+                              "post-data": postItem,
+                              "post-index": index,
+                              date: postItem.created_at
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "panel-body" },
+                            [
+                              _c("post-back-viewer", {
+                                attrs: { "post-img": postItem.images }
+                              }),
+                              _vm._v(" "),
+                              _c("post-event", {
+                                attrs: {
+                                  "post-item": postItem,
+                                  "post-index": index,
+                                  "post-img": postItem.images,
+                                  "event-list": "true",
+                                  "enable-url": "true"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("post-description", {
+                                attrs: { "post-html": postItem.description }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "md-layout-spacer" })
+                        ],
+                        1
+                      )
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "swiper-button-prev hidden",
+                  attrs: { slot: "button-prev" },
+                  slot: "button-prev"
+                }),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "swiper-button-next hidden",
+                  attrs: { slot: "button-next" },
+                  slot: "button-next"
+                })
+              ],
+              2
+            )
+          ],
+          1
         )
-      : _c("div", { staticClass: "text-center" }, [
-          _c("h3", [_vm._v("No Event Found")])
-        ])
+      : !_vm.noEventListFound
+        ? _c(
+            "div",
+            {
+              staticClass: "ft-grid__item lg-loading-skeleton",
+              staticStyle: { width: "100%", "padding-top": "0" }
+            },
+            [_vm._m(0)]
+          )
+        : _c("div", { staticClass: "text-center" }, [
+            _c("h3", [_vm._v("No Event Found")])
+          ])
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -38234,7 +38237,11 @@ var staticRenderFns = [
                 staticClass:
                   "card-desc lg-loadable--text layout-m-b-0 lg-loadable"
               },
-              [_vm._v("\n                         \n                    ")]
+              [
+                _vm._v(
+                  "\n                             \n                        "
+                )
+              ]
             )
           ]),
           _vm._v(" "),
@@ -38247,7 +38254,11 @@ var staticRenderFns = [
                 staticClass:
                   "card-desc lg-loadable--text layout-m-b-0 lg-loadable"
               },
-              [_vm._v("\n                         \n                    ")]
+              [
+                _vm._v(
+                  "\n                             \n                        "
+                )
+              ]
             )
           ]),
           _vm._v(" "),
@@ -38260,7 +38271,11 @@ var staticRenderFns = [
                 staticClass:
                   "card-desc lg-loadable--text layout-m-b-0 lg-loadable"
               },
-              [_vm._v("\n                         \n                    ")]
+              [
+                _vm._v(
+                  "\n                             \n                        "
+                )
+              ]
             )
           ]),
           _vm._v(" "),
@@ -38273,7 +38288,11 @@ var staticRenderFns = [
                 staticClass:
                   "card-desc lg-loadable--text layout-m-b-0 lg-loadable"
               },
-              [_vm._v("\n                         \n                    ")]
+              [
+                _vm._v(
+                  "\n                             \n                        "
+                )
+              ]
             )
           ])
         ])

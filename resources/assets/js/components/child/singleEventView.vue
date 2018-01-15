@@ -1,61 +1,63 @@
 <template>
-    <div v-if="!isLoading && isDesktop" class="hidden-sm hidden-xs">
-        <swiper :options="swiperOptionE" class="event-slider">
-            <swiper-slide :key="index+'singleEvent'+postItem.id" v-for="(postItem, index) in eventList">
-                <div class="panel panel--eventlist panel-default timeline-posts__item panel-post" :id="'ft-event-desktop'+postItem.id">
-                    <post-header event-list="false" disable-close="true" :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
-                    <div class="panel-body">
-                        <post-back-viewer :post-img="postItem.images"></post-back-viewer>
-                        <post-event :post-item="postItem" :post-index="index" :post-img="postItem.images"
-                                    event-list="true" enable-url="true"></post-event>
-                        <post-description :post-html="postItem.description"></post-description>
+    <div class="hidden-sm hidden-xs">
+        <div v-if="!isLoading && isDesktop">
+            <swiper :options="swiperOptionE" class="event-slider">
+                <swiper-slide :key="index+'singleEvent'+postItem.id" v-for="(postItem, index) in eventList">
+                    <div class="panel panel--eventlist panel-default timeline-posts__item panel-post" :id="'ft-event-desktop'+postItem.id">
+                        <post-header event-list="false" disable-close="true" :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
+                        <div class="panel-body">
+                            <post-back-viewer :post-img="postItem.images"></post-back-viewer>
+                            <post-event :post-item="postItem" :post-index="index" :post-img="postItem.images"
+                                        event-list="true" enable-url="true"></post-event>
+                            <post-description :post-html="postItem.description"></post-description>
+                        </div>
+                        <div class="md-layout-spacer"></div>
                     </div>
-                    <div class="md-layout-spacer"></div>
+                </swiper-slide>
+                <div class="swiper-button-prev hidden" slot="button-prev"></div>
+                <div class="swiper-button-next hidden" slot="button-next"></div>
+            </swiper>
+        </div>
+        <div v-else-if="!noEventListFound" class="ft-grid__item lg-loading-skeleton" style="width: 100%;padding-top: 0">
+            <div class="ft_card">
+                <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
                 </div>
-            </swiper-slide>
-            <div class="swiper-button-prev hidden" slot="button-prev"></div>
-            <div class="swiper-button-next hidden" slot="button-next"></div>
-        </swiper>
-    </div>
-    <div v-else-if="!noEventListFound" class="ft-grid__item lg-loading-skeleton" style="width: 100%;padding-top: 0">
-        <div class="ft_card">
-            <div class="lg-loadable ft-card__img-wrapper ft-card_drawer-trigger ft-card__img-wrapper--background" >
-            </div>
-            <div class="ft-card__primary hidden-sm hidden-xs">
-                <div class="ft-card__title lg-loadable">
-                    <h5 class="ft-event-card__title">&nbsp;</h5>
-                </div>
-                <div class="ft-card__list-wrapper">
-                    <div class="ft-card__list">
-                        <div class="icon lg-loadable"></div>
-                        <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                            &nbsp;
-                        </div>
+                <div class="ft-card__primary hidden-sm hidden-xs">
+                    <div class="ft-card__title lg-loadable">
+                        <h5 class="ft-event-card__title">&nbsp;</h5>
                     </div>
-                    <div class="ft-card__list">
-                        <div class="icon icon-participant lg-loadable"></div>
-                        <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                            &nbsp;
+                    <div class="ft-card__list-wrapper">
+                        <div class="ft-card__list">
+                            <div class="icon lg-loadable"></div>
+                            <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                &nbsp;
+                            </div>
                         </div>
-                    </div>
-                    <div class="ft-card__list">
-                        <div class="icon lg-loadable"></div>
-                        <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                            &nbsp;
+                        <div class="ft-card__list">
+                            <div class="icon icon-participant lg-loadable"></div>
+                            <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                &nbsp;
+                            </div>
                         </div>
-                    </div>
-                    <div class="ft-card__list">
-                        <div class="icon lg-loadable"></div>
-                        <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
-                            &nbsp;
+                        <div class="ft-card__list">
+                            <div class="icon lg-loadable"></div>
+                            <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div class="ft-card__list">
+                            <div class="icon lg-loadable"></div>
+                            <div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+                                &nbsp;
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="text-center" v-else="">
-        <h3>No Event Found</h3>
+        <div class="text-center" v-else="">
+            <h3>No Event Found</h3>
+        </div>
     </div>
 </template>
 
