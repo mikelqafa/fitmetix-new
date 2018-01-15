@@ -3824,7 +3824,9 @@ aside .md-drawer-scroll__wrapper{
     #app-single-chat .is-open .ft-chat__write{
        z-index: 2;
     }
-
+    #app-single-chat .ft-chat-box--desktop .ft-chat-box__inner-wrapper, .ft-box--desktop {
+        height: calc(100vh - 116px);
+    }
 }
 @keyframes slideUpDelay {
     0% {
