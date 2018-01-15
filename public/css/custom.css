@@ -3803,7 +3803,7 @@ aside .md-drawer-scroll__wrapper{
 }
 @keyframes slideUpDelay {
     0% {
-        transform: translateY(112px);
+        transform: translateY(60px);
     }
     100% {
         transform: translateY(0);
