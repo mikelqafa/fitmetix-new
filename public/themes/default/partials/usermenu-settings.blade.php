@@ -4,7 +4,7 @@
 			<img class="img-responsive" style="max-width: 24px" src="{{asset('images/left-arrow.png')}}">
 		</a>
 	</header>
-	<a href="" class="list-group-item">
+	<a href="{{ url(Auth::user()->username) }}" class="list-group-item">
 		<div class="list-text md-layout md-layout--row md-align md-align--start-center">
 			<div class="avatar-img layout-m-r-1" style="width: 48px">
 				<img class="img-responsive" src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}" title="{{ Auth::user()->name }}">

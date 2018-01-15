@@ -426,7 +426,7 @@ class TimelineController extends AppBaseController
                 list($width, $height) = getimagesize($change_avatar->getRealPath());
 
 
-                $avatar = Image::make($change_avatar->getRealPath());
+                $avatar = Image::make($change_avatar->getRealPath())->orientate();
                 $avatar_thumbnail = $avatar;
 
                 $mime = $avatar->mime();
@@ -483,7 +483,7 @@ class TimelineController extends AppBaseController
             $change_avatar = $request->file('change_cover');
             $strippedName = str_replace(' ', '', $change_avatar->getClientOriginalName());
             // $photoName = date('Y-m-d-H-i-s').$strippedName;
-            $avatar = Image::make($change_avatar->getRealPath());
+            $avatar = Image::make($change_avatar->getRealPath())->orientate();
             $mime = $avatar->mime();
             if ($mime == 'image/jpeg')
                 $extension = '.jpg';

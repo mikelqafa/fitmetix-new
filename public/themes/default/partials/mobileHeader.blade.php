@@ -57,6 +57,13 @@
             <li class="list-group-item">
                 <a href="{{ url(Auth::user()->username.'/create-event') }}"><i class="fa fa-plus"></i> Inspire</a>
             </li>
+            @if(Auth::user()->custom_option1 == 'scout')
+                <li class="list-group-item">
+                    <a href="{{ url('/'.Auth::user()->username.'/settings/affliates') }}">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i>{{ trans('common.affiliates') }}
+                    </a>
+                </li>
+            @endif
             <li class="list-group-item">
                 <form action="{{ url('/logout') }}" method="post">
                         <button type="submit" class="btn btn-link" style="color: #10413E;font-weight: 600;">
@@ -65,13 +72,6 @@
                         {{ csrf_field() }}
                 </form>
             </li>
-            @if(Auth::user()->custom_option1 == 'scout')
-                <li class="list-group-item">
-                    <a href="{{ url('/'.Auth::user()->username.'/settings/affliates') }}">
-                        <i class="fa fa-user-plus" aria-hidden="true"></i>{{ trans('common.affiliates') }}
-                    </a>
-                </li>
-            @endif
         </ul>
     </div>
 </div>
