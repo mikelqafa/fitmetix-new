@@ -430,6 +430,9 @@ svg {
 }
 
 @media screen and (max-width: 992px) {
+    .ft-main-header{
+        height: 0;
+    }
     .multi-lang__option {
         display: block;
     }

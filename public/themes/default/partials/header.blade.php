@@ -12,7 +12,7 @@
         </div>
     </nav>
 @else
-    <nav class="navbar ft-custom socialite navbar-default no-bg hidden-sm hidden-xs">
+    <nav class="navbar ft-custom socialite navbar-default no-bg ft-main-header">
         <div class="container md-layout md-layout--row" style="max-width: 960px;">
             <div class="no-float navbar-header">
                 <a class="navbar-brand socialite" href="{{ url('/') }}">
