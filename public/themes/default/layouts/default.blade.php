@@ -12,11 +12,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('favicon-16x16.png') }}">
     <link rel="manifest" href="{{asset('manifest.json') }}">
     <link rel="mask-icon" href="{{asset('safari-pinned-tab.svg') }}" color="#1e7c82">
+    <link rel="icon" type="image/x-icon" href="{!! asset('favicon.ico') !!}">
     <meta name="theme-color" content="#1e7c82">
     <meta name="keywords" content="{{ Setting::get('meta_keywords') }}">
     <meta name="description" content="{{ Setting::get('meta_description') }}">
     <meta name="_token" content="{{ csrf_token() }}">
-    <link rel="icon" type="image/x-icon" href="{!! asset('favicon.ico') !!}">
     <meta content="{{ url('/') }}" property="og:url"/>
     <meta content="{!! url('setting/'.Setting::get('logo')) !!}" property="og:image"/>
     <meta content="{{ Setting::get('meta_description') }}" property="og:description"/>
