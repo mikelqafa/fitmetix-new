@@ -18,7 +18,6 @@
         <meta property="og:type" content="Social Network" />
         <meta name="keywords" content="{{ Setting::get('meta_keywords') }}">
         <meta name="description" content="{{ Setting::get('meta_description') }}">
-        <link rel="icon" type="image/x-icon" href="{!! url('setting/'.Setting::get('favicon')) !!}">
         <title>{{ Theme::get('title') }}</title>
         <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
         <link href="{{ asset('fitmetixfont/font.css') }}" rel="stylesheet">
