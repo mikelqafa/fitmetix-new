@@ -402,7 +402,21 @@
 						</div>
 					</div>
 
+					<div class="panel panel-default">
+						<div class="panel-body nopadding">
+							<div class="socialite-form">
+								<a href="{{ url('/'.Auth::user()->username.'/settings/deactivate') }}" class="btn btn-danger">
+									<div class="list-text">
+										{{ trans('common.deactivate_account') }}
+									</div>
+									<div class="clearfix"></div>
+								</a>
+							</div>
+						</div>
+					</div>
+
 				</div>
+
 				<div class="logout" style="text-align: center;">
 					<form action="{{ url('/logout') }}" method="post">
 	                    <button type="submit" class="btn ft-btn-primary btn-primary">
