@@ -3822,13 +3822,14 @@ aside .md-drawer-scroll__wrapper{
         left:0;
     }
     #app-single-chat .is-open .ft-chat__write{
-       z-index: 2;
+       z-index: 4;
+        background-color: #fff;
     }
     #app-single-chat .ft-chat-box--desktop .ft-chat-box__inner-wrapper {
         height: calc(100vh - 104px);
         box-shadow: none;
     }
-    #app-single-chat .ft-chat-box--desktop{
+    #app-single-chat .ft-chat-box--desktop,#app-single-chat .ft-chat-box--desktop {
         box-shadow: none;
     }
 }
