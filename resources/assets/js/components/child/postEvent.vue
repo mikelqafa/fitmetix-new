@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="text-center layout-m-b-1">
-            <div class="pos-rel flex-inline">
+            <div class="pos-rel md-layout md-layout--row md-align md-align--center-space-around">
                 <template v-if="enableEventForThis">
                     <button v-if="!enableUrl" type="button" class="btn btn-submit ft-btn-primary" @click="registerEvent">
                         <template v-if="isRegistered">
@@ -50,7 +50,7 @@
                             Register
                         </template>
                     </button>
-                    <a :href="eventLink" v-else="" type="button" class="btn btn-submit ft-btn-primary">
+                    <a :href="eventLink" type="button" class="btn btn-submit ft-btn-primary">
                         Details
                     </a>
                 </template>
@@ -58,7 +58,7 @@
                     <button v-if="!enableUrl" type="button" disabled class="btn btn-submit">
                         Register
                     </button>
-                    <a :href="eventLink" v-else="" type="button" class="btn btn-submit ft-btn-primary">
+                    <a :href="eventLink" type="button" class="btn btn-submit ft-btn-primary">
                         Details
                     </a>
                 </template>
