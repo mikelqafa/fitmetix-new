@@ -28441,7 +28441,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         enableEventForThis: function enableEventForThis() {
             if (this.hasItem) {
-                if ((this.event.gender === 'all' || this.event.gender === user_gender) && !this.event.protected) {
+                if ((this.event.gender === 'all' || this.event.gender === user_gender) && !this.event.protected && !this.event.expired) {
                     if (this.event.user_limit > this.participantList.length) {
                         return true;
                     }
@@ -30057,7 +30057,8 @@ var render = function() {
                                           _vm.postIndex +
                                           "comment" +
                                           item.id,
-                                        staticClass: "md-list__item",
+                                        staticClass:
+                                          "md-list__item comment-item",
                                         attrs: { "data-comment-id": item.id }
                                       },
                                       [
@@ -33003,7 +33004,7 @@ var render = function() {
                       {
                         key: index + "post" + postItem.id,
                         staticClass:
-                          "panel panel-default ft-theme--color timeline-posts__item panel-post",
+                          "slideFadeIn panel panel-default ft-theme--color timeline-posts__item panel-post",
                         attrs: { id: "ft-post" + postItem.id }
                       },
                       [

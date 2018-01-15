@@ -69,7 +69,7 @@
                             <div class="loading-wrapper"></div>
                         </div>
                         <div class="comment-list-action md-list md-list--dense" v-if="commentItemList.length">
-                            <div class="md-list__item" v-for="(item, index) in commentItemList" :key="Math.random()*10000+postIndex + 'comment' + item.id" :data-comment-id="item.id">
+                            <div class="md-list__item comment-item" v-for="(item, index) in commentItemList" :key="Math.random()*10000+postIndex + 'comment' + item.id" :data-comment-id="item.id">
                                 <a :style="{ backgroundImage: 'url(' + getThumbImage(item.user.avatar) + ')'}" :href="userLink(item.user)" :title="'@'+item.user.username" class="md-list__item-icon user-avatar"></a>
                                 <div class="md-list__item-content">
                                     <div class="md-list__item-primary">

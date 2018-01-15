@@ -206,8 +206,8 @@
             },
             enableEventForThis () {
                 if(this.hasItem) {
-                    if((this.event.gender === 'all' || this.event.gender === user_gender) && !this.event.protected) {
-                        if (this.event.user_limit > this.participantList.length) {
+                    if((this.event.gender === 'all' || this.event.gender === user_gender) && !this.event.protected && !this.event.expired) {
+                        if (this.event.user_limit > this.participantList.length ) {
                             return true
                         }
                         return false

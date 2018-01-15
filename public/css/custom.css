@@ -3801,3 +3801,24 @@ aside .md-drawer-scroll__wrapper{
         margin-top: 0 !important;
     }
 }
+@keyframes slideUpDelay {
+    0% {
+        transform: translateY(40px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0
+    }
+    100% {
+        opacity: 1
+    }
+}
+.timeline-posts .slideFadeIn{
+    animation-fill-mode: both;
+    animation-duration: 300ms;
+    animation-name: slideUpDelay, fadeIn;
+}
