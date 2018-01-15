@@ -18,7 +18,7 @@
                 <img :src="sourceImagePath(image.source)" onload="raven(this)" class="img-responsive">
                 <div class="raven-wrapper md-layout md-align md-align--start-center">
                     <div class="raven-inner-wrapper">
-                        <img :src="getThumbImage(sourceImagePath(image.source))" onload="ravenMini(this)" class="img--base img-responsive">
+                        <img :src="getThumbImage(sourceImagePath(image.source))" class="img--base img-responsive">
                     </div>
                 </div>
             </div>
