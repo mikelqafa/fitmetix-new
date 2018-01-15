@@ -27738,6 +27738,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -27768,6 +27769,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         sourceImagePath: function sourceImagePath(s) {
             return this.isTypeEvent ? asset_url + 'uploads/events/covers/' + s : asset_url + 'uploads/users/gallery/' + s;
         },
+        getThumbImage: function (_getThumbImage) {
+            function getThumbImage(_x) {
+                return _getThumbImage.apply(this, arguments);
+            }
+
+            getThumbImage.toString = function () {
+                return _getThumbImage.toString();
+            };
+
+            return getThumbImage;
+        }(function (url) {
+            return getThumbImage(url, 50);
+        }),
         showTheater: function showTheater(imageIndex) {
             if (this.disableShowcase) {
                 return;
@@ -28170,7 +28184,7 @@ var render = function() {
                   "div",
                   {
                     staticClass:
-                      "image-responsive item__background--post img-viewer",
+                      "image-responsive item__background--post img-viewer raven",
                     on: {
                       click: function($event) {
                         _vm.showTheater(0)
@@ -28180,7 +28194,20 @@ var render = function() {
                   [
                     _c("img", {
                       staticClass: "img-responsive",
-                      attrs: { src: _vm.sourceImagePath(image.source) }
+                      attrs: {
+                        src: _vm.sourceImagePath(image.source),
+                        onload: "raven(this)"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("img", {
+                      staticClass: "img--base img-responsive",
+                      attrs: {
+                        src: _vm.getThumbImage(
+                          _vm.sourceImagePath(image.source)
+                        ),
+                        onload: "ravenMini(this)"
+                      }
                     })
                   ]
                 )

@@ -531,25 +531,26 @@ class TimelineController extends AppBaseController
             else
                 $extension = '';
             $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id.$extension;
-            $photoName_thumbnail = '100_'.$photoName;
+            // post image size max-width 1200
             $avatar = $avatar->resize(1200,null,function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
             $avatar->save(storage_path().'/uploads/users/gallery/'.$photoName, 60);
-            
-            $avatar_thumbnail = $avatar;
-            $avatar_thumbnail->resize(100, 100);
-            $avatar_thumbnail->save(storage_path().'/uploads/users/gallery/'.$photoName_thumbnail, 60);
 
+            // image width 50x50
             $avatar_thumbnail_50 = $avatar;
             $avatar_thumbnail_50 = $avatar_thumbnail_50->resize(50,null,function ($constraint) {
                 $constraint->aspectRatio();
-                $constraint->upsize();
             });
             $photoName_thumbnail_50 = '50_'.$photoName;
             $avatar_thumbnail_50->save(storage_path().'/uploads/users/gallery/'.$photoName_thumbnail_50, 60);
-            
+
+            //image width 100x100
+            $avatar_thumbnail = $avatar;
+            $photoName_thumbnail = '100_'.$photoName;
+            $avatar_thumbnail->resize(100, 100);
+            $avatar_thumbnail->save(storage_path().'/uploads/users/gallery/'.$photoName_thumbnail, 60);
             return response()->json(['status' => '200', $photoName]);
         }
 

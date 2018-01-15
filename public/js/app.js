@@ -2267,8 +2267,22 @@ $(function(){
     })
 })
 
-function getThumbImage (url) {
+function getThumbImage (url, size=0) {
   let url_arr = url.split('/');
   let last_string = url_arr[url_arr.length - 1]
-  return url.replace(last_string, '100_' + last_string);
+  return size ? url.replace(last_string, size+'_' + last_string) : url.replace(last_string, '100_' + last_string);
 }
+function raven(e) {
+  $(e).parent().addClass('raven-loaded')
+  $(e).parent().css('height', $(e).height()+'px')
+}
+function ravenMini(e) {
+  $(e).parent().css('height', $(e).height()+'px')
+}
+$(function(){
+  $(window).resize(function() {
+    $('.raven.raven-loaded .img--base').each(function(index, el) {
+      $(el).parent().css('height', $(el).height()+'px')
+    })
+  })
+})

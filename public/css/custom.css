@@ -1002,8 +1002,26 @@ aside .ft-card__img-wrapper {
     justify-content: center;
 }
 .item__background--post .img-responsive {
-    max-height: 80vh;
     min-height: 200px;
+    z-index: 1;
+}
+.raven{
+    min-height: 200px;
+}
+.raven .img-responsive {
+    position: absolute;
+    top:0;
+    left:0;
+}
+.raven .img--base {
+    z-index: 1;
+    filter: blur(15px);
+    width:  100%;
+    transition: opacity .2s ease-in;
+    opacity: 1;
+}
+.raven.raven-loaded .img--base {
+    opacity: 0;
 }
 @media screen and (max-width: 767px) {
     .md-dialog--theater .md-dialog__body {

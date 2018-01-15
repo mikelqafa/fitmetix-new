@@ -20642,6 +20642,8 @@ div.icon {
   width: 100%;
   background-size: cover;
   background-position: center;
+  position:  relative;
+  overflow:  hidden;
 }
 .img-responsive{
   max-width: 100%;

@@ -14,8 +14,9 @@
             </swiper>
         </template>
         <template v-else="">
-            <div class="image-responsive item__background--post img-viewer" v-for="(image, imageIndex) in postImg" @click="showTheater(0)">
-                <img :src="sourceImagePath(image.source)" class="img-responsive">
+            <div class="image-responsive item__background--post img-viewer raven" v-for="(image, imageIndex) in postImg" @click="showTheater(0)">
+                <img :src="sourceImagePath(image.source)" onload="raven(this)" class="img-responsive">
+                <img :src="getThumbImage(sourceImagePath(image.source))" onload="ravenMini(this)" class="img--base img-responsive">
             </div>
         </template>
     </div>
@@ -50,6 +51,9 @@
         methods: {
             sourceImagePath: function (s) {
                 return this.isTypeEvent ? asset_url + 'uploads/events/covers/'+s : asset_url+'uploads/users/gallery/'+s
+            },
+            getThumbImage: function (url) {
+                return getThumbImage(url,50)
             },
             showTheater: function(imageIndex) {
                 if(this.disableShowcase) {
