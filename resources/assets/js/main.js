@@ -22,6 +22,7 @@ import AppEventList from './components/appEventList'
 import ProfileOptionDialog from './components/ProfileOptionDialog'
 import {store} from './store/store'
 import VueClip from 'vue-clip'
+import directMsg from './components/child/sendDirect'
 import VueChatScroll from 'vue-chat-scroll'
 require('swiper/dist/css/swiper.css')
 
@@ -54,7 +55,13 @@ window.timeLine = new Vue({
     'app-picture-option': ProfilePictureDialog
   }
 })
-
+window.sendDirect = new Vue({
+  el: '#app-send-direct',
+  store,
+  components: {
+    'app-send-direct': directMsg
+  }
+})
 window.appNotification = new Vue({
   el: '#app-notification',
   store,

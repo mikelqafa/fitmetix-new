@@ -3,14 +3,12 @@
         <app-notification></app-notification>
         <app-notification-msg></app-notification-msg>
         <app-chat></app-chat>
-        <app-direct-msg></app-direct-msg>
     </div>
 </template>
 <script>
     import appNotification from './child/appNotification'
     import appNotificationMsg from './child/appMessage'
     import appChat from './child/appChat'
-    import directMsg from './child/sendDirect'
     import { mapGetters } from 'vuex'
 
     export default {
@@ -41,8 +39,7 @@
         components: {
             'app-notification': appNotification,
             'app-chat': appChat,
-            'app-notification-msg': appNotificationMsg,
-            'app-direct-msg': directMsg
+            'app-notification-msg': appNotificationMsg
         }
     }
 </script>

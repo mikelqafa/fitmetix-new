@@ -12,7 +12,7 @@
         </div>
     </nav>
 @else
-    <nav class="navbar ft-custom socialite navbar-default no-bg ft-main-header">
+    <nav class="navbar ft-custom socialite navbar-default no-bg hidden-sm hidden-xs">
         <div class="container md-layout md-layout--row" style="max-width: 960px;">
             <div class="no-float navbar-header">
                 <a class="navbar-brand socialite" href="{{ url('/') }}">
@@ -131,4 +131,7 @@
             </div>
         </div>
     </nav>
+    <div id="app-send-direct">
+        <app-send-direct></app-send-direct>
+    </div>
 @endif
