@@ -3834,3 +3834,9 @@ aside .md-drawer-scroll__wrapper{
     animation-duration: 374ms;
     animation-name: slideUpDelay, fadeIn;
 }
+.post-place {
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
