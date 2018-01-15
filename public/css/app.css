@@ -18222,9 +18222,6 @@ html {
         width: auto;
     }
 }
-.timeline-cover-section .timeline-cover:hover .btn-camera-cover {
-    display: block;
-}
 .timeline-cover-section .timeline-cover img {
     height: auto;
     width: 100%;
@@ -18237,15 +18234,21 @@ html {
     }
 }
 .timeline-cover-section .timeline-cover .btn-camera-cover {
-    width: 198px;
-    height: 50px;
+    width: 42px;
+    height: 42px;
     background: rgba(0, 0, 0, 0.7);
-    border-radius: 0px;
+    border-radius: 50%;
     text-align: left;
     position: absolute;
     top: 8px;
     left: 20px;
-    display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: #fff;
+    display: flex;
+}
+.timeline-cover-section .timeline-cover:hover .btn-camera-cover{
+  opacity: 1;
 }
 @media (max-width: 560px) {
     .timeline-cover-section .timeline-cover .btn-camera-cover {
@@ -18266,20 +18269,7 @@ html {
         margin-right: 10px;
     }
 }
-.timeline-cover-section .timeline-cover .btn-camera-cover .change-cover-text {
-    font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 400;
-    text-transform: none;
-    font-size: 16px;
-    color: #FFFFFF;
-    letter-spacing: 0.37px;
-    vertical-align: text-bottom;
-}
-@media (max-width: 560px) {
-    .timeline-cover-section .timeline-cover .btn-camera-cover .change-cover-text {
-        font-size: 14px;
-    }
-}
+
 .timeline-user-avtar {
     width: 120px;
     height: 120px;
@@ -18289,7 +18279,7 @@ html {
     background:  #fff;
     background-position:  center;
     background-size:  cover;
-    overflow:;
+    overflow:hidden;
 }
 @media (max-width: 560px) {
     .timeline-user-avtar {
@@ -18340,74 +18330,32 @@ html {
 }
 .chang-user-avatar {
     position: relative;
-    /* display: none; */
+    width:  100%;
+    height: 100%;
 }
 .chang-user-avatar .btn-camera {
     background-color: rgba(0, 0, 0, 0.67);
-    width: auto;
-    height: 36px;
-    border-radius: 0px;
+    width: 42px;
+    height: 42px;
     position: absolute;
-    left: 0px;
-    top: 18px;
+    left: 34px;
+    bottom: -6px;
     color: #fff;
-    line-height:  18px;
-    /* opacity: 0; */
+  opacity: 0;
+  transition: opacity .3s ease;
+    border-radius:  50%;
+    text-align:  center;
+}
+.chang-user-avatar:hover .btn-camera{
+  opacity: 1;
 }
 @media (max-width: 560px) {
     .chang-user-avatar .btn-camera {
-        padding-left: 4px;
-        font-size: 8px;
-        text-align:  center;
+      opacity: 1;
     }
-}
-.chang-user-avatar .btn-camera .fa {
-    font-size: 16px;
-    margin-top: 3px;
-    margin-right: 4px;
-    vertical-align: middle;
-}
-@media (max-width: 560px) {
-    .chang-user-avatar .btn-camera .fa {
-        margin-right: 0;
-    }
-}
-@media (max-width: 350px) {
-    .chang-user-avatar .btn-camera .fa {
-        font-size: 13px;
-        margin-top: 5px;
-    }
-}
-.chang-user-avatar .btn-camera .avatar-text {
-    font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    color: #FFFFFF;
-    width: auto;
-    line-height: 10px;
-    margin-top: 5px;
-    vertical-align: top;
-    display:  inline-block;
-}
-@media (max-width: 560px) {
-    .chang-user-avatar .btn-camera .avatar-text {
-        font-size: 11px;
-        display:  none;
-    }
-}
-@media (max-width: 350px) {
-    .chang-user-avatar .btn-camera .avatar-text {
-        font-size: 8px;
-    }
-}
-.chang-user-avatar .btn-camera .avatar-text span {
-    display: block;
-    margin-top: -5px;
-}
-@media (max-width: 350px) {
-    .chang-user-avatar .btn-camera .avatar-text span {
-        margin-top: -7px;
-    }
+  .timeline-cover-section .timeline-cover .btn-camera-cover{
+    opacity: 1;
+  }
 }
 .status-button {
     position: absolute;

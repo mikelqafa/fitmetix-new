@@ -3,8 +3,7 @@
         <img class="v-hidden" src=" @if($timeline->cover_id) {{ url('user/cover/'.$timeline->cover->source) }} @else {{ url('user/cover/default-cover-user.png') }} @endif" alt="{{ $timeline->name }}" title="{{ $timeline->name }}">
         @if($timeline->id == Auth::user()->timeline_id)
             <a href="javascript:;" class="btn btn-camera-cover change-cover" onclick="$('#picture-option-dialog').MaterialDialog('show')">
-                <i class="fa fa-camera" aria-hidden="true"></i>
-                <span class="change-cover-text">{{ trans('common.change_cover') }}</span>
+                <span class="icon icon-photo"></span>
             </a>
         @endif
         <div class="absolute-loader hidden">
@@ -20,10 +19,7 @@
             @if($timeline->id == Auth::user()->timeline_id)
                 <div class="chang-user-avatar">
                     <a href="javascript:;" class="btn btn-camera change-avatar" onclick="$('#picture-profile-option-dialog').MaterialDialog('show')">
-                        <i class="fa fa-camera" aria-hidden="true"></i>
-                                            <span class="avatar-text">
-                                                {{ trans('common.update_profile') }}
-                                            </span>
+                        <span class="icon icon-photo"></span>
                     </a>
                 </div>
                 <input type="hidden" id="timeline_id_user" value="{{Auth::user()->timeline_id}}">

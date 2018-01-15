@@ -3,7 +3,7 @@
 <!-- main-section -->
     <div class="container container--standard section-container @if($timeline->hide_cover) no-cover @endif">
         <div class="row">
-            <div class="md-layout md-algin md-layout--wrap md-align--start-start layout-timeline">
+            <div class="md-layout md-align md-layout--wrap md-align--start-start layout-timeline">
                 <div class="md-col layout-timeline__post layout-m-t-1">
                     {!! Theme::partial('timeline-header',compact('timeline','user_post')) !!}
                     <div class="options" style="text-align: center;display: none;">
