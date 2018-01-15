@@ -40,27 +40,50 @@
             </div>
         </div>
         <div class="text-center layout-m-b-1">
-            <div class="pos-rel md-layout md-layout--row md-align md-align--center-space-around">
+            <div class="pos-rel md-layout md-layout--row md-align md-align--center-center">
                 <template v-if="enableEventForThis">
-                    <button v-if="!enableUrl" type="button" class="btn btn-submit ft-btn-primary" @click="registerEvent">
-                        <template v-if="isRegistered">
-                            Unregister
-                        </template>
-                        <template v-else="">
-                            Register
-                        </template>
-                    </button>
-                    <a :href="eventLink" type="button" class="btn btn-submit ft-btn-primary">
-                        Details
-                    </a>
+                    <template v-if="!enableUrl">
+                        <div class="md-layout-spacer"></div>
+                        <a :href="eventLink" type="button" class="btn btn-submit ft-btn-primary">
+                            Details
+                        </a>
+                        <div class="md-layout-spacer"></div>
+                        <button type="button" class="btn btn-submit ft-btn-primary" @click="registerEvent">
+                            <template v-if="isRegistered">
+                                Unregister
+                            </template>
+                            <template v-else="">
+                                Register
+                            </template>
+                        </button>
+                    </template>
+                    <template v-else="">
+                        <div class="md-layout-spacer"></div>
+                        <a :href="eventLink" type="button" class="btn btn-submit ft-btn-primary">
+                            Details
+                        </a>
+                        <div class="md-layout-spacer"></div>
+                    </template>
                 </template>
                 <template v-else="">
-                    <button v-if="!enableUrl" type="button" disabled class="btn btn-submit">
-                        Register
-                    </button>
-                    <a :href="eventLink" type="button" class="btn btn-submit ft-btn-primary">
-                        Details
-                    </a>
+                    <template v-if="!enableUrl">
+                        <div class="md-layout-spacer"></div>
+                        <a :href="eventLink" type="button" class="btn btn-submit ft-btn-primary">
+                            Details
+                        </a>
+                        <div class="md-layout-spacer"></div>
+                        <button type="button" disabled class="btn btn-submit">
+                            Register
+                        </button>
+                        <div class="md-layout-spacer"></div>
+                    </template>
+                    <template v-else="">
+                        <div class="md-layout-spacer"></div>
+                        <a :href="eventLink" type="button" class="btn btn-submit ft-btn-primary">
+                            Details
+                        </a>
+                        <div class="md-layout-spacer"></div>
+                    </template>
                 </template>
                 <div class="ft-loading ft-loading--abs" v-if="isLoading">
                     <span class="ft-loading__dot"></span>

@@ -2274,15 +2274,4 @@ function getThumbImage (url, size=0) {
 }
 function raven(e) {
   $(e).parent().addClass('raven-loaded')
-  $(e).parent().css('height', $(e).height()+'px')
 }
-function ravenMini(e) {
-  $(e).parent().css('height', $(e).height()+'px')
-}
-$(function(){
-  $(window).resize(function() {
-    $('.raven.raven-loaded .img--base').each(function(index, el) {
-      $(el).parent().css('height', $(el).height()+'px')
-    })
-  })
-})
