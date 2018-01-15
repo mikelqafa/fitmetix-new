@@ -422,16 +422,24 @@ class TimelineController extends AppBaseController
                 $strippedName = str_replace(' ', '', $change_avatar->getClientOriginalName());
                 // $photoName = microtime().$strippedName;
 
-                $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id;
-
-                $photoName_thumbnail = '100_'.$photoName;
-
                 // Lets resize the image to the square with dimensions of either width or height , which ever is smaller.
                 list($width, $height) = getimagesize($change_avatar->getRealPath());
 
 
                 $avatar = Image::make($change_avatar->getRealPath());
                 $avatar_thumbnail = $avatar;
+
+                $mime = $avatar->mime();
+                if ($mime == 'image/jpeg')
+                    $extension = '.jpg';
+                elseif ($mime == 'image/png')
+                    $extension = '.png';
+                elseif ($mime == 'image/gif')
+                    $extension = '.gif';
+                else
+                    $extension = '';
+                $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id.$extension;
+                $photoName_thumbnail = '100_'.$photoName;
 
                 if ($width > $height) {
                     $avatar->crop($height, $height);
@@ -441,10 +449,10 @@ class TimelineController extends AppBaseController
                     $avatar_thumbnail->crop($width, $width);
                 }
                 $avatar->resize(600, 600);
-                $avatar_thumbnail->resize(100, 100);
-
 
                 $avatar->save(storage_path().'/uploads/'.$timeline_type.'s/avatars/'.$photoName, 60);
+
+                $avatar_thumbnail->resize(100, 100);
                 $avatar_thumbnail->save(storage_path().'/uploads/'.$timeline_type.'s/avatars/'.$photoName_thumbnail, 60);
 
                 $media = Media::create([
@@ -475,8 +483,17 @@ class TimelineController extends AppBaseController
             $change_avatar = $request->file('change_cover');
             $strippedName = str_replace(' ', '', $change_avatar->getClientOriginalName());
             // $photoName = date('Y-m-d-H-i-s').$strippedName;
-            $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id;
             $avatar = Image::make($change_avatar->getRealPath());
+            $mime = $avatar->mime();
+            if ($mime == 'image/jpeg')
+                $extension = '.jpg';
+            elseif ($mime == 'image/png')
+                $extension = '.png';
+            elseif ($mime == 'image/gif')
+                $extension = '.gif';
+            else
+                $extension = '';
+            $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id.$extension;
             $avatar->save(storage_path().'/uploads/'.$timeline_type.'s/covers/'.$photoName, 60);
 
             $media = Media::create([
@@ -489,7 +506,7 @@ class TimelineController extends AppBaseController
             $timeline->cover_id = $media->id;
 
             if ($timeline->save()) {
-                return response()->json(['status' => '200', 'cover_url' => url($timeline_type.'/cover/'.$photoName), 'message' => trans('messages.update_cover_success')]);
+                return response()->json(['status' => '200', 'cover_url' => url($timeline_type.'/covers/'.$photoName), 'message' => trans('messages.update_cover_success')]);
             }
         } else {
             return response()->json(['status' => '201', 'message' => trans('messages.update_cover_failed')]);
@@ -502,9 +519,19 @@ class TimelineController extends AppBaseController
             $postImage = $request->file('post_images_upload');
             $strippedName = str_replace(' ', '', $postImage->getClientOriginalName());
             // $photoName = 'post'.time().$strippedName;
-            $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id;
-            $photoName_thumbnail = '100_'.$photoName;
+            
             $avatar = Image::make($postImage->getRealPath())->orientate();
+            $mime = $avatar->mime();
+            if ($mime == 'image/jpeg')
+                $extension = '.jpg';
+            elseif ($mime == 'image/png')
+                $extension = '.png';
+            elseif ($mime == 'image/gif')
+                $extension = '.gif';
+            else
+                $extension = '';
+            $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id.$extension;
+            $photoName_thumbnail = '100_'.$photoName;
             $avatar = $avatar->resize(1200,null,function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();

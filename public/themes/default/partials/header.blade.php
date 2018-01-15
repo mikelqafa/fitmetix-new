@@ -56,11 +56,16 @@
                 <input type="hidden"  name="see-all-messages" value="{{ url('messages') }}">
                 {{--{{ Auth::user() }}--}}
                 <a href="{{ url(Auth::user()->username) }}" class="has-hover-effect fm-nav__item user-image socialite fm-nav__item">
-                    <span class="user-image-wrapper" style="background-image: url('{{url(Auth::user()->avatar)}}')">
 
-                    </span>
+                    @if(Auth::user()->timeline->avatar != null)
+                        <span class="user-image-wrapper" style="background-image: url('user/avatar/100_{{ Auth::user()->timeline->avatar->source }}')">
+                        </span>
+                    @else
+                        <span class="user-image-wrapper" style="background-image: url('user/avatar/100_default-male-avatar.png')">
+                        </span>
+                    @endif
                 </a>
-                <input type="hidden" id="auth-user-avatar" value="{{url('100_'.Auth::user()->avatar)}}">
+                <input type="hidden" id="auth-user-avatar" value="{{url(Auth::user()->avatar)}}">
                 <div class="dropdown message vert-has">
                     <a href="{{ url(Auth::user()->username) }}" class="has-hover-effect fm-nav__item fm-nav__item--no-padding dropdown-toggle"
                        data-toggle="dropdown" role="button" aria-haspopup="true"

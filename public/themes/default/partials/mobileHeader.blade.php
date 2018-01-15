@@ -26,7 +26,11 @@
             </a>
             <form action="{{ url('/logout') }}" method="post" class=" ft-header-nav__item">
                 <a class="ft-header-nav__item--user-img toggleSlide ft-header-nav__item pos-rel" href="javascript:;">
-                    <div class="user-avatar" style="background-image: url('{{url('100_'.Auth::user()->avatar)}}')"></div>
+                    @if(Auth::user()->timeline->avatar != null)
+                        <div class="user-avatar" style="background-image: url('user/avatar/100_{{ Auth::user()->timeline->avatar->source }}')"></div>
+                    @else 
+                        <div class="user-avatar" style="background-image: url('user/avatar/100_default-male-avatar.png')"></div>
+                    @endif
                 </a>
             </form>
         @else
