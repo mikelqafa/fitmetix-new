@@ -18250,12 +18250,6 @@ html {
 .timeline-cover-section .timeline-cover:hover .btn-camera-cover{
   opacity: 1;
 }
-@media (max-width: 560px) {
-    .timeline-cover-section .timeline-cover .btn-camera-cover {
-        width: 148px;
-        height: 40px;
-    }
-}
 .timeline-cover-section .timeline-cover .btn-camera-cover i.fa {
     color: #fff;
     margin-right: 12px;

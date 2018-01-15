@@ -38,12 +38,11 @@
         </div>
     </div>
 </div>
-<div class="layout-m-t-2 timeline-option layout-m-b-2 md-layout md-layout--row md-align md-align--space-between-center">
+<div class="layout-m-t-2 timeline-option layout-m-b-2 md-layout md-layout--row md-align md-align--space-around-center">
     <div class="timeline-option__item">
         @if(Auth::user()->id == $timeline->user->id)
             <a href="{{ url(Auth::user()->username.'/create-event') }}" class="md-layout md-layout--column text-center">
                 <i class="icon icon-add"></i>
-                <span>Inspire</span>
             </a>
         @else
             <a href="javascript:;" class="ft-btn ft-btn--icon" data-user-id="{{$timeline->user->id}}" data-toggle="initChat">

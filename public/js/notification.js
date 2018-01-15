@@ -28583,7 +28583,10 @@ var render = function() {
         _c("div", { staticClass: "text-center layout-m-b-1" }, [
           _c(
             "div",
-            { staticClass: "pos-rel flex-inline" },
+            {
+              staticClass:
+                "pos-rel md-layout md-layout--row md-align md-align--center-space-around"
+            },
             [
               _vm.enableEventForThis
                 ? [
@@ -28610,18 +28613,20 @@ var render = function() {
                           ],
                           2
                         )
-                      : _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-submit ft-btn-primary",
-                            attrs: { href: _vm.eventLink, type: "button" }
-                          },
-                          [
-                            _vm._v(
-                              "\n                    Details\n                "
-                            )
-                          ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-submit ft-btn-primary",
+                        attrs: { href: _vm.eventLink, type: "button" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    Details\n                "
                         )
+                      ]
+                    )
                   ]
                 : [
                     !_vm.enableUrl
@@ -28637,18 +28642,20 @@ var render = function() {
                             )
                           ]
                         )
-                      : _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-submit ft-btn-primary",
-                            attrs: { href: _vm.eventLink, type: "button" }
-                          },
-                          [
-                            _vm._v(
-                              "\n                    Details\n                "
-                            )
-                          ]
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-submit ft-btn-primary",
+                        attrs: { href: _vm.eventLink, type: "button" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                    Details\n                "
                         )
+                      ]
+                    )
                   ],
               _vm._v(" "),
               _vm.isLoading
@@ -34715,7 +34722,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
             var u = $('#eventByUsername');
             if (u !== undefined && u.length) {
-                alert();
                 url += '?' + 'username' + '=' + u.val();
             }
             return url;

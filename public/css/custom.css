@@ -3785,10 +3785,6 @@ aside .md-drawer-scroll__wrapper{
     .chang-user-avatar{
         display:  block;
     }
-    .chang-user-avatar .btn-camera{
-        top: 80px;
-        width:  100%;
-    }
     .timeline-user-avtar{
         overflow: hidden;
     }
