@@ -3803,7 +3803,7 @@ aside .md-drawer-scroll__wrapper{
 }
 @keyframes slideUpDelay {
     0% {
-        transform: translateY(40px);
+        transform: translateY(112px);
     }
     100% {
         transform: translateY(0);
@@ -3819,6 +3819,6 @@ aside .md-drawer-scroll__wrapper{
 }
 .timeline-posts .slideFadeIn{
     animation-fill-mode: both;
-    animation-duration: 300ms;
+    animation-duration: 374ms;
     animation-name: slideUpDelay, fadeIn;
 }
