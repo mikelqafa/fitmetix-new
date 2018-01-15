@@ -58,10 +58,10 @@
                 <a href="{{ url(Auth::user()->username) }}" class="has-hover-effect fm-nav__item user-image socialite fm-nav__item">
 
                     @if(Auth::user()->timeline->avatar != null)
-                        <span class="user-image-wrapper" style="background-image: url('user/avatar/100_{{ Auth::user()->timeline->avatar->source }}')">
+                        <span class="user-image-wrapper" style="background-image: url('{{ url('user/avatar/100_'.Auth::user()->timeline->avatar->source) }}')">
                         </span>
                     @else
-                        <span class="user-image-wrapper" style="background-image: url('user/avatar/100_default-male-avatar.png')">
+                        <span class="user-image-wrapper" style="background-image: url('{{ url('user/avatar/100_default-male-avatar.png')  }}')">
                         </span>
                     @endif
                 </a>
