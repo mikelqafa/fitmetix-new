@@ -3983,3 +3983,6 @@ aside .md-drawer-scroll__wrapper{
 .md-menu__backdrop.is-open {
     display: block;
 }
+.ft-loading--transparent{
+    background-color: transparent;
+}
