@@ -7,7 +7,7 @@
                 {{ trans('messages.whats-going-on') }}
             </div>
         </div>
-        <div class="panel-body">
+        <div class="panel-body" style="min-height: 112px">
             <div id="app-create-post">
                 <app-create-post></app-create-post>
             </div>
