@@ -122,7 +122,7 @@
                 return obj.toLocaleString('en-us', options)
             },
             formatPrice: function(p) {
-                return p == null ? 'Free' : '$' + p
+                return (p == null || 0) ? 'Free' : this.postItem.currency == 'EURO' ? '&euro; ' + p : '&dollar;' + p
             },
             formatUrl: function(u) {
                 return base_url+ 'locate-on-map/' + u

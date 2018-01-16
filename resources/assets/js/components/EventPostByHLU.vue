@@ -187,9 +187,7 @@
                                             </div>
                                             <div class="ft-card__list">
                                                 <div class="icon icon-label-o"></div>
-                                                <div class="card-desc">
-                                                    {{ formatPrice(item.price) }}
-                                                </div>
+                                                <div class="card-desc" v-html="formatPrice(event.price)"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -308,7 +306,7 @@
                 return url
             },
             formatPrice: function(p) {
-                return p == null ? 'Free' : '$' + p
+                return (p == null || 0) ? 'Free' : this.postItem.currency == 'EURO' ? '&euro; ' + p : '&dollar;' + p
             },
             formatUrl: function(u) {
                 return base_url+ 'locate-on-map/' + u
