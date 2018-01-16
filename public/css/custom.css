@@ -3885,6 +3885,7 @@ aside .md-drawer-scroll__wrapper{
 }
 .ft-user-name--comment, .ft-user-name--comment-hide{
     color: #000 !important;
+    font-weight: 400;
 }
 .comment-item .user-avatar{
     margin-top: 0;
@@ -3976,4 +3977,7 @@ aside .md-drawer-scroll__wrapper{
         top: 100%;
     }
 
+}
+.md-dialog-post-option.md-dialog--open{
+    z-index: 25;
 }

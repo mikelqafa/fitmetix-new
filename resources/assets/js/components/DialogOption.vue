@@ -4,7 +4,7 @@
         <report-post-option v-if="!authUser && (postItem !== '')" :post-item="postItem"></report-post-option>
         <edit-post-option :index="optionMenuPostItem.postIndex" v-if="(postItem !== '') && initEdit && !isTypeEvent"  :post-item="postItem"></edit-post-option>
         <edit-event-option :index="optionMenuPostItem.postIndex" v-if="(postItem !== '') && initEdit && isTypeEvent"  :post-item="postItem"></edit-event-option>
-        <div class="md-dialog md-dialog--maintain-width md-dialog--post-option md-dialog--full-screen" id="post-option-dialog">
+        <div class="md-dialog md-dialog--maintain-width md-dialog--post-option md-dialog--full-screen md-dialog-post-option" id="post-option-dialog">
             <div class="md-dialog__wrapper">
                 <div class="md-dialog__shadow"></div>
                 <div class="md-dialog__surface" style="position: relative">
