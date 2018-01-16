@@ -86,8 +86,10 @@
                     let rect = el.currentTarget.getBoundingClientRect()
                     $('#ft-notification-msg').css({left: rect.right- ($('#ft-notification-msg').width())+'px', top: 60+'px'})
                     $('#ft-notification-msg').addClass('is-open')
+                    $('.md-menu__backdrop').addClass('is-open')
                 } else {
                     $('#ft-notification-msg').addClass('is-leaving')
+                    $('.md-menu__backdrop').removeClass('is-open')
                     setTimeout(function () {
                         $('#ft-notification-msg').removeClass('is-open').removeClass('is-leaving')
                     }, 200);

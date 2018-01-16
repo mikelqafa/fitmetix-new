@@ -1990,6 +1990,10 @@ $(function(){
     $(".toggleSlide").click(function(){
         $(".mobile-menu-slide").toggleClass('active');
     })
+    $('.md-menu__backdrop').click(function() {
+      $('.md-menu__container.is-open').removeClass('is-open')
+      $(this).removeClass('is-open')
+    })
 })
 
 function getThumbImage (url, size=0) {
