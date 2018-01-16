@@ -2800,6 +2800,7 @@ class TimelineController extends AppBaseController
                 'user_id'     => Auth::user()->id,
                 'user_limit'  => $request->user_limit,
                 'price'       => $request->price,
+                'currency'    => $request->currency,
                 'location'    => $request->location,
                 'start_date'  => date('Y-m-d H:i', strtotime($start_date)),
                 'end_date'    => date('Y-m-d H:i', strtotime($end_date)),

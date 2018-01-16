@@ -195,7 +195,13 @@
                             </div>
                             <div class="col-md-6">
                                 {{-- <label for="price">Price: <small>(Provide <code>0</code> for FREE Event)</small></label> --}}
-                                {{ Form::number('price', old('price'), ['class' => 'form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price (USD)' ,'min'=>0,'max'=>10000]) }}
+                                <div class="col-md-6">
+                                    {{ Form::number('price', old('price'), ['class' => 'form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price' ,'min'=>0,'max'=>10000]) }}
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="radio" name="currency" value="EURO" checked>EURO
+                                    <input type="radio" name="currency" value="USD">USD
+                                </div>
                                 @if ($errors->has('price'))
                                     <span class="help-block">
 									{{ $errors->first('price') }}
