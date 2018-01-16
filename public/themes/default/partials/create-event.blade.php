@@ -183,7 +183,7 @@
                     <fieldset
                             class="form-group required {{ $errors->has('location') || $errors->has('price') ? ' has-error' : '' }}">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 {{--{{ Form::label('user_limit', 'User Liimt', ['class' => 'control-label']) }}--}}
                                 {{-- <label for="user_limit">User Limit: </label> --}}
                                 {{ Form::number('user_limit', old('user_limit'), ['class' => 'form-control', 'placeholder' => 'Number of participants','min'=>1]) }}
@@ -193,20 +193,22 @@
 								</span>
                                 @endif
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 {{-- <label for="price">Price: <small>(Provide <code>0</code> for FREE Event)</small></label> --}}
-                                <div class="col-md-6">
                                     {{ Form::number('price', old('price'), ['class' => 'form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price' ,'min'=>0,'max'=>10000]) }}
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="radio" name="currency" value="EURO" checked>EURO
-                                    <input type="radio" name="currency" value="USD">USD
-                                </div>
                                 @if ($errors->has('price'))
                                     <span class="help-block">
 									{{ $errors->first('price') }}
 								</span>
                                 @endif
+                            </div>
+                            <div class="col-md-4">
+                                <div class="col-md-6">
+                                    <input type="radio" name="currency" value="EURO" checked> EURO
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="radio" name="currency" value="USD"> USD
+                                </div>
                             </div>
                         </div>
                     </fieldset>

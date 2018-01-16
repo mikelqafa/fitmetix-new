@@ -47,5 +47,9 @@ class Comment extends Model
 
         return $result;
     }
+    public function users_tagged()
+    {
+        return $this->belongsToMany('App\User', 'comment_tags', 'comment_id', 'user_id');
+    }
 }
 

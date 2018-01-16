@@ -711,6 +711,10 @@ class TimelineController extends AppBaseController
         $post = Post::where('id', $request->post_id)->first();
         $posted_user = $post->user;
 
+        if ($request->user_tags != null) {
+            $comment->users_tagged()->sync(explode(',', $request->user_tags));
+        }
+
         if ($comment) {
             if (Auth::user()->id != $post->user_id) {
                 //Check if the user has blocked the post.
