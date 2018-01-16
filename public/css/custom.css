@@ -3833,16 +3833,6 @@ aside .md-drawer-scroll__wrapper{
     #app-single-chat .ft-chat-box--desktop,#app-single-chat .ft-chat-box--desktop {
         box-shadow: none;
     }
-    #app-single-chat .ft-chat-box__inner-wrapper {
-        padding-top: 48px;
-    }
-    #app-single-chat .ft-chat-desktop__header {
-        height: 48px;
-        left:0;
-        width: 100%;
-        position: fixed;
-        top:56px;
-    }
     .panel-create  {
         margin-top: 0;
     }
