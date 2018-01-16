@@ -440,6 +440,7 @@ Route::post('/ajax/accept-decline-unregister-request','TimelineController@accept
 Route::post('/ajax/unregister-user-event-by-creator','TimelineController@unregisterUserEventByCreator');
 Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {
     Route::post('upload-post-images', 'TimelineController@uploadPostImages');
+    Route::post('upload-event-images', 'TimelineController@uploadEventImages');
     Route::post('create-post', 'TimelineController@createPost');
     Route::post('get-youtube-video', 'TimelineController@getYoutubeVideo');
     Route::post('like-post', 'TimelineController@likePost');
