@@ -1899,6 +1899,7 @@ a{
 .comment-list-action.md-list--dense .md-list__item {
     padding-top:2px;
     padding-bottom:2px;
+    align-items: flex-start;
 }
 .md-list__item-content {
     flex: 1 1 100%;
@@ -3878,7 +3879,24 @@ aside .md-drawer-scroll__wrapper{
     font-weight: 600;
     font-size: 14px;
 }
+.ft-user-name--comment, .ft-user-name--comment-hide{
+    font-size: 13px;
+}
 .comment-item .user-avatar{
     margin-top: 0;
     margin-bottom: 2px;
+}
+.md-comment-wrapper{
+    flex-grow: 1;
+    position: relative;
+}
+.md-comment-wrapper .ft-user-name--comment {
+    font-size: 13px;
+    position: absolute;
+    top: 2px;
+    left: 0;
+    z-index: 1;
+}
+.comment-user-hidden {
+    opacity: 0;
 }
