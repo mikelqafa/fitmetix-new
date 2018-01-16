@@ -14,35 +14,11 @@
     :-ms-input-placeholder {
         text-align: center;
     }
-
-    .event_images_upload {
-        visibility: hidden;
-        width: 0;
-        height: 0;
+    .event_images_upload--label{
+        height: 105px;
     }
-
-    .event_images_upload--label {
-        height: 240px;
-        width: 100%;
-        display: block;
-        position: relative;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: 200px auto;
-        cursor: pointer;
-    }
-
-    .event_images_upload--label.image-added {
-        background-image: none;
-    }
-
-    #event_images_upload--image {
-        width: 100%;
-        overflow: hidden;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
+    .has-item .event_images_upload--label{
+        display: none;
     }
 
     #event_images_upload--image img {
@@ -55,6 +31,7 @@
         position: absolute;
         top: 15px;
         right: 15px;
+        z-index: 2;
     }
 
     .bdp-input {
@@ -63,6 +40,7 @@
         border: 1px solid rgba(34, 36, 38, .15);
         cursor: pointer;
         display: flex;
+        background-color: #fff;
         justify-content: space-around;
         align-items: center;
     }
@@ -94,20 +72,13 @@
     .bdp-label {
         font-size: 90%;
         margin-left: 4px;
+        cursor: pointer;
     }
     .padding-bottom{
         padding-bottom: 16px;
     }
 </style>
-<!-- <div class="main-content"> -->	
-<div class="panel panel-default">
-    <div class="panel-heading no-bg panel-settings">
-        @if($group_id != null)
-            <h3 class="panel-title">{{ trans('common.create_event_in') }} {!! $timeline_name !!}</h3>
-        @else
-            <h3 class="panel-title">{{ trans('common.create_event') }}</h3>
-        @endif
-    </div>
+<div class="layout-m-t-1">
     <div class="panel-body nopadding">
         @if( env('GOOGLE_MAPS_API_KEY') == NULL)
             <div class="col-md-12">
@@ -117,7 +88,6 @@
                     }
                 </div>
             </div>
-
         @else
             <div class="container">
                 @if(session()->has('message'))
@@ -127,87 +97,112 @@
                         {{ session()->get('message') }}
                     </div>
                 @endif
-                <form class="margin-right padding-bottom" method="POST" action="{{ url('/'.$username.'/create-event/') }}"
+                <form class="margin-right padding-bottom create-event-form" method="POST" action="{{ url('/'.$username.'/create-event/') }}"
                       enctype="multipart/form-data">
                     {{ csrf_field() }}
-
-				    <fieldset class="form-group required">
-					<label class="event_images_upload--label" for="event_images_upload" style="background-image: url({{url('images/no-image.png')}})">
-                        <p>{{ trans('common.upload_photos') }}</p>
-						<input id="event_images_upload" required type="file" multiple="multiple"
-							   accept="image/jpeg,image/png,image/gif"
-							   name="event_images_upload[]" class="event_images_upload form-control" required>
-						<i class="hidden icon icon-add"></i>
-						<div id="event_images_upload--image"></div>
-					</label>
-
+                    <div id="app-create-post">
+                        <app-make-event></app-make-event>
+                    </div>
 					<br/>
-					{{-- {{ Form::label('name', trans('common.name_of_your_event'), ['class' => 'control-label']) }} --}}
-					@if ($errors->has('name'))
-						<span class="help-block">
+					<div class="form-helper-wrapper layout-m-b-1">
+                        @if ($errors->has('name'))
+                            <span class="help-block">
 							{{ $errors->first('name') }}
 						</span>
-					@endif
-					{{ Form::text('name', old('name'), ['class' => 'form-control', 'placeholder' => trans('common.name_of_your_event'),'maxlength'=>30]) }}
-					<br/>	
+                        @endif
+                        {{ Form::text('name', old('name'), ['id'=>'title','required'=>'required', 'class' => 'form-control', 'placeholder' => trans('common.name_of_your_event'),'maxlength'=>30]) }}
+                        <div class="form-helper">
+                            <div class="helper-inner arrow_box arrow_box--bottom-xs">
+                                Give a great title for your event.
+                            </div>
+                        </div>
+                    </div>
 					<div class="row">
-						<div class="col-md-6">
-							{{-- {{ Form::label('type', trans('common.privacy'), ['class' => 'control-label']) }} --}}
-							{{ Form::select('type', array('' => trans('common.privacy'), 'private' => trans('common.private'), 'public' => trans('common.public')), null ,array('class' => 'form-control selectize','required'=>'required')) }}
+						<div class="col-md-6 form-helper-wrapper">
+							{{ Form::select('type', array('' => trans('common.privacy'), 'private' => trans('common.private'), 'public' => trans('common.public')), null ,array('id'=> 'privacy', 'class' => 'form-control selectize')) }}
 							@if ($errors->has('type'))
 								<span class="help-block">
 									{{ $errors->first('type') }}
 								</span>
 							@endif
+                            <div class="form-helper">
+                                <div class="helper-inner arrow_box arrow_box--bottom-xs">
+                                    Private events are only joined by user you follow. Anyone can join public event.
+                                </div>
+                            </div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-6 form-helper-wrapper">
 							<fieldset class="form-group">
 								{{-- {{ Form::label('frequency', 'Frequency: ', ['class' => 'control-label']) }} --}}
 								{{ Form::hidden('frequency', 'once', array('class' => 'form-control','required'=>'required')) }}
-                                {{ Form::select('gender', array('' => trans('common.gender'), 'male' => 'Males Only', 'female' => 'Females Only', 'all' => 'Everyone'), null ,array('class' => 'form-control selectize','required'=>'required')) }}
+                                {{ Form::select('gender', array('' => trans('common.gender'), 'male' => 'Males Only', 'female' => 'Females Only', 'all' => 'Everyone'), null ,array('id' => 'gender','class' => 'form-control selectize')) }}
 							</fieldset>
+                            <div class="form-helper">
+                                <div class="helper-inner arrow_box arrow_box--bottom-xs">
+                                    If your event only for a specific gender, select gender here. Use everyone for all gender.
+                                </div>
+                            </div>
 						</div>
 					</div>
 				</fieldset>
 
-                    <fieldset class="form-group required {{ $errors->has('type') ? ' has-error' : '' }}">
+                    <fieldset class="form-helper-wrapper form-group required {{ $errors->has('type') ? ' has-error' : '' }}">
                         {{-- {{ Form::label('location', trans('common.location')) }} --}}
-                        {{ Form::text('location', old('location'), ['class' => 'form-control', 'id' => 'location-input', 'autocomplete' => 'off','placeholder' => trans('common.enter_location'), 'onKeyPress' => "return initMap(event)" ]) }}
+                        {{ Form::text('location', old('location'), ['required'=>'required', 'class' => 'form-control', 'id' => 'location-input', 'autocomplete' => 'off','placeholder' => trans('common.enter_location'), 'onKeyPress' => "return initMap(event)" ]) }}
                         @if ($errors->has('location'))
                             <span class="help-block">
 							{{ $errors->first('location') }}
 						</span>
-					@endif	
+					@endif
+                        <div class="form-helper">
+                            <div class="helper-inner arrow_box arrow_box--bottom-xs">
+                                Provide location for your event, so that user can reach over there easily.
+                            </div>
+                        </div>
 				</fieldset>
 
                     <fieldset
                             class="form-group required {{ $errors->has('location') || $errors->has('price') ? ' has-error' : '' }}">
                         <div class="row">
-                            <div class="col-md-5">
-                                {{--{{ Form::label('user_limit', 'User Liimt', ['class' => 'control-label']) }}--}}
-                                {{-- <label for="user_limit">User Limit: </label> --}}
-                                {{ Form::number('user_limit', old('user_limit'), ['class' => 'form-control', 'placeholder' => 'Number of participants','min'=>1]) }}
+                            <div class="col-md-5 form-helper-wrapper">
+                                {{ Form::number('user_limit', old('user_limit'), ['required'=>'required','class' => 'form-control', 'placeholder' => 'Number of participants','min'=>1]) }}
                                 @if ($errors->has('type'))
                                     <span class="help-block">
 									{{ $errors->first('type') }}
 								</span>
                                 @endif
+                                <div class="form-helper">
+                                    <div class="helper-inner arrow_box arrow_box--bottom-xs">
+                                        Enter how many user can participate.
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-3">
-                                {{-- <label for="price">Price: <small>(Provide <code>0</code> for FREE Event)</small></label> --}}
-                                    {{ Form::number('price', old('price'), ['class' => 'form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price' ,'min'=>0,'max'=>10000]) }}
+                            <div class="col-md-3 form-helper-wrapper">
+                                {{ Form::number('price', old('price'), ['class' => 'form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price' ,'min'=>0,'max'=>10000]) }}
                                 @if ($errors->has('price'))
                                     <span class="help-block">
 									{{ $errors->first('price') }}
 								</span>
                                 @endif
-                            </div>
-                            <div class="col-md-4">
-                                <div class="col-md-6">
-                                    <input type="radio" name="currency" value="EURO" checked> EURO
+                                <div class="form-helper">
+                                    <div class="helper-inner arrow_box arrow_box--bottom-xs">
+                                        Provide event Price. If free, enter 0.
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <input type="radio" name="currency" value="USD"> USD
+                            </div>
+                            <div class="col-md-4 md-align md-align--center-center form-helper-wrapper">
+                                <div class="md-layout md-layout-spacer form-control md-layout--row">
+                                    <div class="md-layout md-layout--row">
+                                        <input type="radio" name="currency" id="currency-euro" value="EURO"> <label class="bdp-label" for="currency-euro">EURO</label>
+                                    </div>
+                                    <div class="md-layout md-layout--row layout-m-l-1">
+                                        <input type="radio" name="currency" id="currency-usd" value="USD" checked><label class="bdp-label" for="currency-usd">USD</label>
+                                    </div>
+                                </div>
+                                <div class="form-helper">
+                                    <div class="helper-inner arrow_box arrow_box--bottom-xs">
+                                        Select currency type for paid event.
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -216,14 +211,10 @@
                     <fieldset
                             class="form-group required {{ $errors->has('start_date') || $errors->has('end_date') ? ' has-error' : '' }}">
                         <div class="row">
-                            <div class="col-md-6">
-                                {{-- {{ Form::label('start_date', trans('admin.start_date'), ['class' => 'control-label']) }} --}}
-
+                            <div class="col-md-6 form-helper-wrapper">
                                 <div class="input-group date form_datetime">
-
-                                    <input type="text" class="datepick2--event form-control" name="start_date"
+                                    <input type="text" required  class="datepick2--event form-control" name="start_date"
                                            placeholder="Start Time" value="{{ old('start_date') }}">
-
 								<span class="input-group-addon addon-right calendar-addon">
 									<span class="fa fa-calendar"></span>
 								</span>
@@ -233,33 +224,45 @@
 								{{ $errors->first('start_date') }}
 							</span>
                                 @endif
+                                <div class="form-helper">
+                                    <div class="helper-inner arrow_box arrow_box--bottom-xs">
+                                        Provide date and time when event start.
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                {{ Form::text('duration', old('duration'), ['class' => 'form-control', 'id' => 'duration-event', 'autocomplete' => 'off','placeholder' => 'duration']) }}
+                            <div class="col-md-6 form-helper-wrapper">
+                                {{ Form::text('duration', old('duration'), ['required'=>'required','class' => 'form-control', 'id' => 'duration-event', 'autocomplete' => 'off','placeholder' => 'duration']) }}
                                 @if ($errors->has('duration'))
                                     <span class="help-block">
 									{{ $errors->first('duration') }}
 								</span>
                                 @endif
+                                <div class="form-helper">
+                                    <div class="helper-inner arrow_box arrow_box--bottom-xs">
+                                        How long your event will run. Maximum of 48 hours allowed.
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </fieldset>
 
-                    <fieldset class="form-group">
-                        {{-- {{ Form::label('about', trans('common.about'), ['class' => 'control-label']) }}							 --}}
-                        {{ Form::textarea('about', old('about'), ['class' => 'form-control','placeholder' => trans('common.description'), 'maxlength'=>500]) }}
+                    <fieldset class="form-group form-helper-wrapper">
+                        {{ Form::textarea('about', old('about'), ['id'=>'description','class' => 'form-control','placeholder' => trans('common.description'), 'maxlength'=>500]) }}
+                        <div class="form-helper" style="top: -56px;">
+                            <div class="helper-inner arrow_box arrow_box--bottom-xs arrow_box--bottom">
+                                Enter details about event and things which need to carry to join event.
+                            </div>
+                        </div>
                     </fieldset>
                     <input type="hidden" name="focus" value="training">
 
                     {!! Form::hidden('group_id', $group_id) !!}
 
-                    <div class="pull-right">
-                        {{--@if($group_id != null)
-                        <a href="{!! url($username) !!}" class="btn btn-default">Cancel</a>
-                        @else
-                        <a href="{!! url($username.'/events') !!}" class="btn btn-default">Cancel</a>
-                        @endif--}}
+                    <div class="pull-right hidden-xs">
                         {{ Form::submit(trans('common.create_event'), ['class' => 'btn ft-btn-primary']) }}
+                    </div>
+                    <div class="visible-xs hidden">
+                        {{ Form::submit(trans('common.create_event'), ['class' => 'btn btn-block ft-btn-primary']) }}
                     </div>
                     <div class="clearfix"></div>
 

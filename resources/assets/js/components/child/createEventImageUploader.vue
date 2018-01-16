@@ -14,6 +14,9 @@
                     <div class='image-loader' v-show="file.progress < 100">
                         <div class='image-loader-progress' :style="{width: file.progress+'%'}"></div>
                     </div>
+                    <div v-if="file.progress == 100 && file.xhrResponse !== undefined && file.xhrResponse.responseText !== undefined">
+                        <input type="hidden" name="event_images_upload[]" :value="getImageName(file)">
+                    </div>
                     <div class="text-center image-pip__error" v-if="isNetworkProblem(file) || file.status == 'error'">
                         <p class="error-text">Error</p>
                         <p class="file-name">{{file.name}}</p>
@@ -39,8 +42,8 @@
             return {
                 uploaderClass: 'is-uploader-class',
                 optionsFileUpload: {
-                    url: base_url + 'ajax/upload-post-images',
-                    paramName: 'post_images_upload',
+                    url: base_url + 'ajax/upload-event-images',
+                    paramName: 'event_images_upload',
                     acceptedFiles: {
                         extensions: ['image/*'],
                         message: 'Please upload only image file'
@@ -50,18 +53,6 @@
                     maxFiles:5,
                     resizeWidth: 800,
                     accept: function (file, done) {
-                        /*if(file.size > 10*1024*1024) {
-                         done('Image file is too large')
-                         return
-                         }*/
-                        /*if ((file = this.files[0])) {
-                            img = new Image();
-                            img.onload = function () {
-                                if(this.width < 600 || this.height < 150) {
-                                    alert("Please select a larger image");
-                                }
-                            };
-                        }*/
                         done()
                     }
                 },
@@ -73,6 +64,14 @@
         },
         mounted() {
             this.uploader = this.$refs.vc.uploader
+            let that = this
+            $('.create-event-form').submit(function( e ) {
+                if(that.files.length) {
+
+                } else {
+                    e.preventDefault()
+                }
+            });
         },
         methods: {
             alertMaxFile: function () {
@@ -82,15 +81,6 @@
             validate: function (f) {
                 return f.status == 'error'
             },
-            retryUpload: function (f) {
-                //dropzone.removeAllFiles();
-                let dropzoneFilesCopy = this.uploader._uploader.files.slice(0,1)
-                let that = this
-                $.each(dropzoneFilesCopy, function(file) {
-                    that.uploader.addFile(file)
-                });
-                console.log('retrying...')
-            },
             isNetworkProblem: function (f) {
                 return f.xhrResponse.statusCode == 0
             },
@@ -98,7 +88,6 @@
                 let index = -1
                 if( file._file.width < 600 || file._file.height < 150) {
                     alertApp('Please add a larger image')
-                    console.log(file)
                     for(let i =0; i < this.files.length; i++) {
                         if(this.files[i].name == file.name) {
                             index = i
@@ -122,7 +111,7 @@
                 $('#upload-action-create').trigger('click');
             },
             sending: function(file, xhr, formData) {
-                formData.append('_token', $(".create-post-form input[name=_token]").val())
+                formData.append('_token', $(".create-event-form input[name=_token]").val())
             },
             totalProgress: function(progress, totalBytes, bytesSent) {
                 //console.log(progress, totalBytes, bytesSent)
@@ -146,6 +135,16 @@
                     this.$refs.vc.removeFile(this.files[k])
                     this.files.splice(k, 1)
                 }
+            },
+            getImageName: function (file) {
+                let r = file.xhrResponse.responseText
+                r = $.parseJSON(r)
+                return r[0]
+            }
+        },
+        watch: {
+            files: function (val) {
+                this.$emit('imagechagned', val.length)
             }
         }
     }

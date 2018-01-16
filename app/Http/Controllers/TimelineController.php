@@ -2730,24 +2730,23 @@ class TimelineController extends AppBaseController
 
     public function uploadEventImages(Request $request) {
         if ($request->file('event_images_upload')) {
-            foreach ($request->file('event_images_upload') as $eventImage) {
-                $strippedName = str_replace(' ', '', $eventImage->getClientOriginalName());
-                
-                $avatar = Image::make($eventImage->getRealPath())->orientate();
-                
-                $mime = $avatar->mime();
-                if ($mime == 'image/jpeg')
-                    $extension = '.jpg';
-                elseif ($mime == 'image/png')
-                    $extension = '.png';
-                elseif ($mime == 'image/gif')
-                    $extension = '.gif';
-                else
-                    $extension = '';
-                $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id.$extension;
+            $eventImage = $request->file('event_images_upload');
+            $strippedName = str_replace(' ', '', $eventImage->getClientOriginalName());
 
-                $avatar->save(storage_path().'/uploads/events/covers/'.$photoName, 60);
-            }
+            $avatar = Image::make($eventImage->getRealPath())->orientate();
+
+            $mime = $avatar->mime();
+            if ($mime == 'image/jpeg')
+                $extension = '.jpg';
+            elseif ($mime == 'image/png')
+                $extension = '.png';
+            elseif ($mime == 'image/gif')
+                $extension = '.gif';
+            else
+                $extension = '';
+            $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id.$extension;
+
+            $avatar->save(storage_path().'/uploads/events/covers/'.$photoName, 60);
             return response()->json(['status' => '200', $photoName]);
         }
         else {
@@ -2779,7 +2778,8 @@ class TimelineController extends AppBaseController
                     $strippedName = str_replace(' ', '', $eventImage->getClientOriginalName());
                     // $photoName = date('Y-m-d-H-i-s').$strippedName;
                     $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id;
-
+                    $avatar = Image::make($eventImage->getRealPath())->orientate();
+                    $avatar->save(storage_path().'/uploads/events/covers/'.$photoName, 60);
                     $media = Media::create([
                       'title'  => $eventImage->getClientOriginalName(),
                       'type'   => 'image',

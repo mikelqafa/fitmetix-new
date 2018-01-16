@@ -430,35 +430,6 @@ $(function () {
 
   });
 
-  // Like/Unlike the post by user
-  $(document).on('click','.like-post',function(e){
-    e.preventDefault();
-    like_btn = $(this).closest('.panel-post');
-    postId = $(this).data('post-id');
-    $.post(SP_source() + 'ajax/like-post', {post_id: $(this).data('post-id')}, function(data) {
-      if (data.status == 200) {
-        if (data.liked == true) {
-          like_btn.find('.like-'+postId).parent().addClass('hidden');
-          like_btn.find('.unlike-'+postId).parent().removeClass('hidden');
-          like_btn.find('.notify').parent().addClass('hidden');
-          like_btn.find('.unnotify').parent().removeClass('hidden');
-          $('.footer-list').find('.like1-'+postId).parent().remove();
-          $('.like2-'+postId).empty();
-          $('.footer-list').find('.like2-'+postId).removeClass('hidden').append('<a href="#" class=".show-likes">' + data.likecount + '<i class="fa fa-thumbs-up"></i></a>');
-
-        }else{
-          like_btn.find('.like-'+postId).parent().removeClass('hidden');
-          like_btn.find('.unlike-'+postId).parent().addClass('hidden');
-          like_btn.find('.notify').parent().removeClass('hidden');
-          like_btn.find('.unnotify').parent().addClass('hidden');
-          $('.footer-list').find('.like1-'+postId).parent().remove();
-          $('.like2-'+postId).empty();
-          $('.footer-list').find('.like2-'+postId).removeClass('hidden').append('<a href="#" class=".show-likes">' + data.likecount + '<i class="fa fa-thumbs-up"></i></a>');
-        }
-      }
-    });
-  });
-
   // Join/Joined the timeline user  by  logged user
   $('.join-user').on('click',function(e){
     e.preventDefault();
@@ -719,23 +690,6 @@ $(function () {
       if (data.status == 200) {
         if (data.added == true) {
           add_btn.find('.add').closest('.holder').slideToggle();
-        }
-      }
-    });
-  });
-
-  //Reject user request through join request tab in close group
-  $('.reject-user').on('click',function(e){
-    e.preventDefault();
-    input_ids = $(this).data('user-id').split('-');
-    user_id = input_ids[0];
-    group_id = input_ids[1];
-
-    reject_btn = $(this).closest('.follow-links');
-    $.post(SP_source() + 'ajax/join-reject', {user_id: user_id,group_id: group_id}, function(data) {
-      if (data.status == 200) {
-        if (data.rejected == true) {
-          reject_btn.find('.reject').closest('.holder').slideToggle();
         }
       }
     });
@@ -1344,52 +1298,7 @@ $(function () {
   hashtagify();
   mentionify();
 
-  $('form.change-cover-form').ajaxForm({
-    url: SP_source() + 'ajax/change-cover',
-
-    beforeSend: function() {
-      $('.user-cover-progress').html('0%<br>Uploaded').fadeIn('fast').removeClass('hidden');
-    },
-
-    uploadProgress: function(event, position, total, percentComplete) {
-      var percentVal = percentComplete+'%';
-
-
-      $('.user-cover-progress').html(percentVal+'<br>Uploaded');
-
-      if (percentComplete == 100) {
-
-        setTimeout(function () {
-          $('.user-cover-progress').html('Processing');
-          setTimeout(function () {
-            $('.user-cover-progress').html('Please wait');
-          }, 2000);
-        }, 500);
-      }
-    },
-
-    success: function(responseText) {
-
-      if (responseText.status == 200) {
-        $('.timeline-cover').find('img')
-            .attr('src', responseText.cover_url)
-            .load(function() {
-              $('.user-cover-progress').fadeOut('fast').addClass('hidden').html('');
-              $('.change-cover-input').val();
-            });
-      }
-      else {
-        $('.user-cover-progress').fadeOut('fast').addClass('hidden').html('');
-        $('.change-cover-input').val();
-        notify(responseText.message,'warning');
-
-      }
-    }
-  });
-
   //Image upload trigger on create post    // Change cover button click event
-
-
 
   $(document).on('click','#selfVideoUpload',function(e){
     e.preventDefault();
@@ -1799,27 +1708,6 @@ $(function () {
         });
   });
 
-
-  $('.postmessage').on('keypress',function(e) {
-    if(e.keyCode==13)
-    {
-      e.preventDefault();
-      $.post(SP_source() + 'ajax/post-message',{conversation_id: $('.conversation-id').val(), description: $(this).val()}, function(responseText) {
-        $('.post-message').val('');
-        $('.coversations-thread').append(responseText.data);
-        jQuery("time.timeago").timeago();
-        emojify.run();
-      });
-    }
-  });
-
-  // chat-list-toggle
-  $('.chat-list-toggle').on('click',function(e){
-    e.preventDefault();
-    $('.chat-list').animate({width: 'toggle'});
-    $('.chat-box').slideToggle();
-  });
-
   // for timeline-list toggle in small screens
   $('.btn-status').on('click',function(e){
     // $('.timeline-list .list-inline').slideToggle('slow');
@@ -1848,11 +1736,6 @@ $(function () {
 
   //tooltip intialization
   $('[data-toggle="tooltip"]').tooltip();
-
-  //date-picker
-/*  $( "#datepicker" ).datepicker();
-  $( "#datepicker1" ).datepicker();
-  $( "#datepicker2" ).datepicker();*/
 
   // focus fix for input
   $('.input-group-addon').on('click',function(){
@@ -1965,96 +1848,8 @@ $(function () {
     });
   });
 
-  // User timeline widgets showmore feature for group
-  $('.show-all-groups').on('click',function(e){
-    e.preventDefault();
-    $(this).parents('.all-groups').find('.my-best-pictures').animate({"max-height": "300px"},800)
-    $(this).parents('.all-groups').find('.my-best-pictures').css("overflow-y","scroll")
-    $(this).parents('.all-groups').find('.my-best-pictures').addClass('with-scroll')
-    $(this).parents('.all-groups').find('.less-all-groups').show()
-    $(this).hide()
-  });
-  $('.less-all-groups').on('click',function(e){
-    e.preventDefault();
-    $(this).parents('.all-groups').find('.my-best-pictures').animate({"max-height": "118px"},800)
-    $(this).parents('.all-groups').find('.my-best-pictures').scrollTop("");
-    $(this).parents('.all-groups').find('.my-best-pictures').css("overflow-y","hidden")
-    $(this).parents('.all-groups').find('.my-best-pictures').removeClass('with-scroll')
-    $(this).parents('.all-groups').find('.show-all-groups').show()
-    $(this).hide()
-  });
-
-  // User timeline widgets showmore feature for pages
-  $('.show-all-pages').on('click',function(e){
-    e.preventDefault();
-    $(this).parents('.all-groups').find('.my-best-pictures').animate({"max-height": "300px"},800)
-    $(this).parents('.all-groups').find('.my-best-pictures').css("overflow-y","scroll")
-    $(this).parents('.all-groups').find('.my-best-pictures').addClass('with-scroll')
-    $(this).parents('.all-groups').find('.less-all-pages').show()
-    $(this).hide()
-  });
-  $('.less-all-pages').on('click',function(e){
-    e.preventDefault();
-    $(this).parents('.all-groups').find('.my-best-pictures').animate({"max-height": "118px"},800)
-    $(this).parents('.all-groups').find('.my-best-pictures').scrollTop("");
-    $(this).parents('.all-groups').find('.my-best-pictures').removeClass('with-scroll');
-    $(this).parents('.all-groups').find('.my-best-pictures').css("overflow-y","hidden")
-    $(this).parents('.all-groups').find('.show-all-pages').show()
-    $(this).hide()
-  });
-
-  // User timeline widgets showmore feature for events
-  $('.show-all-events').on('click',function(e){
-    e.preventDefault();
-    $(this).parents('.all-groups').find('.my-best-pictures').animate({"max-height": "300px"},800)
-    $(this).parents('.all-groups').find('.my-best-pictures').css("overflow-y","scroll")
-    $(this).parents('.all-groups').find('.my-best-pictures').addClass('with-scroll')
-    $(this).parents('.all-groups').find('.less-all-events').show()
-    $(this).hide()
-  });
-  $('.less-all-events').on('click',function(e){
-    e.preventDefault();
-    $(this).parents('.all-groups').find('.my-best-pictures').animate({"max-height": "118px"},800)
-    $(this).parents('.all-groups').find('.my-best-pictures').scrollTop("");
-    $(this).parents('.all-groups').find('.my-best-pictures').css("overflow-y","hidden")
-    $(this).parents('.all-groups').find('.my-best-pictures').removeClass('with-scroll')
-    $(this).parents('.all-groups').find('.show-all-events').show()
-    $(this).hide()
-  });
-
-  /*$('.light-album').lightGallery({
-    selector: '.btn-lightgallery'
-  });*/
 });
 
-//deleting group
-$(document).on('click','.delete-group',function(e){
-  e.preventDefault();
-  groupdelete_btn = $(this).closest('.deletegroup');
-  group_id = $(this).data('groupdelete-id');
-  $.confirm({
-    title: 'Confirm!',
-    content: 'Are you sure to delete group?',
-    confirmButton: 'Yes',
-    cancelButton: 'No',
-    confirmButtonClass: 'btn-primary',
-    cancelButtonClass: 'btn-danger',
-
-    confirm: function(){
-      $.post(SP_source() + 'ajax/group-delete', {group_id: group_id}, function(data) {
-        if (data.status == 200) {
-          if (data.deleted == true) {
-            groupdelete_btn.find('.delete_group').closest('.deletegroup').slideToggle();
-            notify('Group deleted successfully');
-          }
-        }
-      });
-    },
-    cancel: function(){
-
-    }
-  });
-});
 $('.checkbox-panel .checkbox-label').on('click',function(){
   $(this).parents('.checkbox-panel').find('.checkbox-input').trigger('click')
   if($(this).parents('.checkbox-panel').find('input.checkbox-input').is(':checked')) {
@@ -2077,75 +1872,6 @@ $('.checkbox-panel').on('click',function(){
     $(this).find('.input-label').removeClass('extra-space')
   }
 })
-// user profile page unjoin the timeline user  by  logged user
-$(document).on('click','.unjoin-page',function(e){
-  e.preventDefault();
-  timeline_id = $(this).data('timeline-id')
-  pagelike_btn = $(this).closest('.page-unjoin');
-
-  $.confirm({
-    title: 'Confirm!',
-    content: 'Are you sure to unjoin this page?',
-    confirmButton: 'Yes',
-    cancelButton: 'No',
-    confirmButtonClass: 'btn-primary',
-    cancelButtonClass: 'btn-danger',
-
-    confirm: function(){
-
-      $.post(SP_source() + 'ajax/unjoinPage', {timeline_id: timeline_id}, function(data) {
-        if (data.status == 200) {
-          if (data.join == true) {
-
-            pagelike_btn.closest('.holder').slideToggle();
-            notify('You have successfully unjoined the page','warning');
-          }
-        }
-      });
-    },
-    cancel: function(){
-
-    }
-  });
-
-  
-
-});
-
-// Timeline page unjoin the timeline user  by  logged user
-$(document).on('click','.unjoin-page-timeline',function(e){
-  e.preventDefault();
-  timeline_id = $(this).data('timeline-id')
-
-  pagelike_btn = $(this).closest('.page-unjoin');
-
-  $.confirm({
-    title: 'Confirm!',
-    content: 'Are you sure to unjoin this page?',
-    confirmButton: 'Yes',
-    cancelButton: 'No',
-    confirmButtonClass: 'btn-primary',
-    cancelButtonClass: 'btn-danger',
-
-    confirm: function(){
-
-      $.post(SP_source() + 'ajax/unjoinPage', {timeline_id: timeline_id}, function(data) {
-        if (data.status == 200) {
-          if (data.join == true) {
-
-            $('.user-profile-buttons').addClass('hidden');
-            notify('You have successfully unjoined the page','warning');
-
-          }
-        }
-      });
-    },
-    cancel: function(){
-
-    }
-  });
-
-});
 
 $(document).on('click', '.change-theme', function(e){
   var color = $(this).attr('data-theme');
@@ -2185,7 +1911,6 @@ $(document).on('change','#event_images_upload',function(e){
           $('.event_images_upload--label').addClass('image-added')
           image.onload = function(){
             if(this.width < 600 || this.height < 150) {
-
               imgPath = '';
               validFiles = [];
               image_holder.empty();
@@ -2200,10 +1925,10 @@ $(document).on('change','#event_images_upload',function(e){
         reader.readAsDataURL(files[key]);
       });
     } else {
-      alert("This browser does not support FileReader.");
+      alertApp("This browser does not support FileReader.");
     }
   } else {
-    alert("Please select only images");
+    alertApp("Please select only images");
   }
 });
 

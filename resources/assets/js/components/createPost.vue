@@ -289,19 +289,9 @@
                     console.log(data)
                     loaderDiv.parent().remove()
                     $('input[name="upload-image-name[]"][data-key="'+key+'"]').val(data[0])
-                    /*var string = '';
-                     progress.css('width','100%');
-                     btnBrowse.attr('disabled',true);
-                     fileInput.attr('disabled',true);
-                     submitBtn.prop('disabled',false);
-                     $('[data-toggle="upload"]').prop('disabled',false);
-                     fileInput.val('');*/
                 }).always(function(e){
                 }).fail(function(e){
-                    /*$('#uploadBtn').prop('disabled', false);
-                     //$('#mdl-progress-wrp').addClass('hidden');
-                     Pmh.showNotificationSnackBar({message:'Upload failed. Please try again!',timeout:3000});
-                     progress.css('width','0%');*/
+
                 })
             },
             resetCreatePost: function () {

@@ -15,6 +15,7 @@ import postDialogOption from './components/DialogOption'
 import commentDialogOption from './components/CommentDialogOption'
 import suggestionUser from './components/suggestionUser'
 import searchAppVue from './components/searchApp'
+import makeEvent from './components/createEvent'
 import VueTimeago from 'vue-timeago'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 // import AppEventCalendar from './components/appEventCalendar'
@@ -105,6 +106,7 @@ window.singleChatApp = new Vue({
 window.createPost = new Vue({
   el: '#app-create-post',
   components: {
-    'app-create-post': createPost
+    'app-create-post': createPost,
+    'app-make-event': makeEvent
   }
 })
