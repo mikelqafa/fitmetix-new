@@ -4,7 +4,7 @@
             <swiper :options="swiperOptionE" class="event-slider">
                 <swiper-slide :key="index+'singleEvent'+postItem.id" v-for="(postItem, index) in eventList">
                     <div class="panel panel--eventlist panel-default timeline-posts__item panel-post" :id="'ft-event-desktop'+postItem.id">
-                        <post-header event-list="false" disable-close="true" :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
+                        <post-header event-list="false" disable-close="true" disable-option="true" :post-data="postItem" :post-index="index" :date="postItem.created_at"></post-header>
                         <div class="panel-body">
                             <post-back-viewer :post-img="postItem.images"></post-back-viewer>
                             <post-event :post-item="postItem" :post-index="index" :post-img="postItem.images"

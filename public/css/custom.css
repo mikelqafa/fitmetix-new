@@ -3874,3 +3874,11 @@ aside .md-drawer-scroll__wrapper{
 .timeline-posts .panel-post .panel-body{
     padding-bottom: 0;
 }
+.ft-user-name{
+    font-weight: 600;
+    font-size: 14px;
+}
+.comment-item .user-avatar{
+    margin-top: 0;
+    margin-bottom: 2px;
+}

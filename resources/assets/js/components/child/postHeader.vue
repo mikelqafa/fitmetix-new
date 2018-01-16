@@ -5,7 +5,7 @@
                 <a class="ft-btn--icon" href="javascript:;" v-show="!disableClose" @click="emitClose" v-if="eventList">
                     <i class="icon icon-close"></i>
                 </a>
-                <a href="javascript:;" class="ft-btn--icon"  v-on:click="openPostDialog">
+                <a href="javascript:;" class="ft-btn--icon"  v-if="!disableOption" v-on:click="openPostDialog">
                     <i class="icon icon-options"></i>
                 </a>
             </div>
@@ -60,7 +60,8 @@
             date: '',
             postIndex: 0,
             eventList:false,
-            disableClose: false
+            disableClose: false,
+            disableOption: false
         },
         data: function () {
             return {

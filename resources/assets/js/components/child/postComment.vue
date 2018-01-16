@@ -71,27 +71,30 @@
                         <div class="comment-list-action md-list md-list--dense" v-if="commentItemList.length">
                             <div class="md-list__item comment-item" v-for="(item, index) in commentItemList" :key="Math.random()*10000+postIndex + 'comment' + item.id" :data-comment-id="item.id">
                                 <a :style="{ backgroundImage: 'url(' + getThumbImage(item.user.avatar) + ')'}" :href="userLink(item.user)" :title="'@'+item.user.username" class="md-list__item-icon user-avatar"></a>
-                                <div class="md-list__item-content">
-                                    <div class="md-list__item-primary">
-                                        <div class="md-layout md-layout--column">
-                                            <div class="md-list__item-text-body" v-html="item.description">
-                                            </div>
-                                            <div class="md-layout md-layout--row hidden">
-                                                <a href="javascript:;" class="ft-expression ft-expression--comment-like  ft-expression--meta" style="">
-                                                    <span class="icon icon-liked count"></span>
-                                                    <span class="ft-expression--meta-text">0</span>
-                                                </a>
+                                <div class="md-list__item-primary">
+                                    <a :href="userLink(item.user)">{{ item.user.username }}</a>
+                                    <div class="md-list__item-content">
+                                        <div class="md-list__item-primary">
+                                            <div class="md-layout md-layout--column">
+                                                <div class="md-list__item-text-body" v-html="item.description">
+                                                </div>
+                                                <div class="md-layout md-layout--row hidden">
+                                                    <a href="javascript:;" class="ft-expression ft-expression--comment-like  ft-expression--meta" style="">
+                                                        <span class="icon icon-liked count"></span>
+                                                        <span class="ft-expression--meta-text">0</span>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="md-list__item-secondary md-layout md-layout--row">
-                                        <a href="javascript:;" class="md-list__item-secondary-action ft-expression" :data-comment-id="item.id" v-on:click="likeUnlikeComment($event, index)"  v-bind:class="{ 'ft-expression--liked': item.isLiked }">
-                                            <i class="icon icon-like visible-default"></i>
-                                            <i class="icon icon-liked hidden-default"></i>
-                                        </a>
-                                        <a class="md-list__item-secondary-action" href="javascript:;" v-on:click="openCommentDialog(item, index)">
-                                            <i class="icon icon-options"></i>
-                                        </a>
+                                        <div class="md-list__item-secondary md-layout md-layout--row">
+                                            <a href="javascript:;" class="md-list__item-secondary-action ft-expression" :data-comment-id="item.id" v-on:click="likeUnlikeComment($event, index)"  v-bind:class="{ 'ft-expression--liked': item.isLiked }">
+                                                <i class="icon icon-like visible-default"></i>
+                                                <i class="icon icon-liked hidden-default"></i>
+                                            </a>
+                                            <a class="md-list__item-secondary-action" href="javascript:;" v-on:click="openCommentDialog(item, index)">
+                                                <i class="icon icon-options"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
