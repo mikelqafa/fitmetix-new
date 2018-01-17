@@ -538,20 +538,6 @@ class TimelineController extends AppBaseController
             });
             $avatar->save(storage_path().'/uploads/users/gallery/'.$photoName, 60);
 
-            // image width 50x50
-            $avatar_thumbnail_50 = $avatar;
-            $avatar_thumbnail_50 = $avatar_thumbnail_50->resize(50,null,function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $photoName_thumbnail_50 = '50_'.$photoName;
-            $avatar_thumbnail_50->save(storage_path().'/uploads/users/gallery/'.$photoName_thumbnail_50, 60);
-
-            //image width 100x100
-            $avatar_thumbnail = $avatar;
-            $photoName_thumbnail = '100_'.$photoName;
-            $avatar_thumbnail->resize(100, 100);
-            $avatar_thumbnail->save(storage_path().'/uploads/users/gallery/'.$photoName_thumbnail, 60);
-
             //image width 400
             $avatar_thumbnail_400 = $avatar;
             $photoName_thumbnail_400 = '400_'.$photoName;
@@ -560,6 +546,21 @@ class TimelineController extends AppBaseController
             });
             $avatar_thumbnail_400->save(storage_path().'/uploads/users/gallery/'.$photoName_thumbnail_400, 60);
 
+
+            //image width 100x100
+            $avatar_thumbnail = $avatar;
+            $photoName_thumbnail = '100_'.$photoName;
+            $avatar_thumbnail->resize(100, 100);
+            $avatar_thumbnail->save(storage_path().'/uploads/users/gallery/'.$photoName_thumbnail, 60);
+
+            // image width 50x50
+            $avatar_thumbnail_50 = $avatar;
+            $avatar_thumbnail_50 = $avatar_thumbnail_50->resize(50,null,function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $photoName_thumbnail_50 = '50_'.$photoName;
+            $avatar_thumbnail_50->save(storage_path().'/uploads/users/gallery/'.$photoName_thumbnail_50, 60);
+            
             return response()->json(['status' => '200', $photoName]);
         }
 
@@ -3875,77 +3876,19 @@ class TimelineController extends AppBaseController
 
     public function getGalleryByLocation(Request $request) {
         $timeline = Timeline::where('username', $request->username)->first();
-        $location = '%'.$request->location.'%';
-        $id = Auth::user()->id;
-        $posts = Post::where([['active', 1],['location','like',$location],['type', null]])->whereIn('user_id', function ($query) use ($id) {
-                $query->select('leader_id')
-                    ->from('followers')
-                    ->where('follower_id', $id);
-            })->orWhere([['user_id', $id],['location','like',$location],['type', null]])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
-
-        // $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
-        /*$posts = [];
-        foreach ($allposts as $key => $value) {
-          if($value->type != 'event') {
-            $posts[$key] = $value;
-          }
-        }*/
-        foreach ($posts as $post) {
-            if($post->images()->count() > 0) {
-                $post['images'] = $post->images()->get();
-            }
-            if($post->comments()->count() > 0) {
-                $post['comments'] = $post->comments()->where('user_id',$post->user_id)->get();
-            }
-
-            $post['likes_count'] = $post->users_liked()->count();
-            $post['user_liked'] = false;
-
-            if($post['likes_count'] > 0) {
-                if($post->users_liked()->where('user_id',Auth::user()->id)->count()) {
-                    $post['user_liked'] = true;
-                }
-            }
-
-/*            if($post->type == 'event'){
-                unset($post);
-                $post['event'] = Event::where('timeline_id',$post->timeline_id)->latest()->get();
-                foreach ($post['event'] as $user_event) {
-                    $user_event['event_details'] = $user_event->timeline->username;
-                    if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
-                        $user_event['event_tags'] = $matches[0];
-                    }
-                    if($user_event->users->contains(Auth::user()->id)){
-                        $user_event['registered'] = true;
-                    }
-                    if($user_event->start_date < Carbon::now()){
-                        $user_event['expired'] = true;
-                    }
-                }
-            }*/
-        }
-
-        $post_image_path = storage_path().'/uploads/users/gallery/';
-        $event_image_path = storage_path().'/uploads/events/covers/';
-
-        return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
-    }
-
-    public function getGalleryByHashtag(Request $request) {
-        $timeline = Timeline::where('username', $request->username)->first();
-        $hashtag = '%'.$request->hashtag.'%';
-        $id = Auth::user()->id;
-        $allposts = Post::where([['active', 1],['description','like',$hashtag]])->whereIn('user_id', function ($query) use ($id) {
-                $query->select('leader_id')
-                    ->from('followers')
-                    ->where('follower_id', $id);
-            })->orWhere([['user_id', $id],['description','like',$hashtag]])->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
-
-        // $posts = $timeline->posts()->where('active', 1)->orderBy('created_at', 'desc')->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
+        $location = $request->location;
+        $user = User::where('timeline_id', $timeline['id'])->first();
+        $allposts = Post::where([['active', 1],['location','like','%'.$location.'%']])->get();
         $posts = [];
+        $i = 0;
+        $start = $request->offset;
+        $end = $start + $request->paginate - 1;
         foreach ($allposts as $key => $value) {
             if($value->images()->count() > 0 AND $value->type != 'event') {
-                $posts[$key] = $value;
+               if(($i >= $request->offset) && ($i <= $end)) {
+                    $posts[$key] = $value;
+               }
+               $i++;
             }
         }
         foreach ($posts as $post) {
@@ -3966,7 +3909,64 @@ class TimelineController extends AppBaseController
             }
 
             if($post->type == 'event'){
-                $post['event'] = Event::where('timeline_id',$post->timeline_id)->latest()->get();
+                $post['event'] = Event::where('timeline_id',$post->timeline_id)->limit($request->paginate)->offset($request->offset)->latest()->get();
+                foreach ($post['event'] as $user_event) {
+                    $user_event['event_details'] = $user_event->timeline->username;
+                    if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
+                        $user_event['event_tags'] = $matches[0];
+                    }
+                    if($user_event->users->contains(Auth::user()->id)){
+                        $user_event['registered'] = true;
+                    }
+                    if($user_event->start_date < Carbon::now()){
+                        $user_event['expired'] = true;
+                    }
+                }
+            }
+        }
+
+        $post_image_path = storage_path().'/uploads/users/gallery/';
+        $event_image_path = storage_path().'/uploads/events/covers/';
+
+        return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
+    }
+
+    public function getGalleryByHashtag(Request $request) {
+        $timeline = Timeline::where('username', $request->username)->first();
+        $hashtag = $request->hashtag;
+        $user = User::where('timeline_id', $timeline['id'])->first();
+        $allposts = Post::where([['active', 1],['description','like','%'.$hashtag.'%'],['user_id',$user->id]])->get();
+        $posts = [];
+        $i = 0;
+        $start = $request->offset;
+        $end = $start + $request->paginate - 1;
+        foreach ($allposts as $key => $value) {
+            if($value->images()->count() > 0 AND $value->type != 'event') {
+               if(($i >= $request->offset) && ($i <= $end)) {
+                    $posts[$key] = $value;
+               }
+               $i++;
+            }
+        }
+        foreach ($posts as $post) {
+            if($post->images()->count() > 0) {
+                $post['images'] = $post->images()->get();
+            }
+            if($post->comments()->count() > 0) {
+                $post['comments'] = $post->comments()->where('user_id',$post->user_id)->get();
+            }
+
+            $post['likes_count'] = $post->users_liked()->count();
+            $post['user_liked'] = false;
+
+            if($post['likes_count'] > 0) {
+                if($post->users_liked()->where('user_id',Auth::user()->id)->count()) {
+                    $post['user_liked'] = true;
+                }
+            }
+
+            if($post->type == 'event'){
+                $post['event'] = Event::where('timeline_id',$post->timeline_id)->latest()->limit($request->paginate)->offset($request->offset)->get();
                 foreach ($post['event'] as $user_event) {
                     $user_event['event_details'] = $user_event->timeline->username;
                     if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
