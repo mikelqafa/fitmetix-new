@@ -551,6 +551,15 @@ class TimelineController extends AppBaseController
             $photoName_thumbnail = '100_'.$photoName;
             $avatar_thumbnail->resize(100, 100);
             $avatar_thumbnail->save(storage_path().'/uploads/users/gallery/'.$photoName_thumbnail, 60);
+
+            //image width 400
+            $avatar_thumbnail_400 = $avatar;
+            $photoName_thumbnail_400 = '400_'.$photoName;
+            $avatar_thumbnail_400 = $avatar_thumbnail_400->resize(400,null,function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $avatar_thumbnail_400->save(storage_path().'/uploads/users/gallery/'.$photoName_thumbnail_400, 60);
+
             return response()->json(['status' => '200', $photoName]);
         }
 
@@ -2773,8 +2782,8 @@ class TimelineController extends AppBaseController
             $user_timeline = Timeline::where('username', $username)->first();
             $i = 0;
 
-            if ($request->file('event_images_upload')) {
-                foreach ($request->file('event_images_upload') as $eventImage) {
+            if ($request->event_images_upload) {
+                foreach ($request->event_images_upload as $eventImage) {
                     
                     $media = Media::create([
                       'title'  => $eventImage,
