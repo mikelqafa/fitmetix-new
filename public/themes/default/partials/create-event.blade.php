@@ -144,8 +144,6 @@
                             </div>
 						</div>
 					</div>
-				</fieldset>
-
                     <fieldset class="form-helper-wrapper form-group required {{ $errors->has('type') ? ' has-error' : '' }}">
                         {{-- {{ Form::label('location', trans('common.location')) }} --}}
                         {{ Form::text('location', old('location'), ['required'=>'required', 'class' => 'form-control', 'id' => 'location-input', 'autocomplete' => 'off','placeholder' => trans('common.enter_location'), 'onKeyPress' => "return initMap(event)" ]) }}
@@ -160,7 +158,6 @@
                             </div>
                         </div>
 				</fieldset>
-
                     <fieldset
                             class="form-group required {{ $errors->has('location') || $errors->has('price') ? ' has-error' : '' }}">
                         <div class="row">
@@ -190,24 +187,23 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 md-align md-align--center-center form-helper-wrapper">
-                                <div class="md-layout md-layout-spacer form-control md-layout--row">
+                            <div class="col-md-4 md-align md-align--center-center">
+                                <div class="md-layout md-layout-spacer form-control form-helper-wrapper md-layout--row">
                                     <div class="md-layout md-layout--row">
                                         <input type="radio" name="currency" id="currency-euro" value="EURO"> <label class="bdp-label" for="currency-euro">EURO</label>
                                     </div>
                                     <div class="md-layout md-layout--row layout-m-l-1">
                                         <input type="radio" name="currency" id="currency-usd" value="USD" checked><label class="bdp-label" for="currency-usd">USD</label>
                                     </div>
-                                </div>
-                                <div class="form-helper">
-                                    <div class="helper-inner arrow_box arrow_box--bottom-xs">
-                                        Select currency type for paid event.
+                                    <div class="form-helper">
+                                        <div class="helper-inner arrow_box arrow_box--bottom-xs">
+                                            Select currency type for paid event.
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </fieldset>
-
                     <fieldset
                             class="form-group required {{ $errors->has('start_date') || $errors->has('end_date') ? ' has-error' : '' }}">
                         <div class="row">
@@ -245,7 +241,6 @@
                             </div>
                         </div>
                     </fieldset>
-
                     <fieldset class="form-group form-helper-wrapper">
                         {{ Form::textarea('about', old('about'), ['id'=>'description','class' => 'form-control','placeholder' => trans('common.description'), 'maxlength'=>500]) }}
                         <div class="form-helper" style="top: -56px;">
