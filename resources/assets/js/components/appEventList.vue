@@ -69,7 +69,7 @@
                 </div>
             </div>
 
-            <div class="md-layout md-layout--row">
+            <div class="md-layout md-layout--row layout-m-t-1 md-layout--wrap" style="margin-left: 12px; margin-right: 12px">
                 <div class="md-layout md-layout--row md-layout--wrap">
                     <template v-for="item in filter">
                         <div class="md-chips is-removable" v-if="item.content !== ''">
@@ -77,12 +77,14 @@
                                 <div class="md-chip__content">
                                     {{item.content}}</div>
                                 <div class="md-chip__remove-container">
-                                    <button class="md-chip__remove md-chip__remove--round"><i class="icon icon-close material-icons"></i> </button>
+                                    <button class="md-chip__remove md-chip__remove--round" @click="removeFilter(item)"><i class="icon icon-close material-icons"></i> </button>
                                 </div>
                             </div>
                         </div>
                     </template>
                 </div>
+                <div class="md-layout-spacer"></div>
+                <button class="btn btn-submit ft-btn-primary" @click="submitFilter">FILTER</button>
             </div>
         </div>
 
@@ -245,7 +247,7 @@
                         <div class="ft-grid">
                             <div v-for="(item, index) in eventList" :key="item.id" class="ft-grid__item">
                                 <div class="ft_card">
-                                    <post-back-viewer v-on:open="showEventPost(item.event_id)" :post-img="item.media"></post-back-viewer>
+                                    <post-back-viewer gallery-view="true" v-on:open="showEventPost(item.event_id)" :post-img="item.media"></post-back-viewer>
                                     <div class="ft-card__primary hidden-sm hidden-xs">
                                         <div class="ft-card__title">
                                             <h5 class="ft-event-card__title">{{item.name}}</h5>
@@ -272,13 +274,21 @@
                                             <div class="ft-card__list">
                                                 <div class="icon icon-label-o"></div>
                                                 <div class="card-desc">
-                                                    {{ formatPrice(item.price) }}
+                                                    {{ formatPrice(item) }}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="text-center" v-if="!hasMorePost && !interact">
+                            No more events to fetch
+                        </div>
+                        <div v-if="isFetchingBottom" class="ft-loading ft-loading--transparent" style="margin: 50px 0">
+                            <span class="ft-loading__dot"></span>
+                            <span class="ft-loading__dot"></span>
+                            <span class="ft-loading__dot"></span>
                         </div>
                     </template>
                     <template v-else="">
@@ -365,15 +375,31 @@
                 isFilterEventListLoading: false,
                 showFilter: true,
                 location: false,
-                hashtag: false
+                hashtag: false,
+                hasMorePost:true,
+                isFetchingBottom: false,
+                offset: 0,
             }
         },
         methods: {
-            formatGender: function(g) {
-              return g == 'all' ? 'Everyone' : g == 'male'? 'Male Only' : 'Female Only'
+            formatPrice: function(e) {
+                return (e.price == null || 0) ? 'Free' : e.currency == 'EURO' ? '&euro; ' + e.price : '&dollar;' + e.price
             },
-            formatDate: function(d) {
-                let obj = new Date(d)
+            formatUrl: function(u) {
+                return base_url+ 'locate-on-map/' + u
+            },
+            formatGender: function(g) {
+                return g == '' ? 'Everyone' : g == 'male'? 'Male Only' : 'Female Only'
+            },
+            formatDate: function(date) {
+                let str = ''
+                if(date != '') {
+                    str = date
+                    let res = str.split(' ')
+                    str = res[0]+'T'+res[1]
+                    str.replace(/\s/, 'T')
+                }
+                let obj = new Date(str+'Z')
                 let options = {
                     year: 'numeric',
                     month: 'short',
@@ -383,42 +409,81 @@
                 }
                 return obj.toLocaleString('en-us', options)
             },
-            formatPrice: function(p) {
-              return p == null ? 'Free' : '$' + p
-            },
-            formatUrl: function(u) {
-                return base_url+ 'locate-on-map/' + u
-            },
             submit: function (i, e) {
                 if(i==1) {
-                    console.log(e.target.value)
                     this.filter[i].content = e.target.value
                 } else {
+                    this.filter[1].content = $('#filter-date').val() == '' ?  $('#filter-date-mob').val() : $('#filter-date').val()
                     this.filter[i].content = this.filterData[i]
                 }
                 this.eventList = []
+                this.offset = 0
+                this.alreadyHavePost = true
+                this.interact = false
+                this.noPostFound = false
+                this.isFetchingBottom = false
+                this.getDefaultData()
+            },
+            submitFilter: function() {
+                if($(window).width()>600) {
+                    if($('#filter-date').val()!='')
+                    this.filter[1].content = $('#filter-date').val()
+                } else  {
+                    if($('#filter-date-mob').val()!='')
+                        this.filter[1].content = $('#filter-date-mob').val()
+                }
+                this.filter[0].content = this.filterData[0] !== undefined ?this.filterData[0]: ''
+                this.filter[2].content = this.filterData[2] !== undefined ?this.filterData[2]: ''
+                this.filter[3].content = this.filterData[3] !== undefined ?this.filterData[3]: ''
+                this.eventList = []
+                this.offset = 0
+                this.alreadyHavePost = true
+                this.interact = false
+                this.noPostFound = false
+                this.isFetchingBottom = false
                 this.getDefaultData()
             },
             getDefaultData: function () {
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
-                let url = this.makeUrl()
                 this.noEventListFound = false
+                let data = {
+                    paginate: 6,
+                    offset: this.offset,
+                    location : this.filter[0].content,
+                    date : this.filter[1].content,
+                    tag : this.filter[2].content,
+                    title : this.filter[3].content,
+                    _token: _token
+                }
                 axios({
-                    method: 'get',
+                    method: 'post',
                     responseType: 'json',
-                    url: url
+                    url: base_url + 'ajax/get-events',
+                    data: data
                 }).then( function (response) {
                     if (response.status ==  200) {
-                        that.eventList = []
-                        for(let i = 0; i< response.data.data.length; i++) {
-                            that.eventList.unshift(response.data.data[i])
-                        }
-                        if(!that.eventList.length) {
-                            that.noEventListFound = true
+                        let events = response.data.data;
+                        console.log(response.data)
+                        let i = 0
+                        $.each(events, function(key, val) {
+                            that.eventList.push(val)
+                            i++
+                        });
+                        if(!i) {
+                            if(!that.interact) {
+                                that.alreadyHavePost = false
+                                that.noEventListFound = true
+                            } else {
+                                that.hasMorePost = false
+                            }
                         } else {
-                            that.noEventListFound = false
+                            that.interact = true
                         }
+                        that.inProgress = false
+                        that.hasMorePost = i == data.paginate;
+                        that.offset += i
+                        that.isFetchingBottom = false
                         setTimeout(function () {
                             emojify.run();
                             hashtagify();
@@ -431,21 +496,6 @@
             },
             closeDrawer: function () {
                 $('#drawer-1').MaterialDrawer('hide')
-            },
-            makeUrl: function () {
-                let url = base_url + 'ajax/get-events'
-                let parameterAdded = false
-                for(let i = 0; i< this.filter.length; i++) {
-                    if(this.filter[i].content != '') {
-                        if(!parameterAdded) {
-                            url += '?'+ this.filter[i].filter+'='+this.filter[i].content
-                            parameterAdded = true
-                        } else {
-                            url += '&'+ this.filter[i].filter+'='+this.filter[i].content
-                        }
-                    }
-                }
-                return url
             },
             showEventPost: function (e) {
                 this.postItem = {}
@@ -489,12 +539,42 @@
             acMapEventDesk: function (e) {
                 let deskMapVal = $('#'+e).val()
                 appEvent.filterData[0] = deskMapVal
-                appEvent.submit(0)
+                // appEvent.submit(0)
             },
             acMapEventMobo: function (e) {
                 let moboMapVal = $('#'+e).val()
                 appEvent.filterData[0] = moboMapVal
-                appEvent.submit(0)
+                //appEvent.submit(0)
+            },
+            scrollFetchInit: function () {
+                let that = this
+                $(window).scroll(function() {
+                    if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                        setTimeout(function() {
+                            if(!$('body').hasClass('is-drawer-open')) {
+                                if(!that.inProgress && that.hasMorePost ){
+                                    that.isFetchingBottom = true
+                                    that.getDefaultData()
+                                    that.inProgress = true
+                                }
+                            }
+                        }, 100)
+                    }
+                });
+            },
+            removeFilter: function (item) {
+                let index = $.map(this.filter, function (e, index) {
+                    if(e.filter ==  item.filter){
+                        return index
+                    }
+                });
+                this.filter[index].content = ''
+                if(index == 1) {
+                    $('#filter-date').val('')
+                    $('#filter-date-mob').val('')
+                }
+                this.filterData[index] = ''
+                this.submitFilter()
             }
         },
         mounted() {
@@ -522,6 +602,7 @@
                 this.hashtag = true
             }
             this.getDefaultData()
+            this.scrollFetchInit()
         },
         components: {
             'post-description': postDescription,
@@ -536,6 +617,14 @@
             'event-participate-list': eventParticipateList
         },
         computed: {
+            showFilterButton () {
+                for(let i=0;i<this.filter.length;i++) {
+                    if(this.filter[i].content !== '') {
+                        return true
+                    }
+                }
+                return false
+            },
             isLoading () {
                 return this.eventList.length === 0
             },

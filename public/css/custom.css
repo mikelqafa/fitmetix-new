@@ -3987,3 +3987,6 @@ aside .md-drawer-scroll__wrapper{
 .ft-loading--transparent{
     background-color: transparent;
 }
+.md-chip__remove .icon{
+    line-height: 1;
+}

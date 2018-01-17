@@ -299,7 +299,7 @@
                                     that.inProgress = true
                                 }
                             }
-                        }, 300)
+                        }, 100)
                     }
                 });
             },

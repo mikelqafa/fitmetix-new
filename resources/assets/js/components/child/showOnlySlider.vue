@@ -32,6 +32,7 @@
     export default {
         props: {
             postImg: {},
+            galleryView: false
         },
         data: function () {
             return {
@@ -55,7 +56,11 @@
             if (this.postImg !== undefined) {
                 $.each(this.postImg, function(key, val) {
                     let s = val.source !== undefined ? val.source : ''
-                    that.images.push(s != '' ? asset_url + 'uploads/events/covers/'+s : base_url+'images/no-image.png')
+                    if(that.galleryView) {
+                        that.images.push( getThumbImage(s != '' ? asset_url + 'uploads/events/covers/'+s : base_url+'images/no-image.png', 400))
+                    } else {
+                        that.images.push(s != '' ? asset_url + 'uploads/events/covers/'+s : base_url+'images/no-image.png')
+                    }
                     if(s == '') {
                         this.defaultImage  = true
                     }
