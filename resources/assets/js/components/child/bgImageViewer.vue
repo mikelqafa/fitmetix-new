@@ -30,6 +30,7 @@
             postImg: '',
             postIndex: 0,
             postEvent: {},
+            galleryView: false,
             disableShowcase: false
         },
         data: function () {
@@ -50,10 +51,14 @@
         },
         methods: {
             sourceImagePath: function (s) {
-                return this.isTypeEvent ? asset_url + 'uploads/events/covers/'+s : asset_url+'uploads/users/gallery/'+s
+                //gallery-view
+                if(this.galleryView) {
+                    return getThumbImage(this.isTypeEvent ? asset_url + 'uploads/events/covers/' + s : asset_url + 'uploads/users/gallery/' + s, 400)
+                }
+                return this.isTypeEvent ? asset_url + 'uploads/events/covers/' + s : asset_url + 'uploads/users/gallery/' + s
             },
-            showTheater: function(imageIndex) {
-                if(this.disableShowcase) {
+            showTheater: function (imageIndex) {
+                if (this.disableShowcase) {
                     return
                 }
                 this.$store.commit('SET_THEATER_ITEM', {postIndex: this.postIndex, imageIndex: imageIndex})
@@ -78,5 +83,5 @@
             swiper,
             swiperSlide
         }
-    }
+    };
 </script>

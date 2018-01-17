@@ -45,7 +45,7 @@
                 <div class="post-filters post-filters--auto-width">
                     <div class="ft-grid">
                         <div v-for="(postItem, index) in itemList" :key="postItem.id" class="ft-grid__item" :id="'ft-post'+postItem.id">
-                            <post-image-viewer :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
+                            <post-image-viewer :gallery-view="true" :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                     <span class="ft-loading__dot"></span>
                     <span class="ft-loading__dot"></span>
                 </div>
-                <div class="hidden text-center" v-if="!hasMorePost">
+                <div class="text-center" v-if="!hasMorePost">
                     That&apos;s all for now
                 </div>
             </template>
@@ -125,7 +125,6 @@
                     data.url = url
                     data.username = username
                 }
-
                 let h = $('#galleryByHashTag')
                 if(h !== undefined && h.length) {
                     hashtag = h.val()
@@ -133,12 +132,9 @@
                     data.url = url
                     data.hashtag = hashtag
                 }
-
-                this.onlyImagePost = true
-
                 let _token = $("meta[name=_token]").attr('content')
-
                 data._token = _token
+                console.log(data)
                 axios({
                     method: 'post',
                     responseType: 'json',
@@ -167,15 +163,15 @@
                         } else {
                             that.interact = true
                         }
+                        that.inProgress = false
+                        that.hasMorePost = i == data.paginate;
+                        that.offset += i
+                        that.isFetchingBottom = false
                         setTimeout(function () {
                             emojify.run();
                             hashtagify();
                             mentionify();
                         }, 500)
-                        that.inProgress = false
-                        that.hasMorePost = i == data.paginate;
-                        that.offset += i
-                        that.isFetchingBottom = false
                     }
                 }).catch(function(error) {
                     console.log(error)
@@ -185,9 +181,7 @@
                 let that = this
                 $(window).scroll(function() {
                     if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
-                        console.log('in')
                         if(!that.inProgress && that.hasMorePost ){
-                            console.log('working')
                             that.isFetchingBottom = true
                             that.getDefaultData()
                             that.inProgress = true

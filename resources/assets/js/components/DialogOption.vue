@@ -94,7 +94,7 @@
                 confirmDialog.MaterialDialog('show')
                 let that = this
                 confirmDialog.on('ca.dialog.affirmative.action', function(){
-                    that.deletePost()
+                    that.deleteEvent()
                 });
             },
             deletePost: function() {
@@ -115,6 +115,35 @@
                         that.$store.commit('REMOVE_POST_ITEM_LIST', that.optionMenuPostItem.postIndex)
                         $('#post-option-dialog').MaterialDialog('hide')
                         materialSnackBar({messageText: response.data.message, autoClose: true })
+                    }
+                    that.isLoading = false
+                }).catch(function(error) {
+                    $('#post-option-dialog').MaterialDialog('hide')
+                    materialSnackBar({messageText: error, autoClose: true })
+                    that.isLoading = false
+                })
+            },
+            deleteEvent: function() {
+                let that = this
+                let _token = $("meta[name=_token]").attr('content')
+                this.isLoading = true
+                $('#post-image-theater-dialog').MaterialDialog('hide')
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url + 'ajax/event-delete',
+                    data: {
+                        _token: _token,
+                        event_id: that.postItem.event[0].id
+                    }
+                }).then( function (response) {
+                    if (response.status ==  200) {
+                        that.$store.commit('REMOVE_POST_ITEM_LIST', that.optionMenuPostItem.postIndex)
+                        $('#post-option-dialog').MaterialDialog('hide')
+                        materialSnackBar({messageText: response.data.message, autoClose: true })
+                        setTimeout(function(){
+                            window.location.reload()
+                        },300)
                     }
                     that.isLoading = false
                 }).catch(function(error) {

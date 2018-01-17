@@ -2141,10 +2141,10 @@ class TimelineController extends AppBaseController
     	$title    = $request->title;
         $username  = $request->username;
         $user_id = '';
-        if($date){
+        if($date && $date != ''){
             $date = date('Y-m-d H:i',strtotime($date));
         }
-        if($username){
+        if($username && $username !=''){
             $user_id = Timeline::where('username',$username)->first()->user->id;
             $events = DB::table('events')
             ->join('timelines', 'timelines.id', '=', 'events.timeline_id')
@@ -2175,7 +2175,7 @@ class TimelineController extends AppBaseController
                         ->where('user_id', $user_id);
                 }
             })
-            ->select('events.*', 'timelines.*','events.id as event_id')->limit($request->paginate)->offset($request->offset)->get();
+            ->select('events.*', 'timelines.*','events.id as event_id')->limit($request->paginate)->offset($request->offset)->orderBy('events.created_at','desc')->get();
         }
         else {
             $events = DB::table('events')
@@ -2200,7 +2200,7 @@ class TimelineController extends AppBaseController
                         $query->where('timelines.name','like',$title.'%');
                     }
             })
-            ->select('events.*', 'timelines.*','events.id as event_id')->limit($request->paginate)->offset($request->offset)->get();
+            ->select('events.*', 'timelines.*','events.id as event_id')->limit($request->paginate)->offset($request->offset)->orderBy('events.created_at','desc')->get();
         }
         
 			$a = 0;

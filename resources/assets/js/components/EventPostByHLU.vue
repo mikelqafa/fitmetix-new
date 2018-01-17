@@ -168,7 +168,7 @@
                             <div v-for="(item, index) in eventList" :key="item.id" class="ft-grid__item">
                                 <div class="ft_card ft-card--shadow">
                                     <div class="ft-card ft-card--only-image">
-                                        <post-back-viewer v-on:open="showEventPost(item.event_id)" :post-img="item.media"></post-back-viewer>
+                                        <post-back-viewer v-on:open="showEventPost(item.event_id, index)" :post-img="item.media"></post-back-viewer>
                                     </div>
                                     <div class="ft-card__primary hidden-xs">
                                         <div class="ft-card__title lg-loadable">
@@ -195,12 +195,20 @@
                                             </div>
                                             <div class="ft-card__list">
                                                 <div class="icon icon-label-o"></div>
-                                                <div class="card-desc" v-html="formatPrice(event.price)"></div>
+                                                <div class="card-desc" v-html="formatPrice(item)"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="text-center" v-if="!hasMorePost">
+                            No more events to fetch
+                        </div>
+                        <div v-if="isFetchingBottom" class="ft-loading ft-loading--transparent" style="margin: 50px 0">
+                            <span class="ft-loading__dot"></span>
+                            <span class="ft-loading__dot"></span>
+                            <span class="ft-loading__dot"></span>
                         </div>
                     </template>
                     <template v-else="">
@@ -258,6 +266,7 @@
         data: function () {
             return {
                 filterData: [],
+                isFetchingBottom:false,
                 eventList: [],
                 alreadyHavePost: true,
                 interact: false,
@@ -267,28 +276,45 @@
                 noEventListFound:false,
                 isFilterEventListLoading: false,
                 showFilter: true,
-                location: false,
-                hashtag: false,
+                location : '',
+                tag:'',
+                username: '',
                 enableOverlay: false,
                 eventUnid: 'event-dialog-opener',
-                hasMorePost:true
+                hasMorePost:true,
+                offset: 0,
+                currentIndex: ''
             }
         },
         methods: {
-            getCoverImage: function(i) {
-                //uploads/events/covers/default-cover-event.png
-                if(false) {
-                    //return asset_url+ 'uploads/events/covers/' + user_event.timeline.cover['source']
-                }  else {
-                    //return asset_url+ 'uploads/events/covers/' + user_event.timeline.cover['source']
-                }
-                return ''
+            scrollFetchInit: function () {
+                let that = this
+                $(window).scroll(function() {
+                    if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                        setTimeout(function() {
+                            if(!$('body').hasClass('is-drawer-open')) {
+                                if(!that.inProgress && that.hasMorePost ){
+                                    that.isFetchingBottom = true
+                                    that.getDefaultData()
+                                    that.inProgress = true
+                                }
+                            }
+                        }, 300)
+                    }
+                });
             },
             formatGender: function(g) {
                 return g == '' ? 'Everyone' : g == 'male'? 'Male Only' : 'Female Only'
             },
-            formatDate: function(d) {
-                let obj = new Date(d)
+            formatDate: function(date) {
+                let str = ''
+                if(date != '') {
+                    str = date
+                    let res = str.split(' ')
+                    str = res[0]+'T'+res[1]
+                    str.replace(/\s/, 'T')
+                }
+                let obj = new Date(str+'Z')
                 let options = {
                     year: 'numeric',
                     month: 'short',
@@ -300,22 +326,28 @@
             },
             makeUrl: function () {
                 let url = base_url + 'ajax/get-events'
+                this.location = ''
+                this.tag = ''
+                this.username = ''
                 let l = $('#eventByLocation')
                 if(l !== undefined && l.length) {
                     url += '?'+ 'location' + '=' + l.val()
+                    this.location = l.val()
                 }
                 let e = $('#eventByHashTag')
                 if(e !== undefined && e.length) {
                     url += '?'+ 'tag' + '=' + e.val()
+                    this.tag = e.val()
                 }
                 let u = $('#eventByUsername')
                 if(u !== undefined && u.length) {
                     url += '?'+ 'username' + '=' + u.val()
+                    this.username = u.val()
                 }
                 return url
             },
-            formatPrice: function(p) {
-                return (p == null || 0) ? 'Free' : this.postItem.currency == 'EURO' ? '&euro; ' + p : '&dollar;' + p
+            formatPrice: function(e) {
+                return (e.price == null || 0) ? 'Free' : e.currency == 'EURO' ? '&euro; ' + e.price : '&dollar;' + e.price
             },
             formatUrl: function(u) {
                 return base_url+ 'locate-on-map/' + u
@@ -333,41 +365,44 @@
             getDefaultData: function () {
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
-                let url = this.makeUrl()
                 this.noEventListFound = false
+                this.makeUrl()
+                let data = {
+                    paginate: 6,
+                    offset: this.offset,
+                    location : this.location,
+                    tag:this.tag,
+                    username: this.username,
+                    _token: _token
+                }
                 axios({
-                    method: 'get',
+                    method: 'post',
                     responseType: 'json',
-                    url: url
+                    url: base_url + 'ajax/get-events',
+                    data: data
                 }).then( function (response) {
                     if (response.status ==  200) {
-                        /*that.eventList = []
-                        for(let i = 0; i< response.data.data.length; i++) {
-                            that.eventList.unshift(response.data.data[i])
-                        }*/
-                        /*if(!that.eventList.length) {
-                            that.noEventListFound = true
-                        } else {
-                            that.noEventListFound = false
-                        }*/
-                        let posts = response.data[0].posts;
+                        let events = response.data.data;
+                        console.log(response.data)
                         let i = 0
-                        $.each(posts, function(key, val) {
-                            if(val.images !== undefined && val.images.length) {
-                                that.eventList.unshift(val)
-                                i++
-                            }
+                        $.each(events, function(key, val) {
+                            that.eventList.push(val)
+                            i++
                         });
                         if(!i) {
                             if(!that.interact) {
                                 that.alreadyHavePost = false
                                 that.noPostFound = true
                             } else {
-                                that.noPostFound = true
+                                that.hasMorePost = false
                             }
                         } else {
                             that.interact = true
                         }
+                        that.inProgress = false
+                        that.hasMorePost = i == data.paginate;
+                        that.offset += i
+                        that.isFetchingBottom = false
                         setTimeout(function () {
                             emojify.run();
                             hashtagify();
@@ -381,9 +416,10 @@
             closeDrawer: function () {
                 $('#drawer-1').MaterialDrawer('hide')
             },
-            showEventPost: function (e) {
+            showEventPost: function (e, index) {
                 this.postItem = {}
                 $('#drawer-1').MaterialDrawer('show')
+                this.currentIndex = index
                 this.fetchNew(e)
             },
             closeEventPost: function (e) {
@@ -399,9 +435,10 @@
                 axios({
                     method: 'post',
                     responseType: 'json',
-                    url: base_url + 'ajax/get-event-post-by-eventid?event_id='+postId,
+                    url: base_url + 'ajax/get-event-post-by-eventid',
                     data: {
-                        _token: _token
+                        _token: _token,
+                        event_id: postId
                     }
                 }).then( function (response) {
                     that.showProgress = false
@@ -439,6 +476,7 @@
             }
             this.getDefaultData()
             $('#drawer-1').MaterialDrawer({show: false, permanent: true})
+            this.scrollFetchInit()
         },
         components: {
             'post-description': postDescription,

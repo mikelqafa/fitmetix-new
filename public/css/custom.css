@@ -3379,6 +3379,7 @@ aside .md-drawer-scroll__wrapper{
     flex-direction: row;
     justify-content: flex-start;
     margin: 0 24px;
+    width: 272px;
 }
 .ft-chat-group{
     display: flex;
