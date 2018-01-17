@@ -3976,9 +3976,15 @@ class TimelineController extends AppBaseController
         $user = User::where('timeline_id', $timeline['id'])->first();
         $allposts = Post::where([['active', 1],['user_id',$user->id]])->get();
         $posts = [];
+        $i = 0;
+        $start = $request->offset;
+        $end = $start + $request->paginate - 1;
         foreach ($allposts as $key => $value) {
             if($value->images()->count() > 0 AND $value->type != 'event') {
-                $posts[$key] = $value;
+               if(($i >= $request->offset) && ($i <= $end)) {
+                    $posts[$key] = $value;
+               }
+               $i++;
             }
         }
         foreach ($posts as $post) {
@@ -3999,7 +4005,7 @@ class TimelineController extends AppBaseController
             }
 
             if($post->type == 'event'){
-                $post['event'] = Event::where('timeline_id',$post->timeline_id)->latest()->get();
+                $post['event'] = Event::where('timeline_id',$post->timeline_id)->latest()->limit($request->paginate)->offset($request->offset)->get();
                 foreach ($post['event'] as $user_event) {
                     $user_event['event_details'] = $user_event->timeline->username;
                     if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
