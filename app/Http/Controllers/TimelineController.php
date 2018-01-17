@@ -2775,15 +2775,11 @@ class TimelineController extends AppBaseController
 
             if ($request->file('event_images_upload')) {
                 foreach ($request->file('event_images_upload') as $eventImage) {
-                    $strippedName = str_replace(' ', '', $eventImage->getClientOriginalName());
-                    // $photoName = date('Y-m-d-H-i-s').$strippedName;
-                    $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id;
-                    $avatar = Image::make($eventImage->getRealPath())->orientate();
-                    $avatar->save(storage_path().'/uploads/events/covers/'.$photoName, 60);
+                    
                     $media = Media::create([
-                      'title'  => $eventImage->getClientOriginalName(),
+                      'title'  => $eventImage,
                       'type'   => 'image',
-                      'source' => $photoName,
+                      'source' => $eventImage,
                     ]);
 
                     $media_to_attach[$i] = $media;
