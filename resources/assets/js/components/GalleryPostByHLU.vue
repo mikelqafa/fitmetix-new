@@ -54,13 +54,13 @@
                     <span class="ft-loading__dot"></span>
                     <span class="ft-loading__dot"></span>
                 </div>
-                <div class="text-center" v-if="!hasMorePost">
+                <div class="text-center ft-loading ft-loading--transparent" v-if="!hasMorePost">
                     That&apos;s all for now
                 </div>
             </template>
         </template>
         <template v-else="">
-            <div class="text-center">
+            <div class="text-center ft-loading ft-loading--transparent">
                 No Gallery Found
             </div>
         </template>

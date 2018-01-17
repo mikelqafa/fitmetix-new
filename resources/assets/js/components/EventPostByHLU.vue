@@ -202,7 +202,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="text-center" v-if="!hasMorePost">
+                        <div class="text-center ft-loading ft-loading--transparent" v-if="!hasMorePost">
                             No more events to fetch
                         </div>
                         <div v-if="isFetchingBottom" class="ft-loading ft-loading--transparent" style="margin: 50px 0">
@@ -213,7 +213,7 @@
                     </template>
                     <template v-else="">
                         <div v-if="noEventListFound" class="">
-                            <h2 class="ft-loading text-center">
+                            <h2 class="ft-loading ft-loading--transparent text-center">
                                 No Event found
                             </h2>
                         </div>
@@ -392,7 +392,7 @@
                         if(!i) {
                             if(!that.interact) {
                                 that.alreadyHavePost = false
-                                that.noPostFound = true
+                                that.noEventListFound = true
                             } else {
                                 that.hasMorePost = false
                             }

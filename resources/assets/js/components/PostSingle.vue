@@ -36,7 +36,7 @@
             </template>
         </template>
         <template v-else="">
-            <div class="text-center">
+            <div class="text-center ft-loading ft-loading--transparent">
                 No Post Found
             </div>
         </template>

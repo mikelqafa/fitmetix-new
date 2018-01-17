@@ -55,8 +55,8 @@
                 </div>
             </div>
         </div>
-        <div class="text-center" v-else="">
-            <h3>No Event Found</h3>
+        <div class="text-center ft-loading ft-loading--transparent" v-else="">
+            <span>No Event Found</span>
         </div>
     </div>
 </template>
