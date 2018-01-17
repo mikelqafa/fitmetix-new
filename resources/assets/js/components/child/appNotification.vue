@@ -85,14 +85,6 @@
             }
         },
         mounted () {
-            // init the pusher
-            //this.getConversations();
-            //let that = this
-            //$('.coversations-thread').bind('scroll',that.chk_scroll);
-            //$('.coversations-list').bind('scroll',that.chk_scroll);
-            //this.initStateVariable()
-
-            // Get if there are any unread notifications or conversations
             this.getNotificationsCounter()
             this.fetchOldNotification()
         },
