@@ -2175,8 +2175,7 @@ class TimelineController extends AppBaseController
                         ->where('user_id', $user_id);
                 }
             })
-            ->select('events.*', 'timelines.*','events.id as event_id')
-            ->get();
+            ->select('events.*', 'timelines.*','events.id as event_id')->limit($request->paginate)->offset($request->offset)->get();
         }
         else {
             $events = DB::table('events')
@@ -2201,8 +2200,7 @@ class TimelineController extends AppBaseController
                         $query->where('timelines.name','like',$title.'%');
                     }
             })
-            ->select('events.*', 'timelines.*','events.id as event_id')
-            ->get();
+            ->select('events.*', 'timelines.*','events.id as event_id')->limit($request->paginate)->offset($request->offset)->get();
         }
         
 			$a = 0;
@@ -2237,7 +2235,7 @@ class TimelineController extends AppBaseController
                     $event->expired = true;
                 }
 			}
-			return response()->json(['status' => '200', 'deleted' => true, 'data' => $events]);
+			return response()->json(['status' => '200', 'data' => $events]);
 
 		}
 
@@ -3976,7 +3974,7 @@ class TimelineController extends AppBaseController
     public function getGalleryByUsername(Request $request) {
         $timeline = Timeline::where('username', $request->username)->first();
         $user = User::where('timeline_id', $timeline['id'])->first();
-        $allposts = Post::where([['active', 1],['user_id',$user->id]])->limit($request->paginate)->offset($request->offset)->get();
+        $allposts = Post::where([['active', 1],['user_id',$user->id]])->get();
         $posts = [];
         foreach ($allposts as $key => $value) {
             if($value->images()->count() > 0 AND $value->type != 'event') {
