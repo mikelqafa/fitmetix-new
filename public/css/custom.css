@@ -3909,6 +3909,7 @@ aside .md-drawer-scroll__wrapper{
     z-index: 11;
     align-items: center;
     justify-content: center;
+    text-align: center;
     opacity: 0;
     transform: scale(.7) translateY(10px);
     transition: opacity,transform .3s ease;
