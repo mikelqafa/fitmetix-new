@@ -383,7 +383,10 @@
         },
         methods: {
             formatPrice: function(e) {
-                return (e.price == null || 0) ? 'Free' : e.currency == 'EURO' ? '&euro; ' + e.price : '&dollar;' + e.price
+                if(!isNaN(e.price)) {
+                    return (Math.ceil(e.price) ==  0) ? 'Free' : e.currency == 'EURO' ? '&euro; ' + e.price : '&dollar;' + e.price
+                }
+                return 'Free'
             },
             formatUrl: function(u) {
                 return base_url+ 'locate-on-map/' + u

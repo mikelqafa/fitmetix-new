@@ -121,8 +121,11 @@
                 }
                 return obj.toLocaleString('en-us', options)
             },
-            formatPrice: function(p) {
-                return (p == null || 0) ? 'Free' : this.postItem.currency == 'EURO' ? '&euro; ' + p : '&dollar;' + p
+            formatPrice: function(e) {
+                if(!isNaN(e.price)) {
+                    return (Math.ceil(e.price) ==  0) ? 'Free' : e.currency == 'EURO' ? '&euro; ' + e.price : '&dollar;' + e.price
+                }
+                return 'Free'
             },
             formatUrl: function(u) {
                 return base_url+ 'locate-on-map/' + u
