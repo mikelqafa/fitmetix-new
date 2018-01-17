@@ -2754,6 +2754,15 @@ class TimelineController extends AppBaseController
             $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id.$extension;
 
             $avatar->save(storage_path().'/uploads/events/covers/'.$photoName, 60);
+
+            //image width 400
+            $avatar_thumbnail_400 = $avatar;
+            $photoName_thumbnail_400 = '400_'.$photoName;
+            $avatar_thumbnail_400 = $avatar_thumbnail_400->resize(400,null,function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $avatar_thumbnail_400->save(storage_path().'/uploads/users/gallery/'.$photoName_thumbnail_400, 60);
+            
             return response()->json(['status' => '200', $photoName]);
         }
         else {
