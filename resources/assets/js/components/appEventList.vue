@@ -389,7 +389,7 @@
                 return base_url+ 'locate-on-map/' + u
             },
             formatGender: function(g) {
-                return g == '' ? 'Everyone' : g == 'male'? 'Male Only' : 'Female Only'
+                return g == 'all' ? 'Everyone' : g == 'male' ? 'Male Only' : 'Female Only'
             },
             formatDate: function(date) {
                 let str = ''
