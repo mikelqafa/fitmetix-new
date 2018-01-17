@@ -2762,6 +2762,15 @@ class TimelineController extends AppBaseController
                 $constraint->aspectRatio();
             });
             $avatar_thumbnail_400->save(storage_path().'/uploads/events/covers/'.$photoName_thumbnail_400, 60);
+
+            //image width 50
+            $avatar_thumbnail_50 = $avatar;
+            $avatar_thumbnail_50 = $avatar_thumbnail_50->resize(50,null,function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $photoName_thumbnail_50 = '50_'.$photoName;
+            $avatar_thumbnail_50->save(storage_path().'/uploads/events/covers/'.$photoName_thumbnail_50, 60);
+
             return response()->json(['status' => '200', $photoName]);
         }
         else {
