@@ -3976,7 +3976,7 @@ class TimelineController extends AppBaseController
     public function getGalleryByUsername(Request $request) {
         $timeline = Timeline::where('username', $request->username)->first();
         $user = User::where('timeline_id', $timeline['id'])->first();
-        $allposts = Post::where([['active', 1],['user_id',$user->id]])->get();
+        $allposts = Post::where([['active', 1],['user_id',$user->id]])->limit($request->paginate)->offset($request->offset)->get();
         $posts = [];
         foreach ($allposts as $key => $value) {
             if($value->images()->count() > 0 AND $value->type != 'event') {
