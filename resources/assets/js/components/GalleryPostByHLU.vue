@@ -49,7 +49,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="isFetchingBottom" class="ft-loading">
+                <div v-if="isFetchingBottom" class="ft-loading ft-loading--transparent" style="margin: 50px 0">
                     <span class="ft-loading__dot"></span>
                     <span class="ft-loading__dot"></span>
                     <span class="ft-loading__dot"></span>
@@ -72,8 +72,7 @@
     import postWhoLikesView from './child/postWhoLikesView'
     import { mapGetters } from 'vuex'
 
-    let axios = window.axios
-    let custTomData = {
+    let custTomDataHLU = {
         isFetchingBottom: false,
         currentItemList: [],
         isLoadingCurrent: false,
@@ -94,7 +93,7 @@
             newPostAdded: false
         },
         data: function () {
-            return custTomData
+            return custTomDataHLU
         },
         methods: {
             since(date) {
@@ -108,8 +107,8 @@
                 let hashtag = ''
                 let data = {}
                 data.username =  current_username
-                data.offset =  0
-                data.paginate =  10
+                data.offset =  this.offset
+                data.paginate =  6
 
                 let l = $('#galleryByLocation')
                 if(l !== undefined && l.length) {
@@ -137,8 +136,6 @@
 
                 this.onlyImagePost = true
 
-                let paginate = 4
-
                 let _token = $("meta[name=_token]").attr('content')
 
                 data._token = _token
@@ -151,7 +148,6 @@
                     if (response.status ==  200) {
                         let posts = response.data[0].posts;
                         let i = 0
-                        console.log(response)
                         $.each(posts, function(key, val) {
                             if(val.images !== undefined && val.images.length) {
                                 let obj = {}
@@ -177,7 +173,7 @@
                             mentionify();
                         }, 500)
                         that.inProgress = false
-                        that.hasMorePost = i == paginate;
+                        that.hasMorePost = i == data.paginate;
                         that.offset += i
                         that.isFetchingBottom = false
                     }
@@ -187,22 +183,23 @@
             },
             scrollFetchInit: function () {
                 let that = this
-                // TODO disable scroll fectch
-                /*$(window).scroll(function() {
+                $(window).scroll(function() {
                     if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+                        console.log('in')
                         if(!that.inProgress && that.hasMorePost ){
+                            console.log('working')
                             that.isFetchingBottom = true
                             that.getDefaultData()
                             that.inProgress = true
                         }
                     }
-                });*/
+                });
             },
             fetchNewOnePost: function (postId) {
                 this.fetchNew(postId)
             },
             fetchNew: function (postId){
-                custTomData.isLoadingCurrent = true
+                custTomDataHLU.isLoadingCurrent = true
                 let _token = $("meta[name=_token]").attr('content')
 
                 let username = current_username
@@ -222,7 +219,7 @@
                     }
                 }).then( function (response) {
                     let that = this
-                    custTomData.isLoadingCurrent = false
+                    custTomDataHLU.isLoadingCurrent = false
                     if (response.status ==  200) {
                         let post = response.data[0].post;
                         vmThat.$store.commit('ADD_POST_ITEM_LIST',{data:post[0], postFrom: 'timeline'})
@@ -240,6 +237,7 @@
             let that = this
             vmThat = this
             that.getDefaultData()
+            this.scrollFetchInit()
         },
         components: {
             'post-image-viewer': postImageViewer,

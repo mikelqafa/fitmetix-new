@@ -154,6 +154,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div v-if="isFetchingBottom" class="ft-loading ft-loading--transparent" style="margin: 50px 0">
+                            <span class="ft-loading__dot"></span>
+                            <span class="ft-loading__dot"></span>
+                            <span class="ft-loading__dot"></span>
+                        </div>
+                        <div class="hidden text-center" v-if="!hasMorePost">
+                            That&apos;s all for now
+                        </div>
                     </template>
                     <template v-else-if="!noEventListFound">
                         <div class="ft-grid">
@@ -262,7 +270,8 @@
                 location: false,
                 hashtag: false,
                 enableOverlay: false,
-                eventUnid: 'event-dialog-opener'
+                eventUnid: 'event-dialog-opener',
+                hasMorePost:true
             }
         },
         methods: {
@@ -332,14 +341,32 @@
                     url: url
                 }).then( function (response) {
                     if (response.status ==  200) {
-                        that.eventList = []
+                        /*that.eventList = []
                         for(let i = 0; i< response.data.data.length; i++) {
                             that.eventList.unshift(response.data.data[i])
-                        }
-                        if(!that.eventList.length) {
+                        }*/
+                        /*if(!that.eventList.length) {
                             that.noEventListFound = true
                         } else {
                             that.noEventListFound = false
+                        }*/
+                        let posts = response.data[0].posts;
+                        let i = 0
+                        $.each(posts, function(key, val) {
+                            if(val.images !== undefined && val.images.length) {
+                                that.eventList.unshift(val)
+                                i++
+                            }
+                        });
+                        if(!i) {
+                            if(!that.interact) {
+                                that.alreadyHavePost = false
+                                that.noPostFound = true
+                            } else {
+                                that.noPostFound = true
+                            }
+                        } else {
+                            that.interact = true
                         }
                         setTimeout(function () {
                             emojify.run();
