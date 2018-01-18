@@ -31,6 +31,7 @@
             postIndex: 0,
             postEvent: {},
             galleryView: false,
+            postId:'',
             disableShowcase: false
         },
         data: function () {
@@ -61,8 +62,13 @@
                 if (this.disableShowcase) {
                     return
                 }
-                this.$store.commit('SET_THEATER_ITEM', {postIndex: this.postIndex, imageIndex: imageIndex})
-                $('#post-image-theater-dialog').MaterialDialog('show')
+                if(this.galleryView  && ($(window).width() < 960)) {
+                    window.location.href = base_url+'post/' + this.postId
+                    return
+                } else {
+                    this.$store.commit('SET_THEATER_ITEM', {postIndex: this.postIndex, imageIndex: imageIndex})
+                    $('#post-image-theater-dialog').MaterialDialog('show')
+                }
             }
         },
         mounted () {

@@ -45,7 +45,7 @@
                 <div class="post-filters post-filters--auto-width">
                     <div class="ft-grid">
                         <div v-for="(postItem, index) in itemList" :key="postItem.id" class="ft-grid__item" :id="'ft-post'+postItem.id">
-                            <post-image-viewer :gallery-view="true" :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
+                            <post-image-viewer :gallery-view="true"  :post-id="postItem.id" :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
                         </div>
                     </div>
                 </div>
