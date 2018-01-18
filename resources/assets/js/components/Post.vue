@@ -211,6 +211,7 @@
                     }
                 }).then( function (response) {
                     custTomData.isLoadingCurrent = false
+                    that.noPostFound = false
                     if (response.status ==  200) {
                         let post = response.data[0].post;
                         post.timeline = response.data[0].timeline
