@@ -251,6 +251,7 @@
             itemList: function (val) {
                 if(val.length) {
                     this.noPostFound = false
+                    this.interact = true
                 } else {
                     if(this.interact) {
                         this.alreadyHavePost = false
