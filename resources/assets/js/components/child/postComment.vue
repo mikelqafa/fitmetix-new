@@ -1,6 +1,6 @@
 <template>
-    <div style="width: 100%" class="ft-theme--color">
-        <div class="panel-footer ft-socialite meta-font">
+    <div style="width: 100%">
+        <div class="panel-footer ft-theme--color ft-socialite meta-font">
             <div class="ft-comment md-layout md-layout--row">
                 <div class="ft-comment__item md-layout md-layout--row">
                     <a href="javascript:;" class="ft-expression ft-expression--likes" v-bind:class="{ 'ft-expression--liked': userLiked }"
