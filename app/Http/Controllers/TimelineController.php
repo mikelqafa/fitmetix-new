@@ -4217,12 +4217,16 @@ class TimelineController extends AppBaseController
 
     public function getEventByDate(Request $request) {
 
-        $events_all = Event::where('start_date','>=',$request->start_date)->get();
+        $events_all = Event::where('start_date','>=',$request->start_date)->with('timeline')->get();
         $events = [];
         foreach ($events_all as $key => $event) {
             if($event->users->contains(Auth::user()->id)){
                 $events[$key] = $event;
-                $events[$key]['details_link'] = $event->timeline->username;
+                $events[$key]['details_link'] = '';
+                $post = Post::where('timeline_id',$event->timeline_id)->first();
+                if($post){
+                    $events[$key]['details_link'] = 'post/'.$post->id;
+                }
             }
         }
         return response()->json(['status' => '200', ['events'=>$events]]);

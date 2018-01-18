@@ -43,7 +43,7 @@ function fetchEvent() {
         var m = allEvents[i].start_date.substr(5,2);
         m = parseInt(m)
         var d = allEvents[i].start_date.substr(8,2);
-        events.push({'Date': new Date(y, m-1, d), 'Title': allEvents[i].timeline.name})
+        events.push({'Date': new Date(y, m-1, d), 'Title': allEvents[i].timeline.name, 'Link': allEvents[i].details_link})
       }
       var element = document.getElementById('caleandar');
       caleandar(element, events, {});
