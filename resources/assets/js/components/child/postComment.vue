@@ -1,5 +1,5 @@
 <template>
-    <div style="width: 100%">
+    <div style="width: 100%" class="ft-theme--color">
         <div class="panel-footer ft-socialite meta-font">
             <div class="ft-comment md-layout md-layout--row">
                 <div class="ft-comment__item md-layout md-layout--row">

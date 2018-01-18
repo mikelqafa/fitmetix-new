@@ -6088,7 +6088,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
     }
 }
 body {
-    background: #EFF3F6;
+    background: #fafafa;
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 14px;
     color: #354052;
@@ -14837,7 +14837,7 @@ html {
     line-height: 33px;
 }
 .widget-left-panel .categotry-list li .hash-icon {
-    background-color: #1991EB;
+    background-color: rgb(30,124,130);
     height: 20px;
     width: 20px;
     border-radius: 50%;
