@@ -64,11 +64,11 @@
                         </div>
                     </div>
 
-
-                    <div class="md-layout md-layout-spacer mobile-layout-column__register-group mobile-layout-column md-layout--row md-align md-align-start-center" style="width: 100%">
-                        <div class="mail-form  form-group form-group__adjust pos-rel">
-                            <input class="form-control" id="datepicker1" placeholder="Birthday" name="birthday" type="text" required readonly="true">
-                            {{--<input class="form-control" id="datepicker-hidden" placeholder="Birthday" name="birthday" type="date">--}}
+                     <div class="md-layout layout-m-b-1 layout-m-b-1--register md-layout-spacer mobile-layout-column__register mobile-layout-column md-layout--row md-align md-align-start-center" style="width: 100%;">
+                        <div class="mail-form  form-group form-group__adjust">
+                            <a class="" href="{!! url('login') !!}" class="forgot-password">
+                                <i class="icon icon-user"></i> {{ trans('auth.already_have_an_account') }}
+                            </a>
                         </div>
                         <div class="form-group form-group__adjust">
                             <select class="form-control" id="gender" required name="gender">
@@ -78,18 +78,32 @@
                             </select>
                         </div>
                     </div>
+
+
+                    {{-- <div class="md-layout md-layout-spacer mobile-layout-column__register-group mobile-layout-column md-layout--row md-align md-align-start-center"> --}}
+                        {{-- <div class="mail-form  form-group form-group__adjust pos-rel">
+                            <input class="form-control" id="datepicker1" placeholder="Birthday" name="birthday" type="text" required readonly="true">
+                        </div> --}}
+                        {{-- <div class="mail-form  form-group form-group__adjust">
+                            <select class="form-control" id="gender" required name="gender">
+                                <option value="">Gender</option>
+                                <option value="female" @if(isset($data['gender']) && $data['gender'] == 'female') selected="selected" @endif>Female</option>
+                                <option value="male" @if(isset($data['gender']) && $data['gender'] == 'male') selected="selected" @endif>Male</option>
+                            </select>
+                        </div>
+                    </div> --}}
                     @if(isset($data['social']) && $data['social'])
                         <input type="hidden" value="{{ $data['avatar'] }}" name="avatar">
                         <input type="hidden" value="1" name="social">
                     @endif
-                    <div class="layout-m-t-0 layout-m-t-0--register md-layout md-layout-flex layout-p-r-0 adjust-mobile-center" style="width: 100%">
+                    {{-- <div class="layout-m-t-0 layout-m-t-0--register md-layout md-layout-flex layout-p-r-0 adjust-mobile-center" style="width: 100%">
                         <div class="md-layout-spacer"></div>
                         <div class="list-inline layout-p-l-1--sm  list-inline__login  layout-p-r-1--sm">
                             <a class="" href="{!! url('login') !!}" class="forgot-password">
                                 <i class="icon icon-user"></i> {{ trans('auth.already_have_an_account') }}
                             </a>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="md-layout layout-m-t-0 layout-p-r-0" style="width: 100%">
                         <div class="md-layout-spacer"></div>
