@@ -117,7 +117,7 @@
                 }).then( function (response) {
                     that.process = false
                     if (response.status ==  200) {
-                        materialSnackBar({autoClose: true, message: response.data.data.message})
+                        materialSnackBar({autoClose: true, 'Following request accepted'})
                         axios({
                             method: 'post',
                             responseType: 'json',
