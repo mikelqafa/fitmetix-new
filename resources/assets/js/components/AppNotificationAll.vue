@@ -29,12 +29,12 @@
                             <div class="md-list--abs">
                                 <div class="md-layout ft-nt-group md-layout--row"  v-if="item.type == 'follow_requested_accept'">
                                     <div class="color-accept" title="Accepted">
-                                        <i class="icon icon-accept"></i> Accepted
+                                        Accepted
                                     </div>
                                 </div>
                                 <div class="md-layout ft-nt-group md-layout--row"  v-if="item.type == 'follow_requested_deny'">
                                     <div class="color-deny">
-                                        <i class="icon icon-close"></i> Denied
+                                        Denied
                                     </div>
                                 </div>
                             </div>
