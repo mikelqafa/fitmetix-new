@@ -247,6 +247,17 @@
             'app-post-share': appPostShare,
             'event-participate-list': eventParticipateList
         },
+        watch:{
+            itemList: function (val) {
+                if(val.length) {
+                    this.noPostFound = false
+                } else {
+                    if(this.interact) {
+                        this.alreadyHavePost = false
+                    }
+                }
+            }
+        },
         computed: {
             ...mapGetters({
                     itemList: 'postItemList'
