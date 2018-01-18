@@ -273,8 +273,7 @@
                                             </div>
                                             <div class="ft-card__list">
                                                 <div class="icon icon-label-o"></div>
-                                                <div class="card-desc">
-                                                    {{ formatPrice(item) }}
+                                                <div class="card-desc" v-html="formatPrice(item)">
                                                 </div>
                                             </div>
                                         </div>
