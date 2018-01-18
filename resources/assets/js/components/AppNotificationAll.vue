@@ -156,7 +156,7 @@
                 }).then( function (response) {
                     that.process = false
                     if (response.status ==  200) {
-                        materialSnackBar({autoClose: true, message: response.data.message})
+                        materialSnackBar({autoClose: true, message: response.data.data.message})
                         axios({
                             method: 'post',
                             responseType: 'json',
