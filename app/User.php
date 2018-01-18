@@ -302,7 +302,7 @@ class User extends Authenticatable
     {
         $chk_user = DB::table('followers')->where('follower_id', $user_id)->where('leader_id', Auth::user()->id)->first();
         $result = false;
-        if ($chk_user['status'] == 'pending') {
+        if ($chk_user->status == 'pending') {
             $result = DB::table('followers')->where('follower_id', $user_id)->where('leader_id', Auth::user()->id)->delete();
         }
 
