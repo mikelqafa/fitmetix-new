@@ -254,7 +254,7 @@
                 } else {
                     if(this.interact) {
                         this.alreadyHavePost = false
-                        this.noPostFound = false
+                        this.noPostFound = true
                     }
                 }
             }
