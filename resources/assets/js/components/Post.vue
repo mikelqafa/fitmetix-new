@@ -198,6 +198,7 @@
             },
             fetchNew: function (postId){
                 custTomData.isLoadingCurrent = true
+                let that = this
                 let _token = $("meta[name=_token]").attr('content')
                 axios({
                     method: 'post',
