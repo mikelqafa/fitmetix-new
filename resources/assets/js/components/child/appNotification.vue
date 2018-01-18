@@ -102,7 +102,7 @@
             this.fetchOldNotification()
         },
         methods: {
-            acceptRequest: function (item) {
+            acceptRequest: function (item, index) {
                 let _token = $("meta[name=_token]").attr('content')
                 this.process = true
                 let that = this
@@ -138,7 +138,7 @@
                     console.log(error)
                 })
             },
-            denyRequest: function (item) {
+            denyRequest: function (item, index) {
                 let _token = $("meta[name=_token]").attr('content')
                 this.process = true
                 let that = this
