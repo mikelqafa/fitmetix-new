@@ -28,7 +28,7 @@
                                                  class="timeago"></timeago>
                                     </div>
                                     <div class="md-layout-spacer"></div>
-                                    <div class="md-layout ft-nt-group md-layout--row" v-if="item.type == 'follow_requested'">
+                                    <div class="md-layout ft-nt-group md-layout--row" v-if="item.type == 'follow_requested' && (item.type !== 'follow_requested_accept' || item.type !=='follow_requested_deny')">
                                         <a class="md-list__item-secondary-action color-deny" @click="denyRequest(item, index)" href="#" title="Deny">
                                             <i class="icon icon-close"></i>
                                         </a>
@@ -36,15 +36,27 @@
                                             <i class="icon icon-accept"></i>
                                         </a>
                                     </div>
+                                </div>
+                                <div class="md-list--abs">
                                     <div class="md-layout ft-nt-group md-layout--row"  v-if="item.type == 'follow_requested_accept'">
-                                        <a class="md-list__item-secondary-action color-accept" href="javascript:;" title="Accept">
-                                            <i class="icon icon-accept"></i>
-                                        </a>
+                                        <div class="color-accept" title="Accepted">
+                                            <i class="icon icon-accept"></i> Accepted
+                                        </div>
+                                    </div>
+                                    <div class="md-layout ft-nt-group md-layout--row"  v-if="item.type == 'follow_requested_deny'">
+                                        <div class="color-deny">
+                                            <i class="icon icon-close"></i> Denied
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </a>
+                    <div v-if="process" class="ft-loading">
+                        <span class="ft-loading__dot"></span>
+                        <span class="ft-loading__dot"></span>
+                        <span class="ft-loading__dot"></span>
+                    </div>
                     <a :href="allNotificationLink" data-user-id="26" class="ft-chat__item">
                         <div class="md-list__item md-list__item--see-all">
                             <div class="md-list__item-content">
@@ -79,6 +91,7 @@
                 notificationsLoading: false,
                 allNotificationLink: base_url + 'allnotifications',
                 redirect: false,
+                process: false,
                 config: {
                     
                 }
@@ -91,15 +104,18 @@
         methods: {
             acceptRequest: function (item) {
                 let _token = $("meta[name=_token]").attr('content')
+                this.process = true
+                let that = this
                 axios({
                     method: 'post',
                     responseType: 'json',
                     url: base_url+'ajax/follow-accept',
                     data :{
                         _token: _token,
-                        user_id: user_id
+                        user_id: item.notified_from.id
                     }
                 }).then( function (response) {
+                    that.process = false
                     if (response.status ==  200) {
                         materialSnackBar({autoClose: true, message: response.data.message})
                         axios({
@@ -124,15 +140,18 @@
             },
             denyRequest: function (item) {
                 let _token = $("meta[name=_token]").attr('content')
+                this.process = true
+                let that = this
                 axios({
                     method: 'post',
                     responseType: 'json',
                     url: base_url+'ajax/follow-reject',
                     data :{
                         _token: _token,
-                        user_id: user_id
+                        user_id: item.notified_from.id
                     }
                 }).then( function (response) {
+                    that.process = false
                     if (response.status ==  200) {
                         axios({
                             method: 'post',
@@ -175,6 +194,9 @@
                     case 'follow_requested_deny':
                         url =  base_url + item.notified_from.username
                     break
+                    case 'accept_follow_request':
+                        url =  base_url + item.notified_from.username
+                        break
                     default:
                         url =  base_url + 'post/'+item.post_id
                 }

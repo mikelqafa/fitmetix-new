@@ -16,14 +16,14 @@
                                 </div>
                             </div>
                             <div class="md-list__image" v-if="notificationImageUrl(item) !== ''" v-bind:style="{ backgroundImage: 'url(' + notificationImageUrl(item) + ')' }"></div>
-                            <div class="md-list__item-secondary">
+                            <div class="md-list__item-secondary pos-rel">
                                 <div class="md-list__item-secondary-info">
                                     <timeago :since="since(item.created_at)"
                                              :auto-update="autoUpdate"
                                              class="timeago"></timeago>
                                 </div>
                                 <div class="md-layout-spacer"></div>
-                                <div class="md-layout ft-nt-group md-layout--row" v-if="item.type == 'follow_requested'">
+                                <div class="md-layout ft-nt-group md-layout--row" v-if="item.type == 'follow_requested' && (item.type !== 'follow_requested_accept' || item.type !=='follow_requested_deny')">
                                     <a class="md-list__item-secondary-action color-deny" @click="denyRequest(item, index)" href="#" title="Deny">
                                         <i class="icon icon-close"></i>
                                     </a>
@@ -31,10 +31,17 @@
                                         <i class="icon icon-accept"></i>
                                     </a>
                                 </div>
+                            </div>
+                            <div class="md-list--abs">
                                 <div class="md-layout ft-nt-group md-layout--row"  v-if="item.type == 'follow_requested_accept'">
-                                    <a class="md-list__item-secondary-action color-accept" href="javascript:;" title="Accept">
-                                        <i class="icon icon-accept"></i>
-                                    </a>
+                                    <div class="color-accept" title="Accepted">
+                                        <i class="icon icon-accept"></i> Accepted
+                                    </div>
+                                </div>
+                                <div class="md-layout ft-nt-group md-layout--row"  v-if="item.type == 'follow_requested_deny'">
+                                    <div class="color-deny">
+                                        <i class="icon icon-close"></i> Denied
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -54,6 +61,7 @@
         data: function () {
             return {
                 autoUpdate: 60,
+                process:false,
                 notificationsLoaded: false,
                 notificationsLoading: false
             }
@@ -117,6 +125,76 @@
                     str.replace(/\s/, 'T')
                 }
                 return date != '' ? new Date(str+'Z').getTime() : new Date().getTime()
+            },
+            acceptRequest: function (item) {
+                let _token = $("meta[name=_token]").attr('content')
+                this.process = true
+                let that = this
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url+'ajax/follow-accept',
+                    data :{
+                        _token: _token,
+                        user_id: item.notified_from.id
+                    }
+                }).then( function (response) {
+                    that.process = false
+                    if (response.status ==  200) {
+                        materialSnackBar({autoClose: true, message: response.data.message})
+                        axios({
+                            method: 'post',
+                            responseType: 'json',
+                            url: base_url+'ajax/notification-reacted',
+                            data :{
+                                _token: _token,
+                                type: 'follow_requested_accept',
+                                notification_id: item.id
+                            }
+                        }).then( function (response) {
+                            console.log(response)
+                            if (response.status ==  200) {
+                                that.$store.commit('CHANGE_NOTIFICATION_TYPE', {index: index, changed: 'follow_requested_accept'})
+                            }
+                        })
+                    }
+                }).catch(function(error) {
+                    console.log(error)
+                })
+            },
+            denyRequest: function (item) {
+                let _token = $("meta[name=_token]").attr('content')
+                this.process = true
+                let that = this
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url+'ajax/follow-reject',
+                    data :{
+                        _token: _token,
+                        user_id: item.notify_from
+                    }
+                }).then( function (response) {
+                    that.process = false
+                    if (response.status ==  200) {
+                        axios({
+                            method: 'post',
+                            responseType: 'json',
+                            url: base_url+'ajax/notification-reacted',
+                            data :{
+                                _token: _token,
+                                type: 'follow_requested_deny',
+                                notification_id: item.id
+                            }
+                        }).then( function (response) {
+                            if (response.status ==  200) {
+                                that.$store.commit('CHANGE_NOTIFICATION_TYPE', {index: index, changed: 'follow_requested_deny'})
+                            }
+                        })
+                    }
+                }).catch(function(error) {
+                    console.log(error)
+                })
             }
         },
         computed: {

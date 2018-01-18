@@ -3997,3 +3997,8 @@ aside .md-drawer-scroll__wrapper{
 .md-chip__remove .icon{
     line-height: 1;
 }
+.md-list--abs{
+    position: absolute;
+    top: 14px;
+    right: 4px;
+}

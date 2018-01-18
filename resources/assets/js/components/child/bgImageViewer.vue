@@ -62,7 +62,7 @@
                 if (this.disableShowcase) {
                     return
                 }
-                if(this.galleryView  && ($(window).width() < 960)) {
+                if(this.galleryView  && ($(window).width() < 600)) {
                     window.location.href = base_url+'post/' + this.postId
                     return
                 } else {

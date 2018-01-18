@@ -1077,7 +1077,6 @@ class UserController extends AppBaseController
     public function acceptFollowRequest(Request $request)
     {
         $user = User::find($request->user_id);
-
         $follow_user = $user->updateFollowStatus($request->user_id);
 
         if ($follow_user) {

@@ -26,6 +26,18 @@
                                     <i class="hidden material-icons">star</i>
                                 </a>
                             </div>
+                            <div class="md-list--abs">
+                                <div class="md-layout ft-nt-group md-layout--row"  v-if="item.type == 'follow_requested_accept'">
+                                    <div class="color-accept" title="Accepted">
+                                        <i class="icon icon-accept"></i> Accepted
+                                    </div>
+                                </div>
+                                <div class="md-layout ft-nt-group md-layout--row"  v-if="item.type == 'follow_requested_deny'">
+                                    <div class="color-deny">
+                                        <i class="icon icon-close"></i> Denied
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </a>
@@ -79,6 +91,21 @@
                     case 'unfollow':
                         url =  base_url + item.notified_from.username
                         break
+                    case 'follow_requested':
+                        url =  base_url + item.notified_from.username
+                        break
+                    case 'follow_requested_accept':
+                        url =  base_url + item.notified_from.username
+                        break
+                    case 'join_event':
+                        url =  base_url + item.notified_from.username
+                        break
+                    case 'follow_requested_deny':
+                        url =  base_url + item.notified_from.username
+                        break
+                    case 'accept_follow_request':
+                        url =  base_url + item.notified_from.username
+                        break
                     case 'unlike_post':
                         url =  base_url + 'post/'+item.post_id
                         break
@@ -113,6 +140,76 @@
                     str.replace(/\s/, 'T')
                 }
                 return date != '' ? new Date(str+'Z').getTime() : new Date().getTime()
+            },
+            acceptRequest: function (item) {
+                let _token = $("meta[name=_token]").attr('content')
+                this.process = true
+                let that = this
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url+'ajax/follow-accept',
+                    data :{
+                        _token: _token,
+                        user_id: item.notified_from.id
+                    }
+                }).then( function (response) {
+                    that.process = false
+                    if (response.status ==  200) {
+                        materialSnackBar({autoClose: true, message: response.data.message})
+                        axios({
+                            method: 'post',
+                            responseType: 'json',
+                            url: base_url+'ajax/notification-reacted',
+                            data :{
+                                _token: _token,
+                                type: 'follow_requested_accept',
+                                notification_id: item.id
+                            }
+                        }).then( function (response) {
+                            console.log(response)
+                            if (response.status ==  200) {
+                                that.$store.commit('CHANGE_NOTIFICATION_TYPE', {index: index, changed: 'follow_requested_accept'})
+                            }
+                        })
+                    }
+                }).catch(function(error) {
+                    console.log(error)
+                })
+            },
+            denyRequest: function (item) {
+                let _token = $("meta[name=_token]").attr('content')
+                this.process = true
+                let that = this
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url+'ajax/follow-reject',
+                    data :{
+                        _token: _token,
+                        user_id: item.notify_from
+                    }
+                }).then( function (response) {
+                    that.process = false
+                    if (response.status ==  200) {
+                        axios({
+                            method: 'post',
+                            responseType: 'json',
+                            url: base_url+'ajax/notification-reacted',
+                            data :{
+                                _token: _token,
+                                type: 'follow_requested_deny',
+                                notification_id: item.id
+                            }
+                        }).then( function (response) {
+                            if (response.status ==  200) {
+                                that.$store.commit('CHANGE_NOTIFICATION_TYPE', {index: index, changed: 'follow_requested_deny'})
+                            }
+                        })
+                    }
+                }).catch(function(error) {
+                    console.log(error)
+                })
             }
         },
         computed: {
