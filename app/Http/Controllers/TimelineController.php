@@ -3878,7 +3878,7 @@ class TimelineController extends AppBaseController
         $timeline = Timeline::where('username', $request->username)->first();
         $location = $request->location;
         $user = User::where('timeline_id', $timeline['id'])->first();
-        $allposts = Post::where([['active', 1],['location','like','%'.$location.'%']])->get();
+        $allposts = Post::where([['active', 1],['location','like','%'.$location.'%']])->latest()->get();
         $posts = [];
         $i = 0;
         $start = $request->offset;
@@ -3935,7 +3935,7 @@ class TimelineController extends AppBaseController
         $timeline = Timeline::where('username', $request->username)->first();
         $hashtag = $request->hashtag;
         $user = User::where('timeline_id', $timeline['id'])->first();
-        $allposts = Post::where([['active', 1],['description','like','%'.$hashtag.'%'],['user_id',$user->id]])->get();
+        $allposts = Post::where([['active', 1],['description','like','%'.$hashtag.'%'],['user_id',$user->id]])->latest()->get();
         $posts = [];
         $i = 0;
         $start = $request->offset;
@@ -3991,7 +3991,7 @@ class TimelineController extends AppBaseController
     public function getGalleryByUsername(Request $request) {
         $timeline = Timeline::where('username', $request->username)->first();
         $user = User::where('timeline_id', $timeline['id'])->first();
-        $allposts = Post::where([['active', 1],['user_id',$user->id]])->get();
+        $allposts = Post::where([['active', 1],['user_id',$user->id]])->latest()->get();
         $posts = [];
         $i = 0;
         $start = $request->offset;
