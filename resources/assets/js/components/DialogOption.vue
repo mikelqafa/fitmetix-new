@@ -194,18 +194,12 @@
                         FB.ui({
                             method: 'feed',
                             name: 'shared the post',
-                            link: 'http://www.fitmetix.com'+'post/'+that.postItem.id,
+                            link: base_url+'post/'+that.postItem.id,
                             picture: that.postItem.postImg !== undefined ? '' : that.postItem.postImg,
                             description: that.postItem.description
                         }, function (response) {
                             console.log(response)
                         })
-                        break
-                    case 'google':
-                        window.open('https://plus.google.com/share?url=' + this.metaTag.url + '&text=' + this.metaTag.title + '&via=freekaadeal', '', 'menubar=no, toolbar=no,resizeable=yes,scrollbars=yes,height=300,width=600')
-                        break
-                    case 'twitter':
-                        window.open('https://twitter.com/share?url=' + this.metaTag.url + '&text=' + this.metaTag.title + '&via=freekaadeal', '', 'menubar=no, toolbar=no,resizeable=yes,scrollbars=yes,height=300,width=600')
                         break
                 }
             }
