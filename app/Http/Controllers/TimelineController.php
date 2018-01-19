@@ -531,11 +531,26 @@ class TimelineController extends AppBaseController
             else
                 $extension = '';
             $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id.$extension;
+            
+            $width = $avatar->width();
+
+            if($width > 1200) {
+                $avatar = $avatar->resize(1200,null,function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    });
+            }
+            
+            $height = $avatar->height();
+
+            if($height > 1000) {
+                    $avatar = $avatar->resize(null,1000,function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    });
+            }
+
             // post image size max-width 1200
-            $avatar = $avatar->resize(1200,null,function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            });
             $avatar->save(storage_path().'/uploads/users/gallery/'.$photoName, 60);
 
             //image width 400
@@ -1261,14 +1276,13 @@ class TimelineController extends AppBaseController
             if($user->settings()->confirm_follow == "no"){
                 $user->followers()->attach(Auth::user()->id, ['status' => 'pending']);
                 $follow_status = 'pending';
+
+                Notification::create(['user_id' => $user->id, 'timeline_id' => Auth::user()->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.request_follow'), 'type' => 'follow_requested']);
             }
             else {
                 $user->followers()->attach(Auth::user()->id, ['status' => 'approved']);
                 $follow_status = 'approved';
             }
-
-            //Notify the user for page like
-            Notification::create(['user_id' => $user->id, 'timeline_id' => Auth::user()->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.request_follow'), 'type' => 'follow_requested']);
 
             return response()->json(['status' => '200', 'followrequest' => true, 'message' => 'successfully sent user follow request','follow_status'=>$follow_status]);
         } else {
@@ -2434,6 +2448,16 @@ class TimelineController extends AppBaseController
 											]);
 		DB::table('timelines')->where('id','=',$event[0]['timeline_id'])->update(['name' => $title,'about' => $description]);
 		DB::table('posts')->where('timeline_id','=',$event[0]['timeline_id'])->update(['description' => $description]);
+
+        $event_edited = Event::find($event_id);
+        $notify_users = $event_edited->users()->where('users.id','!=',Auth::user()->id)->get();
+
+        $post = Post::where('timeline_id',$event_edited->timeline_id)->first();
+
+        foreach ($notify_users as $notify_user) {
+            Notification::create(['user_id' => $notify_user->id, 'timeline_id' => $event_edited->timeline_id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' edited event', 'type' => 'edit_event', 'link' => '/post/'.$post->id]);
+        }
+
 		return response()->json(['status' => '200','error' => FALSE,'err_msg'=>'','success'=>TRUE]);
 	}
 
@@ -3687,8 +3711,8 @@ class TimelineController extends AppBaseController
             ->render();
     }
 
-    public function editEvent(Request $request, $id){
-        $event = Event::find($id);
+    public function editEvent(Request $request){
+        $event = Event::find($request->event_id);
 
         $input = $request->all();
 

@@ -203,7 +203,7 @@ Route::post('/ajax/get-events-on-homepage','TimelineController@eventOnHomePageAP
 Route::get('/ajax/get-suggested-users','TimelineController@suggestedUsersAPI');
 Route::get('/ajax/get-register-button','TimelineController@getRegisterButton');
 Route::post('/ajax/get-event-post-by-eventid','TimelineController@getPostByEventId');
-Route::get('/ajax/update-event','TimelineController@updateEvent');
+Route::post('/ajax/update-event','TimelineController@updateEvent');
 Route::post('/ajax/set-user-background-color','TimelineController@setUserBackground');
 Route::get('/ajax/get-notification-status','TimelineController@getNotificationStatus');
 Route::get('/ajax/on-off-notification','TimelineController@onOffNotification');
