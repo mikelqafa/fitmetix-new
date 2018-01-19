@@ -37,7 +37,7 @@
                     paginationClickable: true,
                     spaceBetween: 0,
                     loop: false,
-                    autoHeight: true,
+                    autoHeight: false,
                     pagination: '.swiper-pagination',
                     prevButton: '.swiper-button-prev',
                     preloadImages: false,
