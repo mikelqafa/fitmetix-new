@@ -4002,3 +4002,20 @@ aside .md-drawer-scroll__wrapper{
     top: 14px;
     right: 4px;
 }
+#post-edit-option-dialog .write-post {
+    padding-left:  16px;
+    padding-right:  16px;
+}
+
+#event-edit-option-dialog .panel-body {
+    padding-left: 16px;
+    padding-right: 16px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+}
+
+#post-edit-option-dialog .post-image--wrapper,
+#event-edit-option-dialog .post-image--wrapper {
+    max-height: calc(100vh - 210px);
+    overflow:  hidden;
+}
