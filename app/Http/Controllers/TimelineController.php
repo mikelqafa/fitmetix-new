@@ -1272,16 +1272,32 @@ class TimelineController extends AppBaseController
     {
         $user = User::where('timeline_id', '=', $request->timeline_id)->first();
 
+        $user_settings = $user->getUserSettings($user->id);
+
         if (!$user->followers->contains(Auth::user()->id)) { 
             if($user->settings()->confirm_follow == "no"){
                 $user->followers()->attach(Auth::user()->id, ['status' => 'pending']);
                 $follow_status = 'pending';
 
                 Notification::create(['user_id' => $user->id, 'timeline_id' => Auth::user()->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.request_follow'), 'type' => 'follow_requested']);
+
+                if ($user_settings && $user_settings->email_follow == 'yes') {
+                    Mail::send('emails.followmail', ['user' => $user, 'follow' => $user], function ($m) use ($user, $user) {
+                        $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
+                        $m->to($user->email, $user->name)->subject(Auth::user()->name.' requested to follow you');
+                    });
+                }
             }
             else {
                 $user->followers()->attach(Auth::user()->id, ['status' => 'approved']);
                 $follow_status = 'approved';
+
+                if ($user_settings && $user_settings->email_follow == 'yes') {
+                    Mail::send('emails.followmail', ['user' => $user, 'follow' => $user], function ($m) use ($user, $user) {
+                        $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
+                        $m->to($user->email, $user->name)->subject(Auth::user()->name.' '.trans('common.follows_you'));
+                    });
+                }
             }
 
             return response()->json(['status' => '200', 'followrequest' => true, 'message' => 'successfully sent user follow request','follow_status'=>$follow_status]);

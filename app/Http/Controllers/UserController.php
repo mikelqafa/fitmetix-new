@@ -1079,11 +1079,21 @@ class UserController extends AppBaseController
         $user = User::find($request->user_id);
         $follow_user = $user->updateFollowStatus($request->user_id);
 
+        $user_settings = $user->getUserSettings($user->id);
+
         if ($follow_user) {
             Flash::success(trans('messages.request_accepted'));
         }
         //Notify the user for accepting the follow request
         Notification::create(['user_id' => $request->user_id, 'timeline_id' => $user->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.accepted_follow_request'), 'type' => 'accept_follow_request', 'link' => Auth::user()->username.'/followers']);
+
+
+        if ($user_settings && $user_settings->email_follow == 'yes') {
+            Mail::send('emails.followmail', ['user' => $user, 'follow' => $user], function ($m) use ($user, $user) {
+                $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
+                $m->to($user->email, $user->name)->subject(Auth::user()->name.' '.trans('common.follows_you'));
+          });
+        }
 
         return response()->json(['status' => '200', 'accepted' => true, 'message' => 'follow request successfully accepted']);
     }
