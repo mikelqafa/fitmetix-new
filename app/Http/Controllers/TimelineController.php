@@ -2998,18 +2998,6 @@ class TimelineController extends AppBaseController
     public function deleteEvent(Request $request)
     {
         $event = Event::find($request->event_id);
-        
-        //Deleting Events
-        $event->users()->detach();
-
-        // Deleting event posts
-        $event_posts = $event->timeline()->with('posts')->first();
-        
-        if (count($event_posts->posts) != 0) {
-            foreach ($event_posts->posts as $post) {
-                $post->deleteMe();
-            }
-        }
 
         //Deleting event notifications
         $timeline_alerts = $event->timeline()->with('notifications')->first();
@@ -3020,6 +3008,24 @@ class TimelineController extends AppBaseController
             }
         }
 
+        $notify_users = $event->users()->where('users.id','!=',Auth::user()->id)->get();
+
+        $post = Post::where('timeline_id',$event->timeline_id)->first();
+
+        foreach ($notify_users as $notify_user) {
+            Notification::create(['user_id' => $notify_user->id, 'timeline_id' => $event->timeline_id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' deleted event', 'type' => 'delete_event', 'link' => '/']);
+        }
+
+        // Deleting event posts
+        $event_posts = $event->timeline()->with('posts')->first();
+        
+        if (count($event_posts->posts) != 0) {
+            foreach ($event_posts->posts as $post) {
+                $post->deleteMe();
+            }
+        }
+
+        $event->users()->detach();
         $event_timeline = $event->timeline();
         $event->delete();
         $event_timeline->delete();

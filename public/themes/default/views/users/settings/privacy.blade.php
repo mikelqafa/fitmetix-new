@@ -22,9 +22,9 @@
 
 						{{ csrf_field() }}
 						@php
-						   $prev_type = 'private';
-						   if($settings['privacy']->confirm_follow == 'yes') {
-						   	    $prev_type = 'public';
+						   $prev_type = 'public';
+						   if($settings['privacy']->confirm_follow == 'no') {
+						   	    $prev_type = 'private';
 						   }
 						@endphp
 						<div class="container">
