@@ -7,7 +7,7 @@
                     <div class="panel-create panel-create--m-t-0">
                         <div class="panel-heading">
                             <div class="heading-text">
-                                Edit Event
+                                Edit Post
                             </div>
                         </div>
                     </div>

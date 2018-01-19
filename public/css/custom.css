@@ -2736,6 +2736,8 @@ aside .md-drawer-scroll__wrapper{
 }
 .write-post__text{
     min-height: 70px;
+    max-height: 240px;
+    overflow-y: auto;
 }
 .smiley-post {
     cursor: pointer;
@@ -4016,6 +4018,13 @@ aside .md-drawer-scroll__wrapper{
 
 #post-edit-option-dialog .post-image--wrapper,
 #event-edit-option-dialog .post-image--wrapper {
-    max-height: calc(100vh - 210px);
+    max-height: calc(100vh - 220px);
     overflow:  hidden;
+}
+
+#post-edit-option-dialog .write-post__text,
+#event-edit-option-dialog .write-post__text {
+    min-height: 70px;
+    max-height: 120px;
+    overflow-y: auto;
 }
