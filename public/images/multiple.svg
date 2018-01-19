@@ -1,0 +1,22 @@
+<svg fill="#ffffff" width="46" height="46" viewBox="0 0 46 46" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>multiple</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(4052 959)">
+<g id="multiple">
+<g id="Group">
+<g id="Group">
+<g id="Vector">
+<use xlink:href="#path0_fill" transform="translate(-4052 -947.988)"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path1_fill" transform="translate(-4040.89 -959)"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" d="M 7.071 19.772L 7.071 2.74658e-07L 4.042 2.74658e-07C 1.803 2.74658e-07 0 1.831 0 4.068L 0 30.8C 0 33.04 1.803 34.851 4.042 34.851L 30.775 34.851C 33.013 34.851 34.851 33.04 34.851 30.8L 34.851 27.88L 15.179 27.88C 10.733 27.881 7.071 24.219 7.071 19.772Z"/>
+<path id="path1_fill" d="M 30.8 7.45058e-10L 4.066 7.45058e-10C 1.828 7.45058e-10 -8.39233e-08 1.813 -8.39233e-08 4.051L -8.39233e-08 30.784C -8.39233e-08 33.025 1.829 34.851 4.066 34.851L 30.8 34.851C 33.037 34.851 34.851 33.025 34.851 30.784L 34.851 4.052C 34.851 1.812 33.037 7.45058e-10 30.8 7.45058e-10Z"/>
+</defs>
+</svg>

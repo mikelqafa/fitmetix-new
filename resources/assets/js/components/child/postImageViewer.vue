@@ -1,17 +1,22 @@
 <template>
     <div v-if="hasItem" class="post-image--wrapper">
         <template v-if="isMultiple">
-            <swiper :options="swiperOption" class="deal-card-slider">
-                <swiper-slide :key="imageIndex" v-for="(image, imageIndex) in postImg">
-                    <a href="javascript:;" :key="imageIndex" @click="showTheater(imageIndex)"
-                       class="item__background" :style="{ backgroundImage: 'url(' + sourceImagePath(image.source) + ')' }">
-                        <img :data-src="sourceImagePath(image.source)" :src="sourceImagePath(image.source)" class="swiper-lazy img-responsive">
-                    </a>
-                </swiper-slide>
-                <div class="swiper-pagination" slot="pagination"></div>
-                <div class="swiper-button-prev hidden" slot="button-prev"></div>
-                <div class="swiper-button-next hidden" slot="button-next"></div>
-            </swiper>
+            <div class="pos-rel">
+                <swiper :options="swiperOption" class="deal-card-slider">
+                    <swiper-slide :key="imageIndex" v-for="(image, imageIndex) in postImg">
+                        <a href="javascript:;" :key="imageIndex" @click="showTheater(imageIndex)"
+                           class="item__background" :style="{ backgroundImage: 'url(' + sourceImagePath(image.source) + ')' }">
+                            <img :data-src="sourceImagePath(image.source)" :src="sourceImagePath(image.source)" class="swiper-lazy img-responsive">
+                        </a>
+                    </swiper-slide>
+                    <div class="swiper-pagination" slot="pagination"></div>
+                    <div class="swiper-button-prev hidden" slot="button-prev"></div>
+                    <div class="swiper-button-next hidden" slot="button-next"></div>
+                </swiper>
+                <div class="swiper-multiple-icon">
+                    <img :src="multiple" class="svg-object" type="image/svg+xml" style="height: 24px">
+                </div>
+            </div>
         </template>
         <template v-else="">
             <div class="image-responsive item__background--post img-viewer raven" v-for="(image, imageIndex) in postImg" @click="showTheater(0)">
@@ -46,11 +51,12 @@
                     autoHeight: true,
                     pagination: '.swiper-pagination'
                 },
-                disableShowcase: false
+                disableShowcase: false,
+                multiple: ''
             }
         },
         mounted () {
-
+            this.multiple = base_url+'images/multiple.svg'
         },
         methods: {
             sourceImagePath: function (s) {

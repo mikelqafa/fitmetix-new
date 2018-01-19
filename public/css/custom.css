@@ -4033,3 +4033,13 @@ aside .md-drawer-scroll__wrapper{
     height: 100%;
     max-height: 90vh;
 }
+.swiper-multiple-icon{
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+    pointer-events: none;
+    z-index: 1;
+}
+.swiper-multiple-icon svg{
+    fill: #ffffff;
+}

@@ -13,7 +13,7 @@
                     </div>
                     <div class="panel-body">
                         <post-image-viewer disable-showcase="true" :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
-                        <form v-on:submit.prevent="editSavePost" method="get" class="event-edit-group" style="padding: 24px 0">
+                        <form v-on:submit.prevent="editSaveEvent" method="get" class="event-edit-group" style="padding: 24px 0">
                             <fieldset class="form-group required">
                                 <input class="form-control" v-model="event.title" required placeholder="Name of your event" maxlength="30" name="name" type="text">
                             </fieldset>
@@ -88,7 +88,7 @@
                     <div class="panel-footer md-layout md-layout--row">
                         <div class="md-layout-spacer"></div>
                         <button class="btn" type="button" @click="cancelSaveEvent">Cancel</button>
-                        <button type="submit" style="margin-left: 8px" class="btn btn-edit-submit ft-btn-primary" @click="editSavePost">Save Event</button>
+                        <button type="submit" style="margin-left: 8px" class="btn btn-edit-submit ft-btn-primary" @click="editSaveEvent">Save Event</button>
                     </div>
                     <div v-if="isLoading" class="absolute-loader" style="z-index: 11">
                         <div class="ft-loading">
@@ -195,7 +195,7 @@
             cancelSaveEvent: function () {
                 $('#event-edit-option-dialog').MaterialDialog('hide')
             },
-            editSavePost: function () {
+            editSaveEvent: function () {
                 if(!this.validate()) {
                     return
                 }
