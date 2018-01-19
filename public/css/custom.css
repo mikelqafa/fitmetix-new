@@ -4028,3 +4028,8 @@ aside .md-drawer-scroll__wrapper{
     max-height: 120px;
     overflow-y: auto;
 }
+
+#post-image-theater-dialog .swiper-slide > div{
+    height: 100%;
+    max-height: 90vh;
+}
