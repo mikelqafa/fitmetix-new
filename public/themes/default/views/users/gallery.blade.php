@@ -13,33 +13,33 @@
                                     <div class="ft-icon">
                                         Events
                                     </div>
-                                    <div class="info">
+                                    <a class="info btn" href="{{ url($timeline->username.'/event') }}">
                                         {{ count($user_events) }}
-                                    </div>
+                                    </a>
                                 </div>
                                 <div class="ft-user-info__item">
                                     <div class="ft-icon">
                                         Posts
                                     </div>
-                                    <div class="info">
+                                    <a class="info btn" href="">
                                         {{ count($posts) }}
-                                    </div>
+                                    </a>
                                 </div>
                                 <div class="ft-user-info__item">
                                     <div class="ft-icon">
                                         Follows
                                     </div>
-                                    <div class="info">
+                                    <a href="javascript:;" class="info btn" onclick="$('#user-who-following--dialog').MaterialDialog('show')">
                                         {{ $following_count }}
-                                    </div>
+                                    </a>
                                 </div>
                                 <div class="ft-user-info__item">
                                     <div class="ft-icon">
                                         Followers
                                     </div>
-                                    <div class="info">
+                                    <a href="javascript:;" class="info btn" onclick="$('#user-who-follow--dialog').MaterialDialog('show')">
                                         {{ $followers_count }}
-                                    </div>
+                                    </a>
                                 </div>
                                 @if(Auth::user()->id == $timeline->user->id)
                                     <div class="ft-user-info__item">
@@ -51,6 +51,12 @@
                                         </div>
                                     </div>
                                 @endif
+                            </div>
+
+                            <div id="user-follow-view">
+                                <input type="hidden" id="follow-userid" value="{{$timeline->user->id}}">
+                                <user-follow-list></user-follow-list>
+                                <user-following-list></user-following-list>
                             </div>
                         @endif
                         @if(Auth::user()->id == $timeline->user->id)

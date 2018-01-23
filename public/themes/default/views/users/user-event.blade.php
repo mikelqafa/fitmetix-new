@@ -50,49 +50,55 @@
                 {!! Theme::partial('timeline-header',compact('timeline','user_post')) !!}
                                     <div class="options" style="text-align: center;display: none;">
                         @if($timeline->user->settings()->post_privacy == 'everyone' || (Auth::user()->id == $timeline->user->id))
-                            <div class="ft-user-info md-layout md-layout--row md-align md-align--space-around show-more">
-                                <div class="ft-user-info__item">
-                                    <div class="ft-icon">
-                                        Events
-                                    </div>
-                                    <div class="info">
-                                        {{ count($user_events) }}
-                                    </div>
-                                </div>
-                                <div class="ft-user-info__item">
-                                    <div class="ft-icon">
-                                        Posts
-                                    </div>
-                                    <div class="info">
-                                        {{ count($posts) }}
-                                    </div>
-                                </div>
-                                <div class="ft-user-info__item">
-                                    <div class="ft-icon">
-                                        Follows
-                                    </div>
-                                    <div class="info">
-                                        {{ $following_count }}
-                                    </div>
-                                </div>
-                                <div class="ft-user-info__item">
-                                    <div class="ft-icon">
-                                        Followers
-                                    </div>
-                                    <div class="info">
-                                        {{ $followers_count }}
-                                    </div>
-                                </div>
-                                @if(Auth::user()->id == $timeline->user->id)
-                                    <div class="ft-user-info__item">
-                                        <div class="ft-icon">
-                                            Saved
-                                        </div>
-                                        <div class="info">
-                                            {{ count($timeline->user->postsSaved()) }}
-                                        </div>
-                                    </div>
-                                @endif
+                                            <div class="ft-user-info md-layout md-layout--row md-align md-align--space-around show-more">
+                                                <div class="ft-user-info__item">
+                                                    <div class="ft-icon">
+                                                        Events
+                                                    </div>
+                                                    <a class="info btn" href="{{ url($timeline->username.'/event') }}">
+                                                        {{ count($user_events) }}
+                                                    </a>
+                                                </div>
+                                                <div class="ft-user-info__item">
+                                                    <div class="ft-icon">
+                                                        Posts
+                                                    </div>
+                                                    <a class="info btn" href="">
+                                                        {{ count($posts) }}
+                                                    </a>
+                                                </div>
+                                                <div class="ft-user-info__item">
+                                                    <div class="ft-icon">
+                                                        Follows
+                                                    </div>
+                                                    <a href="javascript:;" class="info btn" onclick="$('#user-who-following--dialog').MaterialDialog('show')">
+                                                        {{ $following_count }}
+                                                    </a>
+                                                </div>
+                                                <div class="ft-user-info__item">
+                                                    <div class="ft-icon">
+                                                        Followers
+                                                    </div>
+                                                    <a href="javascript:;" class="info btn" onclick="$('#user-who-follow--dialog').MaterialDialog('show')">
+                                                        {{ $followers_count }}
+                                                    </a>
+                                                </div>
+                                                @if(Auth::user()->id == $timeline->user->id)
+                                                    <div class="ft-user-info__item">
+                                                        <div class="ft-icon">
+                                                            Saved
+                                                        </div>
+                                                        <div class="info">
+                                                            {{ count($timeline->user->postsSaved()) }}
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            </div>
+
+                                            <div id="user-follow-view">
+                                <input type="hidden" id="follow-userid" value="{{$timeline->user->id}}">
+                                <user-follow-list></user-follow-list>
+                                <user-following-list></user-following-list>
                             </div>
                         @endif
                         @if(Auth::user()->id == $timeline->user->id)

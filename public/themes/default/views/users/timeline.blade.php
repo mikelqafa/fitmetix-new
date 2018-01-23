@@ -13,33 +13,33 @@
                                     <div class="ft-icon">
                                         Events
                                     </div>
-                                    <div class="info">
+                                    <a class="info btn" href="{{ url($timeline->username.'/event') }}">
                                         {{ count($user_events) }}
-                                    </div>
+                                    </a>
                                 </div>
                                 <div class="ft-user-info__item">
                                     <div class="ft-icon">
                                         Posts
                                     </div>
-                                    <div class="info">
+                                    <a class="info btn" href="">
                                         {{ count($posts) }}
-                                    </div>
+                                    </a>
                                 </div>
                                 <div class="ft-user-info__item">
                                     <div class="ft-icon">
                                         Follows
                                     </div>
-                                    <div class="info">
+                                    <a href="javascript:;" class="info btn" onclick="$('#user-who-following--dialog').MaterialDialog('show')">
                                         {{ $following_count }}
-                                    </div>
+                                    </a>
                                 </div>
                                 <div class="ft-user-info__item">
                                     <div class="ft-icon">
                                         Followers
                                     </div>
-                                    <div class="info">
+                                    <a href="javascript:;" class="info btn" onclick="$('#user-who-follow--dialog').MaterialDialog('show')">
                                         {{ $followers_count }}
-                                    </div>
+                                    </a>
                                 </div>
                                 @if(Auth::user()->id == $timeline->user->id)
                                     <div class="ft-user-info__item">
@@ -51,6 +51,11 @@
                                         </div>
                                     </div>
                                 @endif
+                            </div>
+                            <div id="user-follow-view">
+                                <input type="hidden" id="follow-userid" value="{{$timeline->user->id}}">
+                                <user-follow-list></user-follow-list>
+                                <user-following-list></user-following-list>
                             </div>
                         @endif
                         @if(Auth::user()->id == $timeline->user->id)
@@ -120,57 +125,57 @@
                             @endif
                         @endif
                         <div class="timeline-posts timeline-posts--user">
-                        @if(($timeline->user->settings()->post_privacy == 'everyone') || Auth::user()->id == $timeline->user->id || ($follow_user_status == 'approved'))
-                            <input type="hidden" id="timeline_username" value="{{$username}}" />
-                            <div id="app-timeline">
-                                <input type="hidden" id="newPostId">
-                                @if(Auth::user()->id != $timeline->user->id)
-                                    <input type="hidden" id="username" value="{{$timeline->username}}">
-                                    <input type="hidden" id="timeline_id" value="{{$timeline->id}}">
-                                    <app-profile-option></app-profile-option>
-                                @endif
-                                @if(Auth::user()->id == $timeline->user->id)
-                                    <app-picture-option></app-picture-option>
-                                @endif
-                                <app-post-option></app-post-option>
-                                <app-comment-option></app-comment-option>
-                                <app-post>
-                                    <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
-                                        <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
-                                            <div class="user-avatar lg-loadable"></div>
-                                            <div class="md-layout md-layout--column">
-                                                <div class="user-meta-info lg-loadable"></div>
-                                                <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+                            @if(($timeline->user->settings()->post_privacy == 'everyone') || Auth::user()->id == $timeline->user->id || ($follow_user_status == 'approved'))
+                                <input type="hidden" id="timeline_username" value="{{$username}}" />
+                                <div id="app-timeline">
+                                    <input type="hidden" id="newPostId">
+                                    @if(Auth::user()->id != $timeline->user->id)
+                                        <input type="hidden" id="username" value="{{$timeline->username}}">
+                                        <input type="hidden" id="timeline_id" value="{{$timeline->id}}">
+                                        <app-profile-option></app-profile-option>
+                                    @endif
+                                    @if(Auth::user()->id == $timeline->user->id)
+                                        <app-picture-option></app-picture-option>
+                                    @endif
+                                    <app-post-option></app-post-option>
+                                    <app-comment-option></app-comment-option>
+                                    <app-post>
+                                        <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
+                                            <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
+                                                <div class="user-avatar lg-loadable"></div>
+                                                <div class="md-layout md-layout--column">
+                                                    <div class="user-meta-info lg-loadable"></div>
+                                                    <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="lg-loadable lg-loadable--text"></div>
+                                                <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
+                                                <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
                                             </div>
                                         </div>
-                                        <div class="panel-body">
-                                            <div class="lg-loadable lg-loadable--text"></div>
-                                            <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
-                                            <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
-                                        </div>
-                                    </div>
-                                    <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
-                                        <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
-                                            <div class="user-avatar lg-loadable"></div>
-                                            <div class="md-layout md-layout--column">
-                                                <div class="user-meta-info lg-loadable"></div>
-                                                <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+                                        <div class="lg-loading-skeleton panel panel-default timeline-posts__item panel-post">
+                                            <div class="panel-heading no-bg post-avatar md-layout md-layout--row">
+                                                <div class="user-avatar lg-loadable"></div>
+                                                <div class="md-layout md-layout--column">
+                                                    <div class="user-meta-info lg-loadable"></div>
+                                                    <div class="user-meta-info lg-loadable user-meta-info--sm"></div>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="lg-loadable lg-loadable--text"></div>
+                                                <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
+                                                <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
                                             </div>
                                         </div>
-                                        <div class="panel-body">
-                                            <div class="lg-loadable lg-loadable--text"></div>
-                                            <div class="lg-loadable lg-loadable--text--lg lg-loadable--text"></div>
-                                            <div class="lg-loadable lg-loadable--text--sm lg-loadable--text"></div>
-                                        </div>
-                                    </div>
-                                </app-post>
-                                <div id="scroll-bt"></div>
-                            </div>
+                                    </app-post>
+                                    <div id="scroll-bt"></div>
+                                </div>
                             @else
                                 <div class="text-center">
-                                    <h2>This Account is Private</h2>
-                                    <p>Follow to see their photos and videos.</p>
-                                </div>
+                                        <h2>This Account is Private</h2>
+                                        <p>Follow to see their photos and videos.</p>
+                                    </div>
                             @endif
                         </div>
                     </div>

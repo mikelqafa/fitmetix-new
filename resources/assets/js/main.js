@@ -20,6 +20,8 @@ import VueTimeago from 'vue-timeago'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 // import AppEventCalendar from './components/appEventCalendar'
 import AppEventList from './components/appEventList'
+import AppUserFollowList from './components/child/userFollowList'
+import AppUserFollowingList from './components/child/userFollowingList'
 import ProfileOptionDialog from './components/ProfileOptionDialog'
 import {store} from './store/store'
 import VueClip from 'vue-clip'
@@ -77,6 +79,15 @@ window.singleEvent = new Vue({
   components: {
     'single-event-view': singleEventView,
     'suggestion-user': suggestionUser
+  }
+})
+
+window.userFollowList = new Vue({
+  el: '#user-follow-view',
+  store,
+  components: {
+    'user-follow-list': AppUserFollowList,
+    'user-following-list': AppUserFollowingList
   }
 })
 
