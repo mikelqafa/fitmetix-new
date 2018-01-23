@@ -176,7 +176,7 @@
                 let url = ''
                 switch(item.type) {
                     case 'join_event':
-                        url =  base_url + item.notified_from.username
+                        url =  base_url + 'post/'+item.post_id
                         break
                     case 'follow':
                         url =  base_url + item.notified_from.username

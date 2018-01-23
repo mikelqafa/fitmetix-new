@@ -127,7 +127,7 @@
 							@endif
                             <div class="form-helper">
                                 <div class="helper-inner arrow_box arrow_box--bottom-xs">
-                                    Private events are only joined by user you follow. Anyone can join public event.
+                                    Private events are only joined by people that follow you (those you have accepted if you have private profile). Anyone can join public event.
                                 </div>
                             </div>
 						</div>

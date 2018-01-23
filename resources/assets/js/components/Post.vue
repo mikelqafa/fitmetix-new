@@ -216,6 +216,7 @@
                     if (response.status ==  200) {
                         let post = response.data[0].post;
                         post.timeline = response.data[0].timeline
+                        that.offset++;
                         vmThat.$store.commit('ADD_POST_ITEM_LIST',{data: post, postFrom: 'timeline'})
                         setTimeout(function () {
                             emojify.run();

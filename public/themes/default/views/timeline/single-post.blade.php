@@ -40,8 +40,10 @@
 					</div>
 				</div><!-- /col-md-6 -->
 
-				<div class="col-md-5 col-lg-4">
-					{!! Theme::partial('home-rightbar',compact('suggested_users', 'suggested_groups', 'suggested_pages')) !!}
+				<div class="hide-on-other col-md-5 col-lg-4">
+					<div class="widget-events widget-left-panel" id="single-event-view">
+						<suggestion-user></suggestion-user>
+					</div>
 				</div>
 			</div>
 		</div>

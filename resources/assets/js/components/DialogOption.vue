@@ -138,8 +138,9 @@
                     }
                 }).then( function (response) {
                     if (response.status ==  200) {
-                        that.$store.commit('REMOVE_POST_ITEM_LIST', that.optionMenuPostItem.postIndex)
                         $('#post-option-dialog').MaterialDialog('hide')
+                        $('#drawer-1').MaterialDialog('hide')
+                        that.$store.commit('REMOVE_POST_ITEM_LIST', that.optionMenuPostItem.postIndex)
                         materialSnackBar({messageText: response.data.message, autoClose: true })
                         setTimeout(function(){
                             window.location.reload()
