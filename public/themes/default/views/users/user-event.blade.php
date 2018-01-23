@@ -48,6 +48,81 @@
         <div class="md-layout md-algin md-layout--wrap md-align--start-start layout-timeline">
             <div class="md-col layout-timeline__post layout-m-t-1">
                 {!! Theme::partial('timeline-header',compact('timeline','user_post')) !!}
+                                    <div class="options" style="text-align: center;display: none;">
+                        @if($timeline->user->settings()->post_privacy == 'everyone' || (Auth::user()->id == $timeline->user->id))
+                            <div class="ft-user-info md-layout md-layout--row md-align md-align--space-around show-more">
+                                <div class="ft-user-info__item">
+                                    <div class="ft-icon">
+                                        Events
+                                    </div>
+                                    <div class="info">
+                                        {{ count($user_events) }}
+                                    </div>
+                                </div>
+                                <div class="ft-user-info__item">
+                                    <div class="ft-icon">
+                                        Posts
+                                    </div>
+                                    <div class="info">
+                                        {{ count($posts) }}
+                                    </div>
+                                </div>
+                                <div class="ft-user-info__item">
+                                    <div class="ft-icon">
+                                        Follows
+                                    </div>
+                                    <div class="info">
+                                        {{ $following_count }}
+                                    </div>
+                                </div>
+                                <div class="ft-user-info__item">
+                                    <div class="ft-icon">
+                                        Followers
+                                    </div>
+                                    <div class="info">
+                                        {{ $followers_count }}
+                                    </div>
+                                </div>
+                                @if(Auth::user()->id == $timeline->user->id)
+                                    <div class="ft-user-info__item">
+                                        <div class="ft-icon">
+                                            Saved
+                                        </div>
+                                        <div class="info">
+                                            {{ count($timeline->user->postsSaved()) }}
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                        @endif
+                        @if(Auth::user()->id == $timeline->user->id)
+                            <a class="btn btn-default" href="{{ url($timeline->username.'/settings') }}">Settings</a>
+                        @elseif(Auth::user()->following->contains($timeline->user->id))
+                                @if($block_text == 'Unblock')
+                                    <button class="btn btn-default" onclick="unblock()">{{ $block_text }}</button>
+                                @else
+                                    <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">{{ $block_text }}</button>
+                                @endif
+                            <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Report</button>
+                            <button class="pos-rel btn btn-default" data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="true">
+                                Unfollow
+                                <span class="absolute-loader hidden">
+                                    <span class="ft-loading">
+                                        <span class="ft-loading__dot"></span>
+                                        <span class="ft-loading__dot"></span>
+                                        <span class="ft-loading__dot"></span>
+                                    </span>
+                                </span>
+                            </button>
+                        @else
+                            @if($block_text == 'Unblock')
+                                <button class="btn btn-default" onclick="unblock()">{{ $block_text }}</button>
+                            @else
+                                <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">{{ $block_text }}</button>
+                            @endif
+                            <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Report</button>
+                        @endif
+                    </div>
                 <div class="ft-header-hashtag">
                     <ul class="nav nav-justified" >
                         <li><a href="{{ url($timeline->username) }}">Posts</a></li>
@@ -61,6 +136,17 @@
                         @if(isset($timeline->username))
                             <input type="hidden" id="eventByUsername" value="{{$timeline->username}}">
                         @endif
+
+                        @if(Auth::user()->id != $timeline->user->id)
+                            <input type="hidden" id="username" value="{{$timeline->username}}">
+                            <input type="hidden" id="timeline_id" value="{{$timeline->id}}">
+                            <app-profile-option></app-profile-option>
+                        @endif
+
+                        @if(Auth::user()->id == $timeline->user->id)
+                            <app-picture-option></app-picture-option>
+                        @endif
+
                         <app-post-option></app-post-option>
                         <app-comment-option></app-comment-option>
                         <app-event-hlu>

@@ -55,12 +55,18 @@
                         </div>
                     </div>
 
-                    <div class="md-layout layout-m-b-1 layout-m-b-1--register md-layout-spacer mobile-layout-column__register mobile-layout-column md-layout--row md-align md-align-start-center">
-                        <div class="mail-form  form-group form-group__adjust">
+                    <div class="md-layout layout-m-b-1 layout-m-b-1--register md-layout-spacer mobile-layout-column__register mobile-layout-column md-layout--row md-align md-align-start-center" style="width: 100%">
+                        <div class="mail-form  form-group form-group__adjust pos-rel">
                             <input class="form-control" id="password" required placeholder="{{ trans('auth.password') }}" name="password" type="password">
                         </div>
                         <div class="form-group form-group__adjust">
-                            <input class="form-control" id="referral_code" placeholder="Referrer code" name="affiliate" type="text" value="">
+                            {{-- <input class="form-control" id="referral_code" placeholder="Referrer code" name="affiliate" type="text" value=""> --}}
+
+                            <select class="form-control" id="gender" required name="gender">
+                                <option value="">Gender</option>
+                                <option value="female" @if(isset($data['gender']) && $data['gender'] == 'female') selected="selected" @endif>Female</option>
+                                <option value="male" @if(isset($data['gender']) && $data['gender'] == 'male') selected="selected" @endif>Male</option>
+                            </select>
                         </div>
                     </div>
 
@@ -71,11 +77,16 @@
                             </a>
                         </div>
                         <div class="form-group form-group__adjust">
-                            <select class="form-control" id="gender" required name="gender">
-                                <option value="">Gender</option>
-                                <option value="female" @if(isset($data['gender']) && $data['gender'] == 'female') selected="selected" @endif>Female</option>
-                                <option value="male" @if(isset($data['gender']) && $data['gender'] == 'male') selected="selected" @endif>Male</option>
-                            </select>
+                            <div class="md-layout layout-m-t-0 layout-p-r-0" style="width: 100%">
+                                <div class="md-layout-spacer"></div>
+                                <div class="form-group mobile-full-width md-layout layout-m-l-1 layout-m-l-0--sm">
+                                    <button type="submit" id="submit" class="btn btn-primary btn-submit">{{ trans('auth.register') }}</button>
+                                    <a href="{!! url('social/login/redirect/facebook') !!}" class="btn btn--icon btn-primary layout-m-l-0">
+                                    <object type="image/svg+xml" data="{{asset('fonts/facebook.svg')}}" class="splash">
+                                    </object>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -104,17 +115,6 @@
                             </a>
                         </div>
                     </div> --}}
-
-                    <div class="md-layout layout-m-t-0 layout-p-r-0" style="width: 100%">
-                        <div class="md-layout-spacer"></div>
-                        <div class="form-group mobile-full-width md-layout layout-m-l-1 layout-m-l-0--sm">
-                            <button type="submit" id="submit" class="btn btn-primary btn-submit">{{ trans('auth.register') }}</button>
-                            <a href="{!! url('social/login/redirect/facebook') !!}" class="btn btn--icon btn-primary layout-m-l-0">
-                                <object type="image/svg+xml" data="{{asset('fonts/facebook.svg')}}" class="splash">
-                                </object>
-                            </a>
-                        </div>
-                    </div>
 
                 </form>
             </div>

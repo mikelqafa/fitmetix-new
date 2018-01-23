@@ -4572,7 +4572,7 @@ class TimelineController extends AppBaseController
 
         $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
-        return $theme->scope('users/gallery', compact('user','timeline', 'timeline_type', 'follow_user_status', 'followRequests', 'following_count', 'followers_count', 'timeline_post', 'user_post', 'follow_confirm', 'joined_groups_count','group_members', 'page_members', 'event', 'user_events', 'guest_events', 'username'))->render();
+        return $theme->scope('users/gallery', compact('user','timeline', 'timeline_type','posts' ,'follow_user_status', 'followRequests', 'following_count', 'followers_count', 'timeline_post', 'user_post', 'follow_confirm', 'joined_groups_count','group_members', 'page_members', 'event', 'user_events', 'guest_events', 'username'))->render();
     }
 
     public function timelineUserEvent($username) {
@@ -4633,7 +4633,7 @@ class TimelineController extends AppBaseController
 
         $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
-        return $theme->scope('users/user-event', compact('user','timeline', 'timeline_type', 'follow_user_status', 'followRequests', 'following_count', 'followers_count', 'timeline_post', 'user_post', 'follow_confirm', 'joined_groups_count','group_members', 'page_members', 'event', 'user_events', 'guest_events', 'username'))->render();
+        return $theme->scope('users/user-event', compact('user','timeline', 'timeline_type','posts', 'follow_user_status', 'followRequests', 'following_count', 'followers_count', 'timeline_post', 'user_post', 'follow_confirm', 'joined_groups_count','group_members', 'page_members', 'event', 'user_events', 'guest_events', 'username'))->render();
     }
 
     public function getEventPostByLocation(Request $request) {
