@@ -1282,7 +1282,7 @@ class TimelineController extends AppBaseController
                 Notification::create(['user_id' => $user->id, 'timeline_id' => Auth::user()->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.request_follow'), 'type' => 'follow_requested']);
 
                 if ($user_settings && $user_settings->email_follow == 'yes') {
-                    Mail::send('emails.followmail', ['user' => $user, 'follow' => $user], function ($m) use ($user, $user) {
+                    Mail::send('emails.followmail', ['user' => $user, 'follow' => $user], function ($m) use ($user) {
                         $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
                         $m->to($user->email, $user->name)->subject(Auth::user()->name.' requested to follow you');
                     });
@@ -1293,7 +1293,7 @@ class TimelineController extends AppBaseController
                 $follow_status = 'approved';
 
                 if ($user_settings && $user_settings->email_follow == 'yes') {
-                    Mail::send('emails.followmail', ['user' => $user, 'follow' => $user], function ($m) use ($user, $user) {
+                    Mail::send('emails.followmail', ['user' => $user, 'follow' => $user], function ($m) use ($user) {
                         $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
                         $m->to($user->email, $user->name)->subject(Auth::user()->name.' '.trans('common.follows_you'));
                     });
@@ -4911,5 +4911,22 @@ public function saveMessageAttachment(Request $request) {
        }
        return response()->json(['blocked'=>$block_status]);
 
+  }
+
+  public function getFollowers(Request $request) {
+      $user = User::find($request->user_id);
+      $followers = $user->followers()->where('status', '=', 'approved')->get();
+      return response()->json(['followers'=>$followers]);
+  }
+
+  public function getFollowing(Request $request) {
+      $user = User::find($request->user_id);
+      $following = $user->following()->where('status', '=', 'approved')->get();
+      return response()->json(['following'=>$following]);
+  }
+
+  public function removeFollower(Request $request) {
+      Auth::user()->followers()->detach([$request->user_id]);
+      return response()->json(['data'=>'Successfully removed from followers']);
   }
 }

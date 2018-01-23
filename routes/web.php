@@ -511,6 +511,9 @@ Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {
     Route::get('block-user/{username}','UserController@blockUser');
     Route::get('unblock-user/{id}','UserController@unblockUser');
     Route::post('check-block-status','TimelineController@checkBlockStatus');
+    Route::post('get-followers','TimelineController@getFollowers');
+    Route::post('get-following','TimelineController@getFollowing');
+    Route::post('remove-follower','TimelineController@removeFollower');
 });
 
 

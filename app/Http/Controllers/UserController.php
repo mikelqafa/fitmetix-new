@@ -1089,7 +1089,7 @@ class UserController extends AppBaseController
 
 
         if ($user_settings && $user_settings->email_follow == 'yes') {
-            Mail::send('emails.followmail', ['user' => $user, 'follow' => $user], function ($m) use ($user, $user) {
+            Mail::send('emails.followmail', ['user' => $user, 'follow' => $user], function ($m) use ($user) {
                 $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
                 $m->to($user->email, $user->name)->subject(Auth::user()->name.' '.trans('common.follows_you'));
           });
