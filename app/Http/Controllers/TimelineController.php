@@ -738,7 +738,16 @@ class TimelineController extends AppBaseController
 
         if ($request->user_tags != null) {
             $comment->users_tagged()->sync(explode(',', $request->user_tags));
+            foreach ($request->user_tags as $user_tag) {
+                Notification::create(['user_id' => $user_tag->user_id, 'post_id' => $request->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' mentioned you in comment', 'type' => 'comment_post']);
+            }
         }
+
+        preg_match_all('/(^|\s)(@\w+)/', $request->description, $usernames);
+            foreach ($usernames[2] as $value) {
+                $timeline = Timeline::where('username', str_replace('@', '', $value))->first();
+                $notification = Notification::create(['user_id' => $timeline->user->id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' mentioned you in comment', 'type' => 'mention', 'link' => 'post/'.$post->id]);
+            }
 
         if ($comment) {
             if (Auth::user()->id != $post->user_id) {
