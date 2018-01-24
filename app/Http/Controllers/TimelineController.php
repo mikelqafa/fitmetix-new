@@ -1273,13 +1273,14 @@ class TimelineController extends AppBaseController
         $user = User::where('timeline_id', '=', $request->timeline_id)->first();
 
         $user_settings = $user->getUserSettings($user->id);
+        $notification = '';
 
         if (!$user->followers->contains(Auth::user()->id)) { 
             if($user->settings()->confirm_follow == "no"){
                 $user->followers()->attach(Auth::user()->id, ['status' => 'pending']);
                 $follow_status = 'pending';
 
-                Notification::create(['user_id' => $user->id, 'timeline_id' => Auth::user()->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.request_follow'), 'type' => 'follow_requested']);
+                $notification = Notification::create(['user_id' => $user->id, 'timeline_id' => Auth::user()->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.request_follow'), 'type' => 'follow_requested']);
 
                 if ($user_settings && $user_settings->email_follow == 'yes') {
                     Mail::send('emails.followmail', ['user' => $user, 'follow' => $user], function ($m) use ($user) {
@@ -1300,7 +1301,7 @@ class TimelineController extends AppBaseController
                 }
             }
 
-            return response()->json(['status' => '200', 'followrequest' => true, 'message' => 'successfully sent user follow request','follow_status'=>$follow_status]);
+            return response()->json(['status' => '200', 'followrequest' => true, 'message' => 'successfully sent user follow request','follow_status'=>$follow_status,'notification'=>$notification]);
         } else {
             if ($request->follow_status == 'approved') {
                 $user->followers()->detach([Auth::user()->id]);
@@ -1309,7 +1310,9 @@ class TimelineController extends AppBaseController
             } else {
                 $user->followers()->detach([Auth::user()->id]);
 
-                return response()->json(['status' => '200', 'followrequest' => false, 'message' => 'unsuccessfully request']);
+                $notification = Notification::find($request->notification_id)->delete();
+
+                return response()->json(['status' => '200', 'followrequest' => false, 'message' => 'Request cancelled']);
             }
         }
     }
