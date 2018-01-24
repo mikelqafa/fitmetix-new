@@ -518,7 +518,6 @@ Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {
 
 
 
-
 /*
 |--------------------------------------------------------------------------
 | Image routes

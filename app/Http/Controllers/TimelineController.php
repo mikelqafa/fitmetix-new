@@ -4916,13 +4916,43 @@ public function saveMessageAttachment(Request $request) {
   public function getFollowers(Request $request) {
       $user = User::find($request->user_id);
       $followers = $user->followers()->where('status', '=', 'approved')->get();
+      foreach ($followers as $follower) {
+          $following = DB::table('followers')->where([['leader_id',Auth::user()->id],['follower_id',$follower->follower_id]])->first();
+          if (!empty($following)){
+            if($following->status == 'pending') {
+                $follower->following_status = 'Request Sent';
+            }
+            else {
+                $follower->following_status = 'Following';
+            }
+          }
+          else {
+            $follower->following_status = 'Follow';
+          }
+                    
+      }   
       return response()->json(['followers'=>$followers]);
   }
 
   public function getFollowing(Request $request) {
       $user = User::find($request->user_id);
-      $following = $user->following()->where('status', '=', 'approved')->get();
-      return response()->json(['following'=>$following]);
+      $followings = $user->following()->where('status','approved')->get();
+      foreach ($followings as $following) {
+          $following_auth = DB::table('followers')->where([['leader_id',Auth::user()->id],['follower_id',$following->leader_id]])->first();
+          if (!empty($following_auth)){
+            if($following_auth->status == 'pending') {
+                $following->following_status = 'Request Sent';
+            }
+            else {
+                $following->following_status = 'Following';
+            }
+          }
+          else {
+            $following->following_status = 'Follow';
+          }
+                    
+      } 
+      return response()->json(['following'=>$followings]);
   }
 
   public function removeFollower(Request $request) {
