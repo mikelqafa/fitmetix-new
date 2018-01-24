@@ -7,7 +7,7 @@
                     <header class="md-dialog__header panel-post">
                         <div class="layout-m-l-1 md-layout md-align md-align--start-center">
                             <i class="icon icon-participant" style="margin-top: 4px"></i>
-                            <span class="layout-m-l-1">Followers</span>
+                            <span class="layout-m-l-1">{{ timelineUserName }}&apos;s followers</span>
                         </div>
                         <div class="md-layout-spacer"></div>
                         <a href="javascript:;" style="margin-right: 15px"
@@ -30,7 +30,7 @@
                         </template>
                         <template v-else-if="!noItem">
                             <div class="md-list md-list--likes md-list--dense">
-                                <div class="md-list__item" v-for="item in filterUserSearch">
+                                <div class="md-list__item" v-for="(item, index) in filterUserSearch" :key="index+'user-following-list'">
                                     <a :href="userLink(item)" class="md-list__item-icon user-avatar"  :title="'@' + item.username" v-bind:style="{ backgroundImage: 'url(' + userAvatar(item) +')'}">
                                     </a>
                                     <div class="md-list__item-content">
@@ -44,44 +44,19 @@
                                         <div class="md-layout-spacer">
                                         </div>
                                         <template v-if="!authUser">
-                                            <template v-if="sameUser(item)">
-                                                <button class="btn btn-sm pos-rel" disabled>
-                                                    <span class="true">Registered</span>
-                                                </button>
-                                            </template>
-                                            <template v-else="">
-                                                <button v-if="item.following"  class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true" :data-timeline-id="item.id" data-toggle="follow" data-following="true">
-                                            <span class="absolute-loader hidden">
-                                                <span class="ft-loading">
-                                                    <span class="ft-loading__dot"></span>
-                                                    <span class="ft-loading__dot"></span>
-                                                    <span class="ft-loading__dot"></span>
-                                                </span>
-                                            </span>
-                                                    <span class="false">Follow</span>
-                                                    <span class="true">Following</span>
-                                                </button>
-                                                <button v-else="" class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true"  :data-timeline-id="item.id" data-toggle="follow" data-following="false">
-                                                    <span class="absolute-loader hidden">
+                                            <button v-if="item.following_status == 'Following'"  class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" @click="removeFollowers(item, index)">
+                                                <span class="absolute-loader hidden">
                                                         <span class="ft-loading">
                                                             <span class="ft-loading__dot"></span>
                                                             <span class="ft-loading__dot"></span>
                                                             <span class="ft-loading__dot"></span>
                                                         </span>
                                                     </span>
-                                                    <span class="false">Follow</span>
-                                                    <span class="true">Following</span>
-                                                </button>
-                                            </template>
+                                                <span class="true">Remove</span>
+                                            </button>
                                         </template>
                                         <template v-else="">
-                                            <template v-if="sameUser(item)">
-                                                <button class="btn btn-sm pos-rel" disabled>
-                                                    <span class="true">Registered</span>
-                                                </button>
-                                            </template>
-                                            <template v-else="">
-                                                <button class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true" :data-event-id="item.event_id" :data-user-id="item.user_id" data-toggle="eventRegister" data-following="true">
+                                            <button v-if="item.following_status == 'Following'"  class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true" :data-timeline-id="item.id" data-toggle="follow" data-following="true">
                                                     <span class="absolute-loader hidden">
                                                         <span class="ft-loading">
                                                             <span class="ft-loading__dot"></span>
@@ -89,10 +64,9 @@
                                                             <span class="ft-loading__dot"></span>
                                                         </span>
                                                     </span>
-                                                    <span class="false">Register</span>
-                                                    <span class="true">Unregister</span>
-                                                </button>
-                                            </template>
+                                                <span class="false">Follow</span>
+                                                <span class="true">Following</span>
+                                            </button>
                                         </template>
                                     </div>
                                 </div>
@@ -108,8 +82,6 @@
     </div>
 </template>
 <script>
-    import { mapGetters } from 'vuex'
-
     export default {
         data: function () {
             return {
@@ -118,11 +90,29 @@
                 defaultImage: 'default.png',
                 filterSearch: '',
                 offset: 0,
-                authUser: false,
-                noItem: false
+                noItem: false,
+                timelineUserName: '',
+                hasMorePost: true,
+                inProgress: false,
+                interact: false
             }
         },
         methods: {
+            scrollFetchInit: function () {
+                let that = this
+                $('#user-who-follow--dialog .md-dialog__body--scrollable').scroll(function() {
+                    if($(this).scrollTop() + $(this).innerHeight() > ($(this)[0].scrollHeight - 32)) {
+                        setTimeout(function() {
+                            if(!that.inProgress && that.hasMorePost ){
+                                that.isFetchingBottom = true
+                                that.getList()
+                                that.inProgress = true
+                                that.participantList = []
+                            }
+                        }, 100)
+                    }
+                });
+            },
             userLink (item) {
                 return base_url + item.username
             },
@@ -136,7 +126,6 @@
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
                 let _user_id = $('#follow-userid').val()
-                this.participantList = []
                 axios({
                     method: 'post',
                     responseType: 'json',
@@ -149,14 +138,18 @@
                     }
                 }).then(function (response) {
                     if (response.status == 200) {
-                        console.log(response.data)
                         for(let i = 0;i<response.data.followers.length; i++) {
                             that.participantList.push(response.data.followers[i])
                         }
                         if(!i) {
-                            that.noItem = true
+                            if(that.interact) {
+                                that.noItem = true
+                            } else {
+                                that.hasMorePost = false
+                            }
                         }
-                        that.offset += response.data.length
+                        that.interact = true
+                        that.offset += response.data.followers.length
                     }
                 }).catch(function (error) {
                     console.log(error)
@@ -166,8 +159,27 @@
                 let o = item.username.search(this.filterSearch)
                 return o != -1
             },
-            unregisterFromEvent: function () {
-
+            removeFollowers: function (item, index) {
+                let that = this
+                let _token = $("meta[name=_token]").attr('content')
+                let _user_id = item.id
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url + 'ajax/remove-follower',
+                    data: {
+                        user_id: _user_id,
+                        _token: _token,
+                    }
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        that.participantList.splice(index,1)
+                        that.offset--
+                        materialSnackBar({messageText: 'User removed successfully', autoClose: true })
+                    }
+                }).catch(function (error) {
+                    console.log(error)
+                })
             }
         },
         mounted () {
@@ -176,11 +188,13 @@
             dialog.on('ca.dialog.hidden', function () {
                 that.participantList = []
                 that.offset = 0
-                that.noItem = true
+                that.noItem = false
             });
+            this.timelineUserName = $('#follow-username').val()
             dialog.on('ca.dialog.show', function () {
                 that.getList()
             });
+            this.scrollFetchInit()
         },
         computed: {
             filterUserSearch: function () {
@@ -189,9 +203,9 @@
                 }
                 return this.participantList.filter(this.filterList);
             },
-            ...mapGetters({
-                eventWho: 'eventWho'
-            }),
+            authUser: function () {
+                return $('#follow-userid').val() == current_username
+            },
             loading: function () {
                 return !this.participantList.length
             }

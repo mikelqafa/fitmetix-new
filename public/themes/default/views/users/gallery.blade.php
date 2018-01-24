@@ -21,7 +21,7 @@
                                     <div class="ft-icon">
                                         Posts
                                     </div>
-                                    <a class="info btn" href="">
+                                    <a class="info btn" href="{{ url($timeline->username) }}#post-feed">
                                         {{ count($posts) }}
                                     </a>
                                 </div>
@@ -52,7 +52,6 @@
                                     </div>
                                 @endif
                             </div>
-
                             <div id="user-follow-view">
                                 <input type="hidden" id="follow-userid" value="{{$timeline->user->id}}">
                                 <user-follow-list></user-follow-list>

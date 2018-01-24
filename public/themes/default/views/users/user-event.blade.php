@@ -50,6 +50,7 @@
                 {!! Theme::partial('timeline-header',compact('timeline','user_post')) !!}
                                     <div class="options" style="text-align: center;display: none;">
                         @if($timeline->user->settings()->post_privacy == 'everyone' || (Auth::user()->id == $timeline->user->id))
+
                                             <div class="ft-user-info md-layout md-layout--row md-align md-align--space-around show-more">
                                                 <div class="ft-user-info__item">
                                                     <div class="ft-icon">
@@ -63,7 +64,7 @@
                                                     <div class="ft-icon">
                                                         Posts
                                                     </div>
-                                                    <a class="info btn" href="">
+                                                    <a class="info btn" href="{{ url($timeline->username) }}#post-feed">
                                                         {{ count($posts) }}
                                                     </a>
                                                 </div>
@@ -94,7 +95,6 @@
                                                     </div>
                                                 @endif
                                             </div>
-
                                             <div id="user-follow-view">
                                 <input type="hidden" id="follow-userid" value="{{$timeline->user->id}}">
                                 <user-follow-list></user-follow-list>

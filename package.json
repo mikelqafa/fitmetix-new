@@ -21,6 +21,7 @@
   "dependencies": {
     "jquery": "^3.2.1",
     "medium-editor": "^5.23.3",
+    "textarea-caret": "^3.0.2",
     "vue-at": "^2.3.1",
     "vue-awesome-swiper": "^2.6.7",
     "vue-chat-scroll": "^1.2.1",

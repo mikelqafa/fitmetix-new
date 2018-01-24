@@ -4046,3 +4046,6 @@ aside .md-drawer-scroll__wrapper{
 .swiper-multiple-icon svg{
     fill: #ffffff;
 }
+.zippy--open.open-now{
+    overflow: visible;
+}

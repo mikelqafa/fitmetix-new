@@ -51,7 +51,13 @@
                             <a :href="userLinkAuth" class="md-list__item-icon user-avatar" :style="'background-image: url('+ authUserImage +')'">
                             </a>
                             <form action="#" class="ft-comment__item--grow pos-rel">
-                                <textarea v-on:keydown.13="postComment" class="ft-post__comment-form form-control"  autocomplete="off" data-post-id="" data-comment-id="" name="post_comment" placeholder="Write a comment" rows="1"></textarea>
+                                <at-textarea :members="members" v-on:at="fetchUser" name-key="name">
+                                    <template slot="item" scope="s">
+                                        <img :src="s.item.avatar">
+                                        <span v-text="s.item.name"></span>
+                                    </template>
+                                    <textarea v-on:keydown.13="postComment" class="ft-post__comment-form form-control"  autocomplete="off" data-post-id="" data-comment-id="" name="post_comment" placeholder="Write a comment" rows="1"></textarea>
+                                </at-textarea>
                                 <div class="ft-loading ft-loading--abs" v-if="isCommenting">
                                     <span class="ft-loading__dot"></span>
                                     <span class="ft-loading__dot"></span>
@@ -78,7 +84,7 @@
                                             <div class="md-layout md-layout--column">
                                                 <div class="md-list__item-text-body">
                                                     <a :href="userLink(item.user)" class="ft-user-name ft-user-name--comment-hide comment-user-hidden">{{ item.user.username }}</a>
-                                                    <span class="" v-html="item.description"></span>
+                                                    <span class="text-wrapper" v-html="item.description"></span>
                                                 </div>
                                                 <div class="md-layout md-layout--row hidden">
                                                     <a href="javascript:;" class="ft-expression ft-expression--comment-like  ft-expression--meta" style="">
@@ -122,6 +128,7 @@
 <script>
     import { mapGetters } from 'vuex'
     import Vue from 'vue'
+    import AtTextarea from 'vue-at/dist/vue-at-textarea' // for textarea
     export default {
         props: {
             postId: '',
@@ -133,13 +140,40 @@
         data: function () {
             return {
                 base_url: base_url,
+                members: [],
                 showUserComment: 0,
                 isCommenting: false,
                 authUserImage: '',
-                userLinkAuth: ''
+                userLinkAuth: '',
+                process: false
             }
         },
         methods: {
+            fetchUser: function (data) {
+                if(data == '') {
+                    return
+                }
+                let that = this
+                axios({
+                    method: 'get',
+                    responseType: 'json',
+                    url: base_url + 'ajax/get-users-mentions',
+                    params: {
+                        query: data,
+                        limit: 10
+                    }
+                }).then( function (response) {
+                    that.members = []
+                    if(response.status == 200) {
+                        for(let i=0; i<response.data.length; i++) {
+                            that.members.push({avatar: response.data[i].image, name: response.data[i].username})
+                        }
+                    }
+
+                }).catch(function(error) {
+                    console.log(error)
+                })
+            },
             getThumbImage: function (url) {
                 return getThumbImage(url)
             },
@@ -220,6 +254,9 @@
                 $('#post-who-likes-dialog').MaterialDialog('show')
             },
             postCommentByEnter: function (el) {
+                if(this.members.length) {
+                    return
+                }
                 let target = $(el).find('.ft-post__comment-form')[0]
                 this.initPostComment(target, target.value)
             },
@@ -233,10 +270,17 @@
                         return true
                     }
                 }
+                if(this.members.length) {
+                    return
+                }
                 e.preventDefault()
                 this.initPostComment(e.target, e.target.value)
             },
             initPostComment: function(target, value) {
+                if(this.process) {
+                    return
+                }
+                this.process = true
                 let input = target
                 $(target).parent().addClass('is-loading')
                 let loadingWrapper = $(target).parent().find('.loading-wrapper')
@@ -257,7 +301,7 @@
                         _token: _token
                     }
                 }).then(function (response) {
-                    console.log(response)
+                    that.process = false
                     if (response.status == 200) {
                         input.value = ''
                         that.isCommenting = false
@@ -280,9 +324,11 @@
                         //that.userCommented++
                         setTimeout(function () {
                             that.updateZippy()
+                            hastagify()
                         }, 300)
                     }
                 }).catch(function (error) {
+                    that.process = false
                     console.log(error)
                 })
             },
@@ -351,6 +397,7 @@
                         }
                         setTimeout(function () {
                             that.updateZippy()
+                            mentionify()
                         }, 500)
                     }
                 }).catch(function (error) {
@@ -407,7 +454,14 @@
             setTimeout(function () {
                 that.getDefaultData()
             }, 1000)
-            $('#' + this.expandID).Zippy();
+            let z = $('#' + this.expandID)
+            z.Zippy();
+            z.on('ca.zippy.hide', function(){
+                z.removeClass('open-now')
+            })
+            z.on('ca.zippy.shown', function(){
+                z.addClass('open-now')
+            })
             this.authUserImage = getThumbImage($('#auth-user-avatar').val())
             this.userLinkAuth = base_url + current_username
             if(this.showSidebar) {
@@ -417,7 +471,9 @@
                 }
             }
         },
-        components: {},
+        components: {
+            'at-textarea': AtTextarea
+        },
         computed: {
             ...mapGetters({
                     postItemList: 'postItemList'

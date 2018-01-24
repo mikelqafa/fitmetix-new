@@ -21,7 +21,7 @@
                                     <div class="ft-icon">
                                         Posts
                                     </div>
-                                    <a class="info btn" href="">
+                                    <a class="info btn" href="{{ url($timeline->username) }}#post-feed">
                                         {{ count($posts) }}
                                     </a>
                                 </div>
@@ -54,6 +54,7 @@
                             </div>
                             <div id="user-follow-view">
                                 <input type="hidden" id="follow-userid" value="{{$timeline->user->id}}">
+                                <input type="hidden" id="follow-username" value="{{$timeline->username}}">
                                 <user-follow-list></user-follow-list>
                                 <user-following-list></user-following-list>
                             </div>
@@ -124,7 +125,7 @@
                                 {!! Theme::partial('create-post',compact('timeline','user_post')) !!}
                             @endif
                         @endif
-                        <div class="timeline-posts timeline-posts--user">
+                        <div class="timeline-posts timeline-posts--user" id="post-feed">
                             @if(($timeline->user->settings()->post_privacy == 'everyone') || Auth::user()->id == $timeline->user->id || ($follow_user_status == 'approved'))
                                 <input type="hidden" id="timeline_username" value="{{$username}}" />
                                 <div id="app-timeline">
