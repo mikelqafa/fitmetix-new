@@ -4915,9 +4915,9 @@ public function saveMessageAttachment(Request $request) {
 
   public function getFollowers(Request $request) {
       $user = User::find($request->user_id);
-      $followers = $user->followers()->where('status', '=', 'approved')->get();
+      $followers = $user->followers()->where('status','approved')->limit($request->paginate)->offset($request->offset)->get();
       foreach ($followers as $follower) {
-          $following = DB::table('followers')->where([['leader_id',Auth::user()->id],['follower_id',$follower->follower_id]])->first();
+          $following = DB::table('followers')->where([['leader_id',Auth::user()->id],['follower_id',$follower->id]])->first();
           if (!empty($following)){
             if($following->status == 'pending') {
                 $follower->following_status = 'Request Sent';
@@ -4936,9 +4936,9 @@ public function saveMessageAttachment(Request $request) {
 
   public function getFollowing(Request $request) {
       $user = User::find($request->user_id);
-      $followings = $user->following()->where('status','approved')->get();
+      $followings = $user->following()->where('status','approved')->limit($request->paginate)->offset($request->offset)->get();
       foreach ($followings as $following) {
-          $following_auth = DB::table('followers')->where([['leader_id',Auth::user()->id],['follower_id',$following->leader_id]])->first();
+          $following_auth = DB::table('followers')->where([['follower_id',Auth::user()->id],['leader_id',$following->id]])->first();
           if (!empty($following_auth)){
             if($following_auth->status == 'pending') {
                 $following->following_status = 'Request Sent';
