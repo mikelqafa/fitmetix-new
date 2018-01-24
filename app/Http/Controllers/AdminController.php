@@ -1330,6 +1330,15 @@ class AdminController extends Controller
                     $notification->delete();
                 }
             }
+            if($post->type == 'event'){
+                $event = Event::where('timeline_id',$post->timeline_id)->first();
+                if($event) {
+                    $event->users()->detach();
+                    $event_timeline = $event->timeline();
+                    $event->delete();
+                    $event_timeline->delete();
+                }
+            }
             if ($post->deleteMe()) {
                 Flash::success(trans('messages.report_deleted_success'));
             }
