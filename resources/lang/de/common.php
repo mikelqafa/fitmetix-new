@@ -342,4 +342,5 @@
   'accepted_follow_request' => 'Ihre Folge Anfrage akzeptiert',
   'rejected_follow_request' => 'Ihre Folge Antrag abgelehnt',
   'update_now' => 'Jetzt aktualisieren',
+  't_c' => 'Impressum/AGB',
 );

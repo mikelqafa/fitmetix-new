@@ -16,6 +16,7 @@ Route::get('new/pass', function () {
 });
 
 Route::get('/contact', 'PageController@contact');
+Route::get('/terms', 'PageController@terms');
 Route::get('search', ['uses'=>'TimelineController@getSearch','middleware' => ['auth']]);
 Route::get('setting-mobile', ['uses'=>'TimelineController@getSettingMobile','middleware' => ['auth']]);
 Route::post('/contact', 'PageController@saveContact');

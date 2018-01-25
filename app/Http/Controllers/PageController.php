@@ -56,6 +56,14 @@ class PageController extends Controller
         return $theme->scope('pages/page', compact('page'))->render();
     }
 
+    public function terms()
+    {
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('guest');
+        $theme->setTitle(trans('common.t_c').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+
+        return $theme->scope('pages/terms')->render();
+    }
+
     public function contact()
     {
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('guest');

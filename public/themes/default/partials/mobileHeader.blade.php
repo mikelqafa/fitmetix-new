@@ -44,9 +44,14 @@
 <div class="hidden-lg hidden-md mobile-menu-slide">
     <div>
         <ul class="list-group list-group--ft" style="font-weight: 600;">
-            <li class="list-group-item"><img src="{{ asset('images/left-arrow.png') }}" alt="" class="toggleSlide"></li>
+            <li class="list-group-item" style="padding-left: 20px"><img src="{{ asset('images/left-arrow.png') }}" alt="" class="toggleSlide"></li>
+            <li class="list-group-item text-first-up">
+                <a href="{{ url(Auth::user()->username) }}">
+                    <img src="{{ url(Auth::user()->avatar) }}" class="user-avatar" style="border-radius: 0;">
+                    &nbsp; {{ trans('common.my_profile') }}</a>
+            </li>
             <li class="list-group-item">
-                <a href="{{ url(Auth::user()->username) }}"><img src="{{ url(Auth::user()->avatar) }}" class="user-avatar" style="border-radius: 0;"> &nbsp; My Profile</a>
+                <a href="{{ url(Auth::user()->username.'/create-event') }}"><i class="fa fa-plus"></i> Inspire</a>
             </li>
             <li class="list-group-item">
                 <a href="{{ url('/'.Auth::user()->username.'/settings/general') }}">General Settings</a>
@@ -55,7 +60,9 @@
                 <a href="{{ url('/'.Auth::user()->username.'/settings/privacy') }}">Privacy Settings</a>
             </li>
             <li class="list-group-item">
-                <a href="{{ url(Auth::user()->username.'/create-event') }}"><i class="fa fa-plus"></i> Inspire</a>
+                <a href="{{ url('/terms') }}">
+                    {{ trans('common.t_c') }}
+                </a>
             </li>
             @if(Auth::user()->custom_option1 == 'scout')
                 <li class="list-group-item">
@@ -66,7 +73,7 @@
             @endif
             <li class="list-group-item">
                 <form action="{{ url('/logout') }}" method="post">
-                        <button type="submit" class="btn btn-link" style="color: #10413E;font-weight: 600;">
+                        <button type="submit" class="btn btn-link" style="padding-left:0;color: #10413E;font-weight: 600;">
                             {{ trans('common.logout') }}
                         </button>
                         {{ csrf_field() }}

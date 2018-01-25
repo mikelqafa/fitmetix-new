@@ -4046,3 +4046,6 @@ aside .md-drawer-scroll__wrapper{
 .zippy--open.open-now{
     overflow: visible;
 }
+.text-first-up{
+    text-transform: capitalize;
+}

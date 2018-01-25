@@ -465,4 +465,5 @@ return [
     'home_feature_ten_icon_text'  => 'Feature 10 Icon code',
     'home_feature_ten'           => 'Feature 10 Text',
     'home_feature_ten_text'      => 'Enter text for Feature 10',
+    't_c'      => 'Terms & conditions',
 ];
