@@ -17,10 +17,9 @@
     .event_images_upload--label{
         height: 105px;
     }
-<<<<<<< Updated upstream
-    .has-item .event_images_upload--label{
+    .has-item .event_images_upload--label {
         display: none;
-=======
+    }
     .event_images_upload--label.image-added .icon {
         color: #fff;
     }
@@ -33,7 +32,6 @@
         top:0;
         left: 0;
         position: absolute;
->>>>>>> Stashed changes
     }
 
     #event_images_upload--image img {
@@ -133,13 +131,8 @@
                         </div>
                     </div>
 					<div class="row">
-<<<<<<< Updated upstream
 						<div class="col-md-6 form-helper-wrapper">
 							{{ Form::select('type', array('' => trans('common.privacy'), 'private' => trans('common.private'), 'public' => trans('common.public')), null ,array('id'=> 'privacy', 'class' => 'form-control selectize')) }}
-=======
-						<div class="col-md-6">
-							{{ Form::select('type', array('' => trans('common.privacy'), 'private' => trans('common.private'), 'public' => trans('common.public')), null ,array('class' => 'form-control selectize','required'=>'required')) }}
->>>>>>> Stashed changes
 							@if ($errors->has('type'))
 								<span class="help-block">
 									{{ $errors->first('type') }}
@@ -188,26 +181,10 @@
 									{{ $errors->first('type') }}
 								</span>
                                 @endif
-<<<<<<< Updated upstream
                                 <div class="form-helper">
                                     <div class="helper-inner arrow_box arrow_box--bottom-xs">
                                         Enter how many user can participate.
                                     </div>
-=======
-                            </div>
-                            <div class="col-md-6">
-                                {{-- <label for="price">Price: <small>(Provide <code>0</code> for FREE Event)</small></label> --}}
-                                <div class="col-md-5">
-                                    {{ Form::number('price', old('price'), ['class' => 'form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price' ,'min'=>0,'max'=>10000]) }}
-                                </div>
-                                <div class="col-md-7 md-align md-align--center-center">
-                                    <div class="md-layout md-layout--row layout-m-t-0">
-                                        <div class="md-layout md-layout--row">
-                                            <input type="radio" name="currency" id="currency-euro" value="EURO"> <label class="bdp-label" for="currency-euro">EURO</label></div>
-                                       <div class="md-layout md-layout--row layout-m-l-1"><input type="radio" name="currency" id="currency-usd" value="USD" checked><label class="bdp-label" for="currency-usd">USD</label></div>
-                                    </div>
-
->>>>>>> Stashed changes
                                 </div>
                             </div>
                             <div class="col-md-3 form-helper-wrapper">
