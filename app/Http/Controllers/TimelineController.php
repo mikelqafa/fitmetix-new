@@ -1318,9 +1318,9 @@ class TimelineController extends AppBaseController
                 return response()->json(['status' => '200', 'unfollow' => true, 'message' => 'unfollowed successfully']);
             } else {
                 $user->followers()->detach([Auth::user()->id]);
-
-                $notification = Notification::find($request->notification_id)->delete();
-
+                if(isset($request->notification_id)) {
+                    $notification = Notification::find($request->notification_id)->delete();
+                }
                 return response()->json(['status' => '200', 'followrequest' => false, 'message' => 'Request cancelled']);
             }
         }

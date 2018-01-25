@@ -7,7 +7,7 @@
                     <header class="md-dialog__header panel-post">
                         <div class="layout-m-l-1 md-layout md-align md-align--start-center">
                             <i class="icon icon-participant" style="margin-top: 4px"></i>
-                            <span class="layout-m-l-1">Users followed by {{ timelineUserName }}</span>
+                            <span class="layout-m-l-1">{{ timelineUserName }} following</span>
                         </div>
                         <div class="md-layout-spacer"></div>
                         <a href="javascript:;" style="margin-right: 15px"
@@ -30,21 +30,21 @@
                         </template>
                         <template v-else-if="!noItem">
                             <div class="md-list md-list--likes md-list--dense">
-                                <div class="md-list__item" v-for="item in filterUserSearch">
-                                    <a :href="userLink(item)" class="md-list__item-icon user-avatar"  :title="'@' + item.username" v-bind:style="{ backgroundImage: 'url(' + userAvatar(item) +')'}">
-                                    </a>
-                                    <div class="md-list__item-content">
-                                        <div class="md-list__item-primary md-align md-align--start-center md-layout">
-                                            <a :href="userLink(item)"
-                                               :title="'@' + item.username"
-                                               class="user-name user ft-user-name">
-                                                {{item.name}}
-                                            </a>
-                                        </div>
-                                        <div class="md-layout-spacer">
-                                        </div>
-                                        <template v-if="!authUser">
-                                            <button v-if="item.following_status == 'Following'"  class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true" :data-timeline-id="item.id" data-toggle="follow" data-following="true">
+                                <transition-group name="flip-list" tag="div">
+                                    <div class="md-list__item" v-for="(item, index) in filterUserSearch" :key="index+'user-following'">
+                                        <a :href="userLink(item)" class="md-list__item-icon user-avatar"  :title="'@' + item.username" v-bind:style="{ backgroundImage: 'url(' + userAvatar(item) +')'}">
+                                        </a>
+                                        <div class="md-list__item-content">
+                                            <div class="md-list__item-primary md-align md-align--start-center md-layout">
+                                                <a :href="userLink(item)"
+                                                   :title="'@' + item.username"
+                                                   class="user-name user ft-user-name">
+                                                    {{item.name}}
+                                                </a>
+                                            </div>
+                                            <div class="md-layout-spacer">
+                                            </div>
+                                            <button v-if="item.following_status == 'Following'"  class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true" :data-timeline-id="item.id" @click="unfollowUser(item, index)" data-following="true">
                                                     <span class="absolute-loader hidden">
                                                         <span class="ft-loading">
                                                             <span class="ft-loading__dot"></span>
@@ -53,7 +53,7 @@
                                                         </span>
                                                     </span>
                                                 <span class="false">Follow</span>
-                                                <span class="true">Following</span>
+                                                <span class="true">Unfollow</span>
                                             </button>
                                             <button v-else-if="item.following_status == 'Request Sent'" class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true"  :data-timeline-id="item.id" data-toggle="follow" data-following="true">
                                                     <span class="absolute-loader hidden">
@@ -77,44 +77,9 @@
                                                 <span class="false">Follow</span>
                                                 <span class="true">Following</span>
                                             </button>
-                                        </template>
-                                        <template v-else="">
-                                            <button v-if="item.following_status == 'Following'"  class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true" :data-timeline-id="item.id" data-toggle="follow" data-following="true">
-                                                    <span class="absolute-loader hidden">
-                                                        <span class="ft-loading">
-                                                            <span class="ft-loading__dot"></span>
-                                                            <span class="ft-loading__dot"></span>
-                                                            <span class="ft-loading__dot"></span>
-                                                        </span>
-                                                    </span>
-                                                <span class="false">Follow</span>
-                                                <span class="true">Following</span>
-                                            </button>
-                                            <button v-else-if="item.following_status == 'Request Sent'" class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true"  :data-timeline-id="item.id" data-toggle="follow" data-following="true">
-                                                    <span class="absolute-loader hidden">
-                                                        <span class="ft-loading">
-                                                            <span class="ft-loading__dot"></span>
-                                                            <span class="ft-loading__dot"></span>
-                                                            <span class="ft-loading__dot"></span>
-                                                        </span>
-                                                    </span>
-                                                <span class="false">Follow</span>
-                                                <span class="true">Requested</span>
-                                            </button>
-                                            <button v-else="" class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true"  :data-timeline-id="item.id" data-toggle="follow" data-following="false">
-                                                    <span class="absolute-loader hidden">
-                                                        <span class="ft-loading">
-                                                            <span class="ft-loading__dot"></span>
-                                                            <span class="ft-loading__dot"></span>
-                                                            <span class="ft-loading__dot"></span>
-                                                        </span>
-                                                    </span>
-                                                <span class="false">Follow</span>
-                                                <span class="true">Following</span>
-                                            </button>
-                                        </template>
+                                        </div>
                                     </div>
-                                </div>
+                                </transition-group>
                             </div>
                         </template>
                         <template v-else="">
@@ -135,7 +100,6 @@
                 defaultImage: 'default.png',
                 filterSearch: '',
                 offset: 0,
-                authUser: false,
                 noItem: false,
                 timelineUserName: '',
                 hasMorePost: true,
@@ -206,8 +170,26 @@
                 let o = item.username.search(this.filterSearch)
                 return o != -1
             },
-            unregisterFromEvent: function () {
-
+            unfollowUser: function (item, index) {
+                let that = this
+                let _token = $("meta[name=_token]").attr('content')
+                let timeline_id = item.timeline_id
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url + 'ajax/follow-user-confirm',
+                    data: {
+                        timeline_id: timeline_id,
+                        _token: _token
+                    }
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        that.participantList.splice(index,1)
+                        materialSnackBar({messageText: response.data.message, autoClose: true })
+                    }
+                }).catch(function (error) {
+                    console.log(error)
+                })
             }
         },
         mounted () {
