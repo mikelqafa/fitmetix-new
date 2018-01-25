@@ -561,6 +561,7 @@ $(function () {
       el.attr('disabled', false)
       el.attr('data-processing', false)
       if (data.status == 200) {
+        console.log(data)
         if (data.followed == true) {
           el.attr('data-following', true)
         } else {
@@ -572,6 +573,7 @@ $(function () {
           if(data.followrequest) {
             el.attr('data-following', true)
             el.find('.true').text('Requested')
+            el.attr('disabled', true)
           }
         } else {
           location.reload();

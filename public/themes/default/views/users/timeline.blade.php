@@ -42,7 +42,7 @@
                                     </a>
                                 </div>
                                 @if(Auth::user()->id == $timeline->user->id)
-                                    <div class="ft-user-info__item">
+                                    <div class="ft-user-info__item hidden">
                                         <div class="ft-icon">
                                             Saved
                                         </div>
