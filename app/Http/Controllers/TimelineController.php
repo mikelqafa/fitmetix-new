@@ -2118,7 +2118,6 @@ class TimelineController extends AppBaseController
 
     public function singlePost($post_id)
     {
-        // TODO amit maity
         $mode = 'posts';
         $post = Post::where('id', '=', $post_id)->first();
         $timeline = Auth::user()->timeline;
@@ -2132,8 +2131,25 @@ class TimelineController extends AppBaseController
         if ($post == null) {
             return redirect('/');
         }
+
+        $url = url('/post/'.$post->id);
         $theme = Theme::uses('default')->layout('default');
         $theme->setTitle(trans('common.post').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+
+
+        $post_image_source = $post->images()->where('post_id',$post->id)->first()->source;
+        if($post_image_source != null) {
+            if($post->type == 'event'){
+                $post_image = env('STORAGE_URL').'uploads/events/covers/'.$post_image_source; 
+            }
+            else {
+                $post_image = env('STORAGE_URL').'uploads/users/gallery/'.$post_image_source; 
+            }
+            $theme->set('meta_image',$post_image);
+        }
+        $theme->set('meta_url',$url);
+        $theme->set('meta_description',strip_tags($post->description));
+        $theme->set('meta_site_title',$post->timeline->username);
 
         return $theme->scope('timeline/single-post', compact('post', 'timeline', 'suggested_users', 'trending_tags', 'suggested_groups', 'suggested_pages', 'mode'))->render();
     }

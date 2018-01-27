@@ -17,12 +17,14 @@
     <meta name="keywords" content="{{ Setting::get('meta_keywords') }}">
     <meta name="description" content="{{ Setting::get('meta_description') }}">
     <meta name="_token" content="{{ csrf_token() }}">
-    <meta content="{{ url('/') }}" property="og:url"/>
-    <meta content="{!! url('setting/'.Setting::get('logo')) !!}" property="og:image"/>
-    <meta content="{{ Setting::get('meta_description') }}" property="og:description"/>
-    <meta content="{{ Setting::get('site_name') }}" property="og:title"/>
+
+    <meta content="{{ Theme::get('meta_url') }}" property="og:url"/>
+    <meta content="{{ Theme::get('meta_image') }}" property="og:image"/>
+    <meta content="{{ Theme::get('meta_description') }}" property="og:description"/>
+    <meta content="{{ Theme::get('meta_site_title') }}" property="og:title"/>
     <meta content="website" property="og:type"/>
-    <meta content="{{ Setting::get('site_name') }}" property="og:site_name"/>
+    <meta content="Fitmetix" property="og:site_name"/>
+
     <title>{{ Theme::get('title') }}</title>
     <link href="{{ asset('fitmetixfont/font.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">

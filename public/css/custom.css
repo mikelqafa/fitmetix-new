@@ -2584,6 +2584,7 @@ a{
 .ft-event-card__title{
     text-align: center;
     margin-top: 0;
+    max-width: 300px;
 }
 .absolute-loader{
     position: absolute;
