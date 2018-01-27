@@ -2132,7 +2132,7 @@ class TimelineController extends AppBaseController
             return redirect('/');
         }
 
-        $url = url('/post/'.$post->id);
+        $url = url('/share/'.$post->id);
         $theme = Theme::uses('default')->layout('default');
         $theme->setTitle(trans('common.post').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
