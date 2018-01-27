@@ -95,6 +95,7 @@ Route::post('/register', 'Auth\RegisterController@registerUser');
 Route::get('email/verify', 'Auth\RegisterController@verifyEmail');
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('/post/{post_id}', 'TimelineController@singlePost');
     Route::get('/', 'TimelineController@showFeed');
     Route::get('/browse', 'TimelineController@showGlobalFeed');
 });
@@ -103,7 +104,6 @@ Route::get('/home', 'HomeController@index');
 
 Route::post('/member/update-role', 'TimelineController@assignMemberRole');
 Route::post('/member/updatepage-role', 'TimelineController@assignPageMemberRole');
-Route::get('/post/{post_id}', 'TimelineController@singlePost');
 
 Route::get('allnotifications', 'TimelineController@allNotifications');
 
