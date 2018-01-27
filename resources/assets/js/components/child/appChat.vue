@@ -87,9 +87,9 @@
                                             <div v-for="item in conversations.data" :key="item.id" class="md-list__item"
                                                  @click="openChat(item)">
                                                 <div class="md-list__item-content">
-                                                    <a href="//localhost:3000/fitmetix/public/doremon"
+                                                    <a :href="userLink(item)"
                                                        class="md-list__item-icon user-avatar"
-                                                       :style="{backgroundImage: 'url(100_'+item.user.avatar+')'}">
+                                                       :style="{backgroundImage: 'url('+getThumbImage(item)+')'}">
                                                     </a>
                                                     <div class="md-list__item-primary">
                                                         <span>{{item.user.name}}</span>
@@ -143,6 +143,12 @@
             },
             processEditOperation: function (operation) {
                 this.backContent = operation.api.origElements.innerHTML
+            },
+            userLink: function (item) {
+                return base_url + item.user.username
+            },
+            getThumbImage: function (item) {
+                return getThumbImage(item.user.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.user.avatar_url[0].source : base_url + 'images/' + this.defaultImage)
             },
             since (d) {
                 let str = ''

@@ -13,7 +13,7 @@
     </nav>
 @else
     <nav class="navbar ft-custom socialite navbar-default no-bg hidden-sm hidden-xs">
-        <div class="container md-layout md-layout--row" style="max-width: 960px;">
+        <div class="container md-layout md-layout--row" style="max-width: 1024px;">
             <div class="no-float navbar-header">
                 <a class="navbar-brand socialite" href="{{ url('/') }}">
                     <img class="socialite-logo" src="{!! url('images/logo.png') !!}"
@@ -26,7 +26,7 @@
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
                         </span>
-                    <input type="text" id="navbar-search" style="width: 200px" data-url="{{ URL::to('api/v1/timelines') }}"
+                    <input type="text" id="navbar-search" style="width: 260px" data-url="{{ URL::to('api/v1/timelines') }}"
                            class="form-control"
                            placeholder="Search">
                 </div>

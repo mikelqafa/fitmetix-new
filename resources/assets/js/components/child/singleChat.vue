@@ -18,9 +18,9 @@
                                     <div v-for="item in sortedConversations" :key="item.id" class="md-list__item"
                                          @click="openChat(item)" v-bind:class="{'is-active': item.id == currentConversation.id}">
                                         <div class="md-list__item-content">
-                                            <a href="//localhost:3000/fitmetix/public/doremon"
+                                            <a :href="userLink(item)"
                                                class="md-list__item-icon user-avatar"
-                                               :style="{backgroundImage: 'url('+getThumbImage(item.user.avatar)+')'}">
+                                               :style="{backgroundImage: 'url('+getThumbImage(item)+')'}">
                                             </a>
                                             <div class="md-list__item-primary">
                                             <span class="pos-rel">
@@ -132,17 +132,19 @@
                 options: { disableReturn: false },
                 messageBody: '',
                 placeholder: 'Type a message...',
-                nonEmpty: false
+                nonEmpty: false,
+                defaultImage: 'default.png'
             }
         },
         methods: {
             processEditOperation: function (operation) {
                 this.backContent = operation.api.origElements.innerHTML
             },
-            getThumbImage: function (url) {
-                let url_arr = url.split('/');
-                let last_string = url_arr[url_arr.length - 1]
-                return url.replace(last_string, '100_' + last_string)
+            userLink: function (item) {
+                return base_url + item.user.username
+            },
+            getThumbImage: function (item) {
+                return getThumbImage(item.user.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.user.avatar_url[0].source : base_url + 'images/' + this.defaultImage)
             },
             since (d) {
                 let str = ''

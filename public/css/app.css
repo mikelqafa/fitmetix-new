@@ -17145,7 +17145,7 @@ html {
     margin-left: 0px !important;
     border-left-width: 0px;
     border-right-width: 1px !important;
-    height: 30px !important;
+    height: 40px !important;
     min-width: 360px;
 }
 .form-left .form-control:focus {
@@ -17153,13 +17153,12 @@ html {
     box-shadow: none !important;
 }
 .form-left .form-control .selectize-input {
-    height: 30px;
     min-height: 30px;
     max-width: 360px;
     border-color: #E6EAEE;
     border-radius: 0px 4px 4px 0px;
     border-left-width: 0px;
-    padding-top: 5px;
+    padding-top: 9px;
     padding-left: 8px;
     background-color: #fff;
 }
@@ -17237,7 +17236,7 @@ html {
     border-left-width: 1px !important;
     border-right-width: 0px;
     background: #fff !important;
-    height: 30px !important;
+    height: 40px !important;
     padding-top: 4px;
     padding-right: 6px;
 }
@@ -20069,7 +20068,7 @@ select.form-control {
     margin-left: 0px;
 }
 .socialite-logo {
-    height: 32px;
+    height: 28px;
 }
 a:hover {
     text-decoration: none;

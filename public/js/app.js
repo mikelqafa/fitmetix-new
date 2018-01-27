@@ -1337,8 +1337,6 @@ $(function () {
     searchField: 'name',
     optgroups: [
       {value: 'user', label: 'Users'},
-      {value: 'group', label: 'Groups'},
-      {value: 'page', label: 'Pages'},
       {value: 'event', label: 'Events'}
     ],
 
@@ -1347,19 +1345,10 @@ $(function () {
 
         //  get default images
         var item_image = "default-male-avatar.png";
-        if(item.type=="group")
+        if(item.type == "event")
         {
           item_image = "default-group-avatar.png";
         }
-        else if(item.type == "page")
-        {
-          item_image = "default-page-avatar.png";
-        }
-        else if(item.type == "event")
-        {
-          item_image = "default-group-avatar.png";
-        }
-
 
         if (item.avatar_url[0] != null)
         {
@@ -1374,13 +1363,13 @@ $(function () {
               '</a>';
         }
 
-        if(item.about != null)
+        if(item.name != null)
         {
-          var about = escape(item.about);
+          var about = escape(item.name);
         }
         else
         {
-          var about = '(no description added)';
+          var about = '';
         }
 
         var verified = '';

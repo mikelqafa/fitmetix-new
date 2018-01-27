@@ -4049,3 +4049,6 @@ aside .md-drawer-scroll__wrapper{
 .text-first-up{
     text-transform: capitalize;
 }
+.form-left .form-control .selectize-input {
+    height: 40px;
+}
