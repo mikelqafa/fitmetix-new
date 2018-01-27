@@ -4052,3 +4052,10 @@ aside .md-drawer-scroll__wrapper{
 .form-left .form-control .selectize-input {
     height: 40px;
 }
+.md-dialog .write-post__placeholder {
+    left: 16px;
+}
+#event-edit-option-dialog .item__background--post .img-responsive,
+#post-edit-option-dialog .item__background--post .img-responsive {
+    max-height: 50vh;
+}
