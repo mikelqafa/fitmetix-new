@@ -123,7 +123,7 @@
 							{{ $errors->first('name') }}
 						</span>
                         @endif
-                        {{ Form::text('name', old('name'), ['id'=>'title','required'=>'required', 'class' => 'form-control', 'placeholder' => trans('common.name_of_your_event'),'maxlength'=>30]) }}
+                        {{ Form::text('name', old('name'), ['id'=>'title','required'=>'required', 'class' => 'form-control', 'placeholder' => trans('common.name_of_your_event'),'tabindex'=>'1','maxlength'=>45]) }}
                         <div class="form-helper">
                             <div class="helper-inner arrow_box arrow_box--bottom-xs">
                                 Give a great title for your event.
@@ -132,7 +132,7 @@
                     </div>
 					<div class="row">
 						<div class="col-md-6 form-helper-wrapper">
-							{{ Form::select('type', array('' => trans('common.privacy'), 'private' => trans('common.private'), 'public' => trans('common.public')), null ,array('id'=> 'privacy', 'class' => 'form-control selectize')) }}
+							{{ Form::select('type', array('' => trans('common.privacy'), 'private' => trans('common.private'), 'public' => trans('common.public')), null ,array('id'=> 'privacy', 'tabindex'=>'2','class' => 'form-control selectize')) }}
 							@if ($errors->has('type'))
 								<span class="help-block">
 									{{ $errors->first('type') }}
@@ -148,7 +148,7 @@
 							<fieldset class="form-group">
 								{{-- {{ Form::label('frequency', 'Frequency: ', ['class' => 'control-label']) }} --}}
 								{{ Form::hidden('frequency', 'once', array('class' => 'form-control','required'=>'required')) }}
-                                {{ Form::select('gender', array('' => trans('common.gender'), 'male' => 'Males Only', 'female' => 'Females Only', 'all' => 'Everyone'), null ,array('id' => 'gender','class' => 'form-control selectize')) }}
+                                {{ Form::select('gender', array('' => trans('common.gender'), 'male' => 'Males Only', 'female' => 'Females Only', 'all' => 'Everyone'), null ,array('id' => 'gender', 'tabindex'=>'3','class' => 'form-control selectize')) }}
 							</fieldset>
                             <div class="form-helper">
                                 <div class="helper-inner arrow_box arrow_box--bottom-xs">
@@ -159,7 +159,7 @@
 					</div>
                     <fieldset class="form-helper-wrapper form-group required {{ $errors->has('type') ? ' has-error' : '' }}">
                         {{-- {{ Form::label('location', trans('common.location')) }} --}}
-                        {{ Form::text('location', old('location'), ['required'=>'required', 'class' => 'form-control', 'id' => 'location-input', 'autocomplete' => 'off','placeholder' => trans('common.enter_location'), 'onKeyPress' => "return initMap(event)" ]) }}
+                        {{ Form::text('location', old('location'), ['required'=>'required', 'class' => 'form-control', 'id' => 'location-input', 'tabindex'=>'4','autocomplete' => 'off','placeholder' => trans('common.enter_location'), 'onKeyPress' => "return initMap(event)" ]) }}
                         @if ($errors->has('location'))
                             <span class="help-block">
 							{{ $errors->first('location') }}
@@ -175,7 +175,7 @@
                             class="form-group required {{ $errors->has('location') || $errors->has('price') ? ' has-error' : '' }}">
                         <div class="row">
                             <div class="col-md-5 form-helper-wrapper">
-                                {{ Form::number('user_limit', old('user_limit'), ['required'=>'required','class' => 'form-control', 'placeholder' => 'Number of participants','min'=>1]) }}
+                                {{ Form::number('user_limit', old('user_limit'), ['required'=>'required','class' => 'form-control', 'tabindex'=>'5','placeholder' => 'Number of participants','min'=>1]) }}
                                 @if ($errors->has('type'))
                                     <span class="help-block">
 									{{ $errors->first('type') }}
@@ -188,7 +188,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3 form-helper-wrapper">
-                                {{ Form::number('price', old('price'), ['class' => 'form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price' ,'min'=>0,'max'=>10000]) }}
+                                {{ Form::number('price', old('price'), ['class' => 'form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price' , 'tabindex'=>'6','min'=>0,'max'=>10000]) }}
                                 @if ($errors->has('price'))
                                     <span class="help-block">
 									{{ $errors->first('price') }}
@@ -203,10 +203,10 @@
                             <div class="col-md-4 md-align md-align--center-center">
                                 <div class="md-layout md-layout-spacer form-control form-helper-wrapper md-layout--row">
                                     <div class="md-layout md-layout--row">
-                                        <input type="radio" name="currency" id="currency-euro" value="EURO"> <label class="bdp-label" for="currency-euro">EURO</label>
+                                        <input type="radio" name="currency" tabindex='7' id="currency-euro" value="EURO"> <label class="bdp-label" for="currency-euro">EURO</label>
                                     </div>
                                     <div class="md-layout md-layout--row layout-m-l-1">
-                                        <input type="radio" name="currency" id="currency-usd" value="USD" checked><label class="bdp-label" for="currency-usd">USD</label>
+                                        <input type="radio" name="currency" tabindex='7' id="currency-usd" value="USD" checked><label class="bdp-label" for="currency-usd">USD</label>
                                     </div>
                                     <div class="form-helper">
                                         <div class="helper-inner arrow_box arrow_box--bottom-xs">
@@ -222,7 +222,7 @@
                         <div class="row">
                             <div class="col-md-6 form-helper-wrapper">
                                 <div class="input-group date form_datetime">
-                                    <input type="text" required  class="datepick2--event form-control" name="start_date"
+                                    <input type="text" tabindex='8' required  class="datepick2--event form-control" name="start_date"
                                            placeholder="Start Time" value="{{ old('start_date') }}">
 								<span class="input-group-addon addon-right calendar-addon">
 									<span class="fa fa-calendar"></span>
@@ -240,7 +240,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 form-helper-wrapper">
-                                {{ Form::text('duration', old('duration'), ['required'=>'required','class' => 'form-control', 'id' => 'duration-event', 'autocomplete' => 'off','placeholder' => 'duration']) }}
+                                {{ Form::text('duration', old('duration'), ['required'=>'required','class' => 'form-control', 'id' => 'duration-event','tabindex'=>'9' ,'autocomplete' => 'off','placeholder' => 'duration']) }}
                                 @if ($errors->has('duration'))
                                     <span class="help-block">
 									{{ $errors->first('duration') }}
@@ -255,7 +255,7 @@
                         </div>
                     </fieldset>
                     <fieldset class="form-group form-helper-wrapper">
-                        {{ Form::textarea('about', old('about'), ['id'=>'description','class' => 'form-control','placeholder' => trans('common.description'), 'maxlength'=>500]) }}
+                        {{ Form::textarea('about', old('about'), ['id'=>'description','class' => 'form-control','placeholder' => trans('common.description'), 'tabindex'=>'10','maxlength'=>500]) }}
                         <div class="form-helper" style="top: -56px;">
                             <div class="helper-inner arrow_box arrow_box--bottom-xs arrow_box--bottom">
                                 Enter details about event and things which need to carry to join event.

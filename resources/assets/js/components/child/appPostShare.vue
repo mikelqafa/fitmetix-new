@@ -32,7 +32,7 @@
 </template>
 
 <style>
-    #post-share-dialog{
+    #post-share-init-dialog{
         z-index: 26;
     }
 </style>

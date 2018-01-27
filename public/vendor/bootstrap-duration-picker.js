@@ -2,14 +2,14 @@
 
   var langs = {
     en: {
-      day: 'day',
-      hour: 'hour',
-      minute: 'minute',
-      second: 'second',
-      days: 'days',
-      hours: 'hours',
-      minutes: 'minutes',
-      seconds: 'seconds'
+      day: 'd',
+      hour: 'h',
+      minute: 'm',
+      second: 's',
+      days: 'd',
+      hours: 'h',
+      minutes: 'm',
+      seconds: 's'
     }
   };
 
@@ -38,7 +38,7 @@
             '</div>';
       }
 
-      var mainInputReplacer = $('<div class="bdp-input"><span class="black-label">Duration</span>' +
+      var mainInputReplacer = $('<div class="bdp-input" tabindex="9"><span class="black-label">Duration</span>' +
           buildDisplayBlock('days') +
           buildDisplayBlock('hours') +
           buildDisplayBlock('minutes') +

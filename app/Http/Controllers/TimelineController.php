@@ -2778,7 +2778,7 @@ class TimelineController extends AppBaseController
     protected function validateEventPage(array $data)
     {
         return Validator::make($data, [
-            'name'        => 'required|max:30|min:5',
+            'name'        => 'required|max:45|min:5',
             'start_date'  => 'required',
             'duration'    => 'required|max:2:min:1',
             'location'    => 'required',

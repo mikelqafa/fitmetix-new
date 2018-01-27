@@ -2,14 +2,14 @@
 
   var langs = {
     en: {
-      day: 'day',
-      hour: 'hour',
-      minute: 'minute',
-      second: 'second',
-      days: 'days',
-      hours: 'hours',
-      minutes: 'minutes',
-      seconds: 'seconds'
+      day: 'd',
+      hour: 'h',
+      minute: 'm',
+      second: 's',
+      days: 'd',
+      hours: 'h',
+      minutes: 'm',
+      seconds: 's'
     }
   };
 
@@ -111,7 +111,7 @@
       }
 
       function buildNumericInput(label, hidden, max) {
-        var input = $('<input class="form-control input-sm" type="number" min="0" value="0">')
+        var input = $('<input class="form-control input-sm" type="number" min="0" tabindex=1 value="0">')
             .change(picker_changed);
         if (max) {
           input.attr('max', max);
@@ -126,10 +126,10 @@
 
       if (!disabled) {
         var picker = $('<div class="bdp-popover"></div>');
-        buildNumericInput('days', false).appendTo(picker);
-        buildNumericInput('hours', false, 23).appendTo(picker);
-        buildNumericInput('minutes', false, 59).appendTo(picker);
-        buildNumericInput('seconds', !settings.showSeconds, 59).appendTo(picker);
+        buildNumericInput('d', false).appendTo(picker);
+        buildNumericInput('h', false, 23).appendTo(picker);
+        buildNumericInput('m', false, 59).appendTo(picker);
+        buildNumericInput('s', !settings.showSeconds, 59).appendTo(picker);
 
         mainInputReplacer.popover({
           placement: 'bottom',
