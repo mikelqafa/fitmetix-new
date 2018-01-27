@@ -314,7 +314,7 @@ export const store = new Vuex.Store({
                 }
               });
               context.state.conversations.data[indexes[0]].lastMessage = data.message;
-              if(true) {
+              if(context.state.currentConversation.id != data.message.thread_id) {
                 context.state.conversations.data[indexes[0]].unread = true;
                 $.playSound(theme_url + '/sounds/notification');
               }
