@@ -14,7 +14,7 @@
                             </a>
                             <a href="javascript:;" class="chat-user margin-left-8">{{currentConversation.user.name}}</a>
                             <div class="md-layout-spacer" style="height: 100%" @click="toggleChatMinimize"></div>
-                            <a href="javascript:;" class="chat-options">
+                            <a href="javascript:;" class="hidden chat-options">
                                 <i class="icon icon-options"></i>
                             </a>
                             <a href="javascript:;" class="chat-options margin-right-8" @click="closeChat">

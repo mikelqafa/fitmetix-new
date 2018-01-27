@@ -59,7 +59,7 @@
                         </a>
                         <a href="javascript:;" class="chat-user margin-left-8">{{currentConversation.user.name}}</a>
                         <div class="md-layout-spacer"></div>
-                        <a href="javascript:;" class="chat-options">
+                        <a href="javascript:;" class="hidden chat-options">
                             <i class="icon icon-options"></i>
                         </a>
                     </header>
