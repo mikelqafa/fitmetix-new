@@ -306,6 +306,18 @@ export const store = new Vuex.Store({
               context.state.conversations.data[indexes[0]].unread = true;
               context.state.conversations.data[indexes[0]].lastMessage = data.message;
               $.playSound(theme_url + '/sounds/notification');
+            } else {
+              // means box is open
+              let indexes = $.map(context.state.conversations.data, function (thread, key) {
+                if (thread.id == data.message.thread_id) {
+                  return key;
+                }
+              });
+              context.state.conversations.data[indexes[0]].lastMessage = data.message;
+              if(true) {
+                context.state.conversations.data[indexes[0]].unread = true;
+                $.playSound(theme_url + '/sounds/notification');
+              }
             }
           }
         }
