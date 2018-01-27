@@ -2138,18 +2138,26 @@ class TimelineController extends AppBaseController
 
 
         $post_image_source = $post->images()->where('post_id',$post->id)->first()->source;
-        if($post_image_source != null) {
-            if($post->type == 'event'){
+        
+
+        if($post->type == 'event'){
+            if($post_image_source != null) {
                 $post_image = env('STORAGE_URL').'uploads/events/covers/'.$post_image_source; 
+                $theme->set('meta_image',$post_image);
             }
-            else {
-                $post_image = env('STORAGE_URL').'uploads/users/gallery/'.$post_image_source; 
-            }
-            $theme->set('meta_image',$post_image);
+            $theme->set('meta_site_title',$post->timeline->about);
         }
+        else {
+            if($post_image_source != null) {
+                $post_image = env('STORAGE_URL').'uploads/users/gallery/'.$post_image_source; 
+                $theme->set('meta_image',$post_image);
+            }
+            $theme->set('meta_site_title',$post->timeline->username);
+        }
+        
+
         $theme->set('meta_url',$url);
         $theme->set('meta_description',strip_tags($post->description));
-        $theme->set('meta_site_title',$post->timeline->username);
 
         return $theme->scope('timeline/single-post', compact('post', 'timeline', 'suggested_users', 'trending_tags', 'suggested_groups', 'suggested_pages', 'mode'))->render();
     }
@@ -4983,8 +4991,33 @@ public function saveMessageAttachment(Request $request) {
       return response()->json(['following'=>$followings]);
   }
 
-  public function removeFollower(Request $request) {
-      Auth::user()->followers()->detach([$request->user_id]);
-      return response()->json(['data'=>'Successfully removed from followers']);
-  }
+    public function removeFollower(Request $request) {
+        Auth::user()->followers()->detach([$request->user_id]);
+        return response()->json(['data'=>'Successfully removed from followers']);
+    }
+  
+    public function FBshare($post_id) {
+        $post = Post::where('id', '=', $post_id)->first();
+        $post_id = $post->id;
+
+        $url = url('/post/'.$post->id);
+        $post_image_source = $post->images()->where('post_id',$post->id)->first()->source;
+
+        if($post->type == 'event'){
+            if($post_image_source != null) {
+                $post_image = env('STORAGE_URL').'uploads/events/covers/'.$post_image_source; 
+            }
+            $title = $post->timeline->about;
+        }
+        else {
+            if($post_image_source != null) {
+                $post_image = env('STORAGE_URL').'uploads/users/gallery/'.$post_image_source; 
+            }
+            $title = $post->timeline->username;
+        }
+        
+        $description = $post->description;
+        return view('FBshare',compact('url','post_image','title','description','post_id'));
+    }
+
 }

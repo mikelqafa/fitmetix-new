@@ -583,6 +583,9 @@ Route::get('wallpaper/{filename}', function ($filename) {
     return Image::make(storage_path().'/uploads/wallpapers/'.$filename)->response();
 });
 
+Route::get('share/{post_id}','TimelineController@FBshare');
+
+
 Route::post('paypal', ['as' => 'addmoney.paypal','uses' => 'AddMoneyController@postPaymentWithpaypal']);
 Route::get('paypal', ['as' => 'payment.status','uses' => 'AddMoneyController@getPaymentStatus']);
 Route::post('paypal', ['as' => 'refundmoney.paypal','uses' => 'AddMoneyController@refundPayment']);
