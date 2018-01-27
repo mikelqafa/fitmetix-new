@@ -7,7 +7,7 @@
                 <div class="md-dialog__surface" style="position: relative;">
                     <div class="md-dialog__body">
                         <div class="ft-dialog-option">
-                            <a href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="initRemoveBgPicture">
+                            <a href="javascript:;" data-value="post" class="hidden btn ft-dialog-option__item" @click="initRemoveBgPicture">
                                 Remove Current Photo
                             </a>
                             <form method="post" enctype="multipart/form-data">
@@ -94,7 +94,7 @@
 
             },
             cancelTask: function () {
-
+                $('#picture-option-dialog').MaterialDialog('hide')
             },
             uploadPicture: function () {
                 let that = this
