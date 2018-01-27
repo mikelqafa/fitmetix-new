@@ -194,7 +194,7 @@
                     case 'facebook':
                         FB.ui({
                             method: 'feed',
-                            link: base_url+'post/'+that.postItem.id
+                            link: base_url+'share/'+that.postItem.id
                         }, function (response) {
                             console.log(response)
                         })
