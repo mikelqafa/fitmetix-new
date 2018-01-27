@@ -148,7 +148,7 @@
                 return base_url + item.user.username
             },
             getThumbImage: function (item) {
-                return getThumbImage(item.user.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.user.avatar_url[0].source : base_url + 'images/' + this.defaultImage)
+                return getThumbImage(item.user.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.user.avatar_url[0].source : base_url + 'images/' + 'default.png')
             },
             since (d) {
                 let str = ''
