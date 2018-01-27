@@ -313,8 +313,9 @@ export const store = new Vuex.Store({
                   return key;
                 }
               });
-              context.state.conversations.data[indexes[0]].lastMessage = data.message;
-              if(context.state.currentConversation.id != data.message.thread_id) {
+              context.state.conversations.data[indexes[0]].lastMessage = data.message
+              console.log(context.state.currentConversation.id, data.message.thread_id)
+              if(context.state.currentConversation.id != data.message.thread_id || $('.ft-chat--list-wrapper').hasClass('is-list-open')) {
                 context.state.conversations.data[indexes[0]].unread = true;
                 $.playSound(theme_url + '/sounds/notification');
               }
