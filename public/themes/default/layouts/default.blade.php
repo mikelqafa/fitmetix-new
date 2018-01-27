@@ -19,6 +19,7 @@
     <meta name="_token" content="{{ csrf_token() }}">
 
     <meta content="{{ Theme::get('meta_url') }}" property="og:url"/>
+    <meta content="217416572121069" property="fb:app_id"/>
     <meta content="{{ Theme::get('meta_image') }}" property="og:image"/>
     <meta content="{{ Theme::get('meta_description') }}" property="og:description"/>
     <meta content="{{ Theme::get('meta_site_title') }}" property="og:title"/>

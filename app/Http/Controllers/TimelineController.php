@@ -2132,7 +2132,7 @@ class TimelineController extends AppBaseController
             return redirect('/');
         }
 
-        $url = url('/post/'.$post->id);
+        $url = url('/share/'.$post->id);
         $theme = Theme::uses('default')->layout('default');
         $theme->setTitle(trans('common.post').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
@@ -2145,7 +2145,7 @@ class TimelineController extends AppBaseController
                 $post_image = env('STORAGE_URL').'uploads/events/covers/'.$post_image_source; 
                 $theme->set('meta_image',$post_image);
             }
-            $theme->set('meta_site_title',$post->timeline->about);
+            $theme->set('meta_site_title',strip_tags($post->timeline->about));
         }
         else {
             if($post_image_source != null) {
@@ -5000,7 +5000,7 @@ public function saveMessageAttachment(Request $request) {
         $post = Post::where('id', '=', $post_id)->first();
         $post_id = $post->id;
 
-        $url = url('/post/'.$post->id);
+        $url = url('/share/'.$post->id);
         $post_image_source = $post->images()->where('post_id',$post->id)->first()->source;
 
         if($post->type == 'event'){
