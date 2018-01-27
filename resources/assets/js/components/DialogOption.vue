@@ -194,10 +194,7 @@
                     case 'facebook':
                         FB.ui({
                             method: 'feed',
-                            name: 'shared the post',
-                            link: base_url+'post/'+that.postItem.id,
-                            picture: that.postItem.postImg !== undefined ? '' : that.postItem.postImg,
-                            description: that.postItem.description
+                            link: base_url+'post/'+that.postItem.id
                         }, function (response) {
                             console.log(response)
                         })
