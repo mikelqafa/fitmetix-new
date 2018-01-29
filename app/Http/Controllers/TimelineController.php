@@ -2137,7 +2137,10 @@ class TimelineController extends AppBaseController
         $theme->setTitle(trans('common.post').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
 
-        $post_image_source = $post->images()->where('post_id',$post->id)->first()->source;
+        $post_image_source_row = $post->images()->where('post_id',$post->id)->first();
+        if($post_image_source_row){
+            $post_image_source = $post_image_source_row->source;
+        }
         
 
         if($post->type == 'event'){
