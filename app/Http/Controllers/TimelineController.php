@@ -4643,8 +4643,9 @@ class TimelineController extends AppBaseController
             $followers_count = $user->followers()->where('status', '=', 'approved')->get()->count();
             $followRequests = $user->followers()->where('status', '=', 'pending')->get();
             $all_events = Event::with('timeline')->latest()->get();
+            $user_events = [];
             foreach ($all_events as $key => $value) {
-                if($value->users->contains(Auth::user()->id)){
+                if($value->users->contains($user->id)){
                     $user_events[$key] = $value;
                 }
             }
