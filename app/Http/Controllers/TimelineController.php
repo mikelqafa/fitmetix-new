@@ -4598,17 +4598,20 @@ class TimelineController extends AppBaseController
             $privacy_settings = explode('-', $live_user_settings);
             $timeline_post = $privacy_settings[0];
             $user_post = $privacy_settings[1];
-        } elseif ($timeline->type == 'page') {
-            $page = Page::where('timeline_id', '=', $timeline->id)->first();
-            $page_members = $page->members();
-            $user_post = 'page';
+        }
+
+        $blocked = DB::table('user_blocked')->where([['blocked_uid',$user->id],['blocker_uid',Auth::user()->id]])->first();
+        $block_text = 'Block';
+
+        if($blocked){
+            $block_text = 'Unblock';
         }
 
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
 
         $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
-        return $theme->scope('users/gallery', compact('user','timeline', 'timeline_type','posts' ,'follow_user_status', 'followRequests', 'following_count', 'followers_count', 'timeline_post', 'user_post', 'follow_confirm', 'joined_groups_count','group_members', 'page_members', 'event', 'user_events', 'guest_events', 'username'))->render();
+        return $theme->scope('users/gallery', compact('user','timeline', 'timeline_type','posts' ,'follow_user_status', 'followRequests', 'following_count', 'followers_count', 'timeline_post', 'user_post', 'follow_confirm', 'joined_groups_count','group_members', 'page_members', 'event', 'user_events', 'guest_events', 'username','block_text'))->render();
     }
 
     public function timelineUserEvent($username) {
@@ -4659,17 +4662,20 @@ class TimelineController extends AppBaseController
             $privacy_settings = explode('-', $live_user_settings);
             $timeline_post = $privacy_settings[0];
             $user_post = $privacy_settings[1];
-        } elseif ($timeline->type == 'page') {
-            $page = Page::where('timeline_id', '=', $timeline->id)->first();
-            $page_members = $page->members();
-            $user_post = 'page';
+        }
+
+        $blocked = DB::table('user_blocked')->where([['blocked_uid',$user->id],['blocker_uid',Auth::user()->id]])->first();
+        $block_text = 'Block';
+
+        if($blocked){
+            $block_text = 'Unblock';
         }
 
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
 
         $theme->setTitle($timeline->name.' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 
-        return $theme->scope('users/user-event', compact('user','timeline', 'timeline_type','posts', 'follow_user_status', 'followRequests', 'following_count', 'followers_count', 'timeline_post', 'user_post', 'follow_confirm', 'joined_groups_count','group_members', 'page_members', 'event', 'user_events', 'guest_events', 'username'))->render();
+        return $theme->scope('users/user-event', compact('user','timeline', 'timeline_type','posts', 'follow_user_status', 'followRequests', 'following_count', 'followers_count', 'timeline_post', 'user_post', 'follow_confirm', 'joined_groups_count','group_members', 'page_members', 'event', 'user_events', 'guest_events', 'username','block_text'))->render();
     }
 
     public function getEventPostByLocation(Request $request) {
