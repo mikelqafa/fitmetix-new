@@ -3,7 +3,7 @@
         <template v-if="hasItem">
             <div class="ft-chat__header">Notifications</div>
             <div class="">
-                <a :href="notificationUrl(item)" v-for="item in notifications" :data-nid="item.id" :key="item.id" class="md-menu__item ft-chat__item">
+                <a :href="notificationUrl(item)" v-for="(item, index) in notifications" :data-nid="item.id" :key="'all-nt'+item.id" class="md-menu__item ft-chat__item">
                     <div class="md-list__item  has-divider">
                         <div class="md-list__item-content">
                             <a :href="userLink(item.notified_from.username)" class="md-list__item-icon">
@@ -22,9 +22,15 @@
                                              :auto-update="autoUpdate"
                                              class="timeago"></timeago>
                                 </div>
-                                <a class="md-list__item-secondary-action" href="#">
-                                    <i class="hidden material-icons">star</i>
-                                </a>
+                                <div class="md-layout-spacer"></div>
+                                <div class="md-layout ft-nt-group md-layout--row" v-if="item.type == 'follow_requested' && (item.type !== 'follow_requested_accept' || item.type !=='follow_requested_deny')">
+                                    <a class="md-list__item-secondary-action color-deny" @click="denyRequest(item, index)" href="#" title="Deny">
+                                        <i class="icon icon-close"></i>
+                                    </a>
+                                    <a class="md-list__item-secondary-action color-accept" @click="acceptRequest(item, index)" href="#" title="Accept">
+                                        <i class="icon icon-accept"></i>
+                                    </a>
+                                </div>
                             </div>
                             <div class="md-list--abs">
                                 <div class="md-layout ft-nt-group md-layout--row"  v-if="item.type == 'follow_requested_accept'">
@@ -156,7 +162,7 @@
                 }).then( function (response) {
                     that.process = false
                     if (response.status ==  200) {
-                        materialSnackBar({autoClose: true, messageText: 'Follow request accepted'})
+                        materialSnackBar({autoClose: true, messageText:'Follow request accepted'})
                         axios({
                             method: 'post',
                             responseType: 'json',
@@ -187,7 +193,7 @@
                     url: base_url+'ajax/follow-reject',
                     data :{
                         _token: _token,
-                        user_id: item.notify_from
+                        user_id: item.notified_from.id
                     }
                 }).then( function (response) {
                     that.process = false
