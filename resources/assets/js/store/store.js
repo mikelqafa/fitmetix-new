@@ -411,6 +411,7 @@ export const store = new Vuex.Store({
         if (response.status == 200) {
           if (indexes != '') {
             context.state.conversations.data[indexes[0]].lastMessage = response.data.data;
+            context.state.conversations.data[indexes[0]].unread = false
           }
           context.state.currentConversation.conversationMessages.data[index] = response.data.data;
         }

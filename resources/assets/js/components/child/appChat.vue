@@ -92,7 +92,10 @@
                                                        :style="{backgroundImage: 'url('+getThumbImage(item)+')'}">
                                                     </a>
                                                     <div class="md-list__item-primary">
+                                                        <span class="pos-rel">
                                                         <span>{{item.user.name}}</span>
+                                                        <span class="unread-notification unread-notification--chat" v-bind:class="{ 'is-visible': item.unread }"></span>
+                                                    </span>
                                                         <div class="md-list__item-text-body" v-html="item.lastMessage.body"></div>
                                                     </div>
                                                     <div class="md-list__item-secondary text-right">
