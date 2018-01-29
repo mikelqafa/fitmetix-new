@@ -2218,6 +2218,7 @@ class TimelineController extends AppBaseController
             $user_id = Timeline::where('username',$username)->first()->user->id;
             $events = DB::table('events')
             ->join('timelines', 'timelines.id', '=', 'events.timeline_id')
+            ->join('event_user', 'event_user.event_id', '=', 'events.id')
             ->where(function ($query)  use ($location){
                     if($location != '') {
                             $query->where('events.location','like','%'.$location.'%');
@@ -2238,14 +2239,13 @@ class TimelineController extends AppBaseController
                         $query->where('timelines.name','like',$title.'%');
                     }
             })
-            ->whereIn('user_id', function ($query) use ($user_id) {
+            ->where(function ($query) use ($user_id) {
                 if($user_id != '') {
-                    $query->select('user_id')
-                        ->from('event_user')
-                        ->where('user_id', $user_id);
+                    $query->where('event_user.user_id', $user_id);
                 }
             })
             ->select('events.*', 'timelines.*','events.id as event_id')->limit($request->paginate)->offset($request->offset)->orderBy('events.created_at','desc')->get();
+
         }
         else {
             $events = DB::table('events')

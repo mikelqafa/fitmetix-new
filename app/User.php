@@ -339,6 +339,7 @@ class User extends Authenticatable
         $timeline_post_privacy = '';
         $timeline_post = '';
         $user_post = '';
+        $user_post_privacy = '';
         $result = '';
 
         $live_user_settings = $this->getUserSettings($others_id);
