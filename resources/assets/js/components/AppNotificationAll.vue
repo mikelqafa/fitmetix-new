@@ -194,6 +194,7 @@
                     data :{
                         _token: _token,
                         user_id: item.notified_from.id
+
                     }
                 }).then( function (response) {
                     that.process = false
