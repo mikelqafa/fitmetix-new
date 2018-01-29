@@ -4,15 +4,19 @@
 <div class="container layout-m-t-2">
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2 post-filters--menu-fixed">
-			<div class="list-group-navigation socialite-group">
+			<div class="list-group-navigation socialite-group edit-profile-form-wrapper">
 				<header class="setting-header">
 					<a class="ft-btn--icon" href="{{ url('/'.Auth::user()->username) }}">
 						<img class="img-responsive" style="max-width: 24px" src="{{asset('images/left-arrow.png')}}">
 					</a>
+					<span class="layout-m-l-1 hidden visible-xs">{{ trans('common.edit_profile') }}</span>
 				</header>
+				<div class="hidden-block-header"></div>
 				<div class="panel panel-default">
-
-					<div class="panel-heading no-bg panel-settings">
+					<div class="hidden visible-xs">
+						@include('flash::message')
+					</div>
+					<div class="panel-heading no-bg panel-settings hidden-xs">
 						@include('flash::message')
 						<h3 class="panel-title">
 							{{ trans('common.edit_profile') }}
@@ -91,7 +95,7 @@
 
 								</div>
 
-								<div class="pull-right">
+								<div class="edit-save-btn-wrapper">
 									{{ Form::submit(trans('common.save_changes'), ['class' => 'btn btn-success']) }}
 								</div>
 								<div class="clearfix"></div>

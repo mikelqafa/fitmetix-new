@@ -3,7 +3,7 @@
         <h4 class="text-center layout-p-t-1" style="font-size: 18px">Make each other great</h4>
         <div class="ft-suggestion md-layout md-layout--row md-layout--wrap">
             <div class="ft-suggestion__item md-layout md-layout--column" v-for="item in itemList" :key="item.id">
-                <a class="ft-cp__user" :title="'@'+item.username" :href="userLink(item)" :style="{backgroundImage: 'url('+getThumbImage(item.avatar)+')'}"></a>
+                <a class="ft-cp__user" :title="'@'+item.username" :href="userLink(item)" :style="{backgroundImage: 'url('+userAvatar(item)+')'}"></a>
                 <a :href="userLink(item)" class="text-center">{{ item.username }}</a>
             </div>
         </div>
@@ -56,6 +56,11 @@
             },
             getThumbImage: function (url) {
                 return getThumbImage(url)
+            },
+            userAvatar (item) {
+                return getThumbImage(
+                        item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/default.png'
+                )
             },
             userLink: function(item) {
                 return base_url + item.username

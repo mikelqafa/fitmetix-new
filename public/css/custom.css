@@ -276,10 +276,11 @@ svg {
 .ft-carousel__text {
     text-align: center;
     font-size: 40px;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgb(255, 255, 255);
     max-width: 600px;
     margin: 0 auto;
     margin-bottom: 80px;
+    z-index: 1;
 }
 
 .font-curly {
@@ -2390,7 +2391,7 @@ a{
     line-height: 1.2;
 }
 .image-pip__error .file-name{
-    word-break: break-all;
+    word-break: normal;
     overflow: hidden;
     width: 100%;
     font-size: 10px;
@@ -2733,7 +2734,7 @@ aside .md-drawer-scroll__wrapper{
     position: relative;
     height: inherit;
     line-height: 20px;
-    word-break: break-all;
+    word-break: normal;
 }
 .write-post__text{
     min-height: 70px;
@@ -3674,7 +3675,7 @@ aside .md-drawer-scroll__wrapper{
     margin-bottom: 8px;
 }
 .text-wrapper {
-    word-break: break-word;
+    word-break: normal;
 }
 .mobile-menu-slide {
     position: fixed;
@@ -3968,7 +3969,14 @@ aside .md-drawer-scroll__wrapper{
 }
 @media (max-width: 599px) {
     .form-helper{
-        top:-56px;
+        top:-48px;
+        bottom: auto;
+    }
+    .form-helper-wrapper.big .form-helper{
+        top:-105px;
+    }
+    .form-helper-wrapper.medium .form-helper{
+        top:-68px;
     }
     .arrow_box--bottom-xs::after{
         border-bottom-color: transparent;
@@ -4059,4 +4067,40 @@ aside .md-drawer-scroll__wrapper{
 #event-edit-option-dialog .item__background--post .img-responsive,
 #post-edit-option-dialog .item__background--post .img-responsive {
     max-height: 50vh;
+}
+.edit-save-btn-wrapper{
+    text-align: right;
+}
+@media screen and (max-width: 599px) {
+    .edit-save-btn-wrapper{
+        text-align: center;
+    }
+    .edit-save-btn-wrapper .btn{
+        width: 100%;
+    }
+    .edit-profile-form-wrapper .setting-header {
+        position: fixed;
+        top:0;
+        left: 0;
+        width: 100%;
+        background-color: #fff;
+        z-index: 2;
+        border-bottom: 1px solid rgba(0,0,0,.12);
+    }
+    .edit-profile-form-wrapper .hidden-block-header {
+        height: 56px;
+    }
+}
+.ft-login__slider .ft-carousel__cover::before{
+    position: absolute;
+    bottom:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    content: ' ';
+    background: linear-gradient(to top, rgba(0,0,0,.33), rgba(0,0,0,0) 66%);
+}
+.ft-login__slider .ft-carousel__cover .pos-rel{
+    z-index: 1;
 }

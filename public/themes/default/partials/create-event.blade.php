@@ -131,8 +131,9 @@
                         </div>
                     </div>
 					<div class="row">
-						<div class="col-md-6 form-helper-wrapper">
-							{{ Form::select('type', array('' => trans('common.privacy'), 'private' => trans('common.private'), 'public' => trans('common.public')), null ,array('id'=> 'privacy', 'tabindex'=>'2','class' => 'form-control selectize')) }}
+						<div class="col-md-6 form-helper-wrapper big">
+							{{ Form::select('type', array('' => trans('common.privacy'), 'private' => trans('common.private'),
+							'public' => trans('common.public')), null ,array('id'=> 'privacy', 'tabindex'=>'2','class' => 'form-control selectize')) }}
 							@if ($errors->has('type'))
 								<span class="help-block">
 									{{ $errors->first('type') }}
@@ -140,11 +141,12 @@
 							@endif
                             <div class="form-helper">
                                 <div class="helper-inner arrow_box arrow_box--bottom-xs">
-                                    Private events are only joined by people that follow you (those you have accepted if you have private profile). Anyone can join public event.
+                                    Private events are only joined by people that follow you (those you have accepted if you have private profile).
+                                    Anyone can join public event.
                                 </div>
                             </div>
 						</div>
-						<div class="col-md-6 form-helper-wrapper">
+						<div class="col-md-6 form-helper-wrapper medium">
 							<fieldset class="form-group">
 								{{-- {{ Form::label('frequency', 'Frequency: ', ['class' => 'control-label']) }} --}}
 								{{ Form::hidden('frequency', 'once', array('class' => 'form-control','required'=>'required')) }}
@@ -157,7 +159,7 @@
                             </div>
 						</div>
 					</div>
-                    <fieldset class="form-helper-wrapper form-group required {{ $errors->has('type') ? ' has-error' : '' }}">
+                    <fieldset class="form-helper-wrapper medium form-group required {{ $errors->has('type') ? ' has-error' : '' }}">
                         {{-- {{ Form::label('location', trans('common.location')) }} --}}
                         {{ Form::text('location', old('location'), ['required'=>'required', 'class' => 'form-control', 'id' => 'location-input', 'tabindex'=>'4','autocomplete' => 'off','placeholder' => trans('common.enter_location'), 'onKeyPress' => "return initMap(event)" ]) }}
                         @if ($errors->has('location'))
@@ -239,7 +241,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6 form-helper-wrapper">
+                            <div class="col-md-6 form-helper-wrapper medium">
                                 {{ Form::text('duration', old('duration'), ['required'=>'required','class' => 'form-control', 'id' => 'duration-event','tabindex'=>'9' ,'autocomplete' => 'off','placeholder' => 'duration']) }}
                                 @if ($errors->has('duration'))
                                     <span class="help-block">

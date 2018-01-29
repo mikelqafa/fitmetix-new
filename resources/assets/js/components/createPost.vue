@@ -152,7 +152,7 @@
                 $('.replace-with').html('')
                 $('.replace-with').html($('#create-post-vue').html())
                 $.each($('.replace-with img'), function(){
-                    $(this).replaceWith('<div> '+$(this).attr('title')+' </div>');
+                    $(this).replaceWith('<div class="emoji-wrap"> '+$(this).attr('title')+' </div>');
                 });
             },
             nl2br: function(html) {
@@ -230,6 +230,7 @@
                     user_tags: user_tags,
                     soundcloud_title: soundcloud_title
                 };
+                console.log(data)
                 this.isPosting = true
                 axios({
                     method: 'post',

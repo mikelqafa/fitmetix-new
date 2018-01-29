@@ -127,7 +127,7 @@
                     <div class="container pos-rel">
                         <div class="appearContainer ft-carousel__text ft-carousel__text--register">
                             <span class="font-curl">
-                                push yourself every time you hit the ground
+                                {!! trans('slideshow.READY_FOR') !!}
                             </span>
                         </div>
                     </div>
@@ -138,8 +138,7 @@
                     <div class="container pos-rel">
                         <div class="appearContainer ft-carousel__text ft-carousel__text--register">
                             <span class="font-curl">
-                                When nothing goes right <br/>
-                                go lift
+                                {!! trans('slideshow.IGNITE') !!}
                             </span>
                         </div>
                     </div>
@@ -150,7 +149,7 @@
                     <div class="container pos-rel">
                         <div class="appearContainer ft-carousel__text ft-carousel__text--register">
                             <span class="font-curl">
-                                Eat well, live well...
+                                {!! trans('slideshow.RECIPE') !!}
                             </span>
                         </div>
                     </div>
@@ -161,9 +160,7 @@
                     <div class="container pos-rel">
                         <div class="appearContainer ft-carousel__text ft-carousel__text--register">
                             <span class="font-curl">
-                                Fit is Not a Destination
-                                <br/>
-                                it is a way of life
+                                {!! trans('slideshow.JOURNEY') !!}
                             </span>
                         </div>
                     </div>
