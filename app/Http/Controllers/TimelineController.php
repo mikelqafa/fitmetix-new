@@ -5007,16 +5007,16 @@ public function saveMessageAttachment(Request $request) {
             if($post_image_source != null) {
                 $post_image = env('STORAGE_URL').'uploads/events/covers/'.$post_image_source; 
             }
-            $title = $post->timeline->about;
+            $title = strip_tags($post->timeline->about);
         }
         else {
             if($post_image_source != null) {
                 $post_image = env('STORAGE_URL').'uploads/users/gallery/'.$post_image_source; 
             }
-            $title = $post->timeline->username;
+            $title = strip_tags($post->timeline->username);
         }
         
-        $description = $post->description;
+        $description = strip_tags($post->description);
         return view('FBshare',compact('url','post_image','title','description','post_id'));
     }
 
