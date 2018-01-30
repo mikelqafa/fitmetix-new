@@ -1084,6 +1084,7 @@ class UserController extends AppBaseController
         if ($follow_user) {
             Flash::success(trans('messages.request_accepted'));
         }
+
         //Notify the user for accepting the follow request
         Notification::create(['user_id' => $request->user_id, 'timeline_id' => $user->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.accepted_follow_request'), 'type' => 'accept_follow_request', 'link' => Auth::user()->username.'/followers']);
 
@@ -1108,9 +1109,6 @@ class UserController extends AppBaseController
         if ($follow_user) {
             Flash::success(trans('messages.request_rejected'));
         }
-
-        //Notify the user for rejecting the follow request
-        Notification::create(['user_id' => $request->user_id, 'timeline_id' => $user->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.rejected_follow_request'), 'type' => 'reject_follow_request', 'link' => Auth::user()->username]);
 
         return response()->json(['status' => '200', 'rejected' => true, 'message' => 'follow request successfully denied']);
     }

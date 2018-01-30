@@ -1321,6 +1321,7 @@ class TimelineController extends AppBaseController
                 if(isset($request->notification_id)) {
                     $notification = Notification::find($request->notification_id)->delete();
                 }
+                Notification::where([['user_id',$user->id], ['timeline_id',$request->timeline_id], ['notified_by',Auth::user()->id],['type','follow_rejected']])->delete();
                 return response()->json(['status' => '200', 'followrequest' => false, 'message' => 'Request cancelled']);
             }
         }

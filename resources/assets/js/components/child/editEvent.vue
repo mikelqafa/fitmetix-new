@@ -15,7 +15,7 @@
                         <post-image-viewer disable-showcase="true" :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
                         <form v-on:submit.prevent="editSaveEvent" method="get" class="event-edit-group" style="padding: 24px 0">
                             <fieldset class="form-group required">
-                                <input class="form-control" v-model="event.title" required placeholder="Name of your event" maxlength="30" name="name" type="text">
+                                <input class="form-control" v-model="event.title" required placeholder="Name of your event" maxlength="45" name="name" type="text">
                             </fieldset>
 
                             <fieldset class="form-group required">
