@@ -3918,7 +3918,8 @@ aside .md-drawer-scroll__wrapper{
     transform: scale(.7) translateY(10px);
     transition: opacity,transform .3s ease;
 }
-.form-helper-wrapper:hover .form-helper{
+.form-helper-wrapper.md-textfield--focused:not(.md-textfield--dirty) .form-helper,
+.form-helper-wrapper.force-focus:hover .form-helper{
     visibility: visible;
     opacity: 1;
     transform: none !important;
@@ -4103,4 +4104,22 @@ aside .md-drawer-scroll__wrapper{
 }
 .ft-login__slider .ft-carousel__cover .pos-rel{
     z-index: 1;
+}
+.glyphicon {
+    background-size: cover;
+    background-position: center;
+    height: 28px;
+    width: 28px;
+    display: block;
+}
+.glyphicon.glyphicon-arrow-left{
+    background-image: url('../images/arrow.png');
+    transform: rotate(90deg);
+}
+.glyphicon.glyphicon-arrow-right {
+    background-image: url('../images/arrow.png');
+    transform: rotate(-90deg);
+}
+.hide-bdp .popover.in {
+    display: none;
 }

@@ -64,3 +64,17 @@ var element = document.getElementById('caleandar')
 if(element!== null) {
   fetchEvent()
 }
+$(document).mouseup(function(e)
+{
+  var container = $(".form-helper-wrapper.medium");
+
+  // if the target of the click isn't the container nor a descendant of the container
+  if (!container.is(e.target) && container.has(e.target).length === 0)
+  {
+    container.addClass('hide-bdp')
+  }
+});
+
+$(".form-helper-wrapper.medium").focusin(function(){
+  $(this).removeClass('hide-bdp')
+})

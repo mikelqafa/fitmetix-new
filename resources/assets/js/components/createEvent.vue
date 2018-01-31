@@ -2,7 +2,7 @@
     <div class="pos-rel create-event-form">
         <div class="form-group required layout-m-t-1">
             <div class="event_images_upload--label md-layout md-align md-align--center-center">
-                <a href="javascript:;" style="z-index: 2; width: 200px;" id="eventImageUpload" class="form-helper-wrapper md-layout md-layout--row md-align md-align--center-center">
+                <a href="javascript:;" style="z-index: 2; width: 200px;" id="eventImageUpload" class="form-helper-wrapper force-focus md-layout md-layout--row md-align md-align--center-center">
                     <div class="icon icon-photo center-block" style="font-size: 56px;width: 56px;"></div>
                     <div class="form-helper" style="top: 60px;">
                         <div class="helper-inner arrow_box">
