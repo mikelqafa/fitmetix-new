@@ -4120,6 +4120,6 @@ aside .md-drawer-scroll__wrapper{
     background-image: url('../images/arrow.png');
     transform: rotate(-90deg);
 }
-.hide-bdp .popover.in {
-    display: none;
+.hide-bdp .popover {
+    visibility: hidden;
 }
