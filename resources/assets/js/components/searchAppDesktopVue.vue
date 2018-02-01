@@ -104,7 +104,7 @@
             return base_url + 'gallery/hashtag/' + item.tag
         },
         eventLink (item) {
-            return base_url + item.id
+            return base_url + 'post/' + item.id
         },
         getList: function () {
             let that = this
