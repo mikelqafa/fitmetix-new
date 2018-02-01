@@ -190,12 +190,21 @@ class RegisterController extends Controller
         //saving default settings to user settings
         $user_settings = [
           'user_id'               => $user->id,
-          'confirm_follow'        => Setting::get('confirm_follow'),
-          'follow_privacy'        => Setting::get('follow_privacy'),
-          'comment_privacy'       => Setting::get('comment_privacy'),
-          'timeline_post_privacy' => Setting::get('user_timeline_post_privacy'),
-          'post_privacy'          => Setting::get('post_privacy'),
-          'message_privacy'       => Setting::get('user_message_privacy'), ];
+          'confirm_follow'        => 'no',
+          'follow_privacy'        => 'everyone',
+          'comment_privacy'       => 'everyone',
+          'timeline_post_privacy' => 'everyone',
+          'post_privacy'          => 'everyone',
+          'message_privacy'       => 'everyone', 
+          'email_follow'          => 'yes',
+          'email_like_post'       => 'yes',
+          'email_post_share'      => 'yes',
+          'email_comment_post'    => 'yes',
+          'email_like_comment'    => 'yes',
+          'email_reply_comment'   => 'yes',
+          'email_join_group'      => 'yes',
+          'email_like_page'       => 'yes',
+        ];
 
         //Create a record in user settings table.
         $userSettings = DB::table('user_settings')->insert($user_settings);

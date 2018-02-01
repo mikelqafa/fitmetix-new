@@ -218,10 +218,6 @@ class Post extends Model
 
     public function deleteMe()
     {
-        $hashtag = Hashtag::where('post_id',$this->id)->get();
-        if(!empty($hashtag)){
-            $hashtag->delete();
-        }
         $this->users_liked()->detach();
         $this->shares()->detach();
         $this->usersSaved()->detach();
