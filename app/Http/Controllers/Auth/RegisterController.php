@@ -190,7 +190,7 @@ class RegisterController extends Controller
         //saving default settings to user settings
         $user_settings = [
           'user_id'               => $user->id,
-          'confirm_follow'        => 'no',
+          'confirm_follow'        => 'yes',
           'follow_privacy'        => 'everyone',
           'comment_privacy'       => 'everyone',
           'timeline_post_privacy' => 'everyone',

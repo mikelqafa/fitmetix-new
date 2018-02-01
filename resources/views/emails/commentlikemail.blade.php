@@ -293,7 +293,7 @@
       <table cellspacing="0" cellpadding="0" width="600" class="w320">
         <tr>
           <td class="free-text">
-            <h3><a href="{!! url('$user->username')!!}">{!! $user->name !!}</a> likes your comment </h3>
+            <h3><a href="{{ $user_url }}">{!! $user->name !!}</a> likes your <a href="{{ $post_url }}">comment</a> </h3>
           </td>
         </tr>          
       </table>
