@@ -21,16 +21,10 @@
                 </a>
             </div>
             <div class="md-layout-spacer"></div>
-            <form class="no-float ft-search--navbar navbar-form navbar-left form-left" role="search">
-                <div class="input-group no-margin">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
-                        </span>
-                    <input type="text" id="navbar-search" style="width: 260px" data-url="{{ URL::to('api/v1/timelines') }}"
-                           class="form-control"
-                           placeholder="Search">
-                </div>
-            </form>
+
+            <div class="no-float ft-search--navbar navbar-form navbar-left form-left" id="app-search-desktop">
+                <app-search-desktop></app-search-desktop>
+            </div>
             <div class="md-layout-spacer"></div>
             <div class="nav no-float md-layout fm-nav navbar-nav hidden-sm hidden-xs" id="navbar-right">
                 <a href="{{ url(Auth::user()->username.'/create-event') }}" class="has-hover-effect fm-nav__item {{ Request::path() == Auth::user()->username.'/create-event' ? 'is-active' : '' }}">

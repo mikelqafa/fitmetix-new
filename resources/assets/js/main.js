@@ -15,6 +15,7 @@ import postDialogOption from './components/DialogOption'
 import commentDialogOption from './components/CommentDialogOption'
 import suggestionUser from './components/suggestionUser'
 import searchAppVue from './components/searchApp'
+import searchAppDesktopVue from './components/searchAppDesktopVue'
 import makeEvent from './components/createEvent'
 import VueTimeago from 'vue-timeago'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
@@ -96,6 +97,13 @@ window.searchApp = new Vue({
   store,
   components: {
     'app-search': searchAppVue
+  }
+})
+window.searchDesktopApp = new Vue({
+  el: '#app-search-desktop',
+  store,
+  components: {
+    'app-search-desktop': searchAppDesktopVue
   }
 })
 

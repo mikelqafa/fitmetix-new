@@ -27,7 +27,7 @@
           <div class="tab-content tab-content--event-filter pos-rel">
               <div id="search-user" class="tab-pane fade in active">
                   <div class="panel panel--search">
-                      <div class="panel-heading">
+                      <div class="search-meta">
                           Users
                       </div>
                       <div class="panel-body">
@@ -51,7 +51,7 @@
               </div>
               <div id="search-event" class="tab-pane fade">
                   <div class="panel panel--search">
-                      <div class="panel-heading">
+                      <div class="search-meta">
                           Events
                       </div>
                       <div class="panel-body" v-show="eventList.length">
@@ -76,20 +76,20 @@
               </div>
               <div id="search-tag" class="tab-pane fade">
                   <div class="panel panel--search">
-                      <div class="panel-heading">
+                      <div class="search-meta">
                           Tags
                       </div>
                       <div class="panel-body">
                           <div class="search-result-wrapper md-list" v-show="tagList.length">
                               <a :href="tagLink(item)" class="md-list__item has-divider" v-for="item in tagList" :key="'tag-'+item.tag">
-                                      <span class="md-list__item-content">
-                                          <span class="md-list__item-icon">
-                                              <i class="icon icon-tag"></i>
-                                          </span>
-                                          <span class="md-list__item-primary">
-                                              {{item.tag}}
-                                          </span>
+                                  <span class="md-list__item-content">
+                                      <span class="md-list__item-icon">
+                                          <i class="icon icon-tag"></i>
                                       </span>
+                                      <span class="md-list__item-primary">
+                                          {{item.tag}}
+                                      </span>
+                                  </span>
                               </a>
                           </div>
                       </div>
@@ -146,10 +146,10 @@
         getList: function () {
             let that = this
             let _token = $("meta[name=_token]").attr('content')
+            this.isLoading = true
             this.userList = []
             this.tagList = []
             this.eventList = []
-            this.isLoading = true
             axios({
                 method: 'post',
                 responseType: 'json',
@@ -160,6 +160,9 @@
                 }
             }).then(function (response) {
                 that.isLoading = false
+                that.userList = []
+                that.tagList = []
+                that.eventList = []
                 if (response.status == 200) {
                     let noEventFound = true
                     for(let i = 0;i<response.data[0].events.length; i++) {

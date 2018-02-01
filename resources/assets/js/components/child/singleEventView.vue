@@ -157,6 +157,7 @@
                     }
                 }).catch(function (error) {
                     console.log(error)
+                    that.noEventListFound = true
                 })
             }
         },
