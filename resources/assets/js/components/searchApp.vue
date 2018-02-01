@@ -56,7 +56,7 @@
                       </div>
                       <div class="panel-body" v-show="eventList.length">
                           <div class="search-result-wrapper md-list">
-                              <a :href="userLink(item)" class="md-list__item has-divider" v-for="(item, index) in eventList" :key="index+'event-'+item.id">
+                              <a :href="eventLink(item)" class="md-list__item has-divider" v-for="(item, index) in eventList" :key="index+'event-'+item.id">
                                   <div class="md-list__item-content">
                                           <span class="md-list__item-icon user-avatar">
                                               <i class="icon icon-eventpage"></i>
@@ -136,6 +136,9 @@
         },
         userLink (item) {
             return base_url + item.username
+        },
+        eventLink (item) {
+            return base_url + item.id
         },
         userAvatar (item) {
             return getThumbImage(item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage)

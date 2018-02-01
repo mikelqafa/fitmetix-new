@@ -30,7 +30,7 @@
                         Events
                     </div>
                     <div class="search-result-wrapper md-list">
-                        <a :href="userLink(item)" class="md-list__item " v-for="(item, index) in eventList" :key="index+'event-'+item.id">
+                        <a :href="eventLink(item)" class="md-list__item " v-for="(item, index) in eventList" :key="index+'event-'+item.id">
                             <div class="md-list__item-content">
                                           <span class="md-list__item-icon user-avatar">
                                               <i class="icon icon-eventpage"></i>
@@ -102,6 +102,9 @@
         },
         tagLink(item) {
             return base_url + 'gallery/hashtag/' + item.tag
+        },
+        eventLink (item) {
+            return base_url + item.id
         },
         getList: function () {
             let that = this
