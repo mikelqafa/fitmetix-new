@@ -141,7 +141,7 @@
             },
             formatPrice: function(e) {
                 if(!isNaN(e.price)) {
-                    return (Math.ceil(e.price) ==  0) ? 'Free' : e.currency == 'EURO' ? '&euro; ' + e.price : '&dollar;' + e.price
+                    return (Math.ceil(e.price) ==  0) ? 'Free' : e.currency == 'EURO' ? '&euro;' + e.price : e.currency == 'POUND' ?  '&#163;' + e.price :'&dollar;' + e.price
                 }
                 return 'Free'
             },

@@ -204,11 +204,17 @@
                             </div>
                             <div class="col-md-4 md-align md-align--center-center">
                                 <div class="md-layout md-layout-spacer form-control form-helper-wrapper force-focus md-layout--row">
-                                    <div class="md-layout md-layout--row">
-                                        <input type="radio" name="currency" tabindex='7' id="currency-euro" value="EURO"> <label class="bdp-label" for="currency-euro">EURO</label>
+                                    <div class="md-layout md-layout--row" title="Euro">
+                                        <input type="radio" name="currency" tabindex='7' id="currency-euro" value="EURO">
+                                        <label class="bdp-label" for="currency-euro">&euro;</label>
                                     </div>
-                                    <div class="md-layout md-layout--row layout-m-l-1">
-                                        <input type="radio" name="currency" tabindex='7' id="currency-usd" value="USD" checked><label class="bdp-label" for="currency-usd">USD</label>
+                                    <div class="md-layout md-layout--row layout-m-l-1" title="Pound">
+                                        <input type="radio" name="currency" tabindex='7' id="currency-pound" value="POUND" checked>
+                                        <label class="bdp-label" for="currency-pound">&#163;</label>
+                                    </div>
+                                    <div class="md-layout md-layout--row layout-m-l-1" title="Dollar">
+                                        <input type="radio" name="currency" tabindex='7' id="currency-usd" value="USD" checked>
+                                        <label class="bdp-label" for="currency-usd">&dollar;</label>
                                     </div>
                                     <div class="form-helper">
                                         <div class="helper-inner arrow_box arrow_box--bottom-xs">

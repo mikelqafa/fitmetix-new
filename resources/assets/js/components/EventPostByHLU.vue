@@ -347,7 +347,7 @@
                 return url
             },
             formatPrice: function(e) {
-                return (e.price == null || 0) ? 'Free' : e.currency == 'EURO' ? '&euro; ' + e.price : '&dollar;' + e.price
+                return (e.price == null || 0) ? 'Free' : e.currency == 'EURO' ? '&euro;' + e.price : e.currency == 'POUND' ?  '&#163;' + e.price :'&dollar;' + e.price
             },
             formatUrl: function(u) {
                 return base_url+ 'locate-on-map/' + u
