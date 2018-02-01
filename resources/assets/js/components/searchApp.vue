@@ -138,7 +138,7 @@
             return base_url + item.username
         },
         eventLink (item) {
-            return base_url + 'post/' + item.id
+            return base_url + 'post/' + item.post_id
         },
         userAvatar (item) {
             return getThumbImage(item.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.avatar_url[0].source : base_url + 'images/' + this.defaultImage)

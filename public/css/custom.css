@@ -4176,6 +4176,7 @@ aside .md-drawer-scroll__wrapper{
 .desktop-search-result .md-list__item {
     padding-left: 10px;
     font-size: 13px;
+    cursor: pointer;
 }
 .search-meta {
     padding: 2px 8px;
