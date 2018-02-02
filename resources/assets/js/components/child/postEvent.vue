@@ -43,7 +43,7 @@
                 <template v-if="enableEventForThis">
                     <template v-if="!enableUrl">
                         <div class="md-layout-spacer"></div>
-                        <a :href="eventLink" type="button" class="btn btn-submit ft-btn-primary">
+                        <a :href="eventLink" type="button" class="details-btn btn btn-submit ft-btn-primary">
                             Details
                         </a>
                         <div class="md-layout-spacer"></div>
