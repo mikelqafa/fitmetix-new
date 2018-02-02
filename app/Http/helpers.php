@@ -22,7 +22,7 @@ function suggestedUsers()
 
     if (count($suggested_users) > 0) {
         if (count($suggested_users) > (int) Setting::get('min_items_page', 15)) {
-            $suggested_users = $suggested_users->random((int) Setting::get('min_items_page', 15));
+            $suggested_users = $suggested_users->random(15);
         }
     } else {
         $suggested_users = '';
