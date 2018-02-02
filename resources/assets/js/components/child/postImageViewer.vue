@@ -6,7 +6,7 @@
                     <swiper-slide :key="imageIndex" v-for="(image, imageIndex) in postImg">
                         <a href="javascript:;" :key="imageIndex" @click="showTheater(imageIndex)"
                            class="item__background" :style="{ backgroundImage: 'url(' + sourceImagePath(image.source) + ')' }">
-                            <img :data-src="sourceImagePath(image.source)" :src="sourceImagePath(image.source)" class="swiper-lazy img-responsive">
+                            <img :data-src="sourceImagePath(image.source)" :src="sourceImagePath(image.source)" class="visiblity-hidden swiper-lazy img-responsive">
                         </a>
                     </swiper-slide>
                     <div class="swiper-pagination" slot="pagination"></div>

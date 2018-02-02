@@ -4210,3 +4210,6 @@ aside .md-drawer-scroll__wrapper{
 .disable-details .pos-rel .ft-btn-primary {
     display: none;
 }
+.visiblity-hidden{
+    visibility: hidden;
+}
