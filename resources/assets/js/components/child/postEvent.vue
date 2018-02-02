@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <div class="text-center layout-m-b-1">
+        <div class="text-center layout-m-b-1" :class="{'disable-details': disableDetail }">
             <div class="pos-rel md-layout md-layout--row md-align md-align--center-center">
                 <template v-if="enableEventForThis">
                     <template v-if="!enableUrl">
@@ -100,7 +100,8 @@
             postItem: {},
             eventList:false,
             postIndex: '',
-            enableUrl: false
+            enableUrl: false,
+            disableDetail: false
         },
         data: function () {
             return {

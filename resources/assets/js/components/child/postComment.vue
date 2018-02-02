@@ -324,7 +324,7 @@
                         //that.userCommented++
                         setTimeout(function () {
                             that.updateZippy()
-                            hastagify()
+                            hashtagify()
                         }, 300)
                     }
                 }).catch(function (error) {

@@ -9,7 +9,6 @@
                             <post-back-viewer :post-img="postItem.images"></post-back-viewer>
                             <post-event :post-item="postItem" :post-index="index" :post-img="postItem.images"
                                         event-list="true" enable-url="true"></post-event>
-                            <post-description :post-html="postItem.description"></post-description>
                         </div>
                         <div class="md-layout-spacer"></div>
                     </div>
@@ -62,7 +61,6 @@
 </template>
 
 <script>
-    import postDescription from './postDescription'
     import postBackViewer from './showOnlySlider'
     import postEvent from './postEvent'
     import postHeader from './postHeader'
@@ -169,7 +167,6 @@
                 }
             },
         components: {
-                'post-description': postDescription,
                 'post-back-viewer': postBackViewer,
                 'post-header': postHeader,
                 'post-event': postEvent,

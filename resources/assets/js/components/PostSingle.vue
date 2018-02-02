@@ -28,7 +28,7 @@
                         <post-description :post-html="postItem.description"></post-description>
                         <post-youtube :post-you-tube="postItem.youtube_video_id" :you-tube-title="postItem.youtube_title"></post-youtube>
                         <post-image-viewer :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
-                        <post-event :post-item="postItem" :post-index="index" :post-img="postItem.images"></post-event>
+                        <post-event :disable-detail="true" :post-item="postItem" :post-index="index" :post-img="postItem.images"></post-event>
                         <post-sound-cloud :soundcloud="postItem.soundcloud_id"></post-sound-cloud>
                     </div>
                     <post-comment :post-index="index" :post-id="postItem.id" :post-item="postItem"></post-comment>

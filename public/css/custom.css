@@ -2592,6 +2592,8 @@ a{
 .ft-event-card__title{
     text-align: center;
     margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
     max-width: 300px;
 }
 .absolute-loader{
@@ -4201,4 +4203,10 @@ aside .md-drawer-scroll__wrapper{
     height: 28px;
     line-height: 28px;
     z-index: 1;
+}
+.disable-details .pos-rel .md-layout-spacer:first-child {
+    display: none;
+}
+.disable-details .pos-rel .ft-btn-primary {
+    display: none;
 }
