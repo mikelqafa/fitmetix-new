@@ -21,8 +21,11 @@ function suggestedUsers()
     $suggested_users = App\User::whereNotIn('id', Auth::user()->following()->get()->pluck('id'))->where('id', '!=', Auth::user()->id)->get();
 
     if (count($suggested_users) > 0) {
-        if (count($suggested_users) > (int) Setting::get('min_items_page', 15)) {
+        if (count($suggested_users) > 14) {
             $suggested_users = $suggested_users->random(15);
+        }
+        else {
+            $suggested_users = $suggested_users->random(count($suggested_users));
         }
     } else {
         $suggested_users = '';
