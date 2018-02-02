@@ -312,7 +312,6 @@
                                 <post-image-viewer :post-event="postItem.event" :post-index="index" :post-img="postItem.images"></post-image-viewer>
                                 <post-event :post-item="postItem" :post-index="index" :post-img="postItem.images"
                                             event-list="true"></post-event>
-                                <post-description :post-html="postItem.description"></post-description>
                             </div>
                             <div class="md-layout-spacer"></div>
                             <post-comment :post-index="index" :post-id="postItem.id" :post-item="postItem"></post-comment>
@@ -342,7 +341,6 @@
     </div>
 </template>
 <script>
-    import postDescription from './child/postDescription'
     import postBackViwer from './child/showOnlySlider'
     import postImageViewer from './child/postImageViewer'
     import postEvent from './child/postEvent'
@@ -377,7 +375,7 @@
                 hashtag: false,
                 hasMorePost:true,
                 isFetchingBottom: false,
-                offset: 0,
+                offset: 0
             }
         },
         methods: {
@@ -607,7 +605,6 @@
             this.scrollFetchInit()
         },
         components: {
-            'post-description': postDescription,
             'post-image-viewer': postImageViewer,
             'post-header': postHeader,
             'post-event': postEvent,
