@@ -382,7 +382,7 @@ class MessageController extends Controller
 
     public function deleteThread(Request $request) {
         DB::table('messages')->where([['user_id',$request->user_id],['thread_id',$request->thread_id]])->delete();
-        Thread::find($request->thread_id)->delete();
+        DB::table('threads')->where('id',$request->thread_id)->delete();
         return response()->json(['status' => '200', 'data' => 'Thread deleted']);
     }
 }
