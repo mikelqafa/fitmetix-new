@@ -4207,7 +4207,7 @@ aside .md-drawer-scroll__wrapper{
 .disable-details .pos-rel .md-layout-spacer:first-child {
     display: none;
 }
-.disable-details .pos-rel .ft-btn-primary {
+.disable-details .pos-rel .ft-btn-primary:first-child {
     display: none;
 }
 .visiblity-hidden{

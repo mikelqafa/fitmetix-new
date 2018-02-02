@@ -106,12 +106,17 @@
                                                         </div>
                                                         <div class="md-layout-spacer"></div>
                                                         <div class="color-deny">
-                                                            <a href="javascript:;" @click="confirmDeleteThreadMessage(item, index)" class="md-list__item-secondary-action chat-meta-btn" title="Delete Thread">
+                                                            <a href="javascript:;" @click="confirmClearThreadMessage(item, index)" class="md-list__item-secondary-action chat-meta-btn" title="Delete Thread">
                                                                 <i class="icon icon-delete"></i>
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </template>
+                                        <template v-if="conversations.data == undefined || !conversations.data.length">
+                                            <div class="text-center md-layout md-layout--row md-align--center-center md-align" style="height: 100%">
+                                                <h4>No conversation found!</h4>
                                             </div>
                                         </template>
                                     </div>
@@ -157,6 +162,18 @@
             },
             deleteThreadMessage: function (item, i) {
                 this.$store.dispatch('deleteThreadMessage', {item:item, index: i})
+            },
+            confirmClearThreadMessage: function (item, i) {
+                this.body = 'Do you really want to delte this message?'
+                let confirmDialog = $('#'+ this.unid)
+                confirmDialog.MaterialDialog('show')
+                let that = this
+                confirmDialog.on('ca.dialog.affirmative.action', function(){
+                    that.clearMessage(item, i)
+                });
+            },
+            clearMessage: function (item, i) {
+                this.$store.dispatch('clearMessage', {item:item, index: i})
             },
             closeChat: function () {
               $('.ft-dock-wrapper').addClass('hidden')

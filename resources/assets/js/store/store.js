@@ -587,12 +587,34 @@ export const store = new Vuex.Store({
         data: {
           _token: _token,
           user_id: user_id,
-          thread_id: data.item.thread_id
+          thread_id: data.item.id
         }
       }).then(function (response) {
         if (response.status == 200) {
           // context.state.currentConversation.conversationMessages = {}
           context.state.conversations.data.splice(data.index,1)
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    clearMessage: (context, data) => {
+      let _token = $("meta[name=_token]").attr('content')
+      axios({
+        method: 'post',
+        responseType: 'json',
+        url: base_url + 'ajax/delete-message',
+        data: {
+          _token: _token,
+          user_id: user_id,
+          thread_id: data.item.id
+        }
+      }).then(function (response) {
+        if (response.status == 200) {
+          // context.state.currentConversation.conversationMessages = {}
+          if(data.index == 0) {
+            context.state.currentConversation.conversationMessages = {}
+          }
         }
       }).catch(function (error) {
         console.log(error)
