@@ -5029,7 +5029,7 @@ public function saveMessageAttachment(Request $request) {
             if($post_image_source != null) {
                 $post_image = env('STORAGE_URL').'uploads/events/covers/'.$post_image_source; 
             }
-            $title = strip_tags($post->timeline->about);
+            $title = strip_tags($post->timeline->name);
         }
         else {
             if($post_image_source != null) {
