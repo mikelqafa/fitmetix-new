@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Teepluss\Theme\Facades\Theme;
 use Validator;
+use DB;
 
 class MessageController extends Controller
 {
@@ -371,5 +372,17 @@ class MessageController extends Controller
         }
 
         return response()->json(['status' => '200', 'data' => $thread]);
+    }
+
+    public function deleteChat(Request $request) {
+        DB::table('messages')->where([['user_id',$request->user_id],['thread_id',$request->thread_id]])->delete();
+        return response()->json(['status' => '200','data'=>'Chat deleted']);
+    }
+
+
+    public function deleteThread(Request $request) {
+        DB::table('messages')->where([['user_id',$request->user_id],['thread_id',$request->thread_id]])->delete();
+        Thread::find($request->thread_id)->delete();
+        return response()->json(['status' => '200', 'data' => 'Thread deleted']);
     }
 }
