@@ -3488,17 +3488,25 @@ aside .md-drawer-scroll__wrapper{
     margin-left: 8px;
 }
 .ft-nt-group .md-list__item-secondary-action {
-    height: 28px;
-    width: 28px;
+    height: 29px;
+    width: 38px;
 }
 .ft-nt-group .md-list__item-secondary-action .icon{
-    font-size:20px;
+    font-size:28px;
+    transition: color .2s ease;
 }
 .color-accept {
     color: #589D5B;
 }
 .color-deny {
     color: #EA536A;
+}
+
+.color-deny:hover,
+.color-deny:focus,
+.color-accept:hover,
+.color-accept:focus {
+    color: #000 !important;
 }
 .event-slider .timeline-posts__item {
     margin-top: 0;
