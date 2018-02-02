@@ -4216,3 +4216,15 @@ aside .md-drawer-scroll__wrapper{
 .ft-timeago.sub-meta-info{
     flex-shrink: 0;
 }
+.chat-meta-btn{
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+    z-index: 2;
+}
+.chat-meta-btn .icon {
+    font-size: 20px;
+}
+.layout--column{
+    flex-direction: column;
+}

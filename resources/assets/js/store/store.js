@@ -577,6 +577,26 @@ export const store = new Vuex.Store({
       }).catch(function (error) {
         console.log(error)
       })
+    },
+    deleteThreadMessage: (context, data) => {
+      let _token = $("meta[name=_token]").attr('content')
+      axios({
+        method: 'post',
+        responseType: 'json',
+        url: base_url + 'ajax/delete-thread',
+        data: {
+          _token: _token,
+          user_id: user_id,
+          thread_id: data.item.thread_id
+        }
+      }).then(function (response) {
+        if (response.status == 200) {
+          // context.state.currentConversation.conversationMessages = {}
+          context.state.conversations.data.splice(data.index,1)
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
     }
   }
 });

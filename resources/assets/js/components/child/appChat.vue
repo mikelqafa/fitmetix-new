@@ -1,5 +1,6 @@
 <template>
     <div class="ft-dock-wrapper">
+        <app-confirm :unid="unid" :body="body"></app-confirm>
         <div class="ft-chat-group">
             <div class="ft-chat-wrapper">
                 <div class="ft-chat-box ft-chat-box--abs ft-chat-box--docker">
@@ -84,27 +85,31 @@
                                 <div class="scroll-wrapper coversations-list coversations-list--docker" data-type="list">
                                     <div class="md-list md-list--dense">
                                         <template v-if="conversations.data !== undefined">
-                                            <div v-for="item in conversations.data" :key="item.id" class="md-list__item"
-                                                 @click="openChat(item)">
+                                            <div v-for="(item, index) in conversations.data" :key="item.id" class="md-list__item">
                                                 <div class="md-list__item-content">
                                                     <a :href="userLink(item)"
                                                        class="md-list__item-icon user-avatar"
                                                        :style="{backgroundImage: 'url('+getThumbImage(item)+')'}">
                                                     </a>
-                                                    <div class="md-list__item-primary">
+                                                    <div class="md-list__item-primary" @click="openChat(item)">
                                                         <span class="pos-rel">
                                                         <span>{{item.user.name}}</span>
                                                         <span class="unread-notification unread-notification--chat" v-bind:class="{ 'is-visible': item.unread }"></span>
                                                     </span>
                                                         <div class="md-list__item-text-body" v-html="item.lastMessage.body"></div>
                                                     </div>
-                                                    <div class="md-list__item-secondary text-right">
+                                                    <div class="md-list__item-secondary text-right layout--column">
                                                         <div class="md-list__item-secondary-info">
                                                             <timeago :since="since(item.lastMessage.created_at)"
                                                                      :auto-update="autoUpdate"
                                                                      class="timeago"></timeago>
                                                         </div>
                                                         <div class="md-layout-spacer"></div>
+                                                        <div class="color-deny">
+                                                            <a href="javascript:;" @click="confirmDeleteThreadMessage(item, index)" class="md-list__item-secondary-action chat-meta-btn" title="Delete Thread">
+                                                                <i class="icon icon-delete"></i>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -123,6 +128,7 @@
     import editor from 'vue2-medium-editor'
     import { mapGetters } from 'vuex'
     import chatText from './chatText'
+    import appConfirm from './appConfirm'
     export default {
         data: function () {
             return {
@@ -134,10 +140,24 @@
                 backContent: '',
                 options: { disableReturn: false },
                 messageBody: '',
-                placeholder: 'Type a message...'
+                placeholder: 'Type a message...',
+                unid: 'app-confirm-delete-message',
+                body: ''
             }
         },
         methods: {
+            confirmDeleteThreadMessage: function (item, i) {
+                this.body = 'Do you really want to delete this conversation?'
+                let confirmDialog = $('#'+ this.unid)
+                confirmDialog.MaterialDialog('show')
+                let that = this
+                confirmDialog.on('ca.dialog.affirmative.action', function(){
+                    that.deleteThreadMessage(item, i)
+                });
+            },
+            deleteThreadMessage: function (item, i) {
+                this.$store.dispatch('deleteThreadMessage', {item:item, index: i})
+            },
             closeChat: function () {
               $('.ft-dock-wrapper').addClass('hidden')
             },
@@ -222,7 +242,8 @@
         },
         components: {
             'medium-editor': editor,
-            'chat-thread': chatText
+            'chat-thread': chatText,
+            'app-confirm': appConfirm
         },
         computed: {
             ...mapGetters({
