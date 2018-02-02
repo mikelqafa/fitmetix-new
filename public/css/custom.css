@@ -4213,3 +4213,6 @@ aside .md-drawer-scroll__wrapper{
 .visiblity-hidden{
     visibility: hidden;
 }
+.ft-timeago.sub-meta-info{
+    flex-shrink: 0;
+}
