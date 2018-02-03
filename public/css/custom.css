@@ -3897,7 +3897,11 @@ aside .md-drawer-scroll__wrapper{
 }
 .ft-user-name--comment, .ft-user-name--comment-hide{
     color: #000 !important;
-    font-weight: 400;
+    font-weight: 600;
+}
+.md-comment-wrapper .md-list__item-text-body{
+    color: #000;
+    font-size: 14px;
 }
 .comment-item .user-avatar{
     margin-top: 0;
