@@ -4526,6 +4526,8 @@ class TimelineController extends AppBaseController
       $eventId = $request->event_id;
       $userId = $request->user_id;
       $event = DB::table('events')->where('id', $eventId)->first();
+      $event_d = Event::find($request->event_id);
+      $users = $event_d->users()->get();
       // if ($event->price > 0) {
       //     $registration = DB::table('event_user')
       //         ->where('event_id', $eventId)
@@ -4562,6 +4564,11 @@ class TimelineController extends AppBaseController
               ->delete();
           if ($unregister) {
               $msg = 'Successfully unregistered from Event';
+              foreach ($users as $user) {
+                if ($user->id != Auth::user()->id) {
+                    Notification::create(['user_id' => $user->id, 'timeline_id' => $request->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.quit_attending_your_event'), 'type' => 'unjoin_event']);
+                }
+            }
           } else {
               $msg = 'No registration found for this Event';
           }
@@ -4906,6 +4913,11 @@ class TimelineController extends AppBaseController
                             $query->where('timelines.name','like',$title.'%');
                         }
                 })
+                ->orWhere(function ($query) use ($title){
+                        if($title != '') {
+                            $query->where('timelines.about','like',$title.'%');
+                        }
+                })
                 ->select('events.*', 'timelines.*','events.id as event_id')
                 ->get();
                 $a = 0;
@@ -5030,15 +5042,16 @@ public function saveMessageAttachment(Request $request) {
                 $post_image = env('STORAGE_URL').'uploads/events/covers/'.$post_image_source; 
             }
             $title = strip_tags($post->timeline->name);
+            $description = strip_tags($post->timeline->about);
         }
         else {
             if($post_image_source != null) {
                 $post_image = env('STORAGE_URL').'uploads/users/gallery/'.$post_image_source; 
             }
             $title = strip_tags($post->timeline->username);
+            $description = strip_tags($post->description);
         }
         
-        $description = strip_tags($post->description);
         return view('FBshare',compact('url','post_image','title','description','post_id'));
     }
 
