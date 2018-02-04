@@ -2936,7 +2936,10 @@ aside .md-drawer-scroll__wrapper{
     line-height: 40px;
 }
 .timeline-option__item .ft-btn .icon{
-    font-size: 17px;
+    font-size: 18px;
+}
+.timeline-option__item .md-layout .icon-add {
+    font-size: 32px;
 }
 .timeline-user-desc{
     padding: 16px;

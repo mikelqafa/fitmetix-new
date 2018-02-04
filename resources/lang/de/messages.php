@@ -62,7 +62,7 @@
   'menu_message_page_likes' => 'Liste der Gefiel Benutzer',
   'no_admin' => 'Keine Admins noch!',
   'who_are_you_with' => 'Mit wem sind Sie zusammen?',
-  'what_are_you_watching' => 'Was guckst du?',
+  'what_are_you_watching' => 'Kopiere den Video-Link von YouTube?',
   'what_are_you_listening_to' => 'Was hörst du gerade?',
   'where_are_you' => 'Wo bist du?',
   'no_announcements' => 'Keine Ankündigungen noch!',

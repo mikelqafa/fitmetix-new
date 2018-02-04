@@ -2,11 +2,6 @@
     {{ csrf_field() }}
 
     <div class="panel panel-default panel-create"> <!-- panel-create -->
-        <div class="panel-heading">
-            <div class="heading-text">
-                {{ trans('messages.whats-going-on') }}
-            </div>
-        </div>
         <div class="panel-body" style="min-height: 112px">
             <div id="app-create-post">
                 <app-create-post></app-create-post>
@@ -29,7 +24,9 @@
             <div class="youtube-iframe"></div>
 
             <div class="video-addon post-addon" style="display: none">
-                <span class="post-addon-icon"><i class="icon icon-video"></i></span>
+                <span class="post-addon-icon">
+                    <i class="icon icon-video"></i>
+                </span>
                 <div class="form-group">
                     <input type="text" name="youtubeText" id="youtubeText" class="form-control youtube-text"
                            placeholder="{{ trans('messages.what_are_you_watching') }}" value="">

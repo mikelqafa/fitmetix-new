@@ -395,7 +395,7 @@ export const store = new Vuex.Store({
       context.commit('ADD_CONVERSATION_MESSAGE', {message: preData})
       let indexes = $.map(context.state.conversations.data, function (thread, key) {
         if (thread.id == context.state.currentConversation.id) {
-          return key;x``
+          return key;
         }
       });
       let index = context.state.currentConversation.conversationMessages.data.length - 1
@@ -615,6 +615,7 @@ export const store = new Vuex.Store({
           if(data.index == 0) {
             context.state.currentConversation.conversationMessages = {}
           }
+
         }
       }).catch(function (error) {
         console.log(error)

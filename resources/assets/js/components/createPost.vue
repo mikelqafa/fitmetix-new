@@ -39,7 +39,7 @@
         data: function () {
             return {
                 userImage: '',
-                placeholder: '',
+                placeholder: 'What motivates you...#hashtags @mentions',
                 members: [],
                 content: '',
                 backContent: '',
@@ -55,7 +55,6 @@
         },
         mounted () {
             this.userImage = $('#user-image').val()
-            this.placeholder = $('#post-placeholder').val()
             let username = current_username
             if($('#timeline_username').length) {
                 username =  $('#timeline_username').val()

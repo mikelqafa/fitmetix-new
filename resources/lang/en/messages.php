@@ -77,7 +77,7 @@ return [
     'menu_message_page_likes'     => 'List of Liked users',
     'no_admin'                    => 'No admins yet!',
     'who_are_you_with'            => 'Who are you with?',
-    'what_are_you_watching'       => 'What are you watching?',
+    'what_are_you_watching'       => 'Copy video link from YouTube',
     'what_are_you_listening_to'   => 'What are you listening to?',
     'where_are_you'               => 'Where are you?',
     'no_announcements'            => 'No announcements yet!',

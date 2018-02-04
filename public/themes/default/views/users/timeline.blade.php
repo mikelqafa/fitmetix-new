@@ -68,16 +68,6 @@
                                     <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">{{ $block_text }}</button>
                                 @endif
                             <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Report</button>
-{{--                             <button class="pos-rel btn btn-default" data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="true">
-                                Unfollow
-                                <span class="absolute-loader hidden">
-                                    <span class="ft-loading">
-                                        <span class="ft-loading__dot"></span>
-                                        <span class="ft-loading__dot"></span>
-                                        <span class="ft-loading__dot"></span>
-                                    </span>
-                                </span>
-                            </button> --}}
                         @else
                             @if($block_text == 'Unblock')
                                 <button class="btn btn-default" onclick="unblock()">{{ $block_text }}</button>
