@@ -26,11 +26,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
 use Teepluss\Theme\Facades\Theme;
 use Validator;
+use App;
 
 class UserController extends AppBaseController
 {
