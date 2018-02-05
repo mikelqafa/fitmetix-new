@@ -1086,7 +1086,9 @@ class UserController extends AppBaseController
         }
 
         //Notify the user for accepting the follow request
+        App::setLocale($user->language);
         Notification::create(['user_id' => $request->user_id, 'timeline_id' => $user->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.accepted_follow_request'), 'type' => 'accept_follow_request', 'link' => Auth::user()->username.'/followers']);
+        App::setLocale(Auth::user()->language);
 
 
         if ($user_settings && $user_settings->email_follow == 'yes') {

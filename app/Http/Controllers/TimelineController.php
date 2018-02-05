@@ -640,7 +640,9 @@ class TimelineController extends AppBaseController
             preg_match_all('/(^|\s)(@\w+)/', $request->description, $usernames);
             foreach ($usernames[2] as $value) {
                 $timeline = Timeline::where('username', str_replace('@', '', $value))->first();
+                App::setLocale($timeline->user->language);
                 $notification = Notification::create(['user_id' => $timeline->user->id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.mentioned_you_in_post'), 'type' => 'mention', 'link' => 'post/'.$post->id]);
+                App::setLocale(Auth::user()->language);
             }
             $timeline = Timeline::where('id', $request->timeline_id)->first();
 
@@ -739,14 +741,19 @@ class TimelineController extends AppBaseController
         if ($request->user_tags != null) {
             $comment->users_tagged()->sync(explode(',', $request->user_tags));
             foreach ($request->user_tags as $user_tag) {
-                Notification::create(['user_id' => $user_tag->user_id, 'post_id' => $request->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' mentioned you in comment', 'type' => 'comment_post']);
+                $user_t = User::find($user_tag->user_id);
+                App::setLocale($user_t->language);
+                Notification::create(['user_id' => $user_tag->user_id, 'post_id' => $request->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' mentioned you in comment', 'type' => 'comment_post','link' => 'post/'.$post->id]);
+                App::setLocale(Auth::user()->language);
             }
         }
 
         preg_match_all('/(^|\s)(@\w+)/', $request->description, $usernames);
             foreach ($usernames[2] as $value) {
                 $timeline = Timeline::where('username', str_replace('@', '', $value))->first();
-                $notification = Notification::create(['user_id' => $timeline->user->id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' mentioned you in comment', 'type' => 'mention', 'link' => 'post/'.$post->id]);
+                App::setLocale($timeline->user->language);
+                $notification = Notification::create(['user_id' => $timeline->user->id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.mentioned_you_in_comment'), 'type' => 'mention', 'link' => 'post/'.$post->id]);
+                App::setLocale(Auth::user()->language);
             }
 
         if ($comment) {
@@ -755,7 +762,9 @@ class TimelineController extends AppBaseController
                 $blocked = $this->checkIfPostBlocked($request->post_id,$post->user_id);
                 if ($blocked == FALSE){
                   //Notify the user for comment on his/her post
+                  App::setLocale($posted_user->language);
                   Notification::create(['user_id' => $post->user_id, 'post_id' => $request->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.commented_on_your_post'), 'type' => 'comment_post']);
+                  App::setLocale(Auth::user()->language);
                 }
             }
 
@@ -822,13 +831,15 @@ class TimelineController extends AppBaseController
                 });
             }
 
-            //Notify the user for post like
-            $notify_message = 'liked your post';
-            $notify_type = 'like_post';
-            $status_message = 'successfully liked';
-
             if ($post->user->id != Auth::user()->id) {
+                //Notify the user for post like
+                App::setLocale($post->user->language);
+                $notify_message = trans('common.liked_your_post');
+                $notify_type = 'like_post';
+                $status_message = 'successfully liked';
+
                 Notification::create(['user_id' => $post->user->id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.$notify_message, 'link' =>$post_image, 'type' => $notify_type]);
+                App::setLocale(Auth::user()->language);
             }
             LaravelPusher::trigger('PRAKASH', 'PRAKASH_EVENT', ['message' => $notify_message]);
 
@@ -884,7 +895,9 @@ class TimelineController extends AppBaseController
 
               //Notify the user for comment like
               if ($comment->user->id != Auth::user()->id) {
+                App::setLocale($comment->user->language);
                 Notification::create(['user_id' => $comment->user_id, 'post_id' => $comment->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.liked_your_comment'), 'type' => 'like_comment']);
+                App::setLocale(Auth::user()->language);
               }
             }
 
@@ -924,7 +937,9 @@ class TimelineController extends AppBaseController
 
             if ($post->user_id != Auth::user()->id) {
                 //Notify the user for post share
+                App::setLocale($posted_user->language);
                 Notification::create(['user_id' => $post->user_id, 'post_id' => $request->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.shared_your_post'), 'type' => 'share_post', 'link' => '/'.Auth::user()->username]);
+                App::setLocale(Auth::user()->language);
 
                 $user = User::find(Auth::user()->id);
                 $user_settings = $user->getUserSettings($posted_user->id);
@@ -946,7 +961,9 @@ class TimelineController extends AppBaseController
 
             if ($post->user_id != Auth::user()->id) {
                 //Notify the user for post share
+                App::setLocale($posted_user->language);
                 Notification::create(['user_id' => $post->user_id, 'post_id' => $request->post_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.unshared_your_post'), 'type' => 'unshare_post', 'link' => '/'.Auth::user()->username]);
+                App::setLocale(Auth::user()->language);
             }
 
             return response()->json(['status' => '200', 'unshared' => false, 'message' => 'Successfully unshared', 'share_count' => $post_share_count]);
@@ -1131,8 +1148,10 @@ class TimelineController extends AppBaseController
                 });
             }
 
+            App::setLocale($follow->language);
             //Notify the user for follow
             Notification::create(['user_id' => $follow->id, 'timeline_id' => $request->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.is_following_you'), 'type' => 'follow']);
+            App::setLocale(Auth::user()->language);
 
             return response()->json(['status' => '200', 'followed' => true, 'message' => 'successfully followed']);
         } else {
@@ -1209,7 +1228,9 @@ class TimelineController extends AppBaseController
                 foreach ($users as $user) {
                     if ($user->id != Auth::user()->id) {
                         //Notify the user for event join
+                        App::setLocale($user->language);
                         Notification::create(['user_id' => $user->id, 'timeline_id' => $request->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.attending_your_event'), 'type' => 'join_event']);
+                        App::setLocale(Auth::user()->language);
                     }
                 }
                 return response()->json(['status' => '200', 'joined' => true, 'message' => 'successfully joined']);
@@ -1219,8 +1240,9 @@ class TimelineController extends AppBaseController
 
             foreach ($users as $user) {
                 if ($user->id != Auth::user()->id) {
-                    //Notify the user for page like
+                    App::setLocale($user->language);
                     Notification::create(['user_id' => $user->id, 'timeline_id' => $request->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.quit_attending_your_event'), 'type' => 'unjoin_event']);
+                    App::setLocale(Auth::user()->language);
                 }
             }
             return response()->json(['status' => '200', 'joined' => false, 'message' => 'successfully unjoined']);
@@ -1242,7 +1264,9 @@ class TimelineController extends AppBaseController
         foreach ($users as $user) {
             if ($user->id != Auth::user()->id) {
                 //Notify the user for event join
+                App::setLocale($user->language);
                 Notification::create(['user_id' => $user->id, 'timeline_id' => $timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.attending_your_event'), 'type' => 'join_event']);
+                App::setLocale(Auth::user()->language);
             }
         }
         return redirect('events')->with('msg','Successfully joined');
@@ -1292,9 +1316,10 @@ class TimelineController extends AppBaseController
             if($user->settings()->confirm_follow == "no"){
                 $user->followers()->attach(Auth::user()->id, ['status' => 'pending']);
                 $follow_status = 'pending';
-
+                App::setLocale($user->language);
                 $notification = Notification::create(['user_id' => $user->id, 'timeline_id' => Auth::user()->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.request_follow'), 'type' => 'follow_requested']);
 
+                App::setLocale(Auth::user()->language);
                 if ($user_settings && $user_settings->email_follow == 'yes') {
                     Mail::send('emails.followmail', ['user' => $user, 'follow' => $user], function ($m) use ($user) {
                         $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
@@ -2515,7 +2540,9 @@ class TimelineController extends AppBaseController
         $post = Post::where('timeline_id',$event_edited->timeline_id)->first();
 
         foreach ($notify_users as $notify_user) {
-            Notification::create(['user_id' => $notify_user->id, 'timeline_id' => $event_edited->timeline_id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' edited event', 'type' => 'edit_event', 'link' => '/post/'.$post->id]);
+            App::setLocale($notify_user->language);
+            Notification::create(['user_id' => $notify_user->id, 'timeline_id' => $event_edited->timeline_id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.edited_event'), 'type' => 'edit_event', 'link' => '/post/'.$post->id]);
+            App::setLocale(Auth::user()->language);
         }
 
 		return response()->json(['status' => '200','error' => FALSE,'err_msg'=>'','success'=>TRUE]);
@@ -3073,7 +3100,9 @@ class TimelineController extends AppBaseController
         $post = Post::where('timeline_id',$event->timeline_id)->first();
 
         foreach ($notify_users as $notify_user) {
+            App::setLocale($notify_user->language);
             Notification::create(['user_id' => $notify_user->id, 'timeline_id' => $event->timeline_id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' deleted event', 'type' => 'delete_event', 'link' => '/']);
+            App::setLocale(Auth::user()->language);
         }
 
         // Deleting event posts
@@ -4566,7 +4595,9 @@ class TimelineController extends AppBaseController
               $msg = 'Successfully unregistered from Event';
               foreach ($users as $user) {
                 if ($user->id != Auth::user()->id) {
+                    App::setLocale($user->language);
                     Notification::create(['user_id' => $user->id, 'timeline_id' => $request->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.quit_attending_your_event'), 'type' => 'unjoin_event']);
+                    App::setLocale(Auth::user()->language);
                 }
             }
           } else {
@@ -4849,7 +4880,9 @@ class TimelineController extends AppBaseController
         //Check if the user has blocked the post.
         $block = $this->checkIfPostBlocked($postId,$user->id);
         if ($block == FALSE){
+          App::setLocale($user->language);
           Notification::create(['user_id' => $user->id, 'post_id' => $postId, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' wants you to view this post', 'type' => 'share_post', 'link' => '/post/'.$postId]);
+          App::setLocale(Auth::user()->language);
         }
       }
       return response()->json(['status' => '200','data' => 'Post Shared']);
