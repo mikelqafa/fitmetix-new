@@ -231,7 +231,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div id="event-date-wrapper form-helper-wrapper">
-                                    <div class="demo-section k-content">
+                                    <div class="demo-section k-content botom-margin-sm">
                                         <input id="datetimepicker" title="datetimepicker" name="start_date" style="width: 100%;" />
                                     </div>
 

@@ -3985,8 +3985,13 @@ aside .md-drawer-scroll__wrapper{
     .create-event-form .form-group{
         margin-bottom: 0;
     }
-    .create-event-form .form-control{
-        margin-bottom: 16px;
+    .create-event-form .form-control,
+    .create-event-form .botom-margin-sm{
+        margin-bottom: 24px;
+    }
+    .panel-body.nopadding{
+        padding-left: 0;
+        padding-right: 0;
     }
     .create-event-form #description{
         margin-top: 16px;
@@ -4246,4 +4251,8 @@ aside .md-drawer-scroll__wrapper{
     position: relative;
     height: 100%;
     width: 100%;
+}
+.ft-chat .md-list__item.is-new,
+.ft-chat-box__body.is-new {
+
 }
