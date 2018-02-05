@@ -88,6 +88,7 @@
                 <li><a href="javascript:;" id="locationUpload"><i class="fa fa-map-marker"></i></a></li>
                 <li><a href="javascript:;" id="emoticons"><i class="fa fa-smile-o"></i></a></li>
             </ul>
+            <div class="md-layout-spacer"></div>
             <ul class="list-inline right-list">
                 @if($user_post == 'group' && Auth::user()->is_groupAdmin(Auth::user()->id, $timeline->groups->id) || $user_post == 'group' && $timeline->groups->event_privacy == 'members' && Auth::user()->is_groupMember(Auth::user()->id, $timeline->groups->id))
                     <li><a href="{!! url($username.'/groupevent/'.$timeline->groups->id) !!}"

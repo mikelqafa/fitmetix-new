@@ -1,5 +1,7 @@
 <template>
     <div class="row-on-mobile">
+        <post-wholikes-view></post-wholikes-view>
+        <event-participate-list></event-participate-list>
         <div class="post-filters pages-groups post-filters--auto-width">
             <div class="pane">
                 <div class="pan">
@@ -261,6 +263,9 @@
     import postEvent from './child/postEvent'
     import postHeader from './child/postHeader'
     import postComment from './child/postComment'
+    import postWhoLikesView from './child/postWhoLikesView'
+    import appPostShare from './child/appPostShare'
+    import eventParticipateList from './child/eventParticipateList'
     import { mapGetters } from 'vuex'
     export default {
         data: function () {
@@ -484,7 +489,10 @@
             'post-header': postHeader,
             'post-event': postEvent,
             'post-comment': postComment,
-            'post-back-viewer': postBackViwer
+            'post-back-viewer': postBackViwer,
+            'post-wholikes-view': postWhoLikesView,
+            'app-post-share': appPostShare,
+            'event-participate-list': eventParticipateList
         },
         computed: {
             isLoading () {
