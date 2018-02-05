@@ -1,5 +1,7 @@
 <template>
     <div class="row-on-mobile">
+        <app-post-share></app-post-share>
+        <post-theater-view></post-theater-view>
         <post-wholikes-view></post-wholikes-view>
         <event-participate-list></event-participate-list>
         <div class="post-filters pages-groups post-filters--auto-width">
@@ -266,6 +268,7 @@
     import postWhoLikesView from './child/postWhoLikesView'
     import appPostShare from './child/appPostShare'
     import eventParticipateList from './child/eventParticipateList'
+    import postTheaterView from './child/postTheaterView'
     import { mapGetters } from 'vuex'
     export default {
         data: function () {
@@ -492,6 +495,7 @@
             'post-back-viewer': postBackViwer,
             'post-wholikes-view': postWhoLikesView,
             'app-post-share': appPostShare,
+            'post-theater-view': postTheaterView,
             'event-participate-list': eventParticipateList
         },
         computed: {
