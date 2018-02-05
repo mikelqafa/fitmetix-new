@@ -1,4 +1,3 @@
-<!-- Modal starts here-->
 <div class="modal fade" id="usersModal" tabindex="-1" role="dialog" aria-labelledby="usersModalLabel">
     <div class="modal-dialog modal-likes" role="document">
         <div class="modal-content">
@@ -23,4 +22,15 @@
 			{{ trans('common.copyright') }} &copy; {{ date('Y') }} {{ Setting::get('site_name') }}. {{ trans('common.all_rights_reserved') }}
 			</div>
 	</div>
+
+	@if(!Auth::check())
+		<div class="multi-lang">
+			<a href="javascript:;" title="English" data-language="en" class="switch-language multi-lang__item" style="background-image: url({{asset('images/en.png')}})">
+
+			</a>
+			<a href="javascript:;" title="German" data-language="de" class="switch-language multi-lang__item" style="background-image: url({{asset('images/sp.png')}})">
+			</a>
+		</div>
+	@endif
+
 </div>

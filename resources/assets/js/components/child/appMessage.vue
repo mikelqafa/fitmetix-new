@@ -9,7 +9,7 @@
                 <div class="ft-chat__header">Messages</div>
                 <div class="md-menu">
                     <template v-if="conversations.data !== undefined">
-                        <div v-for="item in conversations.data" :key="'msg-noti'+item.id" class="md-list__item has-divider"
+                        <div :class="{'is-new': item.unread}" v-for="item in conversations.data" :key="'msg-noti'+item.id" class="md-list__item has-divider"
                              @click="openChat(item)">
                             <div class="md-list__item-content">
                                 <a href="#"
