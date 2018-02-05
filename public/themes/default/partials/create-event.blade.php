@@ -91,6 +91,7 @@
         padding-bottom: 16px;
     }
 </style>
+<link rel="stylesheet" href="{{asset('css/date.min.css')}}" />
 <div class="layout-m-t-1">
     <div class="panel-body nopadding">
         @if( env('GOOGLE_MAPS_API_KEY') == NULL)
@@ -229,12 +230,11 @@
                             class="form-group required {{ $errors->has('start_date') || $errors->has('end_date') ? ' has-error' : '' }}">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="input-group date form-helper-wrapper form_datetime md-textfield" data-toggle="textfield">
-                                    <input type="text" tabindex='8' required autocomplete="off" class="md-textfield__input datepick2--event form-control" name="start_date"
-                                           placeholder="Start Time" value="{{ old('start_date') }}">
-                                    <span class="input-group-addon addon-right calendar-addon">
-                                        <span class="fa fa-calendar"></span>
-                                    </span>
+                                <div id="event-date-wrapper form-helper-wrapper">
+                                    <div class="demo-section k-content">
+                                        <input id="datetimepicker" title="datetimepicker" name="start_date" style="width: 100%;" />
+                                    </div>
+
                                     <div class="form-helper">
                                         <div class="helper-inner arrow_box arrow_box--bottom-xs">
                                             Provide date and time when event start.
@@ -324,3 +324,16 @@
 </script>
 
 <script src="{{asset('js/textfield.js')}}"></script>
+<script src="{{asset('js/date.min.js')}}"></script>
+<script>
+    $(document).ready(function () {
+        // create DateTimePicker from input HTML element
+        var today = new Date();
+        var d = $("#datetimepicker").kendoDateTimePicker({
+            value: today,
+            dateInput: true
+        }).data('kendoDateTimePicker')
+        d.min(today)
+        d.max(new Date(today.getFullYear(), today.getMonth()+3, today.getDate()))
+    });
+</script>
