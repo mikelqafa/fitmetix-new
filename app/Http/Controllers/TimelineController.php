@@ -1323,13 +1323,18 @@ class TimelineController extends AppBaseController
                 if ($user_settings && $user_settings->email_follow == 'yes') {
                     Mail::send('emails.followmail', ['user' => $user, 'follow' => $user], function ($m) use ($user) {
                         $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
-                        $m->to($user->email, $user->name)->subject(Auth::user()->name.' requested to follow you');
+                        $m->to($user->email, $user->name)->subject(Auth::user()->name.' wants to follow you');
                     });
                 }
             }
             else {
                 $user->followers()->attach(Auth::user()->id, ['status' => 'approved']);
                 $follow_status = 'approved';
+
+                App::setLocale($user->language);
+                $notification = Notification::create(['user_id' => $user->id, 'timeline_id' => Auth::user()->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.follow_public'), 'type' => 'follow']);
+
+                App::setLocale(Auth::user()->language);
 
                 if ($user_settings && $user_settings->email_follow == 'yes') {
                     Mail::send('emails.followmail', ['user' => $user, 'follow' => $user], function ($m) use ($user) {
@@ -3125,7 +3130,7 @@ class TimelineController extends AppBaseController
     public function allNotifications()
     {
         $mode = 'notifications';
-        $notifications = Notification::where('user_id', Auth::user()->id)->with('notified_from')->latest()->paginate(Setting::get('items_page', 10));
+        $notifications = Notification::where('user_id', Auth::user()->id)->with('notified_from')->latest()->get();
         
         $trending_tags = trendingTags();
         $suggested_users = suggestedUsers();
