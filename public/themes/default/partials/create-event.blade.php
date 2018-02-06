@@ -328,7 +328,8 @@
 <script>
     $(document).ready(function () {
         // create DateTimePicker from input HTML element
-        var today = new Date();
+        var date = new Date()
+        var today = new Date(date.valueOf() + date.getTimezoneOffset() * 60000);
 
         var d = new Date();
         var n = d.toUTCString();
