@@ -6,7 +6,9 @@
     </div>
 </div>
 <div class="footer-description">
+	<div class="md-layout-spacer--mobile"></div>
 	<div class="footer__wrapper">
+		<div class="md-layout-spacer--mobile"></div>
 		<div class="socialite-terms text-center">
 			@if(Auth::check())
 				{{-- <a href="{{ url(Auth::user()->username.'/create-page') }}">{{ trans('common.create_page') }}</a> -
@@ -24,11 +26,18 @@
 	</div>
 
 	@if(!Auth::check())
-		<div class="multi-lang">
+		<div class="multi-lang hidden-sm hidden-xs">
 			<a href="javascript:;" title="English" data-language="en" class="switch-language multi-lang__item" style="background-image: url({{asset('images/en.png')}})">
 
 			</a>
 			<a href="javascript:;" title="German" data-language="de" class="switch-language multi-lang__item" style="background-image: url({{asset('images/sp.png')}})">
+			</a>
+		</div>
+		<div class="md-layout-spacer--mobile"></div>
+		<div class="multi-lang multi-lang--mobile">
+			<a href="javascript:;" title="English" data-language="en" class="switch-language multi-lang__option" style="background-image: url({{asset('images/en.png')}})">
+			</a>
+			<a href="javascript:;" title="German" data-language="de" class="switch-language multi-lang__option" style="background-image: url({{asset('images/sp.png')}})">
 			</a>
 		</div>
 	@endif

@@ -39,14 +39,14 @@
                         </div>
                     </div>
                     <div class="form-group__adjust layout-m-t-0 text-center--mobile">
-                        <ul class="list-inline  layout-p-l-1--sm  list-inline__login  layout-p-r-1--sm">
+                        <ul class="list-inline  layout-p-l-1--sm  list-inline__login  layout-p-r-1--sm mobile-layout-column">
                             <li>
                                 <a href="{!! url('register') !!}" class="forgot-password">
-                                    <i class="icon icon-user"></i> {{ trans('auth.dont_have_an_account_yet') }}</a>
+                                    <i class="icon icon-user"></i> {{ trans('auth.register') }}</a>
                             </li>
                             <li>
-                                <a href="{!! url('password/reset') !!}" class="layout-m-l-0">
-                                    {{ trans('auth.forgot_password') }}
+                                <a href="{!! url('password/reset') !!}" class="layout-m-l-0 text-capitalize">
+                                    <i class="icon icon-user"></i>  {{ trans('auth.forgot_password') }}
                                 </a>
                             </li>
                         </ul>

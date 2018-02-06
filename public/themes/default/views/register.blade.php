@@ -50,7 +50,7 @@
                             <span class="hidden-lg hidden-md" style="position: absolute; top: 0; left: 0;;"></span>
                             <input class="form-control" id="username" required placeholder="Username" name="username" type="text">
                         </div>
-                        <div class="form-group form-group__adjust">
+                        <div class="form-group form-group__adjust form-group__adjust--no-margin">
                             <input class="form-control" id="email" required placeholder="{{ trans('auth.email_address') }}" name="email" type="email" value="@if(isset($data['email'])) {{ $data['email'] }} @endif">
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                         <div class="mail-form  form-group form-group__adjust pos-rel">
                             <input class="form-control" id="password" required placeholder="{{ trans('auth.password') }}" name="password" type="password">
                         </div>
-                        <div class="form-group form-group__adjust">
+                        <div class="form-group form-group__adjust form-group__adjust--no-margin">
                             {{-- <input class="form-control" id="referral_code" placeholder="Referrer code" name="affiliate" type="text" value=""> --}}
 
                             <select class="form-control" id="gender" required name="gender">
