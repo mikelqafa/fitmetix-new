@@ -841,7 +841,6 @@ class TimelineController extends AppBaseController
                 Notification::create(['user_id' => $post->user->id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.$notify_message, 'link' =>$post_image, 'type' => $notify_type]);
                 App::setLocale(Auth::user()->language);
             }
-            LaravelPusher::trigger('PRAKASH', 'PRAKASH_EVENT', ['message' => $notify_message]);
 
             return response()->json(['status' => '200', 'liked' => true, 'message' => $status_message, 'likecount' => $like_count]);
         } //Unlike the post
@@ -4174,7 +4173,7 @@ class TimelineController extends AppBaseController
 
     public function fetchPostLikes(Request $request) {
 
-        $posts = Post::where('id',$request->post_id)->get();
+        $posts = Post::where('id',$request->post_id)->with('timeline')->get();
 
         $hasMore = false;
         $post_likes_by = '';
