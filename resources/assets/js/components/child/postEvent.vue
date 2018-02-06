@@ -130,7 +130,7 @@
                     str = res[0]+'T'+res[1]
                     str.replace(/\s/, 'T')
                 }
-                let obj = new Date(str+'Z')
+                let obj = new Date(str)
                 let options = {
                     year: 'numeric',
                     month: 'short',
