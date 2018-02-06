@@ -143,9 +143,47 @@ class RegisterController extends Controller
         $a = $request->social;
         $b = $request->avatar;
 			if($request->social != '' && $request->avatar != '') {
-				$fileContents = file_get_contents($request->avatar);
-				$photoName = date('Y-m-d-H-i-s').str_random(8).'.png';
-				File::put(storage_path() . '/uploads/users/avatars/' . $photoName, $fileContents);
+                $change_avatar = $request->file('avatar');
+                $strippedName = str_replace(' ', '', $change_avatar->getClientOriginalName());
+                // $photoName = microtime().$strippedName;
+
+                // Lets resize the image to the square with dimensions of either width or height , which ever is smaller.
+                list($width, $height) = getimagesize($change_avatar->getRealPath());
+
+
+                $avatar = Image::make($change_avatar->getRealPath())->orientate();
+                $avatar_thumbnail = $avatar;
+
+                $mime = $avatar->mime();
+                if ($mime == 'image/jpeg')
+                    $extension = '.jpg';
+                elseif ($mime == 'image/png')
+                    $extension = '.png';
+                elseif ($mime == 'image/gif')
+                    $extension = '.gif';
+                else
+                    $extension = '';
+                $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id.$extension;
+                $photoName_thumbnail = '100_'.$photoName;
+
+                if ($width > $height) {
+                    $avatar->crop($height, $height);
+                    $avatar_thumbnail->crop($height, $height);
+                } else {
+                    $avatar->crop($width, $width);
+                    $avatar_thumbnail->crop($width, $width);
+                }
+                $avatar->resize(600, 600);
+
+                $avatar->save(storage_path().'/uploads/users/avatars/'.$photoName, 60);
+
+                $avatar_thumbnail->resize(100, 100);
+                $avatar_thumbnail->save(storage_path().'/uploads/users/avatars/'.$photoName_thumbnail, 60);
+
+
+				// $fileContents = file_get_contents($request->avatar);
+				// $photoName = date('Y-m-d-H-i-s').str_random(8).'.png';
+				// File::put(storage_path() . '/uploads/users/avatars/' . $photoName, $fileContents);
 
 				$media = Media::create([
 					'title'  => $photoName,
