@@ -52,7 +52,7 @@
 
                                         </template>
                                         <template v-else="">
-                                            <button v-if="item.follow_status == 'pending'"  class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true" :data-timeline-id="item.id" data-following="true">
+                                            <button v-if="item.follow_status == 'pending'"  class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true" :data-timeline-id="item.timeline_id" data-following="true">
                                                 <span class="absolute-loader hidden">
                                                     <span class="ft-loading">
                                                         <span class="ft-loading__dot"></span>
@@ -63,7 +63,7 @@
                                                 <span class="false">Follow</span>
                                                 <span class="true">Request sent</span>
                                             </button>
-                                            <button v-else-if="item.follow_status == 'following'" class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true"  :data-timeline-id="item.id" data-toggle="follow" data-following="true">
+                                            <button v-else-if="item.follow_status == 'following'" class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true"  :data-timeline-id="item.timeline_id" data-toggle="follow" data-following="true">
                                                 <span class="absolute-loader hidden">
                                                 <span class="ft-loading">
                                                     <span class="ft-loading__dot"></span>
@@ -74,7 +74,7 @@
                                                 <span class="false">Follow</span>
                                                 <span class="true">Following</span>
                                             </button>
-                                            <button v-else="" class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true"  :data-timeline-id="item.id" data-toggle="follow" data-following="false">
+                                            <button v-else="" class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true"  :data-timeline-id="item.timeline_id" data-toggle="follow" data-following="false">
                                                 <span class="absolute-loader hidden">
                                                     <span class="ft-loading">
                                                     <span class="ft-loading__dot"></span>
