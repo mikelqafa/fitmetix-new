@@ -14,7 +14,7 @@
                             <div class="md-list__item-content">
                                 <a href="#"
                                    class="md-list__item-icon user-avatar"
-                                   :style="{backgroundImage: 'url('+getThumbImage(item.user.avatar)+')'}">
+                                   :style="{backgroundImage: 'url('+getThumbImage(item.user)+')'}">
                                 </a>
                                 <div class="md-list__item-primary">
                                     <span class="pos-rel">
@@ -58,14 +58,16 @@
             }
         },
         mounted () {
-
         },
         methods: {
             getShortMsg: function(item) {
                 return item.length < 50 ? item : item.substr(0, 50) + '...'
             },
-            getThumbImage: function (url) {
-               return getThumbImage(url)
+            getThumbImage: function (user) {
+                console.log(user
+                )
+                // return getThumbImage(user.avatar_url[0].source)
+                return ''
             },
             openChat: function (c) {
                 $('.ft-chat--list-wrapper').addClass('is-list-open')

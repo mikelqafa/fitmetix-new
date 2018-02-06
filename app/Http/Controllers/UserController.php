@@ -1281,21 +1281,22 @@ class UserController extends AppBaseController
 
     public function savedItems($username)
     {
-      $trending_tags = trendingTags();
-      $suggested_users = suggestedUsers();
-      $suggested_groups = suggestedGroups();
-      $suggested_pages = suggestedPages();
+        $mode = 'globalfeed';
+        $user_post = 'globalfeed';
+        $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
 
-      $page_timelines = Auth::user()->timelinesSaved()->where('saved_timelines.type','page')->get(); 
-      $group_timelines = Auth::user()->timelinesSaved()->where('saved_timelines.type','group')->get(); 
-      $event_timelines = Auth::user()->timelinesSaved()->where('saved_timelines.type','event')->get(); 
-      $posts = Auth::user()->postsSaved()->get();
-      $user = Auth::user();
+        $timeline = Timeline::where('username', $username)->first();
 
-      $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
-      $theme->setTitle(trans('common.saved_items').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+        $id = Auth::id();
 
-      return $theme->scope('users/saved', compact('event_timelines','group_timelines','page_timelines','trending_tags','suggested_pages','suggested_groups','suggested_users','posts','user'))->render();
+        $trending_tags = trendingTags();
+        $suggested_users = suggestedUsers();
+        $suggested_groups = suggestedGroups();
+        $suggested_pages = suggestedPages();
+
+        $theme->setTitle($timeline->name.' - Saved Post '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+        return $theme->scope('users/save_timeline', compact('username', 'timeline','hashtag', 'trending_tags', 'suggested_users', 'suggested_groups', 'suggested_pages', 'mode', 'user_post'))
+            ->render();
     }
 
     public function changeLanguageSetting(Request $request) {

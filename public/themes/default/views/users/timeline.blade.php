@@ -42,13 +42,13 @@
                                     </a>
                                 </div>
                                 @if(Auth::user()->id == $timeline->user->id)
-                                    <div class="ft-user-info__item hidden">
+                                    <div class="ft-user-info__item">
                                         <div class="ft-icon">
                                             Saved
                                         </div>
-                                        <div class="info">
-                                            {{ count($timeline->user->postsSaved()) }}
-                                        </div>
+                                        <a href="{{ url($timeline->username.'/saved') }}" class="info btn">
+                                            {{ count($timeline->user->postsSaved()->get()) }}
+                                        </a>
                                     </div>
                                 @endif
                             </div>

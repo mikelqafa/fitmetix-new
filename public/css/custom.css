@@ -4281,3 +4281,9 @@ aside .md-drawer-scroll__wrapper{
     width: 19px;
     vertical-align: baseline;
 }
+.main-content{
+    min-height: calc(100vh - 60px);
+}
+.no-found {
+    padding: 16px;
+}

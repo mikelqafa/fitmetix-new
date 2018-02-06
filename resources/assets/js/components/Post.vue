@@ -68,13 +68,13 @@
                     <span class="ft-loading__dot"></span>
                     <span class="ft-loading__dot"></span>
                 </div>
-                <div class="text-center" v-if="!hasMorePost && !singlePost">
+                <div class="text-center no-found" v-if="!hasMorePost && !singlePost">
                     No more posts to fetch
                 </div>
             </template>
         </template>
         <template v-else="">
-            <div class="text-center">
+            <div class="text-center  no-found">
                 No Post Found
             </div>
         </template>
@@ -131,7 +131,12 @@
                 let username = current_username
                 let paginate = 4
                 let _token = $("meta[name=_token]").attr('content')
-                let url = base_url + 'get-posts'
+                let url = ''
+                if($('#saved').length && $('#saved').val()) {
+                    url = base_url + 'ajax/get-saved-post'
+                } else {
+                    url = base_url + 'get-posts'
+                }
                 let profile_timeline = false
                 if($('#timeline_username').length) {
                     username =  $('#timeline_username').val()
