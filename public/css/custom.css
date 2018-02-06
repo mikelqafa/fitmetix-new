@@ -189,7 +189,7 @@ svg {
     padding: 0 7.5px;
     width: 100%;
     max-width: 320px;
-    min-width: 200px;
+    min-width: 264px;
 }
 
 .ft-login__wrapper .form-group {
@@ -250,6 +250,10 @@ svg {
 
 .layout-p-r-0 {
     padding-right: 7.5px;
+}
+.ft-login__wrapper .btn-submit,
+.ft-login__wrapper a {
+    font-size: 16px;
 }
 @media (min-width:600px) {
     .timeline-posts {
@@ -328,9 +332,9 @@ svg {
     top: 15px;
 }
 
-.ft-login__header--register {
+/*.ft-login__header--register {
     top: 108px !important;
-}
+}*/
 
 .ft-login .form-control {
     /* color: #fff;*/
@@ -431,213 +435,11 @@ svg {
     display: none;
 }
 
-@media screen and (max-width: 992px) {
-    .multi-lang__option {
-        display: block;
-    }
-
-    .multi-lang__item {
-        display: none;
-    }
-
-    .ft-mobile-logo {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        margin-top: 6px;
-    }
-
-    .md-layout-spacer--mobile {
-        display: none;
-    }
-
-    .ft-login__header {
-        top: 112px;
-        margin-top: 0;
-    }
-
-    .ft-login__header .ft-header__logo {
-        display: none;
-    }
-
-    .ft-login__header .form-group__adjust {
-        margin-bottom: 10px;
-    }
-
-    .mobile-align-center {
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-    }
-
-    .mobile-layout-column {
-        -webkit-box-orient: vertical !important;
-        -webkit-box-direction: normal !important;
-        -ms-flex-direction: column !important;
-        flex-direction: column !important;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        padding-top: 20px;
-    }
-
-    .ft-login__wrapper .btn-submit {
-        width: 100%;
-        margin-left: 0;
-        padding: 0 15px;
-    }
-
-    .mobile-full-width {
-        width: 100%;
-    }
-
-    .form-group__adjust .list-inline {
-        margin-bottom: 0;
-    }
-
-    .mobile-align-center {
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-    }
-
-    .ft-login__wrapper .form-group__adjust {
-        padding-right: 0;
-        padding-left: 0;
-    }
-
-    .layout-m-l-0--sm {
-        margin-left: 0;
-    }
-
-    .layout-p-l-1--sm {
-        padding-left: 15px !important;
-    }
-
-    .layout-p-r-1--sm {
-        padding-right: 15px !important;
-    }
-
-    .ft-login__wrapper .form-group__adjust {
-        width: 280px;
-    }
+.md-layout .mail-form.form-group a {
+    width: 250px;
+    display: inline-block;
 }
-.btn{
-    outline: none !important;
-}
-@media screen and (max-width: 599px) {
-    .ft-login .text-center--mobile {
-        text-align: center;
-    }
 
-    .layout-m-b-1--sm {
-        margin-bottom: 16px;
-    }
-
-    .ft-login .adjust-mobile-center .md-layout-spacer {
-        display: none;
-    }
-
-    .ft-login .adjust-mobile-center .list-inline__login {
-        width: 100%;
-        text-align: center;
-    }
-
-    .ft-carousel__text {
-        font-size: 24px;
-    }
-
-    .ft-carousel__text {
-        margin-bottom: 200px;
-    }
-
-    .ft-login__header {
-        top: 112px !important;
-    }
-    .mobile-layout-column__register {
-        padding-top: 0;
-    }
-
-    .mobile-layout-column__register-group {
-        padding-top: 0;
-        -webkit-box-orient: horizontal !important;
-        -webkit-box-direction: normal !important;
-        -ms-flex-direction: row !important;
-        flex-direction: row !important;
-        max-width: 280px;
-    }
-
-    .mobile-layout-column__register-group .form-group__adjust {
-        min-width: 0;
-    }
-
-    .mobile-layout-column__register-group .form-group__adjust:last-child {
-        margin-left: 15px;
-    }
-
-    .layout-m-b-1--register {
-        margin-bottom: 0;
-    }
-
-    .ft-carousel__text--register {
-        margin-bottom: 64px;
-    }
-
-    .layout-m-t-0--register {
-        margin-top: 0;
-    }
-
-    .ft-mobile-logo--register {
-        top: 15px;
-    }
-
-    .ft-login__header--register {
-        top: 108px !important;
-    }
-
-    .ft-login .form-control {
-        /* color: #fff;*/
-    }
-
-    .ft-login .btn--icon,
-    .ft-login .btn-submit {
-        max-height: 34px;
-    }
-
-    .multi-lang--mobile {
-        position: relative;
-        top: 0;
-        left: 0;
-        text-align: center;
-        width: 100%;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: horizontal;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-        flex-direction: row;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-    }
-
-    .multi-lang--mobile .multi-lang__option {
-        height: 28px;
-        width: 28px;
-        margin: 4px;
-    }
-
-    .ft-copyright {
-        display: none;
-    }
-}
 /*login end*/
 .tmargin-10
 {
@@ -1587,7 +1389,15 @@ a {
     width: 100px;
     margin: 4px 8px;
 }
-
+.ft-mobile-logo {
+    display: none;
+    z-index: 3;
+    position: absolute;
+    top: 30px;
+    width: 100%;
+    padding: 0 15px;
+    height: 80px;
+}
 .user-meta-info--sm {
     margin-top: 4px;
     width: 70px;
@@ -1718,6 +1528,217 @@ body.is-dialog-open{
 .md-dialog--md .md-dialog__surface{
     max-width: 600px;
     width: 90%;
+}
+@media screen and (max-width: 992px) {
+    .multi-lang__option {
+        display: block;
+    }
+
+    .multi-lang__item {
+        display: none;
+    }
+
+    .ft-mobile-logo  {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        margin-top: 6px;
+    }
+
+    .md-layout-spacer--mobile {
+        display: none;
+    }
+
+    .ft-login__header {
+        top: 112px;
+        margin-top: 0;
+    }
+
+    .ft-login__header .ft-header__logo {
+        display: none;
+    }
+
+    .ft-login__header .form-group__adjust:not(.form-group__adjust--no-margin) {
+        margin-bottom: 16px;
+    }
+
+    .mobile-align-center {
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+
+    .mobile-layout-column {
+        -webkit-box-orient: vertical !important;
+        -webkit-box-direction: normal !important;
+        -ms-flex-direction: column !important;
+        flex-direction: column !important;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        padding-top: 10px;
+    }
+
+    .ft-login__wrapper .btn-submit {
+        width: 100%;
+        margin-left: 0;
+        padding: 0 15px;
+    }
+
+    .mobile-full-width {
+        width: 100%;
+    }
+
+    .form-group__adjust .list-inline {
+        margin-bottom: 0;
+    }
+
+    .mobile-align-center {
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+
+    .ft-login__wrapper .form-group__adjust {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    .layout-m-l-0--sm {
+        margin-left: 0;
+    }
+
+    .layout-p-l-1--sm {
+        padding-left: 15px !important;
+    }
+
+    .layout-p-r-1--sm {
+        padding-right: 15px !important;
+    }
+
+    .ft-login__wrapper .form-group__adjust {
+        width: 280px;
+    }
+}
+.btn{
+    outline: none !important;
+}
+@media screen and (max-width: 599px) {
+    .ft-login .text-center--mobile {
+        text-align: center;
+    }
+
+    .footer-description {
+        padding: 0;
+    }
+    .layout-m-b-1--sm {
+        margin-bottom: 16px;
+    }
+
+    .ft-login .adjust-mobile-center .md-layout-spacer {
+        display: none;
+    }
+
+    .ft-login .adjust-mobile-center .list-inline__login {
+        width: 100%;
+        text-align: center;
+    }
+
+    .ft-carousel__text {
+        font-size: 24px;
+    }
+
+    .ft-carousel__text {
+        margin-bottom: 200px;
+    }
+
+    .ft-login__header {
+        top: 112px !important;
+    }
+    .mobile-layout-column__register {
+        padding-top: 0;
+    }
+
+    .mobile-layout-column__register-group {
+        padding-top: 0;
+        -webkit-box-orient: horizontal !important;
+        -webkit-box-direction: normal !important;
+        -ms-flex-direction: row !important;
+        flex-direction: row !important;
+        max-width: 280px;
+    }
+
+    .mobile-layout-column__register-group .form-group__adjust {
+        min-width: 0;
+    }
+
+    .mobile-layout-column__register-group .form-group__adjust:last-child {
+        margin-left: 15px;
+    }
+
+    .layout-m-b-1--register {
+        margin-bottom: 0;
+    }
+
+    .ft-carousel__text--register {
+        margin-bottom: 64px;
+    }
+
+    .layout-m-t-0--register {
+        margin-top: 0;
+    }
+
+    .ft-mobile-logo--register {
+        top: 15px;
+    }
+
+    .ft-login__header--register {
+        top: 108px !important;
+    }
+
+    .ft-login .form-control {
+        /* color: #fff;*/
+    }
+
+    .ft-login .btn--icon,
+    .ft-login .btn-submit {
+        max-height: 34px;
+    }
+
+    .multi-lang--mobile {
+        position: relative;
+        top: 0;
+        left: 0;
+        text-align: center;
+        width: 100%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        max-width: 92px;
+    }
+
+    .multi-lang--mobile .multi-lang__option {
+        height: 28px;
+        width: 28px;
+        margin: 4px;
+    }
+
+    .ft-copyright {
+        display: none;
+    }
 }
 .md-dialog__surface{
     margin-top: 16px;
@@ -3191,15 +3212,7 @@ aside .md-drawer-scroll__wrapper{
 .widget-events, .right-side-section {
     margin-top: 24px;
 }
-.ft-mobile-logo {
-    display: none;
-    z-index: 3;
-    position: absolute;
-    top: 30px;
-    width: 100%;
-    padding: 0 15px;
-    height: 80px;
-}
+
 .chat-item__content-wrapper{
     display: flex;
     flex-direction: row;
