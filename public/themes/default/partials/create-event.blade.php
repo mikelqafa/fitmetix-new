@@ -329,8 +329,14 @@
     $(document).ready(function () {
         // create DateTimePicker from input HTML element
         var today = new Date();
+
+        var d = new Date();
+        var n = d.toUTCString();
+
+        var str_date = '';
         var d = $("#datetimepicker").kendoDateTimePicker({
             value: today,
+            timezone: "Etc/UTC",
             dateInput: true
         }).data('kendoDateTimePicker')
         d.min(today)
