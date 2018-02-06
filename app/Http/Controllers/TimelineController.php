@@ -3127,10 +3127,10 @@ class TimelineController extends AppBaseController
         return response()->json(['status' => '200', 'deleted' => true, 'message' => 'Event successfully deleted']);
     }
 
-    public function allNotifications()
+    public function allNotifications(Request $request)
     {
         $mode = 'notifications';
-        $notifications = Notification::where('user_id', Auth::user()->id)->with('notified_from')->latest()->get();
+        $notifications = Notification::where('user_id', Auth::user()->id)->with('notified_from')->limit($request->paginate)->offset($request->offset)->latest()->get();
         
         $trending_tags = trendingTags();
         $suggested_users = suggestedUsers();
