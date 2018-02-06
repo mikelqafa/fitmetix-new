@@ -46,7 +46,7 @@
                             </li>
                             <li>
                                 <a href="{!! url('password/reset') !!}" class="layout-m-l-0 text-capitalize">
-                                    <i class="icon icon-user"></i>  {{ trans('auth.forgot_password') }}
+                                    <img src="{{asset('images/icons/ic_lock_white_24px.svg')}}" class="icon-img">  {{ trans('auth.forgot_password') }}
                                 </a>
                             </li>
                         </ul>

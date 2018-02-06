@@ -4277,3 +4277,7 @@ aside .md-drawer-scroll__wrapper{
     margin: 0 auto;
     overflow: hidden;
 }
+.icon-img {
+    width: 19px;
+    vertical-align: baseline;
+}
