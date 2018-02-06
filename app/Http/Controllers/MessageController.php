@@ -146,6 +146,11 @@ class MessageController extends Controller
                 ->havingRaw('COUNT(thread_id)='.count($recipients));
         })->first();
 
+        $thread_prev = Participant::where('user_id',$recipients[0])->first();
+        if($thread_prev){
+            $thread = Participant::withTrashed()->where([['user_id',Auth::user()->id],['thread_id',$thread_prev->thread_id]])->first();
+            $thread = Thread::find($thread->thread_id);
+        }
 
         if (!$thread) {
             $thread = Thread::create(
@@ -183,6 +188,7 @@ class MessageController extends Controller
                 'body'      => $input['message'],
             ]);
         }
+
 
         $thread->messages()->save($message);
 
@@ -285,7 +291,6 @@ class MessageController extends Controller
                 }
             }
         }
-            // dd($threads);
             return response()->json(['status' => '200', 'data' => $threads]);
     }
 
@@ -375,14 +380,10 @@ class MessageController extends Controller
     }
 
     public function deleteChat(Request $request) {
-        DB::table('messages')->where([['user_id',$request->user_id],['thread_id',$request->thread_id]])->delete();
-        return response()->json(['status' => '200','data'=>'Chat deleted']);
-    }
-
-
-    public function deleteThread(Request $request) {
-        DB::table('messages')->where([['user_id',$request->user_id],['thread_id',$request->thread_id]])->delete();
-        DB::table('threads')->where('id',$request->thread_id)->delete();
-        return response()->json(['status' => '200', 'data' => 'Thread deleted']);
+        $participant = Participant::where([['user_id',$request->user_id],['thread_id',$request->thread_id]])->first();
+        $participant->active = '0';
+        $participant->save();
+        $participant->delete();
+        return response()->json(['status' => '200', 'data' => 'Chat deleted']);
     }
 }
