@@ -41,8 +41,8 @@
 <div class="layout-m-t-2 timeline-option layout-m-b-2 md-layout md-layout--row md-align md-align--space-around-center">
     <div class="timeline-option__item">
         @if(Auth::user()->id == $timeline->user->id)
-            <a href="{{ url(Auth::user()->username.'/create-event') }}" class="md-layout md-layout--column text-center">
-                <i class="icon icon-add"></i>
+            <a href="{{ url(Auth::user()->username.'/create-event') }}" title="Inspire" class="md-layout md-layout--column text-center">
+                <img src="{{asset('images/plus.svg')}}" class="fkd-step__svg"/>
             </a>
         @else
             <a href="javascript:;" class="ft-btn ft-btn--icon" data-user-id="{{$timeline->user->id}}" data-toggle="initChat">
