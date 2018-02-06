@@ -5062,6 +5062,63 @@ public function saveMessageAttachment(Request $request) {
         Auth::user()->followers()->detach([$request->user_id]);
         return response()->json(['data'=>'Successfully removed from followers']);
     }
+
+    public function getSavedPost(Request $request) {
+
+        $timeline = Timeline::where('username', $request->username)->first();
+        $id = $timeline->user->id;
+        $user = User::find($id);
+
+        $posts = $user->postsSaved()->get();
+
+        foreach ($posts as $post) {
+            if($post->images()->count() > 0) {
+                $post['images'] = $post->images()->get();
+            }
+            if($post->comments()->count() > 0) {
+                $post['comments'] = $post->comments()->where('user_id',$post->user_id)->get();
+            }
+
+            $post['likes_count'] = $post->users_liked()->count();
+            $post['user_liked'] = false;
+
+            if($post['likes_count'] > 0) {
+                if($post->users_liked()->where('user_id',Auth::user()->id)->count()) {
+                    $post['user_liked'] = true;
+                }
+            }
+
+            if($post->type == 'event'){
+                $event = Event::where('timeline_id',$post->timeline_id)->latest()->get();
+                if(count($event)){
+                    $post['event'] = $event;
+                    $event = $event->toArray();
+                    $creatorId = $event[0]['user_id'];
+                    $creator = DB::table('users')->where('id',$creatorId)->first();
+                    $creatorTimeline = Timeline::where('id',$creator->timeline_id)->first();
+                    $post['creator_timeline'] = $creatorTimeline;
+                    foreach ($post['event'] as $user_event) {
+                        $user_event['event_details'] = $user_event->timeline->username;
+                        if(preg_match_all('/(?<!\w)#\S+/', $user_event->timeline->about, $matches)) {
+                            $user_event['event_tags'] = $matches[0];
+                        }
+                        if($user_event->users->contains(Auth::user()->id)){
+                            $user_event['registered'] = true;
+                        }
+                        if($user_event->start_date < Carbon::now()){
+                            $user_event['expired'] = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        $post_image_path = storage_path().'/uploads/users/gallery/';
+        $event_image_path = storage_path().'/uploads/events/covers/';
+
+        return response()->json(['status' => '200', ['posts'=>$posts, 'timeline'=>$timeline, 'postImagePath'=>$post_image_path,'eventImagePath'=>$event_image_path]]);
+
+    }
   
     public function FBshare($post_id) {
         $post = Post::where('id', '=', $post_id)->first();

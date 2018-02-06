@@ -511,6 +511,7 @@ Route::group(['prefix' => 'ajax', 'middleware' => ['auth']], function () {
     Route::post('unjoinPage', 'TimelineController@unjoinPage');
     Route::post('save-timeline', 'TimelineController@saveTimeline');
     Route::post('save-post', 'TimelineController@savePost');
+    Route::post('get-saved-post','TimelineController@getSavedPost');
     Route::get('block-user/{username}','UserController@blockUser');
     Route::get('unblock-user/{id}','UserController@unblockUser');
     Route::post('check-block-status','TimelineController@checkBlockStatus');
