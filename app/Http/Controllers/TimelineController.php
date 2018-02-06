@@ -5074,7 +5074,7 @@ public function saveMessageAttachment(Request $request) {
         $id = $timeline->user->id;
         $user = User::find($id);
 
-        $posts = $user->postsSaved()->get();
+        $posts = $user->postsSaved()->latest()->with('timeline')->limit($request->paginate)->offset($request->offset)->get();
 
         foreach ($posts as $post) {
             if($post->images()->count() > 0) {
