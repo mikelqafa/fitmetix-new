@@ -830,6 +830,7 @@ class TimelineController extends AppBaseController
                     $m->to($posted_user->email, $posted_user->name)->subject($user->name.' '.'liked your post');
                 });
             }
+            $status_message = '';
 
             if ($post->user->id != Auth::user()->id) {
                 //Notify the user for post like
