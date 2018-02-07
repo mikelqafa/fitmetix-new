@@ -227,12 +227,12 @@
             }
         },
         computed: {
-                ...mapGetters({
+           ...mapGetters({
                     notifications: 'notification'
                 }),
-        hasItem() {
-            return this.notifications.length !== 0
+            hasItem() {
+                return this.notifications.length !== 0
+            }
         }
-    }
     }
 </script>

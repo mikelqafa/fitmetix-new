@@ -84,7 +84,7 @@
                             <div class="ft-chat-box__body pos-rel">
                                 <div class="scroll-wrapper coversations-list coversations-list--docker" data-type="list">
                                     <div class="md-list md-list--dense">
-                                        <template v-if="conversations.data !== undefined">
+                                        <template v-if="conversations.data !== undefined && conversations.data.length">
                                             <div v-for="(item, index) in conversations.data" :key="item.id" class="md-list__item" :class="{'is-new': item.unread}">
                                                 <div class="md-list__item-content">
                                                     <a :href="userLink(item)"

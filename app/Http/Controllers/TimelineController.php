@@ -3130,17 +3130,10 @@ class TimelineController extends AppBaseController
     public function allNotifications(Request $request)
     {
         $mode = 'notifications';
-        $notifications = Notification::where('user_id', Auth::user()->id)->with('notified_from')->limit($request->paginate)->offset($request->offset)->latest()->get();
-        
         $trending_tags = trendingTags();
         $suggested_users = suggestedUsers();
         $suggested_groups = suggestedGroups();
         $suggested_pages = suggestedPages();
-
-        if ($notifications == null) {
-            return redirect('/');
-        }
-
         $theme = Theme::uses('default')->layout('default');
         $theme->setTitle(trans('common.notifications').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
 

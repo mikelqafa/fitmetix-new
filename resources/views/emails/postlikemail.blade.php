@@ -234,7 +234,7 @@
                   <tr>
                     <td class="pull-left mobile-header-padding-left" style="vertical-align: middle;">
                       <a href="{!! Setting::get('site_url') !!}">
-                        <img src="{{ url('setting/'.Setting::get('logo')) }}" title="{{ Setting::get('site_name') }}" alt="{{ Setting::get('site_name') }}" style="height:46px">
+                        <img src="{{ url('/'.Setting::get('logo')) }}" title="{{ Setting::get('site_name') }}" alt="{{ Setting::get('site_name') }}" style="height:46px">
                       </a>
                     </td>
                     <td class="pull-right mobile-header-padding-right" style="color: #4d4d4d;">

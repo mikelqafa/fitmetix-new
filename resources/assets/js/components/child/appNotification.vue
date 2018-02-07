@@ -93,7 +93,7 @@
                 redirect: false,
                 process: false,
                 config: {
-                    
+
                 }
             }
         },
@@ -265,18 +265,28 @@
             },
             fetchOldNotification: function () {
                 let that = this
-                axios.post(base_url + 'ajax/get-notifications').then(function (response) {
-                    if(response.data.status == 200) {
-                        let notifications = response.data.notifications
-                        that.config.last_page = notifications.last_page
-                        that.config.next_page_url = notifications.next_page_url
-                        that.config.per_page = notifications.per_page
-                        that.config.prev_page_url = notifications.prev_page_url
-                        $.each(notifications.data, function (i, latestNotification) {
-                            that.$store.commit('ADD_NOTIFICATION', latestNotification)
-                        });
+                let _token = $("meta[name=_token]").attr('content')
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url+'ajax/get-notifications',
+                    data :{
+                        _token: _token,
+                        offset:0,
+                        paginate:5
                     }
-                });
+                }).then( function (response) {
+                     let notifications = response.data.notifications
+                     that.config.last_page = notifications.last_page
+                     that.config.next_page_url = notifications.next_page_url
+                     that.config.per_page = notifications.per_page
+                     that.config.prev_page_url = notifications.prev_page_url
+                     $.each(notifications.data, function (i, latestNotification) {
+                     that.$store.commit('ADD_NOTIFICATION', latestNotification)
+                     });
+                }).catch(function(error) {
+                    console.log(error)
+                })
             },
             showNotifications: function (el) {
                 if(!$('#ft-notification').hasClass('is-open')) {
