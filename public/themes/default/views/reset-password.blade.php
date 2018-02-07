@@ -5,12 +5,17 @@
             <div class="panel panel-default">
                 <div class="panel-body nopadding">
                     <div class="login-bottom">
+                        @if(Session::has('link_sent'))
+                            <p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('link_sent') }}</p>
+                            {{ Session::forget('link_sent') }}
+                        @endif
                         <ul class="signup-errors text-danger list-unstyled"></ul>
                         <form method="POST" class="" action="{{ url('/password/email') }}">
                             {{ csrf_field() }}
 
                             <div class="row">
                                 <div class="col-md-12">
+                                    <input type="hidden" name="custom_msg" value="Link sent to your email">
                                     <fieldset class="form-group required {{ $errors->has('email') ? ' has-error' : '' }}">
                                         {{ Form::label('email', trans('auth.email_address')) }}
                                         {{ Form::text('email', NULL, ['class' => 'form-control', 'id' => 'email', 'placeholder'=> trans('auth.email_address')]) }}
