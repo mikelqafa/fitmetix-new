@@ -586,26 +586,6 @@ export const store = new Vuex.Store({
       axios({
         method: 'post',
         responseType: 'json',
-        url: base_url + 'ajax/delete-thread',
-        data: {
-          _token: _token,
-          user_id: user_id,
-          thread_id: data.item.id
-        }
-      }).then(function (response) {
-        if (response.status == 200) {
-          // context.state.currentConversation.conversationMessages = {}
-          context.state.conversations.data.splice(data.index,1)
-        }
-      }).catch(function (error) {
-        console.log(error)
-      })
-    },
-    clearMessage: (context, data) => {
-      let _token = $("meta[name=_token]").attr('content')
-      axios({
-        method: 'post',
-        responseType: 'json',
         url: base_url + 'ajax/delete-message',
         data: {
           _token: _token,
@@ -614,11 +594,8 @@ export const store = new Vuex.Store({
         }
       }).then(function (response) {
         if (response.status == 200) {
-          // context.state.currentConversation.conversationMessages = {}
-          if(data.index == 0) {
-            context.state.currentConversation.conversationMessages = {}
-          }
-
+          context.state.conversations.data.splice(data.index,1)
+          materialSnackBar({messageText: response.data.data, autoClose: true, timeout: 5000})
         }
       }).catch(function (error) {
         console.log(error)

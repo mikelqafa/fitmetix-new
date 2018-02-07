@@ -67,7 +67,7 @@
                 </div>
             </template>
             <template v-else="">
-                <div class="ft-chat__header">No Notifications</div>
+                <div class="ft-chat__header">No Notidfications</div>
             </template>
         </div>
     </div>

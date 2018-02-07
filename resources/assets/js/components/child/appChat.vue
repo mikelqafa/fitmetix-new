@@ -164,7 +164,7 @@
                 this.$store.dispatch('deleteThreadMessage', {item:item, index: i})
             },
             confirmClearThreadMessage: function (item, i) {
-                this.body = 'Do you really want to delte this message?'
+                this.body = 'Do you really want to delete this conversation?'
                 let confirmDialog = $('#'+ this.unid)
                 confirmDialog.MaterialDialog('show')
                 let that = this
@@ -173,7 +173,7 @@
                 });
             },
             clearMessage: function (item, i) {
-                this.$store.dispatch('clearMessage', {item:item, index: i})
+                this.$store.dispatch('deleteThreadMessage', {item:item, index: i})
             },
             closeChat: function () {
               $('.ft-dock-wrapper').addClass('hidden')

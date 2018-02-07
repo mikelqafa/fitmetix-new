@@ -63,7 +63,8 @@
                 autoUpdate: 60,
                 process:false,
                 notificationsLoaded: false,
-                notificationsLoading: false
+                notificationsLoading: false,
+                hasMoreItem: true
             }
         },
         mounted () {

@@ -47,6 +47,9 @@
                         </div>
                     </div>
                 </a>
+                <div class="text-enter layout-m-t-1" v-if="hasMoreItem">
+                    <button class="btn btn-block ft-btn-primary" @click="loadMore">Load More</button>
+                </div>
             </div>
         </template>
         <template v-else="">
@@ -63,7 +66,8 @@
                 autoUpdate: 60,
                 unreadNotifications: 0,
                 notificationsLoaded: false,
-                notificationsLoading: false
+                notificationsLoading: false,
+                hasMoreItem: true
             }
         },
         mounted () {
@@ -136,6 +140,9 @@
             },
             userLink: function (username) {
                 return base_url + username
+            },
+            loadMore: function () {
+
             },
             since: function (date) {
                 let str = date
