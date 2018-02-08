@@ -100,7 +100,15 @@ class MessageController extends Controller
         $users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
         $thread->markAsRead($userId);
         $messages = [];
-        $thread->conversationMessages = $thread->messages()->latest()->with('user')->paginate();
+        
+        $thread->get_from_date = Participant::where([['thread_id',$thread->id],['user_id',$userId]])->first()->deleted_from;
+
+        if(is_null($thread->get_from_date)) {
+            $thread->conversationMessages = $thread->messages()->latest()->with('user')->paginate();
+        }
+        else{
+            $thread->conversationMessages = $thread->messages()->where('created_at','>',$thread->get_from_date)->latest()->with('user')->paginate();
+        }
         return response()->json(['status' => '200', 'data' => $thread]);
     }
 
@@ -382,6 +390,7 @@ class MessageController extends Controller
     public function deleteChat(Request $request) {
         $participant = Participant::where([['user_id',$request->user_id],['thread_id',$request->thread_id]])->first();
         $participant->active = '0';
+        $participant->deleted_from = Carbon::now();
         $participant->save();
         $participant->delete();
         return response()->json(['status' => '200', 'data' => 'Chat deleted']);
