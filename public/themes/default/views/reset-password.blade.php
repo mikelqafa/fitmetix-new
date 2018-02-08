@@ -15,7 +15,7 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input type="hidden" name="custom_msg" value="Link sent to your email">
+                                    <input type="hidden" name="custom_msg" value="A link was sent to your email address">
                                     <fieldset class="form-group required {{ $errors->has('email') ? ' has-error' : '' }}">
                                         {{ Form::label('email', trans('auth.email_address')) }}
                                         {{ Form::text('email', NULL, ['class' => 'form-control', 'id' => 'email', 'placeholder'=> trans('auth.email_address')]) }}

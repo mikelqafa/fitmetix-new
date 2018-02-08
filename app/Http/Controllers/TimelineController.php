@@ -217,6 +217,12 @@ class TimelineController extends AppBaseController
 
             $user = User::where('timeline_id', $timeline['id'])->first();
             
+            $is_blocked = DB::table('user_blocked')->where([['blocker_uid',$user->id],['blocked_uid',Auth::user()->id]])->first();
+            
+            if($is_blocked){
+                abort(404);
+            }
+
             $blocked = DB::table('user_blocked')->where([['blocked_uid',$user->id],['blocker_uid',Auth::user()->id]])->first();
             $block_text = 'Block';
 
