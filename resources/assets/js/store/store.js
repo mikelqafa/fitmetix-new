@@ -323,7 +323,7 @@ export const store = new Vuex.Store({
           }
           else {
             // using chat box
-            if(!$('.ft-chat-box--docker').hasClass('ft-chat-box--open')) {
+            if(!$('.ft-chat-box--docker').hasClass('ft-chat-box--open') || $('.ft-dock-wrapper').hasClass('hidden')) {
               let indexes = $.map(context.state.conversations.data, function (thread, key) {
                 if (thread.id == data.message.thread_id) {
                   return key;
@@ -332,6 +332,7 @@ export const store = new Vuex.Store({
               context.state.conversations.data[indexes[0]].unread = true;
               context.state.conversations.data[indexes[0]].lastMessage = data.message;
               $.playSound(theme_url + '/sounds/notification');
+              $('.ft-dock-wrapper').hasClass('hidden') ? $('.ft-dock-wrapper').removeClass('hidden'):''
             }
             else {
               // means box is open
@@ -341,7 +342,6 @@ export const store = new Vuex.Store({
                 }
               });
               context.state.conversations.data[indexes[0]].lastMessage = data.message
-              console.log(context.state.currentConversation.id, data.message.thread_id)
               if(context.state.currentConversation.id != data.message.thread_id || $('.ft-chat--list-wrapper').hasClass('is-list-open')) {
                 context.state.conversations.data[indexes[0]].unread = true;
                 $.playSound(theme_url + '/sounds/notification');
@@ -355,7 +355,7 @@ export const store = new Vuex.Store({
               return key;
             }
           });
-          if (indexes != '') {
+          if (indexes != '' &&  indexes.length) {
             context.state.conversations.data[indexes[0]].unread = true;
             $.playSound(theme_url + '/sounds/notification');
             context.state.conversations.data[indexes[0]].lastMessage = data.message;
@@ -423,7 +423,7 @@ export const store = new Vuex.Store({
         }
       }).then(function (response) {
         if (response.status == 200) {
-          if (indexes != '') {
+          if (indexes != '' &&  indexes.length) {
             context.state.conversations.data[indexes[0]].lastMessage = response.data.data;
             context.state.conversations.data[indexes[0]].unread = false
           }
@@ -458,8 +458,8 @@ export const store = new Vuex.Store({
                 return key;
               }
             });
-            alert(indexes);
-            if (indexes != '') {
+            console.log(indexes);
+            if (indexes != '' &&  indexes.length) {
               context.state.conversations.data[indexes[0]].unread = true;
               context.state.conversations.data[indexes[0]].lastMessage = newThread.lastMessage;
             }
