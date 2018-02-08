@@ -1352,8 +1352,8 @@ class UserController extends AppBaseController
     return $result;
   }
 
-  public function unblockUser($id) {
-    $unblock = DB::table('user_blocked')->where([['blocked_uid', $id],['blocker_uid',Auth::user()->id]])->delete();
+  public function unblockUser(Request $request) {
+    $unblock = DB::table('user_blocked')->where([['blocked_uid', $request->user_id],['blocker_uid',Auth::user()->id]])->delete();
     $result = $unblock ? 'Successfully unblocked user' : 'Failed to unblock user';
     return response()->json(['result'=>$result]);
   }
