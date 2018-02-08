@@ -158,6 +158,7 @@ class MessageController extends Controller
         if($thread_prev){
             $thread = Participant::withTrashed()->where([['user_id',Auth::user()->id],['thread_id',$thread_prev->thread_id]])->first();
             $thread = Thread::find($thread->thread_id);
+            $thread->activateAllParticipants();
         }
 
         if (!$thread) {
