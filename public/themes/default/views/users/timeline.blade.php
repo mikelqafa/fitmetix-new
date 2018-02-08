@@ -63,14 +63,14 @@
                             <a class="btn btn-default" href="{{ url($timeline->username.'/settings') }}">Settings</a>
                         @elseif(Auth::user()->following->contains($timeline->user->id))
                                 @if($block_text == 'Unblock')
-                                    <button class="btn btn-default" onclick="unblock()">{{ $block_text }}</button>
+                                    <button class="btn btn-default" data-toggle="unblock" data-userid="{{$timeline->user->id}}">{{ $block_text }}</button>
                                 @else
                                     <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">{{ $block_text }}</button>
                                 @endif
                             <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Report</button>
                         @else
                             @if($block_text == 'Unblock')
-                                <button class="btn btn-default" onclick="unblock()">{{ $block_text }}</button>
+                                <button class="btn btn-default" data-toggle="unblock" data-userid="{{$timeline->user->id}}">{{ $block_text }}</button>
                             @else
                                 <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">{{ $block_text }}</button>
                             @endif

@@ -4268,6 +4268,7 @@ aside .md-drawer-scroll__wrapper{
     width: 100%;
 }
 .ft-chat .md-list__item.is-new,
+.ft-box--desktop .md-list__item.is-new,
 .ft-chat-box__body.is-new {
     background-color: rgba(0,0, 0, 0.06);
 }

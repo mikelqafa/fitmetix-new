@@ -22,7 +22,17 @@ export const store = new Vuex.Store({
     },
     conversations: {},
     recipients: [],
-    selfUserObj: ''
+    selfUserObj: '',
+    notiSetting: {
+      config: {
+        last_page: '',
+        next_page_url: '',
+        per_page: '',
+        prev_page_url: ''
+      },
+      offset: 0,
+      hasItem: true
+    }
   },
   getters: {
     unreadMsg: (state) => {
@@ -38,6 +48,7 @@ export const store = new Vuex.Store({
       return hasMsgNotification
     },
     currentConversation: state => state.currentConversation,
+    hasItemNoti: state => state.notiSetting.hasItem,
     recipients: state => state.recipients,
     conversations: state => state.conversations,
     postItemList: state => state.postItemList,
@@ -55,6 +66,10 @@ export const store = new Vuex.Store({
     /* eslint-disable no-param-reassign */
     SET_PUSHER (state, pusher) {
       state.pusher = pusher
+    },
+    SET_NOTI_SETTING (state, notifications) {
+      state.notiSetting.offset = notifications.offset
+      state.notiSetting.hasItem = notifications.hasItem
     },
     SET_OPTIONS_MENU_ITEM (state, postObj) {
       Vue.set(state.optionMenuPostItem, 'postIndex', postObj.postIndex)
@@ -437,14 +452,13 @@ export const store = new Vuex.Store({
           }
         }).then(function (response) {
           if (response.status == 200) {
-            console.log(response)
-            return
             let newThread = response.data.data
             let indexes = $.map(context.state.conversations.data, function (thread, key) {
               if (thread.id == newThread.id) {
                 return key;
               }
             });
+            alert(indexes);
             if (indexes != '') {
               context.state.conversations.data[indexes[0]].unread = true;
               context.state.conversations.data[indexes[0]].lastMessage = newThread.lastMessage;

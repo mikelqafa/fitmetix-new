@@ -47,7 +47,7 @@
                         </div>
                     </div>
                 </a>
-                <div class="text-enter layout-m-t-1" v-if="hasMoreItem">
+                <div class="text-enter layout-m-t-1" v-if="hasItemNoti">
                     <button class="btn btn-block ft-btn-primary" @click="loadMore">Load More</button>
                 </div>
             </div>
@@ -122,6 +122,36 @@
                 }
                 return url
             },
+            fetchOldNotification: function () {
+                let that = this
+                let _token = $("meta[name=_token]").attr('content')
+                let offset = this.$store.state.notiSetting.offset
+                let hasItem = true
+                axios({
+                    method: 'post',
+                    responseType: 'json',
+                    url: base_url+'ajax/get-notifications',
+                    data :{
+                        _token: _token,
+                        offset:offset,
+                        paginate:5
+                    }
+                }).then( function (response) {
+                    let notifications = response.data.notifications
+                    for(let i=0; i< notifications.length; i++) {
+                        that.$store.commit('ADD_NOTIFICATION', notifications[i])
+                    }
+                    offset += notifications.length
+                    if(notifications.length == 5) {
+                        hasItem = true
+                    } else {
+                        hasItem = false
+                    }
+                    that.$store.commit('SET_NOTI_SETTING', {offset: offset, hasItem: hasItem})
+                }).catch(function(error) {
+                    console.log(error)
+                })
+            },
             notificationImageUrl: function (item) {
                 let url = ''
                 switch(item.type) {
@@ -142,7 +172,7 @@
                 return base_url + username
             },
             loadMore: function () {
-
+                this.fetchOldNotification()
             },
             since: function (date) {
                 let str = date
@@ -228,11 +258,13 @@
         },
         computed: {
            ...mapGetters({
-                    notifications: 'notification'
+                    notifications: 'notification',
+                    hasItemNoti: 'hasItemNoti'
                 }),
             hasItem() {
                 return this.notifications.length !== 0
-            }
+            },
+
         }
     }
 </script>

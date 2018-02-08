@@ -17,7 +17,7 @@
                             <template v-if="conversations.data !== undefined">
                                 <transition-group name="flip-list" tag="div">
                                     <div v-for="item in sortedConversations" :key="item.id" class="md-list__item"
-                                         @click="openChat(item)" v-bind:class="{'is-active': item.id == currentConversation.id}">
+                                         @click="openChat(item)" v-bind:class="{'is-new': item.unread, 'is-active': item.id == currentConversation.id}">
                                         <div class="md-list__item-content">
                                             <a :href="userLink(item)"
                                                class="md-list__item-icon user-avatar"

@@ -201,7 +201,8 @@
         computed: {
             ...mapGetters({
                  notifications: 'notification',
-                 unreadNotifications: 'unreadNotifications'
+                 unreadNotifications: 'unreadNotifications',
+                 hasItemNoti: 'hasItemNoti'
             }),
             hasItem() {
                 return this.notifications.length !== 0

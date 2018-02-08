@@ -1124,9 +1124,9 @@ class UserController extends AppBaseController
         return response()->json(['status' => '200', 'message' => 'Notification type changed']);   
     }
 
-    public function getNotifications()
+    public function getNotifications(Request $request)
     {
-        $notifications = Notification::where('user_id', Auth::user()->id)->with('notified_from')->latest()->paginate(Setting::get('items_page', 10));
+        $notifications = Notification::where('user_id', Auth::user()->id)->with('notified_from')->latest()->limit($request->paginate)->offset($request->offset)->get();
 
         return response()->json(['status' => '200', 'notifications' => $notifications]);
     }

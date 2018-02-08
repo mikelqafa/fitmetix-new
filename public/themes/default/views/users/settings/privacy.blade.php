@@ -2,11 +2,6 @@
 <!-- <div class="main-content"> -->
 	<div class="container">
 		<div class="row">
-			{{--<div class="col-md-4">
-				<div class="post-filters">
-					{!! Theme::partial('usermenu-settings') !!}
-				</div>
-			</div>--}}
 			<div class="col-md-2"></div>
 			<div class="col-md-8">
 				<div class="panel panel-default">
@@ -63,7 +58,7 @@
 									<tr>
 										<td>{{$value->blocked_username}}</td>
 										<td>{{$value->created_at}}</td>
-										<td><a target="_blank" href="{{ URL::to('ajax/unblock-user/'.$value->id) }}" >Unblock</a></td>
+										<td><a class="unblock" data-toggle="unblock" data-userid="{{$value->blocked_uid}}" data-username="{{$value->blocked_username}}" href="javascript:;" >Unblock</a></td>
 									</tr>
 									@endforeach
 							@endif

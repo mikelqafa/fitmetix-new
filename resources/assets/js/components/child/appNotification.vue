@@ -276,14 +276,19 @@
                         paginate:5
                     }
                 }).then( function (response) {
-                     let notifications = response.data.notifications
-                     that.config.last_page = notifications.last_page
-                     that.config.next_page_url = notifications.next_page_url
-                     that.config.per_page = notifications.per_page
-                     that.config.prev_page_url = notifications.prev_page_url
-                     $.each(notifications.data, function (i, latestNotification) {
-                     that.$store.commit('ADD_NOTIFICATION', latestNotification)
-                     });
+                    let notifications = response.data.notifications
+                    for(let i=0; i< notifications.length; i++) {
+                        that.$store.commit('ADD_NOTIFICATION', notifications[i])
+                    }
+                    let offset = 0;
+                    let hasItem = true
+                    offset += notifications.length
+                    if(notifications.length == 5) {
+                        hasItem = true
+                    } else {
+                        hasItem = false
+                    }
+                    that.$store.commit('SET_NOTI_SETTING', {offset: offset, hasItem: hasItem})
                 }).catch(function(error) {
                     console.log(error)
                 })

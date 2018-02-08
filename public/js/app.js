@@ -1847,6 +1847,30 @@ $(document).on('click','.event-remove-thumb',function(e) {
   $('.event_images_upload--label').removeClass('image-added')
 })
 
+$(document).on('click','[data-toggle="unblock"]',function(e) {
+  e.preventDefault()
+  var $el = $(e.target)
+  var u_id = $el.attr('data-userid')
+  let _token = $("meta[name=_token]").attr('content')
+  axios({
+    method: 'post',
+    responseType: 'json',
+    url: base_url+'ajax/unblock-user',
+    data :{
+      _token: _token,
+      user_id: u_id
+    }
+  }).then( function (response) {
+    if (response.status ==  200) {
+      materialSnackBar({autoClose: true, message: response.data.message})
+      window.location.href = ''
+    }
+  }).catch(function(error) {
+    console.log(error)
+  })
+
+})
+
 $(function() {
   $('#app-alert').MaterialDialog({show:false})
 })
