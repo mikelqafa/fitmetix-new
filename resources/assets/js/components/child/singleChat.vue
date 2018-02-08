@@ -1,5 +1,6 @@
 <template>
     <div class="row layout-m-t-1">
+        <app-confirm :unid="unid" :body="body"></app-confirm>
         <div class="col-md-4 col-sm-5 no-padding--mobile">
             <div class="ft-box--desktop">
                 <header class="ft-chat-desktop__header" style="box-shadow: none; border-bottom: 1px solid rgba(0,0,0,.12);background-color: #fafafa">
@@ -42,13 +43,16 @@
                                 </transition-group>
                             </template>
                         </div>
+                        <template v-if="conversations.data == undefined || !conversations.data.length">
+                            <div class="ft-chat__header">No Message Found</div>
+                        </template>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-8 col-sm-7 no-padding--mobile chat-user-list-wrapper">
             <div class="ft-chat-box ft-chat-box--desktop">
-                <div class="ft-chat-box__inner-wrapper">
+                <div class="ft-chat-box__inner-wrapper" v-if="conversations.data !== undefined && conversations.data.length">
                     <header class="ft-chat-desktop__header" style="cursor: pointer">
                         <a href="javascript:;" class="hidden visible-xs chat-user margin-left-8" @click="goBack">
                             <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24"
@@ -59,6 +63,9 @@
                         </a>
                         <a href="javascript:;" class="chat-user margin-left-8">{{currentConversation.user.name}}</a>
                         <div class="md-layout-spacer"></div>
+                        <a href="javascript:;" @click="confirmClearThreadMessage" class="chat-options">
+                            <i class="icon icon-delete"></i>
+                        </a>
                         <a href="javascript:;" class="hidden chat-options">
                             <i class="icon icon-options"></i>
                         </a>
@@ -112,6 +119,9 @@
                         </div>
                     </div>
                 </div>
+                <div v-if="conversations.data == undefined || !conversations.data.length">
+                    <div class="ft-chat__header">No Message Found</div>
+                </div>
             </div>
         </div>
     </div>
@@ -119,6 +129,7 @@
 <script>
     import editor from 'vue2-medium-editor'
     import chatText from './chatText'
+    import appConfirm from './appConfirm'
     import { mapGetters } from 'vuex'
     export default {
         data: function () {
@@ -133,10 +144,30 @@
                 messageBody: '',
                 placeholder: 'Type a message...',
                 nonEmpty: false,
-                defaultImage: 'default.png'
+                defaultImage: 'default.png',
+                unid: 'app-confirm-delete-message-single',
+                body: ''
             }
         },
         methods: {
+            confirmClearThreadMessage: function () {
+                this.body = 'Do you really want to delete this conversation?'
+                let confirmDialog = $('#'+ this.unid)
+                confirmDialog.MaterialDialog('show')
+                let that = this
+                confirmDialog.on('ca.dialog.affirmative.action', function(){
+                    that.clearMessage()
+                });
+            },
+            clearMessage: function () {
+                let id_ = this.$store.state.currentConversation.id
+                let indexes = $.map(this.$store.state.conversations.data, function (thread, key) {
+                    if (thread.id == id_) {
+                        return key;
+                    }
+                });
+                this.$store.dispatch('deleteThreadMessage', {item:this.$store.state.currentConversation, index: indexes[0]})
+            },
             processEditOperation: function (operation) {
                 this.backContent = operation.api.origElements.innerHTML
             },
@@ -144,7 +175,11 @@
                 return base_url + item.user.username
             },
             getThumbImage: function (item) {
-                return getThumbImage(item.user.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.user.avatar_url[0].source : base_url + 'images/' + this.defaultImage)
+                if(item.user !== undefined) {
+                    return getThumbImage(item.user.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.user.avatar_url[0].source : base_url + 'images/' + this.defaultImage)
+                } else {
+                    return ''
+                }
             },
             since (d) {
                 let str = ''
@@ -219,7 +254,8 @@
         },
         components: {
             'medium-editor': editor,
-            'chat-thread': chatText
+            'chat-thread': chatText,
+            'app-confirm': appConfirm
         },
         watch: {
             backContent: function (val) {
@@ -247,7 +283,7 @@
             ...mapGetters({
                 currentConversation: 'currentConversation',
                 conversations: 'conversations'
-            }),
+            })
         }
     }
 </script>

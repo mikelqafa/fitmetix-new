@@ -64,10 +64,11 @@
                 return item.length < 50 ? item : item.substr(0, 50) + '...'
             },
             getThumbImage: function (user) {
-                console.log(user
-                )
-                // return getThumbImage(user.avatar_url[0].source)
-                return ''
+                if(user !== undefined) {
+                    return getThumbImage(user.avatar_url.length ? asset_url + 'uploads/users/avatars/' + user.avatar_url[0].source : base_url + 'images/' + this.defaultImage)
+                } else {
+                    return ''
+                }
             },
             openChat: function (c) {
                 $('.ft-chat--list-wrapper').addClass('is-list-open')

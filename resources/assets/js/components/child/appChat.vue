@@ -188,7 +188,11 @@
                 return base_url + item.user.username
             },
             getThumbImage: function (item) {
-                return getThumbImage(item.user.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.user.avatar_url[0].source : base_url + 'images/' + 'default.png')
+                if(item.user !== undefined) {
+                    return getThumbImage(item.user.avatar_url.length ? asset_url + 'uploads/users/avatars/' + item.user.avatar_url[0].source : base_url + 'images/' + this.defaultImage)
+                } else {
+                    return ''
+                }
             },
             since (d) {
                 let str = ''

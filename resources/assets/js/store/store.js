@@ -281,8 +281,6 @@ export const store = new Vuex.Store({
         data.message.user = data.sender;
         if (context.state.currentConversation.id == data.message.thread_id) {
           context.state.currentConversation.conversationMessages.data.push(data.message);
-          //TODO mutation will work?
-          // check user at conversation page
           if($('ft-chat-box--desktop').length) {
             // conversation page open
             if(!$('.chat-user-list-wrapper').hasClass('is-open')) {
@@ -594,8 +592,19 @@ export const store = new Vuex.Store({
         }
       }).then(function (response) {
         if (response.status == 200) {
-          context.state.conversations.data.splice(data.index,1)
-          materialSnackBar({messageText: response.data.data, autoClose: true, timeout: 5000})
+          if(data.index === 0) {
+            context.state.currentConversation.conversationMessages.data = []
+            context.state.conversations.data.splice(data.index,1)
+            if(context.state.conversations.data.length) {
+              context.dispatch('showConversation', {byTap: false, conversation: context.state.conversations.data[0]})
+            }
+            materialSnackBar({messageText: response.data.data, autoClose: true, timeout: 5000})
+          } else {
+            $('.ft-chat--list-wrapper').addClass('is-list-open')
+            context.state.conversations.data.splice(data.index,1)
+            context.dispatch('showConversation', {byTap: false, conversation: context.state.conversations.data[0]})
+            materialSnackBar({messageText: response.data.data, autoClose: true, timeout: 5000})
+          }
         }
       }).catch(function (error) {
         console.log(error)

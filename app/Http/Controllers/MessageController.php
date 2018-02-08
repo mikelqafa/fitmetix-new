@@ -282,7 +282,7 @@ class MessageController extends Controller
 
             $thread->lastMessage = $thread->latestMessage;
 
-            $participants = $thread->participants()->get();
+            $participants = $thread->participants()->withTrashed()->get();
 
             foreach ($participants as $key => $participant) {
                 if ($participant->user->id != Auth::user()->id) {
@@ -301,7 +301,7 @@ class MessageController extends Controller
         $thread->lastMessage = $thread->latestMessage;
         $thread->unread = true;
 
-        $participants = $thread->participants()->get();
+        $participants = $thread->participants()->withTrashed()->get();
 
         foreach ($participants as $key => $participant) {
             if ($participant->user->id != Auth::user()->id) {
