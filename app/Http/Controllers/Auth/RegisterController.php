@@ -69,7 +69,7 @@ class RegisterController extends Controller
             'email'     => 'required|email|max:255|unique:users',
             'password'  => 'required|min:6',
             'gender'    => 'required',
-            'username'  => 'required|max:25|min:5|alpha_num|unique:timelines|no_admin',
+            'username'  => 'required|max:25|min:3|alpha_num|unique:timelines|no_admin',
             'affiliate' => 'exists:timelines,username',
         ];
 
