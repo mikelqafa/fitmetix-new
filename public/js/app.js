@@ -1,3 +1,12 @@
+(function($){
+  var msgX_ = document.getElementById("message-audio");
+  var notX_ = document.getElementById("notification-audio");
+  $.extend({
+    playSound: function(){
+      arguments[0] == theme_url + '/sounds/notification' ? notX_.play() : msgX_.play()
+    }
+  });
+}(jQuery));
 function unjoin_event(el){
     var timeline_id = el.getAttribute('data-timeline');
       $.post(

@@ -67,6 +67,16 @@
     </style>
 </head>
 <body data-theme="{{ Session::get('color_code') }}" id="fitmetix-app" @if(Setting::get('enable_rtl') == 'on') class="direction-rtl" @endif>
+<audio style="display:none;" id="message-audio" controls="controls">
+    <source type="audio/mpeg" src="{{asset('themes/default/assets/sounds/message.mp3')}}">
+    <source type="audio/ogg" src="{{asset('themes/default/assets/sounds/message.ogg')}}">
+    <embed hidden="true" autostart="false" loop="false" src="{{asset('themes/default/assets/sounds/notification.mp3')}}" />
+</audio>
+<audio style="display:none;" id="notification-audio" controls="controls">
+    <source type="audio/mpeg" src="{{asset('themes/default/assets/sounds/notification.mp3')}}">
+    <source type="audio/ogg" src="{{asset('themes/default/assets/sounds/notification.ogg')}}">
+    <embed hidden="true" autostart="false" loop="false" src="{{asset('themes/default/assets/sounds/notification.mp3')}}" />
+</audio>
 
 <div id="app-alert" class="md-dialog md-dialog--center md-dialog--confirm" aria-hidden="false">
     <div class="md-dialog__wrapper">

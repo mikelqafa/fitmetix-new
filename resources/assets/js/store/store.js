@@ -306,7 +306,7 @@ export const store = new Vuex.Store({
               });
               context.state.conversations.data[indexes[0]].unread = true;
               context.state.conversations.data[indexes[0]].lastMessage = data.message;
-              $.playSound(theme_url + '/sounds/notification');
+              $.playSound(theme_url + '/sounds/message');
             } else {
               // means box is open
               let indexes = $.map(context.state.conversations.data, function (thread, key) {
@@ -317,7 +317,7 @@ export const store = new Vuex.Store({
               context.state.conversations.data[indexes[0]].lastMessage = data.message
               if(context.state.currentConversation.id != data.message.thread_id || $('.ft-chat--list-wrapper').hasClass('is-list-open')) {
                 context.state.conversations.data[indexes[0]].unread = true;
-                $.playSound(theme_url + '/sounds/notification');
+                $.playSound(theme_url + '/sounds/message');
               }
             }
           }
@@ -331,7 +331,7 @@ export const store = new Vuex.Store({
               });
               context.state.conversations.data[indexes[0]].unread = true;
               context.state.conversations.data[indexes[0]].lastMessage = data.message;
-              $.playSound(theme_url + '/sounds/notification');
+              $.playSound(theme_url + '/sounds/message');
               $('.ft-dock-wrapper').hasClass('hidden') ? $('.ft-dock-wrapper').removeClass('hidden'):''
             }
             else {
@@ -344,7 +344,7 @@ export const store = new Vuex.Store({
               context.state.conversations.data[indexes[0]].lastMessage = data.message
               if(context.state.currentConversation.id != data.message.thread_id || $('.ft-chat--list-wrapper').hasClass('is-list-open')) {
                 context.state.conversations.data[indexes[0]].unread = true;
-                $.playSound(theme_url + '/sounds/notification');
+                $.playSound(theme_url + '/sounds/message');
               }
             }
           }
@@ -357,7 +357,7 @@ export const store = new Vuex.Store({
           });
           if (indexes != '' &&  indexes.length) {
             context.state.conversations.data[indexes[0]].unread = true;
-            $.playSound(theme_url + '/sounds/notification');
+            $.playSound(theme_url + '/sounds/message');
             context.state.conversations.data[indexes[0]].lastMessage = data.message;
           } else {
             let _token = $("meta[name=_token]").attr('content')
