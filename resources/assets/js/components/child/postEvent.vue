@@ -38,12 +38,12 @@
                 </div>
             </div>
         </div>
-        <div class="text-center layout-m-b-1" :class="{'disable-details': disableDetail }">
+        <div class="text-center layout-m-b-1">
             <div class="pos-rel md-layout md-layout--row md-align md-align--center-center">
                 <template v-if="enableEventForThis">
                     <template v-if="!enableUrl">
-                        <div class="md-layout-spacer"></div>
-                        <a :href="eventLink" type="button" class="details-btn btn btn-submit ft-btn-primary">
+                        <div class="md-layout-spacer" v-if="!disableDetail"></div>
+                        <a :href="eventLink" type="button" v-if="!disableDetail" class="details-btn btn btn-submit ft-btn-primary">
                             Details
                         </a>
                         <div class="md-layout-spacer"></div>

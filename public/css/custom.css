@@ -4231,12 +4231,6 @@ aside .md-drawer-scroll__wrapper{
     line-height: 28px;
     z-index: 1;
 }
-.disable-details .pos-rel .md-layout-spacer:first-child {
-    display: none;
-}
-.disable-details .pos-rel .details-btn {
-    display: none;
-}
 .visiblity-hidden{
     visibility: hidden;
 }
