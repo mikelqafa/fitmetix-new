@@ -1,6 +1,12 @@
+var msgX_ = document.getElementById("message-audio");
+var notX_ = document.getElementById("notification-audio");
+msgX_.volume = 0;
+notX_.volume = 0;
 (function($){
-  var msgX_ = document.getElementById("message-audio");
-  var notX_ = document.getElementById("notification-audio");
+  setTimeout(function(){
+    msgX_.volume = 1
+    notX_.volume = 1
+  }, 2000)
   $.extend({
     playSound: function(){
       arguments[0] == theme_url + '/sounds/notification' ? notX_.play() : msgX_.play()
