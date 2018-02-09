@@ -72,6 +72,8 @@
     <source type="audio/ogg" src="{{asset('themes/default/assets/sounds/message.ogg')}}">
     <embed hidden="true" autostart="true" loop="false" src="{{asset('themes/default/assets/sounds/notification.mp3')}}" />
 </audio>
+<button id="message-audio-btn" class="hidden"></button>
+<button id="notification-audio-btn" class="hidden"></button>
 <audio autoplay style="display:none;" id="notification-audio" controls="controls">
     <source type="audio/mpeg" src="{{asset('themes/default/assets/sounds/notification.mp3')}}">
     <source type="audio/ogg" src="{{asset('themes/default/assets/sounds/notification.ogg')}}">

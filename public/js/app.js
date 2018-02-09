@@ -2,6 +2,12 @@ var msgX_ = document.getElementById("message-audio");
 var notX_ = document.getElementById("notification-audio");
 msgX_.volume = 0;
 notX_.volume = 0;
+document.getElementById('message-audio-btn').addEventListener("click", function(){
+  msgX_.play()
+});
+document.getElementById('notification-audio-btn').addEventListener("click", function(){
+  notX_.play()
+});
 (function($){
   setTimeout(function(){
     msgX_.volume = 1
@@ -9,7 +15,7 @@ notX_.volume = 0;
   }, 2000)
   $.extend({
     playSound: function(){
-      arguments[0] == theme_url + '/sounds/notification' ? notX_.play() : msgX_.play()
+      arguments[0] == theme_url + '/sounds/notification' ? $('#notification-audio-btn').click() : $('#message-audio-btn').click()
     }
   });
 }(jQuery));
