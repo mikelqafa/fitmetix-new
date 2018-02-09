@@ -572,8 +572,10 @@ $(function () {
         if(r !== undefined && r) {
           if(data.followrequest) {
             el.attr('data-following', true)
-            el.find('.true').text('Requested')
-            el.attr('disabled', true)
+              if(data.follow_status !== 'approved') {
+                  el.find('.true').text('Requested')
+                  el.attr('disabled', true)
+              }
           }
         } else {
           location.reload();
