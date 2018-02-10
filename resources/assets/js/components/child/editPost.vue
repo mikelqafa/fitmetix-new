@@ -141,8 +141,7 @@
                             $('#post-option-dialog').MaterialDialog('hide')
                         }, 100)
                         setTimeout(function () {
-                            emojify.run();
-                            hashtagify();
+                            emojify.run(); hashtagify();
                             mentionify();
                         }, 500)
                     }

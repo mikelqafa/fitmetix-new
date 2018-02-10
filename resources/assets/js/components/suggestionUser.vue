@@ -1,19 +1,25 @@
 <template>
     <div class="ft-suggestion-wrapper hidden-sm hidden-xs">
-        <h4 class="text-center layout-p-t-1" style="font-size: 18px">Make each other great</h4>
-        <div class="ft-suggestion md-layout md-layout--row md-layout--wrap">
-            <div class="ft-suggestion__item md-layout md-layout--column" v-for="item in itemList" :key="item.id">
-                <a class="ft-cp__user" :title="'@'+item.username" :href="userLink(item)" :style="{backgroundImage: 'url('+userAvatar(item)+')'}"></a>
-                <a :href="userLink(item)" class="text-center">{{ item.username }}</a>
+        <template v-if="!hasNoUser">
+            <h4 class="text-center layout-p-t-1" style="font-size: 18px">Make each other great</h4>
+            <div class="ft-suggestion md-layout md-layout--row md-layout--wrap">
+                <div class="ft-suggestion__item md-layout md-layout--column" v-for="item in itemList" :key="item.id">
+                    <a class="ft-cp__user" :title="'@'+item.username" :href="userLink(item)" :style="{backgroundImage: 'url('+userAvatar(item)+')'}"></a>
+                    <a :href="userLink(item)" class="text-center">{{ item.username }}</a>
+                </div>
             </div>
-        </div>
+        </template>
+        <template>
+            <div class="text-center ft-loading ft-loading--transparent" style=""><span>No User Found</span></div>
+        </template>
     </div>
 </template>
 <script>
     export default {
         data: function () {
             return {
-                itemList: []
+                itemList: [],
+                hasNoUser: false
             }
         },
         methods: {
@@ -48,6 +54,9 @@
                         let d = response.data[0].suggested_users
                         for(let i = 0;i<d.length; i++) {
                             that.itemList.push(d[i])
+                        }
+                        if(!i) {
+                            that.hasNoUser = true
                         }
                     }
                 }).catch(function (error) {
