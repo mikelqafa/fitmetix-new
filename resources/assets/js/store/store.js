@@ -390,7 +390,6 @@ export const store = new Vuex.Store({
         }
       }).then(function (response) {
         if (response.status == 200) {
-          console.log(response.data.data)
           context.commit('SET_CONVERSATION', {message: response.data.data})
           context.dispatch('showConversation', {conversation: context.state.conversations.data[0], byTap: false})
         }

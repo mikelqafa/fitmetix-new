@@ -1,7 +1,3 @@
-var msgX_ = document.getElementById("message-audio");
-var notX_ = document.getElementById("notification-audio");
-msgX_.volume = 0;
-notX_.volume = 0;
 document.getElementById('message-audio-btn').addEventListener("click", function(){
   msgX_.play()
 });

@@ -79,6 +79,12 @@
     <source type="audio/ogg" src="{{asset('themes/default/assets/sounds/notification.ogg')}}">
     <embed hidden="true" autostart="true" loop="false" src="{{asset('themes/default/assets/sounds/notification.mp3')}}" />
 </audio>
+<script>
+    var msgX_ = document.getElementById("message-audio");
+    var notX_ = document.getElementById("notification-audio");
+    msgX_.volume = 0;
+    notX_.volume = 0;
+</script>
 
 <div id="app-alert" class="md-dialog md-dialog--center md-dialog--confirm" aria-hidden="false">
     <div class="md-dialog__wrapper">
