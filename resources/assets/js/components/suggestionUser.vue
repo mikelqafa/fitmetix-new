@@ -52,7 +52,8 @@
                 }).then(function (response) {
                     if (response.status == 200) {
                         let d = response.data[0].suggested_users
-                        for(let i = 0;i<d.length; i++) {
+                        let i = 0
+                        for(i = 0;i<d.length; i++) {
                             that.itemList.push(d[i])
                         }
                         if(!i) {
