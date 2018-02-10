@@ -104,6 +104,11 @@
                         $('#post-option-dialog').MaterialDialog('hide')
                     }
                     that.isLoading = false
+                    setTimeout(function () {
+                        emojify.run();
+                        hashtagify();
+                        mentionify();
+                    }, 500)
                 }).catch(function(error) {
                     materialSnackBar({messageText: error, autoClose: true })
                     that.isLoading = false
