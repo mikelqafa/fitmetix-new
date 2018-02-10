@@ -502,7 +502,7 @@ export const store = new Vuex.Store({
           }
         });
         if(indexes !== '') {
-          context.state.conversations.data[indexes[0]].unread = false;
+          // context.state.conversations.data[indexes[0]].unread = false
         }
         if (data.conversation.id != context.state.currentConversation.id || data.byTap) {
           let _token = $("meta[name=_token]").attr('content')

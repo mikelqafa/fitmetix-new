@@ -28,10 +28,12 @@ import {store} from './store/store'
 import VueClip from 'vue-clip'
 import directMsg from './components/child/sendDirect'
 import VueChatScroll from 'vue-chat-scroll'
+import VueI18n from 'vue-i18n'
 require('swiper/dist/css/swiper.css')
 
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueClip)
+Vue.use(VueI18n)
 Vue.use(VueChatScroll)
 Vue.use(VueTimeago, {
   name: 'timeago',

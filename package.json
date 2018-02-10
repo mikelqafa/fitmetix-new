@@ -27,6 +27,7 @@
     "vue-chat-scroll": "^1.2.1",
     "vue-clip": "^1.0.0",
     "vue-gallery": "^1.2.4",
+    "vue-i18n": "^7.4.2",
     "vue-sticky-bottom-scroll": "^0.1.0",
     "vue-timeago": "^3.3.6",
     "vue2-medium-editor": "^1.1.2",
