@@ -149,10 +149,10 @@ class RegisterController extends Controller
                 // $photoName = microtime().$strippedName;
 
                 // Lets resize the image to the square with dimensions of either width or height , which ever is smaller.
-                list($width, $height) = getimagesize($change_avatar->getRealPath());
+                list($width, $height) = getimagesize($change_avatar);
 
 
-                $avatar = Image::make($change_avatar->getRealPath())->orientate();
+                $avatar = Image::make($change_avatar)->orientate();
                 $avatar_thumbnail = $avatar;
 
                 $mime = $avatar->mime();
