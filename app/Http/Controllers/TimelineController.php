@@ -666,7 +666,9 @@ class TimelineController extends AppBaseController
             }
 
             foreach ($notify_users as $notify_user) {
-                Notification::create(['user_id' => $notify_user->id, 'timeline_id' => $request->timeline_id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.$notify_message, 'type' => $timeline->type, 'link' => $timeline->username]);
+                if($notify_user->id != Auth::user()->id){
+                    Notification::create(['user_id' => $notify_user->id, 'timeline_id' => $request->timeline_id, 'post_id' => $post->id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.$notify_message, 'type' => $timeline->type, 'link' => $timeline->username]);
+                }
             }
 
 
@@ -693,7 +695,7 @@ class TimelineController extends AppBaseController
         // $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('ajax');
         // $postHtml = $theme->scope('timeline/post', compact('post', 'timeline'))->render();
         
-        return response()->json(['status' => '200', 'data' => $post]);
+        return response()->json(['status' => '200', 'data' => $request]);
     }
 
     public function editPost(Request $request)
@@ -2117,6 +2119,19 @@ class TimelineController extends AppBaseController
         $post = Post::find($request->post_id);
         
         if ($post->user->id == Auth::user()->id) {
+            preg_match_all('/(^|\s)(#\w+)/', $post->description, $hashtags);
+            foreach ($hashtags[2] as $value) {
+                $hashtag = Hashtag::where('tag', str_replace('#', '', $value))->first();
+                if ($hashtag) {
+                    if($hashtag->count > 1){
+                        $hashtag->count = $hashtag->count - 1;
+                        $hashtag->save();
+                    }
+                    else {
+                        $hashtag->delete();
+                    }
+                }
+            }
             $post->deleteMe();
         }
         return response()->json(['status' => '200', 'deleted' => true, 'message' => 'Post successfully deleted']);

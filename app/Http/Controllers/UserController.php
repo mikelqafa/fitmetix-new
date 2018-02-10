@@ -781,7 +781,11 @@ class UserController extends AppBaseController
     public function getUsersMentions(Request $request)
     {
         $requestData = $request->all();
-        $timelines = Timeline::where('name', 'like', "%{$requestData['query']}%")->orWhere('username', 'like', "%{$requestData['query']}%")->where('type', 'user')->get();
+        $timelines = Timeline::where('type','user')
+        ->where(function ($query) use ($requestData){
+                            $query->where('username', 'like', "%{$requestData['query']}%")->
+                            orWhere('name', 'like', "%{$requestData['query']}%");
+                })->limit(5)->get();
 
         $users = $timelines;
         foreach ($timelines as $key => $value) {
