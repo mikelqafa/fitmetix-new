@@ -143,8 +143,9 @@ class RegisterController extends Controller
         $a = $request->social;
         $b = $request->avatar;
 			if($request->social != '' && $request->avatar != '') {
-                copy($request->avatar, $change_avatar);
-                $strippedName = str_replace(' ', '', $change_avatar->getClientOriginalName());
+                $change_avatar = Image::make($request->avatar);
+
+                $strippedName = 'userfromfb';
                 // $photoName = microtime().$strippedName;
 
                 // Lets resize the image to the square with dimensions of either width or height , which ever is smaller.
