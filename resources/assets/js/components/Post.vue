@@ -184,6 +184,7 @@
                         that.isFetchingBottom = false
                     }
                 }).catch(function(error) {
+                    that.inProgress = false
                     console.log(error)
                 })
             },
@@ -194,7 +195,6 @@
                         if(!that.inProgress && that.hasMorePost ){
                             that.isFetchingBottom = true
                             that.getDefaultData()
-                            that.inProgress = true
                         }
                     }
                 });
