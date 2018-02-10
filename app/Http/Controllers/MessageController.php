@@ -148,17 +148,26 @@ class MessageController extends Controller
 
         $recipients = explode(',', $input['recipients']);
         $recipients[1] = (string) Auth::id();
+
+        $blocked = DB::table('user_blocked')->where([['blocker_uid',$recipients[0]],['blocked_uid',Auth::user()->id]])->first();
+        if($blocked != null){
+            return response()->json(['status' => '200', 'data' => 'Failed']);
+        }
+
         $thread = Thread::whereHas('participants', function ($query) use ($recipients) {
             $query->whereIn('user_id', $recipients)
                 ->groupBy('thread_id')
                 ->havingRaw('COUNT(thread_id)='.count($recipients));
         })->first();
 
-        $thread_prev = Participant::where('user_id',$recipients[0])->first();
-        if($thread_prev){
-            $thread = Participant::withTrashed()->where([['user_id',Auth::user()->id],['thread_id',$thread_prev->thread_id]])->first();
-            $thread = Thread::find($thread->thread_id);
-            $thread->activateAllParticipants();
+        $thread_prev_1 = Participant::where('user_id',$recipients[0])->first();
+        $thread_prev_2 = Participant::where('user_id',$recipients[1])->first();
+        if($thread_prev_1 && $thread_prev_2){
+            if($thread_prev_1->thread_id == $thread_prev_2->thread_id){
+                $thread = Participant::withTrashed()->where([['user_id',Auth::user()->id],['thread_id',$thread_prev_1->thread_id]])->first();
+                $thread = Thread::find($thread->thread_id);
+                $thread->activateAllParticipants();
+            }
         }
 
         if (!$thread) {
@@ -234,6 +243,17 @@ class MessageController extends Controller
     {
         $thread = Thread::findOrFail($id);
 
+        $participants = $thread->participants()->withTrashed()->get();
+
+        foreach ($participants as $participant) {
+            $blocked = DB::table('user_blocked')->where([['blocker_uid',$participant->user->id],['blocked_uid',Auth::user()->id]])->first();
+            
+            if($blocked != null){
+                return response()->json(['status' => '200', 'data' => 'Failed']);
+            }
+        }
+        
+
         // Message
         $message = Message::create(
             [
@@ -247,7 +267,7 @@ class MessageController extends Controller
 
         $thread->activateAllParticipants();
         // activate all participants
-        $participants = $thread->participants()->withTrashed()->get();
+        // $participants = $thread->participants()->withTrashed()->get();
         foreach ($participants as $participant) {
             $participant->restore();
             if (Auth::id() != $participant->user->id) {
@@ -294,9 +314,16 @@ class MessageController extends Controller
             $participants = $thread->participants()->withTrashed()->get();
 
             foreach ($participants as $key => $participant) {
-                if ($participant->user->id != Auth::user()->id) {
-                    $thread->user = $participant->user;
-                    break;
+                $blocked = DB::table('user_blocked')->where([['blocker_uid',$participant->user->id],['blocked_uid',Auth::user()->id]])->first();
+                
+                if($blocked != null){
+                    $threads[$key] = (object)[];
+                }
+                else {
+                    if ($participant->user->id != Auth::user()->id) {
+                        $thread->user = $participant->user;
+                        break;
+                    }
                 }
             }
         }
@@ -313,10 +340,17 @@ class MessageController extends Controller
         $participants = $thread->participants()->withTrashed()->get();
 
         foreach ($participants as $key => $participant) {
-            if ($participant->user->id != Auth::user()->id) {
-                $thread->user = $participant->user;
-                break;
-            }
+            $blocked = DB::table('user_blocked')->where([['blocker_uid',$participant->user->id],['blocked_uid',Auth::user()->id]])->first();
+                
+                if($blocked != null){
+                    $threads[$key] = (object)[];
+                }
+                else {
+                    if ($participant->user->id != Auth::user()->id) {
+                        $thread->user = $participant->user;
+                        break;
+                    }
+                }
         }
 
         return response()->json(['status' => '200', 'data' => $thread]);
