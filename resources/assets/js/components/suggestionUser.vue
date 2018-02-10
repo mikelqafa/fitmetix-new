@@ -9,7 +9,7 @@
                 </div>
             </div>
         </template>
-        <template>
+        <template v-else="">
             <div class="text-center ft-loading ft-loading--transparent" style=""><span>No User Found</span></div>
         </template>
     </div>
