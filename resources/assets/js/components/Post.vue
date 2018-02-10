@@ -132,6 +132,7 @@
                 let paginate = 4
                 let _token = $("meta[name=_token]").attr('content')
                 let url = ''
+                that.inProgress = false
                 if($('#saved').length && $('#saved').val()) {
                     url = base_url + 'ajax/get-saved-post'
                 } else {

@@ -165,7 +165,7 @@
                 }).then( function (response) {
                     if (response.status ==  200) {
                         $('#timeline-cover .absolute-loader').addClass('hidden')
-                        $('#timeline-cover').css('background-image', 'url('+ response.data.avatar_url +')')
+                        $('#timeline-cover').css('background-image', 'url('+ response.data.cover_url +')')
                         materialSnackBar({messageText: 'Cover Picture has been changed.', autoClose: true })
                     }
                 }).catch(function(error) {

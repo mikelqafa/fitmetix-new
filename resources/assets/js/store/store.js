@@ -242,6 +242,16 @@ export const store = new Vuex.Store({
         }
       });
     },
+    markConversationRead: (context, data) => {
+      axios.post(base_url + 'ajax/mark-all-notifications').then(function (response) {
+        if (response.status == 200) {
+          context.commit('SET_URN', 0)
+          $.map(context.state.notification, function (notification, key) {
+            context.commit('CHANGE_NOTIFICATION_SEEN', {index: key, changed: true});
+          });
+        }
+      });
+    },
     likePostByPusher: (context, data) => {
       if (data.type !== undefined && (data.type === 'like_post' || data.type === 'unlike_post')) {
         let index = -1
@@ -501,8 +511,9 @@ export const store = new Vuex.Store({
             return key;
           }
         });
-        if(indexes !== '') {
-          // context.state.conversations.data[indexes[0]].unread = false
+        if(indexes !== '' && context.state.conversations.data[indexes[0]].unread) {
+          context.state.conversations.data[indexes[0]].unread = false
+          // TODO set message unread
         }
         if (data.conversation.id != context.state.currentConversation.id || data.byTap) {
           let _token = $("meta[name=_token]").attr('content')
