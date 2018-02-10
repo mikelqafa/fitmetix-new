@@ -182,7 +182,7 @@ class MessageController extends Controller
                 [
                     'thread_id' => $thread->id,
                     'user_id'   => Auth::user()->id,
-                    'last_read' => new Carbon(),
+                    // 'last_read' => new Carbon(),
                 ]
             );
 
@@ -284,7 +284,7 @@ class MessageController extends Controller
                 'user_id'   => Auth::user()->id,
             ]
         );
-        $participant->last_read = new Carbon();
+        // $participant->last_read = new Carbon();
         $participant->save();
 
         // Recipients
