@@ -83,7 +83,12 @@
                     </div>
                     <div class="ft-chat-box__footer" style="box-shadow: none;padding-bottom: 24px">
                         <div class="ft-chat__write">
-                            <div class="write-post__placeholder" v-if="hasNotContent" style="top: 14px;left:26px;font-size:  12px;">{{placeholder}}</div>
+                            <template v-if="currentConversation.block !== undefined">
+                                <div class="write-post__placeholder" v-if="hasNotContent">You can not send the message</div>
+                            </template>
+                            <template>
+                                <div class="write-post__placeholder" v-if="hasNotContent">{{placeholder}}</div>
+                            </template>
                             <medium-editor
                                     id="create-chat-vue-single" :text='backContent' :options='options'
                                     class="ft-chat__write-box ft-chat__write-box--big"

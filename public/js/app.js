@@ -8,7 +8,7 @@ document.getElementById('notification-audio-btn').addEventListener("click", func
   setTimeout(function(){
     msgX_.volume = 1
     notX_.volume = 1
-  }, 2000)
+  }, 10000)
   $.extend({
     playSound: function(){
       arguments[0] == theme_url + '/sounds/notification' ? $('#notification-audio-btn').click() : $('#message-audio-btn').click()

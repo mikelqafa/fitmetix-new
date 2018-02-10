@@ -390,7 +390,16 @@ export const store = new Vuex.Store({
         }
       }).then(function (response) {
         if (response.status == 200) {
-          context.commit('SET_CONVERSATION', {message: response.data.data})
+          let dataToSend = response.data.data
+          let temp_ = []
+          for (let i=0;i<dataToSend.data.length;i++) {
+            if(dataToSend.data[i].id !== undefined) {
+              temp_.push(dataToSend.data[i])
+            }
+          }
+          dataToSend.data = temp_
+          console.log(dataToSend)
+          context.commit('SET_CONVERSATION', {message: dataToSend})
           context.dispatch('showConversation', {conversation: context.state.conversations.data[0], byTap: false})
         }
       }).catch(function (error) {
@@ -422,6 +431,10 @@ export const store = new Vuex.Store({
         }
       }).then(function (response) {
         if (response.status == 200) {
+          if(response.data.data == 'Failed') {
+            Vue.set(context.state.currentConversation, 'block', true)
+            return
+          }
           if (indexes != '' &&  indexes.length) {
             context.state.conversations.data[indexes[0]].lastMessage = response.data.data;
             context.state.conversations.data[indexes[0]].unread = false
