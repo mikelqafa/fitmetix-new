@@ -143,8 +143,7 @@ class RegisterController extends Controller
         $a = $request->social;
         $b = $request->avatar;
 			if($request->social != '' && $request->avatar != '') {
-                $url = $request->avatar;
-                $change_avatar = file_get_contents($url);
+                $change_avatar = Image::make($request->avatar);
                 $strippedName = str_replace(' ', '', $change_avatar->getClientOriginalName());
                 // $photoName = microtime().$strippedName;
 
@@ -248,7 +247,7 @@ class RegisterController extends Controller
         //Create a record in user settings table.
         $userSettings = DB::table('user_settings')->insert($user_settings);
 
-        Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+        Auth::login($user);
 
         if ($user) {
             if ($socialLogin) {
