@@ -147,8 +147,9 @@ class RegisterController extends Controller
             $file_path = json_decode(file_get_contents($b.'&redirect=false'), TRUE);
             $file_actual_url  = $file_path['data']['url'];
             $fileContents = file_get_contents($file_actual_url);
-            Storage::put(storage_path().'/uploads/users/avatars/temp_'.$timeline->id.'.jpg', $fileContents);
-            $change_avatar = Image::make(storage_path().'/uploads/users/avatars/temp_'.$timeline->id.'.jpg');
+            $path_ = storage_path().'/uploads/users/avatars/temp_'.$timeline->id.'.jpg';
+            Storage::put($path_, $fileContents);
+            $change_avatar = Image::make($path_);
             $strippedName = 'userfromfb';
             // Lets resize the image to the square with dimensions of either width or height , which ever is smaller.
             list($width, $height) = getimagesize($change_avatar);
