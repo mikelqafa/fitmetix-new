@@ -186,7 +186,7 @@ class RegisterController extends Controller
             ]);
             $timeline->avatar_id = $media->id;
             $timeline->save();
-            Storage::delete(storage_path().'/uploads/users/avatars/'.'temp_'.$timeline->id.'.jpg');
+            //Storage::delete(storage_path().'/uploads/users/avatars/'.'temp_'.$timeline->id.'.jpg');
         }
         if(Setting::get('mail_verification') == 'off')
         {
