@@ -147,7 +147,7 @@ class RegisterController extends Controller
             $file_path = json_decode(file_get_contents($b.'&redirect=false'), TRUE);
             $file_actual_url  = $file_path['data']['url'];
             $fileContents = file_get_contents($file_actual_url);
-            $path_ = storage_path().'/uploads/users/avatars/temp_'.$timeline->id.'.jpg';
+            $path_ = public_path().'/temp/temp'.$timeline->id.'.jpg';
             Storage::put($path_, $fileContents);
             $change_avatar = Image::make($path_);
             $strippedName = 'userfromfb';

@@ -10,6 +10,8 @@ vendor/*
 #Ignore css and js file
 storage/
 storage/*
+public/temp
+public/temp/*
 
 #Ignore node module
 node_modules/*
