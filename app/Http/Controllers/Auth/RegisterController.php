@@ -288,7 +288,7 @@ class RegisterController extends Controller
     public function facebookRedirect()
     {
 			  $a = 0;
-        dd(Socialite::with('facebook')->redirect());
+        return Socialite::with('facebook')->redirect();
     }
 
     // to get authenticate user data
@@ -297,6 +297,7 @@ class RegisterController extends Controller
     	$a = 0;
     	$user_model = new User();
         $facebook_user = Socialite::with('facebook')->user();
+        dd($facebook_user);
 			if(!isset($facebook_user->test)) {
 				$a = 0;
 			}
