@@ -143,10 +143,9 @@ class RegisterController extends Controller
         $a = $request->social;
         $b = $request->avatar;
 			if($request->social != '' && $request->avatar != '') {
-                $url = $request->avatar;
                 $options = array( 'http' => array( 'header' => "User-Agent: Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.102011-10-16 20:23:10\r\n" ) );
                 $context = stream_context_create( $options );
-                $change_avatar = Image::make( file_get_contents( $url, false, $context ) );
+                $change_avatar = Image::make( file_get_contents($request->avatar));
                 dd($change_avatar);
                 $strippedName = 'userfromfb';
                 // $photoName = microtime().$strippedName;
