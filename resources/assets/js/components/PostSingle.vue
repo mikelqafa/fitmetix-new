@@ -37,7 +37,7 @@
         </template>
         <template v-else="">
             <div class="text-center ft-loading ft-loading--transparent">
-                No Post Found
+               Post {{$t('common.n_f') }}
             </div>
         </template>
     </div>

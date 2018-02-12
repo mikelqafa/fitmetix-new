@@ -4,7 +4,7 @@
             <div class="ft-cp__user" :style="{ backgroundImage: 'url(\'' + userImage + '\')' }"></div>
             <div class="ft-cp__presentation">
                 <div class="write-post">
-                    <div class="write-post__placeholder" v-if="hasNotContent">{{placeholder}}</div>
+                    <div class="write-post__placeholder" v-if="hasNotContent">{{$t('post.w_s') }}</div>
                     <mention-at :members="members" v-on:at="fetchUser" name-key="name">
                         <template slot="item" scope="s">
                             <img :src="s.item.avatar">
@@ -39,7 +39,6 @@
         data: function () {
             return {
                 userImage: '',
-                placeholder: 'What motivates you...#hashtags @mentions',
                 members: [],
                 content: '',
                 backContent: '',
@@ -58,9 +57,6 @@
             let username = current_username
             if($('#timeline_username').length) {
                 username =  $('#timeline_username').val()
-            }
-            if(username !== current_username) {
-                this.placeholder = 'Write something on ' + username
             }
             let that = this
             $(document).on('click', '.smiley-post', function(e){

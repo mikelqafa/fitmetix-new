@@ -6,7 +6,7 @@
         </a>
         <div id="ft-notification-msg" data-width="5" class="md-menu__container ft-chat">
             <template v-if="conversations.data !== undefined && conversations.data.length">
-                <div class="ft-chat__header">Messages</div>
+                <div class="ft-chat__header">{{$t('common.messages') }}</div>
                 <div class="md-menu">
                     <template v-if="conversations.data !== undefined">
                         <div :class="{'is-new': item.unread}" v-for="item in conversations.data" :key="'msg-noti'+item.id" class="md-list__item has-divider"
@@ -37,7 +37,7 @@
                 </div>
             </template>
             <template v-else="">
-                <div class="ft-chat__header">No Message</div>
+                <div class="ft-chat__header">{{$t('common.no') }} {{$t('common.messages') }}</div>
             </template>
         </div>
     </div>

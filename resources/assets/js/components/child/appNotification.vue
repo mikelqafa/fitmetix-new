@@ -6,7 +6,7 @@
         </a>
         <div id="ft-notification" data-width="5" class="md-menu__container ft-chat">
             <template v-if="notifications.length">
-                <div class="ft-chat__header">Notifications</div>
+                <div class="ft-chat__header">{{$t('common.notifi') }}</div>
                 <div class="md-menu">
                     <a :href="notificationUrl(item)" v-for="(item, index) in notifications" :data-nid="item.id" :key="item.id" class="md-menu__item ft-chat__item">
                         <div class="md-list__item  has-divider">
@@ -57,17 +57,17 @@
                         <span class="ft-loading__dot"></span>
                         <span class="ft-loading__dot"></span>
                     </div>
-                    <a :href="allNotificationLink" data-user-id="26" class="ft-chat__item">
+                    <a :href="allNotificationLink" class="ft-chat__item">
                         <div class="md-list__item md-list__item--see-all">
                             <div class="md-list__item-content">
-                                <span>SEE ALL</span>
+                                <span>{{$t('common.see_all') }}</span>
                             </div>
                         </div>
                     </a>
                 </div>
             </template>
             <template v-else="">
-                <div class="ft-chat__header">No Notidfications</div>
+                <div class="ft-chat__header">{{$t('common.no') }} {{$t('common.notifi') }}</div>
             </template>
         </div>
     </div>

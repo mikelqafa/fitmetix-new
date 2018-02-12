@@ -7,7 +7,7 @@
                     <header class="md-dialog__header panel-post">
                         <div class="layout-m-l-1 md-layout md-align md-align--start-center">
                             <i class="icon icon-participant" style="margin-top: 4px"></i>
-                            <span class="layout-m-l-1">Who Likes to this post</span>
+                            <span class="layout-m-l-1">{{$t('common.who_like') }}</span>
                         </div>
                         <div class="md-layout-spacer"></div>
                         <a href="javascript:;" style="margin-right: 15px"
@@ -30,7 +30,7 @@
                                 </div>
                             </div>
                             <div v-else="" class="text-center">
-                                <h3>No likes yet</h3>
+                                <h3>{{$t('common.n_l_y') }}</h3>
                             </div>
                         </template>
                         <template v-else="">
@@ -60,8 +60,8 @@
                                                         <span class="ft-loading__dot"></span>
                                                     </span>
                                                 </span>
-                                                <span class="false">Follow</span>
-                                                <span class="true">Request sent</span>
+                                                <span class="false">{{$t('common.follow') }}</span>
+                                                <span class="true">{{$t('common.r_t') }}</span>
                                             </button>
                                             <button v-else-if="item.follow_status == 'following'" class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true"  :data-timeline-id="item.timeline_id" data-toggle="follow" data-following="true">
                                                 <span class="absolute-loader hidden">
@@ -71,8 +71,8 @@
                                                     <span class="ft-loading__dot"></span>
                                                 </span>
                                             </span>
-                                                <span class="false">Follow</span>
-                                                <span class="true">Following</span>
+                                                <span class="false">{{$t('common.follow') }}</span>
+                                                <span class="false">{{$t('common.following') }}</span>
                                             </button>
                                             <button v-else="" class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true"  :data-timeline-id="item.timeline_id" data-toggle="follow" data-following="false">
                                                 <span class="absolute-loader hidden">
@@ -82,8 +82,8 @@
                                                     <span class="ft-loading__dot"></span>
                                                 </span>
                                                 </span>
-                                                <span class="false">Follow</span>
-                                                <span class="true">Following</span>
+                                                <span class="false">{{$t('common.follow') }}</span>
+                                                <span class="false">{{$t('common.following') }}</span>
                                             </button>
                                         </template>
                                     </div>

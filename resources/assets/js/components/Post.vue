@@ -69,13 +69,13 @@
                     <span class="ft-loading__dot"></span>
                 </div>
                 <div class="text-center no-found" v-if="!hasMorePost && !singlePost">
-                    No more posts to fetch
+                    {{$t('post.no_more') }}
                 </div>
             </template>
         </template>
         <template v-else="">
             <div class="text-center  no-found">
-                No Post Found
+                {{$t('post.n_f') }}
             </div>
         </template>
     </div>
@@ -240,6 +240,7 @@
             vmThat = this
             that.getDefaultData()
             that.scrollFetchInit()
+            console.log(this.$t('message.hello'))
         },
         components: {
             'post-description': postDescription,

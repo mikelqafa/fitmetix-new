@@ -4,7 +4,9 @@
         <template v-if="isMoreViewable">
             <span>...</span>
         </template>
-        <a href="javascript:;" v-show="isMoreViewable" v-on:click="viewMore" class="viewAll md-button--link">view more</a>
+        <a href="javascript:;" v-show="isMoreViewable" v-on:click="viewMore" class="viewAll md-button--link">
+            {{$t('post.v_more') }}
+        </a>
     </div>
 </template>
 <script>

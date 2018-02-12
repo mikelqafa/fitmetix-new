@@ -48,6 +48,9 @@
         function SP_source() {
             return "{{ url('/') }}/";
         }
+        function getLang() {
+            return "{{ config('app.locale') }}";
+        }
         var base_url = "{{ url('/') }}/";
         var asset_url = "{{env('STORAGE_URL')}}";
         var theme_url = "{!! Theme::asset()->url('') !!}";

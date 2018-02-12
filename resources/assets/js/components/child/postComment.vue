@@ -108,7 +108,7 @@
                             </div>
                             <div class="ft-menu text-center" v-if="commentHasMore">
                                 <button type="button" class="text-center btn btn-link btn-sm" v-on:click="loadMore">
-                                    Load More
+                                    {{$t('post.v_more') }}
                                 </button>
                             </div>
                         </div>

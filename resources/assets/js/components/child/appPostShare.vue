@@ -11,7 +11,7 @@
                                 </header>
                                 <div class="md-dialog__body">
                                     <div class="form-group">
-                                        <label for="share-user-select">Select user to share:</label>
+                                        <label for="share-user-select">{{$t('common.user_to_share') }}:</label>
                                         <input placeholder="Send to" class="hidden form-control" id="share-user-select"/>
                                         <app-autocomplete ref="shareuser"></app-autocomplete>
                                     </div>

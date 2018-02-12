@@ -1,7 +1,7 @@
 <template>
     <div class="ft-suggestion-wrapper hidden-sm hidden-xs">
         <template v-if="!hasNoUser">
-            <h4 class="text-center layout-p-t-1" style="font-size: 18px">Make each other great</h4>
+            <h4 class="text-center layout-p-t-1" style="font-size: 18px">{{$t('common.each_other_grt') }}</h4>
             <div class="ft-suggestion md-layout md-layout--row md-layout--wrap">
                 <div class="ft-suggestion__item md-layout md-layout--column" v-for="item in itemList" :key="item.id">
                     <a class="ft-cp__user" :title="'@'+item.username" :href="userLink(item)" :style="{backgroundImage: 'url('+userAvatar(item)+')'}"></a>
@@ -10,7 +10,9 @@
             </div>
         </template>
         <template v-else="">
-            <div class="text-center ft-loading ft-loading--transparent" style=""><span>No User Found</span></div>
+            <div class="text-center ft-loading ft-loading--transparent" style="">
+                <span>{{$t('common.user_n_f') }}</span>
+            </div>
         </template>
     </div>
 </template>

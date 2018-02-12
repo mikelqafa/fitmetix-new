@@ -29,6 +29,7 @@ import VueClip from 'vue-clip'
 import directMsg from './components/child/sendDirect'
 import VueChatScroll from 'vue-chat-scroll'
 import VueI18n from 'vue-i18n'
+import { messages} from './lang/index'
 require('swiper/dist/css/swiper.css')
 
 Vue.use(VueAwesomeSwiper)
@@ -45,10 +46,16 @@ Vue.use(VueTimeago, {
 Vue.config.productionTip = true
 
 /* eslint-disable no-new */
+let local_ = getLang()
+const i18n = new VueI18n({
+  locale: local_, // set locale
+  messages
+})
 
 window.timeLine = new Vue({
   el: '#app-timeline',
   store,
+  i18n,
   components: {
     'app-post': Post,
     'app-post-single': PostSingle,
@@ -64,6 +71,7 @@ window.timeLine = new Vue({
 window.sendDirect = new Vue({
   el: '#app-send-direct',
   store,
+  i18n,
   components: {
     'app-send-direct': directMsg
   }
@@ -71,6 +79,7 @@ window.sendDirect = new Vue({
 window.appNotification = new Vue({
   el: '#app-notification',
   store,
+  i18n,
   components: {
     'app-notification': AppNotification
   }
@@ -79,6 +88,7 @@ window.appNotification = new Vue({
 window.singleEvent = new Vue({
   el: '#single-event-view',
   store,
+  i18n,
   components: {
     'single-event-view': singleEventView,
     'suggestion-user': suggestionUser
@@ -88,6 +98,7 @@ window.singleEvent = new Vue({
 window.userFollowList = new Vue({
   el: '#user-follow-view',
   store,
+  i18n,
   components: {
     'user-follow-list': AppUserFollowList,
     'user-following-list': AppUserFollowingList
@@ -97,6 +108,7 @@ window.userFollowList = new Vue({
 window.searchApp = new Vue({
   el: '#app-search',
   store,
+  i18n,
   components: {
     'app-search': searchAppVue
   }
@@ -104,6 +116,7 @@ window.searchApp = new Vue({
 window.searchDesktopApp = new Vue({
   el: '#app-search-desktop',
   store,
+  i18n,
   components: {
     'app-search-desktop': searchAppDesktopVue
   }
@@ -112,6 +125,7 @@ window.searchDesktopApp = new Vue({
 window.appNotificationAll = new Vue({
   el: '#app-notification-all',
   store,
+  i18n,
   components: {
     'app-notification-all': AppNotificationAll
   }
@@ -119,6 +133,7 @@ window.appNotificationAll = new Vue({
 window.singleChatApp = new Vue({
   el: '#app-single-chat',
   store,
+  i18n,
   components: {
     'app-single-chat': AppSingleChat
   }
@@ -126,6 +141,7 @@ window.singleChatApp = new Vue({
 
 window.createPost = new Vue({
   el: '#app-create-post',
+  i18n,
   components: {
     'app-create-post': createPost,
     'app-make-event': makeEvent

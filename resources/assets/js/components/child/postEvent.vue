@@ -44,15 +44,15 @@
                     <template v-if="!enableUrl">
                         <div class="md-layout-spacer" v-if="!disableDetail"></div>
                         <a :href="eventLink" type="button" v-if="!disableDetail" class="details-btn btn btn-submit ft-btn-primary">
-                            Details
+                            {{$t('common.details') }}
                         </a>
                         <div class="md-layout-spacer"></div>
                         <button type="button" class="btn btn-submit ft-btn-primary" @click="registerEvent">
                             <template v-if="isRegistered">
-                                Unregister
+                                {{$t('common.unreg') }}
                             </template>
                             <template v-else="">
-                                Register
+                                {{$t('common.reg') }}
                             </template>
                         </button>
                         <div class="md-layout-spacer"></div>
@@ -60,7 +60,7 @@
                     <template v-else="">
                         <div class="md-layout-spacer"></div>
                         <a :href="eventLink" type="button" class="btn btn-submit ft-btn-primary">
-                            Details
+                            {{$t('common.details') }}
                         </a>
                         <div class="md-layout-spacer"></div>
                     </template>
@@ -69,18 +69,18 @@
                     <template v-if="!enableUrl">
                         <div class="md-layout-spacer"></div>
                         <a :href="eventLink" type="button" class="btn btn-submit ft-btn-primary">
-                            Details
+                            {{$t('common.details') }}
                         </a>
                         <div class="md-layout-spacer"></div>
                         <button type="button" disabled class="btn btn-submit">
-                            Register
+                            {{$t('post.reg') }}
                         </button>
                         <div class="md-layout-spacer"></div>
                     </template>
                     <template v-else="">
                         <div class="md-layout-spacer"></div>
                         <a :href="eventLink" type="button" class="btn btn-submit ft-btn-primary">
-                            Details
+                            {{$t('common.details') }}
                         </a>
                         <div class="md-layout-spacer"></div>
                     </template>

@@ -1,7 +1,7 @@
 <template>
     <div class="desktop-search">
         <div style="position: relative;">
-            <input v-on:keyup="searchApp" v-model="ftSearch" placeholder="Search for user, event and tags" type="text" class="form-control">
+            <input v-on:keyup="searchApp" v-model="ftSearch" :placeholder="$t('search.ph')" type="text" class="form-control">
             <a href="javascript:;" class="btn reset-search" v-if="ftSearch !== ''"  @click="resetSearch">
                 <i class="icon icon-close"></i>
             </a>
@@ -10,7 +10,7 @@
             <div class="pos-rel">
                 <div id="search-user" class="tab-pane--desktop" v-show="userList.length">
                     <div class="search-meta">
-                        Users
+                        {{$t('common.user')}}
                     </div>
                     <div class="search-result-wrapper md-list">
                         <a :href="userLink(item)" class="md-list__item " v-for="(item, index) in userList" :key="index+'user-'+item.id">
@@ -27,7 +27,7 @@
                 </div>
                 <div id="search-event" class="tab-pane---desktop" v-show="eventList.length">
                     <div class="search-meta">
-                        Events
+                        {{$t('common.event')}}
                     </div>
                     <div class="search-result-wrapper md-list">
                         <a :href="eventLink(item)" class="md-list__item " v-for="(item, index) in eventList" :key="index+'event-'+item.id">
@@ -44,7 +44,9 @@
                     </div>
                 </div>
                 <div id="search-tag" class="tab-pane--desktop" v-show="tagList.length">
-                    <div class="search-meta">Tags</div>
+                    <div class="search-meta">
+                        {{$t('common.tag')}}
+                    </div>
                     <div class="search-result-wrapper md-list" v-show="tagList.length">
                         <a :href="tagLink(item)" class="md-list__item " v-for="item in tagList" :key="'tag-'+item.tag">
                                       <span class="md-list__item-content">

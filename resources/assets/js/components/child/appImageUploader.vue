@@ -15,11 +15,11 @@
                         <div class='image-loader-progress' :style="{width: file.progress+'%'}"></div>
                     </div>
                     <div class="text-center image-pip__error" v-if="isNetworkProblem(file) || file.status == 'error'">
-                        <p class="error-text">Error</p>
+                        <p class="error-text">{{$t('common.error') }}</p>
                         <p class="file-name">{{file.name}}</p>
                     </div>
                     <div class="text-center image-pip__error" v-if="isNetworkProblem(file) || file.status == 'error'">
-                        <p class="error-text">Error</p>
+                        <p class="error-text">{{$t('common.error') }}</p>
                         <p class="file-name">{{file.name}}</p>
                     </div>
                 </div>
