@@ -134,68 +134,58 @@ class RegisterController extends Controller
         }
 
         //Create timeline record for the user
-       /* $timeline = Timeline::create([
+        $timeline = Timeline::create([
             'username' => $request->username,
             'name'     => $request->username,
             'type'     => 'user',
             'about'    => 'Hi, I am on Fitmetix.'
-            ]);*/
+        ]);
         $a = $request->social;
         $b = $request->avatar;
-			if($request->social != '' && $request->avatar != '') {
-                $options = array( 'http' => array( 'header' => "User-Agent: Mozilla/5.0 (iPad; U; CPU OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B334b Safari/531.21.102011-10-16 20:23:10\r\n" ) );
-                $context = stream_context_create( $options );
-                $change_avatar = Image::make( file_get_contents($request->avatar));
-                dd($change_avatar);
-                $strippedName = 'userfromfb';
-                // $photoName = microtime().$strippedName;
+        if($request->social != '' && $request->avatar != '') {
+            $file_path = json_decode(file_get_contents($b.'&redirect=false'), TRUE);
+            $file_actual_url  = $file_path['data']['url'];
+            $filename = basename($file_actual_url);
+            $change_avatar = Image::make($file_actual_url);
+            $strippedName = 'userfromfb';
+            // Lets resize the image to the square with dimensions of either width or height , which ever is smaller.
+            list($width, $height) = getimagesize($change_avatar);
+            $avatar_thumbnail = $change_avatar;
+            $avatar = $change_avatar;
+            $mime = $avatar->mime();
+            if ($mime == 'image/jpeg')
+                $extension = '.jpg';
+            elseif ($mime == 'image/png')
+                $extension = '.png';
+            elseif ($mime == 'image/gif')
+                $extension = '.gif';
+            else
+                $extension = '';
+            $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id.$extension;
+            $photoName_thumbnail = '100_'.$photoName;
 
-                // Lets resize the image to the square with dimensions of either width or height , which ever is smaller.
-                list($width, $height) = getimagesize($change_avatar);
+            if ($width > $height) {
+                $avatar->crop($height, $height);
+                $avatar_thumbnail->crop($height, $height);
+            } else {
+                $avatar->crop($width, $width);
+                $avatar_thumbnail->crop($width, $width);
+            }
+            $avatar->resize(600, 600);
 
+            $avatar->save(storage_path().'/uploads/users/avatars/'.$photoName, 100);
 
-                $avatar = Image::make($change_avatar)->orientate();
-                $avatar_thumbnail = $avatar;
+            $avatar_thumbnail->resize(100, 100);
+            $avatar_thumbnail->save(storage_path().'/uploads/users/avatars/'.$photoName_thumbnail, 100);
 
-                $mime = $avatar->mime();
-                if ($mime == 'image/jpeg')
-                    $extension = '.jpg';
-                elseif ($mime == 'image/png')
-                    $extension = '.png';
-                elseif ($mime == 'image/gif')
-                    $extension = '.gif';
-                else
-                    $extension = '';
-                $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id.$extension;
-                $photoName_thumbnail = '100_'.$photoName;
-
-                if ($width > $height) {
-                    $avatar->crop($height, $height);
-                    $avatar_thumbnail->crop($height, $height);
-                } else {
-                    $avatar->crop($width, $width);
-                    $avatar_thumbnail->crop($width, $width);
-                }
-                $avatar->resize(600, 600);
-
-                $avatar->save(storage_path().'/uploads/users/avatars/'.$photoName, 100);
-
-                $avatar_thumbnail->resize(100, 100);
-                $avatar_thumbnail->save(storage_path().'/uploads/users/avatars/'.$photoName_thumbnail, 100);
-
-
-				// $fileContents = file_get_contents($request->avatar);
-				// $photoName = date('Y-m-d-H-i-s').str_random(8).'.png';
-				// File::put(storage_path() . '/uploads/users/avatars/' . $photoName, $fileContents);
-
-				$media = Media::create([
-					'title'  => $photoName,
-					'type'   => 'image',
-					'source' => $photoName,
-				]);
-				$timeline->avatar_id = $media->id;
-				$timeline->save();
-			}
+            $media = Media::create([
+                'title'  => $photoName,
+                'type'   => 'image',
+                'source' => $photoName,
+            ]);
+            $timeline->avatar_id = $media->id;
+            $timeline->save();
+        }
         if(Setting::get('mail_verification') == 'off')
         {
             $mail_verification = 1;
@@ -214,7 +204,7 @@ class RegisterController extends Controller
             'verification_code' => str_random(30),
             'remember_token'    => str_random(10),
             'email_verified'    => $mail_verification
-            ]);
+        ]);
         if (Setting::get('birthday') == 'on' && $request->birthday != '') {
             $user->birthday = date('Y-m-d', strtotime($request->birthday));
             $user->save();
@@ -230,21 +220,21 @@ class RegisterController extends Controller
 
         //saving default settings to user settings
         $user_settings = [
-          'user_id'               => $user->id,
-          'confirm_follow'        => 'yes',
-          'follow_privacy'        => 'everyone',
-          'comment_privacy'       => 'everyone',
-          'timeline_post_privacy' => 'everyone',
-          'post_privacy'          => 'everyone',
-          'message_privacy'       => 'everyone', 
-          'email_follow'          => 'yes',
-          'email_like_post'       => 'yes',
-          'email_post_share'      => 'yes',
-          'email_comment_post'    => 'yes',
-          'email_like_comment'    => 'yes',
-          'email_reply_comment'   => 'yes',
-          'email_join_group'      => 'yes',
-          'email_like_page'       => 'yes',
+            'user_id'               => $user->id,
+            'confirm_follow'        => 'yes',
+            'follow_privacy'        => 'everyone',
+            'comment_privacy'       => 'everyone',
+            'timeline_post_privacy' => 'everyone',
+            'post_privacy'          => 'everyone',
+            'message_privacy'       => 'everyone',
+            'email_follow'          => 'yes',
+            'email_like_post'       => 'yes',
+            'email_post_share'      => 'yes',
+            'email_comment_post'    => 'yes',
+            'email_like_comment'    => 'yes',
+            'email_reply_comment'   => 'yes',
+            'email_join_group'      => 'yes',
+            'email_like_page'       => 'yes',
         ];
 
         //Create a record in user settings table.
@@ -264,7 +254,7 @@ class RegisterController extends Controller
                         $m->to($user->email, $user->name)->subject('Welcome to '.Setting::get('site_name'));
                     });
                 }
-								$url=URL::to('/');
+                $url=URL::to('/');
                 return response()->json(['status' => '200', 'message' => trans('auth.verify_email'), 'emailnotify' => $chk,'url' => $url]);
             }
         }
@@ -276,12 +266,12 @@ class RegisterController extends Controller
 
         if ($user->email_verified) {
             return Redirect::to('login')
-            ->with('login_notice', trans('messages.verified_mail'));
+                ->with('login_notice', trans('messages.verified_mail'));
         } elseif ($user) {
             $user->email_verified = 1;
             $user->update();
             return Redirect::to('login')
-            ->with('login_notice', trans('messages.verified_mail_success'));
+                ->with('login_notice', trans('messages.verified_mail_success'));
         } else {
             echo trans('messages.invalid_verification');
         }
@@ -289,41 +279,41 @@ class RegisterController extends Controller
 
     public function facebookRedirect()
     {
-			  $a = 0;
+        $a = 0;
         return Socialite::with('facebook')->redirect();
     }
 
     // to get authenticate user data
     public function facebook()
     {
-    	$a = 0;
-    	$user_model = new User();
+        $a = 0;
+        $user_model = new User();
         $facebook_user = Socialite::with('facebook')->user();
-			if(!isset($facebook_user->test)) {
-				$a = 0;
-			}
-			$data = array();
-				$data = $facebook_user->user;
-				$data['social'] = TRUE;
-				$data['avatar'] = $facebook_user->avatar_original;
-			if(!isset($data['email'])) {
-				$theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('guest');
-				$theme->setTitle(trans('auth.register').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
-				return $theme->scope('register',compact('data'))->render();
-			}
-			else {
-				$user_info = $user_model->where('email','=',$data['email'])->get()->toArray();
-				if(empty($user_info)) {
-					$theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('guest');
-					$theme->setTitle(trans('auth.register').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
-					return $theme->scope('register',compact('data'))->render();
-				}
-				else {
-					$user = User::firstOrNew(['email' => $data['email']]);
-					Auth::login($user,TRUE);
-					return redirect('/');
-				}
-			}
+        if(!isset($facebook_user->test)) {
+            $a = 0;
+        }
+        $data = array();
+        $data = $facebook_user->user;
+        $data['social'] = TRUE;
+        $data['avatar'] = $facebook_user->avatar_original;
+        if(!isset($data['email'])) {
+            $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('guest');
+            $theme->setTitle(trans('auth.register').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+            return $theme->scope('register',compact('data'))->render();
+        }
+        else {
+            $user_info = $user_model->where('email','=',$data['email'])->get()->toArray();
+            if(empty($user_info)) {
+                $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('guest');
+                $theme->setTitle(trans('auth.register').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
+                return $theme->scope('register',compact('data'))->render();
+            }
+            else {
+                $user = User::firstOrNew(['email' => $data['email']]);
+                Auth::login($user,TRUE);
+                return redirect('/');
+            }
+        }
 
 
         /*if ($email == null) {
@@ -349,11 +339,11 @@ class RegisterController extends Controller
             $timeline = $this->registerUser($request, true);
             //  Prepare the image for user avatar
             if ($facebook_user->avatar != null) {
-                
+
                 $fileContents = file_get_contents($facebook_user->getAvatar());
                 $photoName = date('Y-m-d-H-i-s').str_random(8).'.png';
                 File::put(storage_path() . '/uploads/users/avatars/' . $photoName, $fileContents);
-                
+
                 $media = Media::create([
                         'title'  => $photoName,
                         'type'   => 'image',
@@ -393,10 +383,10 @@ class RegisterController extends Controller
         $user = User::firstOrNew(['email' => $google_user->email]);
         if (!$user->id) {
             $request = new Request(['username' => $google_user->id,
-              'name'                           => $google_user->name,
-              'email'                          => $google_user->email,
-              'password'                       => bcrypt(str_random(8)),
-              'gender'                         => $user_gender,
+                'name'                           => $google_user->name,
+                'email'                          => $google_user->email,
+                'password'                       => bcrypt(str_random(8)),
+                'gender'                         => $user_gender,
             ]);
             $timeline = $this->registerUser($request, true);
 
@@ -406,10 +396,10 @@ class RegisterController extends Controller
             $avatar->save(storage_path().'/uploads/users/avatars/'.$photoName, 60);
 
             $media = Media::create([
-                      'title'  => $photoName,
-                      'type'   => 'image',
-                      'source' => $photoName,
-                    ]);
+                'title'  => $photoName,
+                'type'   => 'image',
+                'source' => $photoName,
+            ]);
 
             $timeline->avatar_id = $media->id;
 
@@ -429,7 +419,7 @@ class RegisterController extends Controller
         return Socialite::with('twitter')->redirect();
     }
 
-  // to get authenticate user data
+    // to get authenticate user data
     public function twitter()
     {
         $twitter_user = Socialite::with('twitter')->user();
@@ -437,22 +427,22 @@ class RegisterController extends Controller
         $user = User::firstOrNew(['email' => $twitter_user->id.'@twitter.com']);
         if (!$user->id) {
             $request = new Request(['username'   => $twitter_user->id,
-              'name'                           => $twitter_user->name,
-              'email'                          => $twitter_user->id.'@twitter.com',
-              'password'                       => bcrypt(str_random(8)),
-              'gender'                         => 'other',
+                'name'                           => $twitter_user->name,
+                'email'                          => $twitter_user->id.'@twitter.com',
+                'password'                       => bcrypt(str_random(8)),
+                'gender'                         => 'other',
             ]);
             $timeline = $this->registerUser($request, true);
-              //  Prepare the image for user avatar
+            //  Prepare the image for user avatar
             $avatar = Image::make($twitter_user->avatar_original);
             $photoName = date('Y-m-d-H-i-s').str_random(8).'.png';
             $avatar->save(storage_path().'/uploads/users/avatars/'.$photoName, 60);
 
             $media = Media::create([
-                      'title'  => $photoName,
-                      'type'   => 'image',
-                      'source' => $photoName,
-                    ]);
+                'title'  => $photoName,
+                'type'   => 'image',
+                'source' => $photoName,
+            ]);
 
             $timeline->avatar_id = $media->id;
 
@@ -472,7 +462,7 @@ class RegisterController extends Controller
         return Socialite::with('linkedin')->redirect();
     }
 
-  // to get authenticate user data
+    // to get authenticate user data
     public function linkedin()
     {
         $linkedin_user = Socialite::with('linkedin')->user();
@@ -480,24 +470,24 @@ class RegisterController extends Controller
         $user = User::firstOrNew(['email' => $linkedin_user->email]);
         if (!$user->id) {
             $request = new Request(['username'   => preg_replace('/[^A-Za-z0-9 ]/', '', $linkedin_user->id),
-              'name'                           => $linkedin_user->name,
-              'email'                          => $linkedin_user->email,
-              'password'                       => bcrypt(str_random(8)),
-              'gender'                         => 'other',
+                'name'                           => $linkedin_user->name,
+                'email'                          => $linkedin_user->email,
+                'password'                       => bcrypt(str_random(8)),
+                'gender'                         => 'other',
             ]);
 
             $timeline = $this->registerUser($request, true);
 
-              //  Prepare the image for user avatar
+            //  Prepare the image for user avatar
             $avatar = Image::make($linkedin_user->avatar_original);
             $photoName = date('Y-m-d-H-i-s').str_random(8).'.png';
             $avatar->save(storage_path().'/uploads/users/avatars/'.$photoName, 60);
 
             $media = Media::create([
-                      'title'  => $photoName,
-                      'type'   => 'image',
-                      'source' => $photoName,
-                    ]);
+                'title'  => $photoName,
+                'type'   => 'image',
+                'source' => $photoName,
+            ]);
 
             $timeline->avatar_id = $media->id;
 
