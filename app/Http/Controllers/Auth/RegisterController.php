@@ -149,7 +149,7 @@ class RegisterController extends Controller
             $fileContents = file_get_contents($b);
             $path_ = public_path().'/temp/temp'.$timeline->id.'.jpg';
             File::put($path_, $fileContents);
-            $change_avatar = Image::make(basename(public_path().'/temp/temp'.$timeline->id.'.jpg'));
+            $change_avatar = Image::make(asset('/temp/temp'.$timeline->id.'.jpg'));
             $strippedName = 'userfromfb';
             // Lets resize the image to the square with dimensions of either width or height , which ever is smaller.
             list($width, $height) = getimagesize($change_avatar);
