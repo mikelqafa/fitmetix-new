@@ -150,7 +150,6 @@ class RegisterController extends Controller
             $path_ = public_path().'/temp/temp'.$timeline->id.'.jpg';
             File::put($path_, $fileContents);
             $change_avatar = Image::make($path_);
-            dd($change_avatar);
             $strippedName = 'userfromfb';
             // Lets resize the image to the square with dimensions of either width or height , which ever is smaller.
             list($width, $height) = getimagesize($change_avatar);
@@ -189,7 +188,7 @@ class RegisterController extends Controller
             ]);
             $timeline->avatar_id = $media->id;
             $timeline->save();
-            //Storage::delete(storage_path().'/uploads/users/avatars/'.'temp_'.$timeline->id.'.jpg');
+            Storage::delete($path_);
         }
         if(Setting::get('mail_verification') == 'off')
         {
