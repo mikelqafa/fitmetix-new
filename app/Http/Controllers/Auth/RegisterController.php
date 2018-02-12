@@ -143,8 +143,8 @@ class RegisterController extends Controller
         $a = $request->social;
         $b = $request->avatar;
 			if($request->social != '' && $request->avatar != '') {
+                dd($request->avatar);
                 $change_avatar = Image::make($request->avatar);
-                dd($request);
                 $strippedName = 'userfromfb';
                 // $photoName = microtime().$strippedName;
 
@@ -297,14 +297,13 @@ class RegisterController extends Controller
     	$a = 0;
     	$user_model = new User();
         $facebook_user = Socialite::with('facebook')->user();
-        dd($facebook_user);
 			if(!isset($facebook_user->test)) {
 				$a = 0;
 			}
 			$data = array();
 				$data = $facebook_user->user;
 				$data['social'] = TRUE;
-				$data['avatar'] = $facebook_user->getAvatar();
+				$data['avatar'] = $facebook_user->avatar_original;
 			if(!isset($data['email'])) {
 				$theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('guest');
 				$theme->setTitle(trans('auth.register').' '.Setting::get('title_seperator').' '.Setting::get('site_title').' '.Setting::get('title_seperator').' '.Setting::get('site_tagline'));
