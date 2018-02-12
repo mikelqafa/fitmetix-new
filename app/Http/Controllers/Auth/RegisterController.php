@@ -176,10 +176,10 @@ class RegisterController extends Controller
                 }
                 $avatar->resize(600, 600);
 
-                $avatar->save(storage_path().'/uploads/users/avatars/'.$photoName, 60);
+                $avatar->save(storage_path().'/uploads/users/avatars/'.$photoName, 100);
 
                 $avatar_thumbnail->resize(100, 100);
-                $avatar_thumbnail->save(storage_path().'/uploads/users/avatars/'.$photoName_thumbnail, 60);
+                $avatar_thumbnail->save(storage_path().'/uploads/users/avatars/'.$photoName_thumbnail, 100);
 
 
 				// $fileContents = file_get_contents($request->avatar);
