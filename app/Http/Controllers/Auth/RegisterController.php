@@ -152,7 +152,7 @@ class RegisterController extends Controller
             $change_avatar = Image::make($path_);
             $strippedName = 'userfromfb';
             // Lets resize the image to the square with dimensions of either width or height , which ever is smaller.
-            list($width, $height) = getimagesize($change_avatar);
+            list($width, $height) = getimagesize($change_avatar->getRealPath());
             $avatar_thumbnail = $change_avatar;
             $avatar = $change_avatar;
             $mime = $avatar->mime();
