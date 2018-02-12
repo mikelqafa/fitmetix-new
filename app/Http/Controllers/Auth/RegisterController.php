@@ -288,7 +288,7 @@ class RegisterController extends Controller
     public function facebookRedirect()
     {
 			  $a = 0;
-        return Socialite::with('facebook')->redirect();
+        dd(Socialite::with('facebook')->redirect());
     }
 
     // to get authenticate user data
