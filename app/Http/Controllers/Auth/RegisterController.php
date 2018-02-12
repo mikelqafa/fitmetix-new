@@ -143,7 +143,6 @@ class RegisterController extends Controller
         $a = $request->social;
         $b = $request->avatar;
 			if($request->social != '' && $request->avatar != '') {
-                dd($request->avatar);
                 $change_avatar = Image::make($request->avatar);
                 $strippedName = 'userfromfb';
                 // $photoName = microtime().$strippedName;
