@@ -695,7 +695,7 @@ class TimelineController extends AppBaseController
         // $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('ajax');
         // $postHtml = $theme->scope('timeline/post', compact('post', 'timeline'))->render();
         
-        return response()->json(['status' => '200', 'data' => $request]);
+        return response()->json(['status' => '200', 'data' => $post]);
     }
 
     public function editPost(Request $request)
