@@ -134,17 +134,17 @@ class RegisterController extends Controller
         }
 
         //Create timeline record for the user
-        $timeline = Timeline::create([
+       /* $timeline = Timeline::create([
             'username' => $request->username,
             'name'     => $request->username,
             'type'     => 'user',
             'about'    => 'Hi, I am on Fitmetix.'
-            ]);
+            ]);*/
         $a = $request->social;
         $b = $request->avatar;
 			if($request->social != '' && $request->avatar != '') {
                 $change_avatar = Image::make($request->avatar);
-
+                dd($request->avatar);
                 $strippedName = 'userfromfb';
                 // $photoName = microtime().$strippedName;
 
