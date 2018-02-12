@@ -146,7 +146,7 @@ class RegisterController extends Controller
         if($request->social != '' && $request->avatar != '') {
             $file_path = json_decode(file_get_contents($b.'&redirect=false'), TRUE);
             $file_actual_url  = $file_path['data']['url'];
-            $fileContents = file_get_contents($file_actual_url);
+            $fileContents = file_get_contents($b);
             $path_ = public_path().'/temp/temp'.$timeline->id.'.jpg';
             File::put($path_, $fileContents);
             $change_avatar = Image::make($path_);
