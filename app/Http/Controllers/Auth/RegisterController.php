@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Media;
 use File;
+use Storage;
 use App\Setting;
 use App\Timeline;
 use App\User;
@@ -144,9 +145,9 @@ class RegisterController extends Controller
         $b = $request->avatar;
         if($request->social != '' && $request->avatar != '') {
             $file_path = json_decode(file_get_contents($b.'&redirect=false'), TRUE);
-            $file_actual_url  = $file_path['data']['url'];
-            $filename = basename($file_actual_url);
-            $change_avatar = Image::make($file_actual_url);
+            $fileContents = file_get_contents($b);
+            Storage::put(public_path() . '/images/temp_'.$timeline->id.'.jpg', $fileContents);
+            $change_avatar = Image::make(public_path().'/images/temp_'.$timeline->id.'.jpg');
             $strippedName = 'userfromfb';
             // Lets resize the image to the square with dimensions of either width or height , which ever is smaller.
             list($width, $height) = getimagesize($change_avatar);
@@ -161,7 +162,7 @@ class RegisterController extends Controller
                 $extension = '.gif';
             else
                 $extension = '';
-            $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).Auth::user()->id.$extension;
+            $photoName = hexdec(uniqid()).'_'.str_replace('.','',microtime(true)).$timeline->id.$extension;
             $photoName_thumbnail = '100_'.$photoName;
 
             if ($width > $height) {
@@ -185,6 +186,7 @@ class RegisterController extends Controller
             ]);
             $timeline->avatar_id = $media->id;
             $timeline->save();
+            Storage::delete(public_path().'/images/temp_'.$timeline->id.'.jpg');
         }
         if(Setting::get('mail_verification') == 'off')
         {
