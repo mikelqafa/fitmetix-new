@@ -2,11 +2,14 @@
 
 function trendingTags()
 {
-    $trending_tags = App\Hashtag::orderBy('count', 'desc')->limit(20)->get();
+    $trending_tags = App\Hashtag::orderBy('count', 'desc')->get();
 
     if (count($trending_tags) > 0) {
-        if (count($trending_tags) > (int) Setting::get('min_items_page', 15)) {
-            $trending_tags = $trending_tags->random((int) Setting::get('min_items_page', 15));
+        if (count($trending_tags) > 14) {
+            $trending_tags = $trending_tags->random(15);
+        }
+        else {
+            $trending_tags = $trending_tags->random(count($trending_tags));
         }
     } else {
         $trending_tags = '';
