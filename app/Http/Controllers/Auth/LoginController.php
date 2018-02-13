@@ -108,7 +108,12 @@ class LoginController extends Controller
         return $theme->scope('reset-password')->render();
     }
 
-    public function postReset() {
-       
+    public function postReset(Request $request) {
+       $user = User::where('email',$request->email)->first();
+       if($user){
+           $user->password = bcrypt($request->password);
+           $user->save();
+       }
+       return redirect('/');
     }
 }
