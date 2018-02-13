@@ -12,16 +12,16 @@
         <div v-if="showFilter" class="event-filter-wrapper">
             <div class="hidden-sm hidden-xs ft-filter">
                 <fieldset class="form-group">
-                    <input v-on:keyup.enter="submit(0)" onKeyPress="return initMapDesk(event)" class="pac-input form-control" id="filter-location-input" autocomplete="off" placeholder="By Location" name="location" type="text" style="position: relative; overflow: hidden;">
+                    <input v-on:keyup.enter="submit(0)" onKeyPress="return initMapDesk(event)" class="pac-input form-control" id="filter-location-input" autocomplete="off" :placeholder="$t('common.b_loc')" name="location" type="text" style="position: relative; overflow: hidden;">
                 </fieldset>
                 <fieldset class="form-group">
-                    <input v-on:keyup.enter="submit(1, $event)" class="form-control filter-date" name="date" id="filter-date" autocomplete="off" placeholder="By Date" type="text" style="position: relative; overflow: hidden;">
+                    <input v-on:keyup.enter="submit(1, $event)" class="form-control filter-date" name="date" id="filter-date" autocomplete="off" :placeholder="$t('common.b_date')" type="text" style="position: relative; overflow: hidden;">
                 </fieldset>
                 <fieldset class="form-group">
-                    <input v-on:keyup.enter="submit(2)" v-model.trim="filterData[2]" class="form-control" id="filter-tag" name="tags" autocomplete="off" placeholder="By Tag" type="text" style="position: relative; overflow: hidden;">
+                    <input v-on:keyup.enter="submit(2)" v-model.trim="filterData[2]" class="form-control" id="filter-tag" name="tags" autocomplete="off" :placeholder="$t('common.tag')" type="text" style="position: relative; overflow: hidden;">
                 </fieldset>
                 <fieldset class="form-group">
-                    <input v-on:keyup.enter="submit(3)" v-model.trim="filterData[3]" class="form-control" id="filter-title" name="title" autocomplete="off" placeholder="By Title" type="text" style="position: relative; overflow: hidden;">
+                    <input v-on:keyup.enter="submit(3)" v-model.trim="filterData[3]" class="form-control" id="filter-title" name="title" autocomplete="off" :placeholder="$t('common.b_title')" type="text" style="position: relative; overflow: hidden;">
                 </fieldset>
             </div>
 
@@ -54,17 +54,17 @@
 
             <div class="hidden-lg hidden-md tab-content tab-content--event-filter">
                 <div id="home" class="tab-pane fade in active">
-                    <input v-on:keyup.enter="submit(0)" v-model.trim="filterData[0]" class="form-control" id="filter-location-input-mob" autocomplete="off" placeholder="By Location" name="location" type="text" style="position: relative; overflow: hidden;">
+                    <input v-on:keyup.enter="submit(0)" v-model.trim="filterData[0]" class="form-control" id="filter-location-input-mob" autocomplete="off" :placeholder="$t('common.b_loc')" name="location" type="text" style="position: relative; overflow: hidden;">
                 </div>
                 <div id="menu1" class="tab-pane fade">
-                    <input v-on:keyup.enter="submit(1)" class="form-control filter-date" name="date" id="filter-date-mob" autocomplete="off" placeholder="By Date" type="text" style="position: relative; overflow: hidden;">
+                    <input v-on:keyup.enter="submit(1)" class="form-control filter-date" name="date" id="filter-date-mob" autocomplete="off" :placeholder="$t('common.b_date')" type="text" style="position: relative; overflow: hidden;">
                 </div>
                 <div id="menu2" class="tab-pane fade">
-                    <input v-on:keyup.enter="submit(2)" v-model.trim="filterData[2]" class="form-control" id="filter-tag-mob" name="tags" autocomplete="off" placeholder="By Tag" type="text" style="position: relative; overflow: hidden;">
+                    <input v-on:keyup.enter="submit(2)" v-model.trim="filterData[2]" class="form-control" id="filter-tag-mob" name="tags" autocomplete="off" :placeholder="$t('common.b_tag')" type="text" style="position: relative; overflow: hidden;">
                 </div>
                 <div id="menu3" class="tab-pane fade">
                     <fieldset class="form-group required " style="margin-right: 0">
-                        <input v-on:keyup.enter="submit(3)" v-model.trim="filterData[3]" class="form-control" id="filter-title-mob" name="title" autocomplete="off" placeholder="By Title" type="text" style="position: relative; overflow: hidden;">
+                        <input v-on:keyup.enter="submit(3)" v-model.trim="filterData[3]" class="form-control" id="filter-title-mob" name="title" autocomplete="off" :placeholder="$t('common.b_title')" type="text" style="position: relative; overflow: hidden;">
                     </fieldset>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                     </template>
                 </div>
                 <div class="md-layout-spacer"></div>
-                <button class="btn btn-submit ft-btn-primary" @click="submitFilter">FILTER</button>
+                <button class="btn btn-submit ft-btn-primary text-uppercase" @click="submitFilter">{{$t('common.filter')}}</button>
             </div>
         </div>
 
@@ -282,7 +282,7 @@
                             </div>
                         </div>
                         <div class="text-center" v-if="!hasMorePost && !interact">
-                            No more events to fetch
+                            {{$t('common.n_m_e_f')}}
                         </div>
                         <div v-if="isFetchingBottom" class="ft-loading ft-loading--transparent" style="margin: 50px 0">
                             <span class="ft-loading__dot"></span>
@@ -293,7 +293,7 @@
                     <template v-else="">
                         <div v-if="noEventListFound" class="">
                             <h2 class="ft-loading text-center">
-                                No Event found
+                                {{$t('common.e_n_f_d')}}
                             </h2>
                         </div>
                     </template>
@@ -331,7 +331,7 @@
                             <a href="javascript:;" @click="closeEventPost" class="ft-btn--icon ft-btn-icon"><i class="icon icon-close"></i></a>
                         </header>
                         <div class="ft-loading text-center">
-                            Event not found or deleted!
+                            {{$t('common.e_n_f_d')}}
                         </div>
                     </div>
                 </div>

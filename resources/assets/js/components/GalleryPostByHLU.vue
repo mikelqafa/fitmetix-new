@@ -55,13 +55,13 @@
                     <span class="ft-loading__dot"></span>
                 </div>
                 <div class="text-center ft-loading ft-loading--transparent" v-if="!hasMorePost">
-                    That&apos;s all for now
+                    {{$t('common.n_m_g_f')}}
                 </div>
             </template>
         </template>
         <template v-else="">
             <div class="text-center ft-loading ft-loading--transparent">
-                No Gallery Found
+                {{$t('common.no')}} {{$t('common.gl_f')}}
             </div>
         </template>
     </div>

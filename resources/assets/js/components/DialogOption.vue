@@ -12,35 +12,35 @@
                         <div class="ft-dialog-option" v-bind:class="{'is-loading': isLoading}">
                             <template v-if="authUser">
                                 <a v-if="isTypeEvent" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="editEvent">
-                                    Edit Event
+                                    {{this.$t('common.edit')}} {{this.$t('common.event')}}
                                 </a>
                                 <a v-else="" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="editPost">
-                                    Edit Post
+                                    {{this.$t('common.edit')}} post
                                 </a>
 
                                 <a v-if="isTypeEvent" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="confirmDeleteEvent">
-                                    Delete Event
+                                    {{this.$t('common.delete')}} {{this.$t('common.event')}}
                                 </a>
                                 <a v-else="" href="javascript:;" class="btn ft-dialog-option__item" @click="confirmDeletePost">
-                                    Delete Post
+                                    {{this.$t('common.delete')}} Post
                                 </a>
 
                                 <a href="javascript:;" data-value="cancel" class="btn ft-dialog-option__item" @click="shareTo('facebook')">
-                                    Share
+                                    {{this.$t('common.share')}}
                                 </a>
                             </template>
                             <template v-else="">
                                 <a v-if="isTypeEvent" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="initReportPost">
-                                    Report Event
+                                    {{this.$t('common.report')}} {{this.$t('common.event')}}
                                 </a>
                                 <a v-else="" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="initReportPost">
-                                    Report Post
+                                    {{this.$t('common.report')}}  Post
                                 </a>
                                 <a href="javascript:;" data-value="cancel" class="btn ft-dialog-option__item" @click="shareTo('facebook')">
-                                    Share
+                                    {{this.$t('common.share')}}
                                 </a>
                                 <a href="javascript:;" class="btn ft-dialog-option__item" @click="savePost">
-                                    Save/Unsave
+                                    {{this.$t('common.save')}}/{{this.$t('common.unsave')}}
                                 </a>
                             </template>
                         </div>

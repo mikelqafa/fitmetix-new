@@ -1,7 +1,7 @@
 <template>
     <div data-width="5" class="ft-chat" style="width: 100%;max-width: none">
         <template v-if="hasItem">
-            <div class="ft-chat__header">Notifications</div>
+            <div class="ft-chat__header">{{$t('common.notifi')}}</div>
             <div class="">
                 <a :href="notificationUrl(item)" v-for="(item, index) in notifications" :data-nid="item.id" :key="'all-nt'+item.id" class="md-menu__item ft-chat__item">
                     <div class="md-list__item  has-divider">
@@ -35,12 +35,12 @@
                             <div class="md-list--abs">
                                 <div class="md-layout ft-nt-group md-layout--row"  v-if="item.type == 'follow_requested_accept'">
                                     <div class="color-accept" title="Accepted">
-                                        Accepted
+                                        {{$t('common.accepted')}}
                                     </div>
                                 </div>
                                 <div class="md-layout ft-nt-group md-layout--row"  v-if="item.type == 'follow_requested_deny'">
                                     <div class="color-deny">
-                                        Denied
+                                        {{$t('common.denied')}}
                                     </div>
                                 </div>
                             </div>
@@ -48,12 +48,14 @@
                     </div>
                 </a>
                 <div class="text-enter layout-m-t-1" v-if="hasItemNoti">
-                    <button class="btn btn-block ft-btn-primary" @click="loadMore">Load More</button>
+                    <button class="btn btn-block ft-btn-primary" @click="loadMore">
+                        {{$t('common.load_more')}}
+                    </button>
                 </div>
             </div>
         </template>
         <template v-else="">
-            <div class="ft-chat__header">No Notifications</div>
+            <div class="ft-chat__header">{{$t('common.no')}} {{$t('common.notifi')}}</div>
         </template>
     </div>
 </template>

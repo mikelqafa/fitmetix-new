@@ -347,4 +347,13 @@
   'rejected_follow_request' => 'Ihre Folge Antrag abgelehnt',
   'update_now' => 'Jetzt aktualisieren',
   't_c' => 'Impressum/AGB',
+  'form_helper_title' => 'Gib einen tollen Titel für deine Veranstaltung',
+  'form_helper_p' => 'Geben Sie ein, wie viele Benutzer teilnehmen können',
+  'form_helper_currency' => 'Wählen Sie den Währungstyp für das kostenpflichtige Ereignis aus.',
+  'form_helper_price' => 'Geben Sie den Veranstaltungspreis an. Wenn frei, geben Sie 0 ein.',
+  'form_helper_location ' => 'Geben Sie einen Ort für Ihre Veranstaltung an, damit der Nutzer dort leicht hinkommt.',
+  'form_helper_gender' => 'Wenn Ihre Veranstaltung nur für ein bestimmtes Geschlecht gilt, Wählen Sie hier Geschlecht. Verwenden Sie alle für alle Geschlechter.',
+  'form_helper_privacy' => 'Zu privaten Veranstaltungen kommen nur Personen, die dir folgen (die du akzeptiert hast, wenn du ein privates Profil hast). Jeder kann an einer öffentlichen Veranstaltung teilnehmen.',
+   'form_helper_duration' => 'Wie lange wird Ihre Veranstaltung laufen? Maximal 48 Stunden erlaubt.',
+   'form_helper_details' => 'Geben Sie Details über die Veranstaltung und die Dinge ein, die Sie für die Teilnahme an der Veranstaltung benötigen.',
 );

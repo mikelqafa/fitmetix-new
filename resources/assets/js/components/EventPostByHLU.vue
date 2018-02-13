@@ -164,7 +164,7 @@
                             <span class="ft-loading__dot"></span>
                         </div>
                         <div class="hidden text-center" v-if="!hasMorePost">
-                            That&apos;s all for now
+                            {{$t('common.n_m_e_f')}}
                         </div>
                     </template>
                     <template v-else-if="!noEventListFound">
@@ -207,7 +207,7 @@
                             </div>
                         </div>
                         <div class="text-center ft-loading ft-loading--transparent" v-if="!hasMorePost">
-                            No more events to fetch
+                            {{$t('common.n_m_e_f')}}
                         </div>
                         <div v-if="isFetchingBottom" class="ft-loading ft-loading--transparent" style="margin: 50px 0">
                             <span class="ft-loading__dot"></span>
@@ -218,7 +218,7 @@
                     <template v-else="">
                         <div v-if="noEventListFound" class="">
                             <h2 class="ft-loading ft-loading--transparent text-center">
-                                No Event found
+                                {{$t('common.event')}} {{$t('post.n_f')}}
                             </h2>
                         </div>
                     </template>
@@ -250,7 +250,7 @@
                     </div>
                     <div v-if="noEventFound" class="absolute-loader">
                         <div class="ft-loading text-center">
-                            Event not found or deleted!
+                            {{$t('common.event')}} {{$t('post.n_f')}}
                         </div>
                     </div>
                 </div>

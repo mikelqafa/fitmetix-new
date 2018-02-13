@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="position:relative">
-            <input v-on:focus="onFocus" placeholder="Send to" v-on:blur="onBlur" class="form-control" type="text" v-model="autoCompleteValue" @keydown.enter='onKeyEnter' @keydown.down='onKeyDown' @keydown.up='onKeyUp' @input='onInput'/>
+            <input v-on:focus="onFocus" :placeholder="$t('common.send_to')" v-on:blur="onBlur" class="form-control" type="text" v-model="autoCompleteValue" @keydown.enter='onKeyEnter' @keydown.down='onKeyDown' @keydown.up='onKeyUp' @input='onInput'/>
             <div v-if="suggestions.length" class="dropdown-menu md-list md-list--autocomplete md-list--dense" v-bind:class="{'md-list--open':openSuggestion}">
                 <a href="javascript:;" class="md-list__item" v-for="(suggestion, index) in filterSuggestion" v-bind:class="{'md-list__item--active': isActive(index)}" @click="suggestionClick(index)">
                     <div :title="'@'+suggestion.name" class="md-list__item-icon user-avatar" :style="{ backgroundImage: 'url('+ getThumbImage(suggestion.avatar) +')' }"></div>

@@ -6,11 +6,13 @@
                 <div class="md-dialog__shadow"></div>
                 <div class="md-dialog__surface" style="position: relative">
                     <header class="md-dialog__header">
-                        Help us keep Fitmetix an environment that promotes healthy living.
+                        {{$t('common.help_fitmetix')}}
                     </header>
                     <div class="md-dialog__body" v-if="hasItem">
                         <div class="form-group">
-                            <label for="comment">Write your comment:</label>
+                            <label for="comment">
+                                {{$t('common.write_c')}}:
+                            </label>
                             <textarea class="form-control" v-model="reportComment"  rows="5" id="comment"></textarea>
                         </div>
                     </div>
@@ -23,7 +25,9 @@
                     </div>
                     <footer class="md-dialog__footer">
                         <button class="md-dialog__action md-button md-button--compact" data-action="dismissive">CANCEL</button>
-                        <button class="md-dialog__action md-button ft-btn-primary btn md-button--compact" @click="confirmReport">REPORT</button>
+                        <button class="md-dialog__action md-button ft-btn-primary btn md-button--compact" @click="confirmReport">
+                            {{$t('common.report')}}
+                        </button>
                     </footer>
                 </div>
             </div>
@@ -47,7 +51,7 @@
         },
         data: function () {
             return {
-                body: 'Do you really want to report this post?',
+                body:'',
                 isLoading: false,
                 userImage: '',
                 placeholder: '',
@@ -109,6 +113,7 @@
         },
         mounted() {
             $('#post-report-dialog').MaterialDialog({show:false})
+            this.body =  this.$t('common.ask_report_post')
         }
     }
 </script>

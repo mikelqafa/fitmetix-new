@@ -12,12 +12,12 @@
                                 <div class="md-dialog__body">
                                     <div class="form-group">
                                         <label for="share-user-select">{{$t('common.user_to_share') }}:</label>
-                                        <input placeholder="Send to" class="hidden form-control" id="share-user-select"/>
+                                        <input :placeholder="$t('common.send_to')" class="hidden form-control" id="share-user-select"/>
                                         <app-autocomplete ref="shareuser"></app-autocomplete>
                                     </div>
                                 </div>
                                 <footer class="md-dialog__footer">
-                                    <button class="md-dialog__action md-button ft-btn-primary btn md-button--compact" @click="sendPost">Send</button>
+                                    <button class="md-dialog__action md-button ft-btn-primary btn md-button--compact" @click="sendPost">{{$t('common.send')}}</button>
                                 </footer>
                             </template>
                             <div v-if="isLoading" class="absolute-loader">

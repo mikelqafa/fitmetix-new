@@ -170,7 +170,7 @@
                 let $imageInputs = this.$refs.vue_img.files
                 if($imageInputs.length == 0 && youtubeText == '' && location =='' && youtube_title == '' && youtube_video_id == ''
                         && soundcloud_id == '' && user_tags == '' && soundcloud_title == '' && $.trim($('.replace-with').html()) == '' ) {
-                    alertApp('Your post cannot be empty!')
+                    alertApp(this.$t('common.alert_post_empty'))
                     return false;
                 }
                 let imageUploaded = true
@@ -181,7 +181,7 @@
                     }
                 }
                 if(!imageUploaded) {
-                    alertApp('Please wait while images are being uploading')
+                    alertApp(this.$t('common.alert_post_wait'))
                     return;
                 }
                 let invalid = false
@@ -235,7 +235,7 @@
                 }).then(function (response) {
                     if (response.status == 200) {
                         window.timeLine.$options.components["app-post"].methods.fetchNewOnePost(response.data.data.id)
-                        materialSnackBar({messageText: 'Your post has been successfully published', autoClose: true })
+                        materialSnackBar({messageText: that.$t('common.snak_post_s'), autoClose: true })
                         that.resetCreatePost()
                     }
                 }).catch(function (error) {

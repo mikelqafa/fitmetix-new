@@ -6,11 +6,13 @@
                 <div class="md-dialog__shadow"></div>
                 <div class="md-dialog__surface" style="position: relative">
                     <header class="md-dialog__header">
-                        Help us keep Fitmetix an environment that promotes healthy living.
+                        {{$t('common.help_fitmetix')}}
                     </header>
                     <div class="md-dialog__body">
                         <div class="form-group">
-                            <label for="comment">Write your comment:</label>
+                            <label for="comment">
+                                {{$t('common.write_c')}}
+                                :</label>
                             <textarea class="form-control" v-model="reportComment"  rows="5" id="comment"></textarea>
                         </div>
                     </div>
@@ -22,8 +24,12 @@
                         </div>
                     </div>
                     <footer class="md-dialog__footer">
-                        <button class="md-dialog__action md-button md-button--compact" data-action="dismissive">CANCEL</button>
-                        <button class="md-dialog__action md-button ft-btn-primary btn md-button--compact" @click="confirmReport">REPORT</button>
+                        <button class="md-dialog__action md-button md-button--compact" data-action="dismissive">
+                            {{$t('common.report')}}
+                        </button>
+                        <button class="md-dialog__action md-button ft-btn-primary btn md-button--compact" @click="confirmReport">
+                            {{$t('common.report')}}
+                        </button>
                     </footer>
                 </div>
             </div>
@@ -35,10 +41,10 @@
                     <div class="md-dialog__body">
                         <div class="ft-dialog-option" v-bind:class="{'is-loading': isLoading}">
                             <a v-if="!authUser" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="initReportComment">
-                                Report Comment
+                                {{$t('common.report')}} {{$t('common.comment')}}
                             </a>
                             <a v-else="" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="confirmDeleteComment">
-                                Delete Comment
+                                {{$t('common.delete')}} {{$t('common.comment')}}
                             </a>
                         </div>
                     </div>
@@ -86,7 +92,7 @@
         },
         methods: {
             confirmReport: function () {
-                this.body = 'Do you really want to report this comment?'
+                this.body = $t('common.ask_report_comment')
                 let confirmDialog = $('#'+ this.unid)
                 confirmDialog.MaterialDialog('show')
                 let that = this

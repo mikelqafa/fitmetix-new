@@ -6,7 +6,7 @@
                     <div class="icon icon-photo center-block" style="font-size: 56px;width: 56px;"></div>
                     <div class="form-helper" style="top: 60px;">
                         <div class="helper-inner arrow_box">
-                            Upload event's images. You can upload multiple images.
+                            {{$t('common.helper_upload)}}
                         </div>
                     </div>
                 </a>
@@ -45,11 +45,11 @@
         methods: {
             checkImageStatus: function () {
                 if($('#gender').val() =='') {
-                    alertApp('Please select gender!')
+                    alertApp($t('common.alert_gender')+'!')
                     return false
                 }
                 if($('#location-input').val() =='') {
-                    alertApp('Please enter location!')
+                    alertApp($t('common.alert_loc')+'!')
                     return false
                 }
                 if($('#description').val() =='') {
@@ -57,20 +57,20 @@
                     return false
                 }
                 if($('#privacy').val() =='') {
-                    alertApp('Please select privacy!')
+                    alertApp($t('common.alert_pri')+'!')
                     return false
                 }
                 if($('#duration-event').val() == 0) {
-                    alertApp('Please provide duration for the event!')
+                    alertApp($t('common.alert_dur')+'!')
                     return false
                 }
                 if($('#duration-event').val() > 172800) {
-                    alertApp('Event duration must be less than 48 hours')
+                    alertApp($t('common.alert_evn_dur')+'!')
                     return false
                 }
                 let $imageInputs = this.$refs.vue_event_img.files
                 if($imageInputs.length == 0) {
-                    alertApp('Please upload image!')
+                    alertApp($t('common.alert_u_i')+'!')
                     return false;
                 }
                 let imageUploaded = true
@@ -81,7 +81,7 @@
                     }
                 }
                 if(!imageUploaded) {
-                    alertApp('Please wait while images are being uploading')
+                    alertApp($t('common.alert_wait_img')+'!')
                     return false;
                 }
                 let invalid = false
@@ -92,7 +92,7 @@
                     }
                 }
                 if(invalid) {
-                    alertApp('Unable to create event. Remove invalid images or try again!')
+                    alertApp($t('common.alert_u_event')+'!')
                     return false;
                 }
                 for(let i=0; i<$imageInputs.length; i++) {

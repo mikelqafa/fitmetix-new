@@ -127,7 +127,7 @@
                         {{ Form::text('name', old('name'), ['id'=>'title','required'=>'required', 'class' => 'md-textfield__input form-control', 'placeholder' => trans('common.name_of_your_event'),'tabindex'=>'1','maxlength'=>45]) }}
                         <div class="form-helper">
                             <div class="helper-inner arrow_box arrow_box--bottom-xs">
-                                Give a great title for your event.
+                               {{ trans('common.form_helper_title')}}
                             </div>
                         </div>
                     </div>
@@ -142,8 +142,7 @@
 							@endif
                             <div class="form-helper">
                                 <div class="helper-inner arrow_box arrow_box--bottom-xs">
-                                    Private events are only joined by people that follow you (those you have accepted if you have private profile).
-                                    Anyone can join public event.
+                                   {{ trans('common.form_helper_privacy') }}
                                 </div>
                             </div>
 						</div>
@@ -155,7 +154,7 @@
 							</fieldset>
                             <div class="form-helper">
                                 <div class="helper-inner arrow_box arrow_box--bottom-xs">
-                                    If your event only for a specific gender, select gender here. Use everyone for all gender.
+                                   {{ trans('common.form_helper_gender') }}
                                 </div>
                             </div>
 						</div>
@@ -170,7 +169,7 @@
 					@endif
                         <div class="form-helper">
                             <div class="helper-inner arrow_box arrow_box--bottom-xs">
-                                Provide location for your event, so that user can reach over there easily.
+                                {{trans('common.form_helper_location')}}
                             </div>
                         </div>
 				</fieldset>
@@ -186,7 +185,7 @@
                                 @endif
                                 <div class="form-helper">
                                     <div class="helper-inner arrow_box arrow_box--bottom-xs">
-                                        Enter how many user can participate.
+                                        {{trans('common.form_helper_p') }}
                                     </div>
                                 </div>
                             </div>
@@ -199,7 +198,7 @@
                                 @endif
                                 <div class="form-helper">
                                     <div class="helper-inner arrow_box arrow_box--bottom-xs">
-                                        Provide event Price. If free, enter 0.
+                                        {{trans('common.form_helper_price') }}
                                     </div>
                                 </div>
                             </div>
@@ -219,7 +218,7 @@
                                     </div>
                                     <div class="form-helper">
                                         <div class="helper-inner arrow_box arrow_box--bottom-xs">
-                                            Select currency type for paid event.
+                                            {{trans('common.form_helper_currency') }}
                                         </div>
                                     </div>
                                 </div>
@@ -237,7 +236,7 @@
 
                                     <div class="form-helper">
                                         <div class="helper-inner arrow_box arrow_box--bottom-xs">
-                                            Provide date and time when event start.
+                                           {{ trans('common.form_helper_start_date') }}
                                         </div>
                                     </div>
                                 </div>
@@ -256,7 +255,7 @@
                                 @endif
                                 <div class="form-helper">
                                     <div class="helper-inner arrow_box arrow_box--bottom-xs">
-                                        How long your event will run. Maximum of 48 hours allowed.
+                                       {{trans('common.form_helper_duration')}}
                                     </div>
                                 </div>
                             </div>
@@ -266,7 +265,7 @@
                         {{ Form::textarea('about', old('about'), ['id'=>'description','class' => 'md-textfield__input form-control','placeholder' => trans('common.description'), 'tabindex'=>'10','maxlength'=>500]) }}
                         <div class="form-helper" style="top: -56px;">
                             <div class="helper-inner arrow_box arrow_box--bottom-xs arrow_box--bottom">
-                                Enter details about event and things which need to carry to join event.
+                               {{ trans('common.form_helper_details') }}
                             </div>
                         </div>
                     </fieldset>
