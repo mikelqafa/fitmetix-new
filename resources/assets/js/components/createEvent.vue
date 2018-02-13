@@ -6,7 +6,7 @@
                     <div class="icon icon-photo center-block" style="font-size: 56px;width: 56px;"></div>
                     <div class="form-helper" style="top: 60px;">
                         <div class="helper-inner arrow_box">
-                            {{$t('common.helper_upload)}}
+                            {{$t('common.helper_upload')}}
                         </div>
                     </div>
                 </a>
