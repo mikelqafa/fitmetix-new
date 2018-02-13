@@ -5,7 +5,7 @@
             <div class="panel panel-default">
                 <div class="panel-body nopadding">
                     <div class="login-bottom">
-                        @if($msg)
+                        @if(isset($msg))
                             <p class="alert alert-success">{{ $msg }}</p>
                         @endif
                         <ul class="signup-errors text-danger list-unstyled"></ul>
