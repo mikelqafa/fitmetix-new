@@ -319,8 +319,13 @@
 									{{ csrf_field() }}
 
 									<select name="language" class="form-control">
-										<option value="en" title="English">EN</option>
-										<option value="de" title="German">DE</option>
+										@if(Auth::user()->language == 'de')
+											<option value="de" selected title="German">DE</option>
+											<option value="en" title="English">EN</option>
+										@else
+											<option value="en" selected title="English">EN</option>
+											<option value="en" title="English">EN</option>
+										@endif
 									</select>
 									<br/>
 									<div class="pull-right">
