@@ -72,7 +72,7 @@
                                                 </span>
                                             </span>
                                                 <span class="false">{{$t('common.follow') }}</span>
-                                                <span class="false">{{$t('common.following') }}</span>
+                                                <span class="true">{{$t('common.following') }}</span>
                                             </button>
                                             <button v-else="" class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true"  :data-timeline-id="item.timeline_id" data-toggle="follow" data-following="false">
                                                 <span class="absolute-loader hidden">
@@ -83,7 +83,7 @@
                                                 </span>
                                                 </span>
                                                 <span class="false">{{$t('common.follow') }}</span>
-                                                <span class="false">{{$t('common.following') }}</span>
+                                                <span class="true">{{$t('common.following') }}</span>
                                             </button>
                                         </template>
                                     </div>
