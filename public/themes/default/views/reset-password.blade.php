@@ -5,9 +5,8 @@
             <div class="panel panel-default">
                 <div class="panel-body nopadding">
                     <div class="login-bottom">
-                        @if(Session::has('link_sent'))
-                            <p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('link_sent') }}</p>
-                            {{ Session::forget('link_sent') }}
+                        @if($msg)
+                            <p class="alert alert-success">{{ $msg }}</p>
                         @endif
                         <ul class="signup-errors text-danger list-unstyled"></ul>
                         <form method="POST" class="" action="{{ url('/password/email') }}">
