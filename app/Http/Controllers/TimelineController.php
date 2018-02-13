@@ -2127,7 +2127,7 @@ class TimelineController extends AppBaseController
                         $hashtag->count = $hashtag->count - 1;
                         $hashtag->save();
                     }
-                    else {
+                    else {  
                         $hashtag->delete();
                     }
                 }
@@ -2564,6 +2564,17 @@ class TimelineController extends AppBaseController
         $notify_users = $event_edited->users()->where('users.id','!=',Auth::user()->id)->get();
 
         $post = Post::where('timeline_id',$event_edited->timeline_id)->first();
+
+        preg_match_all('/(^|\s)(#\w+)/', $post->description, $hashtags);
+        foreach ($hashtags[2] as $value) {
+            $hashtag = Hashtag::where('tag', str_replace('#', '', $value))->first();
+            if ($hashtag) {
+                $hashtag->count = $hashtag->count + 1;
+                $hashtag->save();
+            } else {
+                Hashtag::create(['tag' => str_replace('#', '', $value), 'count' => 1]);
+            }
+        }
 
         foreach ($notify_users as $notify_user) {
             App::setLocale($notify_user->language);
@@ -3003,7 +3014,7 @@ class TimelineController extends AppBaseController
             }
 
             // Check for any hashtags and save them
-            preg_match_all('/(^|\s)(#\w+)/', $request->description, $hashtags);
+            preg_match_all('/(^|\s)(#\w+)/', $request->about, $hashtags);
             foreach ($hashtags[2] as $value) {
                 $timeline = Timeline::where('username', str_replace('@', '', $value))->first();
                 $hashtag = Hashtag::where('tag', str_replace('#', '', $value))->first();
@@ -3136,6 +3147,19 @@ class TimelineController extends AppBaseController
         
         if (count($event_posts->posts) != 0) {
             foreach ($event_posts->posts as $post) {
+                preg_match_all('/(^|\s)(#\w+)/', $post->description, $hashtags);
+                foreach ($hashtags[2] as $value) {
+                    $hashtag = Hashtag::where('tag', str_replace('#', '', $value))->first();
+                    if ($hashtag) {
+                        if($hashtag->count > 1){
+                            $hashtag->count = $hashtag->count - 1;
+                            $hashtag->save();
+                        }
+                        else {  
+                            $hashtag->delete();
+                        }
+                    }
+                }
                 $post->deleteMe();
             }
         }

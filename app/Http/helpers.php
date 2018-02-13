@@ -2,7 +2,7 @@
 
 function trendingTags()
 {
-    $trending_tags = App\Hashtag::orderBy('count', 'desc')->first()->limit(20)->get();
+    $trending_tags = App\Hashtag::orderBy('count', 'desc')->limit(20)->get();
 
     if (count($trending_tags) > 0) {
         if (count($trending_tags) > (int) Setting::get('min_items_page', 15)) {
