@@ -2542,7 +2542,8 @@ class TimelineController extends AppBaseController
 		$participant = $request->participant;
 		$event_id   = $request->event_id;
 		$title 			= $request->title;
-        $start_date = date('Y-m-d H:i', strtotime($request->start_date));
+        //$start_date = date('Y-m-d H:i', strtotime($request->start_date));
+        $start_date = Event::find($event_id)->start_date;
         $end_date = Carbon::parse($start_date);
         $end_date = $end_date->addSeconds($request->duration);
 		$description = $request->description;
@@ -2554,7 +2555,7 @@ class TimelineController extends AppBaseController
 																	'user_limit' => $participant,
 																	'gender' => $gender,
 																	'location' => $location,
-																	'start_date' => $start_date,
+
 																	'end_date'   => $end_date
 											]);
 		DB::table('timelines')->where('id','=',$event[0]['timeline_id'])->update(['name' => $title,'about' => $description]);

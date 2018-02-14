@@ -474,7 +474,7 @@ return [
     'form_helper_p' => 'Enter how many users can participate',
     'form_helper_currency' => 'Select currency type for paid event.',
     'form_helper_price' => 'Provide event Price. If free, enter 0.',
-    'form_helper_location ' => 'Provide a location for your event, so that user can reach over there easily.',
+    'form_helper_location' => 'Provide a location for your event, so that user can reach over there easily.',
     'form_helper_gender' => 'If your event only for a specific gender, select gender here. Use everyone for all gender.',
     'form_helper_privacy' => 'Private events are only joined by people that follow you (those you have accepted if you have a private profile). Anyone can join a public event.',
     'form_helper_duration' => 'How long your event will run. Maximum of 48 hours allowed.',

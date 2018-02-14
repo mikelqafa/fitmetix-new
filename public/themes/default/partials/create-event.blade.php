@@ -296,8 +296,7 @@
         var key;
         var map = new google.maps.Map(document.getElementById('location-input'), {});
 
-        var input = /** @type {!HTMLInputElement} */(
-                document.getElementById('location-input'));
+        var input = document.getElementById('location-input');
 
         if (window.event) {
             key = window.event.keyCode;

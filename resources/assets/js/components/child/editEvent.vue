@@ -57,7 +57,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="input-group date form_datetime">
-                                            <input type="text" id="edit-event-start-date" required class="datepick2--event-edit form-control" name="start_date"
+                                            <input type="text" id="edit-event-start-date" disabled class="datepick2--event-edit form-control" name="start_date"
                                                    placeholder="Start Time" value="">
                                         <label for="edit-event-start-date" class="input-group-addon addon-right calendar-addon">
                                             <span class="fa fa-calendar"></span>
@@ -202,7 +202,6 @@
                 this.replaceImgEmoji()
                 this.isLoading = true
                 let description = this.nl2br($('.replace-with-edit-event').html())
-                this.event.startDate = $('#edit-event-start-date').val()
                 this.event.privacy = $('#edit-event-privacy').val()
                 this.event.gender = $('#edit-event-gender').val()
                 let that = this
@@ -221,7 +220,6 @@
                         privacy: that.event.privacy,
                         event_id: that.event.id,
                         title: that.event.title,
-                        start_date: that.event.startDate,
                         duration: that.event.duration
                     }
                 }).then( function (response) {
@@ -276,6 +274,7 @@
             },
             initEventForm: function () {
                 this.event.startDate = this.postItem.event[0].start_date
+                console.log(this.event.startDate)
                 this.event.duration = this.getDuration(this.postItem.event[0].start_date, this.postItem.event[0].end_date)
                 this.event.gender = this.postItem.event[0].gender
                 this.event.participant = this.postItem.event[0].user_limit
