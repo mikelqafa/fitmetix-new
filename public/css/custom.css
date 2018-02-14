@@ -3183,6 +3183,10 @@ aside .md-drawer-scroll__wrapper{
         z-index:20;
         max-width: none !important;
     }
+    .is-ios .post-filters--menu-fixed{
+        min-height: 100vh;
+        height: auto;
+    }
     .setting-header{
         display: flex;
         height:56px;

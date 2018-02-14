@@ -6,6 +6,7 @@ document.getElementById('notification-audio-btn').addEventListener("click", func
 });
 (function($){
   var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  console.log('ios', iOS)
   if(iOS) {
     $('body').addClass('is-ios')
   }
