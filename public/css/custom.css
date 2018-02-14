@@ -809,6 +809,7 @@ aside .ft-card__img-wrapper {
 .is-ios #post-edit-option-dialog .md-dialog__wrapper,
 .is-ios #post-report-dialog .md-dialog__wrapper {
     justify-content: flex-start;
+    margin-top: 32px;
 }
 .item__background--post .img-responsive {
     min-height: 200px;
