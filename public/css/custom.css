@@ -3186,6 +3186,8 @@ aside .md-drawer-scroll__wrapper{
     .is-ios .post-filters--menu-fixed{
         min-height: 100vh;
         height: auto;
+        width: 100%;
+        position: relative;
     }
     .setting-header{
         display: flex;
