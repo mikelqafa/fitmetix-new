@@ -223,7 +223,7 @@
     <tr>
       <td>
         <center>
-          <img style="width: 200px; padding-top: 32px;" src="http://fitmetix.com/images/logo.png" alt="Fitmetix logo" />
+          <img style="width: 200px; padding-top: 32px;padding-bottom: 16px;" src="http://fitmetix.com/images/logo.png" alt="Fitmetix logo" />
         </center>
       </td>
     </tr>
@@ -234,11 +234,17 @@
         <tr>
           <td class="free-text">
             <h3 style="color: #757575;">Hi {{ $posted_user->username }},</h3>
-            <h3 style="color: #757575;"><a style="color: #1E7C82;" href="{{ $user_url }}">{!! $user->name !!}</a> likes your <a style="color: #1E7C82;" href="{{ $post_url }}">comment</a> </h3>
+            <h3 style="color: #757575;"><a style="text-decoration: none;color: #1E7C82;" href="{{ $user_url }}">{!! $user->name !!}</a> likes your <a style="text-decoration: none;color: #1E7C82;" href="{{ $post_url }}">comment</a> </h3>
           </td>
         </tr>          
       </table>
     </center>
+  </td>
+</tr>
+
+<tr>
+  <td>
+    <div style="height: 100px"></div>
   </td>
 </tr>
 
@@ -253,8 +259,8 @@
     <center>
       <table cellspacing="0" cellpadding="0" width="600" class="w320">
         <tr>
-          <td style="padding: 25px 0 25px;text-align: center;">
-            <a style="color: #1E7C82; font-size: 14px; text-align: center;" href="http://www.fitmetix.com">www.fitmetix.com</a>
+          <td style="padding: 16px 0 16px;text-align: center;">
+            <a style="color: #1E7C82; font-size: 14px; text-align: center;text-decoration: none;" href="http://www.fitmetix.com">www.fitmetix.com</a>
           </td>
         </tr>
       </table>
