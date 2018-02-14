@@ -49,10 +49,10 @@
                         <div class="md-layout-spacer"></div>
                         <button type="button" class="btn btn-submit ft-btn-primary" @click="registerEvent">
                             <template v-if="isRegistered">
-                                {{$t('common.unreg') }}
+                                {{$t('post.unreg') }}
                             </template>
                             <template v-else="">
-                                {{$t('common.reg') }}
+                                {{$t('post.reg') }}
                             </template>
                         </button>
                         <div class="md-layout-spacer"></div>
