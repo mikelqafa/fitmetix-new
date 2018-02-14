@@ -4152,6 +4152,10 @@ aside .md-drawer-scroll__wrapper{
     .edit-profile-form-wrapper .hidden-block-header {
         height: 56px;
     }
+    .is-ios .edit-profile-form-wrapper .hidden-block-header {
+        height: 32px;
+    }
+
 }
 .ft-login__slider .ft-carousel__cover::before{
     position: absolute;
