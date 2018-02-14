@@ -1758,6 +1758,9 @@ body.is-dialog-open{
     align-items: center;
     flex-direction: column;
 }
+.is-ios .md-comment-wrapper {
+    overflow: auto;
+}
 .item__background {
     min-height: 250px;
     width: 100% !important;

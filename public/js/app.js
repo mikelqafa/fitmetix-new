@@ -5,6 +5,10 @@ document.getElementById('notification-audio-btn').addEventListener("click", func
   notX_.play()
 });
 (function($){
+  var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  if(iOS) {
+    $('body').addClass('is-ios')
+  }
   setTimeout(function(){
     msgX_.volume = 1
     notX_.volume = 1
