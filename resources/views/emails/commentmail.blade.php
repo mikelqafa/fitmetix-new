@@ -42,7 +42,7 @@
     }
 
     a {
-      color: #676767;
+      color: #1E7C82 !important;
       text-decoration: none !important;
     }
 
@@ -293,7 +293,8 @@
       <table cellspacing="0" cellpadding="0" width="600" class="w320">
         <tr>
           <td class="free-text">
-            <h3><a href="{!! url('$user->username')!!}">{!! $user->name !!}</a> commented on your post </h3>
+            <h3>Hi {{ $posted_user->username }},</h3>
+            <h3><a href="{{ $user_url }}">{!! $user->name !!}</a> commented on your post </h3>
           </td>
         </tr>          
       </table>
