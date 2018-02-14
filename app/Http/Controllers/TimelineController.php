@@ -795,8 +795,9 @@ class TimelineController extends AppBaseController
             } else {
                 $user = User::find(Auth::user()->id);
                 $user_settings = $user->getUserSettings($posted_user->id);
+                $user_url = 'fitmetix.com/'.$user->username;
                 if ($user_settings && $user_settings->email_comment_post == 'yes') {
-                    Mail::send('emails.commentmail', ['user' => $user, 'posted_user' => $posted_user], function ($m) use ($user, $posted_user) {
+                    Mail::send('emails.commentmail', ['user' => $user, 'posted_user' => $posted_user, 'user_url'=>$user_url], function ($m) use ($user, $posted_user) {
                         $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
                         $m->to($posted_user->email, $posted_user->name)->subject('New comment to your post');
                     });
