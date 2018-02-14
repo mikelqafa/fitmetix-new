@@ -1530,6 +1530,9 @@ body.is-dialog-open{
     width: 90%;
 }
 @media screen and (max-width: 992px) {
+    .edit-profile-form-wrapper .socialite-form{
+        padding-bottom: 100px;
+    }
     .multi-lang__option {
         display: block;
     }
