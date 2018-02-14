@@ -4101,7 +4101,7 @@ class TimelineController extends AppBaseController
         $timeline = Timeline::where('username', $request->username)->first();
         $hashtag = $request->hashtag;
         $user = User::where('timeline_id', $timeline['id'])->first();
-        $allposts = Post::where([['active', 1],['description','like','%'.$hashtag.'%'],['user_id',$user->id]])->latest()->get();
+        $allposts = Post::where([['active', 1],['description','like','%'.$hashtag.'%']])->latest()->get();
         $posts = [];
         $i = 0;
         $start = $request->offset;
@@ -4425,12 +4425,10 @@ class TimelineController extends AppBaseController
         $suggested_users = suggestedUsers();
         $suggested_groups = suggestedGroups();
         $suggested_pages = suggestedPages();
-
         // Check for hashtag
         if ($request->hashtag) {
             $hashtag = '#'.$request->hashtag;
-
-            $posts = Post::where([['description', 'like', "%{$hashtag}%"],['active',1]])->latest()->paginate(Setting::get('items_page'));
+            $posts = Post::where([['description', 'like', "%{$hashtag}%"],['active',1]])->latest()->get();
         } // else show the normal feed
         else {
             $posts = Post::whereIn('user_id', function ($query) use ($id) {
