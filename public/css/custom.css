@@ -3508,12 +3508,14 @@ aside .md-drawer-scroll__wrapper{
     margin-left: 8px;
 }
 .ft-nt-group .md-list__item-secondary-action {
-    height: 29px;
-    width: 38px;
+    height: 32px;
+    width: 44px;
+    margin-left: 4px;
 }
 .ft-nt-group .md-list__item-secondary-action .icon{
-    font-size:28px;
+    font-size:32px;
     transition: color .2s ease;
+    line-height: 28px;
 }
 .color-accept {
     color: #589D5B;
