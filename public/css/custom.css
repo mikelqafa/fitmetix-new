@@ -805,9 +805,9 @@ aside .ft-card__img-wrapper {
 .md-dialog--center .md-dialog__wrapper{
     justify-content: center;
 }
-.is-ios #post-share-init-dialog .md-dialog--center .md-dialog__wrapper,
-.is-ios #post-edit-option-dialog .md-dialog--center .md-dialog__wrapper,
-.is-ios #post-report-dialog .md-dialog--center .md-dialog__wrapper {
+.is-ios #post-share-init-dialog.md-dialog--center .md-dialog__wrapper,
+.is-ios #post-edit-option-dialog.md-dialog--center .md-dialog__wrapper,
+.is-ios #post-report-dialog.md-dialog--center .md-dialog__wrapper {
     justify-content: flex-start;
 }
 .item__background--post .img-responsive {
