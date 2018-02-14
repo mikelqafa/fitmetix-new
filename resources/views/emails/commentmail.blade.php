@@ -244,7 +244,7 @@
 
 <tr>
   <td>
-    <h4 style="text-align: center;color: #757575; font-size: 100;">Thank you for being part of our community.</h4>
+    <h4 style="text-align: center;color: #757575; font-size: 15px; font-weight: 100;">Thank you for being part of our community.</h4>
   </td>
 </tr>
 
