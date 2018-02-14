@@ -2,33 +2,28 @@
     <div class="">
         <div class="md-dialog md-dialog--center md-dialog--maintain-width md-dialog--md" id="post-share-init-dialog">
             <div class="md-dialog__wrapper">
-                <div class="ios-abs">
-                    <div class="ios-rel md-dialog__wrapper">
-                        <div class="md-dialog__shadow"></div>
-                        <div class="md-dialog__surface" style="position: relative">
-                            <template v-if="hasItem">
-                                <header class="md-dialog__header">
-                                </header>
-                                <div class="md-dialog__body">
-                                    <div class="form-group">
-                                        <label for="share-user-select">{{$t('common.user_to_share') }}:</label>
-                                        <input :placeholder="$t('common.send_to')" class="hidden form-control" id="share-user-select"/>
-                                        <app-autocomplete ref="shareuser"></app-autocomplete>
-                                    </div>
-                                </div>
-                                <footer class="md-dialog__footer">
-                                    <button class="md-dialog__action md-button ft-btn-primary btn md-button--compact" @click="sendPost">{{$t('common.send')}}</button>
-                                </footer>
-                            </template>
-                            <div v-if="isLoading" class="absolute-loader">
-                                <div class="ft-loading">
-                                    <span class="ft-loading__dot"></span>
-                                    <span class="ft-loading__dot"></span>
-                                    <span class="ft-loading__dot"></span>
-                                </div>
+                <div class="md-dialog__shadow"></div>
+                <div class="md-dialog__surface" style="position: relative">
+                    <template v-if="hasItem">
+                        <header class="md-dialog__header">
+                        </header>
+                        <div class="md-dialog__body">
+                            <div class="form-group">
+                                <label for="share-user-select">{{$t('common.user_to_share') }}:</label>
+                                <input :placeholder="$t('common.send_to')" class="hidden form-control" id="share-user-select"/>
+                                <app-autocomplete ref="shareuser"></app-autocomplete>
                             </div>
                         </div>
-
+                        <footer class="md-dialog__footer">
+                            <button class="md-dialog__action md-button ft-btn-primary btn md-button--compact" @click="sendPost">{{$t('common.send')}}</button>
+                        </footer>
+                    </template>
+                    <div v-if="isLoading" class="absolute-loader">
+                        <div class="ft-loading">
+                            <span class="ft-loading__dot"></span>
+                            <span class="ft-loading__dot"></span>
+                            <span class="ft-loading__dot"></span>
+                        </div>
                     </div>
                 </div>
             </div>
