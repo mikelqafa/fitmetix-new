@@ -4028,6 +4028,10 @@ aside .md-drawer-scroll__wrapper{
     .create-event-form #description{
         margin-top: 16px;
     }
+    .ios #post-share-init-dialog .avatar-list {
+        display: flex !important;
+        min-height: 80px;
+    }
 }
 @media (max-width: 599px) {
     .form-helper{
