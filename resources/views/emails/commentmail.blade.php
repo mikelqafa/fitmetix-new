@@ -215,12 +215,15 @@
   </style>
 </head>
 
-<body style="background-color: #f9f9f9">
+<div style="background-color: #f9f9f9; padding: 16px;">
   <table align="center" cellpadding="0" cellspacing="0" class="container-for-gmail-android" width="100%">
+    <tr>
+      <td></td>
+    </tr>
     <tr>
       <td>
         <center>
-          <img src="http://fitmetix.com/images/logo.png" alt="Fitmetix logo" />
+          <img style="width: 200px; padding-top: 32px;" src="http://fitmetix.com/images/logo.png" alt="Fitmetix logo" />
         </center>
       </td>
     </tr>
@@ -231,7 +234,7 @@
         <tr>
           <td class="free-text">
             <h3>Hi {{ $posted_user->username }},</h3>
-            <h3><a href="{{ $user_url }}">{!! $user->name !!}</a> commented on your post </h3>
+            <h3><a style="color: #1E7C82;" href="{{ $user_url }}">{!! $user->name !!}</a> commented on your post </h3>
           </td>
         </tr>          
       </table>
@@ -241,7 +244,7 @@
 
 <tr>
   <td>
-    <h4 style="text-align: center; color: #404040; font-size: 15px;">Thank you for being part of our community.</h4>
+    <h4 style="text-align: center;color: #757575; font-size: 100;">Thank you for being part of our community.</h4>
   </td>
 </tr>
 
@@ -250,8 +253,8 @@
     <center>
       <table cellspacing="0" cellpadding="0" width="600" class="w320">
         <tr>
-          <td style="padding: 25px 0 25px">
-            {!! Setting::get('address_on_mail') !!}
+          <td style="padding: 25px 0 25px;text-align: center;">
+            <a style="color: #1E7C82; font-size: 14px; text-align: center;" href="http://www.fitmetix.com">www.fitmetix.com</a>
           </td>
         </tr>
       </table>
@@ -259,5 +262,5 @@
   </td>
 </tr>
 </table>
-</body>
+</div>
 </html>
