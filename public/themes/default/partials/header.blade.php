@@ -33,7 +33,7 @@
                     </span>
                 </a>
                 <a href="{{ url(Auth::user()->username.'/events') }}" class="has-hover-effect fm-nav__item {{ (Request::is(Auth::user()->username.'/events') ? 'is-active' : '') }}">
-                    Events
+                    {{ trans('common.events') }}
                 </a>
                 <div id="app-notification">
                     <app-notification>
