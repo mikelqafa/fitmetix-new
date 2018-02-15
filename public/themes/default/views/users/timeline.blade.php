@@ -11,7 +11,7 @@
                             <div class="ft-user-info md-layout md-layout--row md-align md-align--space-around show-more">
                                 <div class="ft-user-info__item">
                                     <div class="ft-icon">
-                                        Events
+                                        {{ trans('common.events') }}
                                     </div>
                                     <a class="info btn" href="{{ url($timeline->username.'/event') }}">
                                         {{ count($user_events) }}
@@ -19,7 +19,7 @@
                                 </div>
                                 <div class="ft-user-info__item">
                                     <div class="ft-icon">
-                                        Posts
+                                        {{ trans('common.posts') }}
                                     </div>
                                     <a class="info btn" href="{{ url($timeline->username) }}#post-feed">
                                         {{ count($posts) }}
@@ -27,7 +27,7 @@
                                 </div>
                                 <div class="ft-user-info__item">
                                     <div class="ft-icon">
-                                        Follows
+                                        {{ trans('common.follows') }}
                                     </div>
                                     <a href="javascript:;" class="info btn" onclick="$('#user-who-following--dialog').MaterialDialog('show')">
                                         {{ $following_count }}
@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="ft-user-info__item">
                                     <div class="ft-icon">
-                                        Followers
+                                        {{ trans('common.followers') }}
                                     </div>
                                     <a href="javascript:;" class="info btn" onclick="$('#user-who-follow--dialog').MaterialDialog('show')">
                                         {{ $followers_count }}
@@ -44,7 +44,7 @@
                                 @if(Auth::user()->id == $timeline->user->id)
                                     <div class="ft-user-info__item">
                                         <div class="ft-icon">
-                                            Saved
+                                            {{ trans('common.saved') }}
                                         </div>
                                         <a href="{{ url($timeline->username.'/saved') }}" class="info btn">
                                             {{ count($timeline->user->postsSaved()->get()) }}
@@ -60,21 +60,21 @@
                             </div>
                         @endif
                         @if(Auth::user()->id == $timeline->user->id)
-                            <a class="btn btn-default" href="{{ url($timeline->username.'/settings') }}">Settings</a>
+                            <a class="btn btn-default" href="{{ url($timeline->username.'/settings') }}">{{ trans('common.settings') }}</a>
                         @elseif(Auth::user()->following->contains($timeline->user->id))
-                                @if($block_text == 'Unblock')
+                                @if($block_text == trans('common.unblock'))
                                     <button class="btn btn-default" data-toggle="unblock" data-userid="{{$timeline->user->id}}">{{ $block_text }}</button>
                                 @else
                                     <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">{{ $block_text }}</button>
                                 @endif
-                            <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Report</button>
+                            <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">{{ trans('common.report') }}</button>
                         @else
-                            @if($block_text == 'Unblock')
+                            @if($block_text == trans('common.unblock'))
                                 <button class="btn btn-default" data-toggle="unblock" data-userid="{{$timeline->user->id}}">{{ $block_text }}</button>
                             @else
                                 <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">{{ $block_text }}</button>
                             @endif
-                            <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">Report</button>
+                            <button class="btn btn-default" onclick="$('#profile-option-dialog').MaterialDialog('show')">{{ trans('common.report') }}</button>
                         @endif
                     </div>
                     
@@ -90,9 +90,9 @@
                     @endif
                     <div class="ft-header-hashtag">
                         <ul class="nav nav-justified" >
-                            <li class="active is-active"><a href="{{ url($timeline->username) }}">Posts</a></li>
-                            <li><a href="{{ url($timeline->username.'/gallery') }}" class="">Gallery</a></li>
-                            <li><a href="{{ url($timeline->username.'/event') }}" class="">Events</a></li>
+                            <li class="active is-active"><a href="{{ url($timeline->username) }}">{{ trans('common.posts') }}</a></li>
+                            <li><a href="{{ url($timeline->username.'/gallery') }}" class="">{{ trans('common.gallery') }}</a></li>
+                            <li><a href="{{ url($timeline->username.'/event') }}" class="">{{ trans('common.events') }}</a></li>
                         </ul>
                     </div>
                     <div class="timeline timeline-posts--user">

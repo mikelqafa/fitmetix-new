@@ -224,10 +224,10 @@ class TimelineController extends AppBaseController
             }
 
             $blocked = DB::table('user_blocked')->where([['blocked_uid',$user->id],['blocker_uid',Auth::user()->id]])->first();
-            $block_text = 'Block';
+            $block_text = trans('common.block');
 
             if($blocked){
-                $block_text = 'Unblock';
+                $block_text = trans('common.unblock');
             }
 
             $own_pages = $user->own_pages();
@@ -4697,10 +4697,10 @@ class TimelineController extends AppBaseController
         }
 
         $blocked = DB::table('user_blocked')->where([['blocked_uid',$user->id],['blocker_uid',Auth::user()->id]])->first();
-        $block_text = 'Block';
+        $block_text = trans('common.block');
 
         if($blocked){
-            $block_text = 'Unblock';
+            $block_text = trans('common.unblock');
         }
 
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');
@@ -4762,10 +4762,10 @@ class TimelineController extends AppBaseController
         }
 
         $blocked = DB::table('user_blocked')->where([['blocked_uid',$user->id],['blocker_uid',Auth::user()->id]])->first();
-        $block_text = 'Block';
+        $block_text = trans('common.block');
 
         if($blocked){
-            $block_text = 'Unblock';
+            $block_text = trans('common.unblock');
         }
 
         $theme = Theme::uses(Setting::get('current_theme', 'default'))->layout('default');

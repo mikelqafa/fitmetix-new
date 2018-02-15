@@ -51,7 +51,7 @@
         @endif
     </div>
     @if(Auth::user()->id == $timeline->user->id)
-        <a href="{{ url('/'.Auth::user()->username.'/edit-profile') }}" class="btn ft-btn-primary ft-btn-primary--outline">Edit Profile</a>
+        <a href="{{ url('/'.Auth::user()->username.'/edit-profile') }}" class="btn ft-btn-primary ft-btn-primary--outline">{{ trans('common.edit_profile') }}</a>
     @elseif(Auth::user()->following->contains($timeline->user->id))
 
         @if(Auth::user()->checkFollowStatus($timeline->user->id))
@@ -63,8 +63,8 @@
                         <span class="ft-loading__dot"></span>
                     </span>
                 </span>
-                <span class="false">Follow</span>
-                <span class="true">Request Sent</span>
+                <span class="false">{{ trans('common.follow') }}</span>
+                <span class="true">{{ trans('common.request_sent') }}</span>
             </button>
         @else
             <button class="btn ft-btn-primary pos-rel ft-btn-primary--outline" data-timeline-id="{{$timeline->id}}" data-toggle="follow" data-following="true">
@@ -75,8 +75,8 @@
                         <span class="ft-loading__dot"></span>
                     </span>
                 </span>
-                <span class="false">Follow</span>
-                <span class="true">Following</span>
+                <span class="false">{{ trans('common.follow') }}</span>
+                <span class="true">{{ trans('common.following') }}</span>
             </button>
         @endif
     @else
@@ -88,8 +88,8 @@
                     <span class="ft-loading__dot"></span>
                 </span>
             </span>
-            <span class="false">Follow</span>
-            <span class="true">Following</span>
+            <span class="false">{{ trans('common.follow') }}</span>
+            <span class="true">{{ trans('common.following') }}</span>
         </button>
     @endif
     <div class="timeline-option__item">

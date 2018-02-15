@@ -310,7 +310,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading no-bg panel-settings">
 							<h3 class="panel-title">
-								Change Language
+								{{ trans('common.change_language') }}
 							</h3>
 						</div>
 						<div class="panel-body nopadding">
@@ -329,7 +329,7 @@
 									</select>
 									<br/>
 									<div class="pull-right">
-										{{ Form::submit('Update Language', ['class' => 'btn btn-success']) }}
+										{{ Form::submit(trans('common.update_language'), ['class' => 'btn btn-success']) }}
 									</div>
 									<div class="clearfix"></div>
 								</form>
@@ -340,7 +340,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading no-bg panel-settings">
 							<h3 class="panel-title">
-								Email Notifications
+								{{ trans('common.email_notifications') }}
 							</h3>
 						</div>
 						<div class="panel-body nopadding">
