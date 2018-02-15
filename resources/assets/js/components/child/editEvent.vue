@@ -7,7 +7,7 @@
                     <div class="panel-create panel-create--m-t-0">
                         <div class="panel-heading">
                             <div class="heading-text">
-                                Edit Event
+                                {{$t('common.edit')}} {{$t('common.event')}}
                             </div>
                         </div>
                     </div>
@@ -22,17 +22,17 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <select class="form-control selectize" id="edit-event-privacy" required="required">
-                                            <option value="">Privacy</option>
-                                            <option value="private">Private</option>
-                                            <option value="public">Public</option>
+                                            <option value="">{{$t('common.privacy')}}</option>
+                                            <option value="private">{{$t('common.private')}}</option>
+                                            <option value="public">{{$t('common.public')}}</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
                                         <select class="form-control selectize" id="edit-event-gender" required="required" name="gender">
-                                            <option value="">Gender</option>
-                                            <option value="male">Males Only</option>
-                                            <option value="female">Females Only</option>
-                                            <option value="all">Everyone</option>
+                                            <option value="">{{$t('common.gender')}}</option>
+                                            <option value="male">{{$t('common.male')}}</option>
+                                            <option value="female">{{$t('common.female')}}</option>
+                                            <option value="all">{{$t('common.everyone')}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -87,8 +87,8 @@
                     </div>
                     <div class="panel-footer md-layout md-layout--row">
                         <div class="md-layout-spacer"></div>
-                        <button class="btn" type="button" @click="cancelSaveEvent">Cancel</button>
-                        <button type="submit" style="margin-left: 8px" class="btn btn-edit-submit ft-btn-primary" @click="editSaveEvent">Save Event</button>
+                        <button class="btn" type="button" @click="cancelSaveEvent">{{$t('common.cancel')}}</button>
+                        <button type="submit" style="margin-left: 8px" class="btn btn-edit-submit ft-btn-primary" @click="editSaveEvent">{{$t('common.save')}} {{$t('common.event')}}</button>
                     </div>
                     <div v-if="isLoading" class="absolute-loader" style="z-index: 11">
                         <div class="ft-loading">

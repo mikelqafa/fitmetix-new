@@ -117,7 +117,7 @@
           input.attr('max', max);
         }
         inputs[label] = input;
-        var ctrl = $('<div> ' + langs[settings.lang][label] + '</div>');
+        var ctrl = $('<div> ' + getLang=='en'? 'Duration': 'Dauer' + '</div>');
         if (hidden) {
           ctrl.addClass('hidden');
         }

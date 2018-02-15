@@ -56,7 +56,7 @@
                                         <img :src="s.item.avatar">
                                         <span v-text="s.item.name"></span>
                                     </template>
-                                    <textarea v-on:keydown.13="postComment" class="ft-post__comment-form form-control"  autocomplete="off" data-post-id="" data-comment-id="" name="post_comment" placeholder="Write a comment" rows="1"></textarea>
+                                    <textarea v-on:keydown.13="postComment" class="ft-post__comment-form form-control"  autocomplete="off" data-post-id="" data-comment-id="" name="post_comment" :placeholder="$t('common.write_c')" rows="1"></textarea>
                                 </at-textarea>
                                 <div class="ft-loading ft-loading--abs" v-if="isCommenting">
                                     <span class="ft-loading__dot"></span>

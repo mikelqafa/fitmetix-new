@@ -177,7 +177,7 @@
                             class="form-group required {{ $errors->has('location') || $errors->has('price') ? ' has-error' : '' }}">
                         <div class="row">
                             <div class="col-md-5 form-helper-wrapper md-textfield" data-toggle="textfield">
-                                {{ Form::number('user_limit', old('user_limit'), ['required'=>'required','class' => 'md-textfield__input form-control', 'tabindex'=>'5','placeholder' => 'Number of participants','min'=>1]) }}
+                                {{ Form::number('user_limit', old('user_limit'), ['required'=>'required','class' => 'md-textfield__input form-control', 'tabindex'=>'5','placeholder' => trans('common.number_of_participants'),'min'=>1]) }}
                                 @if ($errors->has('type'))
                                     <span class="help-block">
 									{{ $errors->first('type') }}
@@ -190,7 +190,7 @@
                                 </div>
                             </div>
                             <div class="col-md-3 form-helper-wrapper md-textfield" data-toggle="textfield">
-                                {{ Form::number('price', old('price'), ['class' => 'md-textfield__input form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => 'Price' , 'tabindex'=>'6','min'=>0,'max'=>10000]) }}
+                                {{ Form::number('price', old('price'), ['class' => 'md-textfield__input form-control', 'id' => 'price', 'autocomplete' => 'off','placeholder' => trans('common.price') , 'tabindex'=>'6','min'=>0,'max'=>10000]) }}
                                 @if ($errors->has('price'))
                                     <span class="help-block">
 									{{ $errors->first('price') }}
@@ -247,7 +247,7 @@
                                 @endif
                             </div>
                             <div class="col-md-6 form-helper-wrapper medium force-focus">
-                                {{ Form::text('duration', old('duration'), ['required'=>'required','class' => 'form-control', 'id' => 'duration-event','tabindex'=>'9' ,'autocomplete' => 'off','placeholder' => 'duration']) }}
+                                {{ Form::text('duration', old('duration'), ['required'=>'required','class' => 'form-control', 'id' => 'duration-event','tabindex'=>'9' ,'autocomplete' => 'off','data-lang' => trans('common.duration'),'placeholder' => trans('common.duration')]) }}
                                 @if ($errors->has('duration'))
                                     <span class="help-block">
 									{{ $errors->first('duration') }}

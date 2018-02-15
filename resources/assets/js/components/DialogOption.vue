@@ -15,7 +15,7 @@
                                     {{this.$t('common.edit')}} {{this.$t('common.event')}}
                                 </a>
                                 <a v-else="" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="editPost">
-                                    {{this.$t('common.edit')}} post
+                                    {{this.$t('common.edit_post')}}
                                 </a>
 
                                 <a v-if="isTypeEvent" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="confirmDeleteEvent">
@@ -80,7 +80,7 @@
                 $('#post-report-dialog').MaterialDialog('show')
             },
             confirmDeletePost: function () {
-                this.body = 'Do you really want to delete this post?'
+                this.body = this.$t('common.ask_delete_post')
                 let confirmDialog = $('#'+ this.unid)
                 confirmDialog.MaterialDialog('show')
                 let that = this
@@ -89,7 +89,7 @@
                 });
             },
             confirmDeleteEvent: function () {
-                this.body = 'Are you sure you want to delete this event entirely?'
+                this.body = this.$t('common.ask_delete_event')
                 let confirmDialog = $('#'+ this.unid)
                 confirmDialog.MaterialDialog('show')
                 let that = this

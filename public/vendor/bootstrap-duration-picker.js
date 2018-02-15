@@ -38,7 +38,7 @@
             '</div>';
       }
 
-      var mainInputReplacer = $('<div class="bdp-input" tabindex="9"><span class="black-label">Duration</span>' +
+      var mainInputReplacer = $('<div class="bdp-input" tabindex="9"><span class="black-label">'+ mainInput.attr('data-lang') +'</span>' +
           buildDisplayBlock('days') +
           buildDisplayBlock('hours') +
           buildDisplayBlock('minutes') +
@@ -116,8 +116,9 @@
         if (max) {
           input.attr('max', max);
         }
-        inputs[label] = input;
+        inputs[label] = input;    
         var ctrl = $('<div> ' + langs[settings.lang][label] + '</div>');
+        //var ctrl = $('<div> ' + placeholder + '</div>');
         if (hidden) {
           ctrl.addClass('hidden');
         }

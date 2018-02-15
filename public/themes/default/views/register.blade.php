@@ -48,7 +48,7 @@
                         <div class="mail-form  form-group form-group__adjust pos-rel">
                             <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                             <span class="hidden-lg hidden-md" style="position: absolute; top: 0; left: 0;;"></span>
-                            <input class="form-control" id="username" required placeholder="Username" name="username" type="text">
+                            <input class="form-control" id="username" required placeholder="{{ trans('common.username') }}" name="username" type="text">
                         </div>
                         <div class="form-group form-group__adjust form-group__adjust--no-margin">
                             <input class="form-control" id="email" required placeholder="{{ trans('auth.email_address') }}" name="email" type="email" value="@if(isset($data['email'])) {{ $data['email'] }} @endif">
@@ -63,9 +63,9 @@
                             {{-- <input class="form-control" id="referral_code" placeholder="Referrer code" name="affiliate" type="text" value=""> --}}
 
                             <select class="form-control" id="gender" required name="gender">
-                                <option value="">Gender</option>
-                                <option value="female" @if(isset($data['gender']) && $data['gender'] == 'female') selected="selected" @endif>Female</option>
-                                <option value="male" @if(isset($data['gender']) && $data['gender'] == 'male') selected="selected" @endif>Male</option>
+                                <option value="">{{ trans('common.gender') }}</option>
+                                <option value="female" @if(isset($data['gender']) && $data['gender'] == 'female') selected="selected" @endif>{{ trans('common.female') }}</option>
+                                <option value="male" @if(isset($data['gender']) && $data['gender'] == 'male') selected="selected" @endif>{{ trans('common.male') }}</option>
                             </select>
                         </div>
                     </div>

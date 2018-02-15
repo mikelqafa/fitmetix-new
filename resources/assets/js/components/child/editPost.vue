@@ -7,7 +7,7 @@
                     <div class="panel-create panel-create--m-t-0">
                         <div class="panel-heading">
                             <div class="heading-text">
-                                Edit Post
+                                {{$t('common.edit_post')}}
                             </div>
                         </div>
                     </div>
@@ -29,8 +29,8 @@
                     </div>
                     <div class="panel-footer md-layout md-layout--row">
                         <div class="md-layout-spacer"></div>
-                        <button class="btn" @click="cancelSavePost">Cancel</button>
-                        <button style="margin-left: 8px" class="btn btn-edit-submit ft-btn-primary" @click="editSavePost">Save Post</button>
+                        <button class="btn" @click="cancelSavePost">{{$t('common.cancel')}}</button>
+                        <button style="margin-left: 8px" class="btn btn-edit-submit ft-btn-primary" @click="editSavePost">{{$t('common.save')}} {{$t('common.post')}}</button>
                     </div>
                 </div>
                 <div v-if="isLoading" class="absolute-loader">

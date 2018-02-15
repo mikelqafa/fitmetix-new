@@ -51,13 +51,13 @@
                     &nbsp; {{ trans('common.my_profile') }}</a>
             </li>
             <li class="list-group-item">
-                <a href="{{ url(Auth::user()->username.'/create-event') }}"><i class="fa fa-plus"></i> Inspire</a>
+                <a href="{{ url(Auth::user()->username.'/create-event') }}"><i class="fa fa-plus"></i> {{ trans('common.inspire') }}</a>
             </li>
             <li class="list-group-item">
-                <a href="{{ url('/'.Auth::user()->username.'/settings/general') }}">General Settings</a>
+                <a href="{{ url('/'.Auth::user()->username.'/settings/general') }}">{{ trans('common.settings') }}</a>
             </li>
             <li class="list-group-item">
-                <a href="{{ url('/'.Auth::user()->username.'/settings/privacy') }}">Privacy Settings</a>
+                <a href="{{ url('/'.Auth::user()->username.'/settings/privacy') }}">{{ trans('common.privacy') }}</a>
             </li>
             <li class="list-group-item">
                 <a href="{{ url('/terms') }}">

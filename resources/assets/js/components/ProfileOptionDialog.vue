@@ -8,10 +8,10 @@
                 <div class="md-dialog__body">
                     <div class="ft-dialog-option">
                         <a href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="initReportUser">
-                            Report user
+                            {{$t('common.report')}} {{$t('common.user')}}
                         </a>
                         <a href="javascript:;" data-value="cancel" class="btn ft-dialog-option__item" @click="initBlockUser">
-                            Block user
+                            Block {{$t('common.user')}}
                         </a>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
         },
         methods: {
             initBlockUser: function () {
-                this.body = 'Do you really want to block this user?'
+                this.body = this.$t('common.ask_block_user')
                 let confirmDialog = $('#'+ this.unid)
                 confirmDialog.MaterialDialog('show')
                 let that = this
@@ -56,7 +56,7 @@
                 });
             },
             initReportUser: function () {
-                this.body = 'Do you really want to report this user?'
+                this.body = this.$t('common.ask_report_user')
                 let confirmDialog = $('#'+ this.unid)
                 confirmDialog.MaterialDialog('show')
                 let that = this

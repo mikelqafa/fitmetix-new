@@ -14,8 +14,8 @@
                 </div>
                 <footer class="md-dialog__footer">
                     <slot name="footer">
-                        <button class="md-dialog__action md-button md-button--compact" data-action="dismissive">CANCEL</button>
-                        <button class="md-dialog__action md-button md-button--compact" data-action="affirmative">CONTINUE</button>
+                        <button class="md-dialog__action md-button md-button--compact" data-action="dismissive">{{$t('common.cancel')}}</button>
+                        <button class="md-dialog__action md-button md-button--compact" data-action="affirmative">{{$t('common.continue')}}</button>
                     </slot>
                 </footer>
                 <slot name="dialog-surface"></slot>
