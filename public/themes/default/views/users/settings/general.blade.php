@@ -324,7 +324,7 @@
 											<option value="en" title="English">EN</option>
 										@else
 											<option value="en" selected title="English">EN</option>
-											<option value="en" title="English">EN</option>
+											<option value="de" title="German">DE</option>
 										@endif
 									</select>
 									<br/>
