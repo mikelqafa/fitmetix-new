@@ -7,7 +7,7 @@
                     <header class="md-dialog__header panel-post">
                         <div class="layout-m-l-1 md-layout md-align md-align--start-center">
                             <i class="icon icon-participant" style="margin-top: 4px"></i>
-                            <span class="layout-m-l-1">Participants</span>
+                            <span class="layout-m-l-1">{{ $t('common.participants') }}</span>
                         </div>
                         <div class="md-layout-spacer"></div>
                         <a href="javascript:;" style="margin-right: 15px"
@@ -16,7 +16,7 @@
                         </a>
                     </header>
                     <div style="position:relative; padding: 4px 16px 8px 16px;">
-                        <input placeholder="Search user" v-model="filterSearch" class="form-control" type="text"/>
+                        <input :placeholder="$t('common.search_user')" v-model="filterSearch" class="form-control" type="text"/>
                     </div>
                     <div class="md-dialog__body md-dialog__body--scrollable" style="padding-left: 0; padding-right: 0">
                         <template v-if="loading">
@@ -46,7 +46,7 @@
                                         <template v-if="!authUser">
                                             <template v-if="sameUser(item)">
                                                 <button class="btn btn-sm pos-rel" disabled>
-                                                    <span class="true">Registered</span>
+                                                    <span class="true">{{ $t('common.registered') }}</span>
                                                 </button>
                                             </template>
                                             <template v-else="">
@@ -58,8 +58,8 @@
                                                     <span class="ft-loading__dot"></span>
                                                 </span>
                                             </span>
-                                                    <span class="false">Follow</span>
-                                                    <span class="true">Following</span>
+                                                    <span class="false">{{ $t('common.follow') }}</span>
+                                                    <span class="true">{{ $t('common.following') }}</span>
                                                 </button>
                                                 <button v-else="" class="btn btn-sm ft-btn-primary pos-rel ft-btn-primary--outline" data-noreload="true"  :data-timeline-id="item.timeline.id" data-toggle="follow" data-following="false">
                                             <span class="absolute-loader hidden">
@@ -69,15 +69,15 @@
                                                     <span class="ft-loading__dot"></span>
                                                 </span>
                                             </span>
-                                                    <span class="false">Follow</span>
-                                                    <span class="true">Following</span>
+                                                    <span class="false">{{ $t('common.follow') }}</span>
+                                                    <span class="true">{{ $t('common.following') }}</span>
                                                 </button>
                                             </template>
                                         </template>
                                         <template v-else="">
                                             <template v-if="sameUser(item)">
                                                 <button class="btn btn-sm pos-rel" disabled>
-                                                    <span class="true">Registered</span>
+                                                    <span class="true">{{ $t('common.registered') }}</span>
                                                 </button>
                                             </template>
                                             <template v-else="">
@@ -89,8 +89,8 @@
                                                             <span class="ft-loading__dot"></span>
                                                         </span>
                                                     </span>
-                                                    <span class="false">Register</span>
-                                                    <span class="true">Unregister</span>
+                                                    <span class="false">{{$t('post.reg')}}</span>
+                                                    <span class="true">{{ $t('post.unreg') }}</span>
                                                 </button>
                                             </template>
                                         </template>

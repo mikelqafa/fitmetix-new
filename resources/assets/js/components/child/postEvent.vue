@@ -120,7 +120,7 @@
                 return ''
             },
             formatGender: function(g) {
-                return g == 'all' ? 'Everyone' : g == 'male' ? 'Male Only' : 'Female Only'
+                return g == 'all' ? this.$t('common.everyone') : g == 'male' ? this.$t('common.male') : this.$t('common.female')
             },
             formatDate: function(date) {
                 let str = ''
