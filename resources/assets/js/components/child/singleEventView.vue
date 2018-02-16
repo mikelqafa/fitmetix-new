@@ -99,6 +99,8 @@
                         || navigator.userAgent.match(/BlackBerry/i)
                         || navigator.userAgent.match(/Windows Phone/i)
                 ){
+                    if($(window).width() > 1170)
+                        return true;
                     return false;
                 }
                 else {
