@@ -288,11 +288,16 @@
 </div>
 <!-- </div> -->
 
-<script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places"
         async defer></script>
 
 <script>
     function initMap(event) {
+        if (typeof google === 'object' && typeof google.maps === 'object'){
+
+        } else {
+            return
+        }
         var key;
         var map = new google.maps.Map(document.getElementById('location-input'), {});
 
