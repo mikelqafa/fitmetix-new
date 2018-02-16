@@ -44,6 +44,7 @@
                 }
             },
             getList: function () {
+                alert()
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
                 this.itemList = []

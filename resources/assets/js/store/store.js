@@ -408,7 +408,6 @@ export const store = new Vuex.Store({
             }
           }
           dataToSend.data = temp_
-          console.log(dataToSend)
           context.commit('SET_CONVERSATION', {message: dataToSend})
           context.dispatch('showConversation', {conversation: context.state.conversations.data[0], byTap: false})
         }

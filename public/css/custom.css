@@ -4333,3 +4333,6 @@ aside .md-drawer-scroll__wrapper{
     top: 13px !important;
     font-size: 14px !important;
 }
+.ft-suggestion{
+    justify-content: space-around;
+}
