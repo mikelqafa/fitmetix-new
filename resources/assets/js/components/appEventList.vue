@@ -581,7 +581,7 @@
             appEvent = this
             if(mapReady) {
                 if(!initMap) {
-                    init()
+                    initMapEvent()
                 }
             }
             $( ".filter-date" ).datepicker({

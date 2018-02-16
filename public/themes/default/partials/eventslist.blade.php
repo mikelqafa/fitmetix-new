@@ -212,14 +212,15 @@
 		</app-event-list>
 	</div>
 </div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_vuWi_hzMDDeenNYwaNAj0PHzzS2GAx8&libraries=places&callback=init"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_vuWi_hzMDDeenNYwaNAj0PHzzS2GAx8&libraries=places&callback=initMapEvent"
 		async defer></script>
 <script>
 	var mapReady = false;
 	var initMap = false
-	function init() {
-		mapReady = initMap = true
+	function initMapEvent() {
+		mapReady = true
 		if(document.getElementById('filter-location-input') !== undefined) {
+			initMap = true
 			initMapDesk()
 			initMapMob()
 		}
