@@ -155,7 +155,7 @@
     })
 </script>
 @if (in_array(!Route::currentRouteName(), ['contact', 'login', 'register']))
-    <script src="{{ asset('js/fit-app.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/notification.js') }}" type="text/javascript"></script>
     <script src="{{asset('vendor/bootstrap-duration-picker.js')}}" type="text/javascript"></script>
     <script type="text/javascript" src="{{asset('js/caleandar.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/event.js')}}"></script>
