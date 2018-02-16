@@ -192,6 +192,7 @@
   'private' => 'Privatgelände',
   'name_of_your_event' => 'Name des Ereignisses',
   'only_guests' => 'Gäste',
+  'invite_friends' => 'Freunde einladen',
   'invitemembers' => 'Mitglieder einladen',
   'guests' => 'Gäste',
   'update_event' => 'Aktualisierungs-Ereignis',

@@ -109,7 +109,7 @@
                                     <i class="" aria-hidden="true">
                                         <img class="img-responsive" src="{{asset('images/invitation.png')}}" style="max-width: 18px">
                                     </i>
-                                    Invite friends
+                                    {{ trans('common.invite_friends') }}
                                 </a>
                             </li>
                         <li>

@@ -213,6 +213,7 @@ return [
     'private'                           => 'Private',
     'name_of_your_event'                => 'Event title',
     'only_guests'                       => 'Guests',
+    'invite_friends'                    => 'Invite Friends',
     'invitemembers'                     => 'Invite Members',
     'guests'                            => 'Guests',
     'update_event'                      => 'Update Event',
