@@ -43,8 +43,7 @@
                     return true;
                 }
             },
-            getList: function () {
-                alert()
+            getUserList: function () {
                 let that = this
                 let _token = $("meta[name=_token]").attr('content')
                 this.itemList = []
@@ -84,7 +83,7 @@
         },
         mounted () {
             this.isDesktop = true
-            this.getList()
+            this.getUserList()
         }
     }
 </script>
