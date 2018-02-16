@@ -34,8 +34,9 @@
                         || navigator.userAgent.match(/BlackBerry/i)
                         || navigator.userAgent.match(/Windows Phone/i)
                 ){
-                    if($(window).width() > 1170)
+                    if($(window).width() > 1170) {
                         return true;
+                    }
                     return false;
                 }
                 else {
@@ -81,11 +82,8 @@
             }
         },
         mounted () {
-            this.isDesktop = false
-            if(this.checkDesktop()) {
-                this.isDesktop = true
-                this.getList()
-            }
+            this.isDesktop = true
+            this.getList()
         }
     }
 </script>
