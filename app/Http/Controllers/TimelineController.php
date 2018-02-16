@@ -2294,7 +2294,7 @@ class TimelineController extends AppBaseController
             })
             ->where(function ($query) use ($title){
                     if($title != '') {
-                        $query->where('timelines.name','like',$title.'%');
+                        $query->where('timelines.name','like','%'.$title.'%');
                     }
             })
             ->where(function ($query) use ($user_id) {
@@ -2325,7 +2325,7 @@ class TimelineController extends AppBaseController
             })
             ->where(function ($query) use ($title){
                     if($title != '') {
-                        $query->where('timelines.name','like',$title.'%');
+                        $query->where('timelines.name','like','%'.$title.'%');
                     }
             })
             ->select('events.*', 'timelines.*','events.id as event_id')->limit($request->paginate)->offset($request->offset)->orderBy('events.created_at','desc')->get();

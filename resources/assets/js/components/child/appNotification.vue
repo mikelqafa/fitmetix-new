@@ -175,27 +175,44 @@
             notificationUrl: function (item) {
                 let url = ''
                 switch(item.type) {
-                    case 'join_event':
+                     case 'report_post':
+                        url =  base_url + 'post/'+item.post_id
+                        break
+                    case 'comment_post':
+                        url =  base_url + 'post/'+item.post_id
+                        break
+                    case 'like_post':
+                        url =  base_url + 'post/'+item.post_id
+                        break
+                    case 'share_post':
+                        url =  base_url + 'post/'+item.post_id
+                        break
+                    case 'mention':
                         url =  base_url + 'post/'+item.post_id
                         break
                     case 'follow':
                         url =  base_url + item.notified_from.username
-
-                    break
+                        break
                     case 'unfollow':
                         url =  base_url + item.notified_from.username
-                    break
+                        break
                     case 'follow_requested':
                         url =  base_url + item.notified_from.username
-                    break
+                        break
                     case 'follow_requested_accept':
                         url =  base_url + item.notified_from.username
-                    break
+                        break
+                    case 'join_event':
+                        url =  base_url + item.notified_from.username
+                        break
                     case 'follow_requested_deny':
                         url =  base_url + item.notified_from.username
-                    break
+                        break
                     case 'accept_follow_request':
                         url =  base_url + item.notified_from.username
+                        break
+                    case 'unlike_post':
+                        url =  base_url + 'post/'+item.post_id
                         break
                     default:
                         url =  base_url + 'post/'+item.post_id

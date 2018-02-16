@@ -121,6 +121,8 @@
                     case 'unlike_post':
                         url =  base_url + 'post/'+item.post_id
                         break
+                    default:
+                        url =  base_url + 'post/'+item.post_id
                 }
                 return url
             },

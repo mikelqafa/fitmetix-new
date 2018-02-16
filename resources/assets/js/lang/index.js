@@ -127,8 +127,8 @@ export const messages = {
       search_user: 'suche benutzer',
       b_tag:'Nach Tag',
       b_date:'Nach Datum',
-      unsave: 'Unsichern',
-      save: 'Sparen',
+      unsave: 'Nicht speichern',
+      save: 'Speichern',
       post: 'Beitrag',
       filter: 'filtern',
       n_m_e_f:'Keine weiteren Ereignisse zum Abrufen',
@@ -152,7 +152,7 @@ export const messages = {
       comment: 'Kommentar',
       cancel: 'Stornieren',
       delete: 'Löschen',
-      share: 'Aktie',
+      share: 'Teilen',
       ask_report_comment: 'Möchtest du diesen Kommentar wirklich melden?',
       ask_report_post: 'Möchtest du diesen Post wirklich melden?',
       ask_delete_comment: 'Möchten Sie diesen Kommentar wirklich löschen?',
@@ -173,9 +173,9 @@ export const messages = {
       private: 'Privatgelände',
       privacy: 'Privatsphäre',
       gender: 'Geschlecht',
-      male: 'Männlich',
-      female: 'Weiblich',
-      everyone: 'Jeder'
+      male: 'Nur Männer',
+      female: 'Nur Frauen',
+      everyone: 'Alle'
     }
   }
 }
