@@ -26,3 +26,4 @@ webpack.mix.js
 public/mix-manifest.json
 npm-debug.log
 public/js/notification.js
+public/js/fit-app.js

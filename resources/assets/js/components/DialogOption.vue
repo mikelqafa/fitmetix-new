@@ -12,17 +12,17 @@
                         <div class="ft-dialog-option" v-bind:class="{'is-loading': isLoading}">
                             <template v-if="authUser">
                                 <a v-if="isTypeEvent" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="editEvent">
-                                    {{this.$t('common.edit')}} {{this.$t('common.event')}}
+                                    {{this.$t('group.edit_event')}}
                                 </a>
                                 <a v-else="" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="editPost">
                                     {{this.$t('common.edit_post')}}
                                 </a>
 
                                 <a v-if="isTypeEvent" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="confirmDeleteEvent">
-                                    {{this.$t('common.delete')}} {{this.$t('common.event')}}
+                                    {{this.$t('group.delete_event')}}
                                 </a>
                                 <a v-else="" href="javascript:;" class="btn ft-dialog-option__item" @click="confirmDeletePost">
-                                    {{this.$t('common.delete')}} Post
+                                    {{this.$t('group.delete_post')}}
                                 </a>
 
                                 <a href="javascript:;" data-value="cancel" class="btn ft-dialog-option__item" @click="shareTo('facebook')">
@@ -31,10 +31,10 @@
                             </template>
                             <template v-else="">
                                 <a v-if="isTypeEvent" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="initReportPost">
-                                    {{this.$t('common.report')}} {{this.$t('common.event')}}
+                                    {{this.$t('group.report_event')}}
                                 </a>
                                 <a v-else="" href="javascript:;" data-value="post" class="btn ft-dialog-option__item" @click="initReportPost">
-                                    {{this.$t('common.report')}}  Post
+                                    {{this.$t('group.report_post')}}
                                 </a>
                                 <a href="javascript:;" data-value="cancel" class="btn ft-dialog-option__item" @click="shareTo('facebook')">
                                     {{this.$t('common.share')}}
@@ -194,6 +194,7 @@
                     case 'facebook':
                         FB.ui({
                             method: 'send',
+                            display: 'popup',
                             link: base_url+'share/'+that.postItem.id
                         }, function (response) {
                             console.log(response)

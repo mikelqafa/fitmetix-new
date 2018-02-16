@@ -85,7 +85,16 @@ export const messages = {
       gender: 'Gender',
       male: 'Males Only',
       female: 'Females Only',
-      everyone: 'Everyone'
+      everyone: 'Everyone',
+      requested: 'Requested',
+      remove: 'Remove'
+    },
+    group: {
+      delete_event: 'Delete event',
+      delete_post: 'Delete post',
+      edit_event: 'Edit event',
+      report_event: 'Report event',
+      report_post: 'Report post'
     }
   },
   de: {
@@ -103,13 +112,13 @@ export const messages = {
     common: {
       snak_post_s: 'Dein Beitrag wurde erfolgreich veröffentlicht',
       user: 'Benutzer',
-      event: 'Veranstaltung',
+      event: 'Ereignis',
       edit: 'bearbeiten',
       tag: 'Stichworte',
       details: 'Einzelheiten',
       n_l_y: 'Noch keine Vorlieben',
       follow: 'Folgen',
-      following: 'Folgendes',
+      following: 'Abonniert',
       continue: 'FORTSETZEN',
       r_t: 'Anfrage geschickt',
       edit_post: 'Beitrag bearbeiten',
@@ -148,7 +157,7 @@ export const messages = {
       denied: 'Verweigert',
       help_fitmetix: 'Helfen Sie uns dabei, Fitmetix eine Umgebung zu erhalten, die ein gesundes Leben fördert',
       write_c: 'Schreibe deinen Kommentar',
-      report: 'Bericht',
+      report: 'Melden',
       comment: 'Kommentar',
       cancel: 'Stornieren',
       delete: 'Löschen',
@@ -168,14 +177,23 @@ export const messages = {
       send_to: 'Senden an',
       send: 'Senden',
       participants: 'Teilnehmer',
-      registered: 'Eingetragen',
+      registered: 'Registriert',
       public: 'Öffentlichkeit',
       private: 'Privatgelände',
       privacy: 'Privatsphäre',
       gender: 'Geschlecht',
       male: 'Nur Männer',
       female: 'Nur Frauen',
-      everyone: 'Alle'
+      everyone: 'Alle',
+      requested: 'Angefragt',
+      remove: 'Löschen'
+    },
+    group: {
+      delete_event: 'Ereignis löschen',
+      delete_post: 'Beitrag löschen',
+      edit_event: 'Ereignis bearbeiten',
+      report_event: 'Ereignis melden',
+      report_post: 'Beitrag melden'
     }
   }
 }
