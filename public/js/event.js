@@ -78,3 +78,7 @@ $(document).mouseup(function(e)
 $(".form-helper-wrapper.medium").focusin(function(){
   $(this).removeClass('hide-bdp')
 })
+
+$('.create-event-form').submit(function(){
+    $(this).find(':input[type=submit]').prop('disabled', true);
+});

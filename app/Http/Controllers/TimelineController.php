@@ -2542,7 +2542,7 @@ class TimelineController extends AppBaseController
 		$privacy = $request->privacy;
 		$gender  = $request->gender;
 		$location = $request->location;
-		$participant = $request->participant;
+		$participant = $request->participant+1;
 		$event_id   = $request->event_id;
 		$title 			= $request->title;
         //$start_date = date('Y-m-d H:i', strtotime($request->start_date));
@@ -2999,7 +2999,7 @@ class TimelineController extends AppBaseController
                 'timeline_id' => $timeline->id,
                 'type'        => $request->type,
                 'user_id'     => Auth::user()->id,
-                'user_limit'  => $request->user_limit,
+                'user_limit'  => $request->user_limit+1,
                 'price'       => $request->price,
                 'currency'    => $request->currency,
                 'location'    => $request->location,
