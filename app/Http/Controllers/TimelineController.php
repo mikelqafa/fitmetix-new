@@ -1224,6 +1224,7 @@ class TimelineController extends AppBaseController
     {
         $event = Event::where('timeline_id', '=', $request->timeline_id)->first();
         $users = $event->users()->get();
+        $event_post_id = Post::where('timeline_id',$request->timeline_id)->first()->id;
 
         if (!$event->users->contains(Auth::user()->id)) {
             if($event->user_limit < $event->users()->count()){
@@ -1239,7 +1240,7 @@ class TimelineController extends AppBaseController
                     if ($user->id != Auth::user()->id) {
                         //Notify the user for event join
                         App::setLocale($user->language);
-                        Notification::create(['user_id' => $user->id, 'timeline_id' => $request->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.attending_your_event'), 'type' => 'join_event']);
+                        Notification::create(['user_id' => $user->id,'post_id' => $event_post_id,'timeline_id' => $request->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.attending_your_event'), 'type' => 'join_event','link' => '/post/'.$event_post_id]);
                         App::setLocale(Auth::user()->language);
                     }
                 }
@@ -1251,7 +1252,7 @@ class TimelineController extends AppBaseController
             foreach ($users as $user) {
                 if ($user->id != Auth::user()->id) {
                     App::setLocale($user->language);
-                    Notification::create(['user_id' => $user->id, 'timeline_id' => $request->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.quit_attending_your_event'), 'type' => 'unjoin_event']);
+                    Notification::create(['user_id' => $user->id,'post_id' => $event_post_id,'timeline_id' => $request->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.quit_attending_your_event'), 'type' => 'unjoin_event','link' => '/post/'.$event_post_id]);
                     App::setLocale(Auth::user()->language);
                 }
             }
@@ -4600,6 +4601,7 @@ class TimelineController extends AppBaseController
       $userId = $request->user_id;
       $event = DB::table('events')->where('id', $eventId)->first();
       $event_d = Event::find($request->event_id);
+      $post_id = Post::where('timeline_id',$event_d->timeline_id)->first()->id;
       $users = $event_d->users()->get();
       // if ($event->price > 0) {
       //     $registration = DB::table('event_user')
@@ -4640,7 +4642,7 @@ class TimelineController extends AppBaseController
               foreach ($users as $user) {
                 if ($user->id != Auth::user()->id) {
                     App::setLocale($user->language);
-                    Notification::create(['user_id' => $user->id, 'timeline_id' => $request->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.quit_attending_your_event'), 'type' => 'unjoin_event']);
+                    Notification::create(['user_id' => $user->id,'post_id' => $post_id ,'timeline_id' => $request->timeline_id, 'notified_by' => Auth::user()->id, 'description' => Auth::user()->name.' '.trans('common.quit_attending_your_event'), 'type' => 'unjoin_event','link' => '/post/'.$post_id]);
                     App::setLocale(Auth::user()->language);
                 }
             }
@@ -4980,19 +4982,19 @@ class TimelineController extends AppBaseController
   public function searchAPI(Request $request) {
       $title = $request->keyword;
       // $title = 'mikele';
-      $users = Timeline::where('username','LIKE',$title.'%')->get()->toArray();
-      $tags = Hashtag::where('tag','LIKE',$title.'%')->get()->toArray();
+      $users = Timeline::where('username','LIKE','%'.$title.'%')->get()->toArray();
+      $tags = Hashtag::where('tag','LIKE','%'.$title.'%')->get()->toArray();
 
       $events = DB::table('events')
                 ->join('timelines', 'timelines.id', '=', 'events.timeline_id')
                 ->where(function ($query) use ($title){
                         if($title != '') {
-                            $query->where('timelines.name','like',$title.'%');
+                            $query->where('timelines.name','like','%'.$title.'%');
                         }
                 })
                 ->orWhere(function ($query) use ($title){
                         if($title != '') {
-                            $query->where('timelines.about','like',$title.'%');
+                            $query->where('timelines.about','like','%'.$title.'%');
                         }
                 })
                 ->select('events.*', 'timelines.*','events.id as event_id')

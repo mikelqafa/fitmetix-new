@@ -1,13 +1,15 @@
 <div class="container">
     <div class="row tpadding-20">
         <div class="col-md-4 col-md-offset-4">
-            <h2 class="register-heading">Reset Passowrd</h2>
+            <h2 class="register-heading">Reset Password</h2>
             <div class="panel panel-default">
                 <div class="panel-body nopadding">
                     <div class="login-bottom">
-                        @if(Session::has('link_sent'))
-                            <p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('link_sent') }}</p>
-                            {{ Session::forget('link_sent') }}
+                        @if (!$errors->has('email'))
+                            @if(Session::has('link_sent'))
+                                <p class="alert {{ Session::get('alert-class', 'alert-success') }}">{{ Session::get('link_sent') }}</p>
+                                {{ Session::forget('link_sent') }}
+                            @endif
                         @endif
                         <ul class="signup-errors text-danger list-unstyled"></ul>
                         <form method="POST" class="" action="{{ url('/password/email') }}">
@@ -15,7 +17,7 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input type="hidden" name="custom_msg" value="A link was sent to your email address">
+                                    <input type="hidden" name="custom_msg" value="A link was sent to your email address.">
                                     <fieldset class="form-group required {{ $errors->has('email') ? ' has-error' : '' }}">
                                         {{ Form::label('email', trans('auth.email_address')) }}
                                         {{ Form::text('email', NULL, ['class' => 'form-control', 'id' => 'email', 'placeholder'=> trans('auth.email_address')]) }}

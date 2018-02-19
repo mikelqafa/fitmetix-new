@@ -203,7 +203,7 @@
                         url =  base_url + item.notified_from.username
                         break
                     case 'join_event':
-                        url =  base_url + item.notified_from.username
+                        url =  base_url + 'post/'+item.post_id
                         break
                     case 'follow_requested_deny':
                         url =  base_url + item.notified_from.username
