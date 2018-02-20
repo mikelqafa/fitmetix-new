@@ -13,7 +13,7 @@
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#1e7c82">
         <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
-        <meta property="og:image" content="{{ url('setting/logo.jpg') }}" />
+        <meta property="og:image" content="{{ asset('images/back1-min.jpg') }}" />
         <meta property="og:title" content="{{ Setting::get('site_title') }}" />
         <meta property="og:type" content="Social Network" />
         <meta name="keywords" content="{{ Setting::get('meta_keywords') }}">
