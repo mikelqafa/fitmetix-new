@@ -233,7 +233,7 @@
       <table cellspacing="0" cellpadding="0" width="600" class="w320">
         <tr>
           <td class="free-text">
-            <h3 style="color: #757575;">Hi {{ $posted_user->username }},</h3>
+            <h3 style="color: #757575;">Hi {{ $follow->username }},</h3>
             <h3 style="color: #757575;"><a style="text-decoration: none;color: #1E7C82;" href="{{ $user_url }}">{!! $user->name !!}</a> follows you </h3>
           </td>
         </tr>          
