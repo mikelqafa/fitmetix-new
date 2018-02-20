@@ -1905,7 +1905,7 @@ function alertApp (text) {
 function FacebookInviteFriends() {
   FB.ui({
     display: 'popup',
-    method: 'share',
+    method: 'send',
     href: 'http://www.fitmetix.com',
   },function(response) {
     console.log('facebook', response)
