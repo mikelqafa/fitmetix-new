@@ -4927,6 +4927,8 @@ class TimelineController extends AppBaseController
     public function sharePostByNotification(Request $request){
       //todo: translation not implemented for the description.
       $postId = $request->post_id;
+      $post_shared = Post::findOrFail($postId);
+      $posted_user = $post_shared->user;
       $users = $request->users;
       foreach ($users as $key => $value){
         $timeline = DB::table('timelines')->where('username',$value)->first();
