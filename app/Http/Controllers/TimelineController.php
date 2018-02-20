@@ -1151,9 +1151,10 @@ class TimelineController extends AppBaseController
 
             $user = User::find(Auth::user()->id);
             $user_settings = $user->getUserSettings($follow->id);
+            $user_url = 'fitmetix.com/'.$user->username;
 
             if ($user_settings && $user_settings->email_follow == 'yes') {
-                Mail::send('emails.followmail', ['user' => $user, 'follow' => $follow], function ($m) use ($user, $follow) {
+                Mail::send('emails.followmail', ['user' => $user, 'follow' => $follow,'user_url'=>$user_url], function ($m) use ($user, $follow) {
                     $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
                     $m->to($follow->email, $follow->name)->subject($user->name.' '.trans('common.follows_you'));
                 });
@@ -4941,7 +4942,7 @@ class TimelineController extends AppBaseController
                   $m->to($posted_user->email, $posted_user->name)->subject($user->name.' '.'shared your post');
               });
           }
-          
+
         }
       }
       return response()->json(['status' => '200','data' => 'Post Shared']);
