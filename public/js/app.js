@@ -1902,15 +1902,6 @@ function alertApp (text) {
   $('#app-alert .app-alert__text').html(text)
   $('#app-alert').MaterialDialog('show')
 }
-function FacebookInviteFriends() {
-  FB.ui({
-    display: 'popup',
-    method: 'send',
-    href: 'http://www.fitmetix.com',
-  },function(response) {
-    console.log('facebook', response)
-  });
-}
 $(function() {
   $('.color-picker').click(function() {
     var c = $(this).attr('data-color')

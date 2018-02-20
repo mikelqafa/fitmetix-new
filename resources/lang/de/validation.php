@@ -7,7 +7,7 @@
   'alpha_num' => 'Das: Attribut kann nur Buchstaben und Zahlen enthalten.',
   'array' => 'Das: Attribut muss ein Array sein.',
   'before' => 'Das: Attribut muss ein Datum sein vor: Datum.',
-  'between' => 
+  'between' =>
   array (
     'numeric' => 'numerisch',
     'file' => 'Datei',

@@ -193,7 +193,7 @@
                 switch (network) {
                     case 'facebook':
                         FB.ui({
-                            method: 'send',
+                            method: 'feed',
                             display: 'popup',
                             link: base_url+'share/'+that.postItem.id
                         }, function (response) {

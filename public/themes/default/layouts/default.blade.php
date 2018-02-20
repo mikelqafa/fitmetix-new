@@ -181,5 +181,16 @@
     </script>
 @endif
 @yield('js')
+<script>
+    function FacebookInviteFriends() {
+        FB.ui({
+            display: 'popup',
+            method: 'send',
+            href: base_url
+        },function(response) {
+            console.log('facebook', response)
+        });
+    }
+</script>
 </body>
 </html>
