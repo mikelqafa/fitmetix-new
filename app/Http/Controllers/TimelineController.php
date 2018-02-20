@@ -953,9 +953,10 @@ class TimelineController extends AppBaseController
 
                 $user = User::find(Auth::user()->id);
                 $user_settings = $user->getUserSettings($posted_user->id);
+                $post_url = 'fitmetix.com/post/'.$request->post_id;
 
                 if ($user_settings && $user_settings->email_post_share == 'yes') {
-                    Mail::send('emails.postsharemail', ['user' => $user, 'posted_user' => $posted_user], function ($m) use ($user, $posted_user) {
+                    Mail::send('emails.postsharemail', ['user' => $user, 'posted_user' => $posted_user,'post_url'=>$post_url], function ($m) use ($user, $posted_user) {
                         $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
                         $m->to($posted_user->email, $posted_user->name)->subject($user->name.' '.'shared your post');
                     });
