@@ -4,6 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{!! Setting::get('site_name') !!}</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 
   <style type="text/css">
     /* Take care of image borders and formatting, client hacks */
@@ -138,7 +139,6 @@
 
   <style type="text/css" media="screen">
     @media screen {
-      /* Thanks Outlook 2013! */
       * {
         font-family: 'Oxygen', 'Helvetica Neue', 'Arial', 'sans-serif' !important;
       }
@@ -193,7 +193,7 @@
         padding: 5px 0 30px !important;
       }
 
-       td[class="button"] {
+      td[class="button"] {
         padding: 5px !important;
       }
 
@@ -215,104 +215,58 @@
   </style>
 </head>
 
-<body bgcolor="#f7f7f7">
-<table align="center" cellpadding="0" cellspacing="0" class="container-for-gmail-android" width="100%">
-  <tr>
-    <td align="left" valign="top" width="100%" style="background:repeat-x url(http://s3.amazonaws.com/swu-filepicker/4E687TRe69Ld95IDWyEg_bg_top_02.jpg) #ffffff;">
-      <center>
-      <img src="http://s3.amazonaws.com/swu-filepicker/SBb2fQPrQ5ezxmqUTgCr_transparent.png" class="force-width-gmail">
-        <table cellspacing="0" cellpadding="0" width="100%" bgcolor="#ffffff" background="http://s3.amazonaws.com/swu-filepicker/4E687TRe69Ld95IDWyEg_bg_top_02.jpg" style="background-color:transparent">
-          <tr>
-            <td width="100%" height="80" valign="top" style="text-align: center; vertical-align:middle;">
-            <!--[if gte mso 9]>
-            <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="mso-width-percent:1000;height:80px; v-text-anchor:middle;">
-              <v:fill type="tile" src="http://s3.amazonaws.com/swu-filepicker/4E687TRe69Ld95IDWyEg_bg_top_02.jpg" color="#ffffff" />
-              <v:textbox inset="0,0,0,0">
-            <![endif]-->
-              <center>
-                <table cellpadding="0" cellspacing="0" width="600" class="w320">
-                  <tr>
-                    <td class="pull-left mobile-header-padding-left" style="vertical-align: middle;">
-                      <a href="{!! Setting::get('site_url') !!}">
-                        <img src="{{ url('/'.Setting::get('logo')) }}" title="{{ Setting::get('site_name') }}" alt="{{ Setting::get('site_name') }}" style="height:46px">
-                      </a>
-                    </td>
-                    <td class="pull-right mobile-header-padding-right" style="color: #4d4d4d;">
-                      @if(Setting::get('facebook_link'))
-                        <a href="{!! Setting::get('facebook_link') !!}">
-                          <img class="{{ Setting::get('site_name') }}" src="{!! url('setting/facebook.png') !!}" alt="{{ Setting::get('site_name') }}" title="{{ Setting::get('site_name') }}" width="40" height="40">
-                        </a>
-                      @endif
+<div style="background-color: #f9f9f9; padding: 16px;">
+  <table align="center" cellpadding="0" cellspacing="0" class="container-for-gmail-android" width="100%">
+    <tr>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        <center>
+          <img style="width: 200px; padding-top: 32px;padding-bottom: 16px;" src="http://fitmetix.com/images/logo.png" alt="Fitmetix logo" />
+        </center>
+      </td>
+    </tr>
+<tr>
+  <td align="center" valign="top" width="100%" style="background-color: #f9f9f9;" class="content-padding">
+    <center>
+      <table cellspacing="0" cellpadding="0" width="600" class="w320">
+        <tr>
+          <td class="free-text">
+            <h3 style="color: #757575;">Hi {{ $posted_user->username }},</h3>
+            <h3 style="color: #757575;"><a style="text-decoration: none;color: #1E7C82;" href="{{ $user_url }}">{!! $user->name !!}</a> liked your <a style="text-decoration: none;color: #1E7C82;" href="{{ $post_url }}">post</a> </h3>
+          </td>
+        </tr>          
+      </table>
+    </center>
+  </td>
+</tr>
 
-                      @if(Setting::get('twitter_link'))
-                        <a href="{!! Setting::get('twitter_link') !!}">
-                          <img class="{{ Setting::get('site_name') }}" src="{!! url('setting/twitter.png') !!}" alt="{{ Setting::get('site_name') }}" title="{{ Setting::get('site_name') }}" width="40" height="40">
-                        </a>
-                      @endif
+<tr>
+  <td>
+    <div style="height: 100px"></div>
+  </td>
+</tr>
 
-                      @if(Setting::get('youtube_link'))
-                        <a href="{!! Setting::get('youtube_link') !!}">
-                          <img class="{{ Setting::get('site_name') }}" src="{!! url('setting/youtube.png') !!}" alt="{{ Setting::get('site_name') }}" title="{{ Setting::get('site_name') }}" width="40" height="40">
-                        </a>
-                      @endif
+<tr>
+  <td>
+    <h4 style="text-align: center;color: #757575; font-size: 15px; font-weight: 100;">Thank you for being part of our community.</h4>
+  </td>
+</tr>
 
-                      @if(Setting::get('instagram_link'))
-                        <a href="{!! Setting::get('instagram_link') !!}">
-                          <img class="{{ Setting::get('site_name') }}" src="{!! url('setting/instagram.png') !!}" alt="{{ Setting::get('site_name') }}" title="{{ Setting::get('site_name') }}" width="40" height="40">
-                        </a>
-                      @endif
-
-                      @if(Setting::get('dribbble_link'))
-                        <a href="{!! Setting::get('dribbble_link') !!}">
-                          <img class="{{ Setting::get('site_name') }}" src="{!! url('setting/dribbble.png') !!}" alt="{{ Setting::get('site_name') }}" title="{{ Setting::get('site_name') }}" width="40" height="40">
-                        </a>
-                      @endif
-
-                      @if(Setting::get('linkedin_link'))
-                        <a href="{!! Setting::get('linkedin_link') !!}">
-                          <img class="{{ Setting::get('site_name') }}" src="{!! url('setting/linkedin.png') !!}" alt="{{ Setting::get('site_name') }}" title="{{ Setting::get('site_name') }}" width="40" height="40">
-                        </a>
-                      @endif
-                    </td>
-                  </tr>
-                </table>
-              </center>
-              <!--[if gte mso 9]>
-              </v:textbox>
-            </v:rect>
-            <![endif]-->
-            </td>
-          </tr>	
-        </table>
-      </center>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="top" width="100%" style="background-color: #f7f7f7;" class="content-padding">
-      <center>
-        <table cellspacing="0" cellpadding="0" width="600" class="w320">
-          <tr>
-            <td class="free-text">
-              <h3><a href="{{ $user_url }}">{!! $user->name !!}</a> liked your <a href="{{ $post_url }}">post</a> </h3>
-            </td>
-          </tr>          
-        </table>
-      </center>
-    </td>
-  </tr>
-  <tr>
-    <td align="center" valign="top" width="100%" style="background-color: #f7f7f7; height: 100px;">
-      <center>
-        <table cellspacing="0" cellpadding="0" width="600" class="w320">
-          <tr>
-            <td style="padding: 25px 0 25px">
-              {!! Setting::get('address_on_mail') !!}
-            </td>
-          </tr>
-        </table>
-      </center>
-    </td>
-  </tr>
+<tr>
+  <td align="center" valign="top" width="100%" style="background-color: #f7f7f7; height: 100px;">
+    <center>
+      <table cellspacing="0" cellpadding="0" width="600" class="w320">
+        <tr>
+          <td style="padding: 16px 0 16px;text-align: center;">
+            <a style="color: #1E7C82; font-size: 14px; text-align: center;text-decoration: none;" href="http://www.fitmetix.com">www.fitmetix.com</a>
+          </td>
+        </tr>
+      </table>
+    </center>
+  </td>
+</tr>
 </table>
-</body>
+</div>
 </html>

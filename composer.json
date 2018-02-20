@@ -45,6 +45,7 @@
     "vijaytupakula/transvel": "^1.0",
     "vinkla/pusher": "^4.0",
     "zircote/swagger-php": "^2.0",
+    "intervention/imagecache": "^2.3",
     "zizaco/entrust": "^1.8"
   },
   "require-dev": {
