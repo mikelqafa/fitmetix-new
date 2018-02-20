@@ -186,7 +186,7 @@
         FB.ui({
             display: 'popup',
             method: 'send',
-            href: base_url
+            href: 'http://www.fitmetix.com'
         },function(response) {
             console.log('facebook', response)
         });
