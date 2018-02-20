@@ -91,7 +91,7 @@ return [
 
     'menu'                              => 'menu',
     'general_settings'                  => 'General Settings',
-    'settings'                          => 'settings',
+    'settings'                          => 'Settings',
     'privacy_settings'                  => 'Privacy Settings',
     'my_affiliates'                     => 'my affiliates',
     'my_profile'                        => 'my profile',

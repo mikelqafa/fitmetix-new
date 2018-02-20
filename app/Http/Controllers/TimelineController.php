@@ -1352,8 +1352,11 @@ class TimelineController extends AppBaseController
 
                 App::setLocale(Auth::user()->language);
 
+                $follower = User::find(Auth::user()->id);
+                $user_url = 'fitmetix.com/'.$follower->username;
+
                 if ($user_settings && $user_settings->email_follow == 'yes') {
-                    Mail::send('emails.followmail', ['user' => $user, 'follow' => $user], function ($m) use ($user) {
+                    Mail::send('emails.followmail', ['user' => $user, 'follow' => $follower, 'user_url'=>$user_url], function ($m) use ($user) {
                         $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
                         $m->to($user->email, $user->name)->subject(Auth::user()->name.' '.trans('common.follows_you'));
                     });
