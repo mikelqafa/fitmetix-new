@@ -184,7 +184,7 @@
 <script>
     function FacebookInviteFriends() {
         FB.ui({
-            display: 'popup',
+            display: 'iframe',
             method: 'send',
             link: 'http://www.fitmetix.com'
         },function(response) {
