@@ -64,11 +64,11 @@
                     {{ trans('common.t_c') }}
                 </a>
             </li>
-            <li class="list-group-item">
+{{--             <li class="list-group-item">
                 <a href="javascript:;" onclick="FacebookInviteFriends()">
                     {{ trans('common.invite_friends') }}
                 </a>
-            </li>
+            </li> --}}
             @if(Auth::user()->custom_option1 == 'scout')
                 <li class="list-group-item">
                     <a href="{{ url('/'.Auth::user()->username.'/settings/affliates') }}">
