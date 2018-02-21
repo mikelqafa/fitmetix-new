@@ -2278,8 +2278,11 @@ class TimelineController extends AppBaseController
     	$title    = $request->title;
         $username  = $request->username;
         $user_id = '';
+        $start_date_time = '';
         if($date && $date != ''){
-            $date = date('Y-m-d H:i',strtotime($date));
+            $date = date('Y-m-d H:i:s',strtotime($date));
+            $start_date_time_temp = new \DateTime($request->date.' 23:59:59');
+            $start_date_time =  date_format($start_date_time_temp, 'Y-m-d H:i:s');
         }
         if($username && $username !=''){
             $user_id = Timeline::where('username',$username)->first()->user->id;
@@ -2291,9 +2294,9 @@ class TimelineController extends AppBaseController
                             $query->where('events.location','like','%'.$location.'%');
                     }
             })
-            ->where(function($query) use ($date){
+            ->where(function($query) use ($date,$start_date_time){
                     if($date != '') {
-                        $query->whereBetween($date,['events.start_date','events.end_date']);
+                        $query->whereDate('events.start_date','<=',$date)->where('events.end_date','>=',$date);
                     }
             })
             ->where(function($query) use ($tag){
@@ -2322,9 +2325,9 @@ class TimelineController extends AppBaseController
                             $query->where('events.location','like','%'.$location.'%');
                     }
             })
-            ->where(function($query) use ($date){
+            ->where(function($query) use ($date,$start_date_time){
                     if($date != '') {
-                        $query->where('events.start_date','<=',$date)->where('events.end_date','>=',$date);
+                        $query->whereDate('events.start_date','<=',$date)->where('events.end_date','>=',$date);
                     }
             })
             ->where(function($query) use ($tag){
@@ -4397,7 +4400,13 @@ class TimelineController extends AppBaseController
 
     public function getEventByDate(Request $request) {
 
-        $events_all = Event::where('start_date','>=',$request->start_date)->with('timeline')->get();
+        $start_date_time_temp = new DateTime($request->start_date.' 23:59:59');
+        $start_date_time =  date_format($start_date_time_temp, 'Y-m-d H:i:s');
+
+        $events_all = Event::where('start_date','>=',$request->start_date)->orWhere(function($query) {
+                 $query->where($request->start_date,'<=','start_date')->where($start_date_time, '>=', 'start_date');   
+              }
+          )->with('timeline')->get();
         $events = [];
         foreach ($events_all as $key => $event) {
             if($event->users->contains(Auth::user()->id)){
