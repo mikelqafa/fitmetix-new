@@ -785,22 +785,26 @@ class TimelineController extends AppBaseController
                 $user = User::find(Auth::user()->id);
                 $user_settings = $user->getUserSettings($main_comment_user->id);
                 $user_url = 'fitmetix.com/'.$user->username;
-                if ($user_settings && $user_settings->email_reply_comment == 'yes') {
-                    Mail::send('emails.commentreply_mail', ['user' => $user, 'main_comment_user' => $main_comment_user, 'user_url'=>$user_url], function ($m) use ($user, $main_comment_user) {
-                        $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
-                        $m->to($main_comment_user->email, $main_comment_user->name)->subject('New reply to your comment');
-                    });
+                if (Auth::user()->id != $post->user_id) {
+                    if ($user_settings && $user_settings->email_reply_comment == 'yes') {
+                        Mail::send('emails.commentreply_mail', ['user' => $user, 'main_comment_user' => $main_comment_user, 'user_url'=>$user_url], function ($m) use ($user, $main_comment_user) {
+                            $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
+                            $m->to($main_comment_user->email, $main_comment_user->name)->subject('New reply to your comment');
+                        });
+                    }
                 }
                 $postHtml = $theme->scope('timeline/reply', compact('reply', 'post'))->render();
             } else {
                 $user = User::find(Auth::user()->id);
                 $user_settings = $user->getUserSettings($posted_user->id);
                 $user_url = 'fitmetix.com/'.$user->username;
-                if ($user_settings && $user_settings->email_comment_post == 'yes') {
-                    Mail::send('emails.commentmail', ['user' => $user, 'posted_user' => $posted_user, 'user_url'=>$user_url], function ($m) use ($user, $posted_user) {
-                        $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
-                        $m->to($posted_user->email, $posted_user->name)->subject('New comment to your post');
-                    });
+                if (Auth::user()->id != $post->user_id) {
+                    if ($user_settings && $user_settings->email_comment_post == 'yes') {
+                        Mail::send('emails.commentmail', ['user' => $user, 'posted_user' => $posted_user, 'user_url'=>$user_url], function ($m) use ($user, $posted_user) {
+                            $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
+                            $m->to($posted_user->email, $posted_user->name)->subject('New comment to your post');
+                        });
+                    }
                 }
 
                 $postHtml = $theme->scope('timeline/comment', compact('comment', 'post'))->render();
@@ -834,11 +838,13 @@ class TimelineController extends AppBaseController
             $user_settings = $user->getUserSettings($posted_user->id);
             $post_url = 'fitmetix.com/post/'.$post->id;
             $user_url = 'fitmetix.com/'.$user->username;
-            if ($user_settings && $user_settings->email_like_post == 'yes') {
-                Mail::send('emails.postlikemail', ['user' => $user, 'posted_user' => $posted_user,'post_url' => $post_url, 'user_url'=>$user_url], function ($m) use ($posted_user, $user) {
-                    $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
-                    $m->to($posted_user->email, $posted_user->name)->subject($user->name.' '.'liked your post');
-                });
+            if (Auth::user()->id != $post->user_id) {
+                if ($user_settings && $user_settings->email_like_post == 'yes') {
+                    Mail::send('emails.postlikemail', ['user' => $user, 'posted_user' => $posted_user,'post_url' => $post_url, 'user_url'=>$user_url], function ($m) use ($posted_user, $user) {
+                        $m->from(Setting::get('noreply_email'), Setting::get('site_name'));
+                        $m->to($posted_user->email, $posted_user->name)->subject($user->name.' '.'liked your post');
+                    });
+                }
             }
             $status_message = '';
 
