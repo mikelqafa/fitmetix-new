@@ -147,7 +147,7 @@
                 return 'Free'
             },
             formatUrl: function(u) {
-                return base_url+ 'locate-on-map/' + u
+                return base_url+ 'event/location/' + u
             },
             unRegister: function () {
                 let _token = $("meta[name=_token]").attr('content')

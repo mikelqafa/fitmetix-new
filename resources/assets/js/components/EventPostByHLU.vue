@@ -358,7 +358,7 @@
                 return (e.price == null || 0) ? 'Free' : e.currency == 'EURO' ? '&euro;' + e.price : e.currency == 'POUND' ?  '&#163;' + e.price :'&dollar;' + e.price
             },
             formatUrl: function(u) {
-                return base_url+ 'locate-on-map/' + u
+                return base_url+ 'event/location/' + u
             },
             submit: function (i, e) {
                 if(i==1) {
