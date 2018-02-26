@@ -182,7 +182,7 @@
                                             <div class="ft-card__list">
                                                 <div class="icon icon-location-o"></div>
                                                 <div class="card-desc">
-                                                    <a :href="formatUrl(item.location)" target="_blank">{{ item.location }}</a>
+                                                    <a :href="formatUrl(item.location)">{{ item.location }}</a>
                                                 </div>
                                             </div>
                                             <div class="ft-card__list">
