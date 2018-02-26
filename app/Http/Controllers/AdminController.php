@@ -1321,6 +1321,11 @@ class AdminController extends Controller
     {
         $post = Post::find($post_id);
         $notifications = Notification::where('post_id', $post_id)->get();
+        if($post->type == 'event'){
+            $event = Event::where('timeline_id',$post->timeline_id)->first();
+            $notifications = Notification::where('timeline_id', $post->timeline_id)->get();
+        }
+
         //$comments = Comment::where('post_id',$post_id)->get();
 
         $check_report = $post->deleteManageReport($report_id);
@@ -1336,6 +1341,9 @@ class AdminController extends Controller
                     $event->users()->detach();
                     $event_timeline = $event->timeline();
                     $event->delete();
+                    if ($post->deleteMe()) {
+                        Flash::success(trans('messages.report_deleted_success'));
+                    }
                     $event_timeline->delete();
                 }
             }
