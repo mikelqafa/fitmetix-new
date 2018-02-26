@@ -256,7 +256,7 @@
                                             <div class="ft-card__list">
                                                 <div class="icon icon-location-o"></div>
                                                 <div class="card-desc">
-                                                    <a :href="formatUrl(item.location)" target="_blank">{{ item.location }}</a>
+                                                    <a :href="formatUrl(item.location)">{{ item.location }}</a>
                                                 </div>
                                             </div>
                                             <div class="ft-card__list">
@@ -288,6 +288,9 @@
                             <span class="ft-loading__dot"></span>
                             <span class="ft-loading__dot"></span>
                             <span class="ft-loading__dot"></span>
+                        </div>
+                        <div v-if="isDrawerOpen && hasMorePost" class=" text-center hidden-xs hidden-sm">
+                            <button type="button" v-on:click="fetchByBtn" class="text-center btn btn-lg">Load more</button>
                         </div>
                     </template>
                     <template v-else="">
@@ -375,7 +378,8 @@
                 hashtag: false,
                 hasMorePost:true,
                 isFetchingBottom: false,
-                offset: 0
+                offset: 0,
+                isDrawerOpen: false
             }
         },
         methods: {
@@ -386,7 +390,7 @@
                 return 'Free'
             },
             formatUrl: function(u) {
-                return base_url+ 'locate-on-map/' + u
+                return base_url+ 'event/location/' + u
             },
             formatGender: function(g) {
                 return g == 'all' ? this.$t('common.everyone') : g == 'male' ? this.$t('common.male') : this.$t('common.female')
@@ -496,10 +500,12 @@
             },
             closeDrawer: function () {
                 $('#drawer-1').MaterialDrawer('hide')
+                this.isDrawerOpen = false
             },
             showEventPost: function (e) {
                 this.postItem = {}
                 $('#drawer-1').MaterialDrawer('show')
+                this.isDrawerOpen = true
                 this.fetchNew(e)
             },
             closeEventPost: function (e) {
@@ -561,6 +567,13 @@
                         }, 100)
                     }
                 });
+            },
+            fetchByBtn: function() {
+                if(!this.inProgress && this.hasMorePost ){
+                    this.isFetchingBottom = true
+                    this.getDefaultData()
+                    this.inProgress = true
+                }
             },
             removeFilter: function (item) {
                 let index = $.map(this.filter, function (e, index) {

@@ -8,7 +8,7 @@
                 <div class="ft-card__list">
                     <div class="icon icon-location-o"></div>
                     <div class="card-desc">
-                        <a :href="formatUrl(event.location)" target="_blank">{{ event.location }}</a>
+                        <a :href="formatUrl(event.location)">{{ event.location }}</a>
                     </div>
                 </div>
                 <div class="ft-card__list">

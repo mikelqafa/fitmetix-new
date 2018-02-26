@@ -196,7 +196,7 @@
 												</div>
 												<div class="ft-card__list">
 													<div class="icon lg-loadable"></div>
-													<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
+												<div class="card-desc lg-loadable--text layout-m-b-0 lg-loadable">
 														&nbsp;
 													</div>
 												</div>
@@ -212,6 +212,7 @@
 		</app-event-list>
 	</div>
 </div>
+
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_vuWi_hzMDDeenNYwaNAj0PHzzS2GAx8&libraries=places&callback=initMapEvent"
 		async defer></script>
 <script>
