@@ -4406,11 +4406,12 @@ class TimelineController extends AppBaseController
 
     public function getEventByDate(Request $request) {
 
-        $start_date_time_temp = new DateTime($request->start_date.' 23:59:59');
+			  $start_date = $request->start_date;
+        $start_date_time_temp = date_create($request->start_date.' 23:59:59');
         $start_date_time =  date_format($start_date_time_temp, 'Y-m-d H:i:s');
 
-        $events_all = Event::where('start_date','>=',$request->start_date)->orWhere(function($query) {
-                 $query->where($request->start_date,'<=','start_date')->where($start_date_time, '>=', 'start_date');   
+        $events_all = Event::where('start_date','>=',$request->start_date)->orWhere(function($query) use ($request,$start_date_time) {
+                 $query->where('start_date','<=',$request->start_date)->where('start_date', '>=', $start_date_time);
               }
           )->with('timeline')->get();
         $events = [];
