@@ -34,7 +34,7 @@
             }
         },
         mounted () {
-            emojify.run()
+
         }
     }
 </script>

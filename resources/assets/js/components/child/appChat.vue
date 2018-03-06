@@ -249,6 +249,12 @@
             },
             showConversation: function(c) {
                 this.$store.dispatch('showConversation', {byTap: true, conversation: c})
+                setTimeout(function () {
+                    emojify.run()
+                    //hashtagify();
+                    alert("Hello")
+                    //mentionify();
+                }, 500)
             }
         },
         mounted () {

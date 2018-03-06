@@ -80,5 +80,5 @@ $(".form-helper-wrapper.medium").focusin(function(){
 })
 
 $('.create-event-form').submit(function(){
-    $(this).find(':input[type=submit]').prop('disabled', true);
+    //$(this).find(':input[type=submit]').prop('disabled', true);
 });

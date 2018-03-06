@@ -138,6 +138,7 @@
                 } else {
                     url = base_url + 'get-posts'
                 }
+                alert(url)
                 let profile_timeline = false
                 if($('#timeline_username').length) {
                     username =  $('#timeline_username').val()
@@ -174,9 +175,10 @@
                             that.interact = true
                         }
                         setTimeout(function () {
-                            emojify.run();
-                            hashtagify();
-                            mentionify();
+                            console.log("assssssssssssssssssssssssssssss")
+                            //emojify.run();
+                            //hashtagify();
+                            //mentionify();
                         }, 500)
                         that.inProgress = false
                         that.hasMorePost = i == paginate;
